@@ -1,4 +1,4 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using Biohazard.BioRand.RE7;
 using IntelOrca.Biohazard.REE.Package;
@@ -86,49 +86,16 @@ namespace BioHazard.BioRand.RE7.Commands
         }
 
         private static readonly ImmutableArray<string> FullPatterns = [
-            @"natives/stm/.*\.gui\.540034",
-            @"natives/stm/.*\.motfsm2\.43",
-            @"natives/stm/.*\.msg\.22",
-            @"natives/stm/.*\.pfb\.17",
-            @"natives/stm/.*\.scn\.20",
-            @"natives/stm/.*\.user\.2",
-            @"natives/stm/.*\.uvar\.3"
+            @"natives/.*\.gui\.\d+",
+            @"natives/.*\.motfsm2\.\d+",
+            @"natives/.*\.msg\.\d+",
+            @"natives/.*\.pfb\.\d+",
+            @"natives/.*\.scn\.\d+",
+            @"natives/.*\.user\.\d+",
+            @"natives/.*\.uvar\.\d+"
         ];
 
         private static readonly ImmutableArray<string> MiniPatterns = [
-            //"natives/stm/_anotherorder/appsystem/character/[0-9a-z]+/userdata/[0-9a-z_]+\\.user\\.2",
-            //"natives/stm/_anotherorder/appsystem/inventory/inventorycatalog/.*",
-            //"natives/stm/_anotherorder/appsystem/navigation/.*",
-            //"natives/stm/_anotherorder/appsystem/ui/.*",
-            //"natives/stm/_anotherorder/appsystem/weapon/.*",
-            //"natives/stm/_anotherorder/appsystem/weaponcustom/.*",
-            //"natives/stm/_anotherorder/environment/scene/gimmick/.*",
-            //"natives/stm/_anotherorder/leveldesign/chapter/.*",
-            //"natives/stm/_anotherorder/leveldesign/location/.*",
-            //"natives/stm/_anotherorder/message/mes_main_item/.*",
-            //"natives/stm/_anotherorder/message/mes_main_sys/.*",
-            //"natives/stm/_authoring/appsystem/globalvariables/.*",
-            //"natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_110[12]/.*",
-            //"natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_140[12]/.*",
-            //"natives/stm/_chainsaw/appsystem/character/[0-9a-z]+/userdata/[0-9a-z_]+\\.user\\.2",
-            //"natives/stm/_chainsaw/appsystem/inventory/inventorycatalog/.*",
-            //"natives/stm/_chainsaw/appsystem/navigation/.*",
-            //"natives/stm/_chainsaw/appsystem/prefab/gui/.*",
-            //"natives/stm/_chainsaw/appsystem/shell/bullet/.*",
-            //"natives/stm/_chainsaw/appsystem/ui/.*",
-            //"natives/stm/_chainsaw/appsystem/weapon/.*",
-            //"natives/stm/_chainsaw/appsystem/weaponcustom/.*",
-            //"natives/stm/_chainsaw/environment/scene/gimmick/.*",
-            //"natives/stm/_chainsaw/leveldesign/chapter/.*",
-            //"natives/stm/_chainsaw/leveldesign/location/.*",
-            //"natives/stm/_chainsaw/leveldesign/scenario/.*",
-            //"natives/stm/_chainsaw/message/dlc/ch_mes_dlc_110[12]\\.msg\\.22",
-            //"natives/stm/_chainsaw/message/mes_main_charm/.*",
-            //"natives/stm/_chainsaw/message/mes_main_item/.*",
-            //"natives/stm/_chainsaw/message/mes_main_sys/.*",
-            //"natives/stm/_chainsaw/sound/resource/trigger/weapon/.*\\.user\\.2",
-            //"natives/stm/_chainsaw/vfx/provider/epv_character/.*\\.pfb\\.17",
-            //"natives/stm/_chainsaw/vfx/provider/epv_weapon/.*\\.pfb\\.17",
         ];
     }
 }

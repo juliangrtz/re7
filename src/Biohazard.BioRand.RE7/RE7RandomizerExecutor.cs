@@ -1,4 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 using System.Globalization;
@@ -27,7 +27,7 @@ namespace Biohazard.BioRand.RE7 {
         }
 
         public static PakList GetDefaultPakList() {
-            var pakListBytes = EmbeddedData.GetFile("pakcontents.txt.gz").Ungzip();
+            var pakListBytes = EmbeddedData.GetFile("pakcontentsrt.txt.gz").Ungzip();
             var pakListText = Encoding.UTF8.GetString(pakListBytes);
             return new PakList(pakListText);
         }

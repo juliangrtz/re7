@@ -34,12 +34,6 @@ namespace Biohazard.BioRand.RE7 {
         public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
         public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
 
-        public static PakList GetDefaultPakList() {
-            var pakListBytes = EmbeddedData.GetFile("pakcontents.txt.gz").Ungzip();
-            var pakListText = Encoding.UTF8.GetString(pakListBytes);
-            return new PakList(pakListText);
-        }
-
         public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
             Input = input;
             _inputGamePath = inputGamePath;
