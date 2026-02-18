@@ -1,18 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Threading;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
-using IntelOrca.Biohazard.REE.Package;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading;
 
-namespace Biohazard.BioRand.RE7 {
-    internal class RE7Randomizer : IDisposable {
+namespace Biohazard.BioRand.RE7
+{
+    internal class RE7Randomizer : IDisposable
+    {
         private string _inputGamePath;
         private FileRepository _fileRepository = new FileRepository();
         private bool _supplementApplied;
@@ -28,13 +28,13 @@ namespace Biohazard.BioRand.RE7 {
         public DynamicData DynamicData { get; }
 
         public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
-        public FlagService FlagService => GetService<FlagService>();
 
         public static string BuildVersion => RE7RandomizerFactory.Default.GitHash;
         public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
         public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
 
-        public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
+        public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
+        {
             Input = input;
             _inputGamePath = inputGamePath;
             Reporter = reporter;
@@ -47,11 +47,13 @@ namespace Biohazard.BioRand.RE7 {
             );
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             _fileRepository?.Dispose();
         }
 
-        public RandomizerOutput Randomize() {
+        public RandomizerOutput Randomize()
+        {
             var input = Input;
             _fileRepository = new FileRepository(this, _inputGamePath, DynamicData);
 
@@ -61,7 +63,8 @@ namespace Biohazard.BioRand.RE7 {
             AddLogFile($"output.log", log.Output.Output);
 
             RandomizerOutput? result = null;
-            Reporter.RunTask("Building mod", () => {
+            Reporter.RunTask("Building mod", () =>
+            {
                 var output = new RE7RandomizerOutput(input, _fileRepository.GetOutputPakFile(), _logFiles, PakVersion);
                 result = new RandomizerOutput(
                     [
@@ -89,24 +92,25 @@ namespace Biohazard.BioRand.RE7 {
             return result!;
         }
 
-        public RandomizerLoggerIO Randomize(RandomizerInput input) {
+        public RandomizerLoggerIO Randomize(RandomizerInput input)
+        {
             _modifiers = GetModifiers();
 
             var logger = new RandomizerLoggerIO();
-            foreach (var l in new[] { logger.Input, logger.Process, logger.Output }) {
+            foreach (var l in new[] { logger.Input, logger.Process, logger.Output })
+            {
                 l.LogHr();
                 l.LogVersion();
                 l.LogLine($"Seed = {input.Seed}");
                 l.LogHr();
             }
 
-            ApplySupplement();
-
             // Patches
             Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
 
             // Input
-            IterateModifiers((n, m) => {
+            IterateModifiers((n, m) =>
+            {
                 logger.Input.Push(n);
                 m.LogState(this, logger.Input);
                 logger.Input.Pop();
@@ -114,18 +118,19 @@ namespace Biohazard.BioRand.RE7 {
             });
 
             // Apply modifiers
-            IterateModifiers((n, m) => {
+            IterateModifiers((n, m) =>
+            {
                 logger.Process.Push(n);
                 Reporter.RunTask($"Running modifier: {n}", () => m.Apply(this, logger.Process));
                 logger.Process.Pop();
                 logger.Process.LogHr();
             });
 
-            FlagService.Save(logger.Process);
             //Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
 
             // Output
-            IterateModifiers((n, m) => {
+            IterateModifiers((n, m) =>
+            {
                 logger.Output.Push(n);
                 m.LogState(this, logger.Output);
                 logger.Output.Pop();
@@ -135,22 +140,17 @@ namespace Biohazard.BioRand.RE7 {
             return logger;
         }
 
-        private void ApplySupplement() {
-            // Supplement files
-            if (!_supplementApplied) {
-                _supplementApplied = true;
-                FileRepository.ApplyOverlay(EmbeddedData.GetFile("supplement.zip"));
-            }
-        }
-
-        private void IterateModifiers(Action<string, Modifier> action) {
-            foreach (var modifier in _modifiers) {
+        private void IterateModifiers(Action<string, Modifier> action)
+        {
+            foreach (var modifier in _modifiers)
+            {
                 var name = modifier.GetType().Name.Replace("Modifier", "");
                 action(name, modifier);
             }
         }
 
-        private static ImmutableArray<Modifier> GetModifiers() {
+        private static ImmutableArray<Modifier> GetModifiers()
+        {
             return
             [
                 new RecipeModifier(),
@@ -160,19 +160,22 @@ namespace Biohazard.BioRand.RE7 {
         public string User => GetConfigOption<string>("username") ?? "player";
         public int Seed => Input.Seed;
 
-        public Rng GetRng(params object[] key) {
+        public Rng GetRng(params object[] key)
+        {
             var hashInput = string.Concat([Input.Seed, .. key]);
             var seed = MurMur3.HashData(hashInput);
             return new Rng(seed);
         }
 
-        public T? GetConfigOption<T>(string key, T? defaultValue = default) {
+        public T? GetConfigOption<T>(string key, T? defaultValue = default)
+        {
             if (Input.Configuration == null)
                 return defaultValue;
             return Input.Configuration.GetValueOrDefault<T>(key, defaultValue);
         }
 
-        public bool HasSpecialTouch(string kind) {
+        public bool HasSpecialTouch(string kind)
+        {
             if (!GetConfigOption("enable-special", true))
                 return false;
 
@@ -181,18 +184,21 @@ namespace Biohazard.BioRand.RE7 {
             return present;
         }
 
-        public T GetService<T>() {
+        public T GetService<T>()
+        {
             using var scope = _servicesLock.EnterScope();
             var type = typeof(T);
             _services.TryGetValue(type, out var service);
-            if (service == null) {
+            if (service == null)
+            {
                 service = Activator.CreateInstance(type, [this])!;
                 _services[type] = service;
             }
             return (T)service;
         }
 
-        public void AddLogFile(string name, string content) {
+        public void AddLogFile(string name, string content)
+        {
             _logFiles[name] = content;
         }
     }
