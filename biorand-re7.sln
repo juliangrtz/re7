@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "biorand-re7", "src\biorand-re7\biorand-re7.csproj", "{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C63AE2CF-8873-4DD8-9E14-01E099F90870}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biohazard.BioRand.RE7", "src\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj", "{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
+		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5780D5E9-A2CD-4CCE-AF3A-F785EC19D2AB}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7", "Biohazard.BioRand.RE7.csproj", "{393405E3-2A77-7AE2-9A30-0A8069B8CF53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{393405E3-2A77-7AE2-9A30-0A8069B8CF53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393405E3-2A77-7AE2-9A30-0A8069B8CF53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393405E3-2A77-7AE2-9A30-0A8069B8CF53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393405E3-2A77-7AE2-9A30-0A8069B8CF53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D83BFF59-FAAF-43A1-BCA6-2C309C631ABB}
+	EndGlobalSection
+EndGlobal

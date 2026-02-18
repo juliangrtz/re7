@@ -1,0 +1,2036 @@
+{
+  "items": [
+    {
+      "name": "Handgun Ammo",
+      "kind": "ammo",
+      "id": 112800000,
+      "value": 100,
+      "size": "2x1",
+      "class": "handgun",
+      "stack": 50,
+      "dropKind": "ammo-handgun"
+    },
+    {
+      "name": "Magnum Ammo",
+      "kind": "ammo",
+      "id": 112801600,
+      "value": 1000,
+      "size": "2x1",
+      "class": "magnum",
+      "stack": 10,
+      "dropKind": "ammo-magnum"
+    },
+    {
+      "name": "Shotgun Shells",
+      "kind": "ammo",
+      "id": 112803200,
+      "value": 500,
+      "size": "2x1",
+      "class": "shotgun",
+      "stack": 15,
+      "dropKind": "ammo-shotgun"
+    },
+    {
+      "name": "Rifle Ammo",
+      "kind": "ammo",
+      "id": 112804800,
+      "value": 500,
+      "size": "2x1",
+      "class": "rifle",
+      "stack": 15,
+      "dropKind": "ammo-rifle"
+    },
+    {
+      "name": "Submachine Gun Ammo",
+      "kind": "ammo",
+      "id": 112806400,
+      "value": 10,
+      "size": "2x1",
+      "class": "smg",
+      "stack": 120,
+      "dropKind": "ammo-smg"
+    },
+    {
+      "name": "Bolts",
+      "kind": "ammo",
+      "id": 112808000,
+      "value": 250,
+      "class": "bolt",
+      "stack": 10,
+      "dropKind": "ammo-bolts"
+    },
+    {
+      "name": "it_sm70_506_00_0",
+      "id": 112809600
+    },
+    {
+      "name": "it_sm70_507_00_0",
+      "id": 112811200
+    },
+    {
+      "name": "it_sm70_508_00_0",
+      "id": 112812800
+    },
+    {
+      "name": "Fuel",
+      "kind": "ammo",
+      "id": 112814400,
+      "value": 40,
+      "size": "2x1",
+      "class": "flame",
+      "stack": 1000,
+      "mode": "main",
+      "dropKind": "ammo-fuel"
+    },
+    {
+      "name": "SW - Blast Arrows",
+      "kind": "ammo",
+      "mode": "sw",
+      "class": "arrow",
+      "stack": 10,
+      "id": 112480000,
+      "dropKind": "ammo-arrows"
+    },
+    {
+      "name": "it_sm70_300_10_0",
+      "id": 112480160
+    },
+    {
+      "name": "Mercenaries Explosive Arrows",
+      "kind": "ammo",
+      "mode": "mercenaries",
+      "id": 112320000
+    },
+    {
+      "name": "SW - Lord of the Waterway",
+      "kind": "fish",
+      "mode": "sw",
+      "id": 114080000,
+      "dropKind": "fish"
+    },
+    {
+      "name": "Green Herb",
+      "kind": "health",
+      "id": 114400000,
+      "value": 500,
+      "dropKind": "herb-g"
+    },
+    {
+      "name": "it_sm71_500_10_0",
+      "id": 114400160
+    },
+    {
+      "name": "Red Herb",
+      "kind": "health",
+      "id": 114401600,
+      "value": 1000,
+      "dropKind": "herb-r"
+    },
+    {
+      "name": "it_sm71_501_10_0",
+      "id": 114401760
+    },
+    {
+      "name": "Yellow Herb",
+      "kind": "health",
+      "id": 114403200,
+      "value": 5000,
+      "dropKind": "herb-y"
+    },
+    {
+      "name": "G+G",
+      "kind": "health",
+      "id": 114404800,
+      "value": 1000,
+      "dropKind": "herb-gg"
+    },
+    {
+      "name": "G+G+G",
+      "kind": "health",
+      "id": 114406400,
+      "value": 3000,
+      "dropKind": "herb-ggg"
+    },
+    {
+      "name": "G+R",
+      "kind": "health",
+      "id": 114408000,
+      "value": 3000,
+      "dropKind": "herb-gr"
+    },
+    {
+      "name": "G+Y",
+      "kind": "health",
+      "id": 114409600,
+      "value": 6000,
+      "dropKind": "herb-gy"
+    },
+    {
+      "name": "R+Y",
+      "kind": "health",
+      "id": 114411200,
+      "value": 7000,
+      "dropKind": "herb-ry"
+    },
+    {
+      "name": "G+R+Y",
+      "kind": "health",
+      "id": 114412800,
+      "value": 10000,
+      "dropKind": "herb-gry"
+    },
+    {
+      "name": "G+G+Y",
+      "kind": "health",
+      "id": 114414400,
+      "value": 4000,
+      "dropKind": "herb-ggy"
+    },
+    {
+      "name": "First Aid Spray",
+      "kind": "health",
+      "id": 114416000,
+      "value": 5000,
+      "dropKind": "fas"
+    },
+    {
+      "name": "Black Bass",
+      "kind": "fish",
+      "id": 114417600,
+      "value": 1000,
+      "dropKind": "fish"
+    },
+    {
+      "name": "Lunker Bass",
+      "kind": "fish",
+      "id": 114419200,
+      "value": 5000,
+      "dropKind": "fish"
+    },
+    {
+      "name": "Black Bass (L)",
+      "kind": "fish",
+      "id": 114420800,
+      "value": 2500,
+      "dropKind": "fish"
+    },
+    {
+      "name": "Viper",
+      "kind": "viper",
+      "id": 114422400,
+      "value": 1000,
+      "dropKind": "viper"
+    },
+    {
+      "name": "Rhinoceros Beetle",
+      "kind": "treasure",
+      "id": 114424000,
+      "value": 12000
+    },
+    {
+      "name": "Scope",
+      "kind": "attachment",
+      "id": 116000000,
+      "weapons": [
+        275158656,
+        275475456,
+        275477056,
+        275478656
+      ]
+    },
+    {
+      "name": "Red9 Stock",
+      "kind": "attachment",
+      "id": 116001600,
+      "weapons": [
+        274838656, // Red9
+        278216256 // SW - Red9
+      ]
+    },
+    {
+      "name": "High-power Scope",
+      "kind": "attachment",
+      "id": 116003200,
+      "weapons": [
+        275158656,
+        275475456,
+        275477056,
+        275478656
+      ]
+    },
+    {
+      "name": "Biosensor Scope",
+      "kind": "attachment",
+      "id": 116004800,
+      "weapons": [
+        275158656,
+        275475456,
+        275477056,
+        275478656
+      ]
+    },
+    {
+      "name": "TMP Stock",
+      "kind": "attachment",
+      "id": 116006400,
+      "weapons": [
+        275155456, // TMP
+        278201856 // SW - TMP
+      ]
+    },
+    {
+      "name": "Laser Sight",
+      "kind": "attachment",
+      "id": 116008000,
+      "weapons": [
+        274835456, // SG-09 R
+        274837056, // Punisher
+        278035456, // Sentinel Nine
+        274838656, // Red9
+        274840256, // Blacktail
+        274841856, // Matilda
+        278200256, // SW - Blacktail AC
+        278214656, // SW - Punisher MC
+        278216256 // SW - Red 9
+      ]
+    },
+    {
+      "name": "Matilda Stock",
+      "kind": "attachment",
+      "mode": "main",
+      "id": 116009600,
+      "weapons": [ 274841856 ]
+    },
+    {
+      "name": "Gunpowder",
+      "kind": "gunpowder",
+      "id": 117600000,
+      "dropKind": "gunpowder"
+    },
+    {
+      "name": "Resource (Large)",
+      "kind": "resource",
+      "id": 117601600,
+      "dropKind": "resource-large"
+    },
+    {
+      "name": "Attachable Mines",
+      "kind": "ammo",
+      "id": 117603200,
+      "stack": 10,
+      "dropKind": "ammo-mines"
+    },
+    {
+      "name": "Broken Knife",
+      // "kind": "weapon",
+      // "class": "knife",
+      "id": 117604800
+    },
+    {
+      "name": "Resources (Small)",
+      "kind": "resource",
+      "id": 117606400,
+      "dropKind": "resource-small"
+    },
+    {
+      "name": "Hexagonal Emblem",
+      "kind": "key",
+      "id": 119203200
+    },
+    {
+      "name": "Insignia Key",
+      "kind": "key",
+      "id": 119204800
+    },
+    {
+      "name": "Halo Wheel",
+      "kind": "key",
+      "id": 119206400
+    },
+    {
+      "name": "Crimson Lantern",
+      "kind": "key",
+      "id": 119209600
+    },
+    {
+      "name": "Level 1 Keycard",
+      "kind": "key",
+      "id": 119211200
+    },
+    {
+      "name": "Level 2 Keycard",
+      "kind": "key",
+      "id": 119212800
+    },
+    {
+      "name": "Level 3 Keycard",
+      "kind": "key",
+      "id": 119214400
+    },
+    {
+      "name": "Crystal Marble",
+      "kind": "key",
+      "id": 119217600
+    },
+    {
+      "name": "Wrench",
+      "kind": "key",
+      "id": 119219200
+    },
+    {
+      "name": "Salazar Family Insignia",
+      "kind": "key",
+      "id": 119220800
+    },
+    {
+      "name": "Lion Head",
+      "kind": "key",
+      "id": 119222400
+    },
+    {
+      "name": "Goat Head",
+      "kind": "key",
+      "id": 119224000
+    },
+    {
+      "name": "Serpent Head",
+      "kind": "key",
+      "id": 119225600
+    },
+    {
+      "name": "Blasphemer's Head",
+      "kind": "key",
+      "id": 119230400
+    },
+    {
+      "name": "Apostate's Head",
+      "kind": "key",
+      "id": 119232000
+    },
+    {
+      "name": "Wooden Cog",
+      "kind": "key",
+      "id": 119235200
+    },
+    {
+      "name": "Dynamite",
+      "kind": "key",
+      "id": 119236800
+    },
+    {
+      "name": "Luis's Key",
+      "kind": "key",
+      "id": 119238400
+    },
+    {
+      "name": "Small Key",
+      "kind": "small-key",
+      "id": 119244800
+    },
+    {
+      "name": "Checkpoint Crank",
+      "kind": "key",
+      "id": 119246400
+    },
+    {
+      "name": "Hexagon Piece A",
+      "kind": "key",
+      "id": 119248000
+    },
+    {
+      "name": "Hexagon Piece B",
+      "kind": "key",
+      "id": 119249600
+    },
+    {
+      "name": "Hexagon Piece C",
+      "kind": "key",
+      "id": 119251200
+    },
+    {
+      "name": "Dungeon Key",
+      "kind": "key",
+      "id": 119254400
+    },
+    {
+      "name": "Old Wayshrine Key",
+      "kind": "key",
+      "id": 119256000
+    },
+    {
+      "name": "Church Insignia",
+      "kind": "key",
+      "id": 119257600
+    },
+    {
+      "name": "Water Scooter Key",
+      "kind": "key",
+      "id": 119259200
+    },
+    {
+      "name": "Golden Sword",
+      "kind": "key",
+      "id": 119260800
+    },
+    {
+      "name": "Iron Sword",
+      "kind": "key",
+      "id": 119262400
+    },
+    {
+      "name": "Lithographic Stone A",
+      "kind": "key",
+      "id": 119265600
+    },
+    {
+      "name": "Lithographic Stone B",
+      "kind": "key",
+      "id": 119267200
+    },
+    {
+      "name": "Lithographic Stone C",
+      "kind": "key",
+      "id": 119268800
+    },
+    {
+      "name": "Lithographic Stone D",
+      "kind": "key",
+      "id": 119270400
+    },
+    {
+      "name": "Boat Fuel",
+      "kind": "key",
+      "id": 119273600
+    },
+    {
+      "name": "Bunch of Keys",
+      "kind": "key",
+      "id": 119275200
+    },
+    {
+      "name": "Cubic Device",
+      "kind": "key",
+      "id": 119276800
+    },
+    {
+      "name": "Bloodied Sword",
+      "kind": "key",
+      "id": 119278400
+    },
+    {
+      "name": "Rusted Sword",
+      "kind": "key",
+      "id": 119280000
+    },
+    {
+      "name": "Hunter's Lodge Key",
+      "kind": "key",
+      "id": 119281600
+    },
+    {
+      "name": "Unicorn Horn",
+      "kind": "key",
+      "id": 119283200
+    },
+    {
+      "name": "Blue Dial",
+      "kind": "key",
+      "id": 119284800
+    },
+    {
+      "name": "Silver Token",
+      "kind": "token",
+      "id": 119286400,
+      "mode": "main"
+    },
+    {
+      "name": "Gold Token",
+      "kind": "token",
+      "id": 119288000,
+      "mode": "main"
+    },
+    {
+      "name": "Wooden Planks",
+      "kind": "key",
+      "id": 119289600
+    },
+    {
+      "name": "it_sm74_557_00_0",
+      "id": 119291200
+    },
+    {
+      "name": "it_sm74_300_00_0",
+      "id": 118880000
+    },
+    {
+      "name": "it_sm74_301_00_0",
+      "id": 118881600
+    },
+    {
+      "name": "it_sm74_302_00_0",
+      "id": 118883200
+    },
+    {
+      "name": "it_sm74_303_00_0",
+      "id": 118884800
+    },
+    {
+      "name": "it_sm74_304_00_0",
+      "id": 118886400
+    },
+    {
+      "name": "SW - Red Ink",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118888000
+    },
+    {
+      "name": "SW - Gold Bottle",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118889600
+    },
+    {
+      "name": "SW - Blue Butterfly",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118891200
+    },
+    {
+      "name": "it_sm74_308_00_0",
+      "id": 118892800
+    },
+    {
+      "name": "it_sm74_309_00_0",
+      "id": 118894400
+    },
+    {
+      "name": "it_sm74_310_00_0",
+      "id": 118896000
+    },
+    {
+      "name": "it_sm74_311_00_0",
+      "id": 118897600
+    },
+    {
+      "name": "it_sm74_312_00_0",
+      "id": 118899200
+    },
+    {
+      "name": "it_sm74_313_00_0",
+      "id": 118900800
+    },
+    {
+      "name": "it_sm74_314_00_0",
+      "id": 118902400
+    },
+    {
+      "name": "SW - Rocket Launcher Special",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118904000
+    },
+    {
+      "name": "SW - Boat Key",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118905600
+    },
+    {
+      "name": "SW - Silver Bottle",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118907200
+    },
+    {
+      "name": "it_sm74_318_00_0",
+      "id": 118908800
+    },
+    {
+      "name": "it_sm74_319_00_0",
+      "id": 118910400
+    },
+    {
+      "name": "SW - Lithographic Stone A",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118912000
+    },
+    {
+      "name": "SW - Lithographic Stone B",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118913600
+    },
+    {
+      "name": "SW - Lithographic Stone C",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118915200
+    },
+    {
+      "name": "SW - Lithographic Stone D",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118916800
+    },
+    {
+      "name": "it_sm74_324_00_0",
+      "id": 118918400
+    },
+    {
+      "name": "SW - Hidden Key",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118920000
+    },
+    {
+      "name": "SW - Blue Moonstone",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118921600
+    },
+    {
+      "name": "SW - Power Unit",
+      "kind": "key",
+      "mode": "sw",
+      "id": 118923200
+    },
+    {
+      "name": "SW - Jacket",
+      "kind": "key",
+      "mode": "sw",
+      "id": 120480000,
+      "value": 5000
+    },
+    {
+      "name": "it_sm75_301_00_0",
+      "id": 120481600
+    },
+    {
+      "name": "SW - Beret",
+      "kind": "treasure",
+      "mode": "sw",
+      "id": 120483200,
+      "value": 10000
+    },
+    {
+      "name": "SW - Housekeeper's Barrette",
+      "kind": "treasure",
+      "mode": "sw",
+      "id": 120484800,
+      "value": 20000
+    },
+    {
+      "name": "SW - Glasses",
+      "kind": "treasure",
+      "mode": "sw",
+      "id": 120486400,
+      "value": 3500
+    },
+    {
+      "name": "Spinel",
+      "kind": "treasure",
+      "id": 120800000,
+      "value": 3000
+    },
+    {
+      "name": "Pearl Pendant",
+      "kind": "treasure",
+      "id": 120801600,
+      "value": 5000
+    },
+    {
+      "name": "Dirty Pearl Pendant",
+      "kind": "treasure",
+      "id": 120803200,
+      "value": 2500
+    },
+    {
+      "name": "Brass Pocket Watch",
+      "kind": "treasure",
+      "id": 120809600,
+      "value": 8000
+    },
+    {
+      "name": "Elegant Headdress",
+      "kind": "treasure",
+      "id": 120812800,
+      "value": 7000
+    },
+    {
+      "name": "Antique Pipe",
+      "kind": "treasure",
+      "id": 120814400,
+      "value": 7000
+    },
+    {
+      "name": "Pearl Bangle",
+      "kind": "treasure",
+      "id": 120816000,
+      "value": 12000
+    },
+    {
+      "name": "Red Gemstone Ring",
+      "kind": "treasure",
+      "id": 120817600,
+      "value": 6000
+    },
+    {
+      "name": "Gold Bangle",
+      "kind": "treasure",
+      "id": 120819200,
+      "value": 8000
+    },
+    {
+      "name": "Iluminados Pendant",
+      "kind": "treasure",
+      "id": 120820800,
+      "value": 18000
+    },
+    {
+      "name": "Mirror with Pearls & Rubies",
+      "kind": "treasure",
+      "id": 120822400,
+      "value": 10000
+    },
+    {
+      "name": "Golden Hourglass",
+      "kind": "treasure",
+      "id": 120824000,
+      "value": 10000
+    },
+    {
+      "name": "Elegant Perfume Bottle",
+      "kind": "treasure",
+      "id": 120825600,
+      "value": 10000
+    },
+    {
+      "name": "Elegant Chessboard",
+      "kind": "treasure",
+      "id": 120827200,
+      "value": 13000
+    },
+    {
+      "name": "Staff of Royalty",
+      "kind": "treasure",
+      "id": 120828800,
+      "value": 25000
+    },
+    {
+      "name": "Ruby",
+      "kind": "treasure",
+      "class": "round",
+      "id": 120830400,
+      "value": 3000
+    },
+    {
+      "name": "Emerald",
+      "kind": "treasure",
+      "class": "rectangle",
+      "id": 120832000,
+      "value": 5000
+    },
+    {
+      "name": "Sapphire",
+      "kind": "treasure",
+      "class": "round",
+      "id": 120833600,
+      "value": 4000
+    },
+    {
+      "name": "Yellow Diamond",
+      "kind": "treasure",
+      "class": "round",
+      "id": 120835200,
+      "value": 7000
+    },
+    {
+      "name": "Alexandrite",
+      "kind": "treasure",
+      "class": "rectangle",
+      "id": 120838400,
+      "value": 6000
+    },
+    {
+      "name": "Gold Bar",
+      "kind": "treasure",
+      "id": 120840000,
+      "value": 10000
+    },
+    {
+      "name": "Gold Bar (L)",
+      "kind": "treasure",
+      "id": 120841600,
+      "value": 15000
+    },
+    {
+      "name": "Gold Ingot",
+      "kind": "treasure",
+      "id": 120843200,
+      "value": 20000
+    },
+    {
+      "name": "Depraved Idol",
+      "kind": "treasure",
+      "id": 120844800,
+      "value": 15000
+    },
+    {
+      "name": "Vintage Compass",
+      "kind": "treasure",
+      "id": 120846400,
+      "value": 8000
+    },
+    {
+      "name": "Justitia Statue",
+      "kind": "treasure",
+      "id": 120848000,
+      "value": 12000
+    },
+    {
+      "name": "Crystal Ore",
+      "kind": "treasure",
+      "id": 120849600,
+      "value": 14000
+    },
+    {
+      "name": "Ornate Beetle",
+      "kind": "treasure",
+      "id": 120851200,
+      "value": 11000
+    },
+    {
+      "name": "Méndez's False Eye",
+      "kind": "treasure",
+      "id": 120852800,
+      "value": 12000
+    },
+    {
+      "name": "Gold Monocle",
+      "kind": "treasure",
+      "id": 120854400,
+      "value": 30000,
+      "mode": "main"
+    },
+    {
+      "name": "Lip Rouge",
+      "kind": "treasure",
+      "id": 120856000,
+      "value": 24000
+    },
+    {
+      "name": "Red Beryl",
+      "kind": "treasure",
+      "class": "rectangle",
+      "id": 120857600,
+      "value": 9000
+    },
+    {
+      "name": "Antique Camera",
+      "kind": "treasure",
+      "id": 120860800,
+      "value": 10000
+    },
+    {
+      "name": "Velvet Blue",
+      "kind": "treasure",
+      "id": 120864000,
+      "value": 2500
+    },
+    {
+      "name": "Scratched Emerald",
+      "kind": "treasure",
+      "id": 120865600,
+      "value": 5000
+    },
+    {
+      "name": "Exclusive Upgrade Ticket",
+      "kind": "special",
+      "id": 120867200,
+      "value": 100000
+    },
+    {
+      "name": "it_sm75_600_00_0",
+      "id": 120960000
+    },
+    {
+      "name": "Elegant Mask",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122400000,
+      "value": 5000,
+      "slots": [
+        "round",
+        "round",
+        "round"
+      ]
+    },
+    {
+      "name": "Flagon",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122401600,
+      "value": 4000,
+      "slots": [
+        "round",
+        "round"
+      ]
+    },
+    {
+      "name": "Butterfly Lamp",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122403200,
+      "value": 6000,
+      "slots": [
+        "round",
+        "round",
+        "round"
+      ]
+    },
+    {
+      "name": "Elegant Crown",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122404800,
+      "value": 19000,
+      "slots": [
+        "rectangle",
+        "round",
+        "rectangle",
+        "round",
+        "rectangle"
+      ]
+    },
+    {
+      "name": "Golden Lynx",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122406400,
+      "value": 15000,
+      "slots": [
+        "round",
+        "rectangle",
+        "round"
+      ]
+    },
+    {
+      "name": "Extravagant Clock",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122408000,
+      "value": 9000,
+      "slots": [
+        "rectangle",
+        "round"
+      ]
+    },
+    {
+      "name": "Splendid Bangle",
+      "kind": "treasure",
+      "id": 122409600,
+      "value": 4000
+    },
+    {
+      "name": "Chalice of Atonement",
+      "kind": "treasure",
+      "class": "container",
+      "id": 122411200,
+      "value": 7000,
+      "slots": [
+        "rectangle",
+        "rectangle",
+        "rectangle"
+      ]
+    },
+    {
+      "name": "Ornate Necklace",
+      "kind": "treasure",
+      "id": 122412800,
+      "value": 11000
+    },
+    {
+      "name": "Elegant Bangle",
+      "kind": "treasure",
+      "id": 122416000,
+      "value": 4000
+    },
+    {
+      "name": "Pesetas",
+      "kind": "money",
+      "id": 124000000,
+      "dropKind": "money"
+    },
+    {
+      "name": "Body Armor",
+      "kind": "armor",
+      "id": 124001600
+    },
+    {
+      "name": "Treasure Map: Village",
+      "kind": "map",
+      "id": 124003200
+    },
+    {
+      "name": "Treasure Map: Castle",
+      "kind": "map",
+      "id": 124004800
+    },
+    {
+      "name": "Treasure Map: Island",
+      "kind": "map",
+      "id": 124006400
+    },
+    {
+      "name": "it_sm77_505_00_0",
+      "id": 124008000
+    },
+    {
+      "name": "Case: 7x10",
+      "kind": "case-size",
+      "id": 124160000,
+      "value": 5000
+    },
+    {
+      "name": "Case: 7x12",
+      "kind": "case-size",
+      "id": 124161600,
+      "value": 10000
+    },
+    {
+      "name": "Case: 8x12",
+      "kind": "case-size",
+      "id": 124163200,
+      "value": 20000
+    },
+    {
+      "name": "Case: 8x13",
+      "kind": "case-size",
+      "id": 124164800,
+      "value": 36000
+    },
+    {
+      "name": "Case: 9x13",
+      "kind": "case-size",
+      "id": 124166400,
+      "value": 64000
+    },
+    {
+      "name": "Attaché Case: Silver",
+      "kind": "case-perk",
+      "id": 124176000
+    },
+    {
+      "name": "Attaché Case: Black",
+      "kind": "case-perk",
+      "id": 124177600
+    },
+    {
+      "name": "Attaché Case: Leather",
+      "kind": "case-perk",
+      "id": 124179200
+    },
+    {
+      "name": "Attaché Case: Gold",
+      "kind": "case-perk",
+      "id": 124192000
+    },
+    {
+      "name": "Attaché Case: Classic",
+      "kind": "case-perk",
+      "id": 124193600
+    },
+    {
+      "name": "Recipe: Handgun Ammo",
+      "kind": "recipe",
+      "id": 124321600
+    },
+    {
+      "name": "Recipe: Shotgun Shells",
+      "kind": "recipe",
+      "id": 124323200
+    },
+    {
+      "name": "Recipe: Submachine Gun Ammo",
+      "kind": "recipe",
+      "id": 124324800
+    },
+    {
+      "name": "Recipe: Rifle Ammo",
+      "kind": "recipe",
+      "id": 124326400
+    },
+    {
+      "name": "Recipe: Magnum Ammo",
+      "kind": "recipe",
+      "id": 124328000
+    },
+    {
+      "name": "Recipe: Bolts",
+      "kind": "recipe",
+      "id": 124329600
+    },
+    {
+      "name": "Recipe: Bolts",
+      "id": 124331200
+    },
+    {
+      "name": "it_sm77_708_00_0",
+      "id": 124332800
+    },
+    {
+      "name": "Recipe: Attachable Mines",
+      "kind": "recipe",
+      "id": 124334400
+    },
+    {
+      "name": "Recipe: Heavy Grenade",
+      "kind": "recipe",
+      "id": 124336000
+    },
+    {
+      "name": "Recipe: Flash Grenade",
+      "kind": "recipe",
+      "id": 124337600
+    },
+    {
+      "name": "Recipe: G+G",
+      "kind": "recipe",
+      "id": 124353600
+    },
+    {
+      "name": "Recipe: G+R",
+      "kind": "recipe",
+      "id": 124355200
+    },
+    {
+      "name": "Recipe: G+Y",
+      "kind": "recipe",
+      "id": 124356800
+    },
+    {
+      "name": "Recipe: R+Y",
+      "kind": "recipe",
+      "id": 124358400
+    },
+    {
+      "name": "Recipe: G+G+G",
+      "kind": "recipe",
+      "id": 124360000
+    },
+    {
+      "name": "Recipe: G+G+Y",
+      "kind": "recipe",
+      "id": 124361600
+    },
+    {
+      "name": "Recipe: G+G+Y",
+      "kind": "recipe",
+      "id": 124363200
+    },
+    {
+      "name": "Recipe: G+R+Y",
+      "kind": "recipe",
+      "id": 124364800
+    },
+    {
+      "name": "Recipe: G+R+Y",
+      "kind": "recipe",
+      "id": 124366400
+    },
+    {
+      "name": "Recipe: G+R+Y",
+      "kind": "recipe",
+      "id": 124368000
+    },
+    {
+      "name": "SW - Recipe: Blast Arrows",
+      "kind": "recipe",
+      "mode": "sw",
+      "id": 123683200
+    },
+    {
+      "name": "SW - Attaché Case: Carbon",
+      "kind": "case-perk",
+      "mode": "sw",
+      "id": 123684800
+    },
+    {
+      "name": "SW - Attaché Case: Vintage",
+      "kind": "case-perk",
+      "mode": "sw",
+      "id": 123686400
+    },
+    {
+      "name": "SW - Treasure Maps: All",
+      "kind": "map",
+      "mode": "sw",
+      "id": 123688000
+    },
+    {
+      "name": "it_sm77_306_00_0",
+      "id": 123689600
+    },
+    {
+      "name": "it_sm77_307_00_0",
+      "id": 123691200
+    },
+    {
+      "name": "it_sm77_308_00_0",
+      "id": 123692800
+    },
+    {
+      "name": "Red",
+      "id": 124640000
+    },
+    {
+      "name": "Blue",
+      "id": 124641600
+    },
+    {
+      "name": "Wellington",
+      "id": 124643200
+    },
+    {
+      "name": "it_sm77_903_00_0",
+      "id": 124644800
+    },
+    {
+      "name": "Accessory: Stylish Mask",
+      "id": 124646400
+    },
+    {
+      "name": "it_sm77_905_00_0",
+      "id": 124648000
+    },
+    {
+      "name": "Special",
+      "id": 126880000
+    },
+    {
+      "name": "Charm: Don Jose",
+      "kind": "charm",
+      "id": 127200000
+    },
+    {
+      "name": "Charm: Don Diego",
+      "kind": "charm",
+      "id": 127201600
+    },
+    {
+      "name": "Charm: Don Esteban",
+      "kind": "charm",
+      "id": 127203200
+    },
+    {
+      "name": "Charm: Don Manuel",
+      "kind": "charm",
+      "id": 127204800
+    },
+    {
+      "name": "Charm: Isabel",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127206400
+    },
+    {
+      "name": "Charm: Maria",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127208000
+    },
+    {
+      "name": "Charm: Dr. Salvador",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127209600
+    },
+    {
+      "name": "Charm: Bella Sisters",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127211200
+    },
+    {
+      "name": "Charm: Don Pedro",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127212800
+    },
+    {
+      "name": "Charm: Zealot w/ scythe",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127214400
+    },
+    {
+      "name": "Charm: Zealot w/ shield",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127216000
+    },
+    {
+      "name": "Charm: Zealot w/ bowgun",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127217600
+    },
+    {
+      "name": "Charm: Leader zealot",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127219200
+    },
+    {
+      "name": "Charm: Soldier w/ dynamite",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127220800
+    },
+    {
+      "name": "Charm: Soldier w/ stun-rod",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127222400
+    },
+    {
+      "name": "Charm: Soldier w/ hammer",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127224000
+    },
+    {
+      "name": "Charm: J.J.",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127225600
+    },
+    {
+      "name": "Charm: Ethan w/ handgun",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127227200
+    },
+    {
+      "name": "Charm: Ethan w/ shotgun",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127228800
+    },
+    {
+      "name": "Charm: Ethan w/ rocket launcher",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127230400
+    },
+    {
+      "name": "Charm: Merchant",
+      "kind": "charm",
+      "id": 127232000,
+      "mode": "main"
+    },
+    {
+      "name": "Charm: Ashley Graham",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127233600
+    },
+    {
+      "name": "Charm: Luis Sera",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127235200
+    },
+    {
+      "name": "Charm: Mia Wong",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127236800
+    },
+    {
+      "name": "Charm: Chicken",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127238400
+    },
+    {
+      "name": "Charm: Black Bass",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127240000
+    },
+    {
+      "name": "Charm: Rhinoceros Beetle",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127241600
+    },
+    {
+      "name": "Charm: Iluminados Emblem",
+      "kind": "charm",
+      "id": 127243200
+    },
+    {
+      "name": "Charm: Striker",
+      "kind": "charm",
+      "id": 127244800
+    },
+    {
+      "name": "Charm: Cute Bear",
+      "kind": "charm",
+      "id": 127246400
+    },
+    {
+      "name": "Charm: Green Herb",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127360000
+    },
+    {
+      "name": "Charm: Handgun Ammo",
+      "kind": "charm",
+      "mode": "main",
+      "id": 127361600
+    },
+    {
+      "name": "SG-09 R",
+      "kind": "weapon",
+      "id": 274835456,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 4000
+    },
+    {
+      "name": "Punisher",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 274837056,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 4001
+    },
+    {
+      "name": "Red9",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 274838656,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 4002
+    },
+    {
+      "name": "Blacktail",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 274840256,
+      "size": "2x2",
+      "class": "handgun",
+      "weaponId": 4003
+    },
+    {
+      "name": "Matilda",
+      "kind": "weapon",
+      "id": 274841856,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 4004
+    },
+    {
+      "name": "Minecart Handgun",
+      "kind": "weapon",
+      "id": 274843456,
+      "mode": "disabled",
+      "class": "handgun",
+      "weaponId": 4005
+    },
+    {
+      "name": "W-870",
+      "kind": "weapon",
+      "id": 274995456,
+      "size": "8x2",
+      "class": "shotgun",
+      "weaponId": 4100
+    },
+    {
+      "name": "Riot Gun",
+      "kind": "weapon",
+      "id": 274997056,
+      "size": "8x2",
+      "class": "shotgun",
+      "weaponId": 4101
+    },
+    {
+      "name": "Striker",
+      "kind": "weapon",
+      "id": 274998656,
+      "size": "4x2",
+      "class": "shotgun",
+      "weaponId": 4102
+    },
+    {
+      "name": "TMP",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 275155456,
+      "size": "3x2",
+      "class": "smg",
+      "weaponId": 4200
+    },
+    {
+      "name": "Chicago Sweeper",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 275157056,
+      "class": "smg",
+      "bonus": true,
+      "weaponId": 4201
+    },
+    {
+      "name": "LE 5",
+      "kind": "weapon",
+      "id": 275158656,
+      "size": "6x2",
+      "class": "smg",
+      "weaponId": 4202
+    },
+    {
+      "name": "SR M1903",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 275475456,
+      "size": "9x1",
+      "class": "rifle",
+      "weaponId": 4400
+    },
+    {
+      "name": "Stingray",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 275477056,
+      "size": "7x2",
+      "class": "rifle",
+      "weaponId": 4401
+    },
+    {
+      "name": "CQBR Assault Rifle",
+      "kind": "weapon",
+      "id": 275478656,
+      "size": "7x2",
+      "class": "rifle",
+      "weaponId": 4402
+    },
+    {
+      "name": "Broken Butterfly",
+      "kind": "weapon",
+      "id": 275635456,
+      "size": "3x2",
+      "class": "magnum",
+      "weaponId": 4500
+    },
+    {
+      "name": "Killer7",
+      "kind": "weapon",
+      "id": 275637056,
+      "size": "3x2",
+      "class": "magnum",
+      "weaponId": 4501
+    },
+    {
+      "name": "Handcannon",
+      "kind": "weapon",
+      "id": 275638656,
+      "class": "magnum",
+      "bonus": true,
+      "weaponId": 4502
+    },
+    {
+      "name": "Bolt Thrower",
+      "kind": "weapon",
+      "id": 275795456,
+      "size": "4x2",
+      "class": "bolt",
+      "weaponId": 4600
+    },
+    {
+      "name": "it_wp4600_10_0",
+      "id": 275795616,
+      "mode": "disabled"
+    },
+    {
+      "name": "Flamethrower",
+      "kind": "weapon",
+      "id": 275957056,
+      "size": "6x2",
+      "class": "flame",
+      "weaponId": 4701,
+      "mode": "main",
+      "value": 30000
+    },
+    {
+      "name": "it_wp4702_00_0",
+      "id": 275958656,
+      "weaponId": 4702,
+      "mode": "disabled"
+    },
+    {
+      "name": "it_wp4800_00_0",
+      "id": 276115456,
+      "weaponId": 4800
+    },
+    {
+      "name": "it_wp4801_00_0",
+      "id": 276117056,
+      "weaponId": 4801
+    },
+    {
+      "name": "Rocket Launcher",
+      "kind": "weapon",
+      "id": 276275456,
+      "mode": "disabled",
+      "size": "8x2",
+      "class": "special",
+      "weaponId": 4900,
+      "dropKind": "rocket-launcher"
+    },
+    {
+      "name": "Special Rocket Launcher",
+      "kind": "weapon",
+      "id": 276277056,
+      "mode": "disabled",
+      "class": "special",
+      "weaponId": 4901
+    },
+    {
+      "name": "Infinite Rocket Launcher",
+      "kind": "weapon",
+      "id": 276278656,
+      "mode": "disabled",
+      "class": "special",
+      "weaponId": 4902
+    },
+    {
+      "name": "Combat Knife",
+      "kind": "weapon",
+      "id": 276435456,
+      "size": "1x3",
+      "class": "knife",
+      "weaponId": 5000
+    },
+    {
+      "name": "Fighting Knife",
+      "kind": "weapon",
+      "id": 276437056,
+      "size": "1x4",
+      "class": "knife",
+      "weaponId": 5001
+    },
+    {
+      "name": "Kitchen Knife",
+      "kind": "knife",
+      "id": 276438656,
+      "weaponId": 5002,
+      "dropKind": "knife"
+    },
+    {
+      "name": "Boot Knife",
+      "kind": "knife",
+      "id": 276440256,
+      "weaponId": 5003,
+      "dropKind": "knife"
+    },
+    {
+      "name": "it_wp5004_00_0",
+      "id": 276441856,
+      "weaponId": 5004
+    },
+    {
+      "name": "it_wp5005_00_0",
+      "id": 276443456,
+      "weaponId": 5005
+    },
+    {
+      "name": "Primal Knife",
+      "kind": "weapon",
+      "id": 276445056,
+      "class": "knife",
+      "bonus": true,
+      "weaponId": 5006
+    },
+    {
+      "name": "it_wp5300_00_0",
+      "id": 276915456,
+      "weaponId": 5300
+    },
+    {
+      "name": "it_wp5301_00_0",
+      "id": 276917056,
+      "weaponId": 5301
+    },
+    {
+      "name": "it_wp5302_00_0",
+      "id": 276918656,
+      "weaponId": 5302
+    },
+    {
+      "name": "Hand Grenade",
+      "kind": "grenade",
+      "id": 277075456,
+      "weaponId": 5400,
+      "dropKind": "grenade-light"
+    },
+    {
+      "name": "Heavy Grenade",
+      "kind": "grenade",
+      "id": 277077056,
+      "weaponId": 5401,
+      "dropKind": "grenade-heavy"
+    },
+    {
+      "name": "Flash Grenade",
+      "kind": "grenade",
+      "id": 277078656,
+      "weaponId": 5402,
+      "dropKind": "grenade-flash"
+    },
+    {
+      "name": "Chicken Egg",
+      "kind": "egg",
+      "id": 277080256,
+      "weaponId": 5403,
+      "dropKind": "egg-white"
+    },
+    {
+      "name": "Brown Chicken Egg",
+      "kind": "egg",
+      "id": 277081856,
+      "weaponId": 5404,
+      "dropKind": "egg-brown"
+    },
+    {
+      "name": "Gold Chicken Egg",
+      "kind": "egg",
+      "id": 277083456,
+      "weaponId": 5405,
+      "dropKind": "egg-gold"
+    },
+    {
+      "name": "it_wp5406_00_0",
+      "id": 277085056,
+      "weaponId": 5406
+    },
+    {
+      "name": "it_wp5407_00_0",
+      "id": 277086656,
+      "weaponId": 5407
+    },
+    {
+      "name": "it_wp5408_00_0",
+      "id": 277088256,
+      "weaponId": 5408
+    },
+    {
+      "name": "it_wp5500_00_0",
+      "id": 277235456,
+      "weaponId": 5500
+    },
+    {
+      "name": "it_wp5501_00_0",
+      "id": 277237056,
+      "weaponId": 5501
+    },
+    {
+      "name": "it_wp5502_00_0",
+      "id": 277238656,
+      "weaponId": 5502
+    },
+    {
+      "name": "Sentinel Nine",
+      "kind": "weapon",
+      "id": 278035456,
+      "class": "handgun",
+      "size": "2x3",
+      "dlc": true,
+      "weaponId": 6000
+    },
+    {
+      "name": "Skull Shaker",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 278037056,
+      "class": "shotgun",
+      "size": "1x5",
+      "dlc": true,
+      "weaponId": 6001
+    },
+    {
+      "name": "SW - Sawed-off W-870",
+      "kind": "weapon",
+      "id": 278195456,
+      "class": "shotgun",
+      "size": "2x6",
+      "weaponId": 6100
+    },
+    {
+      "name": "SW - Chicago Sweeper",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278197056,
+      "class": "smg",
+      "bonus": true,
+      "weaponId": 6101
+    },
+    {
+      "name": "SW - Blast Crossbow",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278198656,
+      "class": "arrow",
+      "weaponId": 6102
+    },
+    {
+      "name": "it_wp6102_10_0",
+      "id": 278198816
+    },
+    {
+      "name": "SW - Blacktail AC",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278200256,
+      "size": "2x2",
+      "class": "handgun",
+      "weaponId": 6103
+    },
+    {
+      "name": "SW - TMP",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278201856,
+      "size": "3x2",
+      "class": "smg",
+      "weaponId": 6104
+    },
+    {
+      "name": "SW - Stingray",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278203456,
+      "size": "7x2",
+      "class": "rifle",
+      "weaponId": 6105
+    },
+    {
+      "name": "SW - Rocket Launcher",
+      "kind": "weapon",
+      "mode": "disabled",
+      "id": 278205056,
+      "size": "8x2",
+      "class": "special",
+      "weaponId": 6106
+    },
+    {
+      "name": "SW - Tactical Knife",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278206656,
+      "size": "3x1",
+      "class": "knife",
+      "weaponId": 6107
+    },
+    {
+      "name": "SW - Elite Knife",
+      "kind": "weapon",
+      "mode": "disabled",
+      "id": 278208256,
+      "class": "knife",
+      "weaponId": 6108,
+      "bonus": true
+    },
+    {
+      "name": "it_wp6109_00_0",
+      "id": 278209856,
+      "weaponId": 6109
+    },
+    {
+      "name": "SW - Infinite Rocket Launcher",
+      "kind": "weapon",
+      "mode": "disabled",
+      "id": 278213056,
+      "size": "8x2",
+      "class": "special",
+      "weaponId": 6111
+    },
+    {
+      "name": "SW - Punisher MC",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278214656,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 6112
+    },
+    {
+      "name": "SW - Red9",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278216256,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 6113
+    },
+    {
+      "name": "SW - SR M1903",
+      "kind": "weapon",
+      "mode": "sw",
+      "id": 278217856,
+      "size": "9x1",
+      "class": "rifle",
+      "weaponId": 6114
+    },
+    {
+      "name": "XM96E1",
+      "kind": "weapon",
+      "mode": "main",
+      "id": 278515456,
+      "size": "3x2",
+      "class": "handgun",
+      "weaponId": 6300
+    },
+    {
+      "name": "it_wp6301_00_0",
+      "id": 278517056,
+      "weaponId": 6301
+    },
+    {
+      "name": "it_wp6302_00_0",
+      "id": 278518656,
+      "weaponId": 6302
+    },
+    {
+      "name": "it_wp6303_00_0",
+      "id": 278520256,
+      "weaponId": 6303
+    },
+    {
+      "name": "it_wp6303_10_0",
+      "id": 278520416
+    },
+    {
+      "name": "Mercenaries Krauser's bow",
+      "kind": "weapon",
+      "id": 278521856,
+      "mode": "mercenaries",
+      "weaponId": 6304
+    },
+    {
+      "name": "it_wp6304_10_0",
+      "id": 278522016
+    },
+    {
+      "name": "it_wp6305_00_0",
+      "id": 278523456,
+      "weaponId": 6305
+    }
+  ]
+}
