@@ -27,10 +27,13 @@ namespace BioHazard.BioRand.RE7.Commands
 
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token)
         {
+            var gameId = await GetGameIdAsync(settings.Host, "re7")
+                ?? throw new Exception("re7 game moniker not found.");
+
             var agent = new RandomizerAgent(
                 settings.Host,
                 settings.ApiKey,
-                1,
+                gameId,
                 new RandomizerAgentHandler(settings.InputPath, settings.Beta));
             var cts = new CancellationTokenSource();
             Console.CancelKeyPress += (sender, e) =>
@@ -46,6 +49,14 @@ namespace BioHazard.BioRand.RE7.Commands
             {
             }
             return 0;
+        }
+
+        private static async Task<int?> GetGameIdAsync(string uri, string moniker)
+        {
+            var client = new RandomizerClient(uri);
+            var games = await client.GetGamesAsync();
+            var game = games.FirstOrDefault(x => x.Moniker == moniker);
+            return game?.Id;
         }
 
         private class RandomizerAgentHandler(string gameInputPath, bool beta) : IRandomizerAgentHandler
