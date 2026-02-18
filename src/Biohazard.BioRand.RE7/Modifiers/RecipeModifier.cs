@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.Items;
+﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
@@ -7,16 +6,11 @@ using System.Linq;
 
 namespace Biohazard.BioRand.RE7.Modifiers {
     internal class RecipeModifier : Modifier {
-        private static string GetPath(Campaign campaign) {
-            return campaign == Campaign.Ethan
-                ? "natives/stm/_chainsaw/appsystem/ui/userdata/itemcraftsettinguserdata.user.2"
-                : "natives/stm/_anotherorder/appsystem/ui/userdata/itemcraftsettinguserdata_ao.user.2";
-        }
+        private readonly string Path = "natives/stm/prefab/item/itemcombinedata.user.2";
 
         public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger) {
-            var path = GetPath(randomizer.Campaign);
             var fileRepository = randomizer.FileRepository;
-            var userFile = fileRepository.DeserializeUserFile<ItemCraftSettingUserdata>(path);
+            var userFile = fileRepository.DeserializeUserFile<ItemCraftSettingUserdata>(Path);
             var ids = userFile._RecipeIdOrders.ToArray();
             var itemRepo = ItemDefinitionRepository.Default;
             foreach (var id in ids) {
@@ -51,15 +45,14 @@ namespace Biohazard.BioRand.RE7.Modifiers {
         }
 
         public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger) {
-            if (!randomizer.GetConfigOption<bool>("inventory-additional-recipes"))
+            if (!randomizer.GetConfigOption<bool>("random-recipes"))
                 return;
 
             var recipeData = randomizer.DynamicData.GetData(DynamicDataName.Recipe)!;
             var recipes = Csv.Deserialize<Recipe>(recipeData);
 
-            var path = GetPath(randomizer.Campaign);
             var fileRepository = randomizer.FileRepository;
-            fileRepository.ModifyUserFile(path, root => {
+            fileRepository.ModifyUserFile(Path, root => {
                 var craft = RszSerializer.Deserialize<ItemCraftSettingUserdata>(root)!;
                 foreach (var recipe in recipes) {
 #if ENABLE_BETA_FEATURES

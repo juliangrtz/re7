@@ -1,6 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.Enemies;
-using Biohazard.BioRand.RE7.Items;
+﻿using Biohazard.BioRand.RE7.Items;
 using System;
 using System.Linq;
 using System.Text;
@@ -54,57 +52,6 @@ namespace Biohazard.BioRand.RE7 {
         public void LogLine(string line) {
             _sb.Append(' ', _indent * 2);
             _sb.AppendLine(line);
-        }
-
-        public void LogArea(Area area) {
-            _sb.AppendLine();
-            LogHr();
-            _sb.AppendLine(area.FileName);
-            LogHr();
-        }
-
-        public void LogEnemy(Enemy enemy) {
-            var weapons = "";
-            foreach (var w in new[] { enemy.Weapon, enemy.SecondaryWeapon }) {
-                if (w != 0) {
-                    var ecf = EnemyClassFactory.Default;
-                    var weaponDef = ecf.Weapons.FirstOrDefault(x => x.Id == w);
-                    if (weaponDef != null) {
-                        if (weapons.Length != 0)
-                            weapons += " | ";
-                        weapons += weaponDef.Key;
-                    }
-                }
-            }
-
-            var itemDrop = ".";
-            if (enemy.ItemDrop is Item drop) {
-                itemDrop = "*";
-                if (!drop.IsAutomatic) {
-                    var itemRepo = ItemDefinitionRepository.Default;
-                    var itemDef = itemRepo.Find(drop.Id);
-                    if (itemDef != null) {
-                        itemDrop = itemDef.Name ?? itemDef.Id.ToString();
-                        itemDrop += $" x{drop.Count}";
-                    }
-                }
-            }
-
-            var parasite = "";
-            if ((enemy.ParasiteKind ?? 0) != 0) {
-                if (enemy.ParasiteKind == 1)
-                    parasite = "pA(";
-                else if (enemy.ParasiteKind == 2)
-                    parasite = "pB(";
-                else if (enemy.ParasiteKind == 3)
-                    parasite = "pC(";
-                if (enemy.ForceParasiteAppearance)
-                    parasite += "100%)";
-                else
-                    parasite += $"{enemy.ParasiteAppearanceProbability}%)";
-            }
-
-            LogLine(enemy.Guid, enemy.Kind.Key, weapons, enemy.Health?.ToString() ?? "*", parasite, itemDrop);
         }
 
         public void LogLine(params object[] columns) {

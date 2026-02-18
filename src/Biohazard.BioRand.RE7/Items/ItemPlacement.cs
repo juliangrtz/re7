@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.REEngine;
 using System;
 using System.Collections.Immutable;
@@ -12,7 +11,6 @@ namespace Biohazard.BioRand.RE7.Items {
     internal class ItemPlacement {
         [Key]
         public int Row { get; set; }
-        public Campaign Campaign { get; set; }
         public int Chapter { get; set; }
         public Guid Guid { get; set; }
         public string Description { get; set; } = "";

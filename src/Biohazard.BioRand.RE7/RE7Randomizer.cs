@@ -1,5 +1,3 @@
-using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Services;
@@ -25,20 +23,16 @@ namespace Biohazard.BioRand.RE7 {
 
         public int PakVersion { get; set; } = 8;
         public RandomizerInput Input { get; }
-        public EnemyClassFactory EnemyClassFactory { get; }
         public IProgressReporter Reporter { get; }
         public FileRepository FileRepository => _fileRepository;
         public DynamicData DynamicData { get; }
-        public Campaign Campaign { get; private set; }
 
-        public AreaService AreaService => GetService<AreaService>();
         public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
-        public EnemyService EnemyService => GetService<EnemyService>();
         public FlagService FlagService => GetService<FlagService>();
 
         public static string BuildVersion => RE7RandomizerFactory.Default.GitHash;
-        public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create(EnemyClassFactory.Default);
-        public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create(EnemyClassFactory.Default).GetDefault();
+        public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
+        public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
 
         public static PakList GetDefaultPakList() {
             var pakListBytes = EmbeddedData.GetFile("pakcontents.txt.gz").Ungzip();
@@ -46,8 +40,7 @@ namespace Biohazard.BioRand.RE7 {
             return new PakList(pakListText);
         }
 
-        public RE7Randomizer(EnemyClassFactory enemyClassFactory, RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
-            EnemyClassFactory = enemyClassFactory;
+        public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
             Input = input;
             _inputGamePath = inputGamePath;
             Reporter = reporter;
@@ -68,16 +61,10 @@ namespace Biohazard.BioRand.RE7 {
             var input = Input;
             _fileRepository = new FileRepository(this, _inputGamePath, DynamicData);
 
-            var campaign = Campaign.Ethan;
-            if (input.Configuration.GetValueOrDefault("campaign", "") == "Separate Ways") {
-                campaign = Campaign.Mia;
-            }
-
-            var log = Randomize(input, campaign);
-            var name = campaign.ToString().ToLowerInvariant();
-            AddLogFile($"input_{name}.log", log.Input.Output);
-            AddLogFile($"process_{name}.log", log.Process.Output);
-            AddLogFile($"output_{name}.log", log.Output.Output);
+            var log = Randomize(input);
+            AddLogFile($"input.log", log.Input.Output);
+            AddLogFile($"process.log", log.Process.Output);
+            AddLogFile($"output.log", log.Output.Output);
 
             RandomizerOutput? result = null;
             Reporter.RunTask("Building mod", () => {
@@ -108,8 +95,7 @@ namespace Biohazard.BioRand.RE7 {
             return result!;
         }
 
-        public RandomizerLoggerIO Randomize(RandomizerInput input, Campaign campaign) {
-            Campaign = campaign;
+        public RandomizerLoggerIO Randomize(RandomizerInput input) {
             _modifiers = GetModifiers();
 
             var logger = new RandomizerLoggerIO();
@@ -117,7 +103,6 @@ namespace Biohazard.BioRand.RE7 {
                 l.LogHr();
                 l.LogVersion();
                 l.LogLine($"Seed = {input.Seed}");
-                l.LogLine($"Campaign = {campaign}");
                 l.LogHr();
             }
 
@@ -125,9 +110,6 @@ namespace Biohazard.BioRand.RE7 {
 
             // Patches
             Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
-
-            // Create areas after patches
-            Reporter.RunTask("Loading scenes", () => AreaService.LoadAreas(campaign));
 
             // Input
             IterateModifiers((n, m) => {
@@ -146,7 +128,7 @@ namespace Biohazard.BioRand.RE7 {
             });
 
             FlagService.Save(logger.Process);
-            Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
+            //Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
 
             // Output
             IterateModifiers((n, m) => {
@@ -175,25 +157,10 @@ namespace Biohazard.BioRand.RE7 {
         }
 
         private static ImmutableArray<Modifier> GetModifiers() {
-            return new Modifier[]
-            {
-                new InventoryModifier(),
+            return
+            [
                 new RecipeModifier(),
-                new WeaponModifier(),
-                new ItemModifier(),
-                new DropItemPlaceModifier(),
-                new DropItemModifier(),
-                new EnemyPlaceModifier(),
-                new EnemyMultiplierModifier(),
-#if ENABLE_BETA_FEATURES
-                new EnemyWaveModifier(),
-#endif
-                new EnemyModifier(),
-                new FixesModifier(),
-#if ENABLE_BETA_FEATURES
-                new MessageModifier(),
-#endif
-            }.ToImmutableArray();
+            ];
         }
 
         public string User => GetConfigOption<string>("username") ?? "player";

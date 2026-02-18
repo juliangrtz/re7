@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Items {
     public class ItemDefinition {
@@ -25,16 +24,5 @@ namespace Biohazard.BioRand.RE7.Items {
         public int Height => int.Parse((Size ?? "2x2").Split('x')[1]);
 
         public override string ToString() => Name ?? Id.ToString();
-
-        public bool SupportsCampaign(Campaign campaign) {
-            var mode = Mode;
-            if (mode == "main")
-                return campaign == Campaign.Ethan;
-            else if (mode == "sw")
-                return campaign == Campaign.Mia;
-            else if (!string.IsNullOrEmpty(mode))
-                return false;
-            return true;
-        }
     }
 }

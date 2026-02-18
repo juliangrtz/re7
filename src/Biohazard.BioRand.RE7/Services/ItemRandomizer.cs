@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using IntelOrca.Biohazard.BioRand;
 using System;
@@ -130,17 +129,10 @@ namespace Biohazard.BioRand.RE7.Services {
         private bool IsItemSupported(ItemDefinition itemDefinition) {
             if (_throwAway.Contains(itemDefinition.Id))
                 return false;
-            if (!itemDefinition.SupportsCampaign(_randomizer.Campaign))
-                return false;
             if (itemDefinition.Bonus)
                 return _allowBonusItems;
             if (itemDefinition.Dlc)
                 return _allowDlcItems;
-            if (_randomizer.Campaign != Campaign.Mia &&
-                (itemDefinition.Id == ItemIds.SWSawedOffW870 ||
-                 itemDefinition.Id == ItemIds.XM96E1)) {
-                return _allowMercenariesItems;
-            }
 
 #if !ENABLE_BETA_FEATURES
             if (itemDefinition.Id == ItemIds.Flamethrower)
@@ -227,11 +219,6 @@ namespace Biohazard.BioRand.RE7.Services {
                 foreach (var dropKind in DropKinds.GenericAll) {
                     var ratio = settings.GetItemRatio(dropKind);
                     if (ratio > 0) {
-                        if (_randomizer.Campaign == Campaign.Ethan && dropKind == DropKinds.AmmoArrows)
-                            continue;
-                        if (_randomizer.Campaign == Campaign.Mia && (dropKind == DropKinds.TokenSilver || dropKind == DropKinds.TokenGold))
-                            continue;
-
                         ratios.Add(dropKind, ratio);
                     }
                 }

@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Chapters;
-using Biohazard.BioRand.RE7.REEngine;
+﻿using Biohazard.BioRand.RE7.REEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +15,10 @@ namespace Biohazard.BioRand.RE7.Items {
 
         public static RE7ItemData FromRandomizer(RE7Randomizer randomizer) {
             var files = new List<string>();
-            if (randomizer.Campaign == Campaign.Ethan) {
-                files.Add("natives/stm/_chainsaw/appsystem/ui/userdata/itemdefinitionuserdata.user.2");
-                if (randomizer.GetConfigOption<bool>("allow-dlc-items")) {
-                    files.Add("natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_1401/itemdefinitionuserdata_dlc_1401.user.2");
-                    files.Add("natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_1402/itemdefinitionuserdata_dlc_1402.user.2");
-                }
-            } else {
-                files.Add("natives/stm/_anotherorder/appsystem/ui/userdata/itemdefinitionuserdata_ao.user.2");
-                files.Add("natives/stm/_anotherorder/appsystem/ui/userdata/itemdefinitionuserdata_ovr_ao.user.2");
+            files.Add("natives/stm/_chainsaw/appsystem/ui/userdata/itemdefinitionuserdata.user.2");
+            if (randomizer.GetConfigOption<bool>("allow-dlc-items")) {
+                files.Add("natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_1401/itemdefinitionuserdata_dlc_1401.user.2");
+                files.Add("natives/stm/_chainsaw/appsystem/catalog/dlc/dlc_1402/itemdefinitionuserdata_dlc_1402.user.2");
             }
 
             var fileRepository = randomizer.FileRepository;

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Biohazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
+using IntelOrca.Biohazard.BioRand.Common;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
