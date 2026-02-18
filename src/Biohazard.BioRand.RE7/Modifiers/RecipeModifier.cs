@@ -7,10 +7,11 @@ namespace Biohazard.BioRand.RE7.Modifiers {
 
         public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger) {
             var itemCombineData = randomizer.FileRepository.DeserializeUserFile<app.ItemCombineData>(ItemCombineDataPath);
-            logger.LogLine("Vanilla crafting recipes:");
+            logger.Push("Vanilla crafting recipes");
             foreach (var item in itemCombineData._Datas) {
-                logger.LogLine(item.DataID, item.ResultItemID, item.ResultItemNum);
+                logger.LogLine($"{item.SrcItemNum1}x {item.SrcItemID1} + {item.SrcItemNum2}x {item.SrcItemID2} -> {item.ResultItemNum}x {item.ResultItemID}");
             }
+            logger.Pop();
         }
 
         public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger) {
@@ -26,10 +27,6 @@ namespace Biohazard.BioRand.RE7.Modifiers {
             });
 
             randomizer.FileRepository.ModifyUserFile<app.ItemCombineData>(ItemCombineDataPath, root => {
-                //root._Datas.ForEach(d => {
-                //    d.ResultItemID = "Handgun_Albert";
-                //});
-
                 root._Datas.Add(new app.ItemCombineData.Data() {
                     _Comment = "Test",
                     DataID = "ChemicalM",
