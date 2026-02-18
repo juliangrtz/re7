@@ -7,7 +7,7 @@
     },
     "generate-pak": {
       "commandName": "Project",
-      "commandLineArgs": "generate -s 357436 -c ..\\re7.json -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\re_chunk_000.pak.patch_009.pak\" -i ..\\biorand-re7.pak -k",
+      "commandLineArgs": "generate -s 357436 -c ..\\re7.json -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\re_chunk_000.pak.patch_009.pak\" -i ..\\biorand-re7.pak",
       "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
     },
     "generate-pak-website": {
@@ -17,11 +17,11 @@
     },
     "setup": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o G:\\biorand\\re7\\vanilla-extract -i G:\\biorand\\re7\\vanilla --full"
+      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
     },
     "setup-pak": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i G:\\biorand\\re7\\vanilla --full"
+      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
     },
     "agent": {
       "commandName": "Project",
