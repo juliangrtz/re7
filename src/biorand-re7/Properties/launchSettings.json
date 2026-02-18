@@ -25,7 +25,7 @@
     },
     "agent": {
       "commandName": "Project",
-      "commandLineArgs": "agent https://beta-api.biorand.net -k 2wbhTK38nQxp2HTU5AAoaaho8YNobErH -i ..\\biorand-re7.pak",
+      "commandLineArgs": "agent https://beta-api.biorand.net -k 0gDQTPwkhFrHypx2jpxqLsfsTFcjofna -i ..\\biorand-re7.pak",
       "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
     },
     "mod": {
