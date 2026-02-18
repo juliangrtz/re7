@@ -20,7 +20,7 @@ namespace BioHazard.BioRand.RE7
                     .WithExample("agent", "localhost:8080", "-k", "nCF6UaetQJJ053QLwhXqUGR68U85Rcia", "-i", "input.pak");
                 config.AddCommand<GenerateCommand>("generate")
                     .WithDescription("Generates a new rando")
-                    .WithExample("generate", "-o", "re_chunk_000.pak.patch_006.pak", "--seed", "35825", "--config", "tough.json");
+                    .WithExample("generate", "-o", "re_chunk_000.pak.patch_008.pak", "--seed", "35825", "--config", "tough.json");
                 config.AddCommand<SetupCommand>("setup")
                     .WithDescription("Create a mini pak containing all the required vanilla assets.")
                     .WithExample("setup", "-o", "custom.pak", "-i", "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RESIDENT EVIL 7 biohazard");

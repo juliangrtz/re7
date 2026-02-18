@@ -23,7 +23,7 @@ namespace Biohazard.BioRand.RE7 {
         private readonly Lock _servicesLock = new();
         private readonly Dictionary<string, string> _logFiles = [];
 
-        public int PakVersion { get; set; } = 6;
+        public int PakVersion { get; set; } = 8;
         public RandomizerInput Input { get; }
         public EnemyClassFactory EnemyClassFactory { get; }
         public IProgressReporter Reporter { get; }
