@@ -5,15 +5,17 @@ using System.Reflection;
 
 namespace Biohazard.BioRand.RE7 {
     internal static class EmbeddedData {
+        private const string DataDirectoryName = "_Data";
+
         public static Stream? GetStream(string name) {
             var exeDirectory = AppContext.BaseDirectory;
-            var dataDirectory = Path.Combine(exeDirectory, "data");
+            var dataDirectory = Path.Combine(exeDirectory, DataDirectoryName);
             var dataPath = Path.Combine(dataDirectory, name);
             if (File.Exists(dataPath))
                 return new MemoryStream(File.ReadAllBytes(dataPath));
 
             var assembly = Assembly.GetExecutingAssembly()!;
-            var resourceName = $"Biohazard.BioRand.RE7.data.{name}";
+            var resourceName = $"Biohazard.BioRand.RE7.{DataDirectoryName}.{name}";
             return assembly.GetManifestResourceStream(resourceName);
         }
 

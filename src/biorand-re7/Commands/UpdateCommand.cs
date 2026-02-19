@@ -23,7 +23,7 @@ namespace BioHazard.BioRand.RE7.Commands
                 return 1;
             }
 
-            var dataDir = Path.Combine(solutionDir, "src", "BioHazard.BioRand.RE7", "data");
+            var dataDir = Path.Combine(solutionDir, "src", "BioHazard.BioRand.RE7", "_Data");
 
             var dynamicData = new DynamicData(download: true);
             foreach (var dataName in Enum.GetValues<DynamicDataName>())
