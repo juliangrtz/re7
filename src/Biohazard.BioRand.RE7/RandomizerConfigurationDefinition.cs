@@ -14,20 +14,12 @@ namespace Biohazard.BioRand.RE7 {
             group.Items.Add(new GroupItem() {
                 Id = "game-version",
                 Label = "Game Version",
-                Description = "What version of the game to generate for. Check what version you're using on Steam.",
+                Description = "What version of the game to generate for." +
+                " You can identify it in Steam by right-clicking the game," +
+                " selecting 'Properties' and then 'Game Versions & Betas'.",
                 Type = "dropdown",
-                Options = ["rt", "non-rt"],
-                Default = "rt"
-            });
-
-            group.Items.Add(new GroupItem() {
-                Id = $"start-chapter",
-                Label = "Start Chapter",
-                Description = "Which chapter to start on.",
-                Type = "range",
-                Min = 1,
-                Max = 16,
-                Default = 1
+                Options = ["dx12_rt", "dx11_non-rt"],
+                Default = "dx12_rt"
             });
 
             #endregion
@@ -39,7 +31,7 @@ namespace Biohazard.BioRand.RE7 {
             group.Items.Add(new GroupItem() {
                 Id = $"random-recipes",
                 Label = "Random Recipes",
-                Description = "Let Biorand randomize all the crafting recipes in the game.",
+                Description = "Let BioRand randomize all the crafting recipes in the game.",
                 Type = "switch",
                 Default = false
             });

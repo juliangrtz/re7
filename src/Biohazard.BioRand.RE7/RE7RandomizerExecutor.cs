@@ -26,8 +26,8 @@ namespace Biohazard.BioRand.RE7 {
             }
         }
 
-        public static PakList GetDefaultPakList() {
-            var pakListBytes = EmbeddedData.GetFile("pakcontentsrt.txt.gz").Ungzip();
+        public static PakList GetDefaultPakList(bool isForRaytracingVersion) {
+            var pakListBytes = EmbeddedData.GetFile($"pakcontents{(isForRaytracingVersion ? "rt" : "")}.txt.gz").Ungzip();
             var pakListText = Encoding.UTF8.GetString(pakListBytes);
             return new PakList(pakListText);
         }

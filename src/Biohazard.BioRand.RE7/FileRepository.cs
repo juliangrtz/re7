@@ -4,24 +4,9 @@ using System.IO;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 
-namespace Biohazard.BioRand.RE7
-{
-    internal class FileRepository : IPatchContext, IDisposable
-    {
-        private static RszTypeRepository? _rszRepository;
-
-        public static RszTypeRepository RszRepository
-        {
-            get
-            {
-                if (_rszRepository == null)
-                {
-                    var rszJson = EmbeddedData.GetFile("rszre7rt.json.gz");
-                    _rszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJson);
-                }
-                return _rszRepository;
-            }
-        }
+namespace Biohazard.BioRand.RE7 {
+    internal class FileRepository : IPatchContext, IDisposable {
+        public static RszTypeRepository RszRepository { get; private set; }
 
         public RszTypeRepository TypeRepository => RszRepository;
         public bool ExportingMod => false;
@@ -34,97 +19,81 @@ namespace Biohazard.BioRand.RE7
         public RE7Randomizer? Randomizer => _randomizer;
         public DynamicData DynamicData { get; } = new DynamicData(download: false);
 
-        public FileRepository()
-        {
+        public FileRepository() {
         }
 
-        public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData)
-        {
+        public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData) {
             _inputPakFile = inputPakFile;
             DynamicData = dynamicData;
         }
 
-        public FileRepository(RE7Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
-        {
+        public FileRepository(RE7Randomizer randomizer, string inputGamePath, DynamicData dynamicData) {
             _randomizer = randomizer;
-            if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase))
-            {
+            if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase)) {
                 _inputPakFile = new PatchedPakFile(inputGamePath);
-            }
-            else
-            {
+            } else {
                 _inputGamePath = inputGamePath;
             }
             DynamicData = dynamicData;
+
+            if (RszRepository == null) {
+                var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json.gz");
+                RszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJson);
+            }
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             _inputPakFile?.Dispose();
         }
 
-        public byte[] GetSupplementFile(string path)
-        {
+        public byte[] GetSupplementFile(string path) {
             return EmbeddedData.GetFile(path);
         }
 
-        public byte[]? GetFile(string path)
-        {
+        public byte[]? GetFile(string path) {
             if (_outputFiles.TryGetValue(path, out var data))
                 return data;
 
-            if (_inputGamePath == null)
-            {
+            if (_inputGamePath == null) {
                 return _inputPakFile?.GetEntryData(path);
-            }
-            else
-            {
+            } else {
                 var fullPath = Path.Combine(_inputGamePath, path);
-                if (File.Exists(fullPath))
-                {
+                if (File.Exists(fullPath)) {
                     return File.ReadAllBytes(fullPath);
                 }
                 return null;
             }
         }
 
-        public void SetFile(string path, byte[] data)
-        {
+        public void SetFile(string path, byte[] data) {
             _outputFiles[path] = data;
         }
 
-        public void WriteOutputPakFile(string path)
-        {
+        public void WriteOutputPakFile(string path) {
             var builder = new PakFileBuilder();
-            foreach (var outputFile in _outputFiles)
-            {
+            foreach (var outputFile in _outputFiles) {
                 builder.AddEntry(outputFile.Key, outputFile.Value);
             }
             builder.Save(path, CompressionKind.Zstd);
         }
 
-        public PakFileBuilder GetOutputPakFile()
-        {
+        public PakFileBuilder GetOutputPakFile() {
             var builder = new PakFileBuilder();
-            foreach (var outputFile in _outputFiles)
-            {
+            foreach (var outputFile in _outputFiles) {
                 builder.AddEntry(outputFile.Key, outputFile.Value);
             }
             return builder;
         }
 
-        public void WriteOutputFolder(string path)
-        {
-            foreach (var outputFile in _outputFiles)
-            {
+        public void WriteOutputFolder(string path) {
+            foreach (var outputFile in _outputFiles) {
                 var fullPath = Path.Combine(path, outputFile.Key);
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
                 File.WriteAllBytes(fullPath, outputFile.Value);
             }
         }
 
-        public T? GetConfigOption<T>(string key, T? defaultValue = default)
-        {
+        public T? GetConfigOption<T>(string key, T? defaultValue = default) {
             var randomizer = _randomizer;
             return randomizer == null ? defaultValue : randomizer.GetConfigOption(key, defaultValue);
         }

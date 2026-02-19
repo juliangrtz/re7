@@ -173,6 +173,12 @@ namespace Biohazard.BioRand.RE7
             return Input.Configuration.GetValueOrDefault<T>(key, defaultValue);
         }
 
+        public bool IsOnRaytracingVersion
+            => GetConfigOption<string>("game-version") == "dx12_rt";
+
+        public string RaytracingString
+            => IsOnRaytracingVersion ? "rt" : "";
+
         public bool HasSpecialTouch(string kind)
         {
             if (!GetConfigOption("enable-special", true))
