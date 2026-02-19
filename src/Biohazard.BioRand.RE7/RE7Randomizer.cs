@@ -15,13 +15,12 @@ namespace Biohazard.BioRand.RE7
     {
         private string _inputGamePath;
         private FileRepository _fileRepository = new FileRepository();
-        private bool _supplementApplied;
         private ImmutableArray<Modifier> _modifiers = GetModifiers();
         private readonly Dictionary<Type, object> _services = [];
         private readonly Lock _servicesLock = new();
         private readonly Dictionary<string, string> _logFiles = [];
 
-        public int PakVersion { get; set; } = 9;
+        public int PakVersion { get; set; } = 2;
         public RandomizerInput Input { get; }
         public IProgressReporter Reporter { get; }
         public FileRepository FileRepository => _fileRepository;
@@ -71,7 +70,7 @@ namespace Biohazard.BioRand.RE7
                         new RandomizerOutputAsset(
                             "1-patch",
                             "Patch",
-                            "Simply drop this file into your RE 4 install folder.",
+                            "Simply drop this file into your RE 7 install folder.",
                             $"biorand-re7-{input.Seed}.zip",
                             output.GetOutputZip()),
                         new RandomizerOutputAsset(

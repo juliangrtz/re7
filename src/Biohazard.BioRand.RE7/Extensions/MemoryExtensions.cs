@@ -29,5 +29,17 @@ namespace Biohazard.BioRand.RE7.Extensions {
             deflateStream.CopyTo(outputStream);
             return outputStream.ToArray();
         }
+
+        public static ZipArchive Unzip(this byte[] input) {
+            var inputStream = new MemoryStream(input);
+            return new ZipArchive(inputStream, ZipArchiveMode.Read, leaveOpen: false);
+        }
+
+        public static byte[] GetBytes(this ZipArchiveEntry entry) {
+            using var stream = entry.Open();
+            using var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            return memory.ToArray();
+        }
     }
 }

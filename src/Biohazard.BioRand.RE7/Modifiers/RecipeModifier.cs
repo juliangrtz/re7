@@ -2,6 +2,10 @@ using System;
 
 namespace Biohazard.BioRand.RE7.Modifiers {
     internal class RecipeModifier : Modifier {
+        /**
+         * TODO: Construct these types of strings in a better way
+         * Especially to improve testability and reusability
+         */
         private const string DictionaryCombineDataPath = "natives/stm/prefab/item/dictionarycombinedata.user.2";
         private const string ItemCombineDataPath = "natives/stm/prefab/item/itemcombinedata.user.2";
 

@@ -106,13 +106,5 @@ namespace BioHazard.BioRand.RE7.Commands
 
             private static string Timestamp => DateTime.Now.ToString("[[yyyy-MM-dd HH:mm]]");
         }
-
-        private class EmptyReporter : IProgressReporter
-        {
-            public void RunTask(string text, Action cb)
-            {
-                cb();
-            }
-        }
     }
 }
