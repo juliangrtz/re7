@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj" />
-    <ProjectReference Include="..\src\biorand-re7\biorand-re7.csproj" />
+    <ProjectReference Include="..\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj" />
+    <ProjectReference Include="..\biorand-re7\biorand-re7.csproj" />
   </ItemGroup>
 
   <ItemGroup>

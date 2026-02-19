@@ -1,9 +1,11 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable IDE1006 // These words must begin with upper case characters
+#pragma warning disable IDE0130 // Namespace does not match folder structure
 
 namespace app
 {
     internal class DictionaryCombineData {
-        public System.Collections.Generic.List<app.DictionaryCombineData.Data> _Datas { get; set; } = [];
+        public System.Collections.Generic.List<Data> _Datas { get; set; } = [];
 
         internal class Data {
             public string ItemDataID { get; set; } = "";
@@ -12,7 +14,7 @@ namespace app
 
     internal class ItemCombineData
     {
-        public System.Collections.Generic.List<app.ItemCombineData.Data> _Datas { get; set; } = [];
+        public System.Collections.Generic.List<Data> _Datas { get; set; } = [];
 
         internal class Data
         {

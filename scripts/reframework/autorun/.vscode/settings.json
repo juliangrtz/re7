@@ -1,0 +1,8 @@
+{
+    "Lua.diagnostics.globals": [
+        "reframework"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-global"
+    ]
+}
