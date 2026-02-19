@@ -3,6 +3,7 @@
 I've gathered this information while working on the randomizer.
 
 ## Important directories (main game -> re_chunk_000.pak)
+
 - (key) item locations: re_chunk_000\natives\stm\leveldesign\itemset
 
 - prefabs: re_chunk_000\natives\stm\prefab\item
