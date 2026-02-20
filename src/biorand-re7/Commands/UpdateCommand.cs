@@ -1,4 +1,4 @@
-﻿using Biohazard.BioRand.RE7;
+﻿using Biohazard.BioRand.RE7.Serialization;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System;

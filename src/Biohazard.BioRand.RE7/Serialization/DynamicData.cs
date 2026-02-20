@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Net.Http;
 
-namespace Biohazard.BioRand.RE7 {
+namespace Biohazard.BioRand.RE7.Serialization {
     public sealed class DynamicData(bool download) {
         private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YAOHcvyQ6Tp2n6io9iEcJjpjZoQXuUC0NGwGFKKafQ4/export?format=csv&gid={0}";
         private static readonly ImmutableDictionary<DynamicDataName, (string, int)> g_map = new Dictionary<DynamicDataName, (string, int)> {
@@ -11,7 +11,6 @@ namespace Biohazard.BioRand.RE7 {
             [DynamicDataName.WeaponRng] = ("wpstats.csv", 345409638),
             [DynamicDataName.Enemies] = ("enemies.csv", 2122364676),
             [DynamicDataName.Items] = ("items.csv", 827998375),
-            [DynamicDataName.Events] = ("events.csv", 677674082),
             [DynamicDataName.Messages] = ("messages.csv", 257348148),
         }.ToImmutableDictionary();
 
@@ -54,7 +53,6 @@ namespace Biohazard.BioRand.RE7 {
         WeaponRng,
         Enemies,
         Items,
-        Events,
         Messages,
     }
 }

@@ -2,9 +2,8 @@
 
 namespace Biohazard.BioRand.RE7.Items {
     public class ItemDefinition {
-        public static ItemDefinition Automatic { get; } = new ItemDefinition() { Id = -1, Name = "Automatic" };
-
-        public int Id { get; set; }
+        //[JsonConverter(typeof(StringEnumConverter))]
+        public string Id { get; set; }
         public string? Name { get; set; }
         public string? Kind { get; set; }
         public string? Mode { get; set; }
@@ -14,14 +13,13 @@ namespace Biohazard.BioRand.RE7.Items {
         public bool Dlc { get; set; }
         public int Stack { get; set; }
         public int Value { get; set; }
-        public int[]? Weapons { get; set; }
+        public string[]? Weapons { get; set; }
         public int? WeaponId { get; set; }
         public string? DropKind { get; set; }
         public ImmutableArray<string> Slots { get; set; } = [];
 
-        public bool IsAutomatic => Id == -1;
-        public int Width => int.Parse((Size ?? "2x2").Split('x')[0]);
-        public int Height => int.Parse((Size ?? "2x2").Split('x')[1]);
+        public int Width => int.Parse((Size ?? "1x1").Split('x')[0]);
+        public int Height => int.Parse((Size ?? "1x1").Split('x')[1]);
 
         public override string ToString() => Name ?? Id.ToString();
     }

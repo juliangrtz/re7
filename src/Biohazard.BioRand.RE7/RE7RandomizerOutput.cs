@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 using System.Collections.Generic;

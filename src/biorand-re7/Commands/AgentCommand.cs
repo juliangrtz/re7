@@ -90,10 +90,7 @@ namespace BioHazard.BioRand.RE7.Commands
                 {
                     specials.Add("bawk");
                 }
-                // if (userName.Equals("doubleedger", StringComparison.OrdinalIgnoreCase))
-                // {
-                //     specials.Add("goldbar");
-                // }
+                
                 config["username"] = userName;
                 config["special"] = string.Join(",", specials);
 

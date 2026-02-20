@@ -3,8 +3,10 @@ using BioHazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 
-namespace Biohazard.BioRand.RE7.Tests {
-    public abstract class RandomizerTest : IDisposable {
+namespace Biohazard.BioRand.RE7.Tests
+{
+    public abstract class RandomizerTest : IDisposable
+    {
         private static readonly string PAKPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
             ".biorand",
@@ -13,8 +15,12 @@ namespace Biohazard.BioRand.RE7.Tests {
         private readonly RE7RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
         private const int DefaultTestingSeed = 0x42424242;
 
-        public PakFile RunRandomizer(string configJson, int seed = DefaultTestingSeed) {
-            var input = new RandomizerInput() {
+        public RandomizerConfiguration Configuration { get; private set; }
+
+        public PakFile RunRandomizer(string configJson, int seed = DefaultTestingSeed)
+        {
+            var input = new RandomizerInput()
+            {
                 Seed = seed,
                 Configuration = RandomizerConfiguration.FromJson(configJson)
             };
@@ -34,7 +40,8 @@ namespace Biohazard.BioRand.RE7.Tests {
             );
         }
 
-        public virtual void Dispose() {
+        public virtual void Dispose()
+        {
             GC.SuppressFinalize(this);
         }
     }

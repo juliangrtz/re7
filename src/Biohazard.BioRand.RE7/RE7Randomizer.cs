@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
@@ -124,8 +125,6 @@ namespace Biohazard.BioRand.RE7
                 logger.Process.Pop();
                 logger.Process.LogHr();
             });
-
-            //Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
 
             // Output
             IterateModifiers((n, m) =>
