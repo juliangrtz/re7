@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Serialization;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -13,10 +14,10 @@ namespace Biohazard.BioRand.RE7.Items {
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
         public ImmutableDictionary<string, ImmutableArray<ItemDefinition>> DropKindToItemMap { get; private set; } =
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
-        public ImmutableDictionary<int, ItemDefinition> IdToItemMap { get; private set; } =
-            ImmutableDictionary<int, ItemDefinition>.Empty;
-        public ImmutableDictionary<int, ItemDefinition> WeaponIdToItemMap { get; private set; } =
-            ImmutableDictionary<int, ItemDefinition>.Empty;
+        public ImmutableDictionary<string, ItemDefinition> IdToItemMap { get; private set; } =
+            ImmutableDictionary<string, ItemDefinition>.Empty;
+        public ImmutableDictionary<string, ItemDefinition> WeaponIdToItemMap { get; private set; } =
+            ImmutableDictionary<string, ItemDefinition>.Empty;
 
         public static ItemDefinitionRepository Default {
             get {
@@ -45,21 +46,21 @@ namespace Biohazard.BioRand.RE7.Items {
                 .GroupBy(x => x.DropKind!)
                 .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
             IdToItemMap = Items.ToImmutableDictionary(x => x.Id);
-            WeaponIdToItemMap = Items
-                .Where(x => x.WeaponId != null)
-                .ToImmutableDictionary(x => x.WeaponId!.Value);
+            //WeaponIdToItemMap = Items
+            //    .Where(x => x.WeaponId != null)
+            //    .ToImmutableDictionary(x => x.WeaponId!.Value);
         }
 
-        public ItemDefinition? Find(int id) {
+        public ItemDefinition? Find(string id) {
             IdToItemMap.TryGetValue(id, out var item);
             return item;
         }
 
-        public string GetName(int id) {
+        public string GetName(string id) {
             return Find(id)?.Name ?? id.ToString();
         }
 
-        public ItemDefinition? FromWeaponId(int id) {
+        public ItemDefinition? FromWeaponId(string id) {
             WeaponIdToItemMap.TryGetValue(id, out var item);
             return item;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Biohazard.BioRand.RE7.Serialization;
+using System;
 using System.Linq;
 using System.Reflection;
 
@@ -9,7 +10,7 @@ namespace Biohazard.BioRand.RE7 {
         private static Assembly CurrentAssembly => Assembly.GetExecutingAssembly();
         public Version CurrentVersion { get; } = GetCurrentVersion();
         public string CurrentVersionNumber => $"{CurrentVersion.Major}.{CurrentVersion.Minor}.{CurrentVersion.Build}";
-        public string CurrentVersionInfo => $"BioRand for RE7 {CurrentVersion.Major}.{CurrentVersion.Minor}.{CurrentVersion.Build} ({GitHash})";
+        public string CurrentVersionInfo => $"BioRand for Resident Evil 7 v{CurrentVersion.Major}.{CurrentVersion.Minor}.{CurrentVersion.Build} ({GitHash})";
         public string GitHash { get; } = GetGitHash();
 
         private RE7RandomizerFactory() {

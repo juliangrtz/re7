@@ -34,7 +34,7 @@ namespace Biohazard.BioRand.RE7 {
             var crf = RE7RandomizerFactory.Default;
 
             _sb.AppendLine(crf.CurrentVersionInfo);
-            _sb.AppendLine("by IntelOrca & BioRand Team");
+            _sb.AppendLine("by IntelOrca, Descole & BioRand Team");
             _sb.AppendLine($"Generated at {DateTime.Now}");
         }
 

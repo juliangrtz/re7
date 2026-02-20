@@ -119,7 +119,7 @@ def generate_csharp(enums):
                 print(f"[!] Not generating enum {enum["namespace"]} from System namespace")
                 continue
             
-            output.append(f"namespace {enum['namespace']}")
+            output.append(f"namespace Enums.{enum['namespace']}")
             output.append("{")
 
         underlying = " : uint" if enum["requires_uint"] else ""

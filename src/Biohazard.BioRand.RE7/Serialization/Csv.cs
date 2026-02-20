@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Biohazard.BioRand.RE7 {
+namespace Biohazard.BioRand.RE7.Serialization {
     internal static class Csv {
         public static T[] Deserialize<T>(byte[] utf8Data) {
             var tokens = ReadTokens(utf8Data);

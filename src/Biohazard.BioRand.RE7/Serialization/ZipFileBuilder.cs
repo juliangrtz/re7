@@ -2,7 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace Biohazard.BioRand.RE7 {
+namespace Biohazard.BioRand.RE7.Serialization {
     internal class ZipFileBuilder {
         private Dictionary<string, byte[]> _entries = new();
 

@@ -1,5 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Attributes;
 using Biohazard.BioRand.RE7.Patches;
+using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;

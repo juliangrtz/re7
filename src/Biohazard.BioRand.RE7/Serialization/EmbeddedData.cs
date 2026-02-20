@@ -3,7 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 
-namespace Biohazard.BioRand.RE7 {
+namespace Biohazard.BioRand.RE7.Serialization {
     internal static class EmbeddedData {
         private const string DataDirectoryName = "_Data";
 
