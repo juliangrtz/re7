@@ -1,23 +1,16 @@
-﻿namespace Biohazard.BioRand.RE7.DataGen.Generators
+﻿using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
+
+namespace Biohazard.BioRand.RE7.DataGen.Generators
 {
     internal interface IFileGenerator
     {
         string Id { get; }
+        object Generate(GenerateSettings settings);
     }
 
-    internal enum TextOutputFormat
+    internal enum OutputFormat
     {
         Csv,
         Json
-    }
-
-    internal interface ITextFileGenerator : IFileGenerator
-    {
-        string Generate(TextOutputFormat OutputFormat);
-    }
-
-    internal interface IBinaryFileGenerator : IFileGenerator
-    {
-        byte[] Generate();
     }
 }

@@ -17,10 +17,10 @@ namespace Biohazard.BioRand.RE7.Items
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
         public ImmutableDictionary<string, ImmutableArray<ItemDefinition>> DropKindToItemMap { get; private set; } =
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
-        public ImmutableDictionary<ItemID, ItemDefinition> IdToItemMap { get; private set; } =
-            ImmutableDictionary<ItemID, ItemDefinition>.Empty;
-        public ImmutableDictionary<WeaponID, ItemDefinition> WeaponIdToItemMap { get; private set; } =
-            ImmutableDictionary<WeaponID, ItemDefinition>.Empty;
+        public ImmutableDictionary<string, ItemDefinition> IdToItemMap { get; private set; } =
+            ImmutableDictionary<string, ItemDefinition>.Empty;
+        public ImmutableDictionary<string, ItemDefinition> WeaponIdToItemMap { get; private set; } =
+            ImmutableDictionary<string, ItemDefinition>.Empty;
 
         public static ItemDefinitionRepository Default
         {
@@ -58,18 +58,18 @@ namespace Biohazard.BioRand.RE7.Items
             //    .ToImmutableDictionary(x => x.WeaponId!.Value);
         }
 
-        public ItemDefinition? Find(ItemID id)
+        public ItemDefinition? Find(string id)
         {
             IdToItemMap.TryGetValue(id, out var item);
             return item;
         }
 
-        public string GetName(ItemID id)
+        public string GetName(string id)
         {
             return Find(id)?.Name ?? id.ToString();
         }
 
-        public ItemDefinition? FromWeaponId(WeaponID id)
+        public ItemDefinition? FromWeaponId(string id)
         {
             WeaponIdToItemMap.TryGetValue(id, out var item);
             return item;

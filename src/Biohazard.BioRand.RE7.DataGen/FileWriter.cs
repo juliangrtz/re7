@@ -10,10 +10,20 @@
             }
         }
 
-        public static void WriteOutput(string path, string content)
-            => File.WriteAllText($"GeneratedFiles\\{path}", content);
+        private const string OutputDirectory = "GeneratedFiles";
 
-        public static void WriteOutput(string path, byte[] content)
-            => File.WriteAllBytes($"GeneratedFiles\\{path}", content);
+        public static string WriteOutput(string path, string content)
+        {
+            var finalPath = $"{OutputDirectory}\\{path}";
+            File.WriteAllText(finalPath, content);
+            return finalPath;
+        }
+
+        public static string WriteOutput(string path, byte[] content)
+        {
+            var finalPath = $"{OutputDirectory}\\{path}";
+            File.WriteAllBytes(finalPath, content);
+            return finalPath;
+        }
     }
 }

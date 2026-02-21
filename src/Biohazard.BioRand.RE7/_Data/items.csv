@@ -1,87 +1,314 @@
-Id,Name,CategoryType,Size,IsUnlockable,Dlc,MaxStack,WeaponId,CanStoreInItemBox,DeveloperComment
-HandAxe,Axe,Weapon,Slot1,False,,1,,True,
-CircularSaw,Circular Saw,Weapon,Slot1,False,,1,,True,
-ChainSaw,Chainsaw,Weapon,Slot1,False,,1,,True,
-Knife,Knife,Weapon,Slot1,False,,1,,True,
-Bar,Crowbar,Weapon,Slot1,False,,1,,True,
-Handgun_M19,M19 Handgun,Weapon,Slot1,False,,1,,True,
-Handgun_G17,G17 Handgun,Weapon,Slot1,False,,1,,True,
-Handgun_MPM,MPM Handgun,Weapon,Slot1,False,,1,,True,
-Handgun_Albert,Albert-01,Weapon,Slot1,False,,1,,True,
-Handgun_Albert_Reward,Albert-01R,Weapon,Slot1,False,,1,,True,
-Shotgun_M37,M37 Shotgun,Weapon,Slot2,False,,1,,True,
-Shotgun_DB,M21 Shotgun,Weapon,Slot2,False,,1,,True,
-MachineGun,P19 Machine Gun,Weapon,Slot2,False,,1,,True,
-Magnum,44 MAG,Weapon,Slot2,False,,1,,True,
-GrenadeLauncher,Grenade Launcher,Weapon,Slot2,False,,1,,True,
-Burner,Burner,Weapon,Slot2,False,,1,,True,
-Candle,Candle,Weapon,Slot1,False,,1,,True,
-Candle_Lighted,Candle,Weapon,Slot1,False,,1,,True,
-Glasses,Dirty Telescope,UsableKeyItem,Slot1,False,,1,,True,
-Glasses_Washed,Telescope,UsableKeyItem,Slot1,False,,1,,True,
-LiquidBomb,Remote Bomb,StackWeapon,Slot1,False,,20,,True,
-MiaKnife,Survival Knife,Weapon,Slot1,False,,1,,True,
-HandgunBullet,Handgun Ammo,Shell,Slot1,False,,30,,True,
-HandgunBulletL,Enhanced Handgun Ammo,Shell,Slot1,False,,20,,True,
-ShotgunBullet,Shotgun Shells,Shell,Slot1,False,,30,,True,
-MachineGunBullet,Machine Gun Ammo,Shell,Slot1,False,,300,,True,
-MagnumBullet,44 MAG Ammo,Shell,Slot1,False,,20,,True,
-BurnerBullet,Burner Fuel,Shell,Slot1,False,,500,,True,
-FlameBulletS,Flame Rounds,Shell,Slot1,False,,5,,True,
-AcidBulletS,Neuro Rounds,Shell,Slot1,False,,5,,True,
-RemedyM,First Aid Med,Drug,Slot1,False,,3,,True,
-RemedyL,Strong First Aid Med,Drug,Slot1,False,,3,,True,
-Stimulant,Steroids,Drug,Slot1,False,,1,,True,
-Depressant,Stabilizer,Drug,Slot1,False,,1,,True,
-EvelynRadar,Eveline Tissue Samples,KeyItem,Slot1,False,,1,,False,
-BrokenHandgun_M19,Broken Handgun,KeyItem,Slot1,False,,1,,True,
-BrokenShotgun_DB,Broken Shotgun,KeyItem,Slot2,False,,1,,True,
-FoundFootage000,Derelict House Footage,KeyItem,Slot1,False,,1,,True,
-ChainCutter,Bolt Cutters,KeyItem,Slot2,False,,1,,True,
-Chapter1Map,Guest House Map,OtherItem,Slot1,False,,1,,True,
-Fuse,Fuse,KeyItem,Slot1,False,,1,,True,
-MiaDriversLicense,Driver's License,DiscardableKeyItem,Slot1,False,,1,,True,
-EntranceHallKey,Ox Statuette,KeyItem,Slot1,False,,1,,True,
-HandCutOff,Hand,KeyItem,Slot1,False,,1,,True,
-Chapter3_2Map,Main House Map,Map,Slot1,False,,1,,True,
-SilhouettePazzlePiece,Wooden Statuette,KeyItem,Slot1,False,,1,,True,
-ToyShotgun,Model Shotgun,KeyItem,Slot2,False,,1,,True,
-MorgueKey,Scorpion Key,KeyItem,Slot1,False,,1,,True,
-BurnerPartsA,Burner Grip,KeyItem,Slot1,False,,1,,True,
-BurnerPartsB,Burner Nozzle,KeyItem,Slot1,False,,1,,True,
-TalismanKey,Crow Key,KeyItem,Slot1,False,,1,,True,
-Chapter3_3Map,Old House Map,Map,Slot1,False,,1,,True,
-SerumMaterialA,D-Series Arm,KeyItem,Slot1,False,,1,,True,
-FoundFootage030,Mia,KeyItem,Slot1,False,,1,,True,
-Chapter3_4MAP,Testing Area Map,Map,Slot1,False,,1,,True,
-FoundFootage040,Happy Birthday,KeyItem,Slot1,False,,1,,True,
-Battery,Battery,KeyItem,Slot1,False,,1,,True,
-SpringCoil,Winding Key,KeyItem,Slot1,False,,1,,True,
-CylinderKey,Lock Pick,DiscardableKeyItem,Slot1,False,,20,,True,
-SkinnyDoll,Straw Doll,KeyItem,Slot1,False,,1,,True,
-ScrewFinger,Dummy Finger,KeyItem,Slot1,False,,1,,True,
-Quill,Quill Pen,KeyItem,Slot1,False,,1,,True,
-SerumMaterialB,D-Series Head,KeyItem,Slot1,False,,1,,True,
-Valve,Valve Handle,KeyItem,Slot1,False,,1,,True,
-MasterKey,Snake Key,KeyItem,Slot1,False,,1,,True,3-4で取る「最後の鍵」「マスターキー」
-SpareKey,Corrosive,KeyItem,Slot1,False,,10,,True,溶解剤(旧スペアキー)
-Timebomb,Time Bomb,KeyItem,Slot1,False,,1,,True,"ルーカスパズルタイマー爆弾
-"
-TreasureMap02,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,宝の地図02(合体後)
-TreasureMap03,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,"宝の地図03(合体後)
-"
-DybbukMedicine,Serum,KeyItem,Slot1,False,,1,,True,"血清
-"
-EthanCarKey,Car Key,DiscardableKeyItem,Slot1,False,,1,,True,イーサンの車のカギ
-EthanLeg,Leg,KeyItem,Slot1,False,,1,,True,イーサンの足
-BookDefence01,The Secrets of Defense,KeyItem,Slot1,False,,1,,True,防御の極意
-BookDefence02,The Essence of Defense,KeyItem,Slot1,False,,1,,True,防御の神髄
-AlphaGrass,X-ray Glasses,KeyItem,Slot1,False,,1,,True,透視メガネ
-EasyBoots,Walking Shoes,KeyItem,Slot1,False,,1,,True,歩きやすい靴
-UnlimitedAmmo,Infinite Ammo,KeyItem,Slot1,False,,1,,True,無限弾薬
-Herb,Herb,Drug,Slot1,False,,5,,True,ハーブ
-ChemicalS,Chem Fluid,Material,Slot1,False,,1,,True,薬液（小）
-ChemicalM,Strong Chem Fluid,Material,Slot1,False,,1,,True,薬液（中）
-ChemicalL,Separating Agent,Material,Slot1,False,,1,,True,薬液（強）
-EyeDrops,Psychostimulants,Drug,Slot1,False,,5,,True,目薬（仮）
-Gunpowder,Gunpowder,Material,Slot1,False,,10,,True,ガンパウダー
+Id,Name,CategoryType,Size,IsUnlockable,Dlc,MaxStack,WeaponId,CanStoreInItemBox,DeveloperComment,IsWeapon,IsStackable,IsDlcItem,ItemId
+EasyBoots_IMD,Walking Shoes,KeyItem,Slot1,False,EthanMustDie,1,,True,イーサンマストダイ専用歩きやすい靴,False,False,True,EasyBoots_IMD
+GreenHouseKey,Greenhouse Key,OtherItem,Slot1,False,EthanMustDie,1,,True,グリーンハウスのカギ,False,False,True,
+skl023no,Brawler,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インファイター,False,False,True,
+skl022no,Narrow Escape,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,リベンジスピード,False,False,True,
+skl021no,Vengeance,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,リベンジアタック,False,False,True,
+skl020no,Masochist,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,マゾヒスト,False,False,True,
+skl019no,Quick Reload,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,クイックロード,False,False,True,
+skl018no,Guard Up,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ガーディアン,False,False,True,
+skl017no,Toughness I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タフネスⅠ,False,False,True,
+skl016no,Toughness II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タフネスⅡ,False,False,True,
+skl015no,Impact I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,インパクトⅠ,False,False,True,
+skl014no,Impact II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インパクトⅡ,False,False,True,
+skl013no,Firepower Up I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ビッグガンⅠ,False,False,True,
+skl012no,Firepower Up II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ビッグガンⅡ,False,False,True,
+skl011no,Speed Up I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,スピーダーⅠ,False,False,True,
+skl010no,Speed Up II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,スピーダーⅡ,False,False,True,
+skl009no,Defense I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ハードボディⅠ,False,False,True,
+skl008no,Defense II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ハードボディⅡ,False,False,True,
+skl007no,Time Bonus β-I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タイムリカバーβⅠ,False,False,True,
+skl006no,Time Bonus β-II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タイムリカバーβⅡ,False,False,True,
+skl005no,Time Bonus α-I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タイムリカバーαⅠ],False,False,True,
+skl004no,Time Bonus α-II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タイムリカバーαⅡ,False,False,True,
+skl003no,Clairvoyance,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,クレアボヤンス,False,False,True,
+skl002no,Health Regen,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,リジェネレート,False,False,True,
+skl001no,Infinite Ammo,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インフィニティ,False,False,True,
+skl014,Impact II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インパクトⅡ,False,False,True,
+skl015,Impact I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,インパクトⅠ,False,False,True,
+skl008,Defense II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ハードボディⅡ,False,False,True,
+skl009,Defense I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ハードボディⅠ,False,False,True,
+skl010,Speed Up II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,スピーダーⅡ,False,False,True,
+skl011,Speed Up I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,スピーダーⅠ,False,False,True,
+skl006,Time Bonus β-II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タイムリカバーβⅡ,False,False,True,
+skl007,Time Bonus β-I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タイムリカバーβⅠ,False,False,True,
+skl004,Time Bonus α-II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タイムリカバーαⅡ,False,False,True,
+skl005,Time Bonus α-I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タイムリカバーαⅠ],False,False,True,
+skl018,Guard Up,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ガーディアン,False,False,True,
+skl019,Quick Reload,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,クイックロード,False,False,True,
+skl012,Firepower Up II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ビッグガンⅡ,False,False,True,
+skl013,Firepower Up I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ビッグガンⅠ,False,False,True,
+skl016,Toughness II,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,タフネスⅡ,False,False,True,
+skl017,Toughness I,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,タフネスⅠ,False,False,True,
+skl022,Narrow Escape,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,リベンジスピード,False,False,True,
+skl021,Vengeance,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,リベンジアタック,False,False,True,
+skl023,Brawler,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インファイター,False,False,True,
+skl020,Masochist,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,マゾヒスト,False,False,True,
+skl002,Health Regen,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,リジェネレート,False,False,True,
+skl003,Clairvoyance,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,クレアボヤンス,False,False,True,
+skl001,Infinite Ammo,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,インフィニティ,False,False,True,
+AlcoholCh71,Solid Fuel,KeyItem,Slot1,False,Bedroom,1,,True,固形燃料(Ch7-1用)※捨てられない,False,False,True,
+GimmickLighter,Lighter,KeyItem,Slot1,False,Bedroom,1,,True,ゾイのライター,False,False,True,
+PortableStoveFuel,Stove (Solid Fuel),KeyItem,Slot1,False,Bedroom,1,,True,小型コンロ+固形燃料,False,False,True,
+PortableStove,Stove,KeyItem,Slot1,False,Bedroom,1,,True,小型コンロ,False,False,True,
+ClockHand2,Sewing Needle,KeyItem,Slot1,False,Bedroom,1,,True,ナイフの絵から入手できる時計の針,False,False,True,
+ClockHand,Broken Clock Hand,KeyItem,Slot1,False,Bedroom,1,,True,時計の針(キーピック),False,False,True,
+GimmickPictureC,Untitled Painting C,KeyItem,Slot1,False,Bedroom,1,,True,絵画Ｃ,False,False,True,
+GimmickPictureB,Untitled Painting B,KeyItem,Slot1,False,Bedroom,1,,True,絵画Ｂ,False,False,True,
+GimmickPictureA,Untitled Painting A,KeyItem,Slot1,False,Bedroom,1,,True,絵画Ａ,False,False,True,
+ShadowPiece4,Iron Statuette,KeyItem,Slot1,False,Bedroom,1,,True,影パズルオブジェクト,False,False,True,
+LanternHookB,Lantern Hook B,KeyItem,Slot1,False,Bedroom,1,,True,ランタンフックB,False,False,True,
+LanternHookA,Lantern Hook A,KeyItem,Slot1,False,Bedroom,1,,True,ランタンフックA,False,False,True,
+GimmickOpener,Corkscrew,KeyItem,Slot1,False,Bedroom,1,,True,オープナー,False,False,True,
+GimmickSpoon,Spoon,KeyItem,Slot1,False,Bedroom,1,,True,スプーン,False,False,True,
+GimmickFork,Fork,KeyItem,Slot1,False,Bedroom,1,,True,フォーク,False,False,True,
+DlcKey1,,KeyItem,Slot1,False,Bedroom,1,,True,Ch7_4解放キー(Ch7_1用),False,False,True,
+Gunpowder,Gunpowder,Material,Slot1,False,,10,,True,ガンパウダー,False,True,False,Gunpowder
+AlloyClay,Chilled Chem Fluid,Material,Slot1,False,,10,,True,低温薬液(旧合金粘土),False,True,False,
+Magnesium,Weak Acid,Material,Slot1,False,,10,,True,弱酸液(旧マグネシウム),False,True,False,
+EyeDrops,Psychostimulants,Drug,Slot1,False,,5,EyeDrops,True,目薬（仮）,False,True,False,EyeDrops
+Alcohol,Solid Fuel,Material,Slot1,False,,5,,True,アルコール,False,True,False,
+SyntheticDetergent,Acid Powder,Material,Slot1,False,,5,,True,硝酸粉(旧合成洗剤),False,True,False,
+Flower,Supplements,Material,Slot1,False,,5,,True,花,False,True,False,
+ChemicalL,Separating Agent,Material,Slot1,False,,1,,True,薬液（強）,False,False,False,ChemicalL
+ChemicalM,Strong Chem Fluid,Material,Slot1,False,,1,,True,薬液（中）,False,False,False,ChemicalM
+ChemicalS,Chem Fluid,Material,Slot1,False,,1,,True,薬液（小）,False,False,False,ChemicalS
+Herb,Herb,Drug,Slot1,False,,5,,True,ハーブ,False,True,False,Herb
+GoodLuckCoinB_Buy,Attack Coin,OtherItem,Slot1,False,AttackCoinAndMadhouseUnlock,1,,True,幸運のコインB(DL購入版),False,False,True,
+GoodLuckCoinE_Buy,Universal Coin,OtherItem,Slot1,False,UniversalCoinAndMadhouseUnlock,1,,True,幸運のコインE(DL購入版),False,False,True,
+Curse,Curse,OtherItem,Slot1,False,TwentyOne,1,,True,カース,False,False,True,
+BlackMagic,Black Magic,OtherItem,Slot1,False,TwentyOne,1,,True,ブラックマジック,False,False,True,
+Conjuring,Conjure,OtherItem,Slot1,False,TwentyOne,1,,True,カンジャリング,False,False,True,
+Oblivion,Oblivion,OtherItem,Slot1,False,TwentyOne,1,,True,オブリビオン,False,False,True,
+DeadSilence,Dead Silence,OtherItem,Slot1,False,TwentyOne,1,,True,デッドサイレンス,False,False,True,
+Escape,Escape,OtherItem,Slot1,False,TwentyOne,1,,True,エスケープ,False,False,True,
+Desire_p,Desire+,OtherItem,Slot1,False,TwentyOne,1,,True,デザイア+,False,False,True,
+Desire,Desire,OtherItem,Slot1,False,TwentyOne,1,,True,デザイア,False,False,True,
+MindShift_p,Mind Shift+,OtherItem,Slot1,False,TwentyOne,1,,True,マインドシフト＋,False,False,True,
+MindShift,Mind Shift,OtherItem,Slot1,False,TwentyOne,1,,True,マインドシフト,False,False,True,
+Happiness,Happiness,OtherItem,Slot1,False,TwentyOne,1,,True,ハピネス,False,False,True,
+ShieldAssault_p,Shield Assault+,OtherItem,Slot1,False,TwentyOne,1,,True,シールドアサルト+,False,False,True,
+ShieldAssault,Shield Assault,OtherItem,Slot1,False,TwentyOne,1,,True,シールドアサルト,False,False,True,
+BetUp_21,Twenty-One-Up,OtherItem,Slot1,False,TwentyOne,1,,True,ベットアップ21,False,False,True,
+Desperation,Desperation,OtherItem,Slot1,False,TwentyOne,1,,True,デスペレーション,False,False,True,
+Replace,Harvest,OtherItem,Slot1,False,TwentyOne,1,,True,リプレース,False,False,True,
+Goal_17,Go For 17,OtherItem,Slot1,False,TwentyOne,1,,True,ゴール17,False,False,True,
+Goal_27,Go For 27,OtherItem,Slot1,False,TwentyOne,1,,True,ゴール27,False,False,True,
+Goal_24,Go For 24,OtherItem,Slot1,False,TwentyOne,1,,True,ゴール24,False,False,True,
+Destroy_pp,Destroy++,OtherItem,Slot1,False,TwentyOne,1,,True,デストロイプラスプラス,False,False,True,
+Destroy_p,Destroy+,OtherItem,Slot1,False,TwentyOne,1,,True,デストロイプラス,False,False,True,
+Destroy,Destroy,OtherItem,Slot1,False,TwentyOne,1,,True,デストロイ,False,False,True,
+Remove,Remove,OtherItem,Slot1,False,TwentyOne,1,,True,リムーブ,False,False,True,
+Return,Return,OtherItem,Slot1,False,TwentyOne,1,,True,リターン,False,False,True,
+Exchange,Exchange,OtherItem,Slot1,False,TwentyOne,1,,True,エクスチェンジ,False,False,True,
+SPChange_p,Trump Switch+,OtherItem,Slot1,False,TwentyOne,1,,True,SPチェンジプラス,False,False,True,
+SPChange,Trump Switch,OtherItem,Slot1,False,TwentyOne,1,,True,SPチェンジ,False,False,True,
+Gift,Love Your Enemy,OtherItem,Slot1,False,TwentyOne,1,,True,ギフト,False,False,True,
+PerfectDraw_p,Perfect Draw+,OtherItem,Slot1,False,TwentyOne,1,,True,パーフェクトドロープラス,False,False,True,
+PerfectDraw_x,Ultimate Draw,OtherItem,Slot1,False,TwentyOne,1,,True,パーフェクトドローオメガ,False,False,True,
+PerfectDraw,Perfect Draw,OtherItem,Slot1,False,TwentyOne,1,,True,パーフェクトドロー,False,False,True,
+Draw_7p,7 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「7」※山札に残っている場合のみ「7」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_7,7 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「7」※山札に残っている場合のみ「7」のカードを引く。,False,False,True,
+Draw_6p,6 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「6」※山札に残っている場合のみ「6」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_6,6 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「6」※山札に残っている場合のみ「6」のカードを引く。,False,False,True,
+Draw_5p,5 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「5」※山札に残っている場合のみ「5」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_5,5 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「5」※山札に残っている場合のみ「5」のカードを引く。,False,False,True,
+Draw_4p,4 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「4」※山札に残っている場合のみ「4」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_4,4 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「4」※山札に残っている場合のみ「4」のカードを引く。,False,False,True,
+Draw_3p,3 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「3」※山札に残っている場合のみ「3」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_3,3 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「3」※山札に残っている場合のみ、「3」のカードを引く。,False,False,True,
+Draw_2p,2 Card+,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「2」※山札に残っている場合のみ「2」のカードを引く。さらにSPカードを1枚引く。,False,False,True,
+Draw_2,2 Card,OtherItem,Slot1,False,TwentyOne,1,,True,ドロー「2」※山札に残っている場合のみ「2」のカードを引く。,False,False,True,
+BetDown_2,Shield+,OtherItem,Slot1,False,TwentyOne,1,,True,ベットダウン2,False,False,True,
+BetDown_1,Shield,OtherItem,Slot1,False,TwentyOne,1,,True,ベットダウン1,False,False,True,
+BetUp_2x,Two-Up+,OtherItem,Slot1,False,TwentyOne,1,,True,ベットアップ2オメガ,False,False,True,
+BetUp_2p,Two-Up,OtherItem,Slot1,False,TwentyOne,1,,True,ベットアップ2※SPカードを1枚引く。さらに場に置かれている間、相手の賭け数を2つ増やす。,False,False,True,
+BetUp_2,Two-Up,OtherItem,Slot1,False,TwentyOne,1,,True,ベットアップ2※場に置かれている間、相手の賭け数を2つ増やす。,False,False,True,
+BetUp_1p,One-Up,OtherItem,Slot1,False,TwentyOne,1,,True,ベットアップ1,False,False,True,
+DlcKey2,,KeyItem,Slot1,False,TwentyOne,1,,True,Ch7_4解放キー(Ch7_2用),False,False,True,
+CoinOld,Dirty Coin,KeyItem,Slot1,True,,1,,True,古いコイン(体験版引き継ぎアイテム),False,False,False,
+DummyAxe,Toy Axe,KeyItem,Slot1,False,,1,,True,玩具の手斧,False,False,False,
+SaveTape,Cassette Tape,KeyItem,Slot1,False,,99,,True,セーブ用テープ,False,True,False,
+PowerUpCoin01B,Iron Defense Coin,KeyItem,Slot1,False,,1,,True,ハードモード用防御力UPコイン,False,False,False,
+PowerUpCoin01A,Assault Coin,KeyItem,Slot1,False,,1,,True,ハードモード用攻撃力UPコイン,False,False,False,
+LucasCardKey2,Keycard (Red),KeyItem,Slot1,False,,1,,True,ルーカス館用カードキー2,False,False,False,
+Chapter4_1SwampMAP,Swamp Map,KeyItem,Slot1,False,,1,,True,4_1と4_2を繋ぐ沼マップ,False,False,False,
+SerumTypeE,E-Necrotoxin,KeyItem,Slot1,False,,1,,False,抗E型血清,False,False,False,
+MailMia,Email from Mia,DiscardableKeyItem,Slot1,False,,1,,True,ミアのメール,False,False,False,
+UnlimitedAmmo,Infinite Ammo,KeyItem,Slot1,True,,1,,True,無限弾薬,False,False,False,UnlimitedAmmo
+EasyBoots,Walking Shoes,KeyItem,Slot1,True,,1,,True,歩きやすい靴,False,False,False,EasyBoots
+AlphaGrass,X-ray Glasses,KeyItem,Slot1,True,,1,,True,透視メガネ,False,False,False,AlphaGrass
+BookDefence02,The Essence of Defense,KeyItem,Slot1,True,,1,,True,防御の神髄,False,False,False,BookDefence02
+BookDefence01,The Secrets of Defense,KeyItem,Slot1,True,,1,,True,防御の極意,False,False,False,BookDefence01
+EvCable,Power Cable,KeyItem,Slot1,False,,1,,True,エレベータにはめるケーブル,False,False,False,
+EvOpener,Lug Wrench,KeyItem,Slot1,False,,1,,True,エレベータのフタを開ける物,False,False,False,
+BackDoorKey,,KeyItem,Slot1,False,,1,,True,勝手口のカギ(アンバサ用),False,False,False,
+ProposalBookFf,Project Proposal,KeyItem,Slot1,False,,1,,True,取材企画書(FF用),False,False,False,
+RepairKit,Repair Kit,KeyItem,Slot1,False,,1,,True,リペアキット,False,False,False,
+FloorDoorKey,Hatch Key,KeyItem,Slot1,False,,1,,True,Ch3-1床下ドアのカギ,False,False,False,
+PendulumClock,Clock Pendulum,KeyItem,Slot1,False,,1,,True,振り子時計の振り子,False,False,False,
+EthanLeg,Leg,KeyItem,Slot1,False,,1,,True,イーサンの足,False,False,False,EthanLeg
+EthanCarKey,Car Key,DiscardableKeyItem,Slot1,False,,1,,True,イーサンの車のカギ,False,False,False,EthanCarKey
+Order,Mission Orders,KeyItem,Slot1,False,,1,,True,ミアの指令書,False,False,False,
+CabinKey,Captain's Cabin Locker Key,KeyItem,Slot1,False,,1,,True,船長室の武器ロッカーのカギ,False,False,False,
+FuseCh4,General Purpose Fuse,KeyItem,Slot1,False,,10,,True,ヒューズCh4用,False,True,False,
+DybbukMedicine,Serum,KeyItem,Slot1,False,,1,,True,血清,False,False,False,DybbukMedicine
+TreasureMap03,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,宝の地図03(合体後),False,False,False,TreasureMap03
+TreasureMap02,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,宝の地図02(合体後),False,False,False,TreasureMap02
+TreasureMap01,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,宝の地図01,False,False,False,
+Coin,Antique Coin,DiscardableKeyItem,Slot1,False,,999,,True,コイン,False,True,False,
+ProposalBook,Project Proposal,KeyItem,Slot1,False,,1,,True,取材企画書,False,False,False,
+Timebomb,Time Bomb,KeyItem,Slot1,False,,1,Timebomb,True,ルーカスパズルタイマー爆弾,False,False,False,Timebomb
+Balloonbomb,Balloon,KeyItem,Slot1,False,,1,,True,ルーカスパズル風船爆弾,False,False,False,
+LucasCardKey,Keycard (Blue),KeyItem,Slot1,False,,1,,True,ルーカス館用カードキー1,False,False,False,
+SilhouettePazzlePieceOldHouse,Stone Statuette,KeyItem,Slot1,False,,1,,True,旧館用影絵パズルピース,False,False,False,
+Lantern,Lantern,KeyItem,Slot1,False,,1,Lantern,True,ランタン,False,False,False,
+3CrestKeyC,Red Dog's Head,KeyItem,Slot1,False,,1,,True,トリプルクレストキーA赤銅,False,False,False,
+3CrestKeyB,White Dog's Head,KeyItem,Slot1,False,,1,,True,トリプルクレストキーA白銅,False,False,False,
+3CrestKeyA,Blue Dog's Head,KeyItem,Slot1,False,,1,,True,トリプルクレストキーA青銅,False,False,False,
+Crank,Crank,KeyItem,Slot1,False,,1,,True,クランク,False,False,False,
+WorkroomKey,Dissection Room Key,KeyItem,Slot1,False,,1,,True,作業場のカギ,False,False,False,
+SilhouettePazzlePieceChildroom,Corrosive,KeyItem,Slot1,False,,1,,True,子供部屋用影絵パズルピース,False,False,False,
+SpareKey,Corrosive,KeyItem,Slot1,False,,10,,True,溶解剤(旧スペアキー),False,True,False,SpareKey
+Chapter4_２MAP,Mine Map,Map,Slot1,False,,1,,True,4_2の舞台である岩塩ドームのマップ,False,False,False,
+Chapter4_1MAP,Ship Map,Map,Slot1,False,,1,,True,4_1の舞台である船のマップ,False,False,False,
+FoundFootage050,Old Videotape,KeyItem,Slot1,False,,1,,True,ビデオテープ「船を襲う異変」,False,False,False,
+Map,Main House Map,Map,Slot1,False,,20,,True,現）3-1で取得するマップとして利用している旧）汎用マップ用ItemID(Chapter3用まとめID),False,True,False,
+SerumComplete,Serum,KeyItem,Slot1,False,,1,,False,3-5最終ムカデジャック戦のあとに取得する完成した状態の血清,False,False,False,
+MasterKey,Snake Key,KeyItem,Slot1,False,,1,,True,3-4で取る「最後の鍵」「マスターキー」,False,False,False,MasterKey
+Valve,Valve Handle,KeyItem,Slot1,False,,1,,True,,False,False,False,Valve
+SerumMaterialB,D-Series Head,KeyItem,Slot1,False,,1,,True,,False,False,False,SerumMaterialB
+Quill,Quill Pen,KeyItem,Slot1,False,,1,,True,,False,False,False,Quill
+ScrewFinger,Dummy Finger,KeyItem,Slot1,False,,1,,True,,False,False,False,ScrewFinger
+SkinnyDoll,Straw Doll,KeyItem,Slot1,False,,1,,True,,False,False,False,SkinnyDoll
+CylinderKey,Lock Pick,DiscardableKeyItem,Slot1,False,,20,,True,,False,True,False,CylinderKey
+SpringCoil,Winding Key,KeyItem,Slot1,False,,1,,True,,False,False,False,SpringCoil
+Battery,Battery,KeyItem,Slot1,False,,1,,True,,False,False,False,Battery
+FoundFootage040,"""Happy Birthday""",KeyItem,Slot1,False,,1,,True,,False,False,False,FoundFootage040
+Chapter3_4MAP,Testing Area Map,Map,Slot1,False,,1,,True,,False,False,False,Chapter3_4MAP
+FoundFootage030,"""Mia""",KeyItem,Slot1,False,,1,,True,,False,False,False,FoundFootage030
+SerumMaterialA,D-Series Arm,KeyItem,Slot1,False,,1,,True,,False,False,False,SerumMaterialA
+Chapter3_3Map,Old House Map,Map,Slot1,False,,1,,True,,False,False,False,Chapter3_3Map
+TalismanKey,Crow Key,KeyItem,Slot1,False,,1,,True,,False,False,False,TalismanKey
+BurnerPartsB,Burner Nozzle,KeyItem,Slot1,False,,1,,True,,False,False,False,BurnerPartsB
+BurnerPartsA,Burner Grip,KeyItem,Slot1,False,,1,,True,,False,False,False,BurnerPartsA
+MorgueKey,Scorpion Key,KeyItem,Slot1,False,,1,,True,,False,False,False,MorgueKey
+ToyShotgun,Model Shotgun,KeyItem,Slot2,False,,1,,True,,False,False,False,ToyShotgun
+SilhouettePazzlePiece,Wooden Statuette,KeyItem,Slot1,False,,1,,True,,False,False,False,SilhouettePazzlePiece
+Chapter3_2MapB1F,Processing Area Map,Map,Slot1,False,,1,,True,chapter3-2の剥製部屋B1Fで取得するマップ,False,False,False,
+Chapter3_2Map,Main House Map,Map,Slot1,False,,1,,True,,False,False,False,Chapter3_2Map
+HandCutOff,Hand,KeyItem,Slot1,False,,1,,True,,False,False,False,HandCutOff
+EntranceHallKey,Ox Statuette,KeyItem,Slot1,False,,1,,True,,False,False,False,EntranceHallKey
+MiaDriversLicense,Driver's License,DiscardableKeyItem,Slot1,False,,1,,True,,False,False,False,MiaDriversLicense
+Fuse,Fuse,KeyItem,Slot1,False,,1,,True,,False,False,False,Fuse
+Chapter1Map,Guest House Map,OtherItem,Slot1,False,,1,,True,,False,False,False,Chapter1Map
+ChainCutter,Bolt Cutters,KeyItem,Slot2,False,,1,ChainCutter,True,,False,False,False,ChainCutter
+FoundFootage000,"""Derelict House Footage""",KeyItem,Slot1,False,,1,,True,,False,False,False,FoundFootage000
+GoldenBarNo,Golden Crowbar,Weapon,Slot1,False,Jacks55thBirthday,1,,True,,True,False,True,
+HyperBlasterNo,Gold Blaster,Weapon,Slot1,False,Jacks55thBirthday,1,,True,,True,False,True,
+RedBlaster,Red Blaster,Weapon,Slot1,False,Jacks55thBirthday,1,RedBlaster,False,,True,False,True,RedBlaster
+BlueBlaster,Blue Blaster,Weapon,Slot1,False,Jacks55thBirthday,1,BlueBlaster,False,,True,False,True,BlueBlaster
+GoldenBar,Golden Crowbar,Weapon,Slot1,False,Jacks55thBirthday,1,GoldenBar,True,,True,False,True,GoldenBar
+HyperBlaster,Gold Blaster,Weapon,Slot1,False,Jacks55thBirthday,1,HyperBlaster,True,,True,False,True,HyperBlaster
+GoodLuckCoinD_Buy,Reload Coin,OtherItem,Slot1,False,ReloadCoinAndMadhouseUnlock,1,,True,幸運のコインD(DL購入版),False,False,True,
+GoodLuckCoinC_Buy,Instinct Coin,OtherItem,Slot1,False,InstinctCoinAndMadhouseUnlock,1,,True,幸運のコインC(DL購入版),False,False,True,
+GoodLuckCoinA_Buy,Defense Coin,OtherItem,Slot1,False,DefenseCoinAndMadhouseUnlock,1,,True,幸運のコインA(DL購入版),False,False,True,
+StepUpBomb,Remote Bomb Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,,False,False,True,
+StepUpReload,Reload Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,,False,False,True,
+ResurrectionMedium,Adrenaline,OtherItem,Slot1,False,Nightmare,1,,True,,False,False,True,ResurrectionMedium
+StepUpCrusher,Compactor Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,強化：粉砕機,False,False,True,
+StepUpBurner,Burner Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：バーナー,False,False,True,
+StepUpGrenade,Grenade Launcher Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：グレネード,False,False,True,
+StepUpMagnum,44 MAG Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：マグナム,False,False,True,
+StepUpMeleeWP,Melee Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,強化：近接武器,False,False,True,
+StepUpMachinegun,Machine Gun Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：マシンガン,False,False,True,
+StepUpShotgun,Shotgun Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：ショットガン,False,False,True,
+StepUpHandgun,Handgun Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,強化：ハンドガン,False,False,True,
+StepUpMoveSpeed,Speed Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：移動速度,False,False,True,
+StepUpRemedy,Heal Upgrade,OtherItem,Slot1,False,Nightmare,1,,True,強化：回復薬の回復倍率,False,False,True,
+StepUpHP,Health Upgrade,OtherItem,Slot2,False,Nightmare,1,,True,強化：体力,False,False,True,
+BrokenShotgun_DB,Broken Shotgun,KeyItem,Slot2,False,,1,,True,,False,False,False,BrokenShotgun_DB
+BrokenHandgun_M19,Broken Handgun,KeyItem,Slot1,False,,1,,True,,False,False,False,BrokenHandgun_M19
+EvelynRadar4,Eveline Tissue Samples,KeyItem,Slot1,False,,1,,False,エブリンレーダー(イーサン用),False,False,False,
+EvelynRadar3,Eveline Tissue Samples,KeyItem,Slot1,False,,1,,False,エブリンレーダー(ミア現在),False,False,False,
+EvelynRadar2,Eveline Tissue Samples,KeyItem,Slot1,False,,1,,False,エブリンレーダー(ミア過去),False,False,False,
+EvelynRadar1,Strange Bottle,KeyItem,Slot1,False,,1,,False,エブリンレーダー(ミア記憶無し状態),False,False,False,
+EvelynRadar,Eveline Tissue Samples,KeyItem,Slot1,False,,1,EvelynRadar,False,,False,False,False,EvelynRadar
+Depressant,Stabilizer,Drug,Slot1,False,,1,Depressant,True,,False,False,False,Depressant
+Stimulant,Steroids,Drug,Slot1,False,,1,Stimulant,True,,False,False,False,Stimulant
+RemedyL,Strong First Aid Med,Drug,Slot1,False,,3,,True,,False,True,False,RemedyL
+RemedyM,First Aid Med,Drug,Slot1,False,,3,,True,,False,True,False,RemedyM
+AcidBulletS,Neuro Rounds,Shell,Slot1,False,,5,,True,,False,True,False,AcidBulletS
+FlameBulletS,Flame Rounds,Shell,Slot1,False,,5,,True,,False,True,False,FlameBulletS
+BurnerBullet,Burner Fuel,Shell,Slot1,False,,500,,True,,False,True,False,BurnerBullet
+MagnumBullet,44 MAG Ammo,Shell,Slot1,False,,20,,True,,False,True,False,MagnumBullet
+MachineGunBullet,Machine Gun Ammo,Shell,Slot1,False,,300,,True,,False,True,False,MachineGunBullet
+ShotgunBullet,Shotgun Shells,Shell,Slot1,False,,30,,True,,False,True,False,ShotgunBullet
+HandgunBulletL,Enhanced Handgun Ammo,Shell,Slot1,False,,20,,True,,False,True,False,HandgunBulletL
+HandgunBullet,Handgun Ammo,Shell,Slot1,False,,30,,True,,False,True,False,HandgunBullet
+MiaKnife,Survival Knife,Weapon,Slot1,False,,1,MiaKnife,True,,True,False,False,MiaKnife
+LiquidBomb,Remote Bomb,StackWeapon,Slot1,False,,20,LiquidBomb,True,,False,True,False,LiquidBomb
+Glasses_End,Telescope,UsableKeyItem,Slot1,False,,1,,True,パズル終了後の使う事の出来ない望遠鏡,False,False,False,
+Glasses_Washed,Telescope,UsableKeyItem,Slot1,False,,1,,True,,False,False,False,Glasses_Washed
+Glasses,Dirty Telescope,UsableKeyItem,Slot1,False,,1,Glasses,True,,False,False,False,Glasses
+Candle_Lighted,Candle,Weapon,Slot1,False,,1,,True,,True,False,False,Candle_Lighted
+Candle,Candle,Weapon,Slot1,False,,1,Candle,True,,True,False,False,Candle
+Burner,Burner,Weapon,Slot2,False,,1,Burner,True,,True,False,False,Burner
+GrenadeLauncher,Grenade Launcher,Weapon,Slot2,False,,1,GrenadeLauncher,True,,True,False,False,GrenadeLauncher
+Magnum,44 MAG,Weapon,Slot2,False,,1,Magnum,True,,True,False,False,Magnum
+MachineGun,P19 Machine Gun,Weapon,Slot2,False,,1,MachineGun,True,,True,False,False,MachineGun
+Shotgun_DB,M21 Shotgun,Weapon,Slot2,False,,1,Shotgun_DB,True,,True,False,False,Shotgun_DB
+Shotgun_M37,M37 Shotgun,Weapon,Slot2,False,,1,Shotgun_M37,True,,True,False,False,Shotgun_M37
+Handgun_Albert_Reward,Albert-01R,Weapon,Slot1,True,,1,Handgun_Albert_Reward,True,,True,False,False,Handgun_Albert_Reward
+Handgun_Albert,Albert-01,Weapon,Slot1,False,,1,Handgun_Albert,True,,True,False,False,Handgun_Albert
+Handgun_MPM,MPM Handgun,Weapon,Slot1,False,,1,Handgun_MPM,True,,True,False,False,Handgun_MPM
+Handgun_G17,G17 Handgun,Weapon,Slot1,False,,1,Handgun_G17,True,,True,False,False,Handgun_G17
+Handgun_M19,M19 Handgun,Weapon,Slot1,False,,1,Handgun_M19,True,,True,False,False,Handgun_M19
+Bar,Crowbar,Weapon,Slot1,False,,1,Bar,True,,True,False,False,Bar
+Knife,Knife,Weapon,Slot1,False,,1,Knife,True,,True,False,False,Knife
+ChainSaw,Chainsaw,Weapon,Slot1,False,,1,ChainSaw,True,,True,False,False,ChainSaw
+CircularSawNo,Circular Saw,Weapon,Slot1,False,,1,,True,,True,False,False,
+CircularSaw,Circular Saw,Weapon,Slot1,True,,1,CircularSaw,True,,True,False,False,CircularSaw
+HandAxe,Axe,Weapon,Slot1,False,,1,HandAxe,True,,True,False,False,HandAxe
+Trap_Turret_LV3,Turret Upgrade: Lv. MAX(Scrap cost: 1000),KeyItem,Slot1,False,Nightmare,1,,True,タレットLV3（表示用）,False,False,True,
+Trap_Turret_LV2,Turret Upgrade: Lv.2(Scrap cost: 500),KeyItem,Slot1,False,Nightmare,1,,True,タレットLV2（表示用）,False,False,True,
+Trap_Turret_LV1,Install a Turret Lv.1(Scrap cost: 100),KeyItem,Slot1,False,Nightmare,1,,True,タレットLV1（表示用）,False,False,True,
+Trap_Drum,Install a Flammable Drum(Scrap cost: 100),KeyItem,Slot1,False,Nightmare,1,,True,可燃ドラム缶（表示用）,False,False,True,
+Trap_Wire,Install a Wire Trap(Scrap cost: 100),KeyItem,Slot1,False,Nightmare,1,,True,ワイヤートラップ（表示用）,False,False,True,
+Trap_Barricade,,KeyItem,Slot1,False,Nightmare,1,,True,バリケード（表示用）,False,False,True,
+Trap_Turret,Install a Turret,KeyItem,Slot1,False,Nightmare,1,,True,タレット（表示用）,False,False,True,
+Trap_Mine,Install a Nerve Gas Trap(Scrap cost: 100),KeyItem,Slot1,False,Nightmare,1,,True,神経ガストラップ（表示用）,False,False,True,
+DlcKey3,Dissection Room Key,KeyItem,Slot1,False,Nightmare,1,,True,Ch7_4解放キー(Ch7_3用),False,False,True,
+food019,Baker Family Special  (★★★★),OtherItem,Slot1,False,Jacks55thBirthday,1,,True,ベイカー・スペシャル,False,False,True,food019
+food018,Garbage?,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,甘ったるい生ゴミ,False,False,True,
+food017,Fruitcake  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,フルーツケーキ,False,False,True,food017
+food016,Cheesecake  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,チーズケーキ,False,False,True,food016
+food015,Sugar Cake  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,シュガーケーキ,False,False,True,food015
+food014,Cake  (★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ケーキ,False,False,True,
+food013,Cheese Fondue  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,チーズフォンデュ,False,False,True,food013
+food012,Tom Yum  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,トムヤムクン,False,False,True,food012
+food011,Stew  (★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,シチュー,False,False,True,
+food010,Spicy Chicken  (★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,スパイシーチキン,False,False,True,food010
+food009,Chicken  (★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,チキン,False,False,True,
+food008,Fruit  (★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,フルーツ,False,False,True,
+food007,Dulvey Cru  (★★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,クリュダルヴェイ,False,False,True,
+food006,Cheap Wine  (★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,安物ワイン,False,False,True,
+food005,Fruit Beer  (★★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,フルーツビール,False,False,True,food005
+food004,Beer  (★★),OtherItem,Slot2,False,Jacks55thBirthday,1,,True,ビール,False,False,True,
+food003,Cheese  (★★),OtherItem,Slot1,False,Jacks55thBirthday,1,,True,チーズ,False,False,True,
+food002,Sugar  (★),OtherItem,Slot1,False,Jacks55thBirthday,1,,True,砂糖,False,False,True,
+food001,Spice  (★),OtherItem,Slot1,False,Jacks55thBirthday,1,,True,スパイス,False,False,True,
+SmallFood,,OtherItem,Slot1,False,Jacks55thBirthday,1,,True,1スロ食べ物（仮）,False,False,True,
+MiddleFood,,OtherItem,Slot2,False,Jacks55thBirthday,1,,True,２スロ食べ物（仮）,False,False,True,
+LargeFood,,OtherItem,Slot3,False,Jacks55thBirthday,1,,True,３スロ食べ物(仮),False,False,True,
+Lighter_Z_NoEquip,Lighter,KeyItem,Slot1,False,Daughters,1,,True,ゾイのライター(装備不可版),False,False,True,
+3CrestKeyBch74,Dog Head Relief,KeyItem,Slot1,False,Daughters,1,,True,トリプルクレストキー白銅(Ch7-4用),False,False,True,
+TrophySwitch,Small Component,KeyItem,Slot1,False,Daughters,1,,True,トロフィーにはめるスイッチ,False,False,True,
+GimmickForkCh7_4,Fork,KeyItem,Slot1,False,Daughters,1,,True,釘抜き用フォーク(Ch7_4用),False,False,True,
+SafeBottle,Broken Glass Bottle,KeyItem,Slot1,False,Daughters,1,,True,緊急回避用割れたビン,False,False,True,SafeBottle
+CarKey,Car Key,KeyItem,Slot1,False,Daughters,1,,True,ベーカー家の車のキー,False,False,True,
+ItemRope,Rope,KeyItem,Slot1,False,Daughters,1,,True,ロープ,False,False,True,
+Clothes,Change of Clothes,KeyItem,Slot1,False,Daughters,1,,True,着替え,False,False,True,
+GimmickKnife,Knife,Weapon,Slot1,False,Bedroom,1,GimmickKnife,True,,True,False,True,GimmickKnife
+Lantern_C,Lantern,Weapon,Slot1,False,Bedroom,1,Lantern_C,True,,True,False,True,Lantern_C
+Lighter_Z,Lighter,Weapon,Slot1,False,Daughters,1,Lighter_Z,True,,True,False,True,Lighter_Z

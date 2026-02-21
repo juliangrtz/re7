@@ -11,15 +11,15 @@ namespace Biohazard.BioRand.RE7.Services
     internal class ItemRandomizer
     {
         private readonly RE7Randomizer _randomizer;
-        private readonly HashSet<ItemID> _placedItemIds = new HashSet<ItemID>();
+        private readonly HashSet<string> _placedItemIds = [];
         private readonly bool _allowBonusItems;
         private readonly bool _allowDlcItems;
         private readonly bool _allowMercenariesItems;
         private readonly Dictionary<RandomItemSettings, EndlessBag<string>> _generalDrops = new();
-        private readonly HashSet<ItemID> _throwAway = [];
+        private readonly HashSet<string> _throwAway = [];
         private bool _excludeWeapons;
 
-        public ItemID[] PlacedItemIds => _placedItemIds.ToArray();
+        public string[] PlacedItemIds => _placedItemIds.ToArray();
         public ItemDefinition[] PlacedItems => _placedItemIds
             .Select(x => ItemDefinitionRepository.Default.Find(x)!)
             .ToArray();
@@ -232,11 +232,11 @@ namespace Biohazard.BioRand.RE7.Services
             return null;
         }
 
-        public Item? GetRandomAmmo(ItemID? itemId, Rng rng, RandomItemSettings settings)
+        public Item? GetRandomAmmo(string? itemId, Rng rng, RandomItemSettings settings)
         {
             var itemDef = itemId == null
                 ? GetRandomItemDefinition(rng, ItemKinds.Ammo)
-                : ItemDefinitionRepository.Default.Find(itemId.Value);
+                : ItemDefinitionRepository.Default.Find(itemId);
             if (itemDef == null)
                 return null;
 
