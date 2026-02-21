@@ -8,7 +8,7 @@
         {
             if (IsRunningInGitHubActions())
             {
-                Skip = "Test skipped because it is running in GitHub Actions.";
+                Skip = "Test skipped because it is running in GitHub Actions. Please run the test locally.";
             }
         }
 

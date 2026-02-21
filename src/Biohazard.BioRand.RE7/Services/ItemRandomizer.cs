@@ -1,119 +1,75 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
+using Enums.app;
 using IntelOrca.Biohazard.BioRand;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Biohazard.BioRand.RE7.Services {
-    internal class ItemRandomizer {
+namespace Biohazard.BioRand.RE7.Services
+{
+    internal class ItemRandomizer
+    {
         private readonly RE7Randomizer _randomizer;
-        private readonly HashSet<string> _placedItemIds = new HashSet<string>();
+        private readonly HashSet<ItemID> _placedItemIds = new HashSet<ItemID>();
         private readonly bool _allowBonusItems;
         private readonly bool _allowDlcItems;
         private readonly bool _allowMercenariesItems;
         private readonly Dictionary<RandomItemSettings, EndlessBag<string>> _generalDrops = new();
-        private readonly HashSet<string> _throwAway = new HashSet<string>();
+        private readonly HashSet<ItemID> _throwAway = [];
         private bool _excludeWeapons;
 
-        public string[] PlacedItemIds => _placedItemIds.ToArray();
+        public ItemID[] PlacedItemIds => _placedItemIds.ToArray();
         public ItemDefinition[] PlacedItems => _placedItemIds
             .Select(x => ItemDefinitionRepository.Default.Find(x)!)
             .ToArray();
 
-        public ItemRandomizer(RE7Randomizer randomizer) {
+        public ItemRandomizer(RE7Randomizer randomizer)
+        {
             _randomizer = randomizer;
             _allowBonusItems = randomizer.GetConfigOption<bool>("allow-bonus-items");
             _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
             _allowMercenariesItems = randomizer.GetConfigOption<bool>("allow-mercenaries-items");
         }
 
-        private void ExcludeSomeWeapons(Rng rng) {
-            if (_excludeWeapons)
-                return;
-
-            _excludeWeapons = true;
-            var itemRepo = ItemDefinitionRepository.Default;
-            var maxPerClass = Math.Clamp(_randomizer.GetConfigOption<int>("valuable-limit-weapons-per-class", 8), 1, 8);
-            if (maxPerClass >= 8)
-                return;
-
-            var allWeapons = itemRepo
-                .GetAll(ItemKinds.Weapon)
-                .Where(IsItemSupported)
-                .Shuffle(rng)
-                .GroupBy(x => x.Class)
-                .ToArray();
-            foreach (var g in allWeapons) {
-                var remove = g.Skip(maxPerClass).ToArray();
-                foreach (var r in remove) {
-                    _throwAway.Add(r.Id);
-                }
-            }
-
-            var redundantAttachments = itemRepo
-                .GetAll(ItemKinds.Attachment)
-                .Where(x => x.Weapons!.All(x => !IsItemSupported(itemRepo.Find(x)!)))
-                .ToArray();
-            foreach (var a in redundantAttachments) {
-                _throwAway.Add(a.Id);
-            }
-        }
-
-        public ItemDefinition? GetRandomWeapon(Rng rng, string? classification = null, bool allowReoccurance = true, bool excludeLegendary = false) {
+        public ItemDefinition? GetRandomWeapon(Rng rng, string? classification = null, bool allowReoccurance = true, bool excludeLegendary = false)
+        {
             if (classification == ItemClasses.None)
                 return null;
 
             return GetRandomItemDefinition(rng, ItemKinds.Weapon, classification, allowReoccurance, restrictedCheck);
 
-            bool restrictedCheck(ItemDefinition item) {
-                if (excludeLegendary) {
-                    if (item.WeaponId is int wp) {
-                        if (_randomizer.GetService<WeaponService>().IsRestricted(wp)) {
-                            return false;
-                        }
-                    }
-                }
-                return true;
+            bool restrictedCheck(ItemDefinition item)
+            {
+                if (!excludeLegendary)
+                    return true;
+
+                if (item.WeaponId is not WeaponID weaponId)
+                    return false;
+
+                return _randomizer
+                    .GetService<WeaponService>()
+                    .IsRestricted(weaponId);
             }
         }
 
-        public ItemDefinition? GetRandomAttachment(Rng rng, string? classification = null, bool allowReoccurance = true) {
+        public ItemDefinition? GetRandomAttachment(Rng rng, string? classification = null, bool allowReoccurance = true)
+        {
             return GetRandomItemDefinition(rng, ItemKinds.Attachment, classification, allowReoccurance);
         }
 
-        public ItemDefinition? GetRandomAttachment(Rng rng, ItemDefinition? weapon, bool allowReoccurance = true) {
+        public ItemDefinition? GetRandomItemDefinition(Rng rng, string kind, string? classification = null, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
+        {
             var itemRepo = ItemDefinitionRepository.Default;
             var poolEnumerable = itemRepo
-                .GetAll(ItemKinds.Attachment)
+                .GetAll(kind)
                 .Where(IsItemSupported);
-            if (!allowReoccurance) {
-                poolEnumerable = poolEnumerable
-                    .Where(x => !_placedItemIds.Contains(x.Id));
-            }
-            if (weapon != null) {
-                poolEnumerable = poolEnumerable.Where(x => x.Weapons?.Contains(weapon.Id) ?? false);
-            }
-            var pool = poolEnumerable.ToArray();
-            if (pool.Length == 0)
-                return null;
-
-            var chosen = rng.Next(pool);
-            _placedItemIds.Add(chosen.Id);
-            return chosen;
-        }
-
-        public ItemDefinition? GetRandomItemDefinition(Rng rng, string kind, string? classification = null, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null) {
-            ExcludeSomeWeapons(rng);
-
-            var itemRepo = ItemDefinitionRepository.Default;
-            var poolEnumerable = itemRepo
-                .GetAll(kind, classification)
-                .Where(IsItemSupported);
-            if (extraCheck != null) {
+            if (extraCheck != null)
+            {
                 poolEnumerable = poolEnumerable.Where(extraCheck);
             }
-            if (!allowReoccurance) {
+            if (!allowReoccurance)
+            {
                 poolEnumerable = poolEnumerable
                     .Where(x => !_placedItemIds.Contains(x.Id));
             }
@@ -126,12 +82,13 @@ namespace Biohazard.BioRand.RE7.Services {
             return chosen;
         }
 
-        private bool IsItemSupported(ItemDefinition itemDefinition) {
+        private bool IsItemSupported(ItemDefinition itemDefinition)
+        {
             if (_throwAway.Contains(itemDefinition.Id))
                 return false;
-            if (itemDefinition.Bonus)
+            if (itemDefinition.IsUnlockable)
                 return _allowBonusItems;
-            if (itemDefinition.Dlc)
+            if (itemDefinition.Dlc != null)
                 return _allowDlcItems;
 
 #if !ENABLE_BETA_FEATURES
@@ -143,8 +100,10 @@ namespace Biohazard.BioRand.RE7.Services {
             return true;
         }
 
-        public Item? GetRandomDrop(Rng rng, string dropKind, RandomItemSettings settings) {
-            return dropKind switch {
+        public Item? GetRandomDrop(Rng rng, string dropKind, RandomItemSettings settings)
+        {
+            return dropKind switch
+            {
                 //// General
                 //DropKinds.None => null,
                 //DropKinds.Automatic => new Item(-1, 0),
@@ -199,13 +158,16 @@ namespace Biohazard.BioRand.RE7.Services {
             };
         }
 
-        public Item? GetNextGeneralDrop(Rng rng, RandomItemSettings settings) {
+        public Item? GetNextGeneralDrop(Rng rng, RandomItemSettings settings)
+        {
             var bag = CreateGeneralItemPool(settings, rng);
 
             // TODO optimise this
             string kind = bag.Next();
-            for (var i = 0; i < 1000; i++) {
-                if (settings.ValidateDropKind?.Invoke(kind) != false) {
+            for (var i = 0; i < 1000; i++)
+            {
+                if (settings.ValidateDropKind?.Invoke(kind) != false)
+                {
                     break;
                 }
                 kind = bag.Next();
@@ -213,39 +175,48 @@ namespace Biohazard.BioRand.RE7.Services {
             return GetRandomDrop(rng, kind, settings);
         }
 
-        public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng) {
-            if (!_generalDrops.TryGetValue(settings, out var result)) {
-                //var ratios = new Dictionary<string, double>();
-                //foreach (var dropKind in DropKinds.GenericAll) {
-                //    var ratio = settings.GetItemRatio(dropKind);
-                //    if (ratio > 0) {
-                //        ratios.Add(dropKind, ratio);
-                //    }
-                //}
+        public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng)
+        {
+            if (!_generalDrops.TryGetValue(settings, out var result))
+            {
+                var ratios = new Dictionary<string, double>();
+                foreach (var dropKind in DropKinds.GenericAll)
+                {
+                    var ratio = settings.GetItemRatio(dropKind);
+                    if (ratio > 0)
+                    {
+                        ratios.Add(dropKind, ratio);
+                    }
+                }
 
-                //if (ratios.Count == 0)
-                //    return new EndlessBag<string>(rng, [DropKinds.None]);
+                if (ratios.Count == 0)
+                    return new EndlessBag<string>(rng, [DropKinds.None]);
 
-                //var smallestRatio = ratios.Min(x => x.Value);
-                //foreach (var k in ratios.Keys) {
-                //    ratios[k] = ratios[k] / smallestRatio;
-                //}
+                var smallestRatio = ratios.Min(x => x.Value);
+                foreach (var k in ratios.Keys)
+                {
+                    ratios[k] = ratios[k] / smallestRatio;
+                }
 
-                //var pool = new List<string>();
-                //foreach (var kvp in ratios) {
-                //    for (var i = 0; i < kvp.Value; i++) {
-                //        pool.Add(kvp.Key);
-                //    }
-                //}
-                //result = new EndlessBag<string>(rng, pool);
-                //_generalDrops[settings] = result;
+                var pool = new List<string>();
+                foreach (var kvp in ratios)
+                {
+                    for (var i = 0; i < kvp.Value; i++)
+                    {
+                        pool.Add(kvp.Key);
+                    }
+                }
+                result = new EndlessBag<string>(rng, pool);
+                _generalDrops[settings] = result;
             }
             return result;
         }
 
-        private Item? GetRandomSingleItem(Rng rng, string kind, string? classification = null, bool allowReoccurance = false) {
+        private Item? GetRandomSingleItem(Rng rng, string kind, string? classification = null, bool allowReoccurance = false)
+        {
             ItemDefinition? itemDefinition;
-            switch (kind) {
+            switch (kind)
+            {
                 case ItemKinds.Weapon:
                     itemDefinition = GetRandomWeapon(rng, classification, allowReoccurance);
                     break;
@@ -261,23 +232,25 @@ namespace Biohazard.BioRand.RE7.Services {
             return null;
         }
 
-        public Item? GetRandomAmmo(string? itemId, Rng rng, RandomItemSettings settings) {
+        public Item? GetRandomAmmo(ItemID? itemId, Rng rng, RandomItemSettings settings)
+        {
             var itemDef = itemId == null
                 ? GetRandomItemDefinition(rng, ItemKinds.Ammo)
-                : ItemDefinitionRepository.Default.Find(itemId);
+                : ItemDefinitionRepository.Default.Find(itemId.Value);
             if (itemDef == null)
                 return null;
 
             var min = settings.MinAmmoQuantity;
             var max = settings.MaxAmmoQuantity;
-            var minAmount = Math.Max(1, (int)Math.Round(min * itemDef.Stack));
-            var maxAmount = Math.Min(itemDef.Stack, (int)Math.Round(max * itemDef.Stack));
+            var minAmount = Math.Max(1, (int)Math.Round(min * itemDef.MaxStack));
+            var maxAmount = Math.Min(itemDef.MaxStack, (int)Math.Round(max * itemDef.MaxStack));
             var amount = rng.Next(minAmount, maxAmount + 1);
             return new Item(itemDef.Id, amount);
         }
     }
 
-    public class RandomItemSettings {
+    public class RandomItemSettings
+    {
         public double MinAmmoQuantity { get; set; }
         public double MaxAmmoQuantity { get; set; }
         public int MinMoneyQuantity { get; set; }
@@ -285,7 +258,8 @@ namespace Biohazard.BioRand.RE7.Services {
         public Func<string, double>? ItemRatioKeyFunc { get; set; }
         public Func<string, bool>? ValidateDropKind { get; set; }
 
-        public double GetItemRatio(string dropKind) {
+        public double GetItemRatio(string dropKind)
+        {
             return ItemRatioKeyFunc?.Invoke(dropKind) ?? 0;
         }
     }

@@ -1,26 +1,82 @@
-﻿using System.Collections.Immutable;
+﻿using Biohazard.BioRand.RE7.DLC;
+using Enums.app;
+using Enums.app.Item;
+using System;
+using System.Text.Json.Serialization;
 
-namespace Biohazard.BioRand.RE7.Items {
-    public class ItemDefinition {
-        //[JsonConverter(typeof(StringEnumConverter))]
-        public string Id { get; set; }
+namespace Biohazard.BioRand.RE7.Items
+{
+    /// <summary>
+    /// Represents the definition of an RE7 item.
+    /// Not to be confused with a concrete <see cref="Item"/>!
+    /// </summary>
+    public class ItemDefinition
+    {
+        /// <summary>
+        /// Unique identifier.
+        /// <para></para>
+        /// Example: FoundFootage000
+        /// </summary>
+        public ItemID Id { get; set; }
+
+        /// <summary>
+        /// More readable name than the <see cref="Id"/> used in RE7's UI.
+        /// <para></para>
+        /// Example: Derelict House Footage
+        /// </summary>
         public string? Name { get; set; }
-        public string? Kind { get; set; }
-        public string? Mode { get; set; }
-        public string? Size { get; set; }
-        public string? Class { get; set; }
-        public bool Bonus { get; set; }
-        public bool Dlc { get; set; }
-        public int Stack { get; set; }
-        public int Value { get; set; }
-        public string[]? Weapons { get; set; }
-        public int? WeaponId { get; set; }
-        public string? DropKind { get; set; }
-        public ImmutableArray<string> Slots { get; set; } = [];
 
-        public int Width => int.Parse((Size ?? "1x1").Split('x')[0]);
-        public int Height => int.Parse((Size ?? "1x1").Split('x')[1]);
+        /// <summary>
+        /// Used to differentiate between different categories like ammo, health, weapon etc.
+        /// </summary>
+        public ItemCategoryType CategoryType { get; set; }
+
+        /// <summary>
+        /// Space used in the inventory.
+        /// <para></para>
+        /// Example: Slot1
+        /// </summary>
+        public ItemSlotSize Size { get; set; } = ItemSlotSize.Slot1;
+
+        /// <summary>
+        /// Whether the item is an unlockable extra.
+        /// See <a href="https://steamcommunity.com/sharedfiles/filedetails?id=1761418830">here</a>
+        /// </summary>
+        public bool IsUnlockable { get; set; }
+
+        /// <summary>
+        /// Specifies the DLC the item exists in.
+        /// <para></para>
+        /// Example: NotAHero
+        /// </summary>
+        public DlcType? Dlc { get; set; }
+
+        /// <summary>
+        /// Maximum stack number of the item. Always 1 for weapons.
+        /// </summary>
+        public int MaxStack { get; set; }
+
+        /// <summary>
+        /// Identifier if the item is a weapon.
+        /// </summary>
+        public WeaponID? WeaponId { get; set; }
+
+        /// <summary>
+        /// Whether the item can be stored in the item box.
+        /// </summary>
+        public bool CanStoreInItemBox { get; set; }
+
+        /// <summary>
+        /// Extracted from the game files.
+        /// </summary>
+        public string? DeveloperComment { get; set; }
 
         public override string ToString() => Name ?? Id.ToString();
+
+        // TODO
+        public string ToDetailedString()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
