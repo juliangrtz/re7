@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Biohazard.BioRand.DataGen\Biohazard.BioRand.RE7.DataGen.csproj" />
+    <ProjectReference Include="..\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj" />
     <ProjectReference Include="..\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj" />
     <ProjectReference Include="..\biorand-re7\biorand-re7.csproj" />
   </ItemGroup>
