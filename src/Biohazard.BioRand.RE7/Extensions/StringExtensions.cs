@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Extensions
 {
@@ -54,5 +56,11 @@ namespace Biohazard.BioRand.RE7.Extensions
             hash[8] = (byte)(0x40 | (hash[8] & 0x0F));
             return new Guid(hash);
         }
+
+        public static string RemoveControlCharacters(this string message)
+            => new([.. message.Where(c => !char.IsControl(c))]);
+
+        public static string Without(this string str, string needle)
+            => str.Replace(needle, "");
     }
 }

@@ -15,22 +15,6 @@
       "commandLineArgs": "generate --url https://beta-re7.biorand.net/seed/9211 -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\re_chunk_000.pak.patch_002.pak\" -i ..\\biorand-re7.pak -k",
       "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
     },
-    "setup-rt": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
-    },
-    "setup-non-rt": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
-    },
-    "setup-pak-rt": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
-    },
-    "setup-pak-non-rt": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
-    },
     "agent": {
       "commandName": "Project",
       "commandLineArgs": "agent https://beta-api.biorand.net -k 0gDQTPwkhFrHypx2jpxqLsfsTFcjofna -i ..\\biorand-re7.pak",
@@ -43,6 +27,22 @@
     "update": {
       "commandName": "Project",
       "commandLineArgs": "update"
+    },
+    "setup": {
+      "commandName": "Project",
+      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
+    },
+    "setup-pak": {
+      "commandName": "Project",
+      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
+    },
+    "setup-dlcs": {
+      "commandName": "Project",
+      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-dlc-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full --raytracing"
+    },
+    "setup-pak-dlcs": {
+      "commandName": "Project",
+      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7-dlcs.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full --raytracing"
     }
   }
 }

@@ -34,7 +34,7 @@ namespace BioHazard.BioRand.RE7.Commands {
         public override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
             var patternList = settings.Full ? FullPatterns : MiniPatterns;
             var gamePath = settings.InputPath!;
-            var pak = new RePakCollection(gamePath);
+            var pak = new RePakCollection(gamePath); // TODO: Doesn't work for DLC PAKs yet as they are named differently!
 
             var outputPath = settings.OutputPath!;
             if (outputPath.EndsWith(".pak", StringComparison.OrdinalIgnoreCase)) {

@@ -1,7 +1,8 @@
 ﻿using Biohazard.BioRand.RE7.DLC;
+using Biohazard.BioRand.RE7.Extensions;
 using Enums.app;
 using Enums.app.Item;
-using System;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Biohazard.BioRand.RE7.Items
@@ -10,14 +11,15 @@ namespace Biohazard.BioRand.RE7.Items
     /// Represents the definition of an RE7 item.
     /// Not to be confused with a concrete <see cref="Item"/>!
     /// </summary>
-    public class ItemDefinition
+    public sealed class ItemDefinition
     {
         /// <summary>
         /// Unique identifier.
+        /// Often but not always an <see cref="ItemID"/>.
         /// <para></para>
         /// Example: FoundFootage000
         /// </summary>
-        public ItemID Id { get; set; }
+        public required string Id { get; set; }
 
         /// <summary>
         /// More readable name than the <see cref="Id"/> used in RE7's UI.
@@ -58,6 +60,7 @@ namespace Biohazard.BioRand.RE7.Items
 
         /// <summary>
         /// Identifier if the item is a weapon.
+        /// Often the same as the <see cref="ItemID"/> if the <see cref="CategoryType"/> is <see cref="ItemCategoryType.Weapon"/>.
         /// </summary>
         public WeaponID? WeaponId { get; set; }
 
@@ -67,16 +70,49 @@ namespace Biohazard.BioRand.RE7.Items
         public bool CanStoreInItemBox { get; set; }
 
         /// <summary>
-        /// Extracted from the game files.
+        /// Japanese developer comment extracted from the game files.
+        /// Sometimes gives helpful information if the item is special.
+        /// Must be (de)serialized as UTF-8!
         /// </summary>
         public string? DeveloperComment { get; set; }
 
-        public override string ToString() => Name ?? Id.ToString();
+        [JsonIgnore]
+        public bool IsWeapon => CategoryType == ItemCategoryType.Weapon;
 
-        // TODO
+        [JsonIgnore]
+        public bool IsStackable => MaxStack > 1;
+
+        [JsonIgnore]
+        public bool IsDlcItem => Dlc != null;
+
+        [JsonIgnore]
+        public ItemID? ItemId => EnumExtensions.ParseOrNull<ItemID>(Id);
+
+        public override string ToString() => Name ?? Id;
+
         public string ToDetailedString()
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            sb.AppendLine("=== Item Definition ===");
+            sb.AppendLine($"Id:                 {Id}");
+            sb.AppendLine($"Name:               {Name ?? "<null>"}");
+            sb.AppendLine($"Category:           {CategoryType}");
+            sb.AppendLine($"Size:               {Size}");
+            sb.AppendLine($"Max Stack:          {MaxStack}");
+            sb.AppendLine($"Is Unlockable:      {IsUnlockable}");
+            sb.AppendLine($"Can Store In Box:   {CanStoreInItemBox}");
+            sb.AppendLine($"DLC:                {Dlc?.ToString() ?? "<Base Game>"}");
+            sb.AppendLine($"Weapon Id:          {WeaponId?.ToString() ?? "<none>"}");
+
+            if (!string.IsNullOrWhiteSpace(DeveloperComment))
+            {
+                sb.AppendLine("Developer Comment:");
+                sb.AppendLine($"    {DeveloperComment}");
+            }
+
+            sb.AppendLine("=======================");
+            return sb.ToString();
         }
     }
 }

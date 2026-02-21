@@ -1,105 +1,145 @@
 ﻿using Biohazard.BioRand.RE7.DataGen._Data;
+using Biohazard.BioRand.RE7.DLC;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
-using CsvHelper;
 using Enums.app;
+using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Messages;
+using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
-using System.Globalization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Spectre.Console;
+using System.Collections.Concurrent;
+using System.Text;
+using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators
 {
-    internal class ItemDefinitionGenerator : ITextFileGenerator
+    internal class ItemDefinitionGenerator : IFileGenerator
     {
         public string Id => "items";
-
-        private readonly JsonSerializerOptions serializationOptions = new()
-        {
-            WriteIndented = true,
-            Converters = { new JsonStringEnumConverter() },
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull | JsonIgnoreCondition.WhenWritingDefault,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-        };
 
         private readonly RszTypeRepository _rszRepository =
             RszRepositorySerializer.Default.FromJsonGz(EmbeddedResource.Get("rszre7rt.json.gz"));
 
-        private app.ItemSettings ReadItemSettings(string filename)
+        private readonly PakFile _pakFile =
+            new(EmbeddedResource.Get("biorand-re7.pak"));
+
+        private readonly PakList _pakList =
+            new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedResource.Get("pakcontentsrt.txt.gz"))));
+
+        private readonly string _itemPathPrefix = @"natives/stm/prefab/item/";
+        private readonly string _messagesPathPrefix = @"natives/stm/message/";
+
+        private app.ItemSettings? ReadItemSettings(ulong hash)
         {
-            var userFile = new UserFile(EmbeddedResource.Get(filename));
-            return RszSerializer.Deserialize<app.ItemSettings>(userFile.GetObjects(_rszRepository)[0])
-                ?? throw new ArgumentException("Illegal filename", filename);
+            try
+            {
+                var userFile = new UserFile(_pakFile.GetEntryData(hash));
+                return RszSerializer.Deserialize<app.ItemSettings>(userFile.GetObjects(_rszRepository)[0]);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        private IEnumerable<ItemDefinition> GetItemDefinitions()
+        private readonly Lazy<List<MsgFile>> _messageFiles;
+
+        public ItemDefinitionGenerator()
         {
-            var result = new List<ItemDefinition>();
-            // -------------------------
-            // Main game items
-            // -------------------------
-            var uiItemMessagesFile = new MsgFile(EmbeddedResource.Get("ui_item_mes.msg.17"));
-            var resourceItemSettings = ReadItemSettings("resourceitemsettings.user.2");
-            var keyItemSettings = ReadItemSettings("keyitemsettings.user.2");
-            var materialItemSettings = ReadItemSettings("materialitemsettings.user.2");
-            List<app.ItemData> items = [.. resourceItemSettings._Settings, .. keyItemSettings._Settings, .. materialItemSettings._Settings];
+            _messageFiles = new Lazy<List<MsgFile>>(GetMessageFiles);
+        }
 
-            foreach (var item in items)
+        private List<MsgFile> GetMessageFiles()
+        {
+            var messages = new ConcurrentBag<MsgFile>();
+
+            Parallel.ForEach(_pakFile.FileHashes, hash =>
             {
-                ItemID id;
-                if (!Enum.TryParse(item.ItemDataID, out id))
-                {
-                    Console.WriteLine($"[!] Weird ItemDataID '{item.ItemDataID}' found, ignoring it...");
-                    continue;
-                }
+                var path = _pakList.GetPath(hash);
+                if (path == null || !path.StartsWith(_messagesPathPrefix) || !path.Contains(".msg"))
+                    return;
+                messages.Add(new MsgFile(_pakFile.GetEntryData(hash)));
+            });
 
-                result.Add(new ItemDefinition
-                {
-                    Id = id,
-                    Name = uiItemMessagesFile
-                            .FindMessage(item.NameMsg)
-                            ?.Values
-                            .First(v => v.Language == LanguageId.English)
-                            .Text
-                            .Replace("\u0022", ""), // " character,
-                    CategoryType = item.Category,
-                    Size = item.SlotSize,
-                    MaxStack = item.MaxStackNum,
-                    WeaponId = null,
-                    CanStoreInItemBox = item.CanStoreItembox,
-                    DeveloperComment = item._Comment,
-                    IsUnlockable = false
-                });
+            return [.. messages];
+        }
+
+        private string? FindMessageByGuid(Guid guid)
+        {
+            foreach (var msgFile in _messageFiles.Value)
+            {
+                var message = msgFile.FindMessage(guid);
+                if (message != null)
+                    return message
+                        .Values
+                        .Single(v => v.Language == LanguageId.English)
+                        .Text;
             }
 
-            // -------------------------
-            // DLCs
-            // -------------------------
-
-            // TODO
-
-            return result;
+            return null;
         }
 
-        private string GetCsv(IEnumerable<ItemDefinition> itemDefinitions)
-        {
-            using var writer = new StringWriter();
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            csv.WriteRecords(itemDefinitions);
-            return writer.ToString();
-        }
+        /// <summary>
+        /// <a href="https://steamcommunity.com/sharedfiles/filedetails?id=1761418830">https://steamcommunity.com/sharedfiles/filedetails?id=1761418830</a>
+        /// </summary>
+        private static bool IsUnlockable(string itemId) =>
+            new string[] {
+                "UnlimitedAmmo", "EasyBoots", "Handgun_Albert_Reward",
+                "BookDefence01", "BookDefence02", "AlphaGrass",
+                "CircularSaw", "CoinOld"
+            }.Contains(itemId);
 
-        public string Generate(TextOutputFormat format)
+        private List<ItemDefinition> GetItemDefinitions(GenerateSettings settings)
         {
-            var itemDefinitions = GetItemDefinitions();
-            Console.WriteLine($"[+] Generated {itemDefinitions.Count()} item definitions!");
-            Console.WriteLine($"[+] Please check whether the output is correct.");
-            return format switch
+            var result = new ConcurrentBag<ItemDefinition>();
+
+            Parallel.ForEach(_pakFile.FileHashes, hash =>
             {
-                TextOutputFormat.Json => JsonSerializer.Serialize(itemDefinitions, serializationOptions),
-                TextOutputFormat.Csv => GetCsv(itemDefinitions),
-                _ => throw new NotImplementedException(),
-            };
+                var path = _pakList.GetPath(hash);
+                if (path == null || !path.StartsWith(_itemPathPrefix) || !path.Contains(".user.2"))
+                    return;
+
+                var itemSettings = ReadItemSettings(hash);
+                if (itemSettings == null)
+                {
+                    if (settings.Verbose)
+                    {
+                        AnsiConsole.MarkupLine($"[yellow]{path.Without(_itemPathPrefix)}[/] does not contain item settings.");
+                    }
+
+                    return;
+                }
+
+                var items = itemSettings._Settings;
+                foreach (var item in items)
+                {
+                    result.Add(new ItemDefinition
+                    {
+                        Id = item.ItemDataID,
+                        Name = FindMessageByGuid(item.NameMsg)?.RemoveControlCharacters(),
+                        CategoryType = item.Category,
+                        Size = item.SlotSize,
+                        MaxStack = item.MaxStackNum,
+                        Dlc = DlcTypeExtensions.FromPakFileName(path),
+                        WeaponId = EnumExtensions.ParseOrNull<WeaponID>(item.ItemDataID),
+                        CanStoreInItemBox = item.CanStoreItembox,
+                        DeveloperComment = item._Comment.RemoveControlCharacters(),
+                        IsUnlockable = IsUnlockable(item.ItemDataID)
+                    });
+                }
+                AnsiConsole.MarkupLine($"[green]Extracted {items.Count} item definitions from {path.Without(_itemPathPrefix)}[/].");
+            });
+
+            return [.. result];
+        }
+
+        public object Generate(GenerateSettings settings)
+        {
+            var itemDefinitions = GetItemDefinitions(settings);
+            AnsiConsole.MarkupLine($"[green]Generated {itemDefinitions.Count} item definitions.[/]");
+ 
+            return itemDefinitions;
         }
     }
 }
