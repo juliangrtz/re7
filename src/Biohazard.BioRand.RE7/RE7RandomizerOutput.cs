@@ -5,8 +5,10 @@ using IntelOrca.Biohazard.REE.Package;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Biohazard.BioRand.RE7 {
-    public sealed class RE7RandomizerOutput {
+namespace Biohazard.BioRand.RE7
+{
+    public sealed class RE7RandomizerOutput
+    {
         private byte[]? _zipFile;
         private byte[]? _modFile;
 
@@ -15,14 +17,16 @@ namespace Biohazard.BioRand.RE7 {
         public Dictionary<string, string> LogFiles { get; }
         public int PakVersion { get; }
 
-        internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion) {
+        internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion)
+        {
             Input = input;
             PakFile = pakFile;
             LogFiles = logFiles;
             PakVersion = pakVersion;
         }
 
-        public byte[] GetOutputZip() {
+        public byte[] GetOutputZip()
+        {
             if (_zipFile != null)
                 return _zipFile;
 
@@ -32,12 +36,14 @@ namespace Biohazard.BioRand.RE7 {
             return _zipFile;
         }
 
-        public byte[] GetOutputMod() {
+        public byte[] GetOutputMod()
+        {
             if (_modFile != null)
                 return _modFile;
 
             var zipFile = BuildZipFile();
-            foreach (var entry in PakFile.Entries) {
+            foreach (var entry in PakFile.Entries)
+            {
                 zipFile.AddEntry(entry.Key, (byte[])entry.Value);
             }
             _modFile = zipFile
@@ -47,16 +53,19 @@ namespace Biohazard.BioRand.RE7 {
             return _modFile;
         }
 
-        private ZipFileBuilder BuildZipFile(string logPrefix = "") {
+        private ZipFileBuilder BuildZipFile(string logPrefix = "")
+        {
             var builder = new ZipFileBuilder();
             builder.AddEntry($"{logPrefix}config.json", Encoding.UTF8.GetBytes(Input.Configuration.ToJson()));
-            foreach (var logFile in LogFiles) {
+            foreach (var logFile in LogFiles)
+            {
                 builder.AddEntry($"{logPrefix}{logFile.Key}", Encoding.UTF8.GetBytes(logFile.Value));
             }
             return builder;
         }
 
-        private byte[] GetModInfo() {
+        private byte[] GetModInfo()
+        {
             var rf = RE7RandomizerFactory.Default;
 
             var name = $"BioRand - {Sanitize(Input.ProfileName)} [{Input.Seed}]";
@@ -79,11 +88,13 @@ namespace Biohazard.BioRand.RE7 {
             return Encoding.UTF8.GetBytes(content);
         }
 
-        private static string SanitizeParagraph(string? s) {
+        private static string SanitizeParagraph(string? s)
+        {
             return (s ?? "").Trim().ReplaceLineEndings("\\n");
         }
 
-        private static string Sanitize(string? s) {
+        private static string Sanitize(string? s)
+        {
             return (s ?? "").Trim().ReplaceLineEndings(" ");
         }
     }

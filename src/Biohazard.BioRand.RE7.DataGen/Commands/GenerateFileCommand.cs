@@ -11,7 +11,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
-
 namespace Biohazard.BioRand.RE7.DataGen.Commands
 {
     internal sealed class GenerateCommand : Command<GenerateSettings>

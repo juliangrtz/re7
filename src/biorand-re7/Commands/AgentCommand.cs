@@ -1,9 +1,10 @@
-using System.ComponentModel;
 using Biohazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.BioRand.Common;
 using Spectre.Console;
 using Spectre.Console.Cli;
+
+using System.ComponentModel;
 
 namespace BioHazard.BioRand.RE7.Commands
 {
@@ -13,14 +14,14 @@ namespace BioHazard.BioRand.RE7.Commands
         {
             [Description("Host")]
             [CommandArgument(0, "<host>")]
-            public required string Host { get; init; }
+            public string Host { get; init; }
 
             [Description("Seed to generate")]
             [CommandOption("-k|--key")]
-            public required string ApiKey { get; init; }
+            public string ApiKey { get; init; }
 
             [CommandOption("-i|--input")]
-            public required string InputPath { get; init; }
+            public string InputPath { get; init; }
 
             [CommandOption("-b|--beta")]
             public bool Beta { get; init; }
@@ -90,7 +91,7 @@ namespace BioHazard.BioRand.RE7.Commands
                 {
                     specials.Add("bawk");
                 }
-                
+
                 config["username"] = userName;
                 config["special"] = string.Join(",", specials);
 
@@ -99,6 +100,7 @@ namespace BioHazard.BioRand.RE7.Commands
             }
 
             public void LogInfo(string message) => AnsiConsole.MarkupLine($"[gray]{Timestamp} {message}[/]");
+
             public void LogError(Exception ex, string message) => AnsiConsole.MarkupLine($"[red]{Timestamp} {message} ({ex.Message})[/]");
 
             private static string Timestamp => DateTime.Now.ToString("[[yyyy-MM-dd HH:mm]]");

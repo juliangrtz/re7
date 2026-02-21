@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using BioHazard.BioRand.RE7.Commands;
+﻿using BioHazard.BioRand.RE7.Commands;
 using Spectre.Console.Cli;
+using System.Reflection;
 
 namespace BioHazard.BioRand.RE7
 {

@@ -1,6 +1,6 @@
-using System;
 using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.REE.Rsz;
+using System;
 
 namespace Biohazard.BioRand.RE7.Extensions
 {

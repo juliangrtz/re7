@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Extensions
 {

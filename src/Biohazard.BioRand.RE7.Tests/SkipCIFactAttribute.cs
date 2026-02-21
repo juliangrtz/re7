@@ -14,6 +14,5 @@
 
         private static bool IsRunningInGitHubActions() =>
             Environment.GetEnvironmentVariable(CIEnvVariable) != null;
-
     }
 }

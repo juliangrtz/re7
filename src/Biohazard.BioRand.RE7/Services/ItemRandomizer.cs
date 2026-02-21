@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Extensions;
-using Biohazard.BioRand.RE7.Items;
+﻿using Biohazard.BioRand.RE7.Items;
 using Enums.app;
 using Enums.app.Item;
 using IntelOrca.Biohazard.BioRand;
@@ -21,6 +20,7 @@ namespace Biohazard.BioRand.RE7.Services
         private bool _excludeWeapons;
 
         public string[] PlacedItemIds => _placedItemIds.ToArray();
+
         public ItemDefinition[] PlacedItems => _placedItemIds
             .Select(x => ItemDefinitionRepository.Default.Find(x)!)
             .ToArray();
@@ -109,6 +109,7 @@ namespace Biohazard.BioRand.RE7.Services
                 case ItemCategoryType.Weapon:
                     itemDefinition = GetRandomWeapon(rng, classification, allowReoccurance);
                     break;
+
                 default:
                     itemDefinition = GetRandomItemDefinition(rng, kind, classification, allowReoccurance);
                     break;

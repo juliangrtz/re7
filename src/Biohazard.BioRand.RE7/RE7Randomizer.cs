@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Threading;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Threading;
 
 namespace Biohazard.BioRand.RE7
 {

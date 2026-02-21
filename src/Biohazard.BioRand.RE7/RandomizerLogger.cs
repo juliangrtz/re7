@@ -1,36 +1,41 @@
-﻿using Biohazard.BioRand.RE7.Items;
-using System;
-using System.Linq;
+﻿using System;
 using System.Text;
 
-namespace Biohazard.BioRand.RE7 {
-    internal sealed class RandomizerLoggerIO {
+namespace Biohazard.BioRand.RE7
+{
+    internal sealed class RandomizerLoggerIO
+    {
         public RandomizerLogger Input { get; } = new();
         public RandomizerLogger Process { get; } = new();
         public RandomizerLogger Output { get; } = new();
     }
 
-    internal sealed class RandomizerLogger {
+    internal sealed class RandomizerLogger
+    {
         private readonly StringBuilder _sb = new StringBuilder();
         private readonly string _hr = new string('-', 80);
         private int _indent;
 
         public string Output => _sb.ToString();
 
-        public void Push() {
+        public void Push()
+        {
             _indent++;
         }
 
-        public void Push(string header) {
+        public void Push(string header)
+        {
             LogLine(header);
             Push();
         }
 
-        public void Pop() {
+        public void Pop()
+        {
             _indent--;
         }
 
-        public void LogVersion() {
+        public void LogVersion()
+        {
             var crf = RE7RandomizerFactory.Default;
 
             _sb.AppendLine(crf.CurrentVersionInfo);
@@ -38,26 +43,32 @@ namespace Biohazard.BioRand.RE7 {
             _sb.AppendLine($"Generated at {DateTime.Now}");
         }
 
-        public void LogHr() {
+        public void LogHr()
+        {
             _sb.AppendLine(_hr);
         }
 
-        public void LogHeader(string header) {
+        public void LogHeader(string header)
+        {
             _sb.AppendLine();
             LogHr();
             _sb.AppendLine(header);
             LogHr();
         }
 
-        public void LogLine(string line) {
+        public void LogLine(string line)
+        {
             _sb.Append(' ', _indent * 2);
             _sb.AppendLine(line);
         }
 
-        public void LogLine(params object[] columns) {
+        public void LogLine(params object[] columns)
+        {
             _sb.Append(' ', _indent * 2);
-            if (columns.Length > 0) {
-                foreach (var column in columns) {
+            if (columns.Length > 0)
+            {
+                foreach (var column in columns)
+                {
                     _sb.Append(column);
                     _sb.Append(" ");
                 }

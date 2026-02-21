@@ -1,8 +1,8 @@
-﻿namespace RE7Randomizer.Enums.RE7 {
-
+﻿namespace RE7Randomizer.Enums.RE7
+{
     // TODO: Reverse engineer IDs
-    public enum EnemyIDLegacy {
-
+    public enum EnemyIDLegacy
+    {
         //[FriendlyName("Mia (First Encounter)")]
         Em2000 = 2,
 

@@ -36,18 +36,23 @@ namespace Biohazard.BioRand.RE7.Modifiers
             {
                 case "off":
                     return;
+
                 case "shuffle_outputs":
                     HandleShuffleOutputsMode(randomizer);
                     break;
+
                 case "shuffle_inputs":
                     HandleShuffleInputsMode(randomizer);
                     break;
+
                 case "full_random":
                     HandleFullRandomMode(randomizer);
                     break;
+
                 case "chaos":
                     HandleChaosMode(randomizer);
                     break;
+
                 default:
                     logger.LogLine($"Unknown recipe randomization mode '{randomizationMode}' supplied!");
                     logger.LogLine("Not randomizing recipes.");
@@ -87,7 +92,6 @@ namespace Biohazard.BioRand.RE7.Modifiers
             }
             else
             {
-
             }
 
             randomizer.FileRepository.ModifyUserFile<app.DictionaryCombineData>(DictionaryCombineDataPath, root =>
