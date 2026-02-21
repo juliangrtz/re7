@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biohazard.BioRand.RE7", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.Tests", "src\Biohazard.BioRand.RE7.Tests\Biohazard.BioRand.RE7.Tests.csproj", "{2C763BDF-0236-45C0-BEE3-A1C32DA74E97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.DataGen", "src\Biohazard.BioRand.DataGen\Biohazard.BioRand.RE7.DataGen.csproj", "{F39039EE-DA05-4396-A844-998D0B6A4E41}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.DataGen", "src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj", "{F39039EE-DA05-4396-A844-998D0B6A4E41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
