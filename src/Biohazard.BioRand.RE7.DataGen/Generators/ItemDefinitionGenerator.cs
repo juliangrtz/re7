@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Biohazard.BioRand.RE7.DataGen
+namespace Biohazard.BioRand.RE7.DataGen.Generators
 {
     internal class ItemDefinitionGenerator : ITextFileGenerator
     {

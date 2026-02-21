@@ -1,4 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DataGen;
+﻿using Biohazard.BioRand.RE7.DataGen.Generators;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
