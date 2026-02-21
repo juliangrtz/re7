@@ -5,6 +5,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators
     internal interface IFileGenerator
     {
         string Id { get; }
+
         object Generate(GenerateSettings settings);
     }
 

@@ -2,19 +2,25 @@
 using System.IO;
 using System.IO.Compression;
 
-namespace Biohazard.BioRand.RE7.Serialization {
-    internal class ZipFileBuilder {
+namespace Biohazard.BioRand.RE7.Serialization
+{
+    internal class ZipFileBuilder
+    {
         private Dictionary<string, byte[]> _entries = new();
 
-        public ZipFileBuilder AddEntry(string path, byte[] data) {
+        public ZipFileBuilder AddEntry(string path, byte[] data)
+        {
             _entries.Add(path, data);
             return this;
         }
 
-        public byte[] Build() {
+        public byte[] Build()
+        {
             var tempDir = Directory.CreateTempSubdirectory()!;
-            try {
-                foreach (var entry in _entries) {
+            try
+            {
+                foreach (var entry in _entries)
+                {
                     var fullPath = Path.Combine(tempDir.FullName, entry.Key);
                     var dir = Path.GetDirectoryName(fullPath)!;
                     Directory.CreateDirectory(dir);
@@ -24,7 +30,9 @@ namespace Biohazard.BioRand.RE7.Serialization {
                 var ms = new MemoryStream();
                 ZipFile.CreateFromDirectory(tempDir.FullName, ms);
                 return ms.ToArray();
-            } finally {
+            }
+            finally
+            {
                 tempDir.Delete(recursive: true);
             }
         }

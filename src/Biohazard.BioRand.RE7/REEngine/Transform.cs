@@ -3,29 +3,36 @@ using IntelOrca.Biohazard.REE.Rsz;
 using System;
 using System.Numerics;
 
-namespace Biohazard.BioRand.RE7.REEngine {
-    internal struct Transform {
+namespace Biohazard.BioRand.RE7.REEngine
+{
+    internal struct Transform
+    {
         public Vector3 Position { get; set; }
         public Quaternion Rotation { get; set; }
         public Vector3 Scale { get; set; }
 
         public Transform(RszGameObject gameObject)
-            : this(gameObject.FindComponent("via.Transform") ?? throw new Exception("Game object has no transform")) {
+            : this(gameObject.FindComponent("via.Transform") ?? throw new Exception("Game object has no transform"))
+        {
         }
 
-        public Transform(RszObjectNode node) {
+        public Transform(RszObjectNode node)
+        {
             Position = node.Get<Vector3>("Position");
             Rotation = node.Get<Quaternion>("Rotation");
             Scale = node.Get<Vector3>("Scale");
         }
 
-        public EulerAngles Eular {
+        public EulerAngles Eular
+        {
             get => Rotation.ToEuler();
             set => Rotation = value.ToQuaternion();
         }
 
-        public Matrix4x4 Matrix {
-            get {
+        public Matrix4x4 Matrix
+        {
+            get
+            {
                 var position = Matrix4x4.CreateTranslation(Position);
                 var rotation = Matrix4x4.CreateFromQuaternion(Rotation);
                 var scale = Matrix4x4.CreateScale(Scale);
@@ -33,11 +40,13 @@ namespace Biohazard.BioRand.RE7.REEngine {
             }
         }
 
-        public RszObjectNode ToComponent() {
+        public RszObjectNode ToComponent()
+        {
             return RszFactory.CreateTransform(Position, Rotation, Scale);
         }
 
-        public RszGameObject UpdateGameObject(RszGameObject target) {
+        public RszGameObject UpdateGameObject(RszGameObject target)
+        {
             return target.AddOrUpdateComponent(ToComponent());
         }
     }

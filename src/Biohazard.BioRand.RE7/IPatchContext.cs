@@ -1,11 +1,13 @@
 ﻿using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 
-namespace Biohazard.BioRand.RE7 {
+namespace Biohazard.BioRand.RE7
+{
     /// <summary>
     /// Represents a context for retrieving and replacing files in a pak for a standalone mod or rando.
     /// </summary>
-    public interface IPatchContext {
+    public interface IPatchContext
+    {
         /// <summary>
         /// Gets the RSZ type repository for retrieving RSZ type definitions.
         /// </summary>

@@ -19,7 +19,7 @@ namespace Biohazard.BioRand.RE7.Items
         /// <para></para>
         /// Example: FoundFootage000
         /// </summary>
-        public required string Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// More readable name than the <see cref="Id"/> used in RE7's UI.

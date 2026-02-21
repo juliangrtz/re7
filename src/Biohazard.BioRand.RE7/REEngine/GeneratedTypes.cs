@@ -1,6 +1,7 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning disable IDE1006 // These words must begin with upper case characters
 #pragma warning disable IDE0130 // Namespace does not match folder structure
+
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -79,16 +80,19 @@ namespace app
         public app.ItemData.WeaponData WeaponSetting { get; set; }
         public app.ItemData.UIData UISetting { get; set; }
         public app.ItemData.DropItemData DropItemSetting { get; set; }
+
         public class DropItemData
         {
             public via.Prefab DropItemPrefab { get; set; }
         }
+
         public class UIData
         {
             public int IconFrameNo { get; set; }
             public int RoomID { get; set; }
             public int MapIconFrameNo { get; set; }
         }
+
         public class WeaponData
         {
             public Enums.app.ReticleGUI.WeaponTypeDef ReticleType { get; set; }

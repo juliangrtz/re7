@@ -4,10 +4,8 @@ using Spectre.Console.Cli;
 using System.ComponentModel;
 using static Biohazard.BioRand.RE7.DataGen.Commands.RszToCsCommand;
 
-
 namespace Biohazard.BioRand.RE7.DataGen.Commands
 {
-
     internal sealed class RszToCsCommand : Command<Settings>
     {
         internal sealed class Settings : CommandSettings

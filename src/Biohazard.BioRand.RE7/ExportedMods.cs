@@ -10,21 +10,29 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 
-namespace Biohazard.BioRand.RE7 {
-    public static class ExportedMods {
+namespace Biohazard.BioRand.RE7
+{
+    public static class ExportedMods
+    {
         private static ImmutableArray<Type> _patches;
         private static ImmutableArray<ExportModAttribute> _all;
 
-        private static ImmutableArray<Type> PatchTypes {
-            get {
-                if (_patches.IsDefault) {
+        private static ImmutableArray<Type> PatchTypes
+        {
+            get
+            {
+                if (_patches.IsDefault)
+                {
                     var patches = new List<(Type, int)>();
                     var assembly = Assembly.GetExecutingAssembly();
-                    foreach (var t in assembly.GetTypes()) {
-                        if (t.GetInterfaces().Any(x => x == typeof(IPatch))) {
+                    foreach (var t in assembly.GetTypes())
+                    {
+                        if (t.GetInterfaces().Any(x => x == typeof(IPatch)))
+                        {
                             var order = 0;
                             var orderAttribute = t.GetCustomAttribute<OrderAttribute>();
-                            if (orderAttribute != null) {
+                            if (orderAttribute != null)
+                            {
                                 order = orderAttribute.Order;
                             }
                             patches.Add((t, order));
@@ -39,9 +47,12 @@ namespace Biohazard.BioRand.RE7 {
             }
         }
 
-        public static ImmutableArray<ExportModAttribute> All {
-            get {
-                if (_all.IsDefault) {
+        public static ImmutableArray<ExportModAttribute> All
+        {
+            get
+            {
+                if (_all.IsDefault)
+                {
                     _all = PatchTypes
                         .Select(x => x.GetCustomAttribute<ExportModAttribute>()!)
                         .Where(x => x != null)
@@ -51,7 +62,8 @@ namespace Biohazard.BioRand.RE7 {
             }
         }
 
-        private static void ApplyPatch(Type type, RE7Randomizer? randomizer, IPatchContext context) {
+        private static void ApplyPatch(Type type, RE7Randomizer? randomizer, IPatchContext context)
+        {
             var ctors = type.GetConstructors();
             if (ctors.Length > 1)
                 throw new NotSupportedException($"Only one constructor supported for {nameof(IPatch)}");
@@ -59,11 +71,14 @@ namespace Biohazard.BioRand.RE7 {
             var ctor = ctors[0];
             var ctorParameters = ctor.GetParameters().ToArray();
             var ctorArguments = new object?[ctorParameters.Length];
-            for (var i = 0; i < ctorArguments.Length; i++) {
-                if (ctorParameters[i].ParameterType == typeof(RE7Randomizer)) {
+            for (var i = 0; i < ctorArguments.Length; i++)
+            {
+                if (ctorParameters[i].ParameterType == typeof(RE7Randomizer))
+                {
                     ctorArguments[i] = randomizer;
                 }
-                if (ctorParameters[i].ParameterType == typeof(IPatchContext)) {
+                if (ctorParameters[i].ParameterType == typeof(IPatchContext))
+                {
                     ctorArguments[i] = context;
                 }
             }
@@ -72,14 +87,16 @@ namespace Biohazard.BioRand.RE7 {
             patchInstance.Apply();
         }
 
-        public static ModBuilder ExportMod(string inputPath, string name) {
+        public static ModBuilder ExportMod(string inputPath, string name)
+        {
             var exportedModAttribute = All.FirstOrDefault(x => x.Name == name)
                 ?? throw new ArgumentException($"{name} not found", nameof(name));
             var type = PatchTypes.FirstOrDefault(x => x.GetCustomAttribute<ExportModAttribute>()?.Name == exportedModAttribute.Name)
                 ?? throw new Exception($"Type for {name} not found");
 
             var vanilla = new RePakCollection(inputPath);
-            var modBuilder = new ModBuilder {
+            var modBuilder = new ModBuilder
+            {
                 Name = exportedModAttribute.Name,
                 Description = exportedModAttribute.Description,
                 Version = exportedModAttribute.Version,
@@ -92,20 +109,27 @@ namespace Biohazard.BioRand.RE7 {
             return modBuilder;
         }
 
-        internal static void ApplyAll(RE7Randomizer? randomizer, IPatchContext context) {
-            foreach (var patchType in PatchTypes) {
+        internal static void ApplyAll(RE7Randomizer? randomizer, IPatchContext context)
+        {
+            foreach (var patchType in PatchTypes)
+            {
                 ApplyPatch(patchType, randomizer, context);
             }
         }
 
-        private class PatchContext(IPakFile vanilla, ModBuilder modBuilder) : IPatchContext {
+        private class PatchContext(IPakFile vanilla, ModBuilder modBuilder) : IPatchContext
+        {
             public RszTypeRepository TypeRepository => FileRepository.RszRepository;
             public DynamicData DynamicData { get; } = new DynamicData(download: false);
 
             public byte[]? GetSupplementFile(string path) => EmbeddedData.GetFile(path);
+
             public byte[]? GetFile(string path) => modBuilder[path] ?? vanilla.GetEntryData(path);
+
             public void SetFile(string path, byte[] data) => modBuilder[path] = data;
+
             public T? GetConfigOption<T>(string key, T? defaultValue = default) => defaultValue;
+
             public bool ExportingMod => true;
         }
     }

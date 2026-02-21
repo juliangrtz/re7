@@ -1,7 +1,9 @@
 ﻿using System.Collections.Immutable;
 
-namespace Biohazard.BioRand.RE7.Items {
-    public static class ItemClasses {
+namespace Biohazard.BioRand.RE7.Items
+{
+    public static class ItemClasses
+    {
         public const string None = "none";
         public const string Handgun = "handgun";
         public const string Shotgun = "shotgun";

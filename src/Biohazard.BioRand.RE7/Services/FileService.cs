@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Biohazard.BioRand.RE7.Services {
+namespace Biohazard.BioRand.RE7.Services
+{
 #pragma warning disable CS9113 // Parameter is unread.
+
     internal class FileService(RE7Randomizer chainsaw)
 #pragma warning restore CS9113 // Parameter is unread.
     {
@@ -9,12 +11,14 @@ namespace Biohazard.BioRand.RE7.Services {
 
         public List<FilePlacement> FilePlacements { get; private set; } = [];
 
-        internal int GetNextId() {
+        internal int GetNextId()
+        {
             return _id++;
         }
     }
 
-    internal class FilePlacement {
+    internal class FilePlacement
+    {
         public int TemplateId { get; set; }
         public int Id { get; set; }
         public string Content { get; set; } = "";

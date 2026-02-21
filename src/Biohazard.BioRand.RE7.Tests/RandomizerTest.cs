@@ -12,6 +12,7 @@ namespace Biohazard.BioRand.RE7.Tests
             ".biorand",
             "biorand-re7.pak"
         );
+
         private readonly RE7RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
         private const int DefaultTestingSeed = 0x42424242;
 

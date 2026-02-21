@@ -47,7 +47,6 @@ namespace BioHazard.BioRand.RE7.Commands
                 return 1;
             }
 
-
             foreach (var mod in settings.Mods)
             {
                 var modAttribute = mods.First(x => x.Name.Equals(mod, StringComparison.OrdinalIgnoreCase));

@@ -26,7 +26,7 @@ namespace Biohazard.BioRand.RE7
                 Default = "dx12_rt"
             });
 
-            #endregion
+            #endregion General
 
             #region Recipes
 
@@ -116,8 +116,7 @@ namespace Biohazard.BioRand.RE7
                 Default = 2
             });
 
-            
-            #endregion
+            #endregion Recipes
 
             #region Debug
 
@@ -152,7 +151,7 @@ namespace Biohazard.BioRand.RE7
                 Default = false
             });
 
-            #endregion
+            #endregion Debug
 
             var defaultProfileBytes = RE7RandomizerFactory.GetDefaultProfile();
             var defaultProfileJson = Encoding.UTF8.GetString(defaultProfileBytes);

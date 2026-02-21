@@ -1,3 +1,8 @@
+using Biohazard.BioRand.RE7;
+using Biohazard.BioRand.RE7.Extensions;
+using IntelOrca.Biohazard.BioRand;
+using Spectre.Console;
+using Spectre.Console.Cli;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.IO.Compression;
@@ -5,11 +10,6 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using Biohazard.BioRand.RE7;
-using Biohazard.BioRand.RE7.Extensions;
-using IntelOrca.Biohazard.BioRand;
-using Spectre.Console;
-using Spectre.Console.Cli;
 
 namespace BioHazard.BioRand.RE7.Commands
 {
@@ -47,7 +47,6 @@ namespace BioHazard.BioRand.RE7.Commands
             }
             return base.Validate(context, settings);
         }
-
 
         public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token)
         {

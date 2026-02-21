@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Tracing;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.DLC
 {
@@ -39,12 +38,13 @@ namespace Biohazard.BioRand.RE7.DLC
 
         private sealed record DlcMapping(Regex Pattern, DlcType Type);
 
-        /* TODO: 
+        /* TODO:
         * End of Zoe, Not a Hero
         * Remember that they are in different PAKs!
         */
 
 #pragma warning disable SYSLIB1045
+
         private static readonly DlcMapping[] DlcMappings =
         [
 
@@ -63,8 +63,8 @@ namespace Biohazard.BioRand.RE7.DLC
             new(new Regex("(dlcitem|coin)_04", RegexOptions.IgnoreCase | RegexOptions.Compiled), DlcType.ReloadCoinAndMadhouseUnlock),
             new(new Regex("(dlcitem|coin)_05", RegexOptions.IgnoreCase | RegexOptions.Compiled), DlcType.UniversalCoinAndMadhouseUnlock),
         ];
-#pragma warning restore SYSLIB1045
 
+#pragma warning restore SYSLIB1045
 
         public static DlcType? FromPakFileName(string pakFileName)
         {
