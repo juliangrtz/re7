@@ -10,7 +10,7 @@
     },
     "Generate items": {
       "commandName": "Project",
-      "commandLineArgs": "generate items"
+      "commandLineArgs": "generate -c -v items"
     }
   }
 }

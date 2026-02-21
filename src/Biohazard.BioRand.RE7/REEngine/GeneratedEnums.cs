@@ -2435,6 +2435,9 @@ namespace Enums.app.Item {
     public enum ItemCategoryType {
         OtherItem = 0,
         Weapon = 1,
+        /// <summary>
+        /// Ammo
+        /// </summary>
         Shell = 2,
         Drug = 3,
         KeyItem = 4,

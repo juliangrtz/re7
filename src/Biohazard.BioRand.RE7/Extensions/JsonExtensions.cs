@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Biohazard.BioRand.RE7.Extensions {
     internal static class JsonExtensions {
         public static string ToJson(this object o, bool indented = true, bool camelCase = false) {
             return JsonSerializer.Serialize(
                 o, new JsonSerializerOptions() {
+                    Converters = { new JsonStringEnumConverter() },
                     PropertyNamingPolicy = camelCase ? JsonNamingPolicy.CamelCase : null,
                     WriteIndented = indented
                 })!;
         }
 
-        public static T DeserializeJson<T>(this byte[] json) {
+        public static T DeserializeJson<T>(this byte[] json, bool camelCase = false) {
             return JsonSerializer.Deserialize<T>(
                 json, new JsonSerializerOptions() {
+                    Converters = { new JsonStringEnumConverter() },
                     ReadCommentHandling = JsonCommentHandling.Skip,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    PropertyNamingPolicy = camelCase ? JsonNamingPolicy.CamelCase : null
                 })!;
         }
 
-        public static T DeserializeJson<T>(this string json) {
+        public static T DeserializeJson<T>(this string json, bool camelCase = false) {
             return JsonSerializer.Deserialize<T>(
                 json, new JsonSerializerOptions() {
+                    Converters = { new JsonStringEnumConverter() },
                     ReadCommentHandling = JsonCommentHandling.Skip,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    PropertyNamingPolicy = camelCase ? JsonNamingPolicy.CamelCase : null
                 })!;
         }
 

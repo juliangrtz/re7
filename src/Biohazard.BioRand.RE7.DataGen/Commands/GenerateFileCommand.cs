@@ -93,6 +93,10 @@ namespace Biohazard.BioRand.RE7.DataGen.Commands
                             AnsiConsole.MarkupLine(
                                 $"[green]Generator '{generator.Id}' (format {format.ToString().ToTitleCase()}) finished: [bold]{Path.GetFullPath(outputPath)}[/][/] "
                             );
+
+#if DEBUG
+                            File.Copy(outputPath, $"F:\\RE_Modding\\BioRand\\re7\\src\\Biohazard.BioRand.RE7\\_Data\\{Path.GetFileName(outputPath)}", true);
+#endif
                         }
                         else
                         {

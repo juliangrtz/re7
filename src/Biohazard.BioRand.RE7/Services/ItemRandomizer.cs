@@ -1,6 +1,7 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Enums.app;
+using Enums.app.Item;
 using IntelOrca.Biohazard.BioRand;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Biohazard.BioRand.RE7.Services
             if (classification == ItemClasses.None)
                 return null;
 
-            return GetRandomItemDefinition(rng, ItemKinds.Weapon, classification, allowReoccurance, restrictedCheck);
+            return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, classification, allowReoccurance, restrictedCheck);
 
             bool restrictedCheck(ItemDefinition item)
             {
@@ -53,12 +54,7 @@ namespace Biohazard.BioRand.RE7.Services
             }
         }
 
-        public ItemDefinition? GetRandomAttachment(Rng rng, string? classification = null, bool allowReoccurance = true)
-        {
-            return GetRandomItemDefinition(rng, ItemKinds.Attachment, classification, allowReoccurance);
-        }
-
-        public ItemDefinition? GetRandomItemDefinition(Rng rng, string kind, string? classification = null, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
+        public ItemDefinition? GetRandomItemDefinition(Rng rng, ItemCategoryType kind, string? classification = null, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
         {
             var itemRepo = ItemDefinitionRepository.Default;
             var poolEnumerable = itemRepo
@@ -100,128 +96,18 @@ namespace Biohazard.BioRand.RE7.Services
             return true;
         }
 
-        public Item? GetRandomDrop(Rng rng, string dropKind, RandomItemSettings settings)
-        {
-            return dropKind switch
-            {
-                //// General
-                //DropKinds.None => null,
-                //DropKinds.Automatic => new Item(-1, 0),
-                //DropKinds.AmmoHandgun => GetRandomAmmo(ItemIds.AmmoHandgun, rng, settings),
-                //DropKinds.AmmoShotgun => GetRandomAmmo(ItemIds.AmmoShotgun, rng, settings),
-                //DropKinds.AmmoRifle => GetRandomAmmo(ItemIds.AmmoRifle, rng, settings),
-                //DropKinds.AmmoSmg => GetRandomAmmo(ItemIds.AmmoSmg, rng, settings),
-                //DropKinds.AmmoMagnum => GetRandomAmmo(ItemIds.AmmoMagnum, rng, settings),
-                //DropKinds.AmmoBolts => GetRandomAmmo(ItemIds.AmmoBolts, rng, settings),
-                //DropKinds.AmmoMines => GetRandomAmmo(ItemIds.AmmoMines, rng, settings),
-                //DropKinds.AmmoArrows => GetRandomAmmo(ItemIds.AmmoArrows, rng, settings),
-                //DropKinds.AmmoFuel => GetRandomAmmo(ItemIds.AmmoFuel, rng, settings),
-                //DropKinds.Fas => new Item(ItemIds.FirstAidSpray, 1),
-                //DropKinds.Fish => GetRandomSingleItem(rng, ItemKinds.Fish, allowReoccurance: true),
-                //DropKinds.Viper => new Item(ItemIds.Viper, 1),
-                //DropKinds.EggBrown => new Item(ItemIds.EggBrown, 1),
-                //DropKinds.EggWhite => new Item(ItemIds.EggWhite, 1),
-                //DropKinds.EggGold => new Item(ItemIds.EggGold, 1),
-                //DropKinds.GrenadeFlash => new Item(ItemIds.GrenadeFlash, 1),
-                //DropKinds.GrenadeHeavy => new Item(ItemIds.GrenadeHeavy, 1),
-                //DropKinds.GrenadeLight => new Item(ItemIds.GrenadeLight, 1),
-                //DropKinds.Gunpowder => GetRandomGunpowder(rng),
-                //DropKinds.HerbG => new Item(ItemIds.HerbG, 1),
-                //DropKinds.HerbGG => new Item(ItemIds.HerbGG, 1),
-                //DropKinds.HerbGGY => new Item(ItemIds.HerbGGY, 1),
-                //DropKinds.HerbGGG => new Item(ItemIds.HerbGGG, 1),
-                //DropKinds.HerbGR => new Item(ItemIds.HerbGR, 1),
-                //DropKinds.HerbGRY => new Item(ItemIds.HerbGRY, 1),
-                //DropKinds.HerbGY => new Item(ItemIds.HerbGY, 1),
-                //DropKinds.HerbR => new Item(ItemIds.HerbR, 1),
-                //DropKinds.HerbRY => new Item(ItemIds.HerbRY, 1),
-                //DropKinds.HerbY => new Item(ItemIds.HerbY, 1),
-                //DropKinds.Knife => GetRandomSingleItem(rng, ItemKinds.Knife, allowReoccurance: true),
-                //DropKinds.Money => GetRandomMoney(rng, settings),
-                //DropKinds.ResourceLarge => new Item(ItemIds.ResourcesLarge, 1),
-                //DropKinds.ResourceSmall => new Item(ItemIds.ResourcesSmall, 1),
-                //DropKinds.TokenSilver => new Item(ItemIds.TokenSilver, 1),
-                //DropKinds.TokenGold => new Item(ItemIds.TokenGold, 1),
-                //DropKinds.RocketLauncher => new Item(ItemIds.RocketLauncher, 1),
-
-                //// High value
-                //DropKinds.Attachment => GetRandomSingleItem(rng, ItemKinds.Attachment),
-                //DropKinds.CasePerk => GetRandomSingleItem(rng, ItemKinds.CasePerk),
-                //DropKinds.CaseSize => GetRandomSingleItem(rng, ItemKinds.CaseSize),
-                //DropKinds.Charm => GetRandomSingleItem(rng, ItemKinds.Charm),
-                //DropKinds.Recipe => GetRandomSingleItem(rng, ItemKinds.Recipe),
-                //DropKinds.SmallKey => new Item(ItemIds.SmallKey, 1),
-                //DropKinds.Treasure => GetRandomSingleItem(rng, ItemKinds.Treasure, allowReoccurance: true),
-                //DropKinds.Weapon => GetRandomSingleItem(rng, ItemKinds.Weapon),
-
-                _ => null,
-            };
-        }
-
-        public Item? GetNextGeneralDrop(Rng rng, RandomItemSettings settings)
-        {
-            var bag = CreateGeneralItemPool(settings, rng);
-
-            // TODO optimise this
-            string kind = bag.Next();
-            for (var i = 0; i < 1000; i++)
-            {
-                if (settings.ValidateDropKind?.Invoke(kind) != false)
-                {
-                    break;
-                }
-                kind = bag.Next();
-            }
-            return GetRandomDrop(rng, kind, settings);
-        }
-
         public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng)
         {
-            if (!_generalDrops.TryGetValue(settings, out var result))
-            {
-                var ratios = new Dictionary<string, double>();
-                foreach (var dropKind in DropKinds.GenericAll)
-                {
-                    var ratio = settings.GetItemRatio(dropKind);
-                    if (ratio > 0)
-                    {
-                        ratios.Add(dropKind, ratio);
-                    }
-                }
-
-                if (ratios.Count == 0)
-                    return new EndlessBag<string>(rng, [DropKinds.None]);
-
-                var smallestRatio = ratios.Min(x => x.Value);
-                foreach (var k in ratios.Keys)
-                {
-                    ratios[k] = ratios[k] / smallestRatio;
-                }
-
-                var pool = new List<string>();
-                foreach (var kvp in ratios)
-                {
-                    for (var i = 0; i < kvp.Value; i++)
-                    {
-                        pool.Add(kvp.Key);
-                    }
-                }
-                result = new EndlessBag<string>(rng, pool);
-                _generalDrops[settings] = result;
-            }
-            return result;
+            return new EndlessBag<string>();
         }
 
-        private Item? GetRandomSingleItem(Rng rng, string kind, string? classification = null, bool allowReoccurance = false)
+        private Item? GetRandomSingleItem(Rng rng, ItemCategoryType kind, string? classification = null, bool allowReoccurance = false)
         {
             ItemDefinition? itemDefinition;
             switch (kind)
             {
-                case ItemKinds.Weapon:
+                case ItemCategoryType.Weapon:
                     itemDefinition = GetRandomWeapon(rng, classification, allowReoccurance);
-                    break;
-                case ItemKinds.Attachment:
-                    itemDefinition = GetRandomAttachment(rng, classification, allowReoccurance);
                     break;
                 default:
                     itemDefinition = GetRandomItemDefinition(rng, kind, classification, allowReoccurance);
@@ -235,7 +121,7 @@ namespace Biohazard.BioRand.RE7.Services
         public Item? GetRandomAmmo(string? itemId, Rng rng, RandomItemSettings settings)
         {
             var itemDef = itemId == null
-                ? GetRandomItemDefinition(rng, ItemKinds.Ammo)
+                ? GetRandomItemDefinition(rng, ItemCategoryType.Shell)
                 : ItemDefinitionRepository.Default.Find(itemId);
             if (itemDef == null)
                 return null;
