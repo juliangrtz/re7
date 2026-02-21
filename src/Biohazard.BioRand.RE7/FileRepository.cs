@@ -1,126 +1,123 @@
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
-using System;
 using System.Collections.Concurrent;
-using System.IO;
 
-namespace Biohazard.BioRand.RE7
+namespace Biohazard.BioRand.RE7;
+
+internal class FileRepository : IPatchContext, IDisposable
 {
-    internal class FileRepository : IPatchContext, IDisposable
+    public static RszTypeRepository RszRepository { get; private set; }
+
+    public RszTypeRepository TypeRepository => RszRepository;
+    public bool ExportingMod => false;
+
+    private readonly RE7Randomizer? _randomizer;
+    private readonly PatchedPakFile? _inputPakFile;
+    private readonly string? _inputGamePath;
+    private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
+
+    public RE7Randomizer? Randomizer => _randomizer;
+    public DynamicData DynamicData { get; } = new DynamicData(download: false);
+
+    public FileRepository()
     {
-        public static RszTypeRepository RszRepository { get; private set; }
+    }
 
-        public RszTypeRepository TypeRepository => RszRepository;
-        public bool ExportingMod => false;
+    public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData)
+    {
+        _inputPakFile = inputPakFile;
+        DynamicData = dynamicData;
+    }
 
-        private readonly RE7Randomizer? _randomizer;
-        private readonly PatchedPakFile? _inputPakFile;
-        private readonly string? _inputGamePath;
-        private ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
-
-        public RE7Randomizer? Randomizer => _randomizer;
-        public DynamicData DynamicData { get; } = new DynamicData(download: false);
-
-        public FileRepository()
+    public FileRepository(RE7Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
+    {
+        _randomizer = randomizer;
+        if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase))
         {
+            _inputPakFile = new PatchedPakFile(inputGamePath);
         }
-
-        public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData)
+        else
         {
-            _inputPakFile = inputPakFile;
-            DynamicData = dynamicData;
+            _inputGamePath = inputGamePath;
         }
+        DynamicData = dynamicData;
 
-        public FileRepository(RE7Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
+        if (RszRepository == null)
         {
-            _randomizer = randomizer;
-            if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase))
+            var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json.gz");
+            RszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJson);
+        }
+    }
+
+    public void Dispose()
+    {
+        _inputPakFile?.Dispose();
+    }
+
+    public byte[] GetSupplementFile(string path)
+    {
+        return EmbeddedData.GetFile(path);
+    }
+
+    public byte[]? GetFile(string path)
+    {
+        if (_outputFiles.TryGetValue(path, out var data))
+            return data;
+
+        if (_inputGamePath == null)
+        {
+            return _inputPakFile?.GetEntryData(path);
+        }
+        else
+        {
+            var fullPath = Path.Combine(_inputGamePath, path);
+            if (File.Exists(fullPath))
             {
-                _inputPakFile = new PatchedPakFile(inputGamePath);
+                return File.ReadAllBytes(fullPath);
             }
-            else
-            {
-                _inputGamePath = inputGamePath;
-            }
-            DynamicData = dynamicData;
-
-            if (RszRepository == null)
-            {
-                var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json.gz");
-                RszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJson);
-            }
+            return null;
         }
+    }
 
-        public void Dispose()
+    public void SetFile(string path, byte[] data)
+    {
+        _outputFiles[path] = data;
+    }
+
+    public void WriteOutputPakFile(string path)
+    {
+        var builder = new PakFileBuilder();
+        foreach (var outputFile in _outputFiles)
         {
-            _inputPakFile?.Dispose();
+            builder.AddEntry(outputFile.Key, outputFile.Value);
         }
+        builder.Save(path, CompressionKind.Zstd);
+    }
 
-        public byte[] GetSupplementFile(string path)
+    public PakFileBuilder GetOutputPakFile()
+    {
+        var builder = new PakFileBuilder();
+        foreach (var outputFile in _outputFiles)
         {
-            return EmbeddedData.GetFile(path);
+            builder.AddEntry(outputFile.Key, outputFile.Value);
         }
+        return builder;
+    }
 
-        public byte[]? GetFile(string path)
+    public void WriteOutputFolder(string path)
+    {
+        foreach (var outputFile in _outputFiles)
         {
-            if (_outputFiles.TryGetValue(path, out var data))
-                return data;
-
-            if (_inputGamePath == null)
-            {
-                return _inputPakFile?.GetEntryData(path);
-            }
-            else
-            {
-                var fullPath = Path.Combine(_inputGamePath, path);
-                if (File.Exists(fullPath))
-                {
-                    return File.ReadAllBytes(fullPath);
-                }
-                return null;
-            }
+            var fullPath = Path.Combine(path, outputFile.Key);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+            File.WriteAllBytes(fullPath, outputFile.Value);
         }
+    }
 
-        public void SetFile(string path, byte[] data)
-        {
-            _outputFiles[path] = data;
-        }
-
-        public void WriteOutputPakFile(string path)
-        {
-            var builder = new PakFileBuilder();
-            foreach (var outputFile in _outputFiles)
-            {
-                builder.AddEntry(outputFile.Key, outputFile.Value);
-            }
-            builder.Save(path, CompressionKind.Zstd);
-        }
-
-        public PakFileBuilder GetOutputPakFile()
-        {
-            var builder = new PakFileBuilder();
-            foreach (var outputFile in _outputFiles)
-            {
-                builder.AddEntry(outputFile.Key, outputFile.Value);
-            }
-            return builder;
-        }
-
-        public void WriteOutputFolder(string path)
-        {
-            foreach (var outputFile in _outputFiles)
-            {
-                var fullPath = Path.Combine(path, outputFile.Key);
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-                File.WriteAllBytes(fullPath, outputFile.Value);
-            }
-        }
-
-        public T? GetConfigOption<T>(string key, T? defaultValue = default)
-        {
-            var randomizer = _randomizer;
-            return randomizer == null ? defaultValue : randomizer.GetConfigOption(key, defaultValue);
-        }
+    public T? GetConfigOption<T>(string key, T? defaultValue = default)
+    {
+        var randomizer = _randomizer;
+        return randomizer == null ? defaultValue : randomizer.GetConfigOption(key, defaultValue);
     }
 }

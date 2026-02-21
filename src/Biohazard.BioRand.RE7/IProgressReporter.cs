@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace Biohazard.BioRand.RE7;
 
-namespace Biohazard.BioRand.RE7
+public interface IProgressReporter
 {
-    public interface IProgressReporter
-    {
-        public void RunTask(string text, Action cb);
-    }
+    public void RunTask(string text, Action cb);
 }

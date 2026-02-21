@@ -1,26 +1,25 @@
 ﻿using Biohazard.BioRand.RE7.DataGen.Commands;
 using Spectre.Console.Cli;
 
-namespace Biohazard.BioRand.RE7.DataGen
+namespace Biohazard.BioRand.RE7.DataGen;
+
+internal static class Program
 {
-    internal static class Program
+    public static int Main(string[] args)
     {
-        public static int Main(string[] args)
+        var app = new CommandApp();
+
+        app.Configure(config =>
         {
-            var app = new CommandApp();
+            config.SetApplicationName("Biohazard.BioRand.RE7.DataGen");
 
-            app.Configure(config =>
-            {
-                config.SetApplicationName("Biohazard.BioRand.RE7.DataGen");
+            config.AddCommand<RszToCsCommand>("rsz-to-cs")
+                  .WithDescription("Generate C# class from RSZ type");
 
-                config.AddCommand<RszToCsCommand>("rsz-to-cs")
-                      .WithDescription("Generate C# class from RSZ type");
+            config.AddCommand<GenerateCommand>("generate")
+                  .WithDescription("Run file generator(s)");
+        });
 
-                config.AddCommand<GenerateCommand>("generate")
-                      .WithDescription("Run file generator(s)");
-            });
-
-            return app.Run(args);
-        }
+        return app.Run(args);
     }
 }
