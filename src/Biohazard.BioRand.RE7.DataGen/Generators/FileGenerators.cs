@@ -1,4 +1,4 @@
-﻿namespace Biohazard.BioRand.RE7.DataGen
+﻿namespace Biohazard.BioRand.RE7.DataGen.Generators
 {
     internal interface IFileGenerator
     {
