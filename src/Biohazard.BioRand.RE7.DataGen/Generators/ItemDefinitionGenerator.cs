@@ -138,8 +138,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators
         {
             var itemDefinitions = GetItemDefinitions(settings);
             AnsiConsole.MarkupLine($"[green]Generated {itemDefinitions.Count} item definitions.[/]");
- 
-            return itemDefinitions;
+            return itemDefinitions.OrderBy(it => it.Id);
         }
     }
 }
