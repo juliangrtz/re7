@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Generate C# class for RSZ": {
+      "commandName": "Project",
+      "commandLineArgs": "rsz-to-cs via.Prefab"
+    },
+    "Generate items": {
+      "commandName": "Project",
+      "commandLineArgs": "generate items"
+    }
+  }
+}

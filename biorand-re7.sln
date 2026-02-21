@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11505.172 d18.3
+VisualStudioVersion = 18.3.11505.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "biorand-re7", "src\biorand-re7\biorand-re7.csproj", "{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Biohazard.BioRand.RE7", "src\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj", "{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.Tests", "src\Biohazard.BioRand.RE7.Tests\Biohazard.BioRand.RE7.Tests.csproj", "{2C763BDF-0236-45C0-BEE3-A1C32DA74E97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.DataGen", "src\Biohazard.BioRand.DataGen\Biohazard.BioRand.RE7.DataGen.csproj", "{F39039EE-DA05-4396-A844-998D0B6A4E41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{2C763BDF-0236-45C0-BEE3-A1C32DA74E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C763BDF-0236-45C0-BEE3-A1C32DA74E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C763BDF-0236-45C0-BEE3-A1C32DA74E97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{2693B039-0FDF-4F19-9B4C-9604BB67B6A6} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{2C763BDF-0236-45C0-BEE3-A1C32DA74E97} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
+		{F39039EE-DA05-4396-A844-998D0B6A4E41} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5780D5E9-A2CD-4CCE-AF3A-F785EC19D2AB}

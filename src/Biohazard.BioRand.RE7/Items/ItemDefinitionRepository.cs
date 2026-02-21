@@ -1,27 +1,33 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Serialization;
+using Enums.app;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Biohazard.BioRand.RE7.Items {
-    public class ItemDefinitionRepository {
+namespace Biohazard.BioRand.RE7.Items
+{
+    public class ItemDefinitionRepository
+    {
         private static ItemDefinitionRepository? _default;
 
-        public ItemDefinition[] Items { get; set; } = new ItemDefinition[0];
+        public ItemDefinition[] Items { get; set; } = [];
 
         public ImmutableArray<string> Kinds { get; private set; }
         public ImmutableDictionary<string, ImmutableArray<ItemDefinition>> KindToItemMap { get; private set; } =
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
         public ImmutableDictionary<string, ImmutableArray<ItemDefinition>> DropKindToItemMap { get; private set; } =
             ImmutableDictionary<string, ImmutableArray<ItemDefinition>>.Empty;
-        public ImmutableDictionary<string, ItemDefinition> IdToItemMap { get; private set; } =
-            ImmutableDictionary<string, ItemDefinition>.Empty;
-        public ImmutableDictionary<string, ItemDefinition> WeaponIdToItemMap { get; private set; } =
-            ImmutableDictionary<string, ItemDefinition>.Empty;
+        public ImmutableDictionary<ItemID, ItemDefinition> IdToItemMap { get; private set; } =
+            ImmutableDictionary<ItemID, ItemDefinition>.Empty;
+        public ImmutableDictionary<WeaponID, ItemDefinition> WeaponIdToItemMap { get; private set; } =
+            ImmutableDictionary<WeaponID, ItemDefinition>.Empty;
 
-        public static ItemDefinitionRepository Default {
-            get {
-                if (_default == null) {
+        public static ItemDefinitionRepository Default
+        {
+            get
+            {
+                if (_default == null)
+                {
                     _default ??= EmbeddedData.GetFile("items.json").DeserializeJson<ItemDefinitionRepository>();
                     _default.Initialize();
                 }
@@ -29,60 +35,61 @@ namespace Biohazard.BioRand.RE7.Items {
             }
         }
 
-        private void Initialize() {
-            var releventItems = Items
-                .Where(x => !string.IsNullOrEmpty(x.Kind))
-                .ToArray();
+        private void Initialize()
+        {
+            //var releventItems = Items
+            //    .Where(x => !string.IsNullOrEmpty(x.Type))
+            //    .ToArray();
 
-            Kinds = releventItems
-                .Select(x => x.Kind!)
-                .Distinct()
-                .ToImmutableArray();
-            KindToItemMap = releventItems
-                .GroupBy(x => x.Kind!)
-                .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
-            DropKindToItemMap = releventItems
-                .Where(x => x.DropKind != null)
-                .GroupBy(x => x.DropKind!)
-                .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
-            IdToItemMap = Items.ToImmutableDictionary(x => x.Id);
+            //Kinds = releventItems
+            //    .Select(x => x.Category!)
+            //    .Distinct()
+            //    .ToImmutableArray();
+            //KindToItemMap = releventItems
+            //    .GroupBy(x => x.Category!)
+            //    .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
+            //DropKindToItemMap = releventItems
+            //    .Where(x => x.DropKind != null)
+            //    .GroupBy(x => x.DropKind!)
+            //    .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
+            //IdToItemMap = Items.ToImmutableDictionary(x => x.Id);
             //WeaponIdToItemMap = Items
             //    .Where(x => x.WeaponId != null)
             //    .ToImmutableDictionary(x => x.WeaponId!.Value);
         }
 
-        public ItemDefinition? Find(string id) {
+        public ItemDefinition? Find(ItemID id)
+        {
             IdToItemMap.TryGetValue(id, out var item);
             return item;
         }
 
-        public string GetName(string id) {
+        public string GetName(ItemID id)
+        {
             return Find(id)?.Name ?? id.ToString();
         }
 
-        public ItemDefinition? FromWeaponId(string id) {
+        public ItemDefinition? FromWeaponId(WeaponID id)
+        {
             WeaponIdToItemMap.TryGetValue(id, out var item);
             return item;
         }
 
-        public ItemDefinition[] GetAll(string kind, string? classification = null) {
+        public ItemDefinition[] GetAll(string kind)
+        {
             var items = KindToItemMap[kind].ToArray();
-            if (classification != null)
-                items = items.Where(x => x.Class == classification).ToArray();
             return items;
         }
 
-        public ItemDefinition? GetAmmo(ItemDefinition weapon) {
-            return GetAll(ItemKinds.Ammo, weapon.Class).FirstOrDefault();
-        }
-
-        public ImmutableArray<ItemDefinition> FromDropKind(string dropKind) {
+        public ImmutableArray<ItemDefinition> FromDropKind(string dropKind)
+        {
             var result = DropKindToItemMap.GetValueOrDefault(dropKind);
             return result.IsDefault ? [] : result;
         }
     }
 
-    public static class ItemKinds {
+    public static class ItemKinds
+    {
         public const string Ammo = "ammo";
         public const string Fish = "fish";
         public const string Viper = "viper";

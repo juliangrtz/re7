@@ -1,0 +1,87 @@
+Id,Name,CategoryType,Size,IsUnlockable,Dlc,MaxStack,WeaponId,CanStoreInItemBox,DeveloperComment
+HandAxe,Axe,Weapon,Slot1,False,,1,,True,
+CircularSaw,Circular Saw,Weapon,Slot1,False,,1,,True,
+ChainSaw,Chainsaw,Weapon,Slot1,False,,1,,True,
+Knife,Knife,Weapon,Slot1,False,,1,,True,
+Bar,Crowbar,Weapon,Slot1,False,,1,,True,
+Handgun_M19,M19 Handgun,Weapon,Slot1,False,,1,,True,
+Handgun_G17,G17 Handgun,Weapon,Slot1,False,,1,,True,
+Handgun_MPM,MPM Handgun,Weapon,Slot1,False,,1,,True,
+Handgun_Albert,Albert-01,Weapon,Slot1,False,,1,,True,
+Handgun_Albert_Reward,Albert-01R,Weapon,Slot1,False,,1,,True,
+Shotgun_M37,M37 Shotgun,Weapon,Slot2,False,,1,,True,
+Shotgun_DB,M21 Shotgun,Weapon,Slot2,False,,1,,True,
+MachineGun,P19 Machine Gun,Weapon,Slot2,False,,1,,True,
+Magnum,44 MAG,Weapon,Slot2,False,,1,,True,
+GrenadeLauncher,Grenade Launcher,Weapon,Slot2,False,,1,,True,
+Burner,Burner,Weapon,Slot2,False,,1,,True,
+Candle,Candle,Weapon,Slot1,False,,1,,True,
+Candle_Lighted,Candle,Weapon,Slot1,False,,1,,True,
+Glasses,Dirty Telescope,UsableKeyItem,Slot1,False,,1,,True,
+Glasses_Washed,Telescope,UsableKeyItem,Slot1,False,,1,,True,
+LiquidBomb,Remote Bomb,StackWeapon,Slot1,False,,20,,True,
+MiaKnife,Survival Knife,Weapon,Slot1,False,,1,,True,
+HandgunBullet,Handgun Ammo,Shell,Slot1,False,,30,,True,
+HandgunBulletL,Enhanced Handgun Ammo,Shell,Slot1,False,,20,,True,
+ShotgunBullet,Shotgun Shells,Shell,Slot1,False,,30,,True,
+MachineGunBullet,Machine Gun Ammo,Shell,Slot1,False,,300,,True,
+MagnumBullet,44 MAG Ammo,Shell,Slot1,False,,20,,True,
+BurnerBullet,Burner Fuel,Shell,Slot1,False,,500,,True,
+FlameBulletS,Flame Rounds,Shell,Slot1,False,,5,,True,
+AcidBulletS,Neuro Rounds,Shell,Slot1,False,,5,,True,
+RemedyM,First Aid Med,Drug,Slot1,False,,3,,True,
+RemedyL,Strong First Aid Med,Drug,Slot1,False,,3,,True,
+Stimulant,Steroids,Drug,Slot1,False,,1,,True,
+Depressant,Stabilizer,Drug,Slot1,False,,1,,True,
+EvelynRadar,Eveline Tissue Samples,KeyItem,Slot1,False,,1,,False,
+BrokenHandgun_M19,Broken Handgun,KeyItem,Slot1,False,,1,,True,
+BrokenShotgun_DB,Broken Shotgun,KeyItem,Slot2,False,,1,,True,
+FoundFootage000,Derelict House Footage,KeyItem,Slot1,False,,1,,True,
+ChainCutter,Bolt Cutters,KeyItem,Slot2,False,,1,,True,
+Chapter1Map,Guest House Map,OtherItem,Slot1,False,,1,,True,
+Fuse,Fuse,KeyItem,Slot1,False,,1,,True,
+MiaDriversLicense,Driver's License,DiscardableKeyItem,Slot1,False,,1,,True,
+EntranceHallKey,Ox Statuette,KeyItem,Slot1,False,,1,,True,
+HandCutOff,Hand,KeyItem,Slot1,False,,1,,True,
+Chapter3_2Map,Main House Map,Map,Slot1,False,,1,,True,
+SilhouettePazzlePiece,Wooden Statuette,KeyItem,Slot1,False,,1,,True,
+ToyShotgun,Model Shotgun,KeyItem,Slot2,False,,1,,True,
+MorgueKey,Scorpion Key,KeyItem,Slot1,False,,1,,True,
+BurnerPartsA,Burner Grip,KeyItem,Slot1,False,,1,,True,
+BurnerPartsB,Burner Nozzle,KeyItem,Slot1,False,,1,,True,
+TalismanKey,Crow Key,KeyItem,Slot1,False,,1,,True,
+Chapter3_3Map,Old House Map,Map,Slot1,False,,1,,True,
+SerumMaterialA,D-Series Arm,KeyItem,Slot1,False,,1,,True,
+FoundFootage030,Mia,KeyItem,Slot1,False,,1,,True,
+Chapter3_4MAP,Testing Area Map,Map,Slot1,False,,1,,True,
+FoundFootage040,Happy Birthday,KeyItem,Slot1,False,,1,,True,
+Battery,Battery,KeyItem,Slot1,False,,1,,True,
+SpringCoil,Winding Key,KeyItem,Slot1,False,,1,,True,
+CylinderKey,Lock Pick,DiscardableKeyItem,Slot1,False,,20,,True,
+SkinnyDoll,Straw Doll,KeyItem,Slot1,False,,1,,True,
+ScrewFinger,Dummy Finger,KeyItem,Slot1,False,,1,,True,
+Quill,Quill Pen,KeyItem,Slot1,False,,1,,True,
+SerumMaterialB,D-Series Head,KeyItem,Slot1,False,,1,,True,
+Valve,Valve Handle,KeyItem,Slot1,False,,1,,True,
+MasterKey,Snake Key,KeyItem,Slot1,False,,1,,True,3-4で取る「最後の鍵」「マスターキー」
+SpareKey,Corrosive,KeyItem,Slot1,False,,10,,True,溶解剤(旧スペアキー)
+Timebomb,Time Bomb,KeyItem,Slot1,False,,1,,True,"ルーカスパズルタイマー爆弾
+"
+TreasureMap02,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,宝の地図02(合体後)
+TreasureMap03,Treasure Photo,DiscardableKeyItem,Slot1,False,,1,,True,"宝の地図03(合体後)
+"
+DybbukMedicine,Serum,KeyItem,Slot1,False,,1,,True,"血清
+"
+EthanCarKey,Car Key,DiscardableKeyItem,Slot1,False,,1,,True,イーサンの車のカギ
+EthanLeg,Leg,KeyItem,Slot1,False,,1,,True,イーサンの足
+BookDefence01,The Secrets of Defense,KeyItem,Slot1,False,,1,,True,防御の極意
+BookDefence02,The Essence of Defense,KeyItem,Slot1,False,,1,,True,防御の神髄
+AlphaGrass,X-ray Glasses,KeyItem,Slot1,False,,1,,True,透視メガネ
+EasyBoots,Walking Shoes,KeyItem,Slot1,False,,1,,True,歩きやすい靴
+UnlimitedAmmo,Infinite Ammo,KeyItem,Slot1,False,,1,,True,無限弾薬
+Herb,Herb,Drug,Slot1,False,,5,,True,ハーブ
+ChemicalS,Chem Fluid,Material,Slot1,False,,1,,True,薬液（小）
+ChemicalM,Strong Chem Fluid,Material,Slot1,False,,1,,True,薬液（中）
+ChemicalL,Separating Agent,Material,Slot1,False,,1,,True,薬液（強）
+EyeDrops,Psychostimulants,Drug,Slot1,False,,5,,True,目薬（仮）
+Gunpowder,Gunpowder,Material,Slot1,False,,10,,True,ガンパウダー

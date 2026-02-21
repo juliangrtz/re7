@@ -59,7 +59,6 @@ namespace Biohazard.BioRand.RE7
             {
                 Id = $"recipe-new-entries-min",
                 Label = "Min. amount of new recipes",
-                //Description = "How many additional recipes to add. Warning: 'Only add new recipes' must be enabled for this to have an effect.",
                 Type = "range",
                 Min = 1,
                 Max = 20,
@@ -70,7 +69,6 @@ namespace Biohazard.BioRand.RE7
             {
                 Id = $"recipe-new-entries-max",
                 Label = "Max. amount of new recipes",
-                //Description = "How many additional recipes to add. Warning: 'Only add new recipes' must be enabled for this to have an effect.",
                 Type = "range",
                 Min = 1,
                 Max = 20,

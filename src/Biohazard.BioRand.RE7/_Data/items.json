@@ -1,0 +1,832 @@
+[
+  {
+    "Id": "HandAxe",
+    "Name": "Axe",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "CircularSaw",
+    "Name": "Circular Saw",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "ChainSaw",
+    "Name": "Chainsaw",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Knife",
+    "Name": "Knife",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Bar",
+    "Name": "Crowbar",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Handgun_M19",
+    "Name": "M19 Handgun",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Handgun_G17",
+    "Name": "G17 Handgun",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Handgun_MPM",
+    "Name": "MPM Handgun",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Handgun_Albert",
+    "Name": "Albert-01",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Handgun_Albert_Reward",
+    "Name": "Albert-01R",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Shotgun_M37",
+    "Name": "M37 Shotgun",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Shotgun_DB",
+    "Name": "M21 Shotgun",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MachineGun",
+    "Name": "P19 Machine Gun",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Magnum",
+    "Name": "44 MAG",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "GrenadeLauncher",
+    "Name": "Grenade Launcher",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Burner",
+    "Name": "Burner",
+    "CategoryType": "Weapon",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Candle",
+    "Name": "Candle",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Candle_Lighted",
+    "Name": "Candle",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Glasses",
+    "Name": "Dirty Telescope",
+    "CategoryType": "UsableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Glasses_Washed",
+    "Name": "Telescope",
+    "CategoryType": "UsableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "LiquidBomb",
+    "Name": "Remote Bomb",
+    "CategoryType": "StackWeapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 20,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MiaKnife",
+    "Name": "Survival Knife",
+    "CategoryType": "Weapon",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "HandgunBullet",
+    "Name": "Handgun Ammo",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 30,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "HandgunBulletL",
+    "Name": "Enhanced Handgun Ammo",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 20,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Name": "Shotgun Shells",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 30,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Name": "Machine Gun Ammo",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 300,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MagnumBullet",
+    "Name": "44 MAG Ammo",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 20,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "BurnerBullet",
+    "Name": "Burner Fuel",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 500,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "FlameBulletS",
+    "Name": "Flame Rounds",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 5,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "AcidBulletS",
+    "Name": "Neuro Rounds",
+    "CategoryType": "Shell",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 5,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "RemedyM",
+    "Name": "First Aid Med",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 3,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "RemedyL",
+    "Name": "Strong First Aid Med",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 3,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Stimulant",
+    "Name": "Steroids",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Depressant",
+    "Name": "Stabilizer",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "EvelynRadar",
+    "Name": "Eveline Tissue Samples",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": false,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "BrokenHandgun_M19",
+    "Name": "Broken Handgun",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "BrokenShotgun_DB",
+    "Name": "Broken Shotgun",
+    "CategoryType": "KeyItem",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "FoundFootage000",
+    "Name": "Derelict House Footage",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "ChainCutter",
+    "Name": "Bolt Cutters",
+    "CategoryType": "KeyItem",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Chapter1Map",
+    "Name": "Guest House Map",
+    "CategoryType": "OtherItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Fuse",
+    "Name": "Fuse",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MiaDriversLicense",
+    "Name": "Driver's License",
+    "CategoryType": "DiscardableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "EntranceHallKey",
+    "Name": "Ox Statuette",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "HandCutOff",
+    "Name": "Hand",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Chapter3_2Map",
+    "Name": "Main House Map",
+    "CategoryType": "Map",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "SilhouettePazzlePiece",
+    "Name": "Wooden Statuette",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "ToyShotgun",
+    "Name": "Model Shotgun",
+    "CategoryType": "KeyItem",
+    "Size": "Slot2",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MorgueKey",
+    "Name": "Scorpion Key",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "BurnerPartsA",
+    "Name": "Burner Grip",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "BurnerPartsB",
+    "Name": "Burner Nozzle",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "TalismanKey",
+    "Name": "Crow Key",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Chapter3_3Map",
+    "Name": "Old House Map",
+    "CategoryType": "Map",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "SerumMaterialA",
+    "Name": "D-Series Arm",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "FoundFootage030",
+    "Name": "Mia",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Chapter3_4MAP",
+    "Name": "Testing Area Map",
+    "CategoryType": "Map",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "FoundFootage040",
+    "Name": "Happy Birthday",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Battery",
+    "Name": "Battery",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "SpringCoil",
+    "Name": "Winding Key",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "CylinderKey",
+    "Name": "Lock Pick",
+    "CategoryType": "DiscardableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 20,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "SkinnyDoll",
+    "Name": "Straw Doll",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "ScrewFinger",
+    "Name": "Dummy Finger",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Quill",
+    "Name": "Quill Pen",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "SerumMaterialB",
+    "Name": "D-Series Head",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "Valve",
+    "Name": "Valve Handle",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": ""
+  },
+  {
+    "Id": "MasterKey",
+    "Name": "Snake Key",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "3-4で取る「最後の鍵」「マスターキー」"
+  },
+  {
+    "Id": "SpareKey",
+    "Name": "Corrosive",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 10,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "溶解剤(旧スペアキー)"
+  },
+  {
+    "Id": "Timebomb",
+    "Name": "Time Bomb",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "ルーカスパズルタイマー爆弾\r\n"
+  },
+  {
+    "Id": "TreasureMap02",
+    "Name": "Treasure Photo",
+    "CategoryType": "DiscardableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "宝の地図02(合体後)"
+  },
+  {
+    "Id": "TreasureMap03",
+    "Name": "Treasure Photo",
+    "CategoryType": "DiscardableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "宝の地図03(合体後)\r\n"
+  },
+  {
+    "Id": "DybbukMedicine",
+    "Name": "Serum",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "血清\r\n"
+  },
+  {
+    "Id": "EthanCarKey",
+    "Name": "Car Key",
+    "CategoryType": "DiscardableKeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "イーサンの車のカギ"
+  },
+  {
+    "Id": "EthanLeg",
+    "Name": "Leg",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "イーサンの足"
+  },
+  {
+    "Id": "BookDefence01",
+    "Name": "The Secrets of Defense",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "防御の極意"
+  },
+  {
+    "Id": "BookDefence02",
+    "Name": "The Essence of Defense",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "防御の神髄"
+  },
+  {
+    "Id": "AlphaGrass",
+    "Name": "X-ray Glasses",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "透視メガネ"
+  },
+  {
+    "Id": "EasyBoots",
+    "Name": "Walking Shoes",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "歩きやすい靴"
+  },
+  {
+    "Id": "UnlimitedAmmo",
+    "Name": "Infinite Ammo",
+    "CategoryType": "KeyItem",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "無限弾薬"
+  },
+  {
+    "Id": "Herb",
+    "Name": "Herb",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 5,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "ハーブ"
+  },
+  {
+    "Id": "ChemicalS",
+    "Name": "Chem Fluid",
+    "CategoryType": "Material",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "薬液（小）"
+  },
+  {
+    "Id": "ChemicalM",
+    "Name": "Strong Chem Fluid",
+    "CategoryType": "Material",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "薬液（中）"
+  },
+  {
+    "Id": "ChemicalL",
+    "Name": "Separating Agent",
+    "CategoryType": "Material",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 1,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "薬液（強）"
+  },
+  {
+    "Id": "EyeDrops",
+    "Name": "Psychostimulants",
+    "CategoryType": "Drug",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 5,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "目薬（仮）"
+  },
+  {
+    "Id": "Gunpowder",
+    "Name": "Gunpowder",
+    "CategoryType": "Material",
+    "Size": "Slot1",
+    "IsUnlockable": false,
+    "MaxStack": 10,
+    "CanStoreInItemBox": true,
+    "DeveloperComment": "ガンパウダー"
+  }
+]
