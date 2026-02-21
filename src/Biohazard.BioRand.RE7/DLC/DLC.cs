@@ -1,6 +1,5 @@
-﻿namespace Biohazard.BioRand.RE7.DLC
+﻿namespace Biohazard.BioRand.RE7.DLC;
+
+internal class DLC
 {
-    internal class DLC
-    {
-    }
 }

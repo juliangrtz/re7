@@ -1,19 +1,16 @@
-﻿using System;
+﻿namespace Biohazard.BioRand.RE7.Extensions;
 
-namespace Biohazard.BioRand.RE7.Extensions
+public static class EnumExtensions
 {
-    public static class EnumExtensions
+    public static TEnum? ParseOrNull<TEnum>(string value) where TEnum : struct, Enum
     {
-        public static TEnum? ParseOrNull<TEnum>(string value) where TEnum : struct, Enum
+        try
         {
-            try
-            {
-                return Enum.Parse<TEnum>(value);
-            }
-            catch
-            {
-                return null;
-            }
+            return Enum.Parse<TEnum>(value);
+        }
+        catch
+        {
+            return null;
         }
     }
 }

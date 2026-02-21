@@ -1,90 +1,89 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Enums.app.Item;
 
-namespace Biohazard.BioRand.RE7.Tests.Repositories
+namespace Biohazard.BioRand.RE7.Tests.Repositories;
+
+public class ItemDefinitionRepositoryTest
 {
-    public class ItemDefinitionRepositoryTest
+    private readonly ItemDefinitionRepository repository = ItemDefinitionRepository.Default;
+
+    [Fact]
+    public void Repository_Should_Not_Be_Empty()
     {
-        private readonly ItemDefinitionRepository repository = ItemDefinitionRepository.Default;
+        Assert.NotEmpty(repository);
+    }
 
-        [Fact]
-        public void Repository_Should_Not_Be_Empty()
-        {
-            Assert.NotEmpty(repository);
-        }
+    [Fact]
+    public void All_Items_Must_Have_Id()
+    {
+        var invalid = repository
+            .Where(i => string.IsNullOrWhiteSpace(i.Id))
+            .ToList();
 
-        [Fact]
-        public void All_Items_Must_Have_Id()
-        {
-            var invalid = repository
-                .Where(i => string.IsNullOrWhiteSpace(i.Id))
-                .ToList();
+        Assert.True(invalid.Count == 0,
+            $"Items without valid ID: {string.Join(", ", invalid.Select(i => i.Name ?? "<null>"))}");
+    }
 
-            Assert.True(invalid.Count == 0,
-                $"Items without valid ID: {string.Join(", ", invalid.Select(i => i.Name ?? "<null>"))}");
-        }
+    [Fact]
+    public void Ids_Must_Be_Unique()
+    {
+        var duplicates = repository
+            .GroupBy(i => i.Id)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
 
-        [Fact]
-        public void Ids_Must_Be_Unique()
-        {
-            var duplicates = repository
-                .GroupBy(i => i.Id)
-                .Where(g => g.Count() > 1)
-                .Select(g => g.Key)
-                .ToList();
+        Assert.True(duplicates.Count == 0,
+            $"Duplicate item IDs found: {string.Join(", ", duplicates)}");
+    }
 
-            Assert.True(duplicates.Count == 0,
-                $"Duplicate item IDs found: {string.Join(", ", duplicates)}");
-        }
+    [Fact]
+    public void WeaponIds_Must_Be_Unique()
+    {
+        var duplicates = repository
+            .Where(i => i.WeaponId != null)
+            .GroupBy(i => i.WeaponId)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
 
-        [Fact]
-        public void WeaponIds_Must_Be_Unique()
-        {
-            var duplicates = repository
-                .Where(i => i.WeaponId != null)
-                .GroupBy(i => i.WeaponId)
-                .Where(g => g.Count() > 1)
-                .Select(g => g.Key)
-                .ToList();
+        Assert.True(duplicates.Count == 0,
+            $"Duplicate WeaponIDs found: {string.Join(", ", duplicates)}");
+    }
 
-            Assert.True(duplicates.Count == 0,
-                $"Duplicate WeaponIDs found: {string.Join(", ", duplicates)}");
-        }
+    [Fact]
+    public void Unlockables_Must_Not_Be_Stackable()
+    {
+        var invalid = repository
+            .Where(i => i.IsUnlockable && i.MaxStack > 1)
+            .Select(i => i.Id)
+            .ToList();
 
-        [Fact]
-        public void Unlockables_Must_Not_Be_Stackable()
-        {
-            var invalid = repository
-                .Where(i => i.IsUnlockable && i.MaxStack > 1)
-                .Select(i => i.Id)
-                .ToList();
+        Assert.True(invalid.Count == 0,
+            $"Unlockables with MaxStack > 1: {string.Join(", ", invalid)}");
+    }
 
-            Assert.True(invalid.Count == 0,
-                $"Unlockables with MaxStack > 1: {string.Join(", ", invalid)}");
-        }
+    [Fact]
+    public void Weapons_Must_Have_MaxStack_Of_One()
+    {
+        var invalid = repository
+            .Where(i => i.CategoryType == ItemCategoryType.Weapon && i.MaxStack != 1)
+            .Select(i => i.Id)
+            .ToList();
 
-        [Fact]
-        public void Weapons_Must_Have_MaxStack_Of_One()
-        {
-            var invalid = repository
-                .Where(i => i.CategoryType == ItemCategoryType.Weapon && i.MaxStack != 1)
-                .Select(i => i.Id)
-                .ToList();
+        Assert.True(invalid.Count == 0,
+            $"Weapons with invalid MaxStack: {string.Join(", ", invalid)}");
+    }
 
-            Assert.True(invalid.Count == 0,
-                $"Weapons with invalid MaxStack: {string.Join(", ", invalid)}");
-        }
+    [Fact]
+    public void Named_Items_Should_Not_Have_Empty_Names()
+    {
+        var invalid = repository
+            .Where(i => i.Name != null && string.IsNullOrWhiteSpace(i.Name))
+            .Select(i => i.Id)
+            .ToList();
 
-        [Fact]
-        public void Named_Items_Should_Not_Have_Empty_Names()
-        {
-            var invalid = repository
-                .Where(i => i.Name != null && string.IsNullOrWhiteSpace(i.Name))
-                .Select(i => i.Id)
-                .ToList();
-
-            Assert.True(invalid.Count == 0,
-                $"Items with empty Name string: {string.Join(", ", invalid)}");
-        }
+        Assert.True(invalid.Count == 0,
+            $"Items with empty Name string: {string.Join(", ", invalid)}");
     }
 }

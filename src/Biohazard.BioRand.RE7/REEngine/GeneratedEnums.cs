@@ -6,8 +6,10 @@
 #pragma warning disable IDE0130 // namespace Enums.does not match folder structure
 
 
-namespace Enums.app.Em5540.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em5540.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         Attack = 2,
@@ -17,15 +19,19 @@ namespace Enums.app.Em5540.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.VideoCameraUIDisp {
-    public enum Switch {
+namespace Enums.app.VideoCameraUIDisp
+{
+    public enum Switch
+    {
         ON = 0,
         OFF = 1,
     }
 }
 
-namespace Enums.app.vr {
-    public enum AAType {
+namespace Enums.app.vr
+{
+    public enum AAType
+    {
         None = 0,
         FXAA = 1,
         TAA = 2,
@@ -33,8 +39,10 @@ namespace Enums.app.vr {
     }
 }
 
-namespace Enums.via.wwiselib {
-    public enum CurveInterpolationType {
+namespace Enums.via.wwiselib
+{
+    public enum CurveInterpolationType
+    {
         Log3 = 0,
         Sine = 1,
         Log1 = 2,
@@ -47,8 +55,10 @@ namespace Enums.via.wwiselib {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum StopStatus {
+namespace Enums.via.hid.VrTracker
+{
+    public enum StopStatus
+    {
         Success = 0,
         NotSupported = -1,
         NotStarted = -2,
@@ -57,8 +67,10 @@ namespace Enums.via.hid.VrTracker {
     }
 }
 
-namespace Enums.app.EffectDecal {
-    public enum DecalDirectionEnum {
+namespace Enums.app.EffectDecal
+{
+    public enum DecalDirectionEnum
+    {
         XPlus = 0,
         XMinus = 1,
         YPlus = 2,
@@ -68,8 +80,10 @@ namespace Enums.app.EffectDecal {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum ShapeCastOption {
+namespace Enums.via.dynamics
+{
+    public enum ShapeCastOption
+    {
         AllHits = 0,
         DisableBackFacingTriangleHits = 1,
         DisableFrontFacingTriangleHits = 2,
@@ -82,8 +96,10 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via.puppet.dev.SyncInfo {
-    public enum Event {
+namespace Enums.via.puppet.dev.SyncInfo
+{
+    public enum Event
+    {
         None = 0,
         SendTransform = 1,
         RecvTransform = 2,
@@ -94,8 +110,10 @@ namespace Enums.via.puppet.dev.SyncInfo {
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotOverlayImageOrigin {
+namespace Enums.via
+{
+    public enum ScreenShotOverlayImageOrigin
+    {
         LeftTop = 1,
         LeftCenter = 2,
         LeftBottom = 3,
@@ -108,36 +126,46 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumI1 {
+namespace Enums.via.clr
+{
+    public enum EnumI1
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum ClearFlag {
+namespace Enums.via.render
+{
+    public enum ClearFlag
+    {
         Depth = 1,
         Stencil = 2,
     }
 }
 
-namespace Enums.app.QuickEquipMenu {
-    public enum ModeType {
+namespace Enums.app.QuickEquipMenu
+{
+    public enum ModeType
+    {
         Normal = 0,
         Inventory = 1,
     }
 }
 
-namespace Enums.via {
-    public enum GroupPlacement {
+namespace Enums.via
+{
+    public enum GroupPlacement
+    {
         Top = 0,
         Bottom = 1,
         Natural = 2,
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum ProcStatus {
+namespace Enums.app.CH8SaveManager
+{
+    public enum ProcStatus
+    {
         Idle = 0,
         Load_CH8_System_Entry = 1,
         Load_CH8_System_Wait = 2,
@@ -147,8 +175,10 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.via.render {
-    public enum LuminanceBleedFilterType {
+namespace Enums.via.render
+{
+    public enum LuminanceBleedFilterType
+    {
         DownSample = 0,
         Variance = 1,
         AdjacentClamping = 2,
@@ -156,8 +186,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.network.Core.ShowError {
-    public enum Phase {
+namespace Enums.via.network.Core.ShowError
+{
+    public enum Phase
+    {
         None = 0,
         ErrorDialogOpen = 1,
         ErrorDialogWait = 2,
@@ -169,52 +201,66 @@ namespace Enums.via.network.Core.ShowError {
     }
 }
 
-namespace Enums.via.eq.Var {
-    public enum Identifier {
+namespace Enums.via.eq.Var
+{
+    public enum Identifier
+    {
         None = 0,
         Constant = 1,
         Override = 2,
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum WwiseSwitchListForDamage {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum WwiseSwitchListForDamage
+    {
         Head = 0,
         Other = 1,
     }
 }
 
-namespace Enums.app.MultiSubMenu {
-    public enum TabTypeDef {
+namespace Enums.app.MultiSubMenu
+{
+    public enum TabTypeDef
+    {
         Album = 0,
         Map = 1,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceNativeUiOverlaidStatus {
+namespace Enums.via
+{
+    public enum SystemServiceNativeUiOverlaidStatus
+    {
         Unknown = 0,
         NoOverlaid = 1,
         Overlaid = 2,
     }
 }
 
-namespace Enums.app.Em3100SpawnManager {
-    public enum UseType {
+namespace Enums.app.Em3100SpawnManager
+{
+    public enum UseType
+    {
         Patrol = 0,
         BugHole = 1,
         BugHoleFast = 2,
     }
 }
 
-namespace Enums.app.Em3000 {
-    public enum OverrideActionNo {
+namespace Enums.app.Em3000
+{
+    public enum OverrideActionNo
+    {
         Test = 0,
     }
 }
 
-namespace Enums.app.InventoryItemIcon {
-    public enum State {
+namespace Enums.app.InventoryItemIcon
+{
+    public enum State
+    {
         Default = 0,
         Focus = 1,
         UnFocus = 2,
@@ -224,8 +270,10 @@ namespace Enums.app.InventoryItemIcon {
     }
 }
 
-namespace Enums.app.BirthdayTransitionController {
-    public enum SaveWaitTypeEnum {
+namespace Enums.app.BirthdayTransitionController
+{
+    public enum SaveWaitTypeEnum
+    {
         None = 0,
         Result = 1,
         ModeEnd = 2,
@@ -234,8 +282,10 @@ namespace Enums.app.BirthdayTransitionController {
     }
 }
 
-namespace Enums.via.uvsequence {
-    public enum UVTransform {
+namespace Enums.via.uvsequence
+{
+    public enum UVTransform
+    {
         None = 0,
         Rotate90 = 1,
         Rotate180 = 2,
@@ -247,8 +297,10 @@ namespace Enums.via.uvsequence {
     }
 }
 
-namespace Enums.app.Em8100.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Dead
+{
+    public enum Type
+    {
         Ground = 0,
         Beam = 1,
         Grab = 2,
@@ -256,15 +308,19 @@ namespace Enums.app.Em8100.Action.Dead {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ConsoleGraphicItem {
+namespace Enums.app.OptionMenu
+{
+    public enum ConsoleGraphicItem
+    {
         RayTracingMode = 0,
         HighFrameRate = 1,
     }
 }
 
-namespace Enums.via {
-    public enum Country {
+namespace Enums.via
+{
+    public enum Country
+    {
         Unknown = -1,
         Afghanistan = 4,
         AlandIslands = 248,
@@ -526,15 +582,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum RayTracingResoultion {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum RayTracingResoultion
+    {
         Origin_Res = 0,
         Half_Res = 1,
     }
 }
 
-namespace Enums.app.Pl0000EventOnly {
-    public enum StampRoutine {
+namespace Enums.app.Pl0000EventOnly
+{
+    public enum StampRoutine
+    {
         None = 0,
         Recover = 1,
         Wet = 2,
@@ -542,8 +602,10 @@ namespace Enums.app.Pl0000EventOnly {
     }
 }
 
-namespace Enums.app.Em3600.Action.Step {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Step
+{
+    public enum Type
+    {
         StepL = 0,
         StepR = 1,
         StepB = 2,
@@ -556,8 +618,10 @@ namespace Enums.app.Em3600.Action.Step {
     }
 }
 
-namespace Enums.app.InteractObjectBase {
-    public enum Lv {
+namespace Enums.app.InteractObjectBase
+{
+    public enum Lv
+    {
         None = 0,
         Level1 = 1,
         Level2 = 2,
@@ -567,23 +631,29 @@ namespace Enums.app.InteractObjectBase {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum ControlPointV {
+namespace Enums.via.gui.detail
+{
+    public enum ControlPointV
+    {
         Top = 0,
         Center = 1,
         Bottom = 2,
     }
 }
 
-namespace Enums.app.Em2100Control {
-    public enum RequestSetColliderIndex {
+namespace Enums.app.Em2100Control
+{
+    public enum RequestSetColliderIndex
+    {
         PressMain = 0,
         PressLarge = 1,
     }
 }
 
-namespace Enums.app.PlayerReticleController {
-    public enum ReticleDisplayState {
+namespace Enums.app.PlayerReticleController
+{
+    public enum ReticleDisplayState
+    {
         Hide = 0,
         NoHold = 1,
         CasualHold = 2,
@@ -593,8 +663,10 @@ namespace Enums.app.PlayerReticleController {
     }
 }
 
-namespace Enums.app.Nightmare.NightmareTrapUnitWireTrapUpdater {
-    public enum State {
+namespace Enums.app.Nightmare.NightmareTrapUnitWireTrapUpdater
+{
+    public enum State
+    {
         Init = 0,
         Wait = 1,
         Expand = 2,
@@ -602,31 +674,39 @@ namespace Enums.app.Nightmare.NightmareTrapUnitWireTrapUpdater {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum NodeBillboardType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum NodeBillboardType
+    {
         Bezier = 0,
         Spline = 1,
         Num = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.ExMove {
-    public enum Type {
+namespace Enums.app.Em3600.Action.ExMove
+{
+    public enum Type
+    {
         Stride = 0,
         GetOver = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum CenterStabilizing {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum CenterStabilizing
+    {
         None = 0,
         FadeFrame = 1,
         SpeedLimit = 2,
     }
 }
 
-namespace Enums.via.wwise.WwiseGlobalUserVariablesValue {
-    public enum ComparisonOperator {
+namespace Enums.via.wwise.WwiseGlobalUserVariablesValue
+{
+    public enum ComparisonOperator
+    {
         Equal = 0,
         NotEqual = 1,
         LessThan = 2,
@@ -637,22 +717,28 @@ namespace Enums.via.wwise.WwiseGlobalUserVariablesValue {
     }
 }
 
-namespace Enums.app.DoorPush {
-    public enum OpenSide {
+namespace Enums.app.DoorPush
+{
+    public enum OpenSide
+    {
         Front = 0,
         Back = 1,
         Auto = 2,
     }
 }
 
-namespace Enums.app.Em4000Order {
-    public enum OrderType {
+namespace Enums.app.Em4000Order
+{
+    public enum OrderType
+    {
         WarpTo = 0,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum SourceType : uint {
+namespace Enums.via.audiorender
+{
+    public enum SourceType : uint
+    {
         None = 0xffffffffu,
         Wave = 544629111,
         ADPCM = 2003137400,
@@ -662,8 +748,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.eq.Operator {
-    public enum Type {
+namespace Enums.via.eq.Operator
+{
+    public enum Type
+    {
         Exp = 0,
         Mul = 1,
         Div = 2,
@@ -673,16 +761,20 @@ namespace Enums.via.eq.Operator {
     }
 }
 
-namespace Enums.app.Em3102.Goal {
-    public enum GoalId {
+namespace Enums.app.Em3102.Goal
+{
+    public enum GoalId
+    {
         Idle = 0,
         Rest = 1,
         Em3102 = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_4ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_4ch
+    {
         L = 0,
         R = 1,
         Ls = 2,
@@ -691,16 +783,20 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum StartPosTypeEnum {
+namespace Enums.app.GameEventAction
+{
+    public enum StartPosTypeEnum
+    {
         Point = 0,
         Line = 1,
         StartAngleOnly = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum DeviceKindDetails {
+namespace Enums.via.hid
+{
+    public enum DeviceKindDetails
+    {
         Unknown = 0,
         Null = 1,
         MergedGamePad = 2,
@@ -733,8 +829,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.network.BattleInput {
-    public enum Error {
+namespace Enums.via.network.BattleInput
+{
+    public enum Error
+    {
         None = 0,
         OpponentNotExist = 1,
         Checksum = 2,
@@ -743,38 +841,48 @@ namespace Enums.via.network.BattleInput {
     }
 }
 
-namespace Enums.via.gui {
-    public enum TextureAssetType {
+namespace Enums.via.gui
+{
+    public enum TextureAssetType
+    {
         UVSequence = 0,
         Texture = 1,
     }
 }
 
-namespace Enums.app {
-    public enum WeaponCategory {
+namespace Enums.app
+{
+    public enum WeaponCategory
+    {
         Melee = 0,
         Gun = 1,
         Others = 2,
     }
 }
 
-namespace Enums.app.InventoryMenu.CursorParam {
-    public enum TypeDef {
+namespace Enums.app.InventoryMenu.CursorParam
+{
+    public enum TypeDef
+    {
         ItemSlot = 0,
         ItemBoxList = 1,
     }
 }
 
-namespace Enums.app.PlayerWeaponChange {
-    public enum ItemType {
+namespace Enums.app.PlayerWeaponChange
+{
+    public enum ItemType
+    {
         Unknown = 0,
         Weapon = 1,
         Item = 2,
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
-    public enum DriveCarStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1Final
+{
+    public enum DriveCarStatus
+    {
         None = 0,
         Goto = 1,
         CanGetInto = 2,
@@ -783,23 +891,29 @@ namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
     }
 }
 
-namespace Enums.via.Window.MessageArgs {
-    public enum PenTabCursor {
+namespace Enums.via.Window.MessageArgs
+{
+    public enum PenTabCursor
+    {
         Pen = 1,
         TailSwitch = 2,
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum eMotionLayer {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum eMotionLayer
+    {
         Base = 0,
         Inertia = 1,
         Damage = 2,
     }
 }
 
-namespace Enums.app.Chapter3_IMD_Result {
-    public enum ProcStateEnum {
+namespace Enums.app.Chapter3_IMD_Result
+{
+    public enum ProcStateEnum
+    {
         Startup = 0,
         WaitResident_1 = 1,
         WaitResident_2 = 2,
@@ -809,16 +923,20 @@ namespace Enums.app.Chapter3_IMD_Result {
     }
 }
 
-namespace Enums.app.CH9TimeAttackTimerHUD {
-    public enum StepType {
+namespace Enums.app.CH9TimeAttackTimerHUD
+{
+    public enum StepType
+    {
         Display = 0,
         Count = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum ColorSpace {
+namespace Enums.via.render
+{
+    public enum ColorSpace
+    {
         AUTO = 0,
         SRGB = 1,
         HDTV = 2,
@@ -826,8 +944,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.os {
-    public enum MemorySource {
+namespace Enums.via.os
+{
+    public enum MemorySource
+    {
         UserLand = 0,
         Develop = 1,
         KernelLand = 2,
@@ -835,8 +955,10 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.GameEventController {
-    public enum ProcessType {
+namespace Enums.app.GameEventController
+{
+    public enum ProcessType
+    {
         Stop = 0,
         Loading = 1,
         Wait = 2,
@@ -845,24 +967,30 @@ namespace Enums.app.GameEventController {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum SelectTiming {
+namespace Enums.via.fsm
+{
+    public enum SelectTiming
+    {
         Invalid = 0,
         BeforeAction = 1,
         AfterAction = 2,
     }
 }
 
-namespace Enums.via.storage {
-    public enum BackgroundInstallSpeed {
+namespace Enums.via.storage
+{
+    public enum BackgroundInstallSpeed
+    {
         Slow = 0,
         Suspend = 1,
         Fast = 2,
     }
 }
 
-namespace Enums.app.Em3001.Em3001ActionController {
-    public enum Message {
+namespace Enums.app.Em3001.Em3001ActionController
+{
+    public enum Message
+    {
         AppearUnDiscovery = 0,
         AppearDiscoveryShort = 1,
         AppearDiscoveryMiddle = 2,
@@ -883,8 +1011,10 @@ namespace Enums.app.Em3001.Em3001ActionController {
     }
 }
 
-namespace Enums.app.Em5400.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em5400.Action.Damage
+{
+    public enum Type
+    {
         DamageS = 0,
         DamageFlyS_L = 1,
         DamageFlyS_R = 2,
@@ -892,15 +1022,19 @@ namespace Enums.app.Em5400.Action.Damage {
     }
 }
 
-namespace Enums.via.motion.ChainResource {
-    public enum ChainParamFlags {
+namespace Enums.via.motion.ChainResource
+{
+    public enum ChainParamFlags
+    {
         ChianParamFlags_None = 0,
         ReflectEnviromental = 1,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum SinkTypePs4 {
+namespace Enums.via.wwise
+{
+    public enum SinkTypePs4
+    {
         Main = 0,
         MergeToMain = 1,
         Voice = 2,
@@ -914,8 +1048,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.SaveDataManager {
-    public enum PadPairingStateEnum {
+namespace Enums.app.SaveDataManager
+{
+    public enum PadPairingStateEnum
+    {
         Wait = 0,
         End = 1,
         Sleep = 2,
@@ -932,79 +1068,101 @@ namespace Enums.app.SaveDataManager {
     }
 }
 
-namespace Enums.via.navigation.RelationMapInfo {
-    public enum Operation {
+namespace Enums.via.navigation.RelationMapInfo
+{
+    public enum Operation
+    {
         CopyAttribute = 0,
         OperationNum = 1,
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum DamageEffectDisableLayer {
+namespace Enums.app.PlayerDefine
+{
+    public enum DamageEffectDisableLayer
+    {
         Event = 1,
         GameOver = 2,
         Fsm = 4,
     }
 }
 
-namespace Enums.app.Em8100.Action.TurnWalk {
-    public enum Type {
+namespace Enums.app.Em8100.Action.TurnWalk
+{
+    public enum Type
+    {
         Right = 0,
         Left = 1,
     }
 }
 
-namespace Enums.app.Em8910Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8910Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.CH8StateSwitchExploreTheArea {
-    public enum CHP8_EXPLORE_THE_AREA {
+namespace Enums.app.CH8StateSwitchExploreTheArea
+{
+    public enum CHP8_EXPLORE_THE_AREA
+    {
         safety = 0,
         contamination = 1,
     }
 }
 
-namespace Enums.app.Em4100.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em4100.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.hid.textInput {
-    public enum TextInputKeyboardMode {
+namespace Enums.via.hid.textInput
+{
+    public enum TextInputKeyboardMode
+    {
         Full = 0,
         Numeric = 1,
         Ascii = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100ActionController {
-    public enum DodgeQueType {
+namespace Enums.app.CH8Em4100ActionController
+{
+    public enum DodgeQueType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.CH9Em5850.Action.Appear {
-    public enum Type {
+namespace Enums.app.CH9Em5850.Action.Appear
+{
+    public enum Type
+    {
         Born = 0,
         Gather = 1,
         Call = 2,
     }
 }
 
-namespace Enums.app.fsm.RigidBodyCheck {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.RigidBodyCheck
+{
+    public enum TestTypeParam
+    {
         IsBreak = 0,
     }
 }
 
-namespace Enums.via.math {
-    public enum FpClassify {
+namespace Enums.via.math
+{
+    public enum FpClassify
+    {
         Infinite = 0,
         Nan = 1,
         Normal = 2,
@@ -1014,8 +1172,10 @@ namespace Enums.via.math {
     }
 }
 
-namespace Enums.via.motion {
-    public enum SequenceCategory {
+namespace Enums.via.motion
+{
+    public enum SequenceCategory
+    {
         Game = 0,
         Sound = 1,
         VFX = 2,
@@ -1029,8 +1189,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.navigation.map.PathInfo {
-    public enum WallOverType {
+namespace Enums.via.navigation.map.PathInfo
+{
+    public enum WallOverType
+    {
         NoWall = 0,
         Up = 1,
         Down = 2,
@@ -1039,8 +1201,10 @@ namespace Enums.via.navigation.map.PathInfo {
     }
 }
 
-namespace Enums.app.fsm.SetDoorState {
-    public enum SetState {
+namespace Enums.app.fsm.SetDoorState
+{
+    public enum SetState
+    {
         NotSet = 0,
         Lock = 1,
         Unlock = 2,
@@ -1059,16 +1223,20 @@ namespace Enums.app.fsm.SetDoorState {
     }
 }
 
-namespace Enums.app.BlackOutManager {
-    public enum FadeColorEnum {
+namespace Enums.app.BlackOutManager
+{
+    public enum FadeColorEnum
+    {
         Black = 0,
         White = 1,
         Max = 2,
     }
 }
 
-namespace Em3100Effect {
-    public enum IDAlias {
+namespace Em3100Effect
+{
+    public enum IDAlias
+    {
         Resident = 0,
         BugGather = 1,
         BugHoleGoki = 2,
@@ -1076,8 +1244,10 @@ namespace Em3100Effect {
     }
 }
 
-namespace Enums.app.Em8100.Em8100ActionController {
-    public enum MaterialName {
+namespace Enums.app.Em8100.Em8100ActionController
+{
+    public enum MaterialName
+    {
         em8100_head = 0,
         em8100_body = 1,
         em8100_weak01 = 2,
@@ -1092,8 +1262,10 @@ namespace Enums.app.Em8100.Em8100ActionController {
     }
 }
 
-namespace Enums.app.UICommand {
-    public enum InputLevel {
+namespace Enums.app.UICommand
+{
+    public enum InputLevel
+    {
         VrTutorial = 0,
         Normal = 1,
         Cutin = 2,
@@ -1111,32 +1283,40 @@ namespace Enums.app.UICommand {
     }
 }
 
-namespace Enums.via.render.RenderOutput {
-    public enum OutputType {
+namespace Enums.via.render.RenderOutput
+{
+    public enum OutputType
+    {
         Default = 0,
         Composite = 1,
         CompositeElement = 2,
     }
 }
 
-namespace Enums.app.Em5510Think {
-    public enum BreakState {
+namespace Enums.app.Em5510Think
+{
+    public enum BreakState
+    {
         None = 0,
         FirstBreak = 1,
         SecondBreak = 2,
     }
 }
 
-namespace Enums.app.TinyTimer {
-    public enum Mode {
+namespace Enums.app.TinyTimer
+{
+    public enum Mode
+    {
         None = 0,
         Up = 1,
         Down = 2,
     }
 }
 
-namespace Enums.app.JunkPartsUIAsset {
-    public enum GetPartsState {
+namespace Enums.app.JunkPartsUIAsset
+{
+    public enum GetPartsState
+    {
         DEFAULT = 0,
         FADE_IN = 1,
         FADE_OUT = 2,
@@ -1144,16 +1324,20 @@ namespace Enums.app.JunkPartsUIAsset {
     }
 }
 
-namespace Enums.app.AI.CommonEvaluator.CheckRange {
-    public enum Type {
+namespace Enums.app.AI.CommonEvaluator.CheckRange
+{
+    public enum Type
+    {
         Simple = 0,
         NormalizedRateScore = 1,
         RateScore = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum InterpolationCurve {
+namespace Enums.via.motion
+{
+    public enum InterpolationCurve
+    {
         Linear = 0,
         Smooth = 1,
         EaseIn = 2,
@@ -1161,16 +1345,20 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShaderModifier {
+namespace Enums.via.render
+{
+    public enum ShaderModifier
+    {
         None = 0,
         ClippingPlane = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000.Goal {
-    public enum CH8EvaluatorID {
+namespace Enums.app.CH8Em4000.Goal
+{
+    public enum CH8EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -1189,8 +1377,10 @@ namespace Enums.app.CH8Em4000.Goal {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum ConstantBufferType {
+namespace Enums.via.render.detail
+{
+    public enum ConstantBufferType
+    {
         None = 0,
         Polygon3D = 1,
         Polygon2D = 2,
@@ -1200,8 +1390,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum DamageTransition {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum DamageTransition
+    {
         Non = 0,
         Impact = 1,
         Transition = 2,
@@ -1209,8 +1401,10 @@ namespace Enums.via.motion.IkDamageAction {
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum Compress {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum Compress
+    {
         None = 0,
         Realtime = 1,
         Hardware = 65,
@@ -1220,8 +1414,10 @@ namespace Enums.via.render.RenderTargetOperator {
     }
 }
 
-namespace Enums.via.dynamics.BoxShape {
-    public enum VoronoiId {
+namespace Enums.via.dynamics.BoxShape
+{
+    public enum VoronoiId
+    {
         PlusX = 0,
         MinusX = 1,
         PlusY = 2,
@@ -1232,31 +1428,39 @@ namespace Enums.via.dynamics.BoxShape {
     }
 }
 
-namespace Enums.app.InventoryContextMenu {
-    public enum ContentEnable {
+namespace Enums.app.InventoryContextMenu
+{
+    public enum ContentEnable
+    {
         Enable = 0,
         OnlyIconDisable = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app.CH9Bomb {
-    public enum BombSetType {
+namespace Enums.app.CH9Bomb
+{
+    public enum BombSetType
+    {
         Oilcan = 0,
         FakeBox = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8ItemTest {
-    public enum CompareType {
+namespace Enums.app.fsm.CH8ItemTest
+{
+    public enum CompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum WindType {
+namespace Enums.via.motion.detail
+{
+    public enum WindType
+    {
         None = 0,
         WindOrSpring = 1,
         GravityWave = 2,
@@ -1264,15 +1468,19 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.via.motion.LowerBodyRetarget {
-    public enum EffectorTarget {
+namespace Enums.via.motion.LowerBodyRetarget
+{
+    public enum EffectorTarget
+    {
         Heal = 0,
         Toe = 1,
     }
 }
 
-namespace Enums.app.CH8Em4450.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4450.Action
+{
+    public enum CH8ActionNo
+    {
         Appear = 4,
         Wait = 5,
         AirAttack = 6,
@@ -1285,15 +1493,19 @@ namespace Enums.app.CH8Em4450.Action {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum RestoreType {
+namespace Enums.via.timeline
+{
+    public enum RestoreType
+    {
         Linear = 0,
         Descrete = 1,
     }
 }
 
-namespace Enums.app.Cp7AchievementMenu {
-    public enum Step {
+namespace Enums.app.Cp7AchievementMenu
+{
+    public enum Step
+    {
         Main = 0,
         Decide = 1,
         Reward = 2,
@@ -1305,8 +1517,10 @@ namespace Enums.app.Cp7AchievementMenu {
     }
 }
 
-namespace Enums.app.CH8ActivateObjectOperation.OperationData {
-    public enum IntCompareType {
+namespace Enums.app.CH8ActivateObjectOperation.OperationData
+{
+    public enum IntCompareType
+    {
         Less = 0,
         LessEqual = 1,
         Equal = 2,
@@ -1316,8 +1530,10 @@ namespace Enums.app.CH8ActivateObjectOperation.OperationData {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum LeftFrameState {
+namespace Enums.app.OptionMenu
+{
+    public enum LeftFrameState
+    {
         DEFAULT = 0,
         FOUR = 4,
         FIVE = 5,
@@ -1326,8 +1542,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.CH8CaveCheckSwitch {
-    public enum CaveStateID {
+namespace Enums.app.CH8CaveCheckSwitch
+{
+    public enum CaveStateID
+    {
         CHP8_INTRO_START = 0,
         END = 1,
         SILENCE = 2,
@@ -1335,15 +1553,19 @@ namespace Enums.app.CH8CaveCheckSwitch {
     }
 }
 
-namespace Enums.via.render.BlendShapeController {
-    public enum LodType {
+namespace Enums.via.render.BlendShapeController
+{
+    public enum LodType
+    {
         BakedTexture = 0,
         CalculatedLod = 1,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum VrRotationAngleType {
+namespace Enums.app.PlayerCamera
+{
+    public enum VrRotationAngleType
+    {
         Angle1 = 0,
         Angle2 = 1,
         Angle3 = 2,
@@ -1353,23 +1575,29 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.GroundMove {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.GroundMove
+{
+    public enum Type
+    {
         Normal = 0,
         Reaction = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Suspend {
-    public enum Option {
+namespace Enums.app.CH8Em4400.Action.CH8Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.MotionDelegate {
-    public enum HandlerState {
+namespace Enums.app.MotionDelegate
+{
+    public enum HandlerState
+    {
         Fadein = 0,
         Update = 1,
         Fadeout = 2,
@@ -1377,8 +1605,10 @@ namespace Enums.app.MotionDelegate {
     }
 }
 
-namespace Enums.via.render.layer.PreDeferredLighting {
-    public enum Segment {
+namespace Enums.via.render.layer.PreDeferredLighting
+{
+    public enum Segment
+    {
         SSAO_CompressDepthNormal = 0,
         GeometryAO = 1,
         SSAO_Process = 2,
@@ -1388,16 +1618,20 @@ namespace Enums.via.render.layer.PreDeferredLighting {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum DummyPipelineType {
+namespace Enums.via.landscape
+{
+    public enum DummyPipelineType
+    {
         Static = 0,
         Skinning = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum SinkTypeNSW {
+namespace Enums.via.wwise
+{
+    public enum SinkTypeNSW
+    {
         Main = 0,
         MergeToMain = 1,
         Plugin = 2,
@@ -1405,30 +1639,38 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum DevicePickerShowRule {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum DevicePickerShowRule
+    {
         None = 0,
         KeepEnoughDevice = 1,
     }
 }
 
-namespace Enums.via.Window.MessageArgs {
-    public enum DeviceStatus {
+namespace Enums.via.Window.MessageArgs
+{
+    public enum DeviceStatus
+    {
         Arrival = 0,
         Removal = 1,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataEncryptionPlatform {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataEncryptionPlatform
+    {
         None = 0,
         AutoUse = 1,
         All = 2,
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum AccountPickerShowRule {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum AccountPickerShowRule
+    {
         None = 0,
         DetectValidUserOnly1P = 1,
         DetectValidUser = 2,
@@ -1436,8 +1678,10 @@ namespace Enums.via.hid.gamePlayer {
     }
 }
 
-namespace Enums.via.hansoft {
-    public enum DataMode {
+namespace Enums.via.hansoft
+{
+    public enum DataMode
+    {
         None = 0,
         Task = 1,
         Sprint = 2,
@@ -1447,8 +1691,10 @@ namespace Enums.via.hansoft {
     }
 }
 
-namespace Enums.app.PauseMenu {
-    public enum Step {
+namespace Enums.app.PauseMenu
+{
+    public enum Step
+    {
         Main = 0,
         GoOutFF = 1,
         Restart = 2,
@@ -1464,15 +1710,19 @@ namespace Enums.app.PauseMenu {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum ExternalShakeRequester {
+namespace Enums.app.PlayerDefine
+{
+    public enum ExternalShakeRequester
+    {
         ScriptOrFSM = 0,
         Effect = 1,
     }
 }
 
-namespace Enums.app.VrGui {
-    public enum VrTrackRotModeDef {
+namespace Enums.app.VrGui
+{
+    public enum VrTrackRotModeDef
+    {
         Billboard = 0,
         Billboard_YOnly = 1,
         TargetObjBillboard_YOnly = 2,
@@ -1480,8 +1730,10 @@ namespace Enums.app.VrGui {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseContext {
+namespace Enums.via.network.error
+{
+    public enum CauseContext
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -1522,8 +1774,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimCmdType {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimCmdType
+    {
         Unknown = 0,
         Polygon = 1,
         Mesh = 2,
@@ -1531,24 +1785,30 @@ namespace Enums.via.gui.renderer.detail {
     }
 }
 
-namespace Enums.via.motion.chain {
-    public enum WindDelayType {
+namespace Enums.via.motion.chain
+{
+    public enum WindDelayType
+    {
         None = 0,
         Auto = 1,
         Manual = 2,
     }
 }
 
-namespace Enums.app.Em8000.Em8000ActionStartPoint {
-    public enum ActionType {
+namespace Enums.app.Em8000.Em8000ActionStartPoint
+{
+    public enum ActionType
+    {
         None = 0,
         Appear = 1,
         GetScissors = 2,
     }
 }
 
-namespace Enums.app.Em3001.Goal.Battle {
-    public enum Message {
+namespace Enums.app.Em3001.Goal.Battle
+{
+    public enum Message
+    {
         Non = 0,
         AppearEnd = 1,
         Battle1 = 2,
@@ -1556,8 +1816,10 @@ namespace Enums.app.Em3001.Goal.Battle {
     }
 }
 
-namespace Enums.via.render {
-    public enum BinnerControl {
+namespace Enums.via.render
+{
+    public enum BinnerControl
+    {
         Automatic = 1,
         ForceOn = 2,
         ForceOff = 3,
@@ -1565,23 +1827,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum AnalysisLogTiming {
+namespace Enums.app.GameManager
+{
+    public enum AnalysisLogTiming
+    {
         Start = 0,
         ChangeOption = 1,
         Clear = 2,
     }
 }
 
-namespace Enums.via.motion.detail.ChainGroupData {
-    public enum AngleLimitDirectionMode {
+namespace Enums.via.motion.detail.ChainGroupData
+{
+    public enum AngleLimitDirectionMode
+    {
         BasePose = 0,
         MotionPose = 1,
     }
 }
 
-namespace Enums.app.BirthdayTitle {
-    public enum SeCallTypeEnum {
+namespace Enums.app.BirthdayTitle
+{
+    public enum SeCallTypeEnum
+    {
         Enter = 0,
         Cancel = 1,
         Cursol = 2,
@@ -1589,8 +1857,10 @@ namespace Enums.app.BirthdayTitle {
     }
 }
 
-namespace Enums.app.DoorEventAction {
-    public enum ProcessType {
+namespace Enums.app.DoorEventAction
+{
+    public enum ProcessType
+    {
         Stop = 0,
         Setup = 1,
         Interp = 2,
@@ -1598,8 +1868,10 @@ namespace Enums.app.DoorEventAction {
     }
 }
 
-namespace Enums.app.vr.VrScreenFilter {
-    public enum FilterMode {
+namespace Enums.app.vr.VrScreenFilter
+{
+    public enum FilterMode
+    {
         Off = 0,
         Small = 1,
         Large = 2,
@@ -1607,16 +1879,20 @@ namespace Enums.app.vr.VrScreenFilter {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8BlownAway {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         Parry = 2,
     }
 }
 
-namespace Enums.app.Em3000.Goal {
-    public enum AppearMessageStatus {
+namespace Enums.app.Em3000.Goal
+{
+    public enum AppearMessageStatus
+    {
         Non = 0,
         UnDiscovery = 1,
         DiscoveryShort = 2,
@@ -1624,16 +1900,20 @@ namespace Enums.app.Em3000.Goal {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum LifeType {
+namespace Enums.via.effect.detail
+{
+    public enum LifeType
+    {
         None = 0,
         AppearOnly = 1,
         SyncKeepHold = 2,
     }
 }
 
-namespace Enums.app.Collision.ContactBaseUserData {
-    public enum PriorityLevel {
+namespace Enums.app.Collision.ContactBaseUserData
+{
+    public enum PriorityLevel
+    {
         SystemDefault = 0,
         SystemQuery = 1,
         __________________________P16 = 16,
@@ -1664,8 +1944,10 @@ namespace Enums.app.Collision.ContactBaseUserData {
     }
 }
 
-namespace Enums.app.VideoCameraUI {
-    public enum ModeDef {
+namespace Enums.app.VideoCameraUI
+{
+    public enum ModeDef
+    {
         Start = 0,
         NoiseStrong = 1,
         NoiseAnim = 2,
@@ -1677,16 +1959,20 @@ namespace Enums.app.VideoCameraUI {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum SystemExecGroup {
+namespace Enums.via.fsm
+{
+    public enum SystemExecGroup
+    {
         Fsm = 0,
         MotionFsm = 1,
         SystemExecGroupNum = 2,
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum AreaCompartmentStep {
+namespace Enums.app.CH8SaveManager
+{
+    public enum AreaCompartmentStep
+    {
         SlatMineArea = 0,
         Mine01_Battle = 1,
         LuacsLand = 2,
@@ -1695,8 +1981,10 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.via.motion {
-    public enum TransitionState {
+namespace Enums.via.motion
+{
+    public enum TransitionState
+    {
         None = 0,
         Begin = 1,
         Setuped = 2,
@@ -1705,16 +1993,20 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.motion.JointPoseData {
-    public enum EnableFlags {
+namespace Enums.via.motion.JointPoseData
+{
+    public enum EnableFlags
+    {
         Trans = 1,
         Rotation = 2,
         Scale = 4,
     }
 }
 
-namespace Enums.via.motion.SupportPolygon {
-    public enum SupportModeType {
+namespace Enums.via.motion.SupportPolygon
+{
+    public enum SupportModeType
+    {
         None = 0,
         FootL = 1,
         FootR = 2,
@@ -1722,23 +2014,29 @@ namespace Enums.via.motion.SupportPolygon {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Damage {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Confront {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Confront
+{
+    public enum Type
+    {
         Idle = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.via.network.RemoteProcedureReceiveQueue {
-    public enum DeliverResult {
+namespace Enums.via.network.RemoteProcedureReceiveQueue
+{
+    public enum DeliverResult
+    {
         Success = 0,
         NoMessage = 1,
         RemoteProcedureNotFound = 2,
@@ -1746,22 +2044,28 @@ namespace Enums.via.network.RemoteProcedureReceiveQueue {
     }
 }
 
-namespace Enums.app.CH9Record {
-    public enum EverywhereElement {
+namespace Enums.app.CH9Record
+{
+    public enum EverywhereElement
+    {
         Everywhere = 8,
         EverywhereHard = 9,
         Max = 10,
     }
 }
 
-namespace Enums.app.Em4000.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.Em4000.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum SolidSegment {
+namespace Enums.via.render.layer
+{
+    public enum SolidSegment
+    {
         Star = 0,
         RayTracing = 1,
         ZPrepass = 2,
@@ -1782,16 +2086,20 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.app.CH9MainMenu {
-    public enum CallSe {
+namespace Enums.app.CH9MainMenu
+{
+    public enum CallSe
+    {
         Cursol = 0,
         Decide = 1,
         Cancel = 2,
     }
 }
 
-namespace Enums.app.Chain.ChainHelper.ChangeBlendRateProcess {
-    public enum ChangeStateType {
+namespace Enums.app.Chain.ChainHelper.ChangeBlendRateProcess
+{
+    public enum ChangeStateType
+    {
         None = 0,
         Awake = 1,
         Update = 2,
@@ -1800,15 +2108,19 @@ namespace Enums.app.Chain.ChainHelper.ChangeBlendRateProcess {
     }
 }
 
-namespace Enums.app.CH8Em4450.Action.CH8ParryStagger {
-    public enum AvoidanceType {
+namespace Enums.app.CH8Em4450.Action.CH8ParryStagger
+{
+    public enum AvoidanceType
+    {
         Right = 0,
         Left = 1,
     }
 }
 
-namespace Enums.app {
-    public enum RegionType {
+namespace Enums.app
+{
+    public enum RegionType
+    {
         Unknown = 0,
         Japan = 1,
         USA = 2,
@@ -1817,15 +2129,19 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.render {
-    public enum Ownership {
+namespace Enums.via.render
+{
+    public enum Ownership
+    {
         CPU = 0,
         GPU = 1,
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum ExternalShakeType {
+namespace Enums.app.PlayerDefine
+{
+    public enum ExternalShakeType
+    {
         None = 0,
         Small = 1,
         Large = 2,
@@ -1836,16 +2152,20 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.app.Em5510 {
-    public enum ThinkState {
+namespace Enums.app.Em5510
+{
+    public enum ThinkState
+    {
         None = 0,
         NoThink = 1,
         Passive = 2,
     }
 }
 
-namespace Enums.app.fsm.FsmUnlockAchievementDLC {
-    public enum WrappedID {
+namespace Enums.app.fsm.FsmUnlockAchievementDLC
+{
+    public enum WrappedID
+    {
         BedroomClear = 0,
         FoundAllMouse = 1,
         NightmareClear = 2,
@@ -1859,22 +2179,28 @@ namespace Enums.app.fsm.FsmUnlockAchievementDLC {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodUtility {
+namespace Enums.via.network.error
+{
+    public enum MethodUtility
+    {
         Update = 0,
         ShowProfile = 1,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum FaceDirectionType {
+namespace Enums.app.EnemyActionController
+{
+    public enum FaceDirectionType
+    {
         Upward = 0,
         Downward = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Attack {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000Attack
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         Dash = 1,
@@ -1896,8 +2222,10 @@ namespace Enums.app.Em8000.Action.Em8000Attack {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterParticleType {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterParticleType
+    {
         Unknown = 0,
         Billboard = 1,
         Mesh = 2,
@@ -1940,8 +2268,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         Default_IgnoreDepth = 1,
         StochasticPreZ = 2,
@@ -1950,16 +2280,20 @@ namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource {
     }
 }
 
-namespace Enums.app.CH9Em6400Think {
-    public enum FacialBasicID {
+namespace Enums.app.CH9Em6400Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Dead = 700,
     }
 }
 
-namespace Enums.app {
-    public enum ActiveUserPadPairingStatus {
+namespace Enums.app
+{
+    public enum ActiveUserPadPairingStatus
+    {
         InitialPairingWait = 0,
         OK = 1,
         ActiveUserChanged = 2,
@@ -1967,8 +2301,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.clr {
-    public enum MetadataType {
+namespace Enums.via.clr
+{
+    public enum MetadataType
+    {
         Module = 0,
         TypeRef = 1,
         TypeDef = 2,
@@ -2019,8 +2355,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.os {
-    public enum ThreadPriority {
+namespace Enums.via.os
+{
+    public enum ThreadPriority
+    {
         TimeCritical = 0,
         Highest = 1,
         AboveNormal = 2,
@@ -2032,8 +2370,10 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.CH9Em5700Order.Appear {
-    public enum Type {
+namespace Enums.app.CH9Em5700Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
         Ground = 1,
         Appear = 2,
@@ -2044,8 +2384,10 @@ namespace Enums.app.CH9Em5700Order.Appear {
     }
 }
 
-namespace Enums.via.kernel {
-    public enum XCloudResult {
+namespace Enums.via.kernel
+{
+    public enum XCloudResult
+    {
         OK = 0,
         NoData = 1,
         InvalidArgs = 2,
@@ -2053,8 +2395,10 @@ namespace Enums.via.kernel {
     }
 }
 
-namespace Em4200Effect {
-    public enum IDAlias {
+namespace Em4200Effect
+{
+    public enum IDAlias
+    {
         Explosion = 0,
         Splash = 1,
         VerticalSplash = 2,
@@ -2073,21 +2417,27 @@ namespace Em4200Effect {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.FlyMove {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.FlyMove
+{
+    public enum Type
+    {
         Normal = 0,
         LookTarget = 1,
     }
 }
 
-namespace Enums.via.network.session {
-    public enum SearchKeyAttr {
+namespace Enums.via.network.session
+{
+    public enum SearchKeyAttr
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.PauseMenu {
-    public enum ListElemID {
+namespace Enums.app.PauseMenu
+{
+    public enum ListElemID
+    {
         GoOutFF = 0,
         Restart = 1,
         Option = 2,
@@ -2096,8 +2446,10 @@ namespace Enums.app.PauseMenu {
     }
 }
 
-namespace Enums.via.render.RenderLayer {
-    public enum Priority {
+namespace Enums.via.render.RenderLayer
+{
+    public enum Priority
+    {
         TopMost = 16777216,
         Top = 50331648,
         AboveDefault = 67108864,
@@ -2108,16 +2460,20 @@ namespace Enums.via.render.RenderLayer {
     }
 }
 
-namespace Enums.app.CH8RewardArticle {
-    public enum DifficultyBits {
+namespace Enums.app.CH8RewardArticle
+{
+    public enum DifficultyBits
+    {
         Casual = 1,
         Normal = 2,
         Hard = 4,
     }
 }
 
-namespace Enums.via.render {
-    public enum ByteBufferDataType {
+namespace Enums.via.render
+{
+    public enum ByteBufferDataType
+    {
         None = 0,
         Byte = 1,
         Integer = 2,
@@ -2125,23 +2481,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.landscape.layer.LandformBlendLayer {
-    public enum BlendLayerPipelineStateType {
+namespace Enums.via.landscape.layer.LandformBlendLayer
+{
+    public enum BlendLayerPipelineStateType
+    {
         BlendHeightMap = 0,
         BlendUneditableMask = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.network {
-    public enum EventWriterType {
+namespace Enums.app.network
+{
+    public enum EventWriterType
+    {
         ETX = 0,
         XSAPI = 1,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.AimConstraintData {
-    public enum WorldUpType {
+namespace Enums.via.motion.JointExMultiRemapValue.AimConstraintData
+{
+    public enum WorldUpType
+    {
         SceneUp = 0,
         ObjectUp = 1,
         ObjectRotationUp = 2,
@@ -2150,8 +2512,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.AimConstraintData {
     }
 }
 
-namespace Enums.app.Em3102.Action.Branch {
-    public enum Type {
+namespace Enums.app.Em3102.Action.Branch
+{
+    public enum Type
+    {
         None = 0,
         BranchR = 1,
         BranchL = 2,
@@ -2160,8 +2524,10 @@ namespace Enums.app.Em3102.Action.Branch {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum AssignMethodType {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum AssignMethodType
+    {
         None = 0,
         SelectUser = 1,
         UserEqualPlayer = 2,
@@ -2169,8 +2535,10 @@ namespace Enums.via.hid.gamePlayer {
     }
 }
 
-namespace Enums.via.motion {
-    public enum ExpressionUpdate {
+namespace Enums.via.motion
+{
+    public enum ExpressionUpdate
+    {
         MotionBegin = 0,
         MotionEnd = 1,
         ConstraintsBegin = 2,
@@ -2180,8 +2548,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.network.native.NswProfileInfo {
-    public enum ImageSize {
+namespace Enums.via.network.native.NswProfileInfo
+{
+    public enum ImageSize
+    {
         Size64x64 = 0,
         Size128x128 = 1,
         Size256x256 = 2,
@@ -2189,8 +2559,10 @@ namespace Enums.via.network.native.NswProfileInfo {
     }
 }
 
-namespace Enums.via.PlaneXZ {
-    public enum NGLevel {
+namespace Enums.via.PlaneXZ
+{
+    public enum NGLevel
+    {
         None = 0,
         NanFinite = 1,
         Assert = 2,
@@ -2198,8 +2570,10 @@ namespace Enums.via.PlaneXZ {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_3oAmb {
+namespace Enums.via.audiorender
+{
+    public enum Channel_3oAmb
+    {
         Channel_3oAmb_0 = 0,
         Channel_3oAmb_1 = 1,
         Channel_3oAmb_2 = 2,
@@ -2220,8 +2594,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.hid {
-    public enum VibrationOutputNode {
+namespace Enums.via.hid
+{
+    public enum VibrationOutputNode
+    {
         Dual = 0,
         LeftOnly = 1,
         RightOnly = 2,
@@ -2229,8 +2605,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.FootEffectController {
-    public enum SETriggerTypeEnum {
+namespace Enums.app.FootEffectController
+{
+    public enum SETriggerTypeEnum
+    {
         LeftLegContact = 0,
         RightLegContact = 1,
         LeftLegSlide = 2,
@@ -2243,8 +2621,10 @@ namespace Enums.app.FootEffectController {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GamePadButton : uint {
+namespace Enums.via.hid
+{
+    public enum GamePadButton : uint
+    {
         LUp = 1,
         LDown = 2,
         LLeft = 4,
@@ -2285,8 +2665,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.motion.IkFourLeg {
-    public enum RayCastCallbackID {
+namespace Enums.via.motion.IkFourLeg
+{
+    public enum RayCastCallbackID
+    {
         BackLeft = 1,
         BackRight = 2,
         ForeLeft = 4,
@@ -2304,8 +2686,10 @@ namespace Enums.via.motion.IkFourLeg {
     }
 }
 
-namespace Enums.app.Em3001.Action.Rest {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Rest
+{
+    public enum Type
+    {
         Rest1 = 0,
         Rest2 = 1,
         Rest3 = 2,
@@ -2315,14 +2699,18 @@ namespace Enums.app.Em3001.Action.Rest {
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumI4 {
+namespace Enums.via.clr
+{
+    public enum EnumI4
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.app.Em8001 {
-    public enum ThinkState {
+namespace Enums.app.Em8001
+{
+    public enum ThinkState
+    {
         None = 0,
         Idle = 1,
         Battle = 2,
@@ -2330,8 +2718,10 @@ namespace Enums.app.Em8001 {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum ExpressionOperator : uint {
+namespace Enums.via.effect.detail
+{
+    public enum ExpressionOperator : uint
+    {
         Addition = 0,
         Subtraction = 1,
         Multiplication = 2,
@@ -2341,8 +2731,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.Em8001.Action.Walk {
-    public enum WalkType {
+namespace Enums.app.Em8001.Action.Walk
+{
+    public enum WalkType
+    {
         INVALID = -1,
         None = 0,
         Normal = 1,
@@ -2351,31 +2743,39 @@ namespace Enums.app.Em8001.Action.Walk {
     }
 }
 
-namespace Enums.app.OptionKeyBind {
-    public enum SlotType {
+namespace Enums.app.OptionKeyBind
+{
+    public enum SlotType
+    {
         Primary = 0,
         Secondary = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum LightSourceModel {
+namespace Enums.via.render
+{
+    public enum LightSourceModel
+    {
         Version1 = 0,
         Version2 = 1,
         Invalid = -1,
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum DebugDamageTransition {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum DebugDamageTransition
+    {
         Non = 0,
         ImpactState = 1,
         MaxState = 2,
     }
 }
 
-namespace Enums.via.gui.Effect2D {
-    public enum DefaultExternParam {
+namespace Enums.via.gui.Effect2D
+{
+    public enum DefaultExternParam
+    {
         EffectPosX = 0,
         EffectPosY = 1,
         EffectScaleX = 2,
@@ -2384,23 +2784,29 @@ namespace Enums.via.gui.Effect2D {
     }
 }
 
-namespace Enums.via.motion.RetargetFourLegRig {
-    public enum ChainCalcAxis {
+namespace Enums.via.motion.RetargetFourLegRig
+{
+    public enum ChainCalcAxis
+    {
         BaseLocal = 0,
         BaseControlRoot = 1,
     }
 }
 
-namespace Enums.via.motion.tree {
-    public enum LinkType {
+namespace Enums.via.motion.tree
+{
+    public enum LinkType
+    {
         Unknown = 0,
         Motion = 1,
         Param = 2,
     }
 }
 
-namespace Enums.via.navigation.algorithm.MapGraphAstar {
-    public enum PassStateEnterWallType {
+namespace Enums.via.navigation.algorithm.MapGraphAstar
+{
+    public enum PassStateEnterWallType
+    {
         None = 0,
         Bottom = 1,
         Top = 2,
@@ -2408,31 +2814,39 @@ namespace Enums.via.navigation.algorithm.MapGraphAstar {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShadowCastFlag {
+namespace Enums.via.render
+{
+    public enum ShadowCastFlag
+    {
         A = 1,
         B = 2,
         ALL = 3,
     }
 }
 
-namespace Enums.via.sound {
-    public enum SoundGraphAxisType {
+namespace Enums.via.sound
+{
+    public enum SoundGraphAxisType
+    {
         Linear = 0,
         Db = 1,
     }
 }
 
-namespace Enums.via.navigation.AIMapEffectorCore {
-    public enum ExtraLinkCreationResult {
+namespace Enums.via.navigation.AIMapEffectorCore
+{
+    public enum ExtraLinkCreationResult
+    {
         Success = 0,
         Fail = 1,
         Retry = 2,
     }
 }
 
-namespace Enums.app.Item {
-    public enum ItemCategoryType {
+namespace Enums.app.Item
+{
+    public enum ItemCategoryType
+    {
         OtherItem = 0,
         Weapon = 1,
         /// <summary>
@@ -2452,8 +2866,10 @@ namespace Enums.app.Item {
     }
 }
 
-namespace Enums.app.Em8000.Em8000AditiveDamageInfo {
-    public enum DamageDirection {
+namespace Enums.app.Em8000.Em8000AditiveDamageInfo
+{
+    public enum DamageDirection
+    {
         INVALID = -1,
         None = 0,
         Front = 1,
@@ -2464,8 +2880,10 @@ namespace Enums.app.Em8000.Em8000AditiveDamageInfo {
     }
 }
 
-namespace Enums.via.render.command {
-    public enum TypeId {
+namespace Enums.via.render.command
+{
+    public enum TypeId
+    {
         Clear = 0,
         CopyTexture = 1,
         CopyBuffer = 2,
@@ -2499,8 +2917,10 @@ namespace Enums.via.render.command {
     }
 }
 
-namespace Enums.app.VrGui {
-    public enum DistanceCorrectMode {
+namespace Enums.app.VrGui
+{
+    public enum DistanceCorrectMode
+    {
         NOSET = 0,
         NONE = 1,
         FLEXIBLE = 2,
@@ -2508,30 +2928,38 @@ namespace Enums.app.VrGui {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum AudioInputModuleType {
+namespace Enums.via.simplewwise
+{
+    public enum AudioInputModuleType
+    {
         None = 0,
         Movie = 1,
         Mame = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em7900.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.network.storage {
-    public enum Target {
+namespace Enums.via.network.storage
+{
+    public enum Target
+    {
         None = 0,
         Local = 1,
         Native = 2,
     }
 }
 
-namespace Enums.app.Em3100.Message {
-    public enum TagMessage {
+namespace Enums.app.Em3100.Message
+{
+    public enum TagMessage
+    {
         None = 0,
         BugHole_BattleStart_A_0 = 1,
         BugHole_Common_A_0 = 2,
@@ -2580,8 +3008,10 @@ namespace Enums.app.Em3100.Message {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpType {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpType
+    {
         CharacterFigure = 0,
         CharacterCard = 1,
         KnittedFigure = 2,
@@ -2590,8 +3020,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.BirthdayGameData {
-    public enum BirthdayWepType {
+namespace Enums.app.BirthdayGameData
+{
+    public enum BirthdayWepType
+    {
         MiaKnife = 0,
         ChainSaw = 1,
         Knife = 2,
@@ -2629,15 +3061,19 @@ namespace Enums.app.BirthdayGameData {
     }
 }
 
-namespace Enums.app.fsm.RequestFadeInOut_HideIcon {
-    public enum FadeTypeEnum {
+namespace Enums.app.fsm.RequestFadeInOut_HideIcon
+{
+    public enum FadeTypeEnum
+    {
         FadeOut = 0,
         FadeIn = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseNative {
+namespace Enums.via.network.error
+{
+    public enum CauseNative
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -2666,8 +3102,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.behaviortree {
-    public enum ExecGroup {
+namespace Enums.via.behaviortree
+{
+    public enum ExecGroup
+    {
         ExecGroup_00 = 0,
         ExecGroup_01 = 1,
         ExecGroup_02 = 2,
@@ -2679,15 +3117,19 @@ namespace Enums.via.behaviortree {
     }
 }
 
-namespace Enums.app.vr {
-    public enum Eye {
+namespace Enums.app.vr
+{
+    public enum Eye
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum IL {
+namespace Enums.via.clr
+{
+    public enum IL
+    {
         IL_nop = 0,
         IL_break = 1,
         IL_ldarg_0 = 2,
@@ -2910,15 +3352,19 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum TimelineState {
+namespace Enums.via.timeline
+{
+    public enum TimelineState
+    {
         Play = 0,
         Pause = 1,
     }
 }
 
-namespace Enums.via {
-    public enum GameLiveStreamingStatus {
+namespace Enums.via
+{
+    public enum GameLiveStreamingStatus
+    {
         Disable = -1,
         Failed = -2,
         Stop = 0,
@@ -2926,8 +3372,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum TrapLevel {
+namespace Enums.app.Nightmare
+{
+    public enum TrapLevel
+    {
         Init = 0,
         Level1 = 1,
         Level2 = 2,
@@ -2936,8 +3384,10 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum GameMode {
+namespace Enums.app.GameManager
+{
+    public enum GameMode
+    {
         Title = 0,
         Gameover = 1,
         NormalGame = 2,
@@ -2946,8 +3396,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.AI.AIVisionBeacon {
-    public enum VisionType {
+namespace Enums.app.AI.AIVisionBeacon
+{
+    public enum VisionType
+    {
         Unknown = 0,
         Player = 1,
         Enemy = 2,
@@ -2955,23 +3407,29 @@ namespace Enums.app.AI.AIVisionBeacon {
     }
 }
 
-namespace Enums.app.CH8FadeControlForEvent {
-    public enum FadeRequestEnum {
+namespace Enums.app.CH8FadeControlForEvent
+{
+    public enum FadeRequestEnum
+    {
         None = 0,
         FadeIn = 1,
         FadeOut = 2,
     }
 }
 
-namespace Enums.app.Em2000 {
-    public enum ThinkOrder {
+namespace Enums.app.Em2000
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Chapter4_3_Sleep = 1,
     }
 }
 
-namespace Enums.app.Em3000.Action.StepIn {
-    public enum Type {
+namespace Enums.app.Em3000.Action.StepIn
+{
+    public enum Type
+    {
         Straight = 0,
         Side = 1,
         Thrust = 2,
@@ -2983,22 +3441,28 @@ namespace Enums.app.Em3000.Action.StepIn {
     }
 }
 
-namespace Enums.app.CH8Em4200.CH8ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4200.CH8ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.movie {
-    public enum VideoDecoderMode {
+namespace Enums.via.movie
+{
+    public enum VideoDecoderMode
+    {
         Default = 0,
         Hardware = 1,
         Cpu = 2,
     }
 }
 
-namespace Enums.app.Em8001.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8001.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         BattleIdle = 1,
         Rest = 2,
@@ -3016,16 +3480,20 @@ namespace Enums.app.Em8001.Action {
     }
 }
 
-namespace Enums.app.CH9Em7700ActionController.BattleCondition {
-    public enum WanderIdleActionType {
+namespace Enums.app.CH9Em7700ActionController.BattleCondition
+{
+    public enum WanderIdleActionType
+    {
         None = 0,
         AfterNotice = 1,
         BeforeNotice = 2,
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrDeviceType {
+namespace Enums.via.vr
+{
+    public enum VrDeviceType
+    {
         Invalid = 0,
         HMD = 1,
         Controller = 2,
@@ -3035,8 +3503,10 @@ namespace Enums.via.vr {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum PhysicsValueType {
+namespace Enums.via.wwise
+{
+    public enum PhysicsValueType
+    {
         LinearVelocity = 0,
         AngularVelocity = 1,
         FrictionFactor = 2,
@@ -3046,8 +3516,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum PrepareType {
+namespace Enums.via.audiorender
+{
+    public enum PrepareType
+    {
         None = 0,
         Sec = 1,
         Marker = 2,
@@ -3055,8 +3527,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.EPVDataBase {
-    public enum EffectRelationType {
+namespace Enums.app.EPVDataBase
+{
+    public enum EffectRelationType
+    {
         FollowParent = 0,
         InitializationParent = 1,
         World = 2,
@@ -3067,15 +3541,19 @@ namespace Enums.app.EPVDataBase {
     }
 }
 
-namespace Enums.app.fsm.PositionCheck.CameraParam {
-    public enum CameraTargetSetting {
+namespace Enums.app.fsm.PositionCheck.CameraParam
+{
+    public enum CameraTargetSetting
+    {
         TargetObject = 0,
         OwnerObject = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000.Goal.CH8GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH8Em4000.Goal.CH8GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Release = 2,
@@ -3134,8 +3612,10 @@ namespace Enums.app.CH8Em4000.Goal.CH8GoalGenerator {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum FontRegion {
+namespace Enums.via.nnfc.nfp
+{
+    public enum FontRegion
+    {
         JpUsEu = 0,
         China = 1,
         Korea = 2,
@@ -3147,36 +3627,46 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.fsm.SetMansionAI {
-    public enum SetType {
+namespace Enums.app.fsm.SetMansionAI
+{
+    public enum SetType
+    {
         Enable = 0,
         Disable = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.WanderIdle {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.WanderIdle
+{
+    public enum Type
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.app.AI.MansionAIEffectorZoneGroup {
-    public enum ConditionTypeEnum {
+namespace Enums.app.AI.MansionAIEffectorZoneGroup
+{
+    public enum ConditionTypeEnum
+    {
         InPlayer = 0,
         InEnemy = 1,
         InPlayerAndEnemy = 2,
     }
 }
 
-namespace Enums.app.Em2000.Action.Chapter1Battle4DestroyObject {
-    public enum Type {
+namespace Enums.app.Em2000.Action.Chapter1Battle4DestroyObject
+{
+    public enum Type
+    {
         DestroyObjectL = 0,
         DestroyObjectR = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource {
-    public enum SkinningShaderType {
+namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource
+{
+    public enum SkinningShaderType
+    {
         SkinningShaderType_None = 0,
         SkinningShaderType_None_StorePrimaryUV = 1,
         SkinningShaderType_None_StoreSecondaryUV = 2,
@@ -3201,8 +3691,10 @@ namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource {
     }
 }
 
-namespace Enums.app.Em3001.Em3001WwiseMonitoredValue {
-    public enum PropertyLayer {
+namespace Enums.app.Em3001.Em3001WwiseMonitoredValue
+{
+    public enum PropertyLayer
+    {
         Discovery = 0,
         UnDiscovery = 1,
         DamageDown = 2,
@@ -3210,15 +3702,19 @@ namespace Enums.app.Em3001.Em3001WwiseMonitoredValue {
     }
 }
 
-namespace Enums.app.ControlMaterial {
-    public enum ParamType {
+namespace Enums.app.ControlMaterial
+{
+    public enum ParamType
+    {
         Float4 = 1,
         Float = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum E2DStretchMode {
+namespace Enums.via.render
+{
+    public enum E2DStretchMode
+    {
         None = 0,
         Fit = 1,
         Stretch = 2,
@@ -3226,8 +3722,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.collision {
-    public enum Axis {
+namespace Enums.via.collision
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
@@ -3235,8 +3733,10 @@ namespace Enums.via.collision {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum StreamBlockStatus {
+namespace Enums.via.audiorender
+{
+    public enum StreamBlockStatus
+    {
         None = 0,
         Standby = 1,
         WaitDecode = 2,
@@ -3249,14 +3749,18 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em8100 {
-    public enum OverrideActionNo {
+namespace Enums.app.Em8100
+{
+    public enum OverrideActionNo
+    {
         Test = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXPrimitiveShadingRate {
+namespace Enums.via.render
+{
+    public enum VFXPrimitiveShadingRate
+    {
         Coarse1x1 = 0,
         Coarse1x2 = 1,
         Coarse2x1 = 2,
@@ -3267,8 +3771,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.gui {
-    public enum LinkMoveDirection {
+namespace Enums.via.gui
+{
+    public enum LinkMoveDirection
+    {
         None = 0,
         Up = 1,
         Right = 2,
@@ -3277,8 +3783,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum GameObjectIdIndex {
+namespace Enums.via.simplewwise
+{
+    public enum GameObjectIdIndex
+    {
         Driver = 1,
         Manager = 2,
         Listener_0 = 3,
@@ -3293,15 +3801,19 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.app.CH8Telemetry {
-    public enum TimerType {
+namespace Enums.app.CH8Telemetry
+{
+    public enum TimerType
+    {
         CH8BossBattle = 0,
         CH8AllClear = 1,
     }
 }
 
-namespace Enums.app.Collision.CollisionSystem {
-    public enum AsyncCastRayState {
+namespace Enums.app.Collision.CollisionSystem
+{
+    public enum AsyncCastRayState
+    {
         Unknown = 0,
         NotYet = 1,
         True = 2,
@@ -3309,14 +3821,18 @@ namespace Enums.app.Collision.CollisionSystem {
     }
 }
 
-namespace Enums.app.Em5400.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em5400.Action.Grapple
+{
+    public enum Type
+    {
         Stab = 0,
     }
 }
 
-namespace Enums.via.motion.Fsm2ActionPlayMotion {
-    public enum FrameControl {
+namespace Enums.via.motion.Fsm2ActionPlayMotion
+{
+    public enum FrameControl
+    {
         Normal = 0,
         SyncBaseLayerNormalizeTime = 1,
         PauseStartFrame = 2,
@@ -3324,8 +3840,10 @@ namespace Enums.via.motion.Fsm2ActionPlayMotion {
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum ContextType {
+namespace Enums.app.Richpresence
+{
+    public enum ContextType
+    {
         Easy = 0,
         Normal = 1,
         Hard = 2,
@@ -3333,8 +3851,10 @@ namespace Enums.app.Richpresence {
     }
 }
 
-namespace Enums.via.gui {
-    public enum InputListType {
+namespace Enums.via.gui
+{
+    public enum InputListType
+    {
         None = 0,
         UpDown = 1,
         LeftRight = 2,
@@ -3343,8 +3863,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.behaviortree.TreeNode {
-    public enum WorkFlags {
+namespace Enums.via.behaviortree.TreeNode
+{
+    public enum WorkFlags
+    {
         IsNotifiedEnd = 1,
         HasEvaluated = 2,
         HasSelected = 4,
@@ -3360,8 +3882,10 @@ namespace Enums.via.behaviortree.TreeNode {
     }
 }
 
-namespace Enums.via.motion.DevelopRetargetResource {
-    public enum RetargetJointNameType {
+namespace Enums.via.motion.DevelopRetargetResource
+{
+    public enum RetargetJointNameType
+    {
         HeadName = 0,
         NeckName = 1,
         Spine0Name = 2,
@@ -3400,8 +3924,10 @@ namespace Enums.via.motion.DevelopRetargetResource {
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum ResultScoreGroup {
+namespace Enums.app.Nightmare
+{
+    public enum ResultScoreGroup
+    {
         None = 0,
         FinalJunkPartsNum = 1,
         EnemyKillNum = 2,
@@ -3410,8 +3936,10 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.app.Em5510.Action {
-    public enum ActionNo {
+namespace Enums.app.Em5510.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Damage = 1,
         Dead = 2,
@@ -3419,23 +3947,29 @@ namespace Enums.app.Em5510.Action {
     }
 }
 
-namespace Enums.via.render.Atmosphere2 {
-    public enum IBLTextureBakeMode {
+namespace Enums.via.render.Atmosphere2
+{
+    public enum IBLTextureBakeMode
+    {
         Panorama = 0,
         Cubemap = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum BlendMode {
+namespace Enums.via.motion
+{
+    public enum BlendMode
+    {
         Overwrite = 0,
         AddBlend = 1,
         Private = 2,
     }
 }
 
-namespace Enums.via.io.file.FileInfo {
-    public enum ATTR {
+namespace Enums.via.io.file.FileInfo
+{
+    public enum ATTR
+    {
         DIRECTORY = 1,
         ARCHIVABLE = 2,
         HIDDEN = 4,
@@ -3445,38 +3979,48 @@ namespace Enums.via.io.file.FileInfo {
     }
 }
 
-namespace Enums.app.Em3002.Em3002WwiseMonitoredValue {
-    public enum PropertyEncount {
+namespace Enums.app.Em3002.Em3002WwiseMonitoredValue
+{
+    public enum PropertyEncount
+    {
         InCamera = 0,
         OutCamera = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.motion.Chain {
-    public enum WindDirection {
+namespace Enums.via.motion.Chain
+{
+    public enum WindDirection
+    {
         Global = 0,
         Local = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8ConsecutiveStrike {
-    public enum ConboType {
+namespace Enums.app.CH8Em4500.Action.CH8ConsecutiveStrike
+{
+    public enum ConboType
+    {
         Two = 0,
         Four = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8JumpUp {
-    public enum JumpType {
+namespace Enums.app.CH8Em4500.Action.CH8JumpUp
+{
+    public enum JumpType
+    {
         Normal = 0,
         ModeChange = 1,
         ModeRunaway = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum CommonState {
+namespace Enums.via.gui
+{
+    public enum CommonState
+    {
         Default = 0,
         Focus = 1,
         Select = 2,
@@ -3494,8 +4038,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveState {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveState
+    {
         None = 0,
         IDLE = 1,
         SaveDialogStart = 2,
@@ -3532,23 +4078,29 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.via.render.MaterialParam {
-    public enum ResourceType {
+namespace Enums.via.render.MaterialParam
+{
+    public enum ResourceType
+    {
         Unkown = 0,
         ByteBuffer = 1,
     }
 }
 
-namespace Enums.app.CH8InfraredTrap {
-    public enum WireState {
+namespace Enums.app.CH8InfraredTrap
+{
+    public enum WireState
+    {
         Invisible = 0,
         Visible = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app.Grenade {
-    public enum UpdateRno {
+namespace Enums.app.Grenade
+{
+    public enum UpdateRno
+    {
         Wait = 0,
         Move = 1,
         Explosion = 2,
@@ -3557,32 +4109,40 @@ namespace Enums.app.Grenade {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum EffectorOffsetCtrl {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum EffectorOffsetCtrl
+    {
         None = 0,
         Local = 1,
         World = 2,
     }
 }
 
-namespace Enums.app.BirthdayTransitionController {
-    public enum TransitionTypeEnum {
+namespace Enums.app.BirthdayTransitionController
+{
+    public enum TransitionTypeEnum
+    {
         None = 0,
         NormalJump = 1,
         Restrat = 2,
     }
 }
 
-namespace Enums.via.storage.saveService.detail.exportToMemory {
-    public enum ExportToMemoryVersion {
+namespace Enums.via.storage.saveService.detail.exportToMemory
+{
+    public enum ExportToMemoryVersion
+    {
         ExportToMemoryVersion_Invalid = 0,
         ExportToMemoryVersion_1 = 1,
         ExportToMemoryVersion_Latest = 1,
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum StreamState {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum StreamState
+    {
         NotRequested = 0,
         Failed = 1,
         Requested = 2,
@@ -3591,15 +4151,19 @@ namespace Enums.via.render.RenderTargetOperator {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Swoon {
-    public enum SwoonType {
+namespace Enums.app.CH8Em4500.Action.CH8Swoon
+{
+    public enum SwoonType
+    {
         Default = 0,
         Quick = 1,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageType {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageType
+    {
         Strike = 0,
         Slash = 1,
         Shoot = 2,
@@ -3608,30 +4172,38 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.app.MovementController {
-    public enum SubAdjustType {
+namespace Enums.app.MovementController
+{
+    public enum SubAdjustType
+    {
         None = 0,
         Position = 1,
         Rotation = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum ToeCtrlOption {
+namespace Enums.via.motion.IkLeg
+{
+    public enum ToeCtrlOption
+    {
         None = 0,
         TwoRayCast = 1,
         ToeOnly = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum PtClipAttribute {
+namespace Enums.via.effect.detail
+{
+    public enum PtClipAttribute
+    {
         BindToLife = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum DeviceType {
+namespace Enums.via.hid
+{
+    public enum DeviceType
+    {
         Unknown = 0,
         Null = 1,
         GeneralGamePad = 2,
@@ -3661,16 +4233,20 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum TabIndex {
+namespace Enums.app.InventoryMenu
+{
+    public enum TabIndex
+    {
         Item = 0,
         CombineList = 1,
         Num = 2,
     }
 }
 
-namespace Enums.via.motion.ActionPlayMotion {
-    public enum FrameControl {
+namespace Enums.via.motion.ActionPlayMotion
+{
+    public enum FrameControl
+    {
         Normal = 0,
         SyncBaseLayer = 1,
         PauseStartFrame = 2,
@@ -3678,8 +4254,10 @@ namespace Enums.via.motion.ActionPlayMotion {
     }
 }
 
-namespace Enums.app.CH9Em6700ActionController {
-    public enum SuspendStatus {
+namespace Enums.app.CH9Em6700ActionController
+{
+    public enum SuspendStatus
+    {
         None = 0,
         Requested = 1,
         Suspending = 2,
@@ -3687,31 +4265,39 @@ namespace Enums.app.CH9Em6700ActionController {
     }
 }
 
-namespace Enums.via.hid {
-    public enum AccountPickerResults {
+namespace Enums.via.hid
+{
+    public enum AccountPickerResults
+    {
         Null = 0,
         Completed = 1,
         Failed = 2,
     }
 }
 
-namespace Enums.app.IKMultiBone {
-    public enum SolverType {
+namespace Enums.app.IKMultiBone
+{
+    public enum SolverType
+    {
         CyclicCoordinateDescent = 0,
         Particle = 1,
     }
 }
 
-namespace Enums.app.cutin.CutinHandle2Choice {
-    public enum ResultDef {
+namespace Enums.app.cutin.CutinHandle2Choice
+{
+    public enum ResultDef
+    {
         Select1 = 0,
         Select2 = 1,
         Undecided = 2,
     }
 }
 
-namespace Enums.app.Em5520.Action {
-    public enum ActionNo {
+namespace Enums.app.Em5520.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Move = 1,
         Attack = 2,
@@ -3723,8 +4309,10 @@ namespace Enums.app.Em5520.Action {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimitiveVfxShader {
+namespace Enums.via.render.detail
+{
+    public enum PrimitiveVfxShader
+    {
         Billboard2D = 0,
         Billboard2DOverdraw = 1,
         Billboard2DTexUnit = 2,
@@ -4962,8 +5550,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.AI {
-    public enum AttackPermitGroup {
+namespace Enums.app.AI
+{
+    public enum AttackPermitGroup
+    {
         Group0 = 0,
         Group1 = 1,
         Group2 = 2,
@@ -4973,46 +5563,58 @@ namespace Enums.app.AI {
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum CalcuCenterOffset {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum CalcuCenterOffset
+    {
         ImpactState = 0,
         MaxState = 1,
     }
 }
 
-namespace Enums.via.dialog.VrServiceDialog {
-    public enum Mode {
+namespace Enums.via.dialog.VrServiceDialog
+{
+    public enum Mode
+    {
         Positioning = 0,
         TipsForEnvironment = 1,
     }
 }
 
-namespace Enums.via.motion.tree.RoundingNode {
-    public enum Mode {
+namespace Enums.via.motion.tree.RoundingNode
+{
+    public enum Mode
+    {
         Round = 0,
         Floor = 1,
         Ceil = 2,
     }
 }
 
-namespace Enums.app.CH9RewardManager {
-    public enum ClearType {
+namespace Enums.app.CH9RewardManager
+{
+    public enum ClearType
+    {
         CasualClear = 0,
         NormalClear = 1,
         HardClear = 2,
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Grapple
+{
+    public enum Type
+    {
         SneakB = 0,
         DeathRoll = 1,
         DeathEscape = 2,
     }
 }
 
-namespace Enums.app.CH9Telemetry {
-    public enum OtherCountType {
+namespace Enums.app.CH9Telemetry
+{
+    public enum OtherCountType
+    {
         RightPunch = 0,
         LeftPunch = 1,
         Stomp = 2,
@@ -5020,8 +5622,10 @@ namespace Enums.app.CH9Telemetry {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpError {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpError
+    {
         None = 0,
         NotSupport = 1,
         InvalidFormat = 2,
@@ -5039,8 +5643,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum ActionCancelType {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum ActionCancelType
+    {
         Miss = 0,
         Guard = 1,
         Hit = 2,
@@ -5051,30 +5657,38 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8BlownAway {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.render.Wrinkle {
-    public enum CalcMode {
+namespace Enums.via.render.Wrinkle
+{
+    public enum CalcMode
+    {
         Maximum = 0,
         Average = 1,
     }
 }
 
-namespace Enums.app.CH9Em5850FollowBug {
-    public enum BankId {
+namespace Enums.app.CH9Em5850FollowBug
+{
+    public enum BankId
+    {
         Basic = 10,
         Attack = 20,
         Damage = 30,
     }
 }
 
-namespace Enums.app.FF030_Ex_EndCard {
-    public enum StepEnum {
+namespace Enums.app.FF030_Ex_EndCard
+{
+    public enum StepEnum
+    {
         WaitInput = 0,
         PAGE_1 = 1,
         PAGE_2 = 2,
@@ -5083,16 +5697,20 @@ namespace Enums.app.FF030_Ex_EndCard {
     }
 }
 
-namespace Enums.app.Em5520FollowBug {
-    public enum BankId {
+namespace Enums.app.Em5520FollowBug
+{
+    public enum BankId
+    {
         Basic = 10,
         Attack = 20,
         Damage = 30,
     }
 }
 
-namespace Enums.app.CH9StartCheck {
-    public enum StepType {
+namespace Enums.app.CH9StartCheck
+{
+    public enum StepType
+    {
         CheckWait = 0,
         FirstCheck = 1,
         SystemLoad = 2,
@@ -5103,48 +5721,60 @@ namespace Enums.app.CH9StartCheck {
     }
 }
 
-namespace Enums.via.network.ContextNpln {
-    public enum UserType {
+namespace Enums.via.network.ContextNpln
+{
+    public enum UserType
+    {
         Prearranged = 0,
         New = 1,
         Existing = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum MoveMode {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum MoveMode
+    {
         Default = 0,
         Fast = 1,
         Slow = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum BlendType {
+namespace Enums.via.gui
+{
+    public enum BlendType
+    {
         Alpha = 0,
         Add = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app.Em5520.Action.Appear {
-    public enum Type {
+namespace Enums.app.Em5520.Action.Appear
+{
+    public enum Type
+    {
         Born = 0,
         Gather = 1,
         Call = 2,
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum PageAlignmentH {
+namespace Enums.via.gui.detail
+{
+    public enum PageAlignmentH
+    {
         Left = 0,
         Center = 1,
         Right = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum RIKJointId {
+namespace Enums.via.motion
+{
+    public enum RIKJointId
+    {
         Hip = 7,
         LeftHip = 26,
         LeftKnee = 27,
@@ -5173,30 +5803,38 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.render {
-    public enum InstanceKeyState {
+namespace Enums.via.render
+{
+    public enum InstanceKeyState
+    {
         Invalid = 0,
         Complete = 1,
     }
 }
 
-namespace Enums.via.autoplay.action.AutoButton {
-    public enum Activation {
+namespace Enums.via.autoplay.action.AutoButton
+{
+    public enum Activation
+    {
         Together = 0,
         Sequence = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum DirectionType {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum DirectionType
+    {
         Global = 0,
         Local = 1,
         Manual = 2,
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum SaveTextIndexPS4 {
+namespace Enums.app.CH8SaveManager
+{
+    public enum SaveTextIndexPS4
+    {
         SLOT_TEXT_INDEX_AUTOSAVE = 0,
         SLOT_TEXT_INDEX_DIFFICULTY = 1,
         SLOT_TEXT_INDEX_PLAY_TIME = 2,
@@ -5206,22 +5844,28 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.FinishBlow {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.FinishBlow
+{
+    public enum Type
+    {
         SneakB = 0,
     }
 }
 
-namespace Enums.app.ShallowWaterMaterialControl {
-    public enum BoatType {
+namespace Enums.app.ShallowWaterMaterialControl
+{
+    public enum BoatType
+    {
         Boat01 = 0,
         Boat02 = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.gui.MessageTag {
-    public enum Type {
+namespace Enums.via.gui.MessageTag
+{
+    public enum Type
+    {
         Unknown = 0,
         Page = 1,
         Line = 2,
@@ -5255,23 +5899,29 @@ namespace Enums.via.gui.MessageTag {
     }
 }
 
-namespace Enums.app.fsm.CH8VideoDisp {
-    public enum SetState {
+namespace Enums.app.fsm.CH8VideoDisp
+{
+    public enum SetState
+    {
         Play = 0,
         Stop = 1,
         Clear = 2,
     }
 }
 
-namespace Enums.via.autoplay.action.AutoPlayTimer {
-    public enum Unit {
+namespace Enums.via.autoplay.action.AutoPlayTimer
+{
+    public enum Unit
+    {
         Second = 0,
         Frame = 1,
     }
 }
 
-namespace Enums.app.InteractMaterialControl {
-    public enum Status {
+namespace Enums.app.InteractMaterialControl
+{
+    public enum Status
+    {
         None = 0,
         Wait = 1,
         Stay = 2,
@@ -5282,8 +5932,10 @@ namespace Enums.app.InteractMaterialControl {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum LoadState {
+namespace Enums.via.timeline
+{
+    public enum LoadState
+    {
         Initialize = 0,
         Loading = 1,
         Reload = 2,
@@ -5292,45 +5944,57 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum ItemSelectPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum ItemSelectPanelState
+    {
         DEFAULT = 0,
         LEVELMAX = 1,
         LEVELUP = 2,
     }
 }
 
-namespace Enums.via.physics.FilterInfoData {
-    public enum Attribute {
+namespace Enums.via.physics.FilterInfoData
+{
+    public enum Attribute
+    {
         MaskNAND = 0,
         Max = 1,
     }
 }
 
-namespace Enums.app.Em3100.Action.DiscoveryLoop {
-    public enum Type {
+namespace Enums.app.Em3100.Action.DiscoveryLoop
+{
+    public enum Type
+    {
         Default = 0,
         Patrol = 1,
     }
 }
 
-namespace Enums.via.motion.tree.TransitionNode {
-    public enum Mode {
+namespace Enums.via.motion.tree.TransitionNode
+{
+    public enum Mode
+    {
         Default = 0,
         Sync = 1,
     }
 }
 
-namespace Enums.via.render.PrimitiveFluid2D.Attribute {
-    public enum ParticleType {
+namespace Enums.via.render.PrimitiveFluid2D.Attribute
+{
+    public enum ParticleType
+    {
         Billboard = 0,
         Polygon = 1,
         Ribbon = 2,
     }
 }
 
-namespace Enums.app.Em3001.Goal {
-    public enum AttackMessageStatus {
+namespace Enums.app.Em3001.Goal
+{
+    public enum AttackMessageStatus
+    {
         Non = 0,
         Hit = 1,
         UnHit = 2,
@@ -5338,16 +6002,20 @@ namespace Enums.app.Em3001.Goal {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ArrowDirc {
+namespace Enums.app.OptionMenu
+{
+    public enum ArrowDirc
+    {
         None = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum PCTargetAPI {
+namespace Enums.via.render
+{
+    public enum PCTargetAPI
+    {
         DirectX11 = 0,
         DirectX12 = 1,
         Vulkan = 2,
@@ -5355,37 +6023,47 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.navigation.MapAccessor {
-    public enum SearchResult {
+namespace Enums.via.navigation.MapAccessor
+{
+    public enum SearchResult
+    {
         Found = 0,
         Wait = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.WaveNotifyTimerUI {
-    public enum CountContext {
+namespace Enums.app.WaveNotifyTimerUI
+{
+    public enum CountContext
+    {
         Countdown = 0,
         Countup = 1,
     }
 }
 
-namespace Enums.app.HIDManager {
-    public enum MouseCursor {
+namespace Enums.app.HIDManager
+{
+    public enum MouseCursor
+    {
         Hide = 0,
         Show = 1,
     }
 }
 
-namespace Enums.app.WeaponGun {
-    public enum BulletTypeSwitch {
+namespace Enums.app.WeaponGun
+{
+    public enum BulletTypeSwitch
+    {
         Normal = 0,
         Strong = 1,
     }
 }
 
-namespace Enums.via.simplewwise.BankInfoResource.IdNameInfo {
-    public enum LanguageType {
+namespace Enums.via.simplewwise.BankInfoResource.IdNameInfo
+{
+    public enum LanguageType
+    {
         None = 0,
         Japanese = 1,
         English_US = 2,
@@ -5397,16 +6075,20 @@ namespace Enums.via.simplewwise.BankInfoResource.IdNameInfo {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum GameOverPostRno {
+namespace Enums.app.GameManager
+{
+    public enum GameOverPostRno
+    {
         Wait = 0,
         BlinkStart = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum AntiAliasingType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum AntiAliasingType
+    {
         FXAA = 0,
         TAA = 1,
         FXAA_TAA = 2,
@@ -5415,30 +6097,38 @@ namespace Enums.via.render.RenderConfig {
     }
 }
 
-namespace Enums.via.render {
-    public enum MapType {
+namespace Enums.via.render
+{
+    public enum MapType
+    {
         WriteDiscard = 0,
         Read = 1,
     }
 }
 
-namespace Enums.via.autoplay.action.AutoNavigationPoint {
-    public enum ReachDistanceType {
+namespace Enums.via.autoplay.action.AutoNavigationPoint
+{
+    public enum ReachDistanceType
+    {
         Long = 0,
         Normal = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodWebSocketClient {
+namespace Enums.via.network.error
+{
+    public enum MethodWebSocketClient
+    {
         Update = 0,
         Open = 1,
         Send = 2,
     }
 }
 
-namespace Enums.app.fsm.ChangePlayerGrowth {
-    public enum IncreaseType {
+namespace Enums.app.fsm.ChangePlayerGrowth
+{
+    public enum IncreaseType
+    {
         None = 0,
         Weapon = 1,
         Recovery = 2,
@@ -5448,14 +6138,18 @@ namespace Enums.app.fsm.ChangePlayerGrowth {
     }
 }
 
-namespace Enums.app.CH9Em5800 {
-    public enum ThinkOrder {
+namespace Enums.app.CH9Em5800
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CommandAction {
-    public enum ProcessType {
+namespace Enums.app.CommandAction
+{
+    public enum ProcessType
+    {
         InActive = 0,
         Starting = 1,
         Active = 2,
@@ -5463,8 +6157,10 @@ namespace Enums.app.CommandAction {
     }
 }
 
-namespace Enums.app.OptionManager {
-    public enum loadStep {
+namespace Enums.app.OptionManager
+{
+    public enum loadStep
+    {
         Default = 0,
         FirstFontLoad = 1,
         unload = 2,
@@ -5472,8 +6168,10 @@ namespace Enums.app.OptionManager {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum CastRayEventIdFlags {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum CastRayEventIdFlags
+    {
         None = 0,
         Left = 1,
         Right = 2,
@@ -5482,8 +6180,10 @@ namespace Enums.via.motion.IkLeg2 {
     }
 }
 
-namespace Enums.app.CH8Telemetry {
-    public enum GameOverType {
+namespace Enums.app.CH8Telemetry
+{
+    public enum GameOverType
+    {
         CountOfByCaughtMother = 0,
         CountOfByCar = 1,
         CountOfByTrapBomb = 2,
@@ -5501,28 +6201,36 @@ namespace Enums.app.CH8Telemetry {
     }
 }
 
-namespace Enums.via.navigation.NavigationWaypoint {
-    public enum EndNodeUsage {
+namespace Enums.via.navigation.NavigationWaypoint
+{
+    public enum EndNodeUsage
+    {
         Trace = 0,
         Skip = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodHttpClient {
+namespace Enums.via.network.error
+{
+    public enum MethodHttpClient
+    {
         Request = 0,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum InitialCursorPos {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum InitialCursorPos
+    {
         First = 0,
         Last = 1,
     }
 }
 
-namespace Enums.app.Cp7NightmareReward {
-    public enum Type {
+namespace Enums.app.Cp7NightmareReward
+{
+    public enum Type
+    {
         CraftItem = 0,
         JumkBonus = 1,
         ItemBonus = 2,
@@ -5530,8 +6238,10 @@ namespace Enums.app.Cp7NightmareReward {
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum OtherCountType {
+namespace Enums.app.Telemetry
+{
+    public enum OtherCountType
+    {
         CountOfRepulsedInTheAir = 0,
         CountOfKilledByAttachBomb = 1,
         CountOfAvoidInTheSquat = 2,
@@ -5556,8 +6266,10 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.via.sound.GameParameterInfo {
-    public enum Scope {
+namespace Enums.via.sound.GameParameterInfo
+{
+    public enum Scope
+    {
         None = 0,
         Global = 1,
         GameObject = 2,
@@ -5565,53 +6277,67 @@ namespace Enums.via.sound.GameParameterInfo {
     }
 }
 
-namespace Enums.app.fsm.CH8EndOperator {
-    public enum GUIStateTable {
+namespace Enums.app.fsm.CH8EndOperator
+{
+    public enum GUIStateTable
+    {
         DEFAULT = 0,
         FADEOUT = 1,
     }
 }
 
-namespace Enums.via.movie.MovieManager {
-    public enum GCTarget {
+namespace Enums.via.movie.MovieManager
+{
+    public enum GCTarget
+    {
         RAM = 0,
         VRAM = 1,
         MOVIE = 2,
     }
 }
 
-namespace Enums.app.PlayerExternalRequestController {
-    public enum Action {
+namespace Enums.app.PlayerExternalRequestController
+{
+    public enum Action
+    {
         Empty = 0,
         Chapter1_Battle1_DownStairs = 1,
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum ParentSettingOnEvent {
+namespace Enums.app.GameEventAction
+{
+    public enum ParentSettingOnEvent
+    {
         NoChange = 0,
         RootObject = 1,
         Clear = 2,
     }
 }
 
-namespace Enums.app.fsm.MapExObject {
-    public enum ControlTypes {
+namespace Enums.app.fsm.MapExObject
+{
+    public enum ControlTypes
+    {
         Default = 0,
         Mode1 = 1,
         Mode2 = 2,
     }
 }
 
-namespace Enums.via.nnfc {
-    public enum NnfcMode {
+namespace Enums.via.nnfc
+{
+    public enum NnfcMode
+    {
         Invalid = 0,
         NFP = 1,
     }
 }
 
-namespace Enums.app.CH9Telemetry {
-    public enum RewardItemPattern {
+namespace Enums.app.CH9Telemetry
+{
+    public enum RewardItemPattern
+    {
         Item002 = 0,
         WP000 = 1,
         WP006 = 2,
@@ -5620,8 +6346,10 @@ namespace Enums.app.CH9Telemetry {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimDrawType {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimDrawType
+    {
         Unknown = 0,
         Mesh = 1,
         MeshInstancing = 2,
@@ -5630,8 +6358,10 @@ namespace Enums.via.gui.renderer.detail {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraFramerate {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraFramerate
+    {
         PSCameraFramerate_UNKNOWN = 0,
         PSCameraFramerate_7_5 = 7,
         PSCameraFramerate_15 = 15,
@@ -5642,8 +6372,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum NowOnSaleType {
+namespace Enums.app.GameManager
+{
+    public enum NowOnSaleType
+    {
         Chapter7_1 = 0,
         Chapter7_2 = 1,
         Chapter7_3 = 2,
@@ -5654,15 +6386,19 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.autoplay.action.AutoButton {
-    public enum Unit {
+namespace Enums.via.autoplay.action.AutoButton
+{
+    public enum Unit
+    {
         Seconds = 0,
         Frames = 1,
     }
 }
 
-namespace Enums.app.AreaHitObj {
-    public enum AreaHitType {
+namespace Enums.app.AreaHitObj
+{
+    public enum AreaHitType
+    {
         Normal = 0,
         Flag = 1,
         MansionAI = 2,
@@ -5672,8 +6408,10 @@ namespace Enums.app.AreaHitObj {
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum ItemRemoveType {
+namespace Enums.app.CardGameItem
+{
+    public enum ItemRemoveType
+    {
         NoUse = 0,
         Last = 1,
         All = 2,
@@ -5682,15 +6420,19 @@ namespace Enums.app.CardGameItem {
     }
 }
 
-namespace Enums.via.audiorender.fx.multi_band_eq {
-    public enum EQUnitEnable {
+namespace Enums.via.audiorender.fx.multi_band_eq
+{
+    public enum EQUnitEnable
+    {
         False = 0,
         True = 1,
     }
 }
 
-namespace Enums.app.InteractClockPuzzle {
-    public enum ClockState {
+namespace Enums.app.InteractClockPuzzle
+{
+    public enum ClockState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -5704,8 +6446,10 @@ namespace Enums.app.InteractClockPuzzle {
     }
 }
 
-namespace Enums.via.motion.MotionManager {
-    public enum CallUpdate {
+namespace Enums.via.motion.MotionManager
+{
+    public enum CallUpdate
+    {
         ComponentCollection = 0,
         Structure = 1,
         Frame = 2,
@@ -5719,14 +6463,18 @@ namespace Enums.via.motion.MotionManager {
     }
 }
 
-namespace Enums.app.CH9Em7500.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em7500.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH8Em4100.Goal.CH8GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH8Em4100.Goal.CH8GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Discovery = 2,
@@ -5764,38 +6512,48 @@ namespace Enums.app.CH8Em4100.Goal.CH8GoalGenerator {
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Dead {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Air = 1,
     }
 }
 
-namespace Enums.via.gui.Memo {
-    public enum MemoRotationType {
+namespace Enums.via.gui.Memo
+{
+    public enum MemoRotationType
+    {
         Billboard = 0,
         TransformAndOffset = 1,
         OffsetOnly = 2,
     }
 }
 
-namespace Enums.app.fsm.SetGenomeCodexNoiseLv {
-    public enum RadarNoiseLvDef {
+namespace Enums.app.fsm.SetGenomeCodexNoiseLv
+{
+    public enum RadarNoiseLvDef
+    {
         None = 0,
         Lv1 = 1,
         Lv2 = 2,
     }
 }
 
-namespace Enums.via.storage {
-    public enum CompressionLevel {
+namespace Enums.via.storage
+{
+    public enum CompressionLevel
+    {
         Default = 0,
         Maximum = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum ExceptionTranslationFlag {
+namespace Enums.via.clr
+{
+    public enum ExceptionTranslationFlag
+    {
         None = 0,
         InvalidCast = 1,
         IndexOutOfRange = 2,
@@ -5812,16 +6570,20 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.StampController {
-    public enum SaveStateEnum {
+namespace Enums.app.StampController
+{
+    public enum SaveStateEnum
+    {
         None = 0,
         Preparing = 1,
         Ready = 2,
     }
 }
 
-namespace Enums.via.os {
-    public enum FileError {
+namespace Enums.via.os
+{
+    public enum FileError
+    {
         None = 0,
         NotFound = 1,
         AccessDenied = 2,
@@ -5831,46 +6593,58 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraCaptureMemoryType {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraCaptureMemoryType
+    {
         Onion = 1,
         Garlic = 2,
     }
 }
 
-namespace Enums.app.fsm.GUIFadeInOut {
-    public enum FadeDefine {
+namespace Enums.app.fsm.GUIFadeInOut
+{
+    public enum FadeDefine
+    {
         FadeIn = 0,
         FadeOut = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum ConditionVariableError {
+namespace Enums.via.os
+{
+    public enum ConditionVariableError
+    {
         None = 0,
         Failed = 1,
         TimedOut = 2,
     }
 }
 
-namespace Enums.app.AmbassadorTrialInGameTitle {
-    public enum TypeEnum {
+namespace Enums.app.AmbassadorTrialInGameTitle
+{
+    public enum TypeEnum
+    {
         MainMenu = 0,
         InGame = 1,
         InGame_VR = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum ToeCtrlOption {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum ToeCtrlOption
+    {
         None = 0,
         TwoRayCast = 1,
         ToeOnly = 2,
     }
 }
 
-namespace Enums.app.Em3001.Action.TurnForWander {
-    public enum Type {
+namespace Enums.app.Em3001.Action.TurnForWander
+{
+    public enum Type
+    {
         Right = 0,
         Left = 1,
         BranchR = 2,
@@ -5878,15 +6652,19 @@ namespace Enums.app.Em3001.Action.TurnForWander {
     }
 }
 
-namespace Enums.app.fsm.CallObjective {
-    public enum Mode {
+namespace Enums.app.fsm.CallObjective
+{
+    public enum Mode
+    {
         Disable = 0,
         Enable = 1,
     }
 }
 
-namespace Enums.app.CH8Em4090Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH8Em4090Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -5896,8 +6674,10 @@ namespace Enums.app.CH8Em4090Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.via.gui {
-    public enum ResolutionAdjustAnchor {
+namespace Enums.via.gui
+{
+    public enum ResolutionAdjustAnchor
+    {
         LeftTop = 0,
         LeftCenter = 1,
         LeftBottom = 2,
@@ -5911,8 +6691,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.render.layer.ShadowCast {
-    public enum ShadowCastSegment {
+namespace Enums.via.render.layer.ShadowCast
+{
+    public enum ShadowCastSegment
+    {
         StaticShadow = 0,
         ShadowClear = 1,
         ShadowSolid = 4,
@@ -5937,8 +6719,10 @@ namespace Enums.via.render.layer.ShadowCast {
     }
 }
 
-namespace Enums.via.motion.GpuMotion {
-    public enum PlayState {
+namespace Enums.via.motion.GpuMotion
+{
+    public enum PlayState
+    {
         Play = 0,
         Pause = 1,
         Stop = 2,
@@ -5946,8 +6730,10 @@ namespace Enums.via.motion.GpuMotion {
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum JpegSamplingRatio {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum JpegSamplingRatio
+    {
         YUV444 = 0,
         YUV422 = 1,
         YUV420 = 2,
@@ -5955,60 +6741,76 @@ namespace Enums.via.render.RenderTargetOperator {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum OrientationType {
+namespace Enums.via.hid.VrTracker
+{
+    public enum OrientationType
+    {
         Absolute = 0,
         Relative = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Damage {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum PlayOrder {
+namespace Enums.via.effect.detail
+{
+    public enum PlayOrder
+    {
         Forward = 0,
         Reverse = 1,
         RandomReverse = 2,
     }
 }
 
-namespace Enums.app.Em3102.Message {
-    public enum Priority {
+namespace Enums.app.Em3102.Message
+{
+    public enum Priority
+    {
         Low = 0,
         Middle = 1,
         High = 2,
     }
 }
 
-namespace Enums.via.navigation.NavigationSurface {
-    public enum LineAdjustSideType {
+namespace Enums.via.navigation.NavigationSurface
+{
+    public enum LineAdjustSideType
+    {
         ContourSide = 0,
         Both = 1,
     }
 }
 
-namespace Enums.via.motion.detail.IkFourLegSolver {
-    public enum SolverType {
+namespace Enums.via.motion.detail.IkFourLegSolver
+{
+    public enum SolverType
+    {
         SOLVE_2BONE = 0,
         SOLVE_3BONE = 1,
     }
 }
 
-namespace Enums.via.AnimationCurve {
-    public enum Wrap {
+namespace Enums.via.AnimationCurve
+{
+    public enum Wrap
+    {
         Once = 0,
         Loop = 1,
         Loop_Always = 2,
     }
 }
 
-namespace Enums.app {
-    public enum AccountPickerResult {
+namespace Enums.app
+{
+    public enum AccountPickerResult
+    {
         ActiveUserChanged = 0,
         ActiveUserUnchanged = 1,
         InvalidUser = 2,
@@ -6018,31 +6820,39 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.ItemSelectReaction {
-    public enum Result {
+namespace Enums.app.ItemSelectReaction
+{
+    public enum Result
+    {
         Success = 0,
         Failed = 1,
     }
 }
 
-namespace Enums.app.EffectSphereHolder.SphereInfo {
-    public enum Status {
+namespace Enums.app.EffectSphereHolder.SphereInfo
+{
+    public enum Status
+    {
         Start = 0,
         Update = 1,
         End = 2,
     }
 }
 
-namespace Enums.app.AI.MoldedCommonBoard {
-    public enum RenderTargetType {
+namespace Enums.app.AI.MoldedCommonBoard
+{
+    public enum RenderTargetType
+    {
         Slow = 0,
         Quick = 1,
         Fat = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum Segment {
+namespace Enums.via.gui
+{
+    public enum Segment
+    {
         Keep = -1,
         Segment00 = 0,
         Segment01 = 1,
@@ -6108,16 +6918,20 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceSummerTimeStatus {
+namespace Enums.via
+{
+    public enum SystemServiceSummerTimeStatus
+    {
         Unknown = 0,
         StandardTime = 1,
         SummerTime = 2,
     }
 }
 
-namespace Enums.app.VrExternalLightSetting {
-    public enum LightType {
+namespace Enums.app.VrExternalLightSetting
+{
+    public enum LightType
+    {
         SpotLight = 0,
         LightProbes = 1,
         PointLight = 2,
@@ -6125,21 +6939,27 @@ namespace Enums.app.VrExternalLightSetting {
     }
 }
 
-namespace Enums.app.fsm.EnemyStateCheck {
-    public enum EnemyIntType {
+namespace Enums.app.fsm.EnemyStateCheck
+{
+    public enum EnemyIntType
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em5400.Action.GroundMove {
-    public enum Type {
+namespace Enums.app.Em5400.Action.GroundMove
+{
+    public enum Type
+    {
         Normal = 0,
         Reaction = 1,
     }
 }
 
-namespace Enums.app.Em8000.Em8000Define.Grapple {
-    public enum FsmState {
+namespace Enums.app.Em8000.Em8000Define.Grapple
+{
+    public enum FsmState
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -6147,30 +6967,38 @@ namespace Enums.app.Em8000.Em8000Define.Grapple {
     }
 }
 
-namespace Enums.via.os {
-    public enum SocketOption {
+namespace Enums.via.os
+{
+    public enum SocketOption
+    {
         None = 0,
         TcpNoDelay = 1,
     }
 }
 
-namespace Enums.via.vr.detail {
-    public enum ControllerInfoType {
+namespace Enums.via.vr.detail
+{
+    public enum ControllerInfoType
+    {
         Connection = 0,
         Input = 1,
         Pose = 2,
     }
 }
 
-namespace Enums.via.navigation.NavigationSurface {
-    public enum UnderSearchSettingType {
+namespace Enums.via.navigation.NavigationSurface
+{
+    public enum UnderSearchSettingType
+    {
         Single = 0,
         Each = 1,
     }
 }
 
-namespace Enums.via {
-    public enum ShareServiceTicketStatus {
+namespace Enums.via
+{
+    public enum ShareServiceTicketStatus
+    {
         Invalid = 0,
         Requested = 1,
         Running = 2,
@@ -6178,23 +7006,29 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.effect {
-    public enum PlayerType {
+namespace Enums.via.effect
+{
+    public enum PlayerType
+    {
         Effect = 0,
         Lensflare = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum PanType {
+namespace Enums.via.audiorender
+{
+    public enum PanType
+    {
         Position = 0,
         Angle = 1,
         SphericalHarmonics = 2,
     }
 }
 
-namespace Enums.app.InteractRotateArt {
-    public enum ArtState {
+namespace Enums.app.InteractRotateArt
+{
+    public enum ArtState
+    {
         NotStart = 0,
         Init = 1,
         RotLeft = 2,
@@ -6203,24 +7037,30 @@ namespace Enums.app.InteractRotateArt {
     }
 }
 
-namespace Enums.app.CharacterDefine {
-    public enum Hand {
+namespace Enums.app.CharacterDefine
+{
+    public enum Hand
+    {
         Right = 0,
         Left = 1,
         Both = 2,
     }
 }
 
-namespace Enums.via.motion.RetargetFourLegRig {
-    public enum RotationControlType {
+namespace Enums.via.motion.RetargetFourLegRig
+{
+    public enum RotationControlType
+    {
         Constant = 0,
         Interpolation = 1,
         InterpolationAdd = 2,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseProtocol {
+namespace Enums.via.network.error
+{
+    public enum CauseProtocol
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -6251,16 +7091,20 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em3000Grapple {
-    public enum Layer {
+namespace Enums.app.Em3000Grapple
+{
+    public enum Layer
+    {
         Base = 0,
         Resist = 1,
         Guard = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum FadeMode {
+namespace Enums.via.gui
+{
+    public enum FadeMode
+    {
         In = 0,
         Wait = 1,
         Out = 2,
@@ -6269,15 +7113,19 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum DetectBaseType {
+namespace Enums.via.navigation.Navigation
+{
+    public enum DetectBaseType
+    {
         Agent = 0,
         Target = 1,
     }
 }
 
-namespace Enums.app.Em3000.Em3000WwiseMonitoredValue {
-    public enum GameRank {
+namespace Enums.app.Em3000.Em3000WwiseMonitoredValue
+{
+    public enum GameRank
+    {
         Zero = 0,
         One = 1,
         Two = 2,
@@ -6292,8 +7140,10 @@ namespace Enums.app.Em3000.Em3000WwiseMonitoredValue {
     }
 }
 
-namespace Enums.via.render.DepthOfField {
-    public enum DepthOfFieldBokehControl {
+namespace Enums.via.render.DepthOfField
+{
+    public enum DepthOfFieldBokehControl
+    {
         Default = 0,
         IgnoreNear = 1,
         IgnoreFar = 2,
@@ -6301,22 +7151,28 @@ namespace Enums.via.render.DepthOfField {
     }
 }
 
-namespace Enums.via.render.GeometryAOControl {
-    public enum GeometryAOCullTolerance {
+namespace Enums.via.render.GeometryAOControl
+{
+    public enum GeometryAOCullTolerance
+    {
         Small = 0,
         Middle = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum PtColorOperator {
+namespace Enums.via.effect.detail
+{
+    public enum PtColorOperator
+    {
         Overwrite = 0,
         Multiply = 1,
     }
 }
 
-namespace Enums.via.render.BottomLevelAccelerationStructure {
-    public enum COMPACTION {
+namespace Enums.via.render.BottomLevelAccelerationStructure
+{
+    public enum COMPACTION
+    {
         NOTSUPPORT = 1,
         WAIT = 2,
         READY = 4,
@@ -6325,8 +7181,10 @@ namespace Enums.via.render.BottomLevelAccelerationStructure {
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum StampSetting {
+namespace Enums.app.CarInGarage
+{
+    public enum StampSetting
+    {
         Normal = 0,
         Burn = 1,
         Burnt = 2,
@@ -6334,15 +7192,19 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.app.CH9Em6700.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em6700.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.Em3002Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3002Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Dummy = 1,
         AppearF = 2,
@@ -6352,23 +7214,29 @@ namespace Enums.app.Em3002Order.Appear {
     }
 }
 
-namespace Enums.via.network.native.StadiaStatsValue {
-    public enum ValueType {
+namespace Enums.via.network.native.StadiaStatsValue
+{
+    public enum ValueType
+    {
         Int = 0,
         Double = 1,
         String = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8StateCheck {
-    public enum IntType {
+namespace Enums.app.fsm.CH8StateCheck
+{
+    public enum IntType
+    {
         None = 0,
         Life = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseMatchmaking {
+namespace Enums.via.network.error
+{
+    public enum CauseMatchmaking
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -6399,8 +7267,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Humanoid {
-    public enum LimbType {
+namespace Enums.app.Humanoid
+{
+    public enum LimbType
+    {
         HandR = 0,
         HandL = 1,
         FootR = 2,
@@ -6408,8 +7278,10 @@ namespace Enums.app.Humanoid {
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum eBoatState {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum eBoatState
+    {
         Wait = 0,
         PLRideWait = 1,
         Driving = 2,
@@ -6418,8 +7290,10 @@ namespace Enums.app.CH9SM2644Movement {
     }
 }
 
-namespace Enums.app.CH9ThrowingWp1800 {
-    public enum eHitWallType {
+namespace Enums.app.CH9ThrowingWp1800
+{
+    public enum eHitWallType
+    {
         None = 0,
         Wall = 1,
         Door = 2,
@@ -6427,8 +7301,10 @@ namespace Enums.app.CH9ThrowingWp1800 {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseAchievements {
+namespace Enums.via.network.error
+{
+    public enum CauseAchievements
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -6457,22 +7333,28 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum Vignetting {
+namespace Enums.via.render.ToneMapping
+{
+    public enum Vignetting
+    {
         Enable = 0,
         KerarePlus = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app {
-    public enum DropTableID {
+namespace Enums.app
+{
+    public enum DropTableID
+    {
         DROP_TABLE_DEFAULT = 0,
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum ProgressType {
+namespace Enums.app.Telemetry
+{
+    public enum ProgressType
+    {
         Prologue = 0,
         Chapter1 = 1,
         Garage = 2,
@@ -6489,8 +7371,10 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.via.audiorender.MemoryPool {
-    public enum MemoryPoolType {
+namespace Enums.via.audiorender.MemoryPool
+{
+    public enum MemoryPoolType
+    {
         MemoryPoolType_None = 0,
         MemoryPoolType_4KiB = 1,
         MemoryPoolType_16KiB = 2,
@@ -6501,8 +7385,10 @@ namespace Enums.via.audiorender.MemoryPool {
     }
 }
 
-namespace Enums.app.WireTrapIMD {
-    public enum State {
+namespace Enums.app.WireTrapIMD
+{
+    public enum State
+    {
         Wait = 0,
         WireHit = 1,
         Explosion = 2,
@@ -6510,16 +7396,20 @@ namespace Enums.app.WireTrapIMD {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GUIShaderCommonFlag {
+namespace Enums.via.gui
+{
+    public enum GUIShaderCommonFlag
+    {
         DrawRenderTarget = 1,
         LinearAlphaBlend = 2,
         LinearAlphaBlendNonLerp = 4,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum DebugDrawAttribute {
+namespace Enums.via.navigation
+{
+    public enum DebugDrawAttribute
+    {
         None = 0,
         Fill = 1,
         Contour = 2,
@@ -6527,8 +7417,10 @@ namespace Enums.via.navigation {
     }
 }
 
-namespace Enums.app.Em5520FollowBug {
-    public enum State {
+namespace Enums.app.Em5520FollowBug
+{
+    public enum State
+    {
         Normal = 0,
         Attack = 1,
         Return = 2,
@@ -6541,8 +7433,10 @@ namespace Enums.app.Em5520FollowBug {
     }
 }
 
-namespace mpl_.assert_ {
-    public enum relations {
+namespace mpl_.assert_
+{
+    public enum relations
+    {
         equal = 1,
         not_equal = 2,
         greater = 3,
@@ -6552,8 +7446,10 @@ namespace mpl_.assert_ {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_21ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_21ch
+    {
         L = 0,
         R = 1,
         LFE = 2,
@@ -6561,8 +7457,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em4000BladeController {
-    public enum Type {
+namespace Enums.app.Em4000BladeController
+{
+    public enum Type
+    {
         Default = 0,
         Slash = 1,
         SlashTry = 2,
@@ -6572,16 +7470,20 @@ namespace Enums.app.Em4000BladeController {
     }
 }
 
-namespace Enums.app.CH8HUDControl.AirGauge {
-    public enum OxySoundState {
+namespace Enums.app.CH8HUDControl.AirGauge
+{
+    public enum OxySoundState
+    {
         Normal = 0,
         Warning = 1,
         Danger = 2,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainJiggleRangeShape {
+namespace Enums.via.motion.detail
+{
+    public enum ChainJiggleRangeShape
+    {
         None = 0,
         OBB = 1,
         Sphere = 2,
@@ -6589,16 +7491,20 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.via.os.PackManager {
-    public enum HandleUsage {
+namespace Enums.via.os.PackManager
+{
+    public enum HandleUsage
+    {
         Read = 0,
         StartPrefetch = 1,
         QueryCache = 2,
     }
 }
 
-namespace Enums.app.MotionDelegate.TagProcess {
-    public enum CourseState {
+namespace Enums.app.MotionDelegate.TagProcess
+{
+    public enum CourseState
+    {
         None = 0,
         Waiting = 1,
         FadingIn = 2,
@@ -6607,8 +7513,10 @@ namespace Enums.app.MotionDelegate.TagProcess {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.Generate {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.Generate
+{
+    public enum Type
+    {
         GenerateS = 0,
         GenerateM = 1,
         GenerateL = 2,
@@ -6616,35 +7524,45 @@ namespace Enums.app.CH9Em5700.Action.Generate {
     }
 }
 
-namespace Enums.app.Collision.HitController.DamageInfo {
-    public enum Attribution {
+namespace Enums.app.Collision.HitController.DamageInfo
+{
+    public enum Attribution
+    {
         None = 0,
         Fire = 1,
         Acid = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumU1 {
+namespace Enums.via.clr
+{
+    public enum EnumU1
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.app.BirthdayWeaponMap {
-    public enum MapIconTypeDef {
+namespace Enums.app.BirthdayWeaponMap
+{
+    public enum MapIconTypeDef
+    {
         Weapon = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum GeometryAODirection {
+namespace Enums.via.render
+{
+    public enum GeometryAODirection
+    {
         None = 0,
         Uniform = 1,
     }
 }
 
-namespace Enums.via.network.p2p {
-    public enum StarSocketProtocol {
+namespace Enums.via.network.p2p
+{
+    public enum StarSocketProtocol
+    {
         Udp = 0,
         Dtls = 1,
         Dblowfish = 2,
@@ -6652,22 +7570,28 @@ namespace Enums.via.network.p2p {
     }
 }
 
-namespace Enums.app.RewardData {
-    public enum GameMode {
+namespace Enums.app.RewardData
+{
+    public enum GameMode
+    {
         Main = 0,
         BirthdayGame = 1,
     }
 }
 
-namespace Enums.app.Command {
-    public enum StickType {
+namespace Enums.app.Command
+{
+    public enum StickType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.NowOnSaleMenu {
-    public enum ListElemID {
+namespace Enums.app.NowOnSaleMenu
+{
+    public enum ListElemID
+    {
         GoNext = 0,
         Store = 1,
         Option = 2,
@@ -6675,31 +7599,39 @@ namespace Enums.app.NowOnSaleMenu {
     }
 }
 
-namespace Enums.app.TipsGUI {
-    public enum TipsPosState {
+namespace Enums.app.TipsGUI
+{
+    public enum TipsPosState
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.Em2000.Em2000FaceController {
-    public enum FaceNo {
+namespace Enums.app.Em2000.Em2000FaceController
+{
+    public enum FaceNo
+    {
         Enemy = 0,
         Npc = 1,
         Blend = 2,
     }
 }
 
-namespace Enums.LibJson.JsonReader {
-    public enum Phase {
+namespace Enums.LibJson.JsonReader
+{
+    public enum Phase
+    {
         Idle = 0,
         Name = 1,
         Value = 2,
     }
 }
 
-namespace Enums.via.os.dialog {
-    public enum Result {
+namespace Enums.via.os.dialog
+{
+    public enum Result
+    {
         None = 0,
         Busy = 1,
         Ok = 2,
@@ -6711,22 +7643,28 @@ namespace Enums.via.os.dialog {
     }
 }
 
-namespace Enums.app.WaveTimerUIAsset {
-    public enum TimePanelState {
+namespace Enums.app.WaveTimerUIAsset
+{
+    public enum TimePanelState
+    {
         TIME_AM = 0,
         TIME_PM = 1,
     }
 }
 
-namespace Enums.app.Em3102.Define.Mesh {
-    public enum State {
+namespace Enums.app.Em3102.Define.Mesh
+{
+    public enum State
+    {
         Human = 0,
         Demon = 1,
     }
 }
 
-namespace Enums.app.FootEffectController {
-    public enum SETriggerTargetEnum {
+namespace Enums.app.FootEffectController
+{
+    public enum SETriggerTargetEnum
+    {
         Player = 0,
         PlayerJog = 1,
         PlayerCrouch = 2,
@@ -6735,8 +7673,10 @@ namespace Enums.app.FootEffectController {
     }
 }
 
-namespace Enums.app.CarInGarage.HijackedByEnemy {
-    public enum CoordGroup {
+namespace Enums.app.CarInGarage.HijackedByEnemy
+{
+    public enum CoordGroup
+    {
         PosSouthEast = 1,
         PosSouthWest = 2,
         PosNorthEast = 4,
@@ -6748,39 +7688,49 @@ namespace Enums.app.CarInGarage.HijackedByEnemy {
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrEye {
+namespace Enums.via.vr
+{
+    public enum VrEye
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.render.VolumetricFogControl {
-    public enum DebugView {
+namespace Enums.via.render.VolumetricFogControl
+{
+    public enum DebugView
+    {
         None = 0,
         Contribution = 1,
         Transmittance = 2,
     }
 }
 
-namespace Enums.via.motion.IkFourLeg {
-    public enum RayCastSkipOption {
+namespace Enums.via.motion.IkFourLeg
+{
+    public enum RayCastSkipOption
+    {
         None = 1,
         DIV2 = 2,
         DIV4 = 4,
     }
 }
 
-namespace Enums.app.MapSheet {
-    public enum MapSegments {
+namespace Enums.app.MapSheet
+{
+    public enum MapSegments
+    {
         inactive = 34,
         active = 35,
         activeIcon = 36,
     }
 }
 
-namespace Enums.app.FloorDoor {
-    public enum State {
+namespace Enums.app.FloorDoor
+{
+    public enum State
+    {
         Unknown = 0,
         Closed = 1,
         Opening = 2,
@@ -6789,8 +7739,10 @@ namespace Enums.app.FloorDoor {
     }
 }
 
-namespace Enums.app.MotionExtraData {
-    public enum ContactStatus {
+namespace Enums.app.MotionExtraData
+{
+    public enum ContactStatus
+    {
         None = 0,
         LeftLegContact = 1,
         RightLegContact = 2,
@@ -6826,8 +7778,10 @@ namespace Enums.app.MotionExtraData {
     }
 }
 
-namespace Enums.via.DateTime {
-    public enum Comparison {
+namespace Enums.via.DateTime
+{
+    public enum Comparison
+    {
         Full = 0,
         FullAbout = 1,
         Date = 2,
@@ -6836,8 +7790,10 @@ namespace Enums.via.DateTime {
     }
 }
 
-namespace Enums.via.attribute {
-    public enum KeyComparisonType {
+namespace Enums.via.attribute
+{
+    public enum KeyComparisonType
+    {
         None = 0,
         Equal = 1,
         NotEqual = 2,
@@ -6848,8 +7804,10 @@ namespace Enums.via.attribute {
     }
 }
 
-namespace Enums.via.userdata.CalculateNode {
-    public enum Operation {
+namespace Enums.via.userdata.CalculateNode
+{
+    public enum Operation
+    {
         Add = 0,
         Sub = 1,
         Mul = 2,
@@ -6861,8 +7819,10 @@ namespace Enums.via.userdata.CalculateNode {
     }
 }
 
-namespace Enums.via.motion.IkJacobian.Effector {
-    public enum AttributeType {
+namespace Enums.via.motion.IkJacobian.Effector
+{
+    public enum AttributeType
+    {
         Position = 1,
         Rotation = 2,
         Animation = 4,
@@ -6870,23 +7830,29 @@ namespace Enums.via.motion.IkJacobian.Effector {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PipelineStateVariation {
+namespace Enums.via.render.detail
+{
+    public enum PipelineStateVariation
+    {
         Standard = 0,
         Instancing = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app {
-    public enum PropCategory {
+namespace Enums.app
+{
+    public enum PropCategory
+    {
         Door = 0,
         Etc = 1,
     }
 }
 
-namespace Enums.via.network.native.StadiaEntitlementConsumeResult {
-    public enum ConsumeError {
+namespace Enums.via.network.native.StadiaEntitlementConsumeResult
+{
+    public enum ConsumeError
+    {
         None = 0,
         NotConsumable = 1,
         InvalidPlayer = 2,
@@ -6896,8 +7862,10 @@ namespace Enums.via.network.native.StadiaEntitlementConsumeResult {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000KneeDown {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000KneeDown
+{
+    public enum Type
+    {
         FromF = 0,
         FromB = 1,
         FromL = 2,
@@ -6912,8 +7880,10 @@ namespace Enums.app.Em8000.Action.Em8000KneeDown {
     }
 }
 
-namespace Enums.app.CH9Em5700.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em5700.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         VolumeSpaceMoveToTarget = 2,
@@ -6955,37 +7925,47 @@ namespace Enums.app.CH9Em5700.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.Em5510ActionController {
-    public enum Size {
+namespace Enums.app.Em5510ActionController
+{
+    public enum Size
+    {
         Small = 0,
         Middle = 1,
         Large = 2,
     }
 }
 
-namespace Enums.via.network.session {
-    public enum SearchByFriendOption {
+namespace Enums.via.network.session
+{
+    public enum SearchByFriendOption
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.PlayerUpperVerticalRotateParameter {
-    public enum ActionType {
+namespace Enums.app.PlayerUpperVerticalRotateParameter
+{
+    public enum ActionType
+    {
         Normal = 0,
         Aim = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.app.Em8001.Motion.Em8001MotionID.Type {
-    public enum UpperOverride {
+namespace Enums.app.Em8001.Motion.Em8001MotionID.Type
+{
+    public enum UpperOverride
+    {
         None = 0,
         Gesture = 1,
     }
 }
 
-namespace Enums.via.clr.TypeDB {
-    public enum AttributeListKind {
+namespace Enums.via.clr.TypeDB
+{
+    public enum AttributeListKind
+    {
         Default = 0,
         Field = 1,
         Method = 0,
@@ -6999,29 +7979,37 @@ namespace Enums.via.clr.TypeDB {
     }
 }
 
-namespace Enums.via.areamap.test.DistanceFromItemWithTag {
-    public enum Condition {
+namespace Enums.via.areamap.test.DistanceFromItemWithTag
+{
+    public enum Condition
+    {
         Mode_Closest = 0,
         Mode_Farthest = 1,
     }
 }
 
-namespace Enums.app.Em8000.Override.Em8000OverrideController {
-    public enum OverrideActionArg {
+namespace Enums.app.Em8000.Override.Em8000OverrideController
+{
+    public enum OverrideActionArg
+    {
         Gesture = 0,
         CoreLoopStart = 1,
         CoreLoopEnd = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000Order {
-    public enum OrderType {
+namespace Enums.app.CH8Em4000Order
+{
+    public enum OrderType
+    {
         WarpTo = 0,
     }
 }
 
-namespace Enums.app.Em3000Think {
-    public enum Mode {
+namespace Enums.app.Em3000Think
+{
+    public enum Mode
+    {
         Idle = 0,
         Chapter3Battle1 = 1,
         Chapter3Battle1Final = 2,
@@ -7036,8 +8024,10 @@ namespace Enums.app.Em3000Think {
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum GameOverType {
+namespace Enums.app.Telemetry
+{
+    public enum GameOverType
+    {
         CountOfByCaughtMother = 0,
         CountOfByCar = 1,
         CountOfByTrapBomb = 2,
@@ -7049,8 +8039,10 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.app {
-    public enum FormulationIDAlias {
+namespace Enums.app
+{
+    public enum FormulationIDAlias
+    {
         RemedyM = 0,
         RemedyL = 1,
         EyeDrops = 2,
@@ -7062,8 +8054,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.CH9Em7700BladeLeftController {
-    public enum Type {
+namespace Enums.app.CH9Em7700BladeLeftController
+{
+    public enum Type
+    {
         Default = 0,
         Slash = 1,
         SlashTry = 2,
@@ -7073,31 +8067,39 @@ namespace Enums.app.CH9Em7700BladeLeftController {
     }
 }
 
-namespace Enums.via.fsm.Selector {
-    public enum Attribute {
+namespace Enums.via.fsm.Selector
+{
+    public enum Attribute
+    {
         AttributeSelectBeforeAction = 0,
         AttributeBitNum = 32,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodOverlaySession {
+namespace Enums.via.network.error
+{
+    public enum MethodOverlaySession
+    {
         Update = 0,
         HostChange = 1,
         Process = 2,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodProtocol {
+namespace Enums.via.network.error
+{
+    public enum MethodProtocol
+    {
         Update = 0,
         SendMember = 1,
         Deliver = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         LuminanceBleed = 1,
         SimpleLuminanceBleed = 2,
@@ -7110,23 +8112,29 @@ namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Walk {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000Walk
+{
+    public enum Type
+    {
         None = 0,
         Normal = 1,
         LoopStart = 2,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum EventTargetType {
+namespace Enums.via.wwise
+{
+    public enum EventTargetType
+    {
         GameObject = 0,
         EntireComponent = 1,
     }
 }
 
-namespace Enums.via.path {
-    public enum DriveType {
+namespace Enums.via.path
+{
+    public enum DriveType
+    {
         App = 0,
         SaveData = 1,
         AddContent = 2,
@@ -7141,16 +8149,20 @@ namespace Enums.via.path {
     }
 }
 
-namespace Enums.via {
-    public enum VideoRecordingStopOption {
+namespace Enums.via
+{
+    public enum VideoRecordingStopOption
+    {
         SaveFile = 0,
         SaveFileAndExportLibrary = 1,
         Discard = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg2Data {
-    public enum AxisFlags {
+namespace Enums.via.motion.IkLeg2Data
+{
+    public enum AxisFlags
+    {
         X = 1,
         Y = 2,
         Z = 4,
@@ -7158,8 +8170,10 @@ namespace Enums.via.motion.IkLeg2Data {
     }
 }
 
-namespace Enums.app.SaveDataManager {
-    public enum CrossSaveStep {
+namespace Enums.app.SaveDataManager
+{
+    public enum CrossSaveStep
+    {
         None = 0,
         CheckExistingStart = 1,
         CheckExistingEnd = 2,
@@ -7179,8 +8193,10 @@ namespace Enums.app.SaveDataManager {
     }
 }
 
-namespace Enums.app.EnemyResistParameter {
-    public enum EnemyResistType {
+namespace Enums.app.EnemyResistParameter
+{
+    public enum EnemyResistType
+    {
         Small = 0,
         Middle = 1,
         Large = 2,
@@ -7193,15 +8209,19 @@ namespace Enums.app.EnemyResistParameter {
     }
 }
 
-namespace Enums.app.SceneActivater {
-    public enum SafeLoadStepEnum {
+namespace Enums.app.SceneActivater
+{
+    public enum SafeLoadStepEnum
+    {
         WaiteActiveList = 0,
         WaiteStandbyList = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum VelocityType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum VelocityType
+    {
         None = 0,
         Radial = 1,
         Normal = 2,
@@ -7212,36 +8232,46 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimitiveDistortion {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimitiveDistortion
+    {
         Blur = 0,
         Refract = 1,
     }
 }
 
-namespace Enums.via.motion.detail.IkFingerSolver {
-    public enum fingerType {
+namespace Enums.via.motion.detail.IkFingerSolver
+{
+    public enum fingerType
+    {
         Thumb = 0,
         Normal = 1,
     }
 }
 
-namespace Enums.app.CH8InfraredTrap {
-    public enum CoreState {
+namespace Enums.app.CH8InfraredTrap
+{
+    public enum CoreState
+    {
         Wait = 0,
         Explosion = 1,
         Broken = 2,
     }
 }
 
-namespace Enums.app.CH9Em5901Order.Appear {
-    public enum Type {
+namespace Enums.app.CH9Em5901Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.via {
-    public enum GamePresetsDifficulty {
+namespace Enums.via
+{
+    public enum GamePresetsDifficulty
+    {
         Default = 0,
         Easiest = 1,
         Easy = 2,
@@ -7251,8 +8281,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum BrowserMode {
+namespace Enums.app.GameManager
+{
+    public enum BrowserMode
+    {
         Normal = 0,
         NetRanking55 = 1,
         StorePageUWP = 2,
@@ -7260,8 +8292,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum HandItemRemoveType {
+namespace Enums.app.CardGameItem
+{
+    public enum HandItemRemoveType
+    {
         NoUse = 0,
         Mine = 1,
         MineHalf = 2,
@@ -7271,15 +8305,19 @@ namespace Enums.app.CardGameItem {
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum PngFormat {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum PngFormat
+    {
         RGB8bit = 0,
         RGBA8bit = 1,
     }
 }
 
-namespace Enums.app.PlayerTerrainMoveChecker {
-    public enum CheckDescendResult {
+namespace Enums.app.PlayerTerrainMoveChecker
+{
+    public enum CheckDescendResult
+    {
         None = 0,
         Success_Stand = 1,
         Success_Crouch = 2,
@@ -7291,8 +8329,10 @@ namespace Enums.app.PlayerTerrainMoveChecker {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum ExecGroup {
+namespace Enums.via.fsm
+{
+    public enum ExecGroup
+    {
         ExecGroup_00 = 0,
         ExecGroup_01 = 1,
         ExecGroup_02 = 2,
@@ -7304,15 +8344,19 @@ namespace Enums.via.fsm {
     }
 }
 
-namespace Enums.app.Em3102.Em3102ActionController {
-    public enum MotionSpeedControlGroup {
+namespace Enums.app.Em3102.Em3102ActionController
+{
+    public enum MotionSpeedControlGroup
+    {
         Move = 0,
         Rank = 1,
     }
 }
 
-namespace Enums.app.InteractSendFsm {
-    public enum HardSaveState {
+namespace Enums.app.InteractSendFsm
+{
+    public enum HardSaveState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -7323,8 +8367,10 @@ namespace Enums.app.InteractSendFsm {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum PlayState {
+namespace Enums.via.timeline
+{
+    public enum PlayState
+    {
         PlayStart = 0,
         Play = 1,
         Stop = 2,
@@ -7336,8 +8382,10 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.app.ReticleGUI {
-    public enum WeaponTypeDef {
+namespace Enums.app.ReticleGUI
+{
+    public enum WeaponTypeDef
+    {
         HandGun = 0,
         MachineGun = 1,
         ShotGun = 2,
@@ -7349,8 +8397,10 @@ namespace Enums.app.ReticleGUI {
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusDevice {
-    public enum Status {
+namespace Enums.via.hid.hmd.MorpheusDevice
+{
+    public enum Status
+    {
         Sleep = 0,
         Setup = 1,
         Standby = 2,
@@ -7360,8 +8410,10 @@ namespace Enums.via.hid.hmd.MorpheusDevice {
     }
 }
 
-namespace Enums.via.memory {
-    public enum PerfCounterType {
+namespace Enums.via.memory
+{
+    public enum PerfCounterType
+    {
         Alloc = 0,
         LocalAlloc = 1,
         Free = 2,
@@ -7374,24 +8426,30 @@ namespace Enums.via.memory {
     }
 }
 
-namespace Enums.app.Em3000Think {
-    public enum FacialBasicID {
+namespace Enums.app.Em3000Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Dead = 700,
     }
 }
 
-namespace Enums.via.physics {
-    public enum FillMode {
+namespace Enums.via.physics
+{
+    public enum FillMode
+    {
         Solid = 0,
         WireFrame = 1,
         Solid_WireFrame = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum BlendOp {
+namespace Enums.via.render
+{
+    public enum BlendOp
+    {
         Add = 1,
         Subtract = 2,
         RevSubtract = 3,
@@ -7401,8 +8459,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion {
-    public enum StartType {
+namespace Enums.via.motion
+{
+    public enum StartType
+    {
         None = 0,
         Frame = 1,
         NormalizedTime = 2,
@@ -7412,31 +8472,39 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum DebugDamageTransition {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum DebugDamageTransition
+    {
         Non = 0,
         ImpactState = 1,
         MaxState = 2,
     }
 }
 
-namespace Enums.app.AI.AIVolumeSpaceNavigationHelper {
-    public enum StateType {
+namespace Enums.app.AI.AIVolumeSpaceNavigationHelper
+{
+    public enum StateType
+    {
         None = 0,
         Stopping = 1,
         End = 2,
     }
 }
 
-namespace Enums.app.Em2000.Action.Chapter1Battle2Throw {
-    public enum Type {
+namespace Enums.app.Em2000.Action.Chapter1Battle2Throw
+{
+    public enum Type
+    {
         ThrowingToLeft = 0,
         ThrowingToRight = 1,
     }
 }
 
-namespace Enums.via.render.DepthOfField {
-    public enum DepthOfFieldType {
+namespace Enums.via.render.DepthOfField
+{
+    public enum DepthOfFieldType
+    {
         Default = 0,
         Tessellation = 1,
         Lite = 2,
@@ -7445,31 +8513,39 @@ namespace Enums.via.render.DepthOfField {
     }
 }
 
-namespace Enums.app.fsm.CH8InteractStart {
-    public enum StartTypeParam {
+namespace Enums.app.fsm.CH8InteractStart
+{
+    public enum StartTypeParam
+    {
         Normal = 0,
         SwitchOn = 1,
         SwitchOff = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Move {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.AI {
-    public enum CommonThinkOrder {
+namespace Enums.app.AI
+{
+    public enum CommonThinkOrder
+    {
         None = 0,
         Wait = 1,
         Goto = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum PlayerChangeState {
+namespace Enums.app.GameManager
+{
+    public enum PlayerChangeState
+    {
         None = 0,
         PlayerUnLoad = 1,
         PlayerLoad = 2,
@@ -7478,22 +8554,28 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum MaterialType {
+namespace Enums.via.effect.detail
+{
+    public enum MaterialType
+    {
         Default = 0,
         VertexAnimation = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4500.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum TransformElement {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum TransformElement
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
@@ -7510,8 +8592,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
     }
 }
 
-namespace Enums.via.motion {
-    public enum MotionFrameControl {
+namespace Enums.via.motion
+{
+    public enum MotionFrameControl
+    {
         Normal = 0,
         SyncBaseLayerNormalizeTime = 1,
         PauseStartFrame = 2,
@@ -7519,8 +8603,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.vr.VrFirstBootFlow {
-    public enum Phase {
+namespace Enums.app.vr.VrFirstBootFlow
+{
+    public enum Phase
+    {
         ReturnTitle = 0,
         ReturnTitleFade = 1,
         Cutin = 2,
@@ -7534,16 +8620,20 @@ namespace Enums.app.vr.VrFirstBootFlow {
     }
 }
 
-namespace Enums.via.motion {
-    public enum TreeLayerMode {
+namespace Enums.via.motion
+{
+    public enum TreeLayerMode
+    {
         None = 0,
         Motion = 1,
         Camera = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceKneeDown = 2,
@@ -7551,15 +8641,19 @@ namespace Enums.app.CH9Em7900.Action.BlownAway {
     }
 }
 
-namespace Enums.via.gui {
-    public enum ReprojectionType {
+namespace Enums.via.gui
+{
+    public enum ReprojectionType
+    {
         Default = 0,
         WithOverlay = 1,
     }
 }
 
-namespace Enums.via.render.layer.Transparent {
-    public enum ReducedTransparentBuffer {
+namespace Enums.via.render.layer.Transparent
+{
+    public enum ReducedTransparentBuffer
+    {
         Eighth = 0,
         Quat = 1,
         Default = 2,
@@ -7569,16 +8663,20 @@ namespace Enums.via.render.layer.Transparent {
     }
 }
 
-namespace Enums.via.render {
-    public enum GlobalSparseShadowDebugDrawMode {
+namespace Enums.via.render
+{
+    public enum GlobalSparseShadowDebugDrawMode
+    {
         None = 0,
         GlobalShadow = 1,
         BakeShadow = 2,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum FootLockRotOption {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum FootLockRotOption
+    {
         None = 0,
         AxisX = 1,
         AxisY = 2,
@@ -7586,16 +8684,20 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.fsm.InteractParamSet {
-    public enum FarIconForceDispParam {
+namespace Enums.app.fsm.InteractParamSet
+{
+    public enum FarIconForceDispParam
+    {
         NoChange = 0,
         On = 1,
         Off = 2,
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraFormatLevel {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraFormatLevel
+    {
         Level0 = 1,
         Level1 = 2,
         Level2 = 4,
@@ -7605,24 +8707,30 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.BedRoom.BedRoomMonitoringGimick {
-    public enum MotionDirection {
+namespace Enums.app.BedRoom.BedRoomMonitoringGimick
+{
+    public enum MotionDirection
+    {
         Right = 0,
         Front = 1,
         Left = 2,
     }
 }
 
-namespace Enums.via.physics.DynamicBoundingVolumeHierarchy {
-    public enum ErrorCode {
+namespace Enums.via.physics.DynamicBoundingVolumeHierarchy
+{
+    public enum ErrorCode
+    {
         None = 0,
         FunctorAbort = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum NodePlaneSurfaceCountEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum NodePlaneSurfaceCountEnum
+    {
         Surface1x1 = 0,
         Surface2x2 = 1,
         Surface4x4 = 2,
@@ -7631,8 +8739,10 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.via.physics {
-    public enum ShapeClosestOption {
+namespace Enums.via.physics
+{
+    public enum ShapeClosestOption
+    {
         AllHits = 0,
         DisableBackFacingTriangleHits = 1,
         DisableFrontFacingTriangleHits = 2,
@@ -7642,15 +8752,19 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.motion.DevelopRetarget {
-    public enum FootTarget {
+namespace Enums.via.motion.DevelopRetarget
+{
+    public enum FootTarget
+    {
         Foot = 0,
         Toe = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum EJointLODGroupLevel {
+namespace Enums.via.motion
+{
+    public enum EJointLODGroupLevel
+    {
         Default = 0,
         Level1 = 1,
         Level2 = 2,
@@ -7661,16 +8775,20 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.ObjectiveGUI {
-    public enum Level {
+namespace Enums.app.ObjectiveGUI
+{
+    public enum Level
+    {
         Main = 0,
         Sub = 1,
         SubSub = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum BindFlag {
+namespace Enums.via.render
+{
+    public enum BindFlag
+    {
         ShaderResource = 8,
         RenderTarget = 32,
         DepthStencil = 64,
@@ -7678,8 +8796,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodCodeFlag {
+namespace Enums.via.clr
+{
+    public enum MethodCodeFlag
+    {
         FatFormat = 3,
         TinyFormat = 2,
         MoreSects = 8,
@@ -7687,16 +8807,20 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.ItemExplanation {
-    public enum ItemIconPlayMotion {
+namespace Enums.app.ItemExplanation
+{
+    public enum ItemIconPlayMotion
+    {
         PlayerUse = 0,
         EnemyUse = 1,
         Get = 2,
     }
 }
 
-namespace Enums.app.ObjectLabel {
-    public enum Attribute {
+namespace Enums.app.ObjectLabel
+{
+    public enum Attribute
+    {
         EmAppear = 0,
         EmHide = 1,
         EmClimb = 2,
@@ -7718,8 +8842,10 @@ namespace Enums.app.ObjectLabel {
     }
 }
 
-namespace Enums.app.Em8000.Message {
-    public enum Tag {
+namespace Enums.app.Em8000.Message
+{
+    public enum Tag
+    {
         None = 0,
         Appear_A_0 = 100,
         Appear_B_0 = 101,
@@ -7742,15 +8868,19 @@ namespace Enums.app.Em8000.Message {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum TrackerDevicePermitType {
+namespace Enums.via.hid.VrTracker
+{
+    public enum TrackerDevicePermitType
+    {
         All = 0,
         HmdOnly = 1,
     }
 }
 
-namespace Enums.app.WaveAnnouncementUIAsset {
-    public enum AddPartsState {
+namespace Enums.app.WaveAnnouncementUIAsset
+{
+    public enum AddPartsState
+    {
         DEFAULT = 0,
         FADE_IN = 1,
         FADE_OUT = 2,
@@ -7758,16 +8888,20 @@ namespace Enums.app.WaveAnnouncementUIAsset {
     }
 }
 
-namespace Enums.via.hid.detail {
-    public enum VirtualKeyboardState {
+namespace Enums.via.hid.detail
+{
+    public enum VirtualKeyboardState
+    {
         None = 0,
         Showing = 1,
         Done = 2,
     }
 }
 
-namespace Enums.app.Em3600.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em3600.Goal.GoalGenerator
+{
+    public enum ID
+    {
         OneAction = 0,
         OneAction2 = 1,
         UnDiscovery = 2,
@@ -7873,23 +9007,29 @@ namespace Enums.app.Em3600.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via {
-    public enum MobileBarState {
+namespace Enums.via
+{
+    public enum MobileBarState
+    {
         Invisible = 0,
         Visible = 1,
         VisibleOverContent = 2,
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8BlownAway {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.motion.IkHand {
-    public enum CalculationType {
+namespace Enums.via.motion.IkHand
+{
+    public enum CalculationType
+    {
         CalculationType_Easy = 0,
         CalculationType_2Bone = 1,
         CalculationType_FitGround = 2,
@@ -7898,16 +9038,20 @@ namespace Enums.via.motion.IkHand {
     }
 }
 
-namespace Enums.app.ElevatorButton {
-    public enum LightState {
+namespace Enums.app.ElevatorButton
+{
+    public enum LightState
+    {
         LightOff = 0,
         LightOn = 1,
         SwitchOn = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum LifeState {
+namespace Enums.via.effect.detail
+{
+    public enum LifeState
+    {
         Unknown = 0,
         Wait = 1,
         Initialize = 2,
@@ -7921,8 +9065,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.InteractObjectBase {
-    public enum Category {
+namespace Enums.app.InteractObjectBase
+{
+    public enum Category
+    {
         None = 0,
         ManualInteract = 1,
         AutoInteract = 2,
@@ -7931,22 +9077,28 @@ namespace Enums.app.InteractObjectBase {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum DialogShowingState {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum DialogShowingState
+    {
         None = 0,
         ShowingAcoountPicker = 1,
         ShowingDevicePicker = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerGroundBakeType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerGroundBakeType
+    {
         SplatSDF = 0,
     }
 }
 
-namespace Enums.app.Em3002.Action {
-    public enum ActionShort {
+namespace Enums.app.Em3002.Action
+{
+    public enum ActionShort
+    {
         GrappleFinishMove = 0,
         PunchL = 1,
         Num = 2,
@@ -7954,32 +9106,40 @@ namespace Enums.app.Em3002.Action {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_2ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_2ch
+    {
         L = 0,
         R = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum SeekStatus {
+namespace Enums.via.audiorender
+{
+    public enum SeekStatus
+    {
         None = 0,
         Beforehand = 1,
         Immediately = 2,
     }
 }
 
-namespace Enums.app.Em3000.Action.Appear {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Appear
+{
+    public enum Type
+    {
         Front = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.app.fsm.PlayerStateCheck {
-    public enum PlayerBoolType {
+namespace Enums.app.fsm.PlayerStateCheck
+{
+    public enum PlayerBoolType
+    {
         None = 0,
         FullyOperatable = 1,
         Move = 2,
@@ -8019,8 +9179,10 @@ namespace Enums.app.fsm.PlayerStateCheck {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum RequestType {
+namespace Enums.via.wwise
+{
+    public enum RequestType
+    {
         None = 0,
         RegisterGameObject = 1,
         UnregisterGameObject = 2,
@@ -8055,8 +9217,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.Cp7MainMenu {
-    public enum ListElement {
+namespace Enums.app.Cp7MainMenu
+{
+    public enum ListElement
+    {
         Nightmare = 0,
         BedRoom = 1,
         TwentyOne = 2,
@@ -8066,8 +9230,10 @@ namespace Enums.app.Cp7MainMenu {
     }
 }
 
-namespace Enums.app.ExpansionData {
-    public enum ExpansionBool {
+namespace Enums.app.ExpansionData
+{
+    public enum ExpansionBool
+    {
         Dummy = 0,
         Lang_Caption = 1,
         SaveDataTransfer = 2,
@@ -8075,23 +9241,29 @@ namespace Enums.app.ExpansionData {
     }
 }
 
-namespace Enums.app.SmoothAnimatorTransitionTable.SubItem {
-    public enum Classification {
+namespace Enums.app.SmoothAnimatorTransitionTable.SubItem
+{
+    public enum Classification
+    {
         Everything = 0,
         MotionGroup = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MeshBakeType {
+namespace Enums.via.landscape
+{
+    public enum MeshBakeType
+    {
         TwoWay = 0,
         Upper = 1,
         Lower = 2,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveServiceSegmentType {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveServiceSegmentType
+    {
         Default_0 = 0,
         Default_1 = 1,
         Default_2 = 2,
@@ -8139,8 +9311,10 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.Em3102.Message {
-    public enum Group {
+namespace Enums.app.Em3102.Message
+{
+    public enum Group
+    {
         None = 0,
         Awareness = 1,
         Call_Jack = 2,
@@ -8154,8 +9328,10 @@ namespace Enums.app.Em3102.Message {
     }
 }
 
-namespace Enums.via.physics {
-    public enum CastRayOption {
+namespace Enums.via.physics
+{
+    public enum CastRayOption
+    {
         AllHits = 0,
         DisableBackFacingTriangleHits = 1,
         DisableFrontFacingTriangleHits = 2,
@@ -8170,30 +9346,38 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.app.Em3001Grapple {
-    public enum Layer {
+namespace Enums.app.Em3001Grapple
+{
+    public enum Layer
+    {
         Base = 0,
         Resist = 1,
         Guard = 2,
     }
 }
 
-namespace Enums.via.wwise.SetState {
-    public enum SetTiming {
+namespace Enums.via.wwise.SetState
+{
+    public enum SetTiming
+    {
         Start = 0,
         End = 1,
     }
 }
 
-namespace Enums.via.navigation.NavigationWaypoint {
-    public enum RegionShapeType {
+namespace Enums.via.navigation.NavigationWaypoint
+{
+    public enum RegionShapeType
+    {
         OBB = 0,
         Sphere = 1,
     }
 }
 
-namespace Enums.app.CH8Em4450.CH8Em4450ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4450.CH8Em4450ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         Ground = 1,
         Mother = 2,
@@ -8205,8 +9389,10 @@ namespace Enums.app.CH8Em4450.CH8Em4450ThinkAppearSet {
     }
 }
 
-namespace Enums.app.OtherRestartControl {
-    public enum RestartStepEnum {
+namespace Enums.app.OtherRestartControl
+{
+    public enum RestartStepEnum
+    {
         GetControlFolder = 0,
         CloseScene = 1,
         WaitCloseFolderOnMem = 2,
@@ -8220,8 +9406,10 @@ namespace Enums.app.OtherRestartControl {
     }
 }
 
-namespace Enums.via.navigation.map.NodeContent {
-    public enum EdgeAttribute {
+namespace Enums.via.navigation.map.NodeContent
+{
+    public enum EdgeAttribute
+    {
         Contour = 1,
         Divided = 2,
         Vertical = 4,
@@ -8233,16 +9421,20 @@ namespace Enums.via.navigation.map.NodeContent {
     }
 }
 
-namespace Enums.via.motion {
-    public enum TimingType {
+namespace Enums.via.motion
+{
+    public enum TimingType
+    {
         Now = 0,
         End = 1,
         SyncPoint = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum StencilOp {
+namespace Enums.via.render
+{
+    public enum StencilOp
+    {
         Keep = 1,
         Zero = 2,
         Replace = 3,
@@ -8255,23 +9447,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.navigation.PathfinderSurface {
-    public enum PathCreateType {
+namespace Enums.via.navigation.PathfinderSurface
+{
+    public enum PathCreateType
+    {
         UpperOnly = 0,
         LowerOnly = 1,
         Hybrid = 2,
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum SocketError {
+namespace Enums.via.os
+{
+    public enum SocketError
+    {
         Pending = -1,
         None = 0,
         General = 1,
@@ -8299,22 +9497,28 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.FBIKAttackController {
-    public enum GuideModeType {
+namespace Enums.app.FBIKAttackController
+{
+    public enum GuideModeType
+    {
         Plane = 0,
         Line = 1,
     }
 }
 
-namespace Enums.app.Em8950WwiseMonitoredValue {
-    public enum LastBossMode {
+namespace Enums.app.Em8950WwiseMonitoredValue
+{
+    public enum LastBossMode
+    {
         DemonWall = 0,
         Daidarabotchi = 1,
     }
 }
 
-namespace Enums.via.render.layer.DeferredLighting {
-    public enum LightingPathDebug {
+namespace Enums.via.render.layer.DeferredLighting
+{
+    public enum LightingPathDebug
+    {
         Albedo = 0,
         Diffuse = 1,
         Specular = 2,
@@ -8328,8 +9532,10 @@ namespace Enums.via.render.layer.DeferredLighting {
     }
 }
 
-namespace Enums.via.render {
-    public enum PipeType {
+namespace Enums.via.render
+{
+    public enum PipeType
+    {
         Graphics = 0,
         Compute = 1,
         Copy = 2,
@@ -8337,22 +9543,28 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.fsm.Action {
-    public enum SwitchSetting {
+namespace Enums.via.fsm.Action
+{
+    public enum SwitchSetting
+    {
         Off = 0,
         On = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum ReadWriteLockError {
+namespace Enums.via.os
+{
+    public enum ReadWriteLockError
+    {
         None = 0,
         Failed = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerStatus {
+namespace Enums.via.landscape
+{
+    public enum MapBakerStatus
+    {
         NotStarted = 0,
         Running = 1,
         Completed = 2,
@@ -8360,8 +9572,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround.ManageJoint {
-    public enum JOINT_TYPE {
+namespace Enums.via.motion.IkSpineConformGround.ManageJoint
+{
+    public enum JOINT_TYPE
+    {
         NON = 0,
         START = 1,
         RAY = 2,
@@ -8369,16 +9583,20 @@ namespace Enums.via.motion.IkSpineConformGround.ManageJoint {
     }
 }
 
-namespace Enums.via.gui {
-    public enum CursorType {
+namespace Enums.via.gui
+{
+    public enum CursorType
+    {
         Fix = 0,
         Move = 1,
         NoCursor = 2,
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum TemporalAAAlgorithm {
+namespace Enums.via.render.ToneMapping
+{
+    public enum TemporalAAAlgorithm
+    {
         Legacy = 0,
         Standard = 1,
         StandardV2 = 2,
@@ -8386,15 +9604,19 @@ namespace Enums.via.render.ToneMapping {
     }
 }
 
-namespace Enums.via.motion.JointRemapValue.RemapValueItem {
-    public enum CalculateMode {
+namespace Enums.via.motion.JointRemapValue.RemapValueItem
+{
+    public enum CalculateMode
+    {
         Sum = 0,
         Average = 1,
     }
 }
 
-namespace Enums.via.os.dialog {
-    public enum Error {
+namespace Enums.via.os.dialog
+{
+    public enum Error
+    {
         None = 0,
         InvalidArgument = 1,
         Busy = 2,
@@ -8402,8 +9624,10 @@ namespace Enums.via.os.dialog {
     }
 }
 
-namespace Enums.via.userdata.CompareNode {
-    public enum Operation {
+namespace Enums.via.userdata.CompareNode
+{
+    public enum Operation
+    {
         Eq = 0,
         Neq = 1,
         Ge = 2,
@@ -8413,8 +9637,10 @@ namespace Enums.via.userdata.CompareNode {
     }
 }
 
-namespace Enums.via.os.http_client {
-    public enum Method {
+namespace Enums.via.os.http_client
+{
+    public enum Method
+    {
         Get = 0,
         Post = 1,
         Put = 2,
@@ -8423,8 +9649,10 @@ namespace Enums.via.os.http_client {
     }
 }
 
-namespace Enums.app.Command {
-    public enum StickDirectionType {
+namespace Enums.app.Command
+{
+    public enum StickDirectionType
+    {
         All = 0,
         AllInverse = 1,
         Vertical = 2,
@@ -8446,8 +9674,10 @@ namespace Enums.app.Command {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum EcotopePipelineState {
+namespace Enums.via.landscape
+{
+    public enum EcotopePipelineState
+    {
         DrawDefault = 0,
         DrawMap = 1,
         DrawPoint = 2,
@@ -8462,8 +9692,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.clr.VM {
-    public enum CounterType {
+namespace Enums.via.clr.VM
+{
+    public enum CounterType
+    {
         CycleGC = 0,
         LocalFrameGC = 1,
         GlobalFrameGC = 2,
@@ -8478,8 +9710,10 @@ namespace Enums.via.clr.VM {
     }
 }
 
-namespace Enums.via.hid {
-    public enum AdaptiveTriggerMotor {
+namespace Enums.via.hid
+{
+    public enum AdaptiveTriggerMotor
+    {
         LAnalogTriggerMotor = 0,
         RAnalogTriggerMotor = 1,
         Null = 254,
@@ -8487,8 +9721,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.BirthdayResult {
-    public enum ResultStepEnum {
+namespace Enums.app.BirthdayResult
+{
+    public enum ResultStepEnum
+    {
         Wait_Result = 0,
         Draw_Rank = 1,
         Wait_DrawRank = 2,
@@ -8501,29 +9737,37 @@ namespace Enums.app.BirthdayResult {
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Move {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app {
-    public enum PropID {
+namespace Enums.app
+{
+    public enum PropID
+    {
         Etc = 0,
     }
 }
 
-namespace Enums.app.FirstLanguageGUI {
-    public enum Step {
+namespace Enums.app.FirstLanguageGUI
+{
+    public enum Step
+    {
         Main = 0,
         ChangeFont = 1,
         GoNext = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_5ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_5ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -8533,8 +9777,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.render.layer.CubemapCapture {
-    public enum BASIS {
+namespace Enums.via.render.layer.CubemapCapture
+{
+    public enum BASIS
+    {
         SH_ORDER1 = 0,
         SH_ORDER2 = 1,
         FC3_BASIS = 2,
@@ -8542,8 +9788,10 @@ namespace Enums.via.render.layer.CubemapCapture {
     }
 }
 
-namespace Enums.via.behavior.EffectEvent {
-    public enum LifeState {
+namespace Enums.via.behavior.EffectEvent
+{
+    public enum LifeState
+    {
         Unknown = 0,
         Wait = 1,
         Initialize = 2,
@@ -8557,15 +9805,19 @@ namespace Enums.via.behavior.EffectEvent {
     }
 }
 
-namespace Enums.via.os {
-    public enum MutexError {
+namespace Enums.via.os
+{
+    public enum MutexError
+    {
         None = 0,
         Failed = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4400.Action
+{
+    public enum CH8ActionNo
+    {
         MountTry = 4,
         Grapple = 5,
         Appear = 6,
@@ -8598,15 +9850,19 @@ namespace Enums.app.CH8Em4400.Action {
     }
 }
 
-namespace Enums.via.motion.JointConstraintsResource {
-    public enum LegacyVersion {
+namespace Enums.via.motion.JointConstraintsResource
+{
+    public enum LegacyVersion
+    {
         Latest = 0,
         Legacy1 = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum ListenerBitMask {
+namespace Enums.via.audiorender
+{
+    public enum ListenerBitMask
+    {
         ListenerBitMask_0 = 1,
         ListenerBitMask_1 = 2,
         ListenerBitMask_2 = 4,
@@ -8618,8 +9874,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Sm3073DamageController {
-    public enum TutorialNo {
+namespace Enums.app.Sm3073DamageController
+{
+    public enum TutorialNo
+    {
         Attack = 0,
         RightOnlyCombo = 1,
         Combo = 2,
@@ -8627,8 +9885,10 @@ namespace Enums.app.Sm3073DamageController {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum StateThread {
+namespace Enums.via.audiorender
+{
+    public enum StateThread
+    {
         None = 0,
         Uninitialized = 1,
         Initializing = 2,
@@ -8639,23 +9899,29 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.MapDoor {
-    public enum DoorState {
+namespace Enums.app.MapDoor
+{
+    public enum DoorState
+    {
         DEFAULT = 0,
         UNLOCK = 1,
         LOCK = 2,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum CostValueType {
+namespace Enums.via.navigation
+{
+    public enum CostValueType
+    {
         Unit = 0,
         Direct = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputBitsPerSample {
+namespace Enums.via.audiorender
+{
+    public enum OutputBitsPerSample
+    {
         OutputBitsPerSample_None = 0,
         OutputBitsPerSample_16bit = 16,
         OutputBitsPerSample_24bit = 24,
@@ -8663,31 +9929,39 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.os.websocket_client {
-    public enum ErrorMethod {
+namespace Enums.via.os.websocket_client
+{
+    public enum ErrorMethod
+    {
         Update = 0,
         Open = 1,
         Send = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum TextureType {
+namespace Enums.via.landscape
+{
+    public enum TextureType
+    {
         Heightmap = 0,
         UneditableMask = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Grapple
+{
+    public enum Type
+    {
         Bite = 0,
         Mount = 1,
         Slash = 2,
     }
 }
 
-namespace Enums.app.Em3000 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3000
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Chapter3Battle1_CutLeg = 1,
         Chapter3Battle1_Final = 2,
@@ -8701,8 +9975,10 @@ namespace Enums.app.Em3000 {
     }
 }
 
-namespace Enums.app.Enemy {
-    public enum EnemySpecialAttribute {
+namespace Enums.app.Enemy
+{
+    public enum EnemySpecialAttribute
+    {
         None = 0,
         Em3000BloodPunch = 1,
         Em5520FollowAttack = 2,
@@ -8715,8 +9991,10 @@ namespace Enums.app.Enemy {
     }
 }
 
-namespace Enums.app.Em3600ActionController {
-    public enum Em3600DamageDirection {
+namespace Enums.app.Em3600ActionController
+{
+    public enum Em3600DamageDirection
+    {
         Front = 0,
         Back = 10,
         Left = 20,
@@ -8726,16 +10004,20 @@ namespace Enums.app.Em3600ActionController {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum LetterAlignmentH {
+namespace Enums.via.gui.detail
+{
+    public enum LetterAlignmentH
+    {
         Left = 0,
         Center = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum LinkGroup {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum LinkGroup
+    {
         GroupA = 0,
         GroupB = 1,
         GroupC = 2,
@@ -8765,31 +10047,39 @@ namespace Enums.app.CH9MoldedActionController {
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Suspend {
-    public enum Option {
+namespace Enums.app.CH9Em7800.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.via.physics.BoundingVolumeHierarchy {
-    public enum ErrorCode {
+namespace Enums.via.physics.BoundingVolumeHierarchy
+{
+    public enum ErrorCode
+    {
         None = 0,
         FunctorAbort = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.fsm.AreaHitTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.AreaHitTest
+{
+    public enum TestTypeParam
+    {
         InArea = 0,
         OutArea = 1,
     }
 }
 
-namespace Enums.via.autoplay.AutoPlay {
-    public enum AutoPlayStatus {
+namespace Enums.via.autoplay.AutoPlay
+{
+    public enum AutoPlayStatus
+    {
         Wait = 0,
         PauseConvert = 1,
         PauseLoad = 2,
@@ -8797,8 +10087,10 @@ namespace Enums.via.autoplay.AutoPlay {
     }
 }
 
-namespace Enums.app.EnemyGenerator {
-    public enum Operation {
+namespace Enums.app.EnemyGenerator
+{
+    public enum Operation
+    {
         None = 0,
         Spawn = 1,
         Kill = 2,
@@ -8811,8 +10103,10 @@ namespace Enums.app.EnemyGenerator {
     }
 }
 
-namespace Enums.app.CardGameCondition {
-    public enum CompareType {
+namespace Enums.app.CardGameCondition
+{
+    public enum CompareType
+    {
         Equal = 0,
         NotEqual = 1,
         Less = 2,
@@ -8823,8 +10117,10 @@ namespace Enums.app.CardGameCondition {
     }
 }
 
-namespace Enums.via.gui {
-    public enum TextAnimationCommand {
+namespace Enums.via.gui
+{
+    public enum TextAnimationCommand
+    {
         Restart = 0,
         Resume = 1,
         Pause = 2,
@@ -8832,22 +10128,28 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH8CheckHitToBalloon {
-    public enum ConditionTable {
+namespace Enums.app.CH8CheckHitToBalloon
+{
+    public enum ConditionTable
+    {
         SphereToSphere = 0,
         SphereToPoint = 1,
     }
 }
 
-namespace Enums.app.CH8Em4450.CH8Em4450ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4450.CH8Em4450ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wait = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000ActionStatus {
-    public enum Mode {
+namespace Enums.app.Em8000.Action.Em8000ActionStatus
+{
+    public enum Mode
+    {
         None = 0,
         Axe = 1,
         Hand = 2,
@@ -8855,24 +10157,30 @@ namespace Enums.app.Em8000.Action.Em8000ActionStatus {
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum CostNumState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum CostNumState
+    {
         DEFAULT = 0,
         SHORTAGE = 1,
         LEVELMAX = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Suspend {
-    public enum Option {
+namespace Enums.app.CH9Em7900.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum ModeType {
+namespace Enums.app.InventoryMenu
+{
+    public enum ModeType
+    {
         Normal = 0,
         InteractItemSelect = 1,
         ItemBoxMode = 2,
@@ -8880,8 +10188,10 @@ namespace Enums.app.InventoryMenu {
     }
 }
 
-namespace Enums.app.Em2000Think {
-    public enum FacialBasicID {
+namespace Enums.app.Em2000Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Angry = 200,
@@ -8889,14 +10199,18 @@ namespace Enums.app.Em2000Think {
     }
 }
 
-namespace Enums.app.CH8SaveDataOverWriter.OverWriteInfo {
-    public enum WriteTarget {
+namespace Enums.app.CH8SaveDataOverWriter.OverWriteInfo
+{
+    public enum WriteTarget
+    {
         Fsm = 0,
     }
 }
 
-namespace Enums.app.CharacterDefine {
-    public enum Vitality {
+namespace Enums.app.CharacterDefine
+{
+    public enum Vitality
+    {
         Full = 0,
         Normal = 1,
         Weak = 2,
@@ -8904,15 +10218,19 @@ namespace Enums.app.CharacterDefine {
     }
 }
 
-namespace Enums.app.LastWaveTime {
-    public enum Meridiem {
+namespace Enums.app.LastWaveTime
+{
+    public enum Meridiem
+    {
         AM = 0,
         PM = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum TextureAddressMode {
+namespace Enums.via.render
+{
+    public enum TextureAddressMode
+    {
         TextureAddress_Wrap = 1,
         TextureAddress_Mirror = 2,
         TextureAddress_Clamp = 3,
@@ -8921,15 +10239,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Move {
-    public enum Type {
+namespace Enums.app.CH8Em4500.Action.CH8Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.CarInGarage.AfterCrashCommon {
-    public enum Routine {
+namespace Enums.app.CarInGarage.AfterCrashCommon
+{
+    public enum Routine
+    {
         WaitStartEnemyOut = 0,
         LeakOil = 1,
         Fire = 2,
@@ -8942,38 +10264,48 @@ namespace Enums.app.CarInGarage.AfterCrashCommon {
     }
 }
 
-namespace Enums.app.Em3002.Action {
-    public enum ActionZero {
+namespace Enums.app.Em3002.Action
+{
+    public enum ActionZero
+    {
         GrappleFinishMove = 0,
         Non = 99,
     }
 }
 
-namespace Enums.hikako.GameIntentManager {
-    public enum LaunchType {
+namespace Enums.hikako.GameIntentManager
+{
+    public enum LaunchType
+    {
         OBJECTIVE = 0,
         CHALLENGE = 1,
         OPENENDED = 2,
     }
 }
 
-namespace Enums.via.areamap.test.DotProductItem {
-    public enum Axis {
+namespace Enums.via.areamap.test.DotProductItem
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum ExecuteGroup_hdVibration {
+namespace Enums.via.hid
+{
+    public enum ExecuteGroup_hdVibration
+    {
         ExecuteGroup_00 = 0,
         ExecuteGroup_01 = 1,
     }
 }
 
-namespace Enums.app.Em8900.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8900.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Idle_L = 1,
         Idle_R = 2,
@@ -8986,8 +10318,10 @@ namespace Enums.app.Em8900.Action {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum ClothCalculateMode {
+namespace Enums.via.dynamics
+{
+    public enum ClothCalculateMode
+    {
         Default = 0,
         Performance = 1,
         Balance = 2,
@@ -8995,8 +10329,10 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimitiveGUIMaskMode {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimitiveGUIMaskMode
+    {
         None = 0,
         Target = 1,
         TargetReverse = 2,
@@ -9006,8 +10342,10 @@ namespace Enums.via.gui.renderer.detail {
     }
 }
 
-namespace Enums.app.Em8001.Em8001AditiveDamageInfo {
-    public enum DamageDirection {
+namespace Enums.app.Em8001.Em8001AditiveDamageInfo
+{
+    public enum DamageDirection
+    {
         INVALID = -1,
         None = 0,
         Front = 1,
@@ -9018,8 +10356,10 @@ namespace Enums.app.Em8001.Em8001AditiveDamageInfo {
     }
 }
 
-namespace Enums.app.CH8ActivateObjectOperation {
-    public enum TargetBit {
+namespace Enums.app.CH8ActivateObjectOperation
+{
+    public enum TargetBit
+    {
         GameObject = 1,
         Colliders = 2,
         Fsm = 4,
@@ -9029,8 +10369,10 @@ namespace Enums.app.CH8ActivateObjectOperation {
     }
 }
 
-namespace Enums.app.CH8SaveMenu {
-    public enum ModeDef {
+namespace Enums.app.CH8SaveMenu
+{
+    public enum ModeDef
+    {
         LoadTitleMenu = 0,
         LoadInGame = 1,
         SaveInGame = 2,
@@ -9038,8 +10380,10 @@ namespace Enums.app.CH8SaveMenu {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ListElemID {
+namespace Enums.app.OptionMenu
+{
+    public enum ListElemID
+    {
         Controls = 0,
         Display = 1,
         Audio = 2,
@@ -9050,32 +10394,40 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.ReticleGUI {
-    public enum HitSituation {
+namespace Enums.app.ReticleGUI
+{
+    public enum HitSituation
+    {
         NoHit = 0,
         Improper = 1,
         Hit = 2,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimitiveVfxShaderCombiner {
+namespace Enums.via.render.detail
+{
+    public enum PrimitiveVfxShaderCombiner
+    {
         Default = 0,
         FlowMap = 1,
         Num = 2,
     }
 }
 
-namespace Enums.app.Em3001 {
-    public enum ThinkState {
+namespace Enums.app.Em3001
+{
+    public enum ThinkState
+    {
         None = 0,
         Idle = 1,
         Battle = 2,
     }
 }
 
-namespace Enums.app.CH8StateSwitchEnvShieldMachine {
-    public enum CHP8_ENVSHIELDMACHINE {
+namespace Enums.app.CH8StateSwitchEnvShieldMachine
+{
+    public enum CHP8_ENVSHIELDMACHINE
+    {
         silence = 0,
         shieldmachine_rush = 1,
         shieldmachine_fire = 2,
@@ -9083,16 +10435,20 @@ namespace Enums.app.CH8StateSwitchEnvShieldMachine {
     }
 }
 
-namespace Enums.via.navigation.map.ContentWall {
-    public enum WallLinkType {
+namespace Enums.via.navigation.map.ContentWall
+{
+    public enum WallLinkType
+    {
         Bottom = 0,
         Top = 1,
         Side = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ColorType {
+namespace Enums.via.gui
+{
+    public enum ColorType
+    {
         Fill = 0,
         Vertical = 1,
         Horizontal = 2,
@@ -9100,8 +10456,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Em8001.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em8001.Action.Damage
+{
+    public enum Type
+    {
         INVALID = -1,
         NoDamage = 0,
         MHeadF = 1,
@@ -9118,8 +10476,10 @@ namespace Enums.app.Em8001.Action.Damage {
     }
 }
 
-namespace Enums.app.CH9Em6400.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em6400.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         Chapter92Battle = 200,
         Chapter92BattleFinal = 300,
@@ -9127,23 +10487,29 @@ namespace Enums.app.CH9Em6400.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.ObjectiveGUI {
-    public enum ModeDef {
+namespace Enums.app.ObjectiveGUI
+{
+    public enum ModeDef
+    {
         Inventory = 0,
         Map = 1,
     }
 }
 
-namespace Enums.app.fsm.VibrationSet {
-    public enum VibSizeType {
+namespace Enums.app.fsm.VibrationSet
+{
+    public enum VibSizeType
+    {
         SizeS = 0,
         SizeM = 1,
         SizeL = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum InputType {
+namespace Enums.via.render
+{
+    public enum InputType
+    {
         Static = 0,
         Dynamic = 1,
         PreTransformStatic = 2,
@@ -9173,8 +10539,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum TouchType {
+namespace Enums.app.PlayerDefine
+{
+    public enum TouchType
+    {
         None = 0,
         Wall = 1,
         Door = 2,
@@ -9182,8 +10550,10 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.app.AI.CH9AIWorldBlackBoard {
-    public enum ExistPlayerHideZoneState {
+namespace Enums.app.AI.CH9AIWorldBlackBoard
+{
+    public enum ExistPlayerHideZoneState
+    {
         None = 0,
         Enter = 1,
         Overlap = 2,
@@ -9191,15 +10561,19 @@ namespace Enums.app.AI.CH9AIWorldBlackBoard {
     }
 }
 
-namespace Enums.app.Em3000.Action.AttackBack {
-    public enum Type {
+namespace Enums.app.Em3000.Action.AttackBack
+{
+    public enum Type
+    {
         SwingB = 0,
         PunchB = 1,
     }
 }
 
-namespace Enums.via.hansoft {
-    public enum HttpMethod {
+namespace Enums.via.hansoft
+{
+    public enum HttpMethod
+    {
         Get = 0,
         Post = 1,
         Put = 2,
@@ -9207,16 +10581,20 @@ namespace Enums.via.hansoft {
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum RadarStateDef {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum RadarStateDef
+    {
         None = 0,
         EnableTarget = 1,
         DisableTarget = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum FlickDirection {
+namespace Enums.via.hid
+{
+    public enum FlickDirection
+    {
         Up = 0,
         Down = 1,
         Left = 2,
@@ -9224,8 +10602,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.gui {
-    public enum InputGridType {
+namespace Enums.via.gui
+{
+    public enum InputGridType
+    {
         None = 0,
         LeftStick = 1,
         RightStick = 2,
@@ -9234,16 +10614,20 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum VelocityFlags {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum VelocityFlags
+    {
         VelocityType = 0,
         EnableInherit = 4,
         UseWorldCoordinates = 5,
     }
 }
 
-namespace Enums.via.hid {
-    public enum KeyboardMainKey {
+namespace Enums.via.hid
+{
+    public enum KeyboardMainKey
+    {
         None = 0,
         Back = 8,
         Tab = 9,
@@ -9363,14 +10747,18 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.Grapple
+{
+    public enum Type
+    {
         Stab = 0,
     }
 }
 
-namespace Enums.via.landscape.MeshDrawParameterRange {
-    public enum Bit {
+namespace Enums.via.landscape.MeshDrawParameterRange
+{
+    public enum Bit
+    {
         Solid = 1,
         AlphaTest = 2,
         Transparent = 16,
@@ -9379,21 +10767,27 @@ namespace Enums.via.landscape.MeshDrawParameterRange {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerPointCloudBakeType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerPointCloudBakeType
+    {
         SplatSDF = 0,
     }
 }
 
-namespace Enums.via.gui {
-    public enum CircleColorType {
+namespace Enums.via.gui
+{
+    public enum CircleColorType
+    {
         Fill = 0,
         InOut = 1,
     }
 }
 
-namespace Enums.app.Em3002.Em3002ActionController {
-    public enum Message {
+namespace Enums.app.Em3002.Em3002ActionController
+{
+    public enum Message
+    {
         DiscoveryHearing = 0,
         DiscoveryVision = 1,
         UnDiscovery = 2,
@@ -9408,8 +10802,10 @@ namespace Enums.app.Em3002.Em3002ActionController {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodSession {
+namespace Enums.via.network.error
+{
+    public enum MethodSession
+    {
         Update = 0,
         Create = 1,
         SearchByFilter = 2,
@@ -9428,44 +10824,56 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum XsapiPropertySet {
+namespace Enums.via.network.wrangler
+{
+    public enum XsapiPropertySet
+    {
         Dimensions = 0,
         Measurement = 1,
     }
 }
 
-namespace Enums.via.network.session {
-    public enum FilterAttr {
+namespace Enums.via.network.session
+{
+    public enum FilterAttr
+    {
         None = 0,
         FindFull = 1,
     }
 }
 
-namespace Enums.via.autoplay.AutoPlay {
-    public enum PadEnterType {
+namespace Enums.via.autoplay.AutoPlay
+{
+    public enum PadEnterType
+    {
         Nomal = 0,
         Reverse = 1,
     }
 }
 
-namespace Enums.app.Elevator {
-    public enum DoorAngleType {
+namespace Enums.app.Elevator
+{
+    public enum DoorAngleType
+    {
         Front = 0,
         Back = 1,
     }
 }
 
-namespace Enums.via.hansoft {
-    public enum EnvironmentType {
+namespace Enums.via.hansoft
+{
+    public enum EnvironmentType
+    {
         None = 0,
         Test = 1,
         Prod = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em6400.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         UnDiscovery = 2,
@@ -9537,16 +10945,20 @@ namespace Enums.app.CH9Em6400.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.CrusherUIAsset {
-    public enum MaterPanelState {
+namespace Enums.app.CrusherUIAsset
+{
+    public enum MaterPanelState
+    {
         DEFAULT = 0,
         EMPTY = 1,
         FULL = 2,
     }
 }
 
-namespace Enums.app.MotionGroupTable {
-    public enum MoveTypeEnum {
+namespace Enums.app.MotionGroupTable
+{
+    public enum MoveTypeEnum
+    {
         Other = 0,
         Idle = 1,
         Walk = 2,
@@ -9554,27 +10966,35 @@ namespace Enums.app.MotionGroupTable {
     }
 }
 
-namespace Enums.app.CH8Em4450.Action {
-    public enum CH8ActionCategory {
+namespace Enums.app.CH8Em4450.Action
+{
+    public enum CH8ActionCategory
+    {
         Follow = 5,
     }
 }
 
-namespace Enums.via.render {
-    public enum ShallowWaterRenderingPriority {
+namespace Enums.via.render
+{
+    public enum ShallowWaterRenderingPriority
+    {
         PreDecal = 0,
         PostDecal = 1,
     }
 }
 
-namespace Enums.app.Em3101Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3101Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum LightImportantLevel {
+namespace Enums.via.render
+{
+    public enum LightImportantLevel
+    {
         Highest = 0,
         High = 1,
         Normal = 2,
@@ -9583,8 +11003,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.navigation.map.PathInfo {
-    public enum PathObjectAttribute {
+namespace Enums.via.navigation.map.PathInfo
+{
+    public enum PathObjectAttribute
+    {
         GlobalPortalPosition = 0,
         PossibleNearEnd = 1,
         FixNodeCenter = 2,
@@ -9594,16 +11016,20 @@ namespace Enums.via.navigation.map.PathInfo {
     }
 }
 
-namespace Enums.app.Collision.HitController {
-    public enum PressSkipAxis {
+namespace Enums.app.Collision.HitController
+{
+    public enum PressSkipAxis
+    {
         X = 1,
         Y = 2,
         Z = 4,
     }
 }
 
-namespace Enums.via.storage.ProprietaryDLC {
-    public enum ErrorReason {
+namespace Enums.via.storage.ProprietaryDLC
+{
+    public enum ErrorReason
+    {
         InvalidToken = 0,
         Unknown = 1,
         None = 2,
@@ -9613,15 +11039,19 @@ namespace Enums.via.storage.ProprietaryDLC {
     }
 }
 
-namespace Enums.app.AsyncLoadManager {
-    public enum PriorityEnum {
+namespace Enums.app.AsyncLoadManager
+{
+    public enum PriorityEnum
+    {
         Primary = 0,
         Secondary = 1,
     }
 }
 
-namespace Enums.via.effect.detail.CustomCSData {
-    public enum ShaderType {
+namespace Enums.via.effect.detail.CustomCSData
+{
+    public enum ShaderType
+    {
         EmitBillboard = 0,
         EmitRibbonFollow = 1,
         EmitRibbonLength = 2,
@@ -9641,8 +11071,10 @@ namespace Enums.via.effect.detail.CustomCSData {
     }
 }
 
-namespace Enums.via.effect.lensflare {
-    public enum AxisType {
+namespace Enums.via.effect.lensflare
+{
+    public enum AxisType
+    {
         PositiveX = 0,
         PositiveY = 1,
         PositiveZ = 2,
@@ -9652,40 +11084,50 @@ namespace Enums.via.effect.lensflare {
     }
 }
 
-namespace Enums.app.Ch9AccelerationControl {
-    public enum eStatus {
+namespace Enums.app.Ch9AccelerationControl
+{
+    public enum eStatus
+    {
         Stop = 0,
         Acceleration = 1,
         Deceleration = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Move {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8Move
+{
+    public enum Type
+    {
         Solo = 0,
         Normal = 1,
         Wanderer = 2,
     }
 }
 
-namespace Enums.app.CH9Em7500ActionController {
-    public enum DivingType {
+namespace Enums.app.CH9Em7500ActionController
+{
+    public enum DivingType
+    {
         ToAppear = 0,
         Suspend = 1,
         SelfDie = 2,
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum Tension {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum Tension
+    {
         Normal = 0,
         Excite = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.app.Em8100.Action.Idle {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Idle
+{
+    public enum Type
+    {
         Front = 0,
         Right = 1,
         Left = 2,
@@ -9693,8 +11135,10 @@ namespace Enums.app.Em8100.Action.Idle {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum GameClearState {
+namespace Enums.app.GameManager
+{
+    public enum GameClearState
+    {
         None = 0,
         Init = 1,
         Reward0 = 2,
@@ -9709,16 +11153,20 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.Em8000.Em8000AroundTargetAgent {
-    public enum DistanceGroup {
+namespace Enums.app.Em8000.Em8000AroundTargetAgent
+{
+    public enum DistanceGroup
+    {
         Near = 0,
         Middle = 1,
         Far = 2,
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum FoundFootageIndex {
+namespace Enums.app.Achievement
+{
+    public enum FoundFootageIndex
+    {
         TVCrew = 0,
         RunawayMia = 1,
         PlayPuzzle = 2,
@@ -9726,8 +11174,10 @@ namespace Enums.app.Achievement {
     }
 }
 
-namespace Enums.via.motion.tree.BaseGamePadButtonNode {
-    public enum BtnKind {
+namespace Enums.via.motion.tree.BaseGamePadButtonNode
+{
+    public enum BtnKind
+    {
         LL = 0,
         LU = 1,
         LR = 2,
@@ -9741,16 +11191,20 @@ namespace Enums.via.motion.tree.BaseGamePadButtonNode {
     }
 }
 
-namespace Enums.via.effect.dev.PreviewAnimationBehavior {
-    public enum PreviewAxis {
+namespace Enums.via.effect.dev.PreviewAnimationBehavior
+{
+    public enum PreviewAxis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum BlendType {
+namespace Enums.via.effect.detail
+{
+    public enum BlendType
+    {
         AlphaBlend = 0,
         Physical = 1,
         AddContrast = 2,
@@ -9759,8 +11213,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum OutputMode {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum OutputMode
+    {
         Mode_Sum = 0,
         Mode_Average = 1,
         Mode_Mul = 2,
@@ -9769,8 +11225,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
     }
 }
 
-namespace Enums.app.Em8001.Define.WeaponGroup {
-    public enum Group {
+namespace Enums.app.Em8001.Define.WeaponGroup
+{
+    public enum Group
+    {
         INVALID = -1,
         None = 0,
         Handgun = 1,
@@ -9784,8 +11242,10 @@ namespace Enums.app.Em8001.Define.WeaponGroup {
     }
 }
 
-namespace Enums.via.network.log {
-    public enum Category {
+namespace Enums.via.network.log
+{
+    public enum Category
+    {
         None = 0,
         Dev01 = 1,
         Dev02 = 2,
@@ -9810,8 +11270,10 @@ namespace Enums.via.network.log {
     }
 }
 
-namespace Enums.app.MenuSound {
-    public enum MenuSoundTrigger {
+namespace Enums.app.MenuSound
+{
+    public enum MenuSoundTrigger
+    {
         Enter = 0,
         Exit = 1,
         Cursol = 2,
@@ -9826,8 +11288,10 @@ namespace Enums.app.MenuSound {
     }
 }
 
-namespace Enums.via.render.LightShaft {
-    public enum LightShaftType {
+namespace Enums.via.render.LightShaft
+{
+    public enum LightShaftType
+    {
         AABB = 0,
         LightSpaceCalc = 1,
         SimpleVolume = 2,
@@ -9837,8 +11301,10 @@ namespace Enums.via.render.LightShaft {
     }
 }
 
-namespace Enums.via.motion.MotionListElementData {
-    public enum Flags {
+namespace Enums.via.motion.MotionListElementData
+{
+    public enum Flags
+    {
         Flags_Mirror = 1,
         Flags_LocalTree = 2,
         Flags_3 = 4,
@@ -9850,8 +11316,10 @@ namespace Enums.via.motion.MotionListElementData {
     }
 }
 
-namespace Enums.via.Rect3DXZ {
-    public enum VoronoiId {
+namespace Enums.via.Rect3DXZ
+{
+    public enum VoronoiId
+    {
         L_Bit = 1,
         R_Bit = 2,
         T_Bit = 4,
@@ -9868,16 +11336,20 @@ namespace Enums.via.Rect3DXZ {
     }
 }
 
-namespace Enums.via.os {
-    public enum BackgroundInstallSpeed {
+namespace Enums.via.os
+{
+    public enum BackgroundInstallSpeed
+    {
         Slow = 0,
         Suspend = 1,
         Fast = 2,
     }
 }
 
-namespace Enums.via.attribute.FsmCategoryAttribute {
-    public enum Category {
+namespace Enums.via.attribute.FsmCategoryAttribute
+{
+    public enum Category
+    {
         None = 0,
         Fsm = 1,
         Mot = 2,
@@ -9887,23 +11359,29 @@ namespace Enums.via.attribute.FsmCategoryAttribute {
     }
 }
 
-namespace Enums.via.render.SSAOControl {
-    public enum SSAOAlgorithm {
+namespace Enums.via.render.SSAOControl
+{
+    public enum SSAOAlgorithm
+    {
         Default = 0,
         Temporal = 1,
     }
 }
 
-namespace Enums.app.CH8TipsData {
-    public enum DifficultyBits {
+namespace Enums.app.CH8TipsData
+{
+    public enum DifficultyBits
+    {
         Casual = 1,
         Normal = 2,
         Hard = 4,
     }
 }
 
-namespace Enums.app.AdditionalTreeLayer {
-    public enum PriorityLevel {
+namespace Enums.app.AdditionalTreeLayer
+{
+    public enum PriorityLevel
+    {
         None = 0,
         Low = 1,
         Middle = 2,
@@ -9911,8 +11389,10 @@ namespace Enums.app.AdditionalTreeLayer {
     }
 }
 
-namespace Enums.via.Application {
-    public enum RuntimeTargetType {
+namespace Enums.via.Application
+{
+    public enum RuntimeTargetType
+    {
         Target_Undefined = 0,
         TargetMachine_Mask = 15,
         TargetMachine_PC = 1,
@@ -9952,8 +11432,10 @@ namespace Enums.via.Application {
     }
 }
 
-namespace Enums.via.motion.Motion {
-    public enum DrawTarget {
+namespace Enums.via.motion.Motion
+{
+    public enum DrawTarget
+    {
         Hidden = 0,
         Main = 1,
         All = 2,
@@ -9968,8 +11450,10 @@ namespace Enums.via.motion.Motion {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum WwiseProjectNo {
+namespace Enums.via.wwise
+{
+    public enum WwiseProjectNo
+    {
         WwiseProjectNo_0 = 0,
         WwiseProjectNo_1 = 1,
         WwiseProjectNo_2 = 2,
@@ -9978,15 +11462,19 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_1ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_1ch
+    {
         Channel_1Ch = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.motion.detail.ChainNode {
-    public enum HitFlags {
+namespace Enums.via.motion.detail.ChainNode
+{
+    public enum HitFlags
+    {
         None = 0,
         Self = 2,
         Model = 4,
@@ -9998,36 +11486,46 @@ namespace Enums.via.motion.detail.ChainNode {
     }
 }
 
-namespace Enums.app.CH9Em5700Think {
-    public enum Mode {
+namespace Enums.app.CH9Em5700Think
+{
+    public enum Mode
+    {
         Ground = 0,
         Fly = 1,
     }
 }
 
-namespace Enums.via.render.detail.PrimitiveMeshMaterialManager {
-    public enum ShaderCapability {
+namespace Enums.via.render.detail.PrimitiveMeshMaterialManager
+{
+    public enum ShaderCapability
+    {
         AlphaTest = 1,
         TwoSided = 2,
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum CollisionID {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum CollisionID
+    {
         PressNormal = 0,
     }
 }
 
-namespace Enums.via.wwise.midi {
-    public enum MMC {
+namespace Enums.via.wwise.midi
+{
+    public enum MMC
+    {
         Stop = 1,
         Play = 2,
         RecStrobe = 3,
     }
 }
 
-namespace Enums.app.InteractZoomSendFsm {
-    public enum ZoomState {
+namespace Enums.app.InteractZoomSendFsm
+{
+    public enum ZoomState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -10036,8 +11534,10 @@ namespace Enums.app.InteractZoomSendFsm {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum EggParts {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum EggParts
+    {
         Head = 8,
         Chest = 9,
         Hip = 10,
@@ -10045,8 +11545,10 @@ namespace Enums.app.CH8Em4400.Action.CH8Generate {
     }
 }
 
-namespace Enums.via.str.detail.format.csharp.format_item {
-    public enum ExFmtFlag {
+namespace Enums.via.str.detail.format.csharp.format_item
+{
+    public enum ExFmtFlag
+    {
         Ignore = 0,
         SetPrecision = 0,
         ZeroPadding = 0,
@@ -10054,23 +11556,29 @@ namespace Enums.via.str.detail.format.csharp.format_item {
     }
 }
 
-namespace Enums.app.Bomb {
-    public enum UpdateRno {
+namespace Enums.app.Bomb
+{
+    public enum UpdateRno
+    {
         Wait = 0,
         Explosion = 1,
         Sleep = 2,
     }
 }
 
-namespace Enums.via.render.LDRImagePlane {
-    public enum BlendType {
+namespace Enums.via.render.LDRImagePlane
+{
+    public enum BlendType
+    {
         Overlay = 0,
         Max = 1,
     }
 }
 
-namespace Enums.CH8Em4400Effect {
-    public enum CH8IDAlias {
+namespace Enums.CH8Em4400Effect
+{
+    public enum CH8IDAlias
+    {
         Explosion = 0,
         Splash = 1,
         VerticalSplash = 2,
@@ -10090,16 +11598,20 @@ namespace Enums.CH8Em4400Effect {
     }
 }
 
-namespace Enums.app.AI.AILookAtAgent {
-    public enum Distance {
+namespace Enums.app.AI.AILookAtAgent
+{
+    public enum Distance
+    {
         Near = 0,
         Middle = 1,
         Far = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum GroundCommonSegment {
+namespace Enums.via.landscape
+{
+    public enum GroundCommonSegment
+    {
         WarmingPhysicalTexture = 0,
         ClearVirtualTexture = 1,
         Streaming = 2,
@@ -10107,15 +11619,19 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.fsm.PositionCheck {
-    public enum CheckTimeTypeEnum {
+namespace Enums.app.fsm.PositionCheck
+{
+    public enum CheckTimeTypeEnum
+    {
         Time = 0,
         TotalTime = 1,
     }
 }
 
-namespace Enums.app.CH9RankManager {
-    public enum Flow {
+namespace Enums.app.CH9RankManager
+{
+    public enum Flow
+    {
         None = 0,
         Run = 1,
         CheckMessage = 2,
@@ -10127,32 +11643,40 @@ namespace Enums.app.CH9RankManager {
     }
 }
 
-namespace Enums.app.fsm.HandLightPower {
-    public enum ActionType {
+namespace Enums.app.fsm.HandLightPower
+{
+    public enum ActionType
+    {
         None = 0,
         ForceOn = 1,
         ForceOff = 2,
     }
 }
 
-namespace Enums.app.BirthdayPlayerSelector {
-    public enum PlayerNoEnum {
+namespace Enums.app.BirthdayPlayerSelector
+{
+    public enum PlayerNoEnum
+    {
         Player01 = 0,
         Player02 = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.Havok.RigidBodyDestruct {
-    public enum EraseModeEnum {
+namespace Enums.app.Havok.RigidBodyDestruct
+{
+    public enum EraseModeEnum
+    {
         None = 0,
         Partial = 1,
         All = 2,
     }
 }
 
-namespace Enums.via.userdata {
-    public enum ParamType {
+namespace Enums.via.userdata
+{
+    public enum ParamType
+    {
         Unknown = 0,
         Bool = 1,
         U8 = 2,
@@ -10177,16 +11701,20 @@ namespace Enums.via.userdata {
     }
 }
 
-namespace Enums.via.graph {
-    public enum VertexIndex {
+namespace Enums.via.graph
+{
+    public enum VertexIndex
+    {
         Invalid = -1,
         From = 0,
         To = 1,
     }
 }
 
-namespace Enums.app.CardGameInventoryMenu {
-    public enum StepType {
+namespace Enums.app.CardGameInventoryMenu
+{
+    public enum StepType
+    {
         OpenWait = 0,
         ItemSlot = 1,
         ItemMove = 2,
@@ -10195,8 +11723,10 @@ namespace Enums.app.CardGameInventoryMenu {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum OffsetCtrl {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum OffsetCtrl
+    {
         None = 0,
         LocalOffset = 1,
         WorldOffset = 2,
@@ -10205,8 +11735,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.RecordOrderContainer {
-    public enum Type {
+namespace Enums.app.RecordOrderContainer
+{
+    public enum Type
+    {
         Blood = 0,
         Scar = 1,
         Water = 2,
@@ -10214,8 +11746,10 @@ namespace Enums.app.RecordOrderContainer {
     }
 }
 
-namespace Enums.app.Em2000.Action {
-    public enum ActionNo {
+namespace Enums.app.Em2000.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         DoorOpen = 1,
         Chapter1Battle1Crawl = 2,
@@ -10257,15 +11791,19 @@ namespace Enums.app.Em2000.Action {
     }
 }
 
-namespace Enums.app.MoveCharacter {
-    public enum TEST_RE_SWITCH_MT {
+namespace Enums.app.MoveCharacter
+{
+    public enum TEST_RE_SWITCH_MT
+    {
         MT_CONCRETE = 0,
         MT_SOIL = 1,
     }
 }
 
-namespace Enums.app.CH8CharacterExistActionRestrictZoneGroup.ActionRestrictWork {
-    public enum Type {
+namespace Enums.app.CH8CharacterExistActionRestrictZoneGroup.ActionRestrictWork
+{
+    public enum Type
+    {
         Em4000Grapple = 0,
         Em4100WallAttack = 1,
         Em4100AroundFlewover = 2,
@@ -10279,8 +11817,10 @@ namespace Enums.app.CH8CharacterExistActionRestrictZoneGroup.ActionRestrictWork 
     }
 }
 
-namespace Enums.via.motion.detail.ChainGroupData {
-    public enum AttrFlags {
+namespace Enums.via.motion.detail.ChainGroupData
+{
+    public enum AttrFlags
+    {
         None = 0,
         RootRotation = 1,
         AngleLimit = 2,
@@ -10301,23 +11841,29 @@ namespace Enums.via.motion.detail.ChainGroupData {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum PageAlignmentV {
+namespace Enums.via.gui.detail
+{
+    public enum PageAlignmentV
+    {
         Top = 0,
         Center = 1,
         Bottom = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum SourceSinkType {
+namespace Enums.via.effect.detail
+{
+    public enum SourceSinkType
+    {
         Circle = 0,
         Rectangle = 1,
     }
 }
 
-namespace Enums.via.hid.mouse {
-    public enum ManipulatorClientType {
+namespace Enums.via.hid.mouse
+{
+    public enum ManipulatorClientType
+    {
         Null = 0,
         DirectInput = 1,
         RawInput = 2,
@@ -10328,15 +11874,19 @@ namespace Enums.via.hid.mouse {
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum CalcuCenterOffset {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum CalcuCenterOffset
+    {
         ImpactState = 0,
         MaxState = 1,
     }
 }
 
-namespace Enums.via.debug {
-    public enum LevelType {
+namespace Enums.via.debug
+{
+    public enum LevelType
+    {
         Verbose = 0,
         Warning = 1,
         Info = 2,
@@ -10345,8 +11895,10 @@ namespace Enums.via.debug {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum CameraItem {
+namespace Enums.app.OptionMenu
+{
+    public enum CameraItem
+    {
         NormalFOV = 0,
         AimFOV = 1,
         RotDirc = 2,
@@ -10356,8 +11908,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.network.protocol {
-    public enum MemberIndex {
+namespace Enums.via.network.protocol
+{
+    public enum MemberIndex
+    {
         None = -1,
         All = -2,
         Other = -3,
@@ -10366,8 +11920,10 @@ namespace Enums.via.network.protocol {
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum RotationInertiaType {
+namespace Enums.app.PlayerCamera
+{
+    public enum RotationInertiaType
+    {
         None = 0,
         Weak = 1,
         Normal = 2,
@@ -10375,23 +11931,29 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum FlipType {
+namespace Enums.via.effect.detail
+{
+    public enum FlipType
+    {
         None = 0,
         Flip = 1,
         RandomFlip = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum Dynamicrange {
+namespace Enums.app.OptionMenu
+{
+    public enum Dynamicrange
+    {
         Large = 0,
         Small = 1,
     }
 }
 
-namespace Enums.app.EnemySpawnInfo {
-    public enum CollisionFilterType {
+namespace Enums.app.EnemySpawnInfo
+{
+    public enum CollisionFilterType
+    {
         PressCheckDefault = 0,
         TerrainCheckDefault = 1,
         TerrainCheckEnemy = 2,
@@ -10403,8 +11965,10 @@ namespace Enums.app.EnemySpawnInfo {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum ReturnState {
+namespace Enums.app.PlayerDefine
+{
+    public enum ReturnState
+    {
         Unknown = 0,
         StandIdle = 1,
         CrouchIdle = 2,
@@ -10418,8 +11982,10 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.hikako.raytracing.RayTracingManager {
-    public enum MachineType {
+namespace Enums.hikako.raytracing.RayTracingManager
+{
+    public enum MachineType
+    {
         INVALID = 0,
         PC = 1,
         PS4 = 2,
@@ -10429,8 +11995,10 @@ namespace Enums.hikako.raytracing.RayTracingManager {
     }
 }
 
-namespace Enums.via.render.LightProbes {
-    public enum LightProbesPriority {
+namespace Enums.via.render.LightProbes
+{
+    public enum LightProbesPriority
+    {
         Base = 0,
         Low = 1,
         Middle = 2,
@@ -10440,8 +12008,10 @@ namespace Enums.via.render.LightProbes {
     }
 }
 
-namespace Enums.via.render.PrimitiveMaterialGeometry {
-    public enum GeometryType {
+namespace Enums.via.render.PrimitiveMaterialGeometry
+{
+    public enum GeometryType
+    {
         Billboard3D = 0,
         Ribbon = 1,
         Polygon = 2,
@@ -10449,8 +12019,10 @@ namespace Enums.via.render.PrimitiveMaterialGeometry {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.Damage {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.Damage
+{
+    public enum Type
+    {
         DamageS = 0,
         DamageFlyS_L = 1,
         DamageFlyS_R = 2,
@@ -10458,14 +12030,18 @@ namespace Enums.app.CH9Em5700.Action.Damage {
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotImageSize {
+namespace Enums.via
+{
+    public enum ScreenShotImageSize
+    {
         ScreenShotImageSize_1280x720 = 0,
     }
 }
 
-namespace Enums.via.gui.BlurManager {
-    public enum BlurFilterLayerType {
+namespace Enums.via.gui.BlurManager
+{
+    public enum BlurFilterLayerType
+    {
         None = 0,
         Transparent = 1,
         PostEffect = 2,
@@ -10473,8 +12049,10 @@ namespace Enums.via.gui.BlurManager {
     }
 }
 
-namespace Enums.via.render {
-    public enum Blend {
+namespace Enums.via.render
+{
+    public enum Blend
+    {
         Zero = 1,
         One = 2,
         SrcColor = 3,
@@ -10496,16 +12074,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.attribute.RemoteProperty {
-    public enum SyncMode {
+namespace Enums.via.attribute.RemoteProperty
+{
+    public enum SyncMode
+    {
         Copy = 0,
         Kill = 1,
         Transaction = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum DsvFlag {
+namespace Enums.via.render
+{
+    public enum DsvFlag
+    {
         Dsv_ReadOnlyDepth = 1,
         Dsv_ReadOnlyStencil = 2,
         Dsv_StencilLeft = 4,
@@ -10513,8 +12095,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.landscape.beta.QuadTreesLodManager.NodeMeta {
-    public enum PriorityOption {
+namespace Enums.via.landscape.beta.QuadTreesLodManager.NodeMeta
+{
+    public enum PriorityOption
+    {
         None = 0,
         VirtualRoot = 1,
         Persistent = 2,
@@ -10522,22 +12106,28 @@ namespace Enums.via.landscape.beta.QuadTreesLodManager.NodeMeta {
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum CalculationBendRotation {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum CalculationBendRotation
+    {
         Parent = 0,
         Root = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum AimAssistIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum AimAssistIndex
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.app.Em8000.Damage {
-    public enum Tag {
+namespace Enums.app.Em8000.Damage
+{
+    public enum Tag
+    {
         NoDamage = 0,
         Small_Head_F = 1,
         Small_Head_B = 2,
@@ -10601,21 +12191,27 @@ namespace Enums.app.Em8000.Damage {
     }
 }
 
-namespace Enums.app.Em4200.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Grapple
+{
+    public enum Type
+    {
         Mount = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum InterporateResolve {
+namespace Enums.via.render
+{
+    public enum InterporateResolve
+    {
         Default = 0,
         Fast = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum GeneratePosition {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum GeneratePosition
+    {
         Head = 0,
         Chest = 1,
         Stomach = 2,
@@ -10623,14 +12219,18 @@ namespace Enums.app.CH8Em4400.Action.CH8Generate {
     }
 }
 
-namespace Enums.via.gui.BlurManager {
-    public enum BlurFilterMipMap {
+namespace Enums.via.gui.BlurManager
+{
+    public enum BlurFilterMipMap
+    {
         MipMapMax = 6,
     }
 }
 
-namespace Enums.via {
-    public enum ModuleEntry {
+namespace Enums.via
+{
+    public enum ModuleEntry
+    {
         Initialize = 0,
         InitializeLog = 1,
         InitializeGameCore = 2,
@@ -11025,8 +12625,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app {
-    public enum ItemSortCategory {
+namespace Enums.app
+{
+    public enum ItemSortCategory
+    {
         Weapon = 0,
         Shell = 1,
         Drug = 2,
@@ -11042,8 +12644,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum DistanceLinkVisibleType {
+namespace Enums.via.dynamics
+{
+    public enum DistanceLinkVisibleType
+    {
         Structural = 0,
         Shear = 1,
         Bending = 2,
@@ -11051,15 +12655,19 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodMatchmaking {
+namespace Enums.via.network.error
+{
+    public enum MethodMatchmaking
+    {
         Searching = 0,
         Permition = 1,
     }
 }
 
-namespace Enums.via.Stream {
-    public enum Attribute {
+namespace Enums.via.Stream
+{
+    public enum Attribute
+    {
         Default = 0,
         Write = 1,
         Expandable = 2,
@@ -11069,8 +12677,10 @@ namespace Enums.via.Stream {
     }
 }
 
-namespace Enums.app.PosLerp {
-    public enum State {
+namespace Enums.app.PosLerp
+{
+    public enum State
+    {
         LerpPos = 0,
         LerpRot = 1,
         LerpLocalPos = 2,
@@ -11079,37 +12689,47 @@ namespace Enums.app.PosLerp {
     }
 }
 
-namespace Enums.via.render {
-    public enum LightCullingResolution {
+namespace Enums.via.render
+{
+    public enum LightCullingResolution
+    {
         Default = 0,
         Low = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum WindowMode {
+namespace Enums.via.render
+{
+    public enum WindowMode
+    {
         Normal = 0,
         FullScreen = 1,
         Borderless = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Idle {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8ControlMaterial {
-    public enum ParamType {
+namespace Enums.app.fsm.CH8ControlMaterial
+{
+    public enum ParamType
+    {
         Float4 = 1,
         Float = 2,
     }
 }
 
-namespace Enums.via.Cylinder {
-    public enum NGLevel {
+namespace Enums.via.Cylinder
+{
+    public enum NGLevel
+    {
         None = 0,
         Point = 1,
         SizeNone = 2,
@@ -11119,38 +12739,48 @@ namespace Enums.via.Cylinder {
     }
 }
 
-namespace Enums.via.timeline.DialogueTimelinePlayer {
-    public enum ResourceType {
+namespace Enums.via.timeline.DialogueTimelinePlayer
+{
+    public enum ResourceType
+    {
         None = 0,
         DialogueTimeline = 1,
         DialogueTimelineList = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8MotionPlay {
-    public enum AdjustStartFrameTypeEnum {
+namespace Enums.app.fsm.CH8MotionPlay
+{
+    public enum AdjustStartFrameTypeEnum
+    {
         None = 0,
         NormalizeTime = 1,
         ReverseNormalizeTime = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceNgWordsReplacementResult {
+namespace Enums.via
+{
+    public enum SystemServiceNgWordsReplacementResult
+    {
         Succeed = 0,
         Failed = 1,
     }
 }
 
-namespace Enums.via.dynamics.HeightFieldResource {
-    public enum PointState {
+namespace Enums.via.dynamics.HeightFieldResource
+{
+    public enum PointState
+    {
         Removed = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.landscape.GroundUtility {
-    public enum PipelineStateType {
+namespace Enums.via.landscape.GroundUtility
+{
+    public enum PipelineStateType
+    {
         CopyTexture = 0,
         CopyTextureArray = 1,
         CopyRegionTexture = 2,
@@ -11163,15 +12793,19 @@ namespace Enums.via.landscape.GroundUtility {
     }
 }
 
-namespace Enums.app.CH8FadeControl {
-    public enum FadeStatusEnum {
+namespace Enums.app.CH8FadeControl
+{
+    public enum FadeStatusEnum
+    {
         OffBlack = 0,
         OnBlack = 1,
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum ProgressTypeDLC {
+namespace Enums.app.Telemetry
+{
+    public enum ProgressTypeDLC
+    {
         Nightmare = 0,
         NightTerror = 1,
         Bedroom = 2,
@@ -11184,15 +12818,19 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Move {
-    public enum CrawlMode {
+namespace Enums.app.CH8Em4000.Action.CH8Move
+{
+    public enum CrawlMode
+    {
         Wait = 0,
         Walk = 1,
     }
 }
 
-namespace Enums.app.MenuHolder {
-    public enum ReloadStep {
+namespace Enums.app.MenuHolder
+{
+    public enum ReloadStep
+    {
         None = 0,
         Destroy = 1,
         Standby = 2,
@@ -11200,38 +12838,48 @@ namespace Enums.app.MenuHolder {
     }
 }
 
-namespace Enums.app.CH9MultiSubMenu {
-    public enum CH9TabTypeDef {
+namespace Enums.app.CH9MultiSubMenu
+{
+    public enum CH9TabTypeDef
+    {
         Album = 0,
         Map = 1,
     }
 }
 
-namespace Enums.app.EndingAnnounceGUI {
-    public enum State {
+namespace Enums.app.EndingAnnounceGUI
+{
+    public enum State
+    {
         DEFAULT = 0,
         FADE_IN = 1,
         FADE_OUT = 2,
     }
 }
 
-namespace Enums.via.motion.Chassis {
-    public enum State {
+namespace Enums.via.motion.Chassis
+{
+    public enum State
+    {
         Initialized = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum TextCheckResult {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum TextCheckResult
+    {
         Success = 0,
         ShowFailureDialog = 1,
         ShowConfirmDialog = 2,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainNodeCollisionShape {
+namespace Enums.via.motion.detail
+{
+    public enum ChainNodeCollisionShape
+    {
         None = 0,
         Sphere = 1,
         Capsule = 2,
@@ -11239,8 +12887,10 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.via.render.layer.Overlay {
-    public enum UITargetType {
+namespace Enums.via.render.layer.Overlay
+{
+    public enum UITargetType
+    {
         Default = 0,
         Effect2DPlane0 = 1,
         Effect2DPlane1 = 2,
@@ -11250,8 +12900,10 @@ namespace Enums.via.render.layer.Overlay {
     }
 }
 
-namespace Enums.app.MissionDetail {
-    public enum CompareType {
+namespace Enums.app.MissionDetail
+{
+    public enum CompareType
+    {
         Less = 0,
         LessEqual = 1,
         Equal = 2,
@@ -11260,8 +12912,10 @@ namespace Enums.app.MissionDetail {
     }
 }
 
-namespace Enums.app {
-    public enum PlayerID {
+namespace Enums.app
+{
+    public enum PlayerID
+    {
         Pl0000 = 0,
         Pl1000 = 1,
         Pl2000 = 2,
@@ -11279,30 +12933,38 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.cutin.CutinHandle1Button {
-    public enum ResultDef {
+namespace Enums.app.cutin.CutinHandle1Button
+{
+    public enum ResultDef
+    {
         Button = 0,
         Undecided = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodNative {
+namespace Enums.via.network.error
+{
+    public enum MethodNative
+    {
         Method0 = 0,
         Method1 = 1,
         Method2 = 2,
     }
 }
 
-namespace Enums.via.reflection.detail {
-    public enum Stage {
+namespace Enums.via.reflection.detail
+{
+    public enum Stage
+    {
         BSS = 0,
         Heap = 1,
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum GBufferLayout {
+namespace Enums.via.render.layer
+{
+    public enum GBufferLayout
+    {
         PreLighting = 0,
         BaseColorMetallicTranslucency = 1,
         NormalXNormalYRoughnessMisc = 2,
@@ -11311,8 +12973,10 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum Raytracing {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum Raytracing
+    {
         AmbientOcclusion = 0,
         HybridPathTracing = 1,
         PurePathTracing = 2,
@@ -11323,15 +12987,19 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.via.render {
-    public enum CopyType {
+namespace Enums.via.render
+{
+    public enum CopyType
+    {
         copyResource = 0,
         copySubresourceRegion = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum Comparison {
+namespace Enums.via.render
+{
+    public enum Comparison
+    {
         Never = 1,
         Less = 2,
         Equal = 3,
@@ -11344,8 +13012,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.SaveDataManager {
-    public enum SaveErrorStateEnum {
+namespace Enums.app.SaveDataManager
+{
+    public enum SaveErrorStateEnum
+    {
         None = 0,
         SaveErrorInit = 1,
         SaveCutinWait = 2,
@@ -11362,15 +13032,19 @@ namespace Enums.app.SaveDataManager {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum PreferenceType {
+namespace Enums.via.hid.VrTracker
+{
+    public enum PreferenceType
+    {
         FarPosition = 0,
         StablePosition = 1,
     }
 }
 
-namespace Enums.app.CH9Em5700ActionController {
-    public enum MaterialName {
+namespace Enums.app.CH9Em5700ActionController
+{
+    public enum MaterialName
+    {
         Risotto_Rate = 0,
         Record_RandumFlag = 1,
         Burn_Rate = 2,
@@ -11378,24 +13052,30 @@ namespace Enums.app.CH9Em5700ActionController {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimitiveGUIFilter {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimitiveGUIFilter
+    {
         None = 0,
         InstantBlur = 1,
         GaussianBlur = 2,
     }
 }
 
-namespace Enums.app.CH9GauntletChargeGauge {
-    public enum eHandType {
+namespace Enums.app.CH9GauntletChargeGauge
+{
+    public enum eHandType
+    {
         Left = 0,
         Right = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.Em3000.Goal.Search {
-    public enum Type {
+namespace Enums.app.Em3000.Goal.Search
+{
+    public enum Type
+    {
         Non = 0,
         Vision = 1,
         Hearing = 2,
@@ -11403,24 +13083,30 @@ namespace Enums.app.Em3000.Goal.Search {
     }
 }
 
-namespace Enums.app.fsm.Em3102.Em3102Target {
-    public enum Event {
+namespace Enums.app.fsm.Em3102.Em3102Target
+{
+    public enum Event
+    {
         None = 0,
         ActionEnd = 1,
         ActionFailed = 2,
     }
 }
 
-namespace Enums.app.Em8001.Em8001BattleDirective.ScissorsBattleParameter {
-    public enum ChainsawEngineDamageTrigger {
+namespace Enums.app.Em8001.Em8001BattleDirective.ScissorsBattleParameter
+{
+    public enum ChainsawEngineDamageTrigger
+    {
         None = 0,
         Grapple_BattleOfSaw = 1,
         RepelPlayerChainsawAttack = 2,
     }
 }
 
-namespace Enums.app.Em3000.Em3000WwiseMonitoredValue {
-    public enum PropertyLayer {
+namespace Enums.app.Em3000.Em3000WwiseMonitoredValue
+{
+    public enum PropertyLayer
+    {
         Discovery = 0,
         UnDiscovery = 1,
         DamageDown = 2,
@@ -11428,24 +13114,30 @@ namespace Enums.app.Em3000.Em3000WwiseMonitoredValue {
     }
 }
 
-namespace Enums.app.CardGameMaster {
-    public enum GameBetType {
+namespace Enums.app.CardGameMaster
+{
+    public enum GameBetType
+    {
         Finger = 0,
         Electric = 1,
         Saw = 2,
     }
 }
 
-namespace Enums.app.Em8001.Em8001ActionController {
-    public enum MotionSpeedControlGroup {
+namespace Enums.app.Em8001.Em8001ActionController
+{
+    public enum MotionSpeedControlGroup
+    {
         Base = 0,
         Attack = 1,
         Rank = 2,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum PrimitiveHandleType {
+namespace Enums.via.navigation
+{
+    public enum PrimitiveHandleType
+    {
         None = 0,
         IndexedTriangle = 1,
         IndexedPolygon = 2,
@@ -11457,15 +13149,19 @@ namespace Enums.via.navigation {
     }
 }
 
-namespace Enums.via.areamap.test.DistanceFromNameRegion {
-    public enum Condition {
+namespace Enums.via.areamap.test.DistanceFromNameRegion
+{
+    public enum Condition
+    {
         Mode_Closest = 0,
         Mode_Farthest = 1,
     }
 }
 
-namespace Enums.app.MissionDetail {
-    public enum ConditionType {
+namespace Enums.app.MissionDetail
+{
+    public enum ConditionType
+    {
         None = 0,
         DefeatEnemy = 1,
         EnterArea = 2,
@@ -11476,8 +13172,10 @@ namespace Enums.app.MissionDetail {
     }
 }
 
-namespace Enums.app.Em3001.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Damage
+{
+    public enum Type
+    {
         NoDamage = 0,
         MidHeadF = 1,
         MidHeadFR = 2,
@@ -11510,15 +13208,19 @@ namespace Enums.app.Em3001.Action.Damage {
     }
 }
 
-namespace Enums.app.fsm.CH8StartOperator {
-    public enum GUIStateTable {
+namespace Enums.app.fsm.CH8StartOperator
+{
+    public enum GUIStateTable
+    {
         DEFAULT = 0,
         FADEIN = 1,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceSkuFlag {
+namespace Enums.via
+{
+    public enum SystemServiceSkuFlag
+    {
         Unknown = 65535,
         Default = 0,
         Trial = 1,
@@ -11526,8 +13228,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.memory {
-    public enum CounterType {
+namespace Enums.via.memory
+{
+    public enum CounterType
+    {
         UsedSize = 0,
         Overhead = 1,
         AllocCount = 2,
@@ -11537,39 +13241,49 @@ namespace Enums.via.memory {
     }
 }
 
-namespace Enums.via.navigation.AIMapEffector {
-    public enum EffectType {
+namespace Enums.via.navigation.AIMapEffector
+{
+    public enum EffectType
+    {
         Attribute = 0,
         Disable = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum JointMaskIDMode {
+namespace Enums.via.motion
+{
+    public enum JointMaskIDMode
+    {
         ID = 0,
         BitFlagOr = 1,
         BitFlagAnd = 2,
     }
 }
 
-namespace Enums.app.VolumeDecalContainer {
-    public enum Type {
+namespace Enums.app.VolumeDecalContainer
+{
+    public enum Type
+    {
         Blood = 0,
         Scar = 1,
         Water = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum SpeakerType {
+namespace Enums.app.OptionMenu
+{
+    public enum SpeakerType
+    {
         Surround = 0,
         TV = 1,
         Headphone = 2,
     }
 }
 
-namespace Enums.via.Rect3D {
-    public enum VoronoiId {
+namespace Enums.via.Rect3D
+{
+    public enum VoronoiId
+    {
         L_Bit = 1,
         R_Bit = 2,
         T_Bit = 4,
@@ -11586,8 +13300,10 @@ namespace Enums.via.Rect3D {
     }
 }
 
-namespace Enums.app.CH8Em4200.CH8ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4200.CH8ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Fixed = 1,
         Wanderer = 2,
@@ -11596,22 +13312,28 @@ namespace Enums.app.CH8Em4200.CH8ThinkStateSet {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Walk {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
         TNormal = 1,
     }
 }
 
-namespace Enums.via.render.VolumetricFogControl {
-    public enum JitterNoiseType {
+namespace Enums.via.render.VolumetricFogControl
+{
+    public enum JitterNoiseType
+    {
         Default = 0,
         Fast = 1,
     }
 }
 
-namespace Enums.app.FileDataManager {
-    public enum Player {
+namespace Enums.app.FileDataManager
+{
+    public enum Player
+    {
         None = 0,
         Ethan = 1,
         Mia_Chapter4 = 2,
@@ -11619,8 +13341,10 @@ namespace Enums.app.FileDataManager {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard {
-    public enum KeyboardMode {
+namespace Enums.via.hid.virtualKeyboard
+{
+    public enum KeyboardMode
+    {
         Full = 0,
         Numeric = 1,
         Latin = 2,
@@ -11629,48 +13353,60 @@ namespace Enums.via.hid.virtualKeyboard {
     }
 }
 
-namespace Enums.app.Em8000FirstStamp {
-    public enum TimelineIndex {
+namespace Enums.app.Em8000FirstStamp
+{
+    public enum TimelineIndex
+    {
         Default = 0,
         Clean = 1,
         Dirty = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceVideoRecorderStatus {
+namespace Enums.via
+{
+    public enum SystemServiceVideoRecorderStatus
+    {
         Unknown = 0,
         Idle = 1,
         Recording = 2,
     }
 }
 
-namespace Enums.via.areamap.RegionConnection {
-    public enum AccessState {
+namespace Enums.via.areamap.RegionConnection
+{
+    public enum AccessState
+    {
         Access_Open = 0,
         Access_Locked = 1,
         Access_Closed = 2,
     }
 }
 
-namespace Enums.app.Em8001.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em8001.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
         LoopStart = 1,
         Acid = 2,
     }
 }
 
-namespace Enums.app.CH9Em7700DebugController {
-    public enum HandStatus {
+namespace Enums.app.CH9Em7700DebugController
+{
+    public enum HandStatus
+    {
         Normal = 0,
         Blade = 1,
         Lost = 2,
     }
 }
 
-namespace Enums.app.CH9Em6800 {
-    public enum eBaseMotionID {
+namespace Enums.app.CH9Em6800
+{
+    public enum eBaseMotionID
+    {
         CarryStand = 0,
         CarryWalk = 1,
         CarryDead = 2,
@@ -11686,8 +13422,10 @@ namespace Enums.app.CH9Em6800 {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Rest {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Rest
+{
+    public enum Type
+    {
         Rest00 = 0,
         Rest01 = 1,
         Rest02 = 2,
@@ -11698,23 +13436,29 @@ namespace Enums.app.CH9Em6400.Action.Rest {
     }
 }
 
-namespace Enums.app.EffectCommonDefine {
-    public enum EffectActionOnProviderDestroy {
+namespace Enums.app.EffectCommonDefine
+{
+    public enum EffectActionOnProviderDestroy
+    {
         None = 0,
         Finish = 1,
         Kill = 2,
     }
 }
 
-namespace Enums.app.Em3100.Action.OverLook {
-    public enum Type {
+namespace Enums.app.Em3100.Action.OverLook
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum UavDimension {
+namespace Enums.via.render
+{
+    public enum UavDimension
+    {
         Unknown = 0,
         Buffer = 1,
         Texture1d = 2,
@@ -11725,16 +13469,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em4100ActionController {
-    public enum MoveType {
+namespace Enums.app.Em4100ActionController
+{
+    public enum MoveType
+    {
         Default = 0,
         ForceSolo = 1,
         ForceAround = 2,
     }
 }
 
-namespace Enums.app.CH8StateSwitchMission {
-    public enum CHP8_MISSION {
+namespace Enums.app.CH8StateSwitchMission
+{
+    public enum CHP8_MISSION
+    {
         SILENCE = 0,
         CHP8_SILENCE_MINE = 1,
         CHP8_MINING_AREA = 2,
@@ -11743,8 +13491,10 @@ namespace Enums.app.CH8StateSwitchMission {
     }
 }
 
-namespace Enums.via.landscape.layer.OutputLayer {
-    public enum OutputPipelineStateType {
+namespace Enums.via.landscape.layer.OutputLayer
+{
+    public enum OutputPipelineStateType
+    {
         CombineHeightmap = 0,
         CombineUneditableMask = 1,
         CombineSpline = 2,
@@ -11752,16 +13502,20 @@ namespace Enums.via.landscape.layer.OutputLayer {
     }
 }
 
-namespace Enums.via {
-    public enum BasisPlane {
+namespace Enums.via
+{
+    public enum BasisPlane
+    {
         XZ = 0,
         XY = 1,
         YZ = 2,
     }
 }
 
-namespace Enums.app.Em5400.Action {
-    public enum ActionNo {
+namespace Enums.app.Em5400.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         GroundIdleReaction = 1,
         Attack = 2,
@@ -11781,8 +13535,10 @@ namespace Enums.app.Em5400.Action {
     }
 }
 
-namespace Enums.app.CH9Em6400.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em6400.ThinkStateSet
+{
+    public enum Type
+    {
         None = 0,
         Chapter92Battle = 200,
         Chapter92BattleSecond = 250,
@@ -11796,8 +13552,10 @@ namespace Enums.app.CH9Em6400.ThinkStateSet {
     }
 }
 
-namespace Enums.via {
-    public enum VideoRecordingStatus {
+namespace Enums.via
+{
+    public enum VideoRecordingStatus
+    {
         Disable = -1,
         NotSupported = -2,
         None = 0,
@@ -11807,8 +13565,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrDeviceName {
+namespace Enums.via.vr
+{
+    public enum VrDeviceName
+    {
         None = 0,
         PSVR_HMD = 1,
         PSVR_DEALSHOCK4 = 2,
@@ -11826,8 +13586,10 @@ namespace Enums.via.vr {
     }
 }
 
-namespace Enums.via.wwise.WwiseGeneratedBankInfo {
-    public enum IdType {
+namespace Enums.via.wwise.WwiseGeneratedBankInfo
+{
+    public enum IdType
+    {
         None = 0,
         Bank = 1,
         Event = 2,
@@ -11844,8 +13606,10 @@ namespace Enums.via.wwise.WwiseGeneratedBankInfo {
     }
 }
 
-namespace Enums.app.CardGameAchievementControl {
-    public enum AchieveType {
+namespace Enums.app.CardGameAchievementControl
+{
+    public enum AchieveType
+    {
         TotalWin = 0,
         TotalUseItem = 1,
         TotalTwentyOne = 2,
@@ -11863,15 +13627,19 @@ namespace Enums.app.CardGameAchievementControl {
     }
 }
 
-namespace Enums.app.fsm.SetGenomeCodexRadarEnable {
-    public enum StateDef {
+namespace Enums.app.fsm.SetGenomeCodexRadarEnable
+{
+    public enum StateDef
+    {
         Disable = 0,
         Enable = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum MemoryProtection {
+namespace Enums.via.os
+{
+    public enum MemoryProtection
+    {
         CPU_RO = 4,
         CPU_RW = 8,
         GPU_RO = 16,
@@ -11881,8 +13649,10 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.CH9ThrowingWp1500 {
-    public enum UpdateRno {
+namespace Enums.app.CH9ThrowingWp1500
+{
+    public enum UpdateRno
+    {
         Wait = 0,
         Move = 1,
         HitWall = 2,
@@ -11892,16 +13662,20 @@ namespace Enums.app.CH9ThrowingWp1500 {
     }
 }
 
-namespace Enums.app.SecondaryMotionReceiver {
-    public enum MotionChangeCheckState {
+namespace Enums.app.SecondaryMotionReceiver
+{
+    public enum MotionChangeCheckState
+    {
         NoCheck = 0,
         Start = 1,
         Checking = 2,
     }
 }
 
-namespace Enums.via.motion.JointExLimit {
-    public enum LimitFlags {
+namespace Enums.via.motion.JointExLimit
+{
+    public enum LimitFlags
+    {
         None = 0,
         TransMinX = 1,
         TransMaxX = 2,
@@ -11924,8 +13698,10 @@ namespace Enums.via.motion.JointExLimit {
     }
 }
 
-namespace Enums.app.Em5552.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em5552.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         Attack = 2,
@@ -11935,8 +13711,10 @@ namespace Enums.app.Em5552.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.math {
-    public enum RotationOrder {
+namespace Enums.via.math
+{
+    public enum RotationOrder
+    {
         XYZ = 0,
         YZX = 1,
         ZXY = 2,
@@ -11946,8 +13724,10 @@ namespace Enums.via.math {
     }
 }
 
-namespace Enums.via.effect {
-    public enum PlayerState {
+namespace Enums.via.effect
+{
+    public enum PlayerState
+    {
         Idle = 0,
         Start = 1,
         Running = 2,
@@ -11958,45 +13738,57 @@ namespace Enums.via.effect {
     }
 }
 
-namespace Enums.via.motion.detail.ChainLinkData {
-    public enum AttrFlags {
+namespace Enums.via.motion.detail.ChainLinkData
+{
+    public enum AttrFlags
+    {
         EnableStretch = 1,
     }
 }
 
-namespace Enums.via.DateTime {
-    public enum Kind {
+namespace Enums.via.DateTime
+{
+    public enum Kind
+    {
         Unspecified = 0,
         UTC = 1,
         Local = 2,
     }
 }
 
-namespace Enums.via.network.AutoMatchmaking {
-    public enum RuleType {
+namespace Enums.via.network.AutoMatchmaking
+{
+    public enum RuleType
+    {
         Must = 0,
         Should = 1,
     }
 }
 
-namespace Enums.via {
-    public enum Hide {
+namespace Enums.via
+{
+    public enum Hide
+    {
         Script = 1,
         Tool = 2,
         Public = 4,
     }
 }
 
-namespace Enums.via.render.layer.PrepareOutput {
-    public enum DISPLAYCOLORSPACE {
+namespace Enums.via.render.layer.PrepareOutput
+{
+    public enum DISPLAYCOLORSPACE
+    {
         SRGB = 0,
         HDTV_REC709 = 1,
         BT2020 = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em6400.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
         LeaveEnd = 1,
         GrappleFromPlayer = 2,
@@ -12004,8 +13796,10 @@ namespace Enums.app.CH9Em6400.ThinkOrderSet {
     }
 }
 
-namespace Enums.via.motion {
-    public enum SequenceUpdateMode {
+namespace Enums.via.motion
+{
+    public enum SequenceUpdateMode
+    {
         Always = 0,
         PlayOnly = 1,
         DisableReverseEvent = 2,
@@ -12013,8 +13807,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.render.layer.CaptureGBuffer {
-    public enum FACEINDEX {
+namespace Enums.via.render.layer.CaptureGBuffer
+{
+    public enum FACEINDEX
+    {
         POSITIVE_X = 0,
         NEGATIVE_X = 1,
         POSITIVE_Y = 2,
@@ -12024,15 +13820,19 @@ namespace Enums.via.render.layer.CaptureGBuffer {
     }
 }
 
-namespace Enums.via.navigation.FailReport {
-    public enum FailLevel {
+namespace Enums.via.navigation.FailReport
+{
+    public enum FailLevel
+    {
         Upper = 0,
         Lower = 1,
     }
 }
 
-namespace Enums.via.landscape.layer.LandformBaseLayer {
-    public enum Priority {
+namespace Enums.via.landscape.layer.LandformBaseLayer
+{
+    public enum Priority
+    {
         TopMost = 16777216,
         Top = 50331648,
         Default = 83886080,
@@ -12041,8 +13841,10 @@ namespace Enums.via.landscape.layer.LandformBaseLayer {
     }
 }
 
-namespace Enums.app.CH9Em6700.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em6700.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         OutRange = 1,
         InRange = 2,
@@ -12050,8 +13852,10 @@ namespace Enums.app.CH9Em6700.Goal {
     }
 }
 
-namespace Enums.app.CH9Em7500ActionController {
-    public enum SuspendStatus {
+namespace Enums.app.CH9Em7500ActionController
+{
+    public enum SuspendStatus
+    {
         None = 0,
         Requested = 1,
         Suspending = 2,
@@ -12059,8 +13863,10 @@ namespace Enums.app.CH9Em7500ActionController {
     }
 }
 
-namespace Enums.app.Em8000.Em8000MaterialController {
-    public enum TargetTag {
+namespace Enums.app.Em8000.Em8000MaterialController
+{
+    public enum TargetTag
+    {
         None = 0,
         Own = 1,
         Head = 2,
@@ -12068,8 +13874,10 @@ namespace Enums.app.Em8000.Em8000MaterialController {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GpuBufferType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GpuBufferType
+    {
         PhysicalProps = 0,
         TextureProps = 1,
         ExtForceProps = 2,
@@ -12084,16 +13892,20 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.via.gui.OutlineFont {
-    public enum ShapeType {
+namespace Enums.via.gui.OutlineFont
+{
+    public enum ShapeType
+    {
         Arabic = 0,
         Thai = 1,
         Hindi = 2,
     }
 }
 
-namespace Enums.app.CH9Em7700BladeController {
-    public enum Type {
+namespace Enums.app.CH9Em7700BladeController
+{
+    public enum Type
+    {
         Default = 0,
         Slash = 1,
         SlashTry = 2,
@@ -12103,15 +13915,19 @@ namespace Enums.app.CH9Em7700BladeController {
     }
 }
 
-namespace Enums.via.areamap.test.BasicDistance {
-    public enum Condition {
+namespace Enums.via.areamap.test.BasicDistance
+{
+    public enum Condition
+    {
         Mode_Closest = 0,
         Mode_Farthest = 1,
     }
 }
 
-namespace Enums.app.ChapterLoadTempManager {
-    public enum CollectTypeEnum {
+namespace Enums.app.ChapterLoadTempManager
+{
+    public enum CollectTypeEnum
+    {
         Env = 0,
         Advanced = 1,
         Other = 2,
@@ -12120,8 +13936,10 @@ namespace Enums.app.ChapterLoadTempManager {
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum VFXSpecularDenoiserFlag {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum VFXSpecularDenoiserFlag
+    {
         Full = 1,
         Spatial = 2,
         Temporal = 4,
@@ -12129,16 +13947,20 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.app.InteractPushMove {
-    public enum PushMoveTypeEnum {
+namespace Enums.app.InteractPushMove
+{
+    public enum PushMoveTypeEnum
+    {
         Front = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum LightGroupBit {
+namespace Enums.via.gui
+{
+    public enum LightGroupBit
+    {
         Group0 = 1,
         Group1 = 2,
         Group2 = 4,
@@ -12151,23 +13973,29 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.navigation.map.NodeBlock {
-    public enum Attribute {
+namespace Enums.via.navigation.map.NodeBlock
+{
+    public enum Attribute
+    {
         Static = 0,
         ModifyBase = 1,
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapInput {
-    public enum JointLimitFlags {
+namespace Enums.via.motion.SubExJointRemapInput
+{
+    public enum JointLimitFlags
+    {
         BasePose = 1,
         MidPoint = 2,
         Enable = 4,
     }
 }
 
-namespace Enums.via.motion.ChainResource {
-    public enum SettingAttrFlags {
+namespace Enums.via.motion.ChainResource
+{
+    public enum SettingAttrFlags
+    {
         None = 0,
         Default = 1,
         VirtualGroundRoot = 2,
@@ -12177,8 +14005,10 @@ namespace Enums.via.motion.ChainResource {
     }
 }
 
-namespace Enums.app.vr.VrErrorFlow {
-    public enum Phase {
+namespace Enums.app.vr.VrErrorFlow
+{
+    public enum Phase
+    {
         FadeOut = 0,
         Request = 1,
         Success = 2,
@@ -12194,15 +14024,19 @@ namespace Enums.app.vr.VrErrorFlow {
     }
 }
 
-namespace Enums.app.Em3000.Action.Zigzag {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Zigzag
+{
+    public enum Type
+    {
         Normal = 0,
         TNormal = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum DamageReactionType {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum DamageReactionType
+    {
         None = 0,
         Middle = 1,
         Large = 2,
@@ -12212,8 +14046,10 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BakerSegment {
+namespace Enums.via.landscape
+{
+    public enum BakerSegment
+    {
         BakeMesh = 0,
         BakePath = 1,
         BakeRoad = 2,
@@ -12225,23 +14061,29 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.physics.System {
-    public enum PaintType {
+namespace Enums.via.physics.System
+{
+    public enum PaintType
+    {
         Overwrite = 0,
         Add = 1,
         Reset = 2,
     }
 }
 
-namespace Enums.app.Em3002.Action.Turn {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Turn
+{
+    public enum Type
+    {
         Fast = 0,
         Move = 1,
     }
 }
 
-namespace Enums.via.dialog {
-    public enum Status {
+namespace Enums.via.dialog
+{
+    public enum Status
+    {
         None = 0,
         Initialized = 1,
         Running = 2,
@@ -12249,16 +14091,20 @@ namespace Enums.via.dialog {
     }
 }
 
-namespace Enums.via.effect {
-    public enum VectorFieldDrawFlag {
+namespace Enums.via.effect
+{
+    public enum VectorFieldDrawFlag
+    {
         None = 0,
         Box = 1,
         Grid = 2,
     }
 }
 
-namespace Enums.app.CH9SceneFoldersCtrlRequester {
-    public enum ControlTypeEnum {
+namespace Enums.app.CH9SceneFoldersCtrlRequester
+{
+    public enum ControlTypeEnum
+    {
         None = 0,
         Standby_True = 1,
         Standby_False = 2,
@@ -12269,37 +14115,47 @@ namespace Enums.app.CH9SceneFoldersCtrlRequester {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum HiddenType {
+namespace Enums.app.EnemyActionController
+{
+    public enum HiddenType
+    {
         Invalid = 0,
         ForDead = 1,
         ForSuspend = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.GuardFollow {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.GuardFollow
+{
+    public enum Type
+    {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum LensDistortionSetting {
+namespace Enums.via.render.RenderConfig
+{
+    public enum LensDistortionSetting
+    {
         ON = 0,
         DistortionOnly = 1,
         OFF = 2,
     }
 }
 
-namespace Enums.via.audiorender.fx.distortion {
-    public enum DistType {
+namespace Enums.via.audiorender.fx.distortion
+{
+    public enum DistType
+    {
         Distortion = 0,
         TubeDrive = 1,
         OverDrive = 2,
     }
 }
 
-namespace Enums.CH8Em4200Effect {
-    public enum CH8IDAlias {
+namespace Enums.CH8Em4200Effect
+{
+    public enum CH8IDAlias
+    {
         Explosion = 0,
         Splash = 1,
         VerticalSplash = 2,
@@ -12318,8 +14174,10 @@ namespace Enums.CH8Em4200Effect {
     }
 }
 
-namespace Enums.app.Em8001.Action.DamageDown {
-    public enum Direction {
+namespace Enums.app.Em8001.Action.DamageDown
+{
+    public enum Direction
+    {
         INVALID = -1,
         None = 0,
         Front = 1,
@@ -12330,14 +14188,18 @@ namespace Enums.app.Em8001.Action.DamageDown {
     }
 }
 
-namespace Enums.app.Em8100.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.app.Em3000.Action.AttackToGrapple {
-    public enum Type {
+namespace Enums.app.Em3000.Action.AttackToGrapple
+{
+    public enum Type
+    {
         CommonGrab = 0,
         NeckSlash = 1,
         ShovelLift = 2,
@@ -12351,15 +14213,19 @@ namespace Enums.app.Em3000.Action.AttackToGrapple {
     }
 }
 
-namespace Enums.app.ColorCorrectController {
-    public enum Type {
+namespace Enums.app.ColorCorrectController
+{
+    public enum Type
+    {
         Damage = 0,
         Zone = 1,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum CameraTypeEnum {
+namespace Enums.app.PlayerCamera
+{
+    public enum CameraTypeEnum
+    {
         MaximumOperatable = 0,
         PivotRotation = 1,
         ElasticRotation = 2,
@@ -12374,8 +14240,10 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.CH8Em4000Effect {
-    public enum IDAlias {
+namespace Enums.CH8Em4000Effect
+{
+    public enum IDAlias
+    {
         LostHead = 0,
         LostLeftArm = 1,
         LostRightArm = 2,
@@ -12392,22 +14260,28 @@ namespace Enums.CH8Em4000Effect {
     }
 }
 
-namespace Enums.app.PCSystemData {
-    public enum DefaultResolutionMaxType {
+namespace Enums.app.PCSystemData
+{
+    public enum DefaultResolutionMaxType
+    {
         MAX1920P = 0,
         MAX3840P = 1,
     }
 }
 
-namespace Enums.app.fsm.OpenWaveAnnouncement {
-    public enum Meridiem {
+namespace Enums.app.fsm.OpenWaveAnnouncement
+{
+    public enum Meridiem
+    {
         AM = 0,
         PM = 1,
     }
 }
 
-namespace Enums.app.CH8HUDControl.AirGauge {
-    public enum HealthCondition {
+namespace Enums.app.CH8HUDControl.AirGauge
+{
+    public enum HealthCondition
+    {
         Normal = 0,
         Warning = 1,
         Danger = 2,
@@ -12415,8 +14289,10 @@ namespace Enums.app.CH8HUDControl.AirGauge {
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainCollisionShape {
+namespace Enums.via.motion.detail
+{
+    public enum ChainCollisionShape
+    {
         None = 0,
         Sphere = 1,
         Capsule = 2,
@@ -12428,68 +14304,86 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.app.CH9ThrowingWeaponBase {
-    public enum ParentType {
+namespace Enums.app.CH9ThrowingWeaponBase
+{
+    public enum ParentType
+    {
         None = 0,
         Transform = 1,
         Joint = 2,
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum SimulationContinuousType {
+namespace Enums.via.dynamics
+{
+    public enum SimulationContinuousType
+    {
         Skinning = 0,
         Previous = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum EffectorOffsetCtrl {
+namespace Enums.via.motion.IkLeg
+{
+    public enum EffectorOffsetCtrl
+    {
         None = 0,
         Local = 1,
         World = 2,
     }
 }
 
-namespace Enums.app.fsm.EffectControlAction {
-    public enum TargetModeEnum {
+namespace Enums.app.fsm.EffectControlAction
+{
+    public enum TargetModeEnum
+    {
         TargetOnly = 0,
         TargetAndChildren = 1,
         ChildrenOnly = 2,
     }
 }
 
-namespace Enums.via.motion.chain {
-    public enum ChainVGroundType {
+namespace Enums.via.motion.chain
+{
+    public enum ChainVGroundType
+    {
         None = 0,
         Root = 1,
         Target = 2,
     }
 }
 
-namespace Enums.via.os {
-    public enum ChunkInstalledDevice {
+namespace Enums.via.os
+{
+    public enum ChunkInstalledDevice
+    {
         None = 0,
         Slow = 1,
         Fast = 2,
     }
 }
 
-namespace Enums.via.userdata.MultiLogicNode {
-    public enum Operation {
+namespace Enums.via.userdata.MultiLogicNode
+{
+    public enum Operation
+    {
         And = 0,
         Or = 1,
     }
 }
 
-namespace Enums.app.CH8PlayerDefine {
-    public enum ExternalShakeType {
+namespace Enums.app.CH8PlayerDefine
+{
+    public enum ExternalShakeType
+    {
         LandShake = 2000,
     }
 }
 
-namespace Enums.app.AI.NodeLinkInfo {
-    public enum Validation {
+namespace Enums.app.AI.NodeLinkInfo
+{
+    public enum Validation
+    {
         Invalid = 0,
         Node = 1,
         Link = 2,
@@ -12497,8 +14391,10 @@ namespace Enums.app.AI.NodeLinkInfo {
     }
 }
 
-namespace Enums.via.motion.MotionAppendData {
-    public enum PrimitiveClassType {
+namespace Enums.via.motion.MotionAppendData
+{
+    public enum PrimitiveClassType
+    {
         Unkonw = 0,
         Vec2 = 1,
         Vec3 = 2,
@@ -12508,8 +14404,10 @@ namespace Enums.via.motion.MotionAppendData {
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum ActionCategory {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum ActionCategory
+    {
         None = 0,
         Common = 1,
         First = 2,
@@ -12529,8 +14427,10 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.app.Em8001.Action.Acid {
-    public enum State {
+namespace Enums.app.Em8001.Action.Acid
+{
+    public enum State
+    {
         None = 0,
         Start = 1,
         End = 2,
@@ -12538,22 +14438,28 @@ namespace Enums.app.Em8001.Action.Acid {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShadowPrecision {
+namespace Enums.via.render
+{
+    public enum ShadowPrecision
+    {
         Default = 0,
         Low = 1,
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum Attribute {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum Attribute
+    {
         Ticket = 0,
         Player = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource {
-    public enum ComputeShaderType {
+namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource
+{
+    public enum ComputeShaderType
+    {
         Initialize = 0,
         BoundingBox = 1,
         BoundingSphere = 2,
@@ -12565,22 +14471,28 @@ namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource {
     }
 }
 
-namespace Enums.app.CH8InfraredTrap {
-    public enum LampState {
+namespace Enums.app.CH8InfraredTrap
+{
+    public enum LampState
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum AmbientBRDF {
+namespace Enums.via.render
+{
+    public enum AmbientBRDF
+    {
         Legacy = 0,
         New = 1,
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum MotionSensorDataUpdateTiming {
+namespace Enums.via.hid.VrTracker
+{
+    public enum MotionSensorDataUpdateTiming
+    {
         Nothing = 0,
         Always = 2147483647,
         OnLedTrackerProcessSuccessful = 4,
@@ -12590,16 +14502,20 @@ namespace Enums.via.hid.VrTracker {
     }
 }
 
-namespace Enums.app.CH8ActivateObjectOperation.OperationData {
-    public enum DataType {
+namespace Enums.app.CH8ActivateObjectOperation.OperationData
+{
+    public enum DataType
+    {
         Operation = 0,
         BoolVariable = 1,
         IntVariable = 2,
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraCaptureFrameResult : uint {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraCaptureFrameResult : uint
+    {
         OK = 1,
         ErrorStoped = 0x80000001u,
         ErrorDeviceDisconnected = 0x80000002u,
@@ -12607,16 +14523,20 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.via.render {
-    public enum PipePriority {
+namespace Enums.via.render
+{
+    public enum PipePriority
+    {
         Lowest = 0,
         Default = 7,
         Highest = 15,
     }
 }
 
-namespace Enums.app.cutin.CutinProc1Button {
-    public enum StateType {
+namespace Enums.app.cutin.CutinProc1Button
+{
+    public enum StateType
+    {
         Normal = 0,
         ReNet = 1,
         NetworkWait = 2,
@@ -12625,43 +14545,55 @@ namespace Enums.app.cutin.CutinProc1Button {
     }
 }
 
-namespace Enums.via.motion.IkLookAt2 {
-    public enum AxisCoord {
+namespace Enums.via.motion.IkLookAt2
+{
+    public enum AxisCoord
+    {
         Local = 0,
         Root = 1,
     }
 }
 
-namespace Enums.via.behaviortree {
-    public enum ExecGroupCreationType {
+namespace Enums.via.behaviortree
+{
+    public enum ExecGroupCreationType
+    {
         EveryFrame = 0,
         Loaded = 1,
     }
 }
 
-namespace Enums.app.Em8950 {
-    public enum ThinkState {
+namespace Enums.app.Em8950
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH8SaveDataOverWriter.OverWriteInfo {
-    public enum ActionState {
+namespace Enums.app.CH8SaveDataOverWriter.OverWriteInfo
+{
+    public enum ActionState
+    {
         PreSave = 0,
         PostLoad = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum GroupLevel {
+namespace Enums.via.effect.detail
+{
+    public enum GroupLevel
+    {
         GroupLevel_0 = 0,
         GroupLevel_1 = 1,
         GroupLevel_Num = 2,
     }
 }
 
-namespace Enums.app.Em4200.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.Em4200.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Fixed = 1,
         Wanderer = 2,
@@ -12670,46 +14602,58 @@ namespace Enums.app.Em4200.ThinkStateSet {
     }
 }
 
-namespace Enums.app.EffectChainMeshAnim {
-    public enum PlayTypeEnum {
+namespace Enums.app.EffectChainMeshAnim
+{
+    public enum PlayTypeEnum
+    {
         Once = 0,
         Loop = 1,
         Pause = 2,
     }
 }
 
-namespace Enums.app.CH8ShellManager {
-    public enum GrenadeType {
+namespace Enums.app.CH8ShellManager
+{
+    public enum GrenadeType
+    {
         Grenadebomb = 0,
         Thermatebomb = 1,
         Stangrenadebomb = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8Wait {
-    public enum WaitTypeEnum {
+namespace Enums.app.fsm.CH8Wait
+{
+    public enum WaitTypeEnum
+    {
         Normal = 0,
         FlagSet = 1,
     }
 }
 
-namespace Enums.app.FileMenu {
-    public enum ModeDef {
+namespace Enums.app.FileMenu
+{
+    public enum ModeDef
+    {
         FileOnly = 0,
         List = 1,
     }
 }
 
-namespace Enums.app.CH8HUDControl.AirGauge {
-    public enum PollutionLevel {
+namespace Enums.app.CH8HUDControl.AirGauge
+{
+    public enum PollutionLevel
+    {
         Clean = 0,
         Caution = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.Em4000.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.Em4000.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -12729,8 +14673,10 @@ namespace Enums.app.Em4000.Goal {
     }
 }
 
-namespace Enums.via.gui {
-    public enum RegionFitType {
+namespace Enums.via.gui
+{
+    public enum RegionFitType
+    {
         None = 0,
         Horizontal = 1,
         Vertical = 2,
@@ -12738,8 +14684,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum WwiseSwitchList {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum WwiseSwitchList
+    {
         HeadON = 0,
         HeadOFF = 1,
         LeftArmNORMAL = 2,
@@ -12751,8 +14699,10 @@ namespace Enums.app.CH9MoldedActionController {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM4 {
-    public enum CHP8_4 {
+namespace Enums.app.CH8StateSwitchM4
+{
+    public enum CHP8_4
+    {
         SILENCE = 0,
         CHP8_BGM_TRAIN_01 = 1,
         CHP8_BGM_TRAIN_02 = 2,
@@ -12760,8 +14710,10 @@ namespace Enums.app.CH8StateSwitchM4 {
     }
 }
 
-namespace Enums.app.Em3102.Message {
-    public enum Tag {
+namespace Enums.app.Em3102.Message
+{
+    public enum Tag
+    {
         None = 0,
         Walk_A = 17000,
         Walk_B = 17001,
@@ -12794,23 +14746,29 @@ namespace Enums.app.Em3102.Message {
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum CH92BattleWwiseState {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum CH92BattleWwiseState
+    {
         ENCOUNT = 0,
         LOST_PL = 1,
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapInput {
-    public enum Axis {
+namespace Enums.via.motion.SubExJointRemapInput
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum MotionLayer {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum MotionLayer
+    {
         CantUse0 = 0,
         CantUse1 = 1,
         ChatUse2 = 2,
@@ -12821,22 +14779,28 @@ namespace Enums.app.CH8Em4400.Action.CH8Generate {
     }
 }
 
-namespace Enums.app.Em4200.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.Em4200.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         First = 1,
         Summon = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400ActionPoint {
-    public enum Type {
+namespace Enums.app.CH8Em4400ActionPoint
+{
+    public enum Type
+    {
         DropPoint = 0,
     }
 }
 
-namespace Enums.app.Em8100.Action.Turn {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Turn
+{
+    public enum Type
+    {
         Right = 0,
         Left = 1,
         Back = 2,
@@ -12849,8 +14813,10 @@ namespace Enums.app.Em8100.Action.Turn {
     }
 }
 
-namespace Enums.via.motion {
-    public enum SequencePhase {
+namespace Enums.via.motion
+{
+    public enum SequencePhase
+    {
         Init = 0,
         First = 1,
         Second = 2,
@@ -12858,8 +14824,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.Component {
-    public enum TypeFlag : uint {
+namespace Enums.via.Component
+{
+    public enum TypeFlag : uint
+    {
         CollectionIndexEnable = 1,
         BehaviorGroupIndexEnable = 2,
         CollectionIndexMask = 1044480,
@@ -12867,22 +14835,28 @@ namespace Enums.via.Component {
     }
 }
 
-namespace Enums.via.render.LDRRadialBlur {
-    public enum LookAtType {
+namespace Enums.via.render.LDRRadialBlur
+{
+    public enum LookAtType
+    {
         WorldPosition = 0,
         ScreenPosition = 1,
     }
 }
 
-namespace Enums.via.render.MeshRenderer {
-    public enum Status {
+namespace Enums.via.render.MeshRenderer
+{
+    public enum Status
+    {
         None = 0,
         BeginRendering = 1,
     }
 }
 
-namespace Enums.via.render.PrimitiveMaterial {
-    public enum SolidShader {
+namespace Enums.via.render.PrimitiveMaterial
+{
+    public enum SolidShader
+    {
         BillboardMaterial = 0,
         RibbonMaterial = 1,
         PolygonMaterial = 2,
@@ -12891,8 +14865,10 @@ namespace Enums.via.render.PrimitiveMaterial {
     }
 }
 
-namespace Enums.app.CardGameTutorial {
-    public enum TutorialItem {
+namespace Enums.app.CardGameTutorial
+{
+    public enum TutorialItem
+    {
         BasicRule = 0,
         OneRound = 1,
         SPCard = 2,
@@ -12903,8 +14879,10 @@ namespace Enums.app.CardGameTutorial {
     }
 }
 
-namespace Enums.via.network.dev.NetworkDataLoggingInternal {
-    public enum Metrics {
+namespace Enums.via.network.dev.NetworkDataLoggingInternal
+{
+    public enum Metrics
+    {
         Traffic = 0,
         Performance = 1,
         Rpc = 2,
@@ -12912,24 +14890,30 @@ namespace Enums.via.network.dev.NetworkDataLoggingInternal {
     }
 }
 
-namespace Enums.app.VrLightEffectiveRangeController {
-    public enum LightType {
+namespace Enums.app.VrLightEffectiveRangeController
+{
+    public enum LightType
+    {
         PointLight = 0,
         SpotLight = 1,
         IESLight = 2,
     }
 }
 
-namespace Enums.app.AI.UseDoorInfo {
-    public enum SearchDirectionType {
+namespace Enums.app.AI.UseDoorInfo
+{
+    public enum SearchDirectionType
+    {
         Default = 0,
         OwnerAxisZ = 1,
         PotalInfo = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum LandformPipelineStateType {
+namespace Enums.via.landscape
+{
+    public enum LandformPipelineStateType
+    {
         Draw3D = 0,
         Pick = 1,
         FlatColor = 2,
@@ -12943,24 +14927,30 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum LuminanceBleedType {
+namespace Enums.via.effect.detail
+{
+    public enum LuminanceBleedType
+    {
         None = 0,
         Transparent = 1,
         PostTransparent = 2,
     }
 }
 
-namespace Enums.via.effect {
-    public enum WindInfluenceDrawFlag {
+namespace Enums.via.effect
+{
+    public enum WindInfluenceDrawFlag
+    {
         None = 0,
         Select = 1,
         All = 2,
     }
 }
 
-namespace Enums.via.render.ByteBufferUpdateExecutor {
-    public enum UpdateType {
+namespace Enums.via.render.ByteBufferUpdateExecutor
+{
+    public enum UpdateType
+    {
         Byte = 0,
         ByteArray = 1,
         Integer = 2,
@@ -12972,8 +14962,10 @@ namespace Enums.via.render.ByteBufferUpdateExecutor {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum IdType {
+namespace Enums.via.simplewwise
+{
+    public enum IdType
+    {
         None = 0,
         Bank = 1,
         Event = 2,
@@ -12991,16 +14983,20 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.render {
-    public enum HazeCompositorFilterType {
+namespace Enums.via.render
+{
+    public enum HazeCompositorFilterType
+    {
         Variance = 0,
         AdjacentClamping = 1,
         Gaussian = 2,
     }
 }
 
-namespace Enums.app.DoorPush {
-    public enum InitialState {
+namespace Enums.app.DoorPush
+{
+    public enum InitialState
+    {
         Unlock = 0,
         Lock = 1,
         LittleOpenFront = 2,
@@ -13010,8 +15006,10 @@ namespace Enums.app.DoorPush {
     }
 }
 
-namespace Enums.app.CH9RewardData.RewardData {
-    public enum Type {
+namespace Enums.app.CH9RewardData.RewardData
+{
+    public enum Type
+    {
         Difficulty = 0,
         Item = 1,
         Everywhere = 2,
@@ -13019,8 +15017,10 @@ namespace Enums.app.CH9RewardData.RewardData {
     }
 }
 
-namespace Enums.via.network.utility.Request {
-    public enum State {
+namespace Enums.via.network.utility.Request
+{
+    public enum State
+    {
         Dead = 0,
         Init = 1,
         Start = 2,
@@ -13030,8 +15030,10 @@ namespace Enums.via.network.utility.Request {
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrSystemStatus {
+namespace Enums.via.vr
+{
+    public enum VrSystemStatus
+    {
         Unknown = 0,
         Invalid = 1,
         UnUsed = 2,
@@ -13041,15 +15043,19 @@ namespace Enums.via.vr {
     }
 }
 
-namespace Enums.via.fsm.FsmManager {
-    public enum SelectorTiming {
+namespace Enums.via.fsm.FsmManager
+{
+    public enum SelectorTiming
+    {
         Last = 0,
         BackGround = 1,
     }
 }
 
-namespace Enums.app.SystemData {
-    public enum DataType {
+namespace Enums.app.SystemData
+{
+    public enum DataType
+    {
         Display_Tutorial = 0,
         Display_Calling = 1,
         Display_Brightness = 2,
@@ -13057,15 +15063,19 @@ namespace Enums.app.SystemData {
     }
 }
 
-namespace Enums.app.Em3001.Action.AttackToGrapple {
-    public enum Type {
+namespace Enums.app.Em3001.Action.AttackToGrapple
+{
+    public enum Type
+    {
         CommonGrab = 0,
         TCommonGrab = 1,
     }
 }
 
-namespace Enums.via.nnfc {
-    public enum DeviceState {
+namespace Enums.via.nnfc
+{
+    public enum DeviceState
+    {
         Initialize = 0,
         NoDevice = 1,
         Conflict = 2,
@@ -13076,14 +15086,18 @@ namespace Enums.via.nnfc {
     }
 }
 
-namespace Enums.app.FirstReNetMenu {
-    public enum ModeDef {
+namespace Enums.app.FirstReNetMenu
+{
+    public enum ModeDef
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.via.dynamics.gjk.SimplexSolver {
-    public enum SimplexType {
+namespace Enums.via.dynamics.gjk.SimplexSolver
+{
+    public enum SimplexType
+    {
         None = 0,
         Point = 1,
         LineSegment = 2,
@@ -13093,16 +15107,20 @@ namespace Enums.via.dynamics.gjk.SimplexSolver {
     }
 }
 
-namespace Enums.via {
-    public enum GamePresetsCamera {
+namespace Enums.via
+{
+    public enum GamePresetsCamera
+    {
         Default = 0,
         Normal = 1,
         Reverse = 2,
     }
 }
 
-namespace Enums.app.ShellManager {
-    public enum BulletType {
+namespace Enums.app.ShellManager
+{
+    public enum BulletType
+    {
         Unknown = 0,
         Handgun_M19 = 1,
         Handgun_M19_L = 2,
@@ -13133,29 +15151,37 @@ namespace Enums.app.ShellManager {
     }
 }
 
-namespace Enums.app.Em4100.Action.Idle {
-    public enum Type {
+namespace Enums.app.Em4100.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8AreaHitTest {
-    public enum TargetParam {
+namespace Enums.app.fsm.CH8AreaHitTest
+{
+    public enum TargetParam
+    {
         Player = 0,
         Enemy = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum SequenceGetMode {
+namespace Enums.via.motion
+{
+    public enum SequenceGetMode
+    {
         TypeA = 0,
         TypeB = 1,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum ChapterNo {
+namespace Enums.app.GameManager
+{
+    public enum ChapterNo
+    {
         BootLogo = 0,
         FirstMenu = 1,
         Chapter0 = 2,
@@ -13197,8 +15223,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum StoppedEventType {
+namespace Enums.via.wwise
+{
+    public enum StoppedEventType
+    {
         None = 0,
         GameObject_EventId_Duration = 1,
         GameObject_RequestId_Duration = 2,
@@ -13208,44 +15236,56 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckOpenFileMenu {
-    public enum Status {
+namespace Enums.app.fsm.CH8CheckOpenFileMenu
+{
+    public enum Status
+    {
         Open = 0,
         Close = 1,
     }
 }
 
-namespace Enums.app.CH9GauntletChargeGauge {
-    public enum eChargeHand {
+namespace Enums.app.CH9GauntletChargeGauge
+{
+    public enum eChargeHand
+    {
         OneHnad = 0,
         BothHnads = 1,
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum ItemBGChildChildPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum ItemBGChildChildPanelState
+    {
         SIZE1 = 0,
         SIZE2 = 1,
     }
 }
 
-namespace Enums.app.Em8000.Motion.Em8000MotionID.Type {
-    public enum UpperOverride {
+namespace Enums.app.Em8000.Motion.Em8000MotionID.Type
+{
+    public enum UpperOverride
+    {
         None = 0,
         Gesture = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum LuminanceBleedResolution {
+namespace Enums.via.render
+{
+    public enum LuminanceBleedResolution
+    {
         Low = 0,
         Mid = 1,
         High = 2,
     }
 }
 
-namespace Enums.app.CH9TipsFlagManager {
-    public enum TipsType {
+namespace Enums.app.CH9TipsFlagManager
+{
+    public enum TipsType
+    {
         DeadByEm7500In9_2Solo = 0,
         DeadByEm7500In9_2Duo = 1,
         DeadByEm7500In9_3 = 2,
@@ -13261,8 +15301,10 @@ namespace Enums.app.CH9TipsFlagManager {
     }
 }
 
-namespace Enums.app.UICommand {
-    public enum DircType {
+namespace Enums.app.UICommand
+{
+    public enum DircType
+    {
         Up = 0,
         Down = 1,
         Left = 2,
@@ -13270,15 +15312,19 @@ namespace Enums.app.UICommand {
     }
 }
 
-namespace Enums.app.Em3001Think {
-    public enum Mode {
+namespace Enums.app.Em3001Think
+{
+    public enum Mode
+    {
         Idle = 0,
         Battle = 1,
     }
 }
 
-namespace Enums.app.Em4000.ThinkAppearSet {
-    public enum MimicryType {
+namespace Enums.app.Em4000.ThinkAppearSet
+{
+    public enum MimicryType
+    {
         Floor1 = 0,
         Floor2 = 1,
         Lean1 = 2,
@@ -13287,8 +15333,10 @@ namespace Enums.app.Em4000.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.fsm.PlayerAction {
-    public enum PlayerActionType {
+namespace Enums.app.fsm.PlayerAction
+{
+    public enum PlayerActionType
+    {
         None = 0,
         ForceCrawl = 1,
         LeftArmCut = 2,
@@ -13296,8 +15344,10 @@ namespace Enums.app.fsm.PlayerAction {
     }
 }
 
-namespace Enums.app.CardGameObjectFingerMachine {
-    public enum FingerMachineJointMaskID {
+namespace Enums.app.CardGameObjectFingerMachine
+{
+    public enum FingerMachineJointMaskID
+    {
         Finger1 = 1,
         Finger2 = 2,
         Finger3 = 3,
@@ -13306,8 +15356,10 @@ namespace Enums.app.CardGameObjectFingerMachine {
     }
 }
 
-namespace Enums.app {
-    public enum WeaponInfoType {
+namespace Enums.app
+{
+    public enum WeaponInfoType
+    {
         Nothing = 0,
         Gun = 1,
         Burner = 2,
@@ -13318,8 +15370,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.Em3600 {
-    public enum ThinkState {
+namespace Enums.app.Em3600
+{
+    public enum ThinkState
+    {
         None = 0,
         BattleStart = 1,
         BattleDefault = 2,
@@ -13327,8 +15381,10 @@ namespace Enums.app.Em3600 {
     }
 }
 
-namespace Enums.app.CH8GasBomb {
-    public enum Rno {
+namespace Enums.app.CH8GasBomb
+{
+    public enum Rno
+    {
         Running = 0,
         Detonation = 1,
         Interval = 2,
@@ -13337,8 +15393,10 @@ namespace Enums.app.CH8GasBomb {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum LodDebugType {
+namespace Enums.via.landscape
+{
+    public enum LodDebugType
+    {
         None = 0,
         LodLevel = 1,
         NodeUV = 2,
@@ -13349,8 +15407,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.network.session {
-    public enum SearchKeyGroup {
+namespace Enums.via.network.session
+{
+    public enum SearchKeyGroup
+    {
         None = 0,
         Develop = 1,
         QA = 2,
@@ -13361,14 +15421,18 @@ namespace Enums.via.network.session {
     }
 }
 
-namespace Enums.app.Em8940Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8940Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.Em3001.Goal {
-    public enum GoalId {
+namespace Enums.app.Em3001.Goal
+{
+    public enum GoalId
+    {
         Discovery = 0,
         UnDiscovery = 1,
         Idle = 2,
@@ -13381,22 +15445,28 @@ namespace Enums.app.Em3001.Goal {
     }
 }
 
-namespace Enums.via.navigation {
-    public enum AdjustPrio {
+namespace Enums.via.navigation
+{
+    public enum AdjustPrio
+    {
         Floor = 0,
         Wall = 1,
     }
 }
 
-namespace Enums.app.Cp7GameOverChoice {
-    public enum Step {
+namespace Enums.app.Cp7GameOverChoice
+{
+    public enum Step
+    {
         Main = 0,
         Cutin = 1,
     }
 }
 
-namespace Enums.via.timeline {
-    public enum NodeType {
+namespace Enums.via.timeline
+{
+    public enum NodeType
+    {
         Unknown = 0,
         GameObject = 1,
         Component = 2,
@@ -13404,22 +15474,28 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.app.InventoryItemBox {
-    public enum ItemNumType {
+namespace Enums.app.InventoryItemBox
+{
+    public enum ItemNumType
+    {
         All = 0,
         One = 1,
     }
 }
 
-namespace Enums.via.render.Atmosphere {
-    public enum IBLTextureBakeMode {
+namespace Enums.via.render.Atmosphere
+{
+    public enum IBLTextureBakeMode
+    {
         Panorama = 0,
         Cubemap = 1,
     }
 }
 
-namespace Enums.app.CarInGarage.Donut {
-    public enum Routine {
+namespace Enums.app.CarInGarage.Donut
+{
+    public enum Routine
+    {
         Steer = 0,
         Approach = 1,
         Turn = 2,
@@ -13428,8 +15504,10 @@ namespace Enums.app.CarInGarage.Donut {
     }
 }
 
-namespace Enums.via.navigation.map.Node {
-    public enum SystemAttributes {
+namespace Enums.via.navigation.map.Node
+{
+    public enum SystemAttributes
+    {
         SystemAttribute_ModifiedChildren = 0,
         SystemAttribute_Junction = 1,
         SystemAttribute_DisableHybridTrace = 2,
@@ -13442,15 +15520,19 @@ namespace Enums.via.navigation.map.Node {
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum NoMapAction {
+namespace Enums.via.navigation.Navigation
+{
+    public enum NoMapAction
+    {
         NoMove = 0,
         Straight = 1,
     }
 }
 
-namespace Enums.app {
-    public enum Easing {
+namespace Enums.app
+{
+    public enum Easing
+    {
         Linear = 0,
         InQuad = 1,
         OutQuad = 2,
@@ -13461,23 +15543,29 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.effect {
-    public enum PolygonDivideDrawFlag {
+namespace Enums.via.effect
+{
+    public enum PolygonDivideDrawFlag
+    {
         None = 0,
         Select = 1,
         All = 2,
     }
 }
 
-namespace Enums.app.UITimer {
-    public enum CountTypeDef {
+namespace Enums.app.UITimer
+{
+    public enum CountTypeDef
+    {
         CountUp = 0,
         CountDown = 1,
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum DircType {
+namespace Enums.app.InventoryMenu
+{
+    public enum DircType
+    {
         None = 0,
         Up = 1,
         Down = 2,
@@ -13486,8 +15574,10 @@ namespace Enums.app.InventoryMenu {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseUtility {
+namespace Enums.via.network.error
+{
+    public enum CauseUtility
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -13517,16 +15607,20 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em3002.Goal.Search {
-    public enum Type {
+namespace Enums.app.Em3002.Goal.Search
+{
+    public enum Type
+    {
         Non = 0,
         Vision = 1,
         Hearing = 2,
     }
 }
 
-namespace Enums.app.DoorPush {
-    public enum SETriggerID {
+namespace Enums.app.DoorPush
+{
+    public enum SETriggerID
+    {
         Unknown = 0,
         Locked = 1,
         CreakSlow = 2,
@@ -13543,8 +15637,10 @@ namespace Enums.app.DoorPush {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum RequestType {
+namespace Enums.via.audiorender
+{
+    public enum RequestType
+    {
         None = 0,
         Play = 1,
         Prepare = 2,
@@ -13662,16 +15758,20 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.GameFlowEndNode {
-    public enum EndTypeEnum {
+namespace Enums.app.GameFlowEndNode
+{
+    public enum EndTypeEnum
+    {
         Noraml = 0,
         After = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.navigation.map.Link {
-    public enum PortalType {
+namespace Enums.via.navigation.map.Link
+{
+    public enum PortalType
+    {
         Destination = 0,
         Source = 1,
         ToBoundary = 2,
@@ -13679,8 +15779,10 @@ namespace Enums.via.navigation.map.Link {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM2 {
-    public enum CHP8_2 {
+namespace Enums.app.CH8StateSwitchM2
+{
+    public enum CHP8_2
+    {
         SILENCE = 0,
         CHP8_EM4600_BT_MINING = 1,
         CHP8_EM4600_BT_END_MINING = 2,
@@ -13689,8 +15791,10 @@ namespace Enums.app.CH8StateSwitchM2 {
     }
 }
 
-namespace Enums.app.Command {
-    public enum HIDCommandType {
+namespace Enums.app.Command
+{
+    public enum HIDCommandType
+    {
         None = 0,
         Aim = 1,
         Attack = 2,
@@ -13739,8 +15843,10 @@ namespace Enums.app.Command {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum Fov_Value {
+namespace Enums.app.OptionMenu
+{
+    public enum Fov_Value
+    {
         Fov_60 = 0,
         Fov_70 = 1,
         Fov_80 = 2,
@@ -13751,24 +15857,30 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.movie {
-    public enum PlaybackStrategy {
+namespace Enums.via.movie
+{
+    public enum PlaybackStrategy
+    {
         OneShot = 0,
         Loop = 1,
         Replay = 2,
     }
 }
 
-namespace Enums.app.MessageLabelGUI {
-    public enum MsgType {
+namespace Enums.app.MessageLabelGUI
+{
+    public enum MsgType
+    {
         MultiDispSubtitle = 0,
         Subtitle = 1,
         Interact = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.BillboardCS.BillboardResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.BillboardCS.BillboardResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         LuminanceBleed = 1,
         SimpleLuminanceBleed = 2,
@@ -13781,8 +15893,10 @@ namespace Enums.via.effect.gpgpu.BillboardCS.BillboardResource {
     }
 }
 
-namespace Enums.via.physics.CastRayQuery {
-    public enum Type {
+namespace Enums.via.physics.CastRayQuery
+{
+    public enum Type
+    {
         Unknown = 0,
         Ray = 1,
         EndPoint = 2,
@@ -13790,16 +15904,20 @@ namespace Enums.via.physics.CastRayQuery {
     }
 }
 
-namespace Enums.via.motion {
-    public enum MotionType {
+namespace Enums.via.motion
+{
+    public enum MotionType
+    {
         None = 0,
         Motion = 1,
         Tree = 2,
     }
 }
 
-namespace Enums.via.hid.textInput {
-    public enum TextInputResult {
+namespace Enums.via.hid.textInput
+{
+    public enum TextInputResult
+    {
         OK = 0,
         AlreadyDone = 1,
         Error = 2,
@@ -13809,8 +15927,10 @@ namespace Enums.via.hid.textInput {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum AdditionalFootAdjustMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum AdditionalFootAdjustMode
+    {
         None = 0,
         RayFromKnee = 1,
         RayFromHip = 2,
@@ -13820,8 +15940,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum ProjectNo {
+namespace Enums.via.simplewwise
+{
+    public enum ProjectNo
+    {
         No0 = 0,
         No1 = 1,
         No2 = 2,
@@ -13830,16 +15952,20 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.motion.detail.ChainLinkData {
-    public enum LinkMode {
+namespace Enums.via.motion.detail.ChainLinkData
+{
+    public enum LinkMode
+    {
         TopToBottom = 0,
         BottomToTop = 1,
         Manual = 2,
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum DataType {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum DataType
+    {
         None = -1,
         Number = 0,
         TotalValue = 1,
@@ -13849,15 +15975,19 @@ namespace Enums.via.network.MatchmakingRules {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum DisplayCaption {
+namespace Enums.app.OptionMenu
+{
+    public enum DisplayCaption
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum SourceStatus {
+namespace Enums.via.audiorender
+{
+    public enum SourceStatus
+    {
         None = 0,
         Initialized = 1,
         Prepare = 2,
@@ -13869,8 +15999,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.gui.MessageAnalyzer {
-    public enum State {
+namespace Enums.via.gui.MessageAnalyzer
+{
+    public enum State
+    {
         Normal = 0,
         Ruby = 1,
         RubyRB = 2,
@@ -13879,8 +16011,10 @@ namespace Enums.via.gui.MessageAnalyzer {
     }
 }
 
-namespace Enums.app.Em4200.Action.Breath {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Breath
+{
+    public enum Type
+    {
         Vertical = 0,
         Horizontal = 1,
         Walk = 2,
@@ -13888,8 +16022,10 @@ namespace Enums.app.Em4200.Action.Breath {
     }
 }
 
-namespace Enums.app.fsm.setGenomeCodexMode {
-    public enum Mode {
+namespace Enums.app.fsm.setGenomeCodexMode
+{
+    public enum Mode
+    {
         Scan = 0,
         Install = 1,
         TraceScan = 2,
@@ -13905,15 +16041,19 @@ namespace Enums.app.fsm.setGenomeCodexMode {
     }
 }
 
-namespace Enums.via.physics.RequestSetColliderResource {
-    public enum RequestSetState {
+namespace Enums.via.physics.RequestSetColliderResource
+{
+    public enum RequestSetState
+    {
         AlwaysRegister = 0,
         Max = 1,
     }
 }
 
-namespace Em3600Effect {
-    public enum IDAlias {
+namespace Em3600Effect
+{
+    public enum IDAlias
+    {
         Resident = 0,
         Grapple = 1,
         Generate = 2,
@@ -13943,8 +16083,10 @@ namespace Em3600Effect {
     }
 }
 
-namespace Enums.via.puppet.RemoteGameObject {
-    public enum SendPriority {
+namespace Enums.via.puppet.RemoteGameObject
+{
+    public enum SendPriority
+    {
         None = 0,
         Unreliable = 1,
         Reliable = 2,
@@ -13953,8 +16095,10 @@ namespace Enums.via.puppet.RemoteGameObject {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraFrameStatus {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraFrameStatus
+    {
         Active = 0,
         NotActive = 1,
         AlreadyRead = 2,
@@ -13964,8 +16108,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.app.CH9Em7500.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em7500.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         OutRange = 1,
         InRange = 2,
@@ -13981,8 +16127,10 @@ namespace Enums.app.CH9Em7500.Goal {
     }
 }
 
-namespace Enums.app {
-    public enum CraftState {
+namespace Enums.app
+{
+    public enum CraftState
+    {
         Craftable = 0,
         LevelMax = 1,
         JunkPartsShortage = 2,
@@ -13992,45 +16140,57 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum StretchType {
+namespace Enums.via.effect.detail
+{
+    public enum StretchType
+    {
         Time = 0,
         Distance = 1,
     }
 }
 
-namespace Enums.app.PlayerMotionController {
-    public enum RequestPriority {
+namespace Enums.app.PlayerMotionController
+{
+    public enum RequestPriority
+    {
         Default = 0,
         Damage = 1,
         Dead = 2,
     }
 }
 
-namespace Enums.app.CH8ItemDrop {
-    public enum PropType {
+namespace Enums.app.CH8ItemDrop
+{
+    public enum PropType
+    {
         None = 0,
         RigidBodyDestruct = 1,
     }
 }
 
-namespace Enums.app.fsm.InteractStart {
-    public enum StartTypeParam {
+namespace Enums.app.fsm.InteractStart
+{
+    public enum StartTypeParam
+    {
         Normal = 0,
         SwitchOn = 1,
         SwitchOff = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GlobalLocalVectorFieldFlags {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GlobalLocalVectorFieldFlags
+    {
         Local = 1,
         Global = 2,
     }
 }
 
-namespace Enums.via.network.msgpack {
-    public enum ObjectType {
+namespace Enums.via.network.msgpack
+{
+    public enum ObjectType
+    {
         NilObject = 0,
         Boolean = 1,
         PositiveInteger = 2,
@@ -14046,23 +16206,29 @@ namespace Enums.via.network.msgpack {
     }
 }
 
-namespace Enums.app.CH9Em5800 {
-    public enum ThinkState {
+namespace Enums.app.CH9Em5800
+{
+    public enum ThinkState
+    {
         None = 0,
         NoThink = 1,
         Passive = 2,
     }
 }
 
-namespace Enums.app.Em3002.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
         TNormal = 1,
     }
 }
 
-namespace Enums.via.movie {
-    public enum Codec {
+namespace Enums.via.movie
+{
+    public enum Codec
+    {
         Unknown = 0,
         H264 = 1,
         WMV9 = 2,
@@ -14072,24 +16238,30 @@ namespace Enums.via.movie {
     }
 }
 
-namespace Enums.app.Em3102.Action.Search {
-    public enum Type {
+namespace Enums.app.Em3102.Action.Search
+{
+    public enum Type
+    {
         None = 0,
         SearchR = 1,
         SearchL = 2,
     }
 }
 
-namespace Enums.app.CH8Em4500CoreGuard {
-    public enum CoreStetus {
+namespace Enums.app.CH8Em4500CoreGuard
+{
+    public enum CoreStetus
+    {
         Default = 0,
         Close = 1,
         Open = 2,
     }
 }
 
-namespace Enums.app.vr.VrFlowBase {
-    public enum FlowType {
+namespace Enums.app.vr.VrFlowBase
+{
+    public enum FlowType
+    {
         Start = 0,
         Stop = 1,
         Error = 2,
@@ -14099,16 +16271,20 @@ namespace Enums.app.vr.VrFlowBase {
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum InstancePoolType {
+namespace Enums.via.motion.detail
+{
+    public enum InstancePoolType
+    {
         DoNothing = 0,
         CallFinalize = 1,
         PlacementNew = 2,
     }
 }
 
-namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker {
-    public enum StartResult {
+namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker
+{
+    public enum StartResult
+    {
         OK = 0,
         ErrorUnknown = -1,
         ErrorAlreadyStarted = -2,
@@ -14119,8 +16295,10 @@ namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum ShapeType {
+namespace Enums.via.dynamics
+{
+    public enum ShapeType
+    {
         Invalid = 0,
         Sphere = 1,
         Capsule = 2,
@@ -14134,32 +16312,40 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via.hid.AudioInManager {
-    public enum AUDIO_IN_TYPE {
+namespace Enums.via.hid.AudioInManager
+{
+    public enum AUDIO_IN_TYPE
+    {
         NORMAL = 0,
         VOICE_CHAT = 1,
         VOICE_RECOGNITION = 2,
     }
 }
 
-namespace Enums.app.CH8Em4500ActionController {
-    public enum ModeMotionStatus {
+namespace Enums.app.CH8Em4500ActionController
+{
+    public enum ModeMotionStatus
+    {
         Small = 0,
         Change = 1,
         Big = 2,
     }
 }
 
-namespace Enums.via.motion.IkDog {
-    public enum RayCastSkipOption {
+namespace Enums.via.motion.IkDog
+{
+    public enum RayCastSkipOption
+    {
         None = 1,
         DIV2 = 2,
         DIV4 = 4,
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum WaveState {
+namespace Enums.app.Nightmare
+{
+    public enum WaveState
+    {
         None = 0,
         Wave1 = 1,
         Wave2 = 2,
@@ -14170,8 +16356,10 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.via.str.detail.format.boost.format_item {
-    public enum ExFmtFlag {
+namespace Enums.via.str.detail.format.boost.format_item
+{
+    public enum ExFmtFlag
+    {
         Ignore = 0,
         SetPrecision = 0,
         ZeroPadding = 0,
@@ -14179,8 +16367,10 @@ namespace Enums.via.str.detail.format.boost.format_item {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum GenerateState {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum GenerateState
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -14189,8 +16379,10 @@ namespace Enums.app.CH8Em4400.Action.CH8Generate {
     }
 }
 
-namespace Enums.via.storage {
-    public enum SaveServiceWriteMode {
+namespace Enums.via.storage
+{
+    public enum SaveServiceWriteMode
+    {
         SaveServiceWriteMode_Default = 131072,
         SaveServiceWriteMode_1_Byte = 1,
         SaveServiceWriteMode_512_Sector = 512,
@@ -14205,8 +16397,10 @@ namespace Enums.via.storage {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridScrollDirection {
+namespace Enums.via.gui
+{
+    public enum GridScrollDirection
+    {
         None = 0,
         Up = 1,
         Right = 2,
@@ -14215,23 +16409,29 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ReticleDisplay {
+namespace Enums.app.OptionMenu
+{
+    public enum ReticleDisplay
+    {
         AlwaysDisplay = 0,
         AimDisplay = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum AmbisonicsNormalizeType {
+namespace Enums.via.audiorender
+{
+    public enum AmbisonicsNormalizeType
+    {
         N = 0,
         SN3D = 1,
     }
 }
 
-namespace Enums.app.Em5520.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em5520.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         ReturnMove = 2,
@@ -14258,30 +16458,38 @@ namespace Enums.app.Em5520.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum ResourceChunkTag {
+namespace Enums.via.audiorender
+{
+    public enum ResourceChunkTag
+    {
         Head = 1751347827,
         Data = 1684238963,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum AdjustPositionType {
+namespace Enums.via.navigation.Navigation
+{
+    public enum AdjustPositionType
+    {
         CurrentPosition = 0,
         Direct = 1,
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraStopResult : uint {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraStopResult : uint
+    {
         OK = 1,
         Stoped = 2,
         ErrInternal = 0x80001000u,
     }
 }
 
-namespace Enums.app.CH9Em7900.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em7900.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -14300,8 +16508,10 @@ namespace Enums.app.CH9Em7900.Goal {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum FilterType {
+namespace Enums.via.audiorender
+{
+    public enum FilterType
+    {
         LowPass = 0,
         HighPass = 1,
         BandPass = 2,
@@ -14314,15 +16524,19 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em3100.Action.WalkOverLook {
-    public enum Type {
+namespace Enums.app.Em3100.Action.WalkOverLook
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.motion.DataHeader {
-    public enum ErrFlags {
+namespace Enums.via.motion.DataHeader
+{
+    public enum ErrFlags
+    {
         None = 0,
         Empty = 1,
         NotFoundRefAsset = 2,
@@ -14330,40 +16544,50 @@ namespace Enums.via.motion.DataHeader {
     }
 }
 
-namespace Enums.app.CH9WeaponWwiseStateList {
-    public enum SndSwitch_enhanceType {
+namespace Enums.app.CH9WeaponWwiseStateList
+{
+    public enum SndSwitch_enhanceType
+    {
         NORMAL = 0,
         ENHACE = 1,
         ROT = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServicePerformanceMode {
+namespace Enums.via
+{
+    public enum SystemServicePerformanceMode
+    {
         Invalid = 0,
         Normal = 1,
         Boost = 2,
     }
 }
 
-namespace Enums.app.Em4000.Action.Move {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Destination = 1,
         Wanderer = 2,
     }
 }
 
-namespace Enums.via.network.AutoMatchmaking {
-    public enum DataType {
+namespace Enums.via.network.AutoMatchmaking
+{
+    public enum DataType
+    {
         Number = 0,
         TotalValue = 1,
         TotalBit = 2,
     }
 }
 
-namespace Enums.via.render.compress {
-    public enum PngFormat {
+namespace Enums.via.render.compress
+{
+    public enum PngFormat
+    {
         Unknown = 0,
         RGB8bit = 1,
         RGBA8bit = 2,
@@ -14376,8 +16600,10 @@ namespace Enums.via.render.compress {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum Service {
+namespace Enums.via.network.error
+{
+    public enum Service
+    {
         None = 0,
         Context = 1,
         P2p = 2,
@@ -14397,8 +16623,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.geometry {
-    public enum BrushPipelineState {
+namespace Enums.via.geometry
+{
+    public enum BrushPipelineState
+    {
         Shape = 0,
         ShapeDefault = 1,
         ShapeShadow = 2,
@@ -14414,30 +16642,38 @@ namespace Enums.via.geometry {
     }
 }
 
-namespace Enums.app.fsm.CH8NoSaveValueControl {
-    public enum ControlTargetEnum {
+namespace Enums.app.fsm.CH8NoSaveValueControl
+{
+    public enum ControlTargetEnum
+    {
         None = 0,
         LastBattle = 1,
         HUDEvent = 2,
     }
 }
 
-namespace Enums.via.render.layer.PostShadowCast {
-    public enum PostShadowCastSegment {
+namespace Enums.via.render.layer.PostShadowCast
+{
+    public enum PostShadowCastSegment
+    {
         DepthOcclusion = 0,
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum AutoDeviceSelectionFlag {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum AutoDeviceSelectionFlag
+    {
         None = 0,
         TryOnAssign = 2,
         TryOnReassign = 4,
     }
 }
 
-namespace Enums.app {
-    public enum EventCharaID {
+namespace Enums.app
+{
+    public enum EventCharaID
+    {
         Pl0000 = 0,
         Pl1000 = 1,
         Em2000 = 2,
@@ -14455,32 +16691,40 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.SaveDataManager {
-    public enum RestartFadeTypeEnum {
+namespace Enums.app.SaveDataManager
+{
+    public enum RestartFadeTypeEnum
+    {
         Default = 0,
         WaitFadeInTimeSet = 1,
         NoFadeIn = 2,
     }
 }
 
-namespace Enums.via.render.layer.DeferredLighting {
-    public enum AllowShadowType {
+namespace Enums.via.render.layer.DeferredLighting
+{
+    public enum AllowShadowType
+    {
         Standard = 0,
         StandardAndTranslucent = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.FileMenu_File {
-    public enum FileInput {
+namespace Enums.app.FileMenu_File
+{
+    public enum FileInput
+    {
         Default = 0,
         WaitSelectionChange = 1,
         WaitPageChange = 2,
     }
 }
 
-namespace Enums.app.Em3001.Goal.Search {
-    public enum Type {
+namespace Enums.app.Em3001.Goal.Search
+{
+    public enum Type
+    {
         Non = 0,
         Vision = 1,
         Hearing = 2,
@@ -14488,16 +16732,20 @@ namespace Enums.app.Em3001.Goal.Search {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Step {
-    public enum StepCorrectionDirection {
+namespace Enums.app.CH9Em6400.Action.Step
+{
+    public enum StepCorrectionDirection
+    {
         None = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.app.Em3001.Em3001WwiseMonitoredValue {
-    public enum GameRank {
+namespace Enums.app.Em3001.Em3001WwiseMonitoredValue
+{
+    public enum GameRank
+    {
         Zero = 0,
         One = 1,
         Two = 2,
@@ -14512,35 +16760,45 @@ namespace Enums.app.Em3001.Em3001WwiseMonitoredValue {
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainTaperedCollideMethod {
+namespace Enums.via.motion.detail
+{
+    public enum ChainTaperedCollideMethod
+    {
         TermSphere = 0,
     }
 }
 
-namespace Enums.app.FF030_Ex_ScreenControl {
-    public enum ScreenTypeEnum {
+namespace Enums.app.FF030_Ex_ScreenControl
+{
+    public enum ScreenTypeEnum
+    {
         Title = 0,
         EndCard = 1,
     }
 }
 
-namespace Enums.via.autoplay.action.AutoAttack {
-    public enum Precision {
+namespace Enums.via.autoplay.action.AutoAttack
+{
+    public enum Precision
+    {
         High = 0,
         Medium = 1,
         Low = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.FinishBlow {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.FinishBlow
+{
+    public enum Type
+    {
         SneakB = 0,
     }
 }
 
-namespace Enums.app.Em5552.Action {
-    public enum ActionNo {
+namespace Enums.app.Em5552.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Attack = 1,
         Damage = 2,
@@ -14548,8 +16806,10 @@ namespace Enums.app.Em5552.Action {
     }
 }
 
-namespace Enums.via.render {
-    public enum UsageType {
+namespace Enums.via.render
+{
+    public enum UsageType
+    {
         Default = 0,
         Immutable = 1,
         Dynamic = 2,
@@ -14557,16 +16817,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Nightmare.NightmareTrapLevelBehavior {
-    public enum Type {
+namespace Enums.app.Nightmare.NightmareTrapLevelBehavior
+{
+    public enum Type
+    {
         Target = 0,
         Symbol = 1,
         Interact = 2,
     }
 }
 
-namespace Enums.via.rebe {
-    public enum RebeServiceState {
+namespace Enums.via.rebe
+{
+    public enum RebeServiceState
+    {
         None = 0,
         Initialized = 1,
         Running = 2,
@@ -14575,16 +16839,20 @@ namespace Enums.via.rebe {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum DepthOperatorFlags {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum DepthOperatorFlags
+    {
         UseBounce = 1,
         UseYNormalEmission = 2,
         FreezeBounceParticle = 4,
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum ProviderEnabledState {
+namespace Enums.via.network.wrangler
+{
+    public enum ProviderEnabledState
+    {
         Undefined = 0,
         ForceOff = 1,
         OffByDefault = 2,
@@ -14593,8 +16861,10 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.app.DrawDebugShape {
-    public enum DrawTypeEnum {
+namespace Enums.app.DrawDebugShape
+{
+    public enum DrawTypeEnum
+    {
         Capsule = 0,
         Line = 1,
         OBB = 2,
@@ -14610,8 +16880,10 @@ namespace Enums.app.DrawDebugShape {
     }
 }
 
-namespace Enums.app {
-    public enum FsmParam {
+namespace Enums.app
+{
+    public enum FsmParam
+    {
         None = 0,
         Open = 1,
         Close = 2,
@@ -14629,8 +16901,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.render {
-    public enum HazeCompositorBlur {
+namespace Enums.via.render
+{
+    public enum HazeCompositorBlur
+    {
         Level1 = 0,
         Level2 = 1,
         Level3 = 2,
@@ -14638,16 +16912,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.landscape.road {
-    public enum HeightBakeType {
+namespace Enums.via.landscape.road
+{
+    public enum HeightBakeType
+    {
         Both = 0,
         RaiseOnly = 1,
         LowerOnly = 2,
     }
 }
 
-namespace Enums.app.dev1lab.PlatformTicketController {
-    public enum Phase {
+namespace Enums.app.dev1lab.PlatformTicketController
+{
+    public enum Phase
+    {
         Invalid = 0,
         Request = 1,
         Wait = 2,
@@ -14655,8 +16933,10 @@ namespace Enums.app.dev1lab.PlatformTicketController {
     }
 }
 
-namespace Enums.app.CH8Em4500.Goal.CH8GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH8Em4500.Goal.CH8GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Battle = 1,
         FastBattle = 2,
@@ -14700,30 +16980,38 @@ namespace Enums.app.CH8Em4500.Goal.CH8GoalGenerator {
     }
 }
 
-namespace Enums.via.motion.RetargetRig {
-    public enum RotationCalcOrder {
+namespace Enums.via.motion.RetargetRig
+{
+    public enum RotationCalcOrder
+    {
         After = 0,
         Before = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum SamplingPositionType {
+namespace Enums.via.effect.detail
+{
+    public enum SamplingPositionType
+    {
         Emitter = 0,
         Joint = 1,
         Particle = 2,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum NoNodeSearch {
+namespace Enums.via.navigation.Navigation
+{
+    public enum NoNodeSearch
+    {
         None = 0,
         NearestNode = 1,
     }
 }
 
-namespace Enums.app.LookAt {
-    public enum Index {
+namespace Enums.app.LookAt
+{
+    public enum Index
+    {
         _LookAtJoint0 = 0,
         _LookAtJoint1 = 1,
         _LookAtJoint2 = 2,
@@ -14735,8 +17023,10 @@ namespace Enums.app.LookAt {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GestureState {
+namespace Enums.via.hid
+{
+    public enum GestureState
+    {
         Update = 0,
         Begin = 1,
         End = 2,
@@ -14745,8 +17035,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodRanking {
+namespace Enums.via.network.error
+{
+    public enum MethodRanking
+    {
         Update = 0,
         Register = 1,
         GetScoreByRange = 2,
@@ -14755,51 +17047,65 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.CardGameMaster {
-    public enum FaceType {
+namespace Enums.app.CardGameMaster
+{
+    public enum FaceType
+    {
         Down = 0,
         Up = 1,
     }
 }
 
-namespace Enums.app.Em5540Order.Appear {
-    public enum Type {
+namespace Enums.app.Em5540Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.GimmickActiveControl {
-    public enum EndTypeEnum {
+namespace Enums.app.GimmickActiveControl
+{
+    public enum EndTypeEnum
+    {
         None = 0,
         SetNo = 1,
         Auto = 2,
     }
 }
 
-namespace Enums.via.os.detail {
-    public enum SocketSslSubError {
+namespace Enums.via.os.detail
+{
+    public enum SocketSslSubError
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum SheetMode {
+namespace Enums.app.MapManager
+{
+    public enum SheetMode
+    {
         FRAME = 0,
         MAPIMAGE = 1,
         BG = 2,
     }
 }
 
-namespace Enums.via.render.PrimitiveMaterial {
-    public enum ShaderType {
+namespace Enums.via.render.PrimitiveMaterial
+{
+    public enum ShaderType
+    {
         Transparent = 0,
         Solid = 1,
         SolidExpensive = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadId {
+namespace Enums.via.hid
+{
+    public enum NpadId
+    {
         Handheld = 1,
         No1 = 2,
         No2 = 4,
@@ -14813,8 +17119,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.physics {
-    public enum PhaseType {
+namespace Enums.via.physics
+{
+    public enum PhaseType
+    {
         AfterUpdate = 0,
         CharacterControl = 1,
         AfterLateUpdate = 2,
@@ -14822,15 +17130,19 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.storage.DLC {
-    public enum MountMode {
+namespace Enums.via.storage.DLC
+{
+    public enum MountMode
+    {
         Automatic = 0,
         Manual = 1,
     }
 }
 
-namespace Enums.via.landscape.beta.GroundBetaManager {
-    public enum GroundPipelineStateType {
+namespace Enums.via.landscape.beta.GroundBetaManager
+{
+    public enum GroundPipelineStateType
+    {
         CSGroundSplatTextureCopy = 0,
         CSGroundSplatTextureCopyTail = 1,
         CSUploadToPhysicalTexture = 2,
@@ -14860,8 +17172,10 @@ namespace Enums.via.landscape.beta.GroundBetaManager {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum Step {
+namespace Enums.app.OptionMenu
+{
+    public enum Step
+    {
         Main = 0,
         Controls = 1,
         Display = 2,
@@ -14907,15 +17221,19 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GpuParentOptions {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GpuParentOptions
+    {
         None = 0,
         UseLocal = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum ActionDistanceType {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum ActionDistanceType
+    {
         None = 0,
         Zero = 1,
         Short = 2,
@@ -14925,21 +17243,27 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.via.behaviortree.action.SetBool {
-    public enum Status {
+namespace Enums.via.behaviortree.action.SetBool
+{
+    public enum Status
+    {
         False = 0,
         True = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8EnemyStateCheck {
-    public enum EnemyIntType {
+namespace Enums.app.fsm.CH8EnemyStateCheck
+{
+    public enum EnemyIntType
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render.command.UpdateBuffer {
-    public enum BufferType {
+namespace Enums.via.render.command.UpdateBuffer
+{
+    public enum BufferType
+    {
         VertexBuffer = 0,
         IndexBuffer = 1,
         Buffer = 2,
@@ -14949,8 +17273,10 @@ namespace Enums.via.render.command.UpdateBuffer {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum IkCtrl {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum IkCtrl
+    {
         HumanToe = 0,
         HumanHeal = 1,
         HumanExToe = 2,
@@ -14959,23 +17285,29 @@ namespace Enums.via.motion.IkLeg2 {
     }
 }
 
-namespace Enums.via.motion.detail.ChainJiggleData {
-    public enum AttrFlags {
+namespace Enums.via.motion.detail.ChainJiggleData
+{
+    public enum AttrFlags
+    {
         None = 0,
         OverrideDamping = 1,
     }
 }
 
-namespace Enums.via.render.primitive {
-    public enum LightingType {
+namespace Enums.via.render.primitive
+{
+    public enum LightingType
+    {
         Billboard = 0,
         Ribbon = 1,
         Polygon = 2,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataType {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataType
+    {
         Array = -1,
         Int32 = 0,
         Int64 = 1,
@@ -14986,29 +17318,37 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.Em5510 {
-    public enum ThinkOrder {
+namespace Enums.app.Em5510
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH8Em4000ActionController {
-    public enum DestinationType {
+namespace Enums.app.CH8Em4000ActionController
+{
+    public enum DestinationType
+    {
         ChangeThink = 0,
         SelfKill = 1,
     }
 }
 
-namespace Enums.app.AI.GoalArbitrator {
-    public enum Cycle {
+namespace Enums.app.AI.GoalArbitrator
+{
+    public enum Cycle
+    {
         EveryFrame = 0,
         Permitted = 1,
         ElapsedSec = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BakerPipelineState {
+namespace Enums.via.landscape
+{
+    public enum BakerPipelineState
+    {
         BakeHeightMapFromUpper = 0,
         BakeHeightMapFromLower = 1,
         BakePathHeightMap = 2,
@@ -15028,8 +17368,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum SinkTypeWindows {
+namespace Enums.via.wwise
+{
+    public enum SinkTypeWindows
+    {
         Main = 0,
         MergeToMain = 1,
         Secondary = 2,
@@ -15039,8 +17381,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.CH9Em7700.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em7700.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Mimicry = 1,
         Dregs = 2,
@@ -15051,8 +17395,10 @@ namespace Enums.app.CH9Em7700.ThinkStateSet {
     }
 }
 
-namespace Enums.via.render {
-    public enum SrvDimension {
+namespace Enums.via.render
+{
+    public enum SrvDimension
+    {
         Unknown = 0,
         Buffer = 1,
         Texture1d = 2,
@@ -15069,8 +17415,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum LegendType {
+namespace Enums.app.MapManager
+{
+    public enum LegendType
+    {
         None = -1,
         Player = 0,
         Arms = 1,
@@ -15090,14 +17438,18 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.app.ReliefItemTable {
-    public enum TableType {
+namespace Enums.app.ReliefItemTable
+{
+    public enum TableType
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.via.os.websocket_client {
-    public enum ErrorCause {
+namespace Enums.via.os.websocket_client
+{
+    public enum ErrorCause
+    {
         Timeout = 256,
         Native = 257,
         HandshakeFailed = 258,
@@ -15109,15 +17461,19 @@ namespace Enums.via.os.websocket_client {
     }
 }
 
-namespace Enums.via.render.CubeTo2D {
-    public enum TYPE {
+namespace Enums.via.render.CubeTo2D
+{
+    public enum TYPE
+    {
         PARABOROID = 0,
         SPHERE = 1,
     }
 }
 
-namespace Enums.via {
-    public enum AccountPickerShowRequestResult {
+namespace Enums.via
+{
+    public enum AccountPickerShowRequestResult
+    {
         Success = 0,
         ErrorNotSupported = 1,
         ErrorAlreadyShown = 2,
@@ -15127,15 +17483,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Move {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.CH8Telemetry {
-    public enum OtherCountType {
+namespace Enums.app.CH8Telemetry
+{
+    public enum OtherCountType
+    {
         CountOfAirTank = 0,
         CountOfQuizWrong = 1,
         CountOfPunch = 2,
@@ -15145,8 +17505,10 @@ namespace Enums.app.CH8Telemetry {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum OutputDevice {
+namespace Enums.via.simplewwise
+{
+    public enum OutputDevice
+    {
         None = 0,
         HDMI = 1,
         Headphone = 2,
@@ -15159,8 +17521,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.app.MoldedActionController.LostPartsUnit {
-    public enum Type {
+namespace Enums.app.MoldedActionController.LostPartsUnit
+{
+    public enum Type
+    {
         Head = 0,
         LeftArm = 1,
         RightArm = 2,
@@ -15171,8 +17535,10 @@ namespace Enums.app.MoldedActionController.LostPartsUnit {
     }
 }
 
-namespace Enums.via.motion.TransitionData {
-    public enum StartType {
+namespace Enums.via.motion.TransitionData
+{
+    public enum StartType
+    {
         Frame = 0,
         NormalizedTime = 1,
         SyncTime = 2,
@@ -15181,8 +17547,10 @@ namespace Enums.via.motion.TransitionData {
     }
 }
 
-namespace Enums.app.AdditionalTreeLayer {
-    public enum State {
+namespace Enums.app.AdditionalTreeLayer
+{
+    public enum State
+    {
         None = 0,
         Start = 1,
         EaseIn = 2,
@@ -15194,8 +17562,10 @@ namespace Enums.app.AdditionalTreeLayer {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseIdConverter {
+namespace Enums.via.network.error
+{
+    public enum CauseIdConverter
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -15224,8 +17594,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em8000ScarController {
-    public enum PartType {
+namespace Enums.app.Em8000ScarController
+{
+    public enum PartType
+    {
         LeftLeg = 0,
         RightLeg = 1,
         LeftArm = 2,
@@ -15234,8 +17606,10 @@ namespace Enums.app.Em8000ScarController {
     }
 }
 
-namespace Enums.via.network.BattleReplay {
-    public enum Error {
+namespace Enums.via.network.BattleReplay
+{
+    public enum Error
+    {
         None = 0,
         Abort = 1,
         Command = 2,
@@ -15245,8 +17619,10 @@ namespace Enums.via.network.BattleReplay {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShallowWaterRenderingMode {
+namespace Enums.via.render
+{
+    public enum ShallowWaterRenderingMode
+    {
         Translucent = 0,
         TranslucentLighting = 1,
         GBuffer = 2,
@@ -15255,8 +17631,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.rebe {
-    public enum RebeDevFlags {
+namespace Enums.via.rebe
+{
+    public enum RebeDevFlags
+    {
         General = 1,
         General2 = 2,
         HjmIgnore = 4,
@@ -15267,8 +17645,10 @@ namespace Enums.via.rebe {
     }
 }
 
-namespace Enums.app.MotionGroupTable {
-    public enum GroupType {
+namespace Enums.app.MotionGroupTable
+{
+    public enum GroupType
+    {
         Other = 0,
         One = 1,
         LeftRight = 2,
@@ -15276,8 +17656,10 @@ namespace Enums.app.MotionGroupTable {
     }
 }
 
-namespace Enums.app.CH8InteractSavePoint {
-    public enum HardSaveState {
+namespace Enums.app.CH8InteractSavePoint
+{
+    public enum HardSaveState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -15288,38 +17670,48 @@ namespace Enums.app.CH8InteractSavePoint {
     }
 }
 
-namespace Enums.via.motion.SecondaryRetarget {
-    public enum TransStretchMode {
+namespace Enums.via.motion.SecondaryRetarget
+{
+    public enum TransStretchMode
+    {
         LengthRate = 0,
         Offset = 1,
         Motion = 2,
     }
 }
 
-namespace Enums.via.motion.IkHand2.EffectorInfo {
-    public enum OutputType {
+namespace Enums.via.motion.IkHand2.EffectorInfo
+{
+    public enum OutputType
+    {
         JointRayCast = 0,
         WeightRayCast = 1,
         Weight = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Idle {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.Pl0000EventOnly {
-    public enum StampIndex {
+namespace Enums.app.Pl0000EventOnly
+{
+    public enum StampIndex
+    {
         Recover = 0,
         Wet = 1,
     }
 }
 
-namespace Enums.app.Em3000 {
-    public enum ThinkState {
+namespace Enums.app.Em3000
+{
+    public enum ThinkState
+    {
         None = 0,
         Idle = 1,
         Chapter3Battle1 = 2,
@@ -15334,15 +17726,19 @@ namespace Enums.app.Em3000 {
     }
 }
 
-namespace Enums.via.navigation.map.MapSegmentObject {
-    public enum ShapeCoordType {
+namespace Enums.via.navigation.map.MapSegmentObject
+{
+    public enum ShapeCoordType
+    {
         Local = 0,
         Global = 1,
     }
 }
 
-namespace Enums.via.os.websocket_client {
-    public enum Error {
+namespace Enums.via.os.websocket_client
+{
+    public enum Error
+    {
         Unavailable = -3,
         NativeError = -2,
         InvalidParameter = -1,
@@ -15350,8 +17746,10 @@ namespace Enums.via.os.websocket_client {
     }
 }
 
-namespace Enums.via.clr {
-    public enum ElementType {
+namespace Enums.via.clr
+{
+    public enum ElementType
+    {
         End = 0,
         Void = 1,
         Boolean = 2,
@@ -15393,8 +17791,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_5oAmb {
+namespace Enums.via.audiorender
+{
+    public enum Channel_5oAmb
+    {
         Channel_5oAmb_0 = 0,
         Channel_5oAmb_1 = 1,
         Channel_5oAmb_2 = 2,
@@ -15435,23 +17835,29 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em3100.Em3100WwiseStateList {
-    public enum PropertyStealth {
+namespace Enums.app.Em3100.Em3100WwiseStateList
+{
+    public enum PropertyStealth
+    {
         UnDiscovery = 0,
         Discovery = 1,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum FadeType {
+namespace Enums.via.wwise
+{
+    public enum FadeType
+    {
         None = 0,
         In = 1,
         Out = 2,
     }
 }
 
-namespace Enums.app.ObjectManager {
-    public enum ListType {
+namespace Enums.app.ObjectManager
+{
+    public enum ListType
+    {
         EnemySave = 0,
         Item = 1,
         OtherObjectSave = 2,
@@ -15474,8 +17880,10 @@ namespace Enums.app.ObjectManager {
     }
 }
 
-namespace Enums.via {
-    public enum DeviceOrientation {
+namespace Enums.via
+{
+    public enum DeviceOrientation
+    {
         Portrait = 0,
         LandscapeLeft = 1,
         LandscapeRight = 2,
@@ -15483,8 +17891,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum ItemType {
+namespace Enums.app.CardGameItem
+{
+    public enum ItemType
+    {
         NoUse = 0,
         BetUp_1p = 10,
         BetUp_2 = 11,
@@ -15538,8 +17948,10 @@ namespace Enums.app.CardGameItem {
     }
 }
 
-namespace Enums.via.render.Primitive {
-    public enum ShapeType {
+namespace Enums.via.render.Primitive
+{
+    public enum ShapeType
+    {
         Sphere = 0,
         Tetrahedron = 1,
         Cube = 2,
@@ -15549,8 +17961,10 @@ namespace Enums.via.render.Primitive {
     }
 }
 
-namespace Enums.app.CH8Em4100.Goal {
-    public enum CH8EvaluatorID {
+namespace Enums.app.CH8Em4100.Goal
+{
+    public enum CH8EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -15567,22 +17981,28 @@ namespace Enums.app.CH8Em4100.Goal {
     }
 }
 
-namespace Enums.app.Em8100Think {
-    public enum Mode {
+namespace Enums.app.Em8100Think
+{
+    public enum Mode
+    {
         Idle = 0,
         Battle = 1,
     }
 }
 
-namespace Enums.hikako.WwiseVibrationDefineInfo {
-    public enum MotorIndex {
+namespace Enums.hikako.WwiseVibrationDefineInfo
+{
+    public enum MotorIndex
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BakerBakeTextureType {
+namespace Enums.via.landscape
+{
+    public enum BakerBakeTextureType
+    {
         Height = 0,
         Splat = 1,
         SDF = 2,
@@ -15590,8 +18010,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MeshDrawType {
+namespace Enums.via.landscape
+{
+    public enum MeshDrawType
+    {
         Solid = 0,
         AlphaTest = 1,
         Decal = 2,
@@ -15602,59 +18024,75 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.Em8910Think {
-    public enum TentacleType {
+namespace Enums.app.Em8910Think
+{
+    public enum TentacleType
+    {
         MoveTentacle = 0,
         AttackTentacle = 1,
     }
 }
 
-namespace Enums.app {
-    public enum PlayerVoiceAttackType {
+namespace Enums.app
+{
+    public enum PlayerVoiceAttackType
+    {
         Normal = 0,
         Battle = 1,
     }
 }
 
-namespace Enums.app.Oilcan {
-    public enum OilcanSetType {
+namespace Enums.app.Oilcan
+{
+    public enum OilcanSetType
+    {
         Oilcan = 0,
         FakeBox = 1,
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum CalculationAddRotation {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum CalculationAddRotation
+    {
         SpecificJoint = 0,
         AllJoint = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum PreZForCullResolution {
+namespace Enums.via.render
+{
+    public enum PreZForCullResolution
+    {
         PreZForCullResolution_Recommended = 256,
         PreZForCullResolution_256x128 = 256,
         PreZForCullResolution_512x256 = 512,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum NodePickPriority {
+namespace Enums.via.navigation
+{
+    public enum NodePickPriority
+    {
         Floor = 0,
         Wall = 1,
         FloorOnly = 2,
     }
 }
 
-namespace Enums.via.dynamics.ConeTwistConstraint.Initializer {
-    public enum PositionType {
+namespace Enums.via.dynamics.ConeTwistConstraint.Initializer
+{
+    public enum PositionType
+    {
         World = 0,
         Local = 1,
     }
 }
 
-namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker {
-    public enum UpdateTaskStatus {
+namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker
+{
+    public enum UpdateTaskStatus
+    {
         Wait = 0,
         Standup = 1,
         Run = 2,
@@ -15663,8 +18101,10 @@ namespace Enums.via.hid.camera.detail.PlayStationCameraLedTracker {
     }
 }
 
-namespace Enums.via.render {
-    public enum SamplerType {
+namespace Enums.via.render
+{
+    public enum SamplerType
+    {
         PointWrap = 0,
         PointClamp = 1,
         PointBorder = 2,
@@ -15707,8 +18147,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.navigation.AIMapEffector {
-    public enum EdgeCreateType {
+namespace Enums.via.navigation.AIMapEffector
+{
+    public enum EdgeCreateType
+    {
         Optimize = 0,
         Simple = 1,
         NonConvexCheck = 2,
@@ -15716,8 +18158,10 @@ namespace Enums.via.navigation.AIMapEffector {
     }
 }
 
-namespace Enums.via.motion.tree.CalculateNode {
-    public enum Operation {
+namespace Enums.via.motion.tree.CalculateNode
+{
+    public enum Operation
+    {
         Add = 0,
         Sub = 1,
         Mul = 2,
@@ -15729,24 +18173,30 @@ namespace Enums.via.motion.tree.CalculateNode {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1Rest {
-    public enum LeaveStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1Rest
+{
+    public enum LeaveStatus
+    {
         Non = 0,
         Leave = 1,
         Arrive = 2,
     }
 }
 
-namespace Enums.via {
-    public enum GamePresetsGraphics {
+namespace Enums.via
+{
+    public enum GamePresetsGraphics
+    {
         Default = 0,
         FrameRate = 1,
         Resolution = 2,
     }
 }
 
-namespace Enums.app.Em3001.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Grapple
+{
+    public enum Type
+    {
         CommonTurn = 0,
         CommonHeadButt = 1,
         CommonKnee = 2,
@@ -15755,14 +18205,18 @@ namespace Enums.app.Em3001.Action.Grapple {
     }
 }
 
-namespace Enums.app.CH8Em4400.CH8ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4400.CH8ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.clr {
-    public enum SystemType {
+namespace Enums.via.clr
+{
+    public enum SystemType
+    {
         None = 0,
         Object = 1,
         String = 2,
@@ -15859,14 +18313,18 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.CH9EverywhereManager {
-    public enum MissionType {
+namespace Enums.app.CH9EverywhereManager
+{
+    public enum MissionType
+    {
         TimeAttack = 0,
     }
 }
 
-namespace Enums.app.AI.CH9AIWorldBlackBoard {
-    public enum SideType {
+namespace Enums.app.AI.CH9AIWorldBlackBoard
+{
+    public enum SideType
+    {
         FrontRight = 0,
         FrontLeft = 1,
         BackRight = 2,
@@ -15875,8 +18333,10 @@ namespace Enums.app.AI.CH9AIWorldBlackBoard {
     }
 }
 
-namespace Enums.app.Em3000.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Grapple
+{
+    public enum Type
+    {
         CommonTurn = 0,
         CommonHeadButt = 1,
         CommonKnee = 2,
@@ -15901,8 +18361,10 @@ namespace Enums.app.Em3000.Action.Grapple {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerBakeTarget {
+namespace Enums.via.landscape
+{
+    public enum MapBakerBakeTarget
+    {
         Mesh = 0,
         Road = 1,
         Ground = 2,
@@ -15913,8 +18375,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.navigation.map {
-    public enum MapType {
+namespace Enums.via.navigation.map
+{
+    public enum MapType
+    {
         NavMesh = 0,
         WayPoint = 1,
         VolumeSpace = 2,
@@ -15922,8 +18386,10 @@ namespace Enums.via.navigation.map {
     }
 }
 
-namespace Enums.app.CH9MainMenu {
-    public enum SelectType {
+namespace Enums.app.CH9MainMenu
+{
+    public enum SelectType
+    {
         NewGame = 0,
         Continue = 1,
         LoadGame = 2,
@@ -15931,8 +18397,10 @@ namespace Enums.app.CH9MainMenu {
     }
 }
 
-namespace Enums.app.DLC1VideoCameraUI {
-    public enum ModeDef {
+namespace Enums.app.DLC1VideoCameraUI
+{
+    public enum ModeDef
+    {
         Start = 0,
         NoiseAnim = 1,
         Close = 2,
@@ -15941,16 +18409,20 @@ namespace Enums.app.DLC1VideoCameraUI {
     }
 }
 
-namespace Enums.app.UITimer.StringConvertParam {
-    public enum IntegralEmptyDigitTypeDef {
+namespace Enums.app.UITimer.StringConvertParam
+{
+    public enum IntegralEmptyDigitTypeDef
+    {
         Nothing = 0,
         Zero = 1,
         Space = 2,
     }
 }
 
-namespace Enums.via.render.SSRControl {
-    public enum SSRControlType {
+namespace Enums.via.render.SSRControl
+{
+    public enum SSRControlType
+    {
         Default = 0,
         Disable = 1,
         Spherical = 2,
@@ -15960,8 +18432,10 @@ namespace Enums.via.render.SSRControl {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum Axis {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
@@ -15969,8 +18443,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
     }
 }
 
-namespace Enums.app.Em8001.Em8001BattleDirective.ScissorsBattleParameter.AttackActionParameter {
-    public enum AttackActionType {
+namespace Enums.app.Em8001.Em8001BattleDirective.ScissorsBattleParameter.AttackActionParameter
+{
+    public enum AttackActionType
+    {
         None = 0,
         Zero_Front_Back = 1,
         Zero_Back_Swing = 2,
@@ -15986,8 +18462,10 @@ namespace Enums.app.Em8001.Em8001BattleDirective.ScissorsBattleParameter.AttackA
     }
 }
 
-namespace Enums.via.wwise {
-    public enum ListenerBitMask {
+namespace Enums.via.wwise
+{
+    public enum ListenerBitMask
+    {
         ListenerBitMask_0 = 1,
         ListenerBitMask_1 = 2,
         ListenerBitMask_2 = 4,
@@ -15999,8 +18477,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4500.Action
+{
+    public enum CH8ActionNo
+    {
         Appear = 4,
         Idle = 5,
         AttackBeating = 6,
@@ -16040,8 +18520,10 @@ namespace Enums.app.CH8Em4500.Action {
     }
 }
 
-namespace Enums.via.render.command.PS4Extention {
-    public enum ExtentionType {
+namespace Enums.via.render.command.PS4Extention
+{
+    public enum ExtentionType
+    {
         ExtentionType_4KCheckerBoardRenderingEnable = 0,
         ExtentionType_4KCheckerBoardRenderingEvenFrameEnable = 0,
         ExtentionType_4KCheckerBoardRenderingOddFrameEnable = 1,
@@ -16061,8 +18543,10 @@ namespace Enums.via.render.command.PS4Extention {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum DrawMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum DrawMode
+    {
         DrawMode_Hidden = 0,
         DrawMode_Default = 1,
         DrawMode_Root = 2,
@@ -16078,8 +18562,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.fsm.CH8BlackOut {
-    public enum RequestTypeEnum {
+namespace Enums.app.fsm.CH8BlackOut
+{
+    public enum RequestTypeEnum
+    {
         None = 0,
         SceneJump = 1,
         ShadowPazzle = 2,
@@ -16095,8 +18581,10 @@ namespace Enums.app.fsm.CH8BlackOut {
     }
 }
 
-namespace Enums.via.render {
-    public enum UserAttributeAndCustomParamsFormat {
+namespace Enums.via.render
+{
+    public enum UserAttributeAndCustomParamsFormat
+    {
         Disable = 0,
         R11G11B10Float = 1,
         R16G16B16A16Float = 2,
@@ -16104,23 +18592,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH9Em6700.Action.Idle {
-    public enum Type {
+namespace Enums.app.CH9Em6700.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         Homing = 1,
     }
 }
 
-namespace Enums.app.AIBeaconManager {
-    public enum Group {
+namespace Enums.app.AIBeaconManager
+{
+    public enum Group
+    {
         Vision = 0,
         Grapple = 1,
         Combat = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceAppParamIndex {
+namespace Enums.via
+{
+    public enum SystemServiceAppParamIndex
+    {
         Index0 = 0,
         Index1 = 1,
         Index2 = 2,
@@ -16133,23 +18627,29 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em3102.Em3102Think {
-    public enum FacialBasicID {
+namespace Enums.app.Em3102.Em3102Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Ghost = 1000,
     }
 }
 
-namespace Enums.app.CH8NightVisionTrigger {
-    public enum Mode {
+namespace Enums.app.CH8NightVisionTrigger
+{
+    public enum Mode
+    {
         TriggerOnlyUseNightVision = 0,
         TriggerOnlyNoHasNightVision = 1,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageActionType {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageActionType
+    {
         Damage = 0,
         BlownAway = 1,
         LostParts = 2,
@@ -16161,8 +18661,10 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.render.layer.Overlay {
-    public enum Effect2DPlane {
+namespace Enums.via.render.layer.Overlay
+{
+    public enum Effect2DPlane
+    {
         Plane0 = 1,
         Plane1 = 2,
         Plane2 = 3,
@@ -16171,15 +18673,19 @@ namespace Enums.via.render.layer.Overlay {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.FirstReNetMenu {
-    public enum Step {
+namespace Enums.app.FirstReNetMenu
+{
+    public enum Step
+    {
         Main = 0,
         Yes = 1,
         No = 2,
@@ -16188,16 +18694,20 @@ namespace Enums.app.FirstReNetMenu {
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum StepType {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum StepType
+    {
         HP = 0,
         Scan = 1,
         Radar = 2,
     }
 }
 
-namespace Enums.app.Command {
-    public enum PlatformType {
+namespace Enums.app.Command
+{
+    public enum PlatformType
+    {
         None = 0,
         PS4 = 1,
         XboxOne = 2,
@@ -16207,24 +18717,30 @@ namespace Enums.app.Command {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Appeal {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Appeal
+{
+    public enum Type
+    {
         Type00 = 0,
         Type01 = 1,
         Type02 = 2,
     }
 }
 
-namespace Enums.app.CH9KnuckleBullet {
-    public enum UpdateRno {
+namespace Enums.app.CH9KnuckleBullet
+{
+    public enum UpdateRno
+    {
         Stomp = 0,
         AttackBack = 1,
         Sleep = 2,
     }
 }
 
-namespace Enums.via.os {
-    public enum SocketType {
+namespace Enums.via.os
+{
+    public enum SocketType
+    {
         None = 0,
         Tcp = 1,
         Udp = 2,
@@ -16234,8 +18750,10 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum DeviceTypeXB1 {
+namespace Enums.via.simplewwise
+{
+    public enum DeviceTypeXB1
+    {
         None = 0,
         Main = 1,
         MergeToMain = 2,
@@ -16247,8 +18765,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.app {
-    public enum EnemyBaseActionNo {
+namespace Enums.app
+{
+    public enum EnemyBaseActionNo
+    {
         Idle = 0,
         Damage = 1,
         Dead = 2,
@@ -16258,8 +18778,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraFormat {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraFormat
+    {
         Unknown = 0,
         NoUse = 1,
         BaseYUV422 = 65536,
@@ -16271,8 +18793,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.via.render {
-    public enum DsvDimension {
+namespace Enums.via.render
+{
+    public enum DsvDimension
+    {
         Unknown = 0,
         Texture1d = 1,
         Texture1darray = 2,
@@ -16283,52 +18807,66 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.behaviortree.action.NodeTimer {
-    public enum Unit {
+namespace Enums.via.behaviortree.action.NodeTimer
+{
+    public enum Unit
+    {
         Second = 0,
         Frame = 1,
     }
 }
 
-namespace Enums.app.FBIKAttackController {
-    public enum AttackModeType {
+namespace Enums.app.FBIKAttackController
+{
+    public enum AttackModeType
+    {
         Rotate = 0,
         Target = 1,
     }
 }
 
-namespace Enums.via.hid.HDVibrationSource {
-    public enum TargetNode {
+namespace Enums.via.hid.HDVibrationSource
+{
+    public enum TargetNode
+    {
         Dual = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.fsm.requestMenuFromFsm {
-    public enum RequestTypeEnum {
+namespace Enums.app.fsm.requestMenuFromFsm
+{
+    public enum RequestTypeEnum
+    {
         Open = 0,
         Close = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum EditSceneDraw3DLayerType {
+namespace Enums.via.gui
+{
+    public enum EditSceneDraw3DLayerType
+    {
         Default = 0,
         ForceTransparent = 1,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum TraceLineOptimizeTiming {
+namespace Enums.via.navigation.Navigation
+{
+    public enum TraceLineOptimizeTiming
+    {
         NodeUpdate = 0,
         Frame = 1,
         Start = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum NetworkMode {
+namespace Enums.app.GameManager
+{
+    public enum NetworkMode
+    {
         None = 0,
         Wait = 1,
         StoreOpen = 2,
@@ -16339,8 +18877,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.MoldedActionController {
-    public enum SuspendStatusType {
+namespace Enums.app.MoldedActionController
+{
+    public enum SuspendStatusType
+    {
         None = 0,
         Requested = 1,
         Moving = 2,
@@ -16350,8 +18890,10 @@ namespace Enums.app.MoldedActionController {
     }
 }
 
-namespace Enums.via.gui {
-    public enum AssetLanguage {
+namespace Enums.via.gui
+{
+    public enum AssetLanguage
+    {
         Invalid = -1,
         No0 = 0,
         No1 = 1,
@@ -16361,16 +18903,20 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Crusher {
-    public enum State {
+namespace Enums.app.Crusher
+{
+    public enum State
+    {
         PowerOff = 0,
         InProduction = 1,
         StopProduction = 2,
     }
 }
 
-namespace Enums.app.InteractPadlock {
-    public enum PadlockState {
+namespace Enums.app.InteractPadlock
+{
+    public enum PadlockState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -16384,8 +18930,10 @@ namespace Enums.app.InteractPadlock {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum EnabledPrimitiveProcessor {
+namespace Enums.via.render.detail
+{
+    public enum EnabledPrimitiveProcessor
+    {
         DOFBlend = 1,
         Lighting = 2,
         MieLighting = 4,
@@ -16399,8 +18947,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.via.network.MatchmakingProcComfirm {
-    public enum Phase {
+namespace Enums.via.network.MatchmakingProcComfirm
+{
+    public enum Phase
+    {
         None = 0,
         Idle = 1,
         Search = 2,
@@ -16415,8 +18965,10 @@ namespace Enums.via.network.MatchmakingProcComfirm {
     }
 }
 
-namespace Enums.app.OverrideAction {
-    public enum Slot {
+namespace Enums.app.OverrideAction
+{
+    public enum Slot
+    {
         Tension = 0,
         Action = 1,
         Area = 2,
@@ -16426,8 +18978,10 @@ namespace Enums.app.OverrideAction {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum NodePlaneSurfaceType {
+namespace Enums.via.landscape
+{
+    public enum NodePlaneSurfaceType
+    {
         Surface1x1 = 0,
         Surface2x2 = 1,
         Surface4x4 = 2,
@@ -16436,30 +18990,38 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum WalkSpeedIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum WalkSpeedIndex
+    {
         Default = 0,
         Slowish = 1,
         Slow = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum UserParamType {
+namespace Enums.via.gui
+{
+    public enum UserParamType
+    {
         Int = 0,
         Float = 1,
         String = 2,
     }
 }
 
-namespace Enums.app.Em8001 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8001
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround {
-    public enum RayCastCallbackID {
+namespace Enums.via.motion.IkSpineConformGround
+{
+    public enum RayCastCallbackID
+    {
         PartsHead = 256,
         PartsTail = 512,
         OrientHorizon = 4096,
@@ -16468,8 +19030,10 @@ namespace Enums.via.motion.IkSpineConformGround {
     }
 }
 
-namespace Enums.app.CardGameObjectElectricMachine {
-    public enum MeshPartsDef {
+namespace Enums.app.CardGameObjectElectricMachine
+{
+    public enum MeshPartsDef
+    {
         MachineBody = 0,
         Bet_x0 = 1,
         Bet_x9 = 10,
@@ -16480,21 +19044,27 @@ namespace Enums.app.CardGameObjectElectricMachine {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum FootLockMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum FootLockMode
+    {
         Auto = 0,
         SemiAuto = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8LiftSet {
-    public enum SetType {
+namespace Enums.app.fsm.CH8LiftSet
+{
+    public enum SetType
+    {
         SkipInterval = 0,
     }
 }
 
-namespace Enums.via.hid {
-    public enum GamePlayerIndex {
+namespace Enums.via.hid
+{
+    public enum GamePlayerIndex
+    {
         Player1P = 0,
         Player2P = 1,
         Player3P = 2,
@@ -16516,16 +19086,20 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.InteractDetailSearch {
-    public enum SearchEventRotAxis {
+namespace Enums.app.InteractDetailSearch
+{
+    public enum SearchEventRotAxis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum VibrationOutputMotor {
+namespace Enums.via.hid
+{
+    public enum VibrationOutputMotor
+    {
         Motor0 = 0,
         Motor1 = 1,
         Motor2 = 2,
@@ -16535,8 +19109,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum RayCastCallbackID {
+namespace Enums.via.motion.IkLeg
+{
+    public enum RayCastCallbackID
+    {
         Left = 1,
         Right = 2,
         Heal = 4,
@@ -16550,22 +19126,28 @@ namespace Enums.via.motion.IkLeg {
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrHandRole {
+namespace Enums.via.vr
+{
+    public enum VrHandRole
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.CardGameKillCountProduction.KillCountProductionSoundController {
-    public enum Type {
+namespace Enums.app.CardGameKillCountProduction.KillCountProductionSoundController
+{
+    public enum Type
+    {
         BlackOut = 0,
         CountDown = 1,
     }
 }
 
-namespace Enums.app.CH9EverywhereManager {
-    public enum MissionNo {
+namespace Enums.app.CH9EverywhereManager
+{
+    public enum MissionNo
+    {
         Mission01 = 0,
         Mission02 = 1,
         Mission03 = 2,
@@ -16581,8 +19163,10 @@ namespace Enums.app.CH9EverywhereManager {
     }
 }
 
-namespace Enums.app.DetailSearchGUI {
-    public enum State {
+namespace Enums.app.DetailSearchGUI
+{
+    public enum State
+    {
         TitleAndExp = 0,
         ExpOnly = 1,
         Nothing = 2,
@@ -16590,8 +19174,10 @@ namespace Enums.app.DetailSearchGUI {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1DestroyTable {
-    public enum DestroyTableStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1DestroyTable
+{
+    public enum DestroyTableStatus
+    {
         Non = 0,
         GotoTable = 1,
         CanDestroyTable = 2,
@@ -16600,16 +19186,20 @@ namespace Enums.app.Em3000.Goal.Chapter3Battle1DestroyTable {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GestureFingerNumber {
+namespace Enums.via.hid
+{
+    public enum GestureFingerNumber
+    {
         One = 0,
         Two = 1,
         Three = 2,
     }
 }
 
-namespace Enums.app {
-    public enum GroupFlag {
+namespace Enums.app
+{
+    public enum GroupFlag
+    {
         Player = 1,
         Enemy = 2,
         Item = 8,
@@ -16624,23 +19214,29 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.VrGui {
-    public enum TargetTypeDef {
+namespace Enums.app.VrGui
+{
+    public enum TargetTypeDef
+    {
         ActiveCamera = 0,
         ActivePlayer = 1,
         Specify = 2,
     }
 }
 
-namespace Enums.app.fsm.AreaHitTest {
-    public enum TargetParam {
+namespace Enums.app.fsm.AreaHitTest
+{
+    public enum TargetParam
+    {
         Player = 0,
         Enemy = 1,
     }
 }
 
-namespace Enums.via.render.MaterialParam {
-    public enum MaterialParamType {
+namespace Enums.via.render.MaterialParam
+{
+    public enum MaterialParamType
+    {
         Unkown = 0,
         Float4 = 1,
         Float = 2,
@@ -16649,31 +19245,39 @@ namespace Enums.via.render.MaterialParam {
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXResolutionTexType {
+namespace Enums.via.render
+{
+    public enum VFXResolutionTexType
+    {
         R16G16B16A16 = 0,
         R10G10B10A2 = 1,
     }
 }
 
-namespace Enums.app.FirstLanguageGUI {
-    public enum ModeDef {
+namespace Enums.app.FirstLanguageGUI
+{
+    public enum ModeDef
+    {
         First = 0,
         Normal = 1,
         Back = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceSpin = 2,
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig {
-    public enum ActiveLevel {
+namespace Enums.via.motion.FullBodyIKRig
+{
+    public enum ActiveLevel
+    {
         Idle = 0,
         SmoothingToIdle = 1,
         InitSmoothing = 2,
@@ -16681,16 +19285,20 @@ namespace Enums.via.motion.FullBodyIKRig {
     }
 }
 
-namespace Enums.app.FadeControl {
-    public enum FadeRequestEnum {
+namespace Enums.app.FadeControl
+{
+    public enum FadeRequestEnum
+    {
         None = 0,
         FadeIn = 1,
         FadeOut = 2,
     }
 }
 
-namespace Enums.via.navigation.NodeQueryInfo {
-    public enum RegionType {
+namespace Enums.via.navigation.NodeQueryInfo
+{
+    public enum RegionType
+    {
         None = 0,
         Sphere = 1,
         AABB = 2,
@@ -16702,8 +19310,10 @@ namespace Enums.via.navigation.NodeQueryInfo {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShaderStage {
+namespace Enums.via.render
+{
+    public enum ShaderStage
+    {
         Vertex = 0,
         Hull = 1,
         Domain = 2,
@@ -16714,30 +19324,38 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.movie {
-    public enum DecodeLayer {
+namespace Enums.via.movie
+{
+    public enum DecodeLayer
+    {
         Common = 0,
         Overlay = 1,
     }
 }
 
-namespace Enums.app.Em3001FirstStamp {
-    public enum TimelineFrame {
+namespace Enums.app.Em3001FirstStamp
+{
+    public enum TimelineFrame
+    {
         Default = 0,
         Clean = 1,
         Dirty = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum RecordScreenType {
+namespace Enums.app.OptionMenu
+{
+    public enum RecordScreenType
+    {
         Pause = 0,
         Ending = 1,
     }
 }
 
-namespace Enums.via.hansoft {
-    public enum HansoftResult {
+namespace Enums.via.hansoft
+{
+    public enum HansoftResult
+    {
         None = 0,
         Doing = 1,
         Success = 2,
@@ -16754,8 +19372,10 @@ namespace Enums.via.hansoft {
     }
 }
 
-namespace Enums.app.InteractNumberLock {
-    public enum NumberLockState {
+namespace Enums.app.InteractNumberLock
+{
+    public enum NumberLockState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -16767,30 +19387,38 @@ namespace Enums.app.InteractNumberLock {
     }
 }
 
-namespace Enums.app.WaveAnnouncementUIAsset {
-    public enum MainState {
+namespace Enums.app.WaveAnnouncementUIAsset
+{
+    public enum MainState
+    {
         DEFAULT = 0,
         FADE_IN_BONUS = 1,
         FADE_IN_LIMIT = 2,
     }
 }
 
-namespace Enums.app.PharmacyDictionary {
-    public enum Step {
+namespace Enums.app.PharmacyDictionary
+{
+    public enum Step
+    {
         News = 0,
         Dictionary = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum RequestBoolean {
+namespace Enums.via.audiorender
+{
+    public enum RequestBoolean
+    {
         False = 0,
         True = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum ShaderType {
+namespace Enums.via.landscape
+{
+    public enum ShaderType
+    {
         Auto = 0,
         Near = 1,
         Far = 2,
@@ -16798,15 +19426,19 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.PCSystemData {
-    public enum DisplayModeCol {
+namespace Enums.app.PCSystemData
+{
+    public enum DisplayModeCol
+    {
         Resolution = 0,
         Refreshrate = 1,
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum SpawnInfoTagID {
+namespace Enums.app.Nightmare
+{
+    public enum SpawnInfoTagID
+    {
         A = 0,
         B = 1,
         C = 2,
@@ -16814,53 +19446,67 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.via.areamap.test.DotProductSelf {
-    public enum Axis {
+namespace Enums.via.areamap.test.DotProductSelf
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.app.CharacterDefine {
-    public enum Type {
+namespace Enums.app.CharacterDefine
+{
+    public enum Type
+    {
         Player = 0,
         Enemy = 1,
         Npc = 2,
     }
 }
 
-namespace Enums.via.navigation.algorithm.MapGraphAstar {
-    public enum SearchPhase {
+namespace Enums.via.navigation.algorithm.MapGraphAstar
+{
+    public enum SearchPhase
+    {
         SearchPhase_1st = 0,
         SearchPhase_2nd = 1,
     }
 }
 
-namespace Enums.via.motion.IkTrain {
-    public enum ControlType {
+namespace Enums.via.motion.IkTrain
+{
+    public enum ControlType
+    {
         AutoPassTargetPosition = 0,
         HeadTargetPosition = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum CenterDistance {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum CenterDistance
+    {
         OriginalLeg = 0,
         LeachLeg = 1,
     }
 }
 
-namespace Enums.app.Bomb {
-    public enum ParentType {
+namespace Enums.app.Bomb
+{
+    public enum ParentType
+    {
         None = 0,
         Transform = 1,
         Joint = 2,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000ComboAttack {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000ComboAttack
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         ComboAttack = 1,
@@ -16869,8 +19515,10 @@ namespace Enums.app.Em8000.Action.Em8000ComboAttack {
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum SuspendStatusType {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum SuspendStatusType
+    {
         None = 0,
         Requested = 1,
         Moving = 2,
@@ -16880,8 +19528,10 @@ namespace Enums.app.CH9MoldedActionController {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum RightPanelState {
+namespace Enums.app.OptionMenu
+{
+    public enum RightPanelState
+    {
         DEFAULT = 0,
         EXTRAGAME = 1,
         RENET = 2,
@@ -16889,8 +19539,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.dev1lab.AnalysisLogTransmitter.HttpRequest {
-    public enum Phase {
+namespace Enums.app.dev1lab.AnalysisLogTransmitter.HttpRequest
+{
+    public enum Phase
+    {
         None = 0,
         Request = 1,
         ReceiveResponseHeader = 2,
@@ -16902,8 +19554,10 @@ namespace Enums.app.dev1lab.AnalysisLogTransmitter.HttpRequest {
     }
 }
 
-namespace Enums.app.HitStopController {
-    public enum HitStopState {
+namespace Enums.app.HitStopController
+{
+    public enum HitStopState
+    {
         None = 0,
         CheckHit = 1,
         SlowDown = 2,
@@ -16912,16 +19566,20 @@ namespace Enums.app.HitStopController {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum CustomFilterTiming {
+namespace Enums.via.render.detail
+{
+    public enum CustomFilterTiming
+    {
         Default = 0,
         BeforePostEffectLayer = 1,
         AfterCBRResolved = 2,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum MouseRotationSensitivityType {
+namespace Enums.app.PlayerCamera
+{
+    public enum MouseRotationSensitivityType
+    {
         Sensitivity0 = 0,
         Sensitivity1 = 1,
         Sensitivity2 = 2,
@@ -16966,8 +19624,10 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.via.octree {
-    public enum GridDirection {
+namespace Enums.via.octree
+{
+    public enum GridDirection
+    {
         All = 0,
         NorthGrid = 1,
         SouthGrid = 2,
@@ -16978,16 +19638,20 @@ namespace Enums.via.octree {
     }
 }
 
-namespace Enums.app.Em3002.Goal {
-    public enum AppearMessageStatus {
+namespace Enums.app.Em3002.Goal
+{
+    public enum AppearMessageStatus
+    {
         Non = 0,
         DiscoveryHearing = 1,
         DiscoveryVision = 2,
     }
 }
 
-namespace Enums.app.Em4400.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em4400.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Return = 1,
         Wander = 2,
@@ -17029,31 +19693,39 @@ namespace Enums.app.Em4400.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum StackPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum StackPanelState
+    {
         DISABLE = 0,
         SIZE1 = 1,
         SIZE2 = 2,
     }
 }
 
-namespace Enums.app.Em3001.Action.Appear {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Appear
+{
+    public enum Type
+    {
         Front = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum InterleaveConditionType {
+namespace Enums.via.render
+{
+    public enum InterleaveConditionType
+    {
         OR = 0,
         AND = 1,
     }
 }
 
-namespace Enums.via.render.VolumeDecal {
-    public enum ProjectionShape {
+namespace Enums.via.render.VolumeDecal
+{
+    public enum ProjectionShape
+    {
         Obb = 0,
         Pyramid = 2,
         PyramidY = 3,
@@ -17061,8 +19733,10 @@ namespace Enums.via.render.VolumeDecal {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
-    public enum GetOffCarStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1Final
+{
+    public enum GetOffCarStatus
+    {
         Non = 0,
         GotoGetOffCar = 1,
         CanGetOffCar = 2,
@@ -17070,8 +19744,10 @@ namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
     }
 }
 
-namespace Enums.via.behaviortree.TreeNodeData {
-    public enum NodeAttribute {
+namespace Enums.via.behaviortree.TreeNodeData
+{
+    public enum NodeAttribute
+    {
         IsEnabled = 1,
         IsRestartable = 2,
         HasReferenceTree = 4,
@@ -17082,16 +19758,20 @@ namespace Enums.via.behaviortree.TreeNodeData {
     }
 }
 
-namespace Enums.via.detail {
-    public enum ModalDialogResult {
+namespace Enums.via.detail
+{
+    public enum ModalDialogResult
+    {
         Ok = 0,
         Busy = 1,
         Invalid = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum TypingCondition {
+namespace Enums.via.gui
+{
+    public enum TypingCondition
+    {
         Update = 0,
         Pause = 1,
         End = 2,
@@ -17099,8 +19779,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.gui {
-    public enum LetterAlignment {
+namespace Enums.via.gui
+{
+    public enum LetterAlignment
+    {
         LeftTop = 0,
         LeftCenter = 4,
         LeftBottom = 8,
@@ -17116,8 +19798,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH8Em4200.Goal {
-    public enum CH8EvaluatorID {
+namespace Enums.app.CH8Em4200.Goal
+{
+    public enum CH8EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -17136,8 +19820,10 @@ namespace Enums.app.CH8Em4200.Goal {
     }
 }
 
-namespace Enums.via.physics {
-    public enum MaskType {
+namespace Enums.via.physics
+{
+    public enum MaskType
+    {
         AND = 0,
         NAND = 1,
         Default = 2,
@@ -17145,15 +19831,19 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.render.ShadowQualityControl {
-    public enum ShadowQualityType {
+namespace Enums.via.render.ShadowQualityControl
+{
+    public enum ShadowQualityType
+    {
         Default = 0,
         Fast = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Damage {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Damage
+{
+    public enum Type
+    {
         None = 0,
         MidHeadF = 1,
         MidHeadFR = 2,
@@ -17187,15 +19877,19 @@ namespace Enums.app.CH9Em6400.Action.Damage {
     }
 }
 
-namespace Enums.app.CH9EverywhereData {
-    public enum Type {
+namespace Enums.app.CH9EverywhereData
+{
+    public enum Type
+    {
         Item = 0,
         Weapon = 1,
     }
 }
 
-namespace Enums.via.network {
-    public enum RequestId {
+namespace Enums.via.network
+{
+    public enum RequestId
+    {
         ContextStart = 257,
         P2pConnect = 513,
         SessionCreate = 769,
@@ -17230,16 +19924,20 @@ namespace Enums.via.network {
     }
 }
 
-namespace Enums.app.vr.VrManager {
-    public enum FadeRequestType {
+namespace Enums.app.vr.VrManager
+{
+    public enum FadeRequestType
+    {
         None = 0,
         PlayerCamera = 1,
         Event = 2,
     }
 }
 
-namespace Enums.app.vr.VrManager {
-    public enum RequestFlowType {
+namespace Enums.app.vr.VrManager
+{
+    public enum RequestFlowType
+    {
         None = 0,
         FirstBoot = 1,
         SecondBoot = 2,
@@ -17250,8 +19948,10 @@ namespace Enums.app.vr.VrManager {
     }
 }
 
-namespace Enums.app.CH8OperatorManager2 {
-    public enum ResultTable {
+namespace Enums.app.CH8OperatorManager2
+{
+    public enum ResultTable
+    {
         None = 0,
         Runnning = 1,
         Filure = 2,
@@ -17259,8 +19959,10 @@ namespace Enums.app.CH8OperatorManager2 {
     }
 }
 
-namespace Enums.app.vr.VrTutorialOpenFlow {
-    public enum Phase {
+namespace Enums.app.vr.VrTutorialOpenFlow
+{
+    public enum Phase
+    {
         Cutin = 0,
         Yes = 1,
         No = 2,
@@ -17268,8 +19970,10 @@ namespace Enums.app.vr.VrTutorialOpenFlow {
     }
 }
 
-namespace Enums.app.fsm.Em9900ManagerActionBase {
-    public enum ActionType {
+namespace Enums.app.fsm.Em9900ManagerActionBase
+{
+    public enum ActionType
+    {
         None = 0,
         Start = 1,
         A = 2,
@@ -17280,8 +19984,10 @@ namespace Enums.app.fsm.Em9900ManagerActionBase {
     }
 }
 
-namespace Enums.app.fsm.HandLightBlink {
-    public enum ActionType {
+namespace Enums.app.fsm.HandLightBlink
+{
+    public enum ActionType
+    {
         None = 0,
         AutoBlinkEnable = 1,
         AutoBlinkDisable = 2,
@@ -17290,8 +19996,10 @@ namespace Enums.app.fsm.HandLightBlink {
     }
 }
 
-namespace Enums.app.TitleSubMenu {
-    public enum CameraMotionID {
+namespace Enums.app.TitleSubMenu
+{
+    public enum CameraMotionID
+    {
         VoiceRecorder_to_SaveSlot = 0,
         SaveSlot_to_VoiceRecorder = 1,
         VoiceRecorder_to_Option = 2,
@@ -17300,8 +20008,10 @@ namespace Enums.app.TitleSubMenu {
     }
 }
 
-namespace Enums.app.TestMovement {
-    public enum MovementType {
+namespace Enums.app.TestMovement
+{
+    public enum MovementType
+    {
         PositionLine = 0,
         PositionRoll = 1,
         RotationLine = 2,
@@ -17309,8 +20019,10 @@ namespace Enums.app.TestMovement {
     }
 }
 
-namespace Enums.app.Em3000.Action.TurnAttack {
-    public enum Type {
+namespace Enums.app.Em3000.Action.TurnAttack
+{
+    public enum Type
+    {
         Forward = 0,
         Right = 1,
         Left = 2,
@@ -17319,23 +20031,29 @@ namespace Enums.app.Em3000.Action.TurnAttack {
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum PushCharaControllerType {
+namespace Enums.app.CarInGarage
+{
+    public enum PushCharaControllerType
+    {
         None = 0,
         Forward = 1,
         Reverse = 2,
     }
 }
 
-namespace Enums.via.motion.LowerBodyRetarget {
-    public enum TransformMode {
+namespace Enums.via.motion.LowerBodyRetarget
+{
+    public enum TransformMode
+    {
         Default = 0,
         None = 1,
     }
 }
 
-namespace Enums.app.Havok.RagdollCharacter {
-    public enum PartsId {
+namespace Enums.app.Havok.RagdollCharacter
+{
+    public enum PartsId
+    {
         Hip = 0,
         Push_Hip = 1,
         R_Thigh = 2,
@@ -17360,8 +20078,10 @@ namespace Enums.app.Havok.RagdollCharacter {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputLogType : uint {
+namespace Enums.via.audiorender
+{
+    public enum OutputLogType : uint
+    {
         Default = 1,
         NSWSaturation = 2,
         ExternalSource = 4,
@@ -17369,15 +20089,19 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em8001.Action.OpenDoor {
-    public enum Type {
+namespace Enums.app.Em8001.Action.OpenDoor
+{
+    public enum Type
+    {
         Swing_Front = 0,
         Swing_Back = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum KeyboardSpecialKey {
+namespace Enums.via.hid
+{
+    public enum KeyboardSpecialKey
+    {
         None = 0,
         Shift = 16,
         Control = 17,
@@ -17385,15 +20109,19 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.CH8PlayerOrder.IgnoreInputReturnFromMenu {
-    public enum IgnoreInputTimeType {
+namespace Enums.app.CH8PlayerOrder.IgnoreInputReturnFromMenu
+{
+    public enum IgnoreInputTimeType
+    {
         Frame = 0,
         Second = 1,
     }
 }
 
-namespace Enums.app.AI.AINavigationHelper {
-    public enum ResultType {
+namespace Enums.app.AI.AINavigationHelper
+{
+    public enum ResultType
+    {
         None = 0,
         Update = 1,
         Fail = 2,
@@ -17401,37 +20129,47 @@ namespace Enums.app.AI.AINavigationHelper {
     }
 }
 
-namespace Enums.app.fsm.CH9InGameContentAction {
-    public enum OperationTypeEnum {
+namespace Enums.app.fsm.CH9InGameContentAction
+{
+    public enum OperationTypeEnum
+    {
         ContentStart = 0,
         ContentEnd = 1,
     }
 }
 
-namespace Enums.via.physics.StaticCompoundShape.Instance {
-    public enum Type {
+namespace Enums.via.physics.StaticCompoundShape.Instance
+{
+    public enum Type
+    {
         Additive = 0,
         Subtractive = 1,
     }
 }
 
-namespace Enums.app.FileMenu_FileList {
-    public enum ProcResultDef {
+namespace Enums.app.FileMenu_FileList
+{
+    public enum ProcResultDef
+    {
         Cancel = 0,
         Decide = 1,
     }
 }
 
-namespace Enums.app.Em3001.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
         Acid = 1,
         TNormal = 2,
     }
 }
 
-namespace Enums.app.SaveDataManager {
-    public enum LoadingState {
+namespace Enums.app.SaveDataManager
+{
+    public enum LoadingState
+    {
         None = 0,
         SaveDataLoading = 1,
         RootClear = 2,
@@ -17441,8 +20179,10 @@ namespace Enums.app.SaveDataManager {
     }
 }
 
-namespace Enums.via {
-    public enum AreaQueryCategory {
+namespace Enums.via
+{
+    public enum AreaQueryCategory
+    {
         Unknown = 0,
         AreaItem = 1,
         Position = 2,
@@ -17452,8 +20192,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum VehicleGear {
+namespace Enums.via.dynamics
+{
+    public enum VehicleGear
+    {
         Reverse = 0,
         Neutral = 1,
         First = 2,
@@ -17465,15 +20207,19 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.app.CH8Em4090Grapple {
-    public enum AttackType {
+namespace Enums.app.CH8Em4090Grapple
+{
+    public enum AttackType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.EventActionTask {
-    public enum PriorityType {
+namespace Enums.app.EventActionTask
+{
+    public enum PriorityType
+    {
         None = 0,
         InteractEventLow = 1,
         Grapple = 2,
@@ -17482,15 +20228,19 @@ namespace Enums.app.EventActionTask {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Jump {
-    public enum Jumptype {
+namespace Enums.app.CH8Em4500.Action.CH8Jump
+{
+    public enum Jumptype
+    {
         None = -1,
         Normal = 0,
     }
 }
 
-namespace Enums.app.Em3600.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Grapple
+{
+    public enum Type
+    {
         ThrowF = 0,
         Mount = 1,
         MountFourLeg = 2,
@@ -17503,8 +20253,10 @@ namespace Enums.app.Em3600.Action.Grapple {
     }
 }
 
-namespace Enums.via.motion.Motion {
-    public enum IntervalUpdateOption {
+namespace Enums.via.motion.Motion
+{
+    public enum IntervalUpdateOption
+    {
         None = 0,
         ApplyAllJoints = 1,
         UpdateRootAndApplyRoot = 2,
@@ -17512,8 +20264,10 @@ namespace Enums.via.motion.Motion {
     }
 }
 
-namespace Enums.via.render.layer.StochasticTransparent {
-    public enum Segment {
+namespace Enums.via.render.layer.StochasticTransparent
+{
+    public enum Segment
+    {
         Preprocess = 0,
         ZPrePass = 1,
         UpdateBuffer = 2,
@@ -17521,16 +20275,20 @@ namespace Enums.via.render.layer.StochasticTransparent {
     }
 }
 
-namespace Enums.app.Em8001.Message {
-    public enum Priority {
+namespace Enums.app.Em8001.Message
+{
+    public enum Priority
+    {
         Low = 0,
         Middle = 1,
         High = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.Hide {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Hide
+{
+    public enum Type
+    {
         FirePlace_1F = 0,
         Floor_1F = 1,
         SmallRoomCeiling_1F = 2,
@@ -17547,15 +20305,19 @@ namespace Enums.app.Em3600.Action.Hide {
     }
 }
 
-namespace Enums.app.ItemExplanation {
-    public enum ItemTextType {
+namespace Enums.app.ItemExplanation
+{
+    public enum ItemTextType
+    {
         Name = 0,
         Explanation = 1,
     }
 }
 
-namespace Enums.app.CH8SettingSkill_Item {
-    public enum Process {
+namespace Enums.app.CH8SettingSkill_Item
+{
+    public enum Process
+    {
         Idle = 0,
         DLC_Init = 1,
         DLC_update = 2,
@@ -17564,15 +20326,19 @@ namespace Enums.app.CH8SettingSkill_Item {
     }
 }
 
-namespace Enums.app.WetPlayer {
-    public enum Setting {
+namespace Enums.app.WetPlayer
+{
+    public enum Setting
+    {
         Normal = 0,
         Wet = 1,
     }
 }
 
-namespace Enums.hikako.ActivityManager {
-    public enum ProgressActivityType {
+namespace Enums.hikako.ActivityManager
+{
+    public enum ProgressActivityType
+    {
         Objective_01 = 0,
         Objective_FF01 = 1,
         Objective_02 = 2,
@@ -17589,8 +20355,10 @@ namespace Enums.hikako.ActivityManager {
     }
 }
 
-namespace Enums.via.geometry.GeometryBrush {
-    public enum BooleanState {
+namespace Enums.via.geometry.GeometryBrush
+{
+    public enum BooleanState
+    {
         No = 0,
         ReadyNo = 1,
         ReadyYes = 2,
@@ -17598,8 +20366,10 @@ namespace Enums.via.geometry.GeometryBrush {
     }
 }
 
-namespace Enums.via.motion.IkDog {
-    public enum RayCastCallbackID {
+namespace Enums.via.motion.IkDog
+{
+    public enum RayCastCallbackID
+    {
         BackLeft = 1,
         BackRight = 2,
         ForeLeft = 4,
@@ -17617,8 +20387,10 @@ namespace Enums.via.motion.IkDog {
     }
 }
 
-namespace Enums.app.CH8Em4000BladeController {
-    public enum Type {
+namespace Enums.app.CH8Em4000BladeController
+{
+    public enum Type
+    {
         Default = 0,
         Slash = 1,
         SlashTry = 2,
@@ -17628,8 +20400,10 @@ namespace Enums.app.CH8Em4000BladeController {
     }
 }
 
-namespace Enums.via.render.LDRColorDeficiencySimulation {
-    public enum DeficiencyType {
+namespace Enums.via.render.LDRColorDeficiencySimulation
+{
+    public enum DeficiencyType
+    {
         Normal = 0,
         Protanopia = 1,
         Deuteranopia = 2,
@@ -17639,8 +20413,10 @@ namespace Enums.via.render.LDRColorDeficiencySimulation {
     }
 }
 
-namespace Enums.via.navigation {
-    public enum PathObjectOperatorType {
+namespace Enums.via.navigation
+{
+    public enum PathObjectOperatorType
+    {
         PathObjectOperator_NavigationTargetStraight = 0,
         PathObjectOperator_NavMeshStraight = 1,
         PathObjectOperator_NavMeshMapBoundary = 2,
@@ -17653,22 +20429,28 @@ namespace Enums.via.navigation {
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Damage {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.ActiveControlBase {
-    public enum EventTypeEnum {
+namespace Enums.app.ActiveControlBase
+{
+    public enum EventTypeEnum
+    {
         None = 0,
         Main = 1,
     }
 }
 
-namespace Enums.via {
-    public enum InterpolationType {
+namespace Enums.via
+{
+    public enum InterpolationType
+    {
         Unknown = 0,
         Discrete = 1,
         Linear = 2,
@@ -17687,8 +20469,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em3001Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3001Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Dummy = 1,
         AppearF = 2,
@@ -17697,43 +20481,55 @@ namespace Enums.app.Em3001Order.Appear {
     }
 }
 
-namespace Enums.via.navigation.algorithm.MapGraphAstar {
-    public enum TryPossibilityType {
+namespace Enums.via.navigation.algorithm.MapGraphAstar
+{
+    public enum TryPossibilityType
+    {
         NoTry = 0,
         Node = 1,
         Path = 2,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodIdConverter {
+namespace Enums.via.network.error
+{
+    public enum MethodIdConverter
+    {
         GetNickname = 0,
     }
 }
 
-namespace Enums.app.CH8ChangeFogParamProxy {
-    public enum REQUEST_MODE {
+namespace Enums.app.CH8ChangeFogParamProxy
+{
+    public enum REQUEST_MODE
+    {
         NONE = 0,
         NORMAL = 1,
         NIGHT_VISION = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum LightMask {
+namespace Enums.via.render
+{
+    public enum LightMask
+    {
         Default = 0,
         Beauty = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000.CH8ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4000.CH8ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render.LightVolumeDecal {
-    public enum DecalTextureSize {
+namespace Enums.via.render.LightVolumeDecal
+{
+    public enum DecalTextureSize
+    {
         DecalTextureSize_64 = 64,
         DecalTextureSize_128 = 128,
         DecalTextureSize_256 = 256,
@@ -17742,14 +20538,18 @@ namespace Enums.via.render.LightVolumeDecal {
     }
 }
 
-namespace Enums.via.motion.IkMultiBoneData {
-    public enum AttributeFlags {
+namespace Enums.via.motion.IkMultiBoneData
+{
+    public enum AttributeFlags
+    {
         IsUseMotionPose = 1,
     }
 }
 
-namespace Enums.via {
-    public enum HardwareServiceThermalState {
+namespace Enums.via
+{
+    public enum HardwareServiceThermalState
+    {
         Normal = 0,
         LittleHigh = 1,
         High = 2,
@@ -17760,14 +20560,18 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CH9Em7700Order {
-    public enum OrderType {
+namespace Enums.app.CH9Em7700Order
+{
+    public enum OrderType
+    {
         WarpTo = 0,
     }
 }
 
-namespace Enums.app.Cp7CardGameReward {
-    public enum Type {
+namespace Enums.app.Cp7CardGameReward
+{
+    public enum Type
+    {
         OpenItem = 0,
         AddDrawNum = 1,
         AddBetNum = 2,
@@ -17775,8 +20579,10 @@ namespace Enums.app.Cp7CardGameReward {
     }
 }
 
-namespace Enums.app.TitleExtraContentGUI {
-    public enum State {
+namespace Enums.app.TitleExtraContentGUI
+{
+    public enum State
+    {
         EXTRAGAME1 = 0,
         EXTRAGAME2 = 1,
         DLC1 = 2,
@@ -17786,23 +20592,29 @@ namespace Enums.app.TitleExtraContentGUI {
     }
 }
 
-namespace Enums.app.Em4100.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.Em4100.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.Em4200ActionController {
-    public enum AngerStatus {
+namespace Enums.app.Em4200ActionController
+{
+    public enum AngerStatus
+    {
         Normal = 0,
         NeedAnger = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.Fall {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Fall
+{
+    public enum Type
+    {
         Normal = 0,
         TwoLegJumpOff = 1,
         GenerateCancelWall = 2,
@@ -17811,23 +20623,29 @@ namespace Enums.app.Em3600.Action.Fall {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum VrFrontGuideIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum VrFrontGuideIndex
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum CenterAdjust {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum CenterAdjust
+    {
         None = 0,
         CogCtrl = 1,
         ToRoot = 2,
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum LodDebugTypeEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum LodDebugTypeEnum
+    {
         None = 0,
         LodLevel = 1,
         NodeUV = 2,
@@ -17837,22 +20655,28 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.app.Em4200.Action.Idle {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.FadeControl {
-    public enum FadeStatusEnum {
+namespace Enums.app.FadeControl
+{
+    public enum FadeStatusEnum
+    {
         OffBlack = 0,
         OnBlack = 1,
     }
 }
 
-namespace Enums.app.CH9SaveMenu {
-    public enum StepType {
+namespace Enums.app.CH9SaveMenu
+{
+    public enum StepType
+    {
         Init = 0,
         Main = 1,
         Load = 2,
@@ -17864,15 +20688,19 @@ namespace Enums.app.CH9SaveMenu {
     }
 }
 
-namespace Enums.app.fsm.CH8ElevatorDoor {
-    public enum ActionType {
+namespace Enums.app.fsm.CH8ElevatorDoor
+{
+    public enum ActionType
+    {
         Open = 0,
         Close = 1,
     }
 }
 
-namespace Enums.via.telemetry.TelemetryManager {
-    public enum EventType {
+namespace Enums.via.telemetry.TelemetryManager
+{
+    public enum EventType
+    {
         Ready = 0,
         Activated = 0,
         Deactivated = 1,
@@ -17880,8 +20708,10 @@ namespace Enums.via.telemetry.TelemetryManager {
     }
 }
 
-namespace Enums.app.Em5400Order.Appear {
-    public enum Type {
+namespace Enums.app.Em5400Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
         Ground = 1,
         Appear = 2,
@@ -17892,8 +20722,10 @@ namespace Enums.app.Em5400Order.Appear {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum RankPointType {
+namespace Enums.app.GameManager
+{
+    public enum RankPointType
+    {
         PlGetItem = 0,
         EmAttackFailed = 1,
         PlDying = 2,
@@ -17903,23 +20735,29 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.render.VolumetricFogControl {
-    public enum ShadowQuality {
+namespace Enums.via.render.VolumetricFogControl
+{
+    public enum ShadowQuality
+    {
         Auto = 0,
         High = 1,
         Middle = 2,
     }
 }
 
-namespace Enums.via.os.websocket_client {
-    public enum MessageType {
+namespace Enums.via.os.websocket_client
+{
+    public enum MessageType
+    {
         Binary = 0,
         Text = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum LightBakeOption {
+namespace Enums.via.render
+{
+    public enum LightBakeOption
+    {
         None = 0,
         Direct = 1,
         Indirect = 2,
@@ -17927,13 +20765,17 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.AppealAwaken {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.AppealAwaken
+{
+    public enum Type
+    {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum ChapterType {
+namespace Enums.app.GameManager
+{
+    public enum ChapterType
+    {
         BootLogo = 0,
         FirstMenu = 1,
         FirstPlayable = 2,
@@ -17948,8 +20790,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.NowOnSaleMenu {
-    public enum Step {
+namespace Enums.app.NowOnSaleMenu
+{
+    public enum Step
+    {
         Main = 0,
         Yes = 1,
         No = 2,
@@ -17958,8 +20802,10 @@ namespace Enums.app.NowOnSaleMenu {
     }
 }
 
-namespace Enums.via {
-    public enum EffectPerformanceLevel {
+namespace Enums.via
+{
+    public enum EffectPerformanceLevel
+    {
         Low = 0,
         Normal = 1,
         Caution = 2,
@@ -17968,8 +20814,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em3600Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3600Order.Appear
+{
+    public enum Type
+    {
         TwoLegIdle = 0,
         FourLegIdle = 1,
         Floor = 2,
@@ -17978,15 +20826,19 @@ namespace Enums.app.Em3600Order.Appear {
     }
 }
 
-namespace Enums.app.CH9Em7700ActionController {
-    public enum DestinationType {
+namespace Enums.app.CH9Em7700ActionController
+{
+    public enum DestinationType
+    {
         ChangeThink = 0,
         SelfKill = 1,
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum VariablesTagID {
+namespace Enums.app.Achievement
+{
+    public enum VariablesTagID
+    {
         CountOfKilledByKnife = 0,
         CountOfKilledByAttachBomb = 1,
         CountOfOpenItemBox = 2,
@@ -18023,16 +20875,20 @@ namespace Enums.app.Achievement {
     }
 }
 
-namespace Enums.via.navigation.map.MapData {
-    public enum MapStructure {
+namespace Enums.via.navigation.map.MapData
+{
+    public enum MapStructure
+    {
         Unclassified = 0,
         GroundBase = 1,
         AllSurface = 2,
     }
 }
 
-namespace Enums.app.Em3002 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3002
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Rest = 1,
         RestEnd = 2,
@@ -18047,16 +20903,20 @@ namespace Enums.app.Em3002 {
     }
 }
 
-namespace Enums.via.landscape.streaming.beta {
-    public enum PageRequestType {
+namespace Enums.via.landscape.streaming.beta
+{
+    public enum PageRequestType
+    {
         Allocate = 0,
         Deallocate = 1,
         Nop = 2,
     }
 }
 
-namespace Enums.app.Em3102 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3102
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Rest = 1,
         RestEnd = 2,
@@ -18066,22 +20926,28 @@ namespace Enums.app.Em3102 {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum DivideAxisType {
+namespace Enums.via.effect.detail
+{
+    public enum DivideAxisType
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.app.Em5510Order.Appear {
-    public enum Type {
+namespace Enums.app.Em5510Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.via.eq.Token {
-    public enum Type {
+namespace Enums.via.eq.Token
+{
+    public enum Type
+    {
         Constant = 0,
         Operator = 1,
         UnaryOperator = 2,
@@ -18090,8 +20956,10 @@ namespace Enums.via.eq.Token {
     }
 }
 
-namespace Enums.via.puppet.RemoteGameObject {
-    public enum WarpType {
+namespace Enums.via.puppet.RemoteGameObject
+{
+    public enum WarpType
+    {
         Initialize = 0,
         Master = 1,
         Puppet = 2,
@@ -18099,8 +20967,10 @@ namespace Enums.via.puppet.RemoteGameObject {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EffectBoundsType {
+namespace Enums.via.effect.detail
+{
+    public enum EffectBoundsType
+    {
         None = 0,
         Sphere = 1,
         AABB = 2,
@@ -18108,8 +20978,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.navigation.AIMapAutoScan {
-    public enum AutoState {
+namespace Enums.via.navigation.AIMapAutoScan
+{
+    public enum AutoState
+    {
         Move = 0,
         FromCenter = 1,
         ToCenter = 2,
@@ -18117,8 +20989,10 @@ namespace Enums.via.navigation.AIMapAutoScan {
     }
 }
 
-namespace Enums.app.DetectionParam {
-    public enum Level {
+namespace Enums.app.DetectionParam
+{
+    public enum Level
+    {
         Lv0 = 0,
         Lv1 = 1,
         Lv2 = 2,
@@ -18129,15 +21003,19 @@ namespace Enums.app.DetectionParam {
     }
 }
 
-namespace Enums.app.MovementController {
-    public enum Mode {
+namespace Enums.app.MovementController
+{
+    public enum Mode
+    {
         Internal = 0,
         External = 1,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapSheetState {
+namespace Enums.app.MapManager
+{
+    public enum MapSheetState
+    {
         Disable = 0,
         OpenMapWindow = 1,
         OpenMapSheet = 2,
@@ -18145,8 +21023,10 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.app.Em4000Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.Em4000Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -18156,16 +21036,20 @@ namespace Enums.app.Em4000Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.app.CH8GameManager {
-    public enum Difficulty {
+namespace Enums.app.CH8GameManager
+{
+    public enum Difficulty
+    {
         Casual = 0,
         Normal = 1,
         Hard = 2,
     }
 }
 
-namespace Enums.app.vr.VrFlowBase {
-    public enum CutinType {
+namespace Enums.app.vr.VrFlowBase
+{
+    public enum CutinType
+    {
         VrModeChangeCheck = 0,
         Success = 1,
         Cancel = 2,
@@ -18176,22 +21060,28 @@ namespace Enums.app.vr.VrFlowBase {
     }
 }
 
-namespace Enums.app.Em4000.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.Em5400.Action.FlyMove {
-    public enum Type {
+namespace Enums.app.Em5400.Action.FlyMove
+{
+    public enum Type
+    {
         Normal = 0,
         LookTarget = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Breath {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Breath
+{
+    public enum Type
+    {
         Vertical = 0,
         Horizontal = 1,
         Walk = 2,
@@ -18199,15 +21089,19 @@ namespace Enums.app.CH8Em4400.Action.CH8Breath {
     }
 }
 
-namespace Enums.app.CH9Em6400HeadController {
-    public enum InsectMotionState {
+namespace Enums.app.CH9Em6400HeadController
+{
+    public enum InsectMotionState
+    {
         Sleep = 0,
         Active = 1,
     }
 }
 
-namespace Enums.via.render.TextureScaler {
-    public enum ScalingMethodType {
+namespace Enums.via.render.TextureScaler
+{
+    public enum ScalingMethodType
+    {
         Nearest = 0,
         Bilinear = 1,
         SmoothBilinear = 2,
@@ -18216,15 +21110,19 @@ namespace Enums.via.render.TextureScaler {
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum Duties {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum Duties
+    {
         Guest = 0,
         Host = 1,
     }
 }
 
-namespace Enums.app.KeyHelpPlayable {
-    public enum DispTypeDef {
+namespace Enums.app.KeyHelpPlayable
+{
+    public enum DispTypeDef
+    {
         Up = 0,
         Center = 1,
         Message = 2,
@@ -18233,8 +21131,10 @@ namespace Enums.app.KeyHelpPlayable {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Step {
-    public enum RequestStepType {
+namespace Enums.app.CH9Em6400.Action.Step
+{
+    public enum RequestStepType
+    {
         Back = 0,
         BackLong = 1,
         BackLeft = 2,
@@ -18249,15 +21149,19 @@ namespace Enums.app.CH9Em6400.Action.Step {
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadJoyHoldType {
+namespace Enums.via.hid
+{
+    public enum NpadJoyHoldType
+    {
         Vertical = 0,
         Horizontal = 1,
     }
 }
 
-namespace Enums.app.Em4000.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.Em4000.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Mimicry = 1,
         Dregs = 2,
@@ -18268,8 +21172,10 @@ namespace Enums.app.Em4000.ThinkStateSet {
     }
 }
 
-namespace Enums.app.Em4100ActionPoint {
-    public enum Type {
+namespace Enums.app.Em4100ActionPoint
+{
+    public enum Type
+    {
         ClimbWall40 = 0,
         ClimbWall79 = 1,
         ClimbWall80 = 2,
@@ -18282,23 +21188,29 @@ namespace Enums.app.Em4100ActionPoint {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum WindowMode {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum WindowMode
+    {
         Single = 0,
         Floating = 1,
         AdjacentFloating = 2,
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Idle {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em7700.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -18318,23 +21230,29 @@ namespace Enums.app.CH9Em7700.Goal {
     }
 }
 
-namespace Enums.via.physics.CollisionSkinningMeshResource {
-    public enum WeightType {
+namespace Enums.via.physics.CollisionSkinningMeshResource
+{
+    public enum WeightType
+    {
         None = 0,
         Weight4 = 1,
         Weight8 = 2,
     }
 }
 
-namespace Enums.via.physics.RequestSetCollider.RequestSet {
-    public enum State {
+namespace Enums.via.physics.RequestSetCollider.RequestSet
+{
+    public enum State
+    {
         Registered = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via {
-    public enum DisplayType {
+namespace Enums.via
+{
+    public enum DisplayType
+    {
         Fit = 0,
         Uniform4x3 = 1,
         Uniform16x9 = 2,
@@ -18361,30 +21279,38 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum RayCastSkipOption {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum RayCastSkipOption
+    {
         None = 1,
         DIV2 = 2,
     }
 }
 
-namespace Enums.via.render.layer.PostDeferredLighting {
-    public enum PriorSegment {
+namespace Enums.via.render.layer.PostDeferredLighting
+{
+    public enum PriorSegment
+    {
         ComputeVolumetricFog = 0,
         IndirectIlluminationWait = 16,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum Shape3DType {
+namespace Enums.via.effect.detail
+{
+    public enum Shape3DType
+    {
         Box = 0,
         Sphere = 1,
         Cylinder = 2,
     }
 }
 
-namespace Enums.app.Em3600.Em3600WwiseMonitoredValue {
-    public enum PropertyBgmMode {
+namespace Enums.app.Em3600.Em3600WwiseMonitoredValue
+{
+    public enum PropertyBgmMode
+    {
         Normal = 0,
         Wall = 1,
         Generate = 2,
@@ -18393,21 +21319,27 @@ namespace Enums.app.Em3600.Em3600WwiseMonitoredValue {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8Grapple
+{
+    public enum Type
+    {
         Thrust = 0,
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig {
-    public enum JointType {
+namespace Enums.via.motion.FullBodyIKRig
+{
+    public enum JointType
+    {
         Cone = 0,
         Hinge = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum WindowModeChangeStatus {
+namespace Enums.via.render
+{
+    public enum WindowModeChangeStatus
+    {
         SetWindowMode = 0,
         KeyboardShortcuts = 1,
         Occlude = 2,
@@ -18415,15 +21347,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.gui {
-    public enum SVGStrokeRangeType {
+namespace Enums.via.gui
+{
+    public enum SVGStrokeRangeType
+    {
         TotalPath = 0,
         EachPath = 1,
     }
 }
 
-namespace Enums.app.Em8910 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8910
+{
+    public enum ThinkOrder
+    {
         None = 0,
         CleaveAttack = 1,
         PierceAttack = 2,
@@ -18434,8 +21370,10 @@ namespace Enums.app.Em8910 {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum SimulationMeshVisibleType {
+namespace Enums.via.dynamics
+{
+    public enum SimulationMeshVisibleType
+    {
         Normal = 0,
         Weight = 1,
         Mass = 2,
@@ -18445,22 +21383,28 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via.timeline.UserCurvePlayer {
-    public enum ResourceType {
+namespace Enums.via.timeline.UserCurvePlayer
+{
+    public enum ResourceType
+    {
         None = 0,
         UserCurve = 1,
         UserCurveList = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum BufferUavFlag {
+namespace Enums.via.render
+{
+    public enum BufferUavFlag
+    {
         Raw = 1,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveIcon {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveIcon
+    {
         IconNew = 0,
         Icon1 = 1,
         Icon2 = 2,
@@ -18565,16 +21509,20 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.CH9MessageController.MessageInfoListCtrl {
-    public enum PlayType {
+namespace Enums.app.CH9MessageController.MessageInfoListCtrl
+{
+    public enum PlayType
+    {
         Default = 0,
         RandomOnce = 1,
         RandomLoop = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum ShortActionType {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum ShortActionType
+    {
         Attack_SkillA1 = 100,
         Attack_SkillA2 = 101,
         Attack_SkillA3 = 102,
@@ -18628,8 +21576,10 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.app.Em3000.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Damage
+{
+    public enum Type
+    {
         NoDamage = 0,
         MidHeadF = 1,
         MidHeadFR = 2,
@@ -18663,22 +21613,28 @@ namespace Enums.app.Em3000.Action.Damage {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum OptionStatePattern {
+namespace Enums.app.OptionMenu
+{
+    public enum OptionStatePattern
+    {
         Default = 0,
         Arabic = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.InteractDetailSearch {
-    public enum SearchEventSubInteractType {
+namespace Enums.app.InteractDetailSearch
+{
+    public enum SearchEventSubInteractType
+    {
         EndInteract = 0,
         NotEndInteract = 1,
         PauseWaitInteract = 2,
@@ -18686,8 +21642,10 @@ namespace Enums.app.InteractDetailSearch {
     }
 }
 
-namespace Enums.app.InteractObjectBase {
-    public enum Type {
+namespace Enums.app.InteractObjectBase
+{
+    public enum Type
+    {
         None = 0,
         ManualMovable = 1,
         ManualDetailSearch = 2,
@@ -18707,8 +21665,10 @@ namespace Enums.app.InteractObjectBase {
     }
 }
 
-namespace Enums.app.Em8100.Em8100WwiseMonitoredValue {
-    public enum PropertyBurn {
+namespace Enums.app.Em8100.Em8100WwiseMonitoredValue
+{
+    public enum PropertyBurn
+    {
         None = 0,
         Burn1 = 1,
         Burn2 = 2,
@@ -18717,15 +21677,19 @@ namespace Enums.app.Em8100.Em8100WwiseMonitoredValue {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataArrayType {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataArrayType
+    {
         Value = 0,
         Class = 1,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum OutputDevice {
+namespace Enums.via.wwise
+{
+    public enum OutputDevice
+    {
         None = 0,
         HDMI = 1,
         Headphone = 2,
@@ -18735,29 +21699,37 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.FBIKAttackController {
-    public enum HandModeType {
+namespace Enums.app.FBIKAttackController
+{
+    public enum HandModeType
+    {
         R = 0,
         L = 1,
     }
 }
 
-namespace Enums.app.CH9Em6700.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em6700.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         Surface = 10,
     }
 }
 
-namespace Enums.app.ScreenAreaAdjustGUI {
-    public enum ModeDef {
+namespace Enums.app.ScreenAreaAdjustGUI
+{
+    public enum ModeDef
+    {
         BootFlow = 0,
         Normal = 1,
     }
 }
 
-namespace Enums.app.Chapter3_IMD_MainMenu {
-    public enum ProcStateEnum {
+namespace Enums.app.Chapter3_IMD_MainMenu
+{
+    public enum ProcStateEnum
+    {
         Startup = 0,
         WaitResident = 1,
         InputProc = 2,
@@ -18766,22 +21738,28 @@ namespace Enums.app.Chapter3_IMD_MainMenu {
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig {
-    public enum AngleLimitAxisSource {
+namespace Enums.via.motion.FullBodyIKRig
+{
+    public enum AngleLimitAxisSource
+    {
         Motion = 0,
         Parent = 1,
     }
 }
 
-namespace Enums.app.EnemySpawnInfo.ResumeParameter {
-    public enum Type {
+namespace Enums.app.EnemySpawnInfo.ResumeParameter
+{
+    public enum Type
+    {
         LastStandingPoint = 0,
         FirstAppearPoint = 1,
     }
 }
 
-namespace Enums.app.Havok.CH8Em4500RagdollCharacter {
-    public enum PartsId {
+namespace Enums.app.Havok.CH8Em4500RagdollCharacter
+{
+    public enum PartsId
+    {
         Hip = 0,
         Hip_Live = 1,
         R_Thigh = 2,
@@ -18806,8 +21784,10 @@ namespace Enums.app.Havok.CH8Em4500RagdollCharacter {
     }
 }
 
-namespace Enums.via.gui {
-    public enum FontSlot {
+namespace Enums.via.gui
+{
+    public enum FontSlot
+    {
         Slot0 = 0,
         Slot1 = 1,
         Slot2 = 2,
@@ -18828,8 +21808,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.render {
-    public enum Filter {
+namespace Enums.via.render
+{
+    public enum Filter
+    {
         MinMagMipPoint = 0,
         MinMagPointMipLinear = 1,
         MinPointMagLinearMipPoint = 4,
@@ -18851,16 +21833,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.render {
-    public enum EyeballShadingType {
+namespace Enums.via.render
+{
+    public enum EyeballShadingType
+    {
         Standard = 0,
         Expensive = 1,
         ExpensiveWithCaustics = 2,
     }
 }
 
-namespace Enums.app.CH8Telemetry {
-    public enum LostPartsType {
+namespace Enums.app.CH8Telemetry
+{
+    public enum LostPartsType
+    {
         Em4400Head = 0,
         Em4600Head = 1,
         Em4600LeftArm = 2,
@@ -18870,28 +21856,36 @@ namespace Enums.app.CH8Telemetry {
     }
 }
 
-namespace Enums.app.CH8Em4450.Action.CH8Avoidance {
-    public enum AvoidanceType {
+namespace Enums.app.CH8Em4450.Action.CH8Avoidance
+{
+    public enum AvoidanceType
+    {
         Right = 0,
         Left = 1,
     }
 }
 
-namespace Enums.app.CH9Em6700.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em6700.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.fsm.RequestFadeInOut {
-    public enum FadeTypeEnum {
+namespace Enums.app.fsm.RequestFadeInOut
+{
+    public enum FadeTypeEnum
+    {
         FadeOut = 0,
         FadeIn = 1,
     }
 }
 
-namespace Enums.via.gui.GUIUtility {
-    public enum AnalyzeContext {
+namespace Enums.via.gui.GUIUtility
+{
+    public enum AnalyzeContext
+    {
         Key = 0,
         Association = 1,
         Value = 2,
@@ -18900,30 +21894,38 @@ namespace Enums.via.gui.GUIUtility {
     }
 }
 
-namespace Enums.app.Em5510Think {
-    public enum ThinkMode {
+namespace Enums.app.Em5510Think
+{
+    public enum ThinkMode
+    {
         Normal = 0,
         NoThink = 1,
         Passive = 2,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum CenterAdjustMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum CenterAdjustMode
+    {
         Default = 0,
         LockIgnore = 1,
     }
 }
 
-namespace Enums.via.fsm {
-    public enum StateQueryType {
+namespace Enums.via.fsm
+{
+    public enum StateQueryType
+    {
         All = 0,
         Start = 1,
     }
 }
 
-namespace Enums.via.clr.VMRuntimeType {
-    public enum Kind {
+namespace Enums.via.clr.VMRuntimeType
+{
+    public enum Kind
+    {
         Default = 0,
         GenericParameter = 1,
         ByRef = 2,
@@ -18931,31 +21933,39 @@ namespace Enums.via.clr.VMRuntimeType {
     }
 }
 
-namespace Enums.via.memory {
-    public enum InstanceType {
+namespace Enums.via.memory
+{
+    public enum InstanceType
+    {
         Default = 0,
         Object = 1,
         ManagedObject = 2,
     }
 }
 
-namespace Enums.app.PlayerMeshController {
-    public enum LegPartsState {
+namespace Enums.app.PlayerMeshController
+{
+    public enum LegPartsState
+    {
         Normal = 0,
         LegCut = 1,
         LegCure = 2,
     }
 }
 
-namespace Enums.app.fsm.AdjustSafeSpace {
-    public enum FindType {
+namespace Enums.app.fsm.AdjustSafeSpace
+{
+    public enum FindType
+    {
         Direction = 0,
         SpaceCheck = 1,
     }
 }
 
-namespace Enums.app.Em2000.Action.Chapter1Battle4SlashAttack {
-    public enum Type {
+namespace Enums.app.Em2000.Action.Chapter1Battle4SlashAttack
+{
+    public enum Type
+    {
         SlashL = 0,
         SlashR = 1,
         ShortSlashL = 2,
@@ -18968,15 +21978,19 @@ namespace Enums.app.Em2000.Action.Chapter1Battle4SlashAttack {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8ThreatOneShot {
-    public enum ThreatType {
+namespace Enums.app.CH8Em4500.Action.CH8ThreatOneShot
+{
+    public enum ThreatType
+    {
         Small = 0,
         Big = 1,
     }
 }
 
-namespace Enums.app.Item {
-    public enum ITEMSTATE {
+namespace Enums.app.Item
+{
+    public enum ITEMSTATE
+    {
         SCENE_SET = 0,
         DROP_SET = 1,
         INVENTRY_IN = 2,
@@ -18988,8 +22002,10 @@ namespace Enums.app.Item {
     }
 }
 
-namespace Enums.app.Em3100.Message {
-    public enum TagRandomMessageGroup {
+namespace Enums.app.Em3100.Message
+{
+    public enum TagRandomMessageGroup
+    {
         None = 0,
         BugHole_BattleStart = 1,
         BugHole_Common = 2,
@@ -19009,8 +22025,10 @@ namespace Enums.app.Em3100.Message {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum CallbackType {
+namespace Enums.via.simplewwise
+{
+    public enum CallbackType
+    {
         None = 0,
         EndOfEvent = 1,
         EndOfDynamicSequenceItem = 2,
@@ -19036,15 +22054,19 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.render {
-    public enum AccelerationStructureGeometryFlag {
+namespace Enums.via.render
+{
+    public enum AccelerationStructureGeometryFlag
+    {
         None = 0,
         Opaque = 1,
     }
 }
 
-namespace Enums.app {
-    public enum BulletID {
+namespace Enums.app
+{
+    public enum BulletID
+    {
         None = 0,
         Normal = 1,
         Strong = 2,
@@ -19053,8 +22075,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.typeinfo {
-    public enum TypeCode {
+namespace Enums.via.typeinfo
+{
+    public enum TypeCode
+    {
         Undefined = 0,
         Object = 1,
         Action = 2,
@@ -19143,8 +22167,10 @@ namespace Enums.via.typeinfo {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum DeviceTypeWindows {
+namespace Enums.via.simplewwise
+{
+    public enum DeviceTypeWindows
+    {
         None = 0,
         Main = 1,
         MergeToMain = 2,
@@ -19154,15 +22180,19 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.navigation.algorithm.LinkValidityGetter {
-    public enum BaseType {
+namespace Enums.via.navigation.algorithm.LinkValidityGetter
+{
+    public enum BaseType
+    {
         Start = 0,
         Goal = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource {
-    public enum RibbonLengthComputeShaderType {
+namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource
+{
+    public enum RibbonLengthComputeShaderType
+    {
         InitializeCS = 0,
         ConstructCS = 1,
         DepthOcclusion = 2,
@@ -19171,8 +22201,10 @@ namespace Enums.via.effect.gpgpu.RibbonLengthCS.RibbonLengthResource {
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum SpawnInfoTagName {
+namespace Enums.app.Nightmare
+{
+    public enum SpawnInfoTagName
+    {
         Molded_Slow = 0,
         Molded_Blade = 1,
         Molded_Quick = 2,
@@ -19186,23 +22218,29 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.via.render.layer.Transparent {
-    public enum LuminanceBleedType {
+namespace Enums.via.render.layer.Transparent
+{
+    public enum LuminanceBleedType
+    {
         Pre = 0,
         Post = 1,
     }
 }
 
-namespace Enums.via.behaviortree.TreeNode {
-    public enum SelectorStatus {
+namespace Enums.via.behaviortree.TreeNode
+{
+    public enum SelectorStatus
+    {
         Off = 0,
         Start = 1,
         Work = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum DeviceCaps {
+namespace Enums.via.hid
+{
+    public enum DeviceCaps
+    {
         None = 0,
         ForceFeedback = 1,
         TouchInterface = 2,
@@ -19214,15 +22252,19 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.Em8001.Action.Acid {
-    public enum Type {
+namespace Enums.app.Em8001.Action.Acid
+{
+    public enum Type
+    {
         Start = 0,
         End = 1,
     }
 }
 
-namespace Enums.via.render.PrimitiveDrawObject {
-    public enum DrawType {
+namespace Enums.via.render.PrimitiveDrawObject
+{
+    public enum DrawType
+    {
         Default = 0,
         ZPrepass = 1,
         Shadow = 2,
@@ -19232,8 +22274,10 @@ namespace Enums.via.render.PrimitiveDrawObject {
     }
 }
 
-namespace Enums.via.motion.IkLookAt2 {
-    public enum State {
+namespace Enums.via.motion.IkLookAt2
+{
+    public enum State
+    {
         Focusing = 0,
         Moving = 1,
         Following = 2,
@@ -19241,8 +22285,10 @@ namespace Enums.via.motion.IkLookAt2 {
     }
 }
 
-namespace Enums.app.LastWaveUIAsset.MainPanel {
-    public enum MainState {
+namespace Enums.app.LastWaveUIAsset.MainPanel
+{
+    public enum MainState
+    {
         DEFAULT = 0,
         PLAY_BONUS = 1,
         PLAY_TEXT = 2,
@@ -19250,8 +22296,10 @@ namespace Enums.app.LastWaveUIAsset.MainPanel {
     }
 }
 
-namespace Enums.via.render.Bloodshed {
-    public enum SourceChannel {
+namespace Enums.via.render.Bloodshed
+{
+    public enum SourceChannel
+    {
         R = 1,
         G = 2,
         B = 3,
@@ -19259,8 +22307,10 @@ namespace Enums.via.render.Bloodshed {
     }
 }
 
-namespace Enums.app.Em8000.Damage {
-    public enum Mode {
+namespace Enums.app.Em8000.Damage
+{
+    public enum Mode
+    {
         Common = 0,
         Hand = 1,
         Axe = 2,
@@ -19268,8 +22318,10 @@ namespace Enums.app.Em8000.Damage {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue {
-    public enum RotOrder {
+namespace Enums.via.motion.JointExMultiRemapValue
+{
+    public enum RotOrder
+    {
         XYZ = 0,
         YZX = 1,
         ZXY = 2,
@@ -19279,23 +22331,29 @@ namespace Enums.via.motion.JointExMultiRemapValue {
     }
 }
 
-namespace Enums.via.render {
-    public enum SupportRenderMode {
+namespace Enums.via.render
+{
+    public enum SupportRenderMode
+    {
         DeferredAndForward = 0,
         Deferred = 1,
         Forward = 2,
     }
 }
 
-namespace Enums.app.EffectCommonDefine {
-    public enum EffectEndType {
+namespace Enums.app.EffectCommonDefine
+{
+    public enum EffectEndType
+    {
         Kill = 0,
         Finish = 1,
     }
 }
 
-namespace Enums.via {
-    public enum HashType {
+namespace Enums.via
+{
+    public enum HashType
+    {
         CRC16 = 0,
         CRC32 = 1,
         MD2 = 2,
@@ -19312,8 +22370,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.sound {
-    public enum SoundCurveType {
+namespace Enums.via.sound
+{
+    public enum SoundCurveType
+    {
         Linear = 0,
         FlatHermite = 1,
         SineFadeIn = 2,
@@ -19322,8 +22382,10 @@ namespace Enums.via.sound {
     }
 }
 
-namespace Enums.via.movie.Movie {
-    public enum CosmeticState {
+namespace Enums.via.movie.Movie
+{
+    public enum CosmeticState
+    {
         Preparing = 0,
         Ready = 1,
         Playing = 2,
@@ -19332,31 +22394,39 @@ namespace Enums.via.movie.Movie {
     }
 }
 
-namespace Enums.app.Em3600Think.MotherHoleInfo {
-    public enum HoleType {
+namespace Enums.app.Em3600Think.MotherHoleInfo
+{
+    public enum HoleType
+    {
         Hide = 0,
         Appear = 1,
         Sneak = 2,
     }
 }
 
-namespace Enums.app.CH8ChangeToneMapProxy {
-    public enum STATUS_FLAG {
+namespace Enums.app.CH8ChangeToneMapProxy
+{
+    public enum STATUS_FLAG
+    {
         INITIALIZE = 1,
         AUTONIGHT_VISION = 2,
     }
 }
 
-namespace Enums.via.areamap.AreaTest {
-    public enum Mode {
+namespace Enums.via.areamap.AreaTest
+{
+    public enum Mode
+    {
         Score = 0,
         Filter = 1,
         Both = 2,
     }
 }
 
-namespace Enums.via.movie {
-    public enum PlaybackPerformance {
+namespace Enums.via.movie
+{
+    public enum PlaybackPerformance
+    {
         Slowest = 0,
         Normal = 1,
         Fastest = 2,
@@ -19364,24 +22434,30 @@ namespace Enums.via.movie {
     }
 }
 
-namespace Enums.via.render.RoughTransparentUpdater {
-    public enum DebugMode {
+namespace Enums.via.render.RoughTransparentUpdater
+{
+    public enum DebugMode
+    {
         None = 0,
         Downsample = 1,
         Blur = 2,
     }
 }
 
-namespace Enums.app.Em3600 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3600
+{
+    public enum ThinkOrder
+    {
         None = 0,
         PLSearchGoTo = 1,
         SneakSet = 2,
     }
 }
 
-namespace Enums.via.hid.VrTrackerResultData {
-    public enum ProjectionQuality {
+namespace Enums.via.hid.VrTrackerResultData
+{
+    public enum ProjectionQuality
+    {
         Raw = 0,
         None = 3,
         Partial = 6,
@@ -19389,8 +22465,10 @@ namespace Enums.via.hid.VrTrackerResultData {
     }
 }
 
-namespace Enums.via.motion.RetargetRig {
-    public enum JointTypes {
+namespace Enums.via.motion.RetargetRig
+{
+    public enum JointTypes
+    {
         Head = 0,
         EndNeck = 1,
         BaseNeck = 2,
@@ -19412,8 +22490,10 @@ namespace Enums.via.motion.RetargetRig {
     }
 }
 
-namespace Enums.app.CH9Em5901.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em5901.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         Attack = 2,
@@ -19423,23 +22503,29 @@ namespace Enums.app.CH9Em5901.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.fluidflock.FluidFlockSimulationModelBase {
-    public enum NeiborSearchMethod {
+namespace Enums.via.fluidflock.FluidFlockSimulationModelBase
+{
+    public enum NeiborSearchMethod
+    {
         Default = 0,
         UseCellSpace = 1,
         Highbrid = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum ShadowCastMode {
+namespace Enums.via.render
+{
+    public enum ShadowCastMode
+    {
         A = 1,
         B = 2,
     }
 }
 
-namespace Enums.app.Em3100.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3100.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Walk = 1,
         Run = 2,
@@ -19471,21 +22557,27 @@ namespace Enums.app.Em3100.Action {
     }
 }
 
-namespace Enums.app.Em4000.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.Em4000.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.Em3101 {
-    public enum ThinkState {
+namespace Enums.app.Em3101
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum User {
+namespace Enums.via.wwise
+{
+    public enum User
+    {
         User_0 = 0,
         User_1 = 1,
         User_2 = 2,
@@ -19494,8 +22586,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.StaffRollData {
-    public enum Type {
+namespace Enums.app.StaffRollData
+{
+    public enum Type
+    {
         Work = 0,
         Company = 1,
         Organization = 2,
@@ -19505,16 +22599,20 @@ namespace Enums.app.StaffRollData {
     }
 }
 
-namespace Enums.app.Item {
-    public enum ItemSlotSize {
+namespace Enums.app.Item
+{
+    public enum ItemSlotSize
+    {
         Slot1 = 0,
         Slot2 = 1,
         Slot3 = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum SearchMode {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum SearchMode
+    {
         None = 0,
         Vision = 1,
         Hearing = 2,
@@ -19522,8 +22620,10 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.app.CH8Em4200.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4200.Action
+{
+    public enum CH8ActionNo
+    {
         MountTry = 4,
         Grapple = 5,
         Appear = 6,
@@ -19550,46 +22650,58 @@ namespace Enums.app.CH8Em4200.Action {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridLoopType {
+namespace Enums.via.gui
+{
+    public enum GridLoopType
+    {
         Clamp = 0,
         Loop = 1,
         Next = 2,
     }
 }
 
-namespace Enums.app.CH9Em7500.Evaluator.CheckRangeFromJoint {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Evaluator.CheckRangeFromJoint
+{
+    public enum Type
+    {
         Simple = 0,
         NormalizedRateScore = 1,
         RateScore = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Suspend {
-    public enum Option {
+namespace Enums.app.CH8Em4100.Action.CH8Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum Difficulty {
+namespace Enums.app.GameManager
+{
+    public enum Difficulty
+    {
         Easy = 0,
         Normal = 1,
         Hard = 2,
     }
 }
 
-namespace Enums.CH8Em4450Effect {
-    public enum IDAlias {
+namespace Enums.CH8Em4450Effect
+{
+    public enum IDAlias
+    {
         BabySpawn = 0,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_51ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_51ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -19600,15 +22712,19 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Move {
-    public enum CrawlMode {
+namespace Enums.app.CH9Em7700.Action.Move
+{
+    public enum CrawlMode
+    {
         Wait = 0,
         Walk = 1,
     }
 }
 
-namespace Enums.via {
-    public enum InterpolationFlag {
+namespace Enums.via
+{
+    public enum InterpolationFlag
+    {
         Unknown = 0,
         Discrete = 1,
         Linear = 2,
@@ -19627,22 +22743,28 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em4200.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.Em4200.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum ExecuteTiming {
+namespace Enums.via.render
+{
+    public enum ExecuteTiming
+    {
         Sync = 0,
         Async = 1,
         Precede = 2,
     }
 }
 
-namespace Enums.app.BedRoom.BedRoomManager {
-    public enum GimickReset {
+namespace Enums.app.BedRoom.BedRoomManager
+{
+    public enum GimickReset
+    {
         None = 0,
         DeActivate = 1,
         Wait = 2,
@@ -19650,14 +22772,18 @@ namespace Enums.app.BedRoom.BedRoomManager {
     }
 }
 
-namespace Enums.app.CH8Em4400Message {
-    public enum Tag {
+namespace Enums.app.CH8Em4400Message
+{
+    public enum Tag
+    {
         FirstLiquidBomb = 0,
     }
 }
 
-namespace Enums.app.Em5400ActionController {
-    public enum MaterialName {
+namespace Enums.app.Em5400ActionController
+{
+    public enum MaterialName
+    {
         Risotto_Rate = 0,
         Record_RandumFlag = 1,
         Burn_Rate = 2,
@@ -19665,8 +22791,10 @@ namespace Enums.app.Em5400ActionController {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseHttpClient {
+namespace Enums.via.network.error
+{
+    public enum CauseHttpClient
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -19695,16 +22823,20 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em3000.Em3000WwiseMonitoredValue {
-    public enum PropertyEncount {
+namespace Enums.app.Em3000.Em3000WwiseMonitoredValue
+{
+    public enum PropertyEncount
+    {
         InCamera = 0,
         OutCamera = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.BirthdaySealedSetting {
-    public enum ColorTypeEnum {
+namespace Enums.app.BirthdaySealedSetting
+{
+    public enum ColorTypeEnum
+    {
         Red = 0,
         Blue = 1,
         Green = 2,
@@ -19714,21 +22846,27 @@ namespace Enums.app.BirthdaySealedSetting {
     }
 }
 
-namespace Enums.app.fsm.CountAddTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.CountAddTest
+{
+    public enum TestTypeParam
+    {
         CoinCounter = 0,
     }
 }
 
-namespace Enums.app.AI.EvaluationMethod {
-    public enum Type {
+namespace Enums.app.AI.EvaluationMethod
+{
+    public enum Type
+    {
         Average = 0,
         Weighted = 1,
     }
 }
 
-namespace Enums.via.wwise.FreeArea {
-    public enum FreeArea0to7 : uint {
+namespace Enums.via.wwise.FreeArea
+{
+    public enum FreeArea0to7 : uint
+    {
         FreeArea0to7_None = 0xffffffffu,
         FreeArea0to7_0 = 0,
         FreeArea0to7_1 = 1,
@@ -19741,16 +22879,20 @@ namespace Enums.via.wwise.FreeArea {
     }
 }
 
-namespace Enums.via.os {
-    public enum ClipboardFormat {
+namespace Enums.via.os
+{
+    public enum ClipboardFormat
+    {
         TEXT_ANSI = 0,
         TEXT_UNICODE = 1,
         BINARY = 2,
     }
 }
 
-namespace Enums.app.MathEx {
-    public enum RotationOrder {
+namespace Enums.app.MathEx
+{
+    public enum RotationOrder
+    {
         XYZ = 0,
         XZY = 1,
         YXZ = 2,
@@ -19760,8 +22902,10 @@ namespace Enums.app.MathEx {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraSetConfigResult : uint {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraSetConfigResult : uint
+    {
         OK = 1,
         ErrorStarted = 0x80000001u,
         ErrorInvalidType = 0x80000002u,
@@ -19769,8 +22913,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.via.nnfc {
-    public enum NpadId {
+namespace Enums.via.nnfc
+{
+    public enum NpadId
+    {
         Pad1 = 0,
         Pad2 = 1,
         Pad3 = 2,
@@ -19780,8 +22926,10 @@ namespace Enums.via.nnfc {
     }
 }
 
-namespace Enums.via.attribute.RemoteFieldAttribute {
-    public enum SyncMode {
+namespace Enums.via.attribute.RemoteFieldAttribute
+{
+    public enum SyncMode
+    {
         Copy = 0,
         Kill = 1,
         Transaction = 2,
@@ -19789,8 +22937,10 @@ namespace Enums.via.attribute.RemoteFieldAttribute {
     }
 }
 
-namespace Enums.app.GraphicDefaultSettings {
-    public enum PresetType {
+namespace Enums.app.GraphicDefaultSettings
+{
+    public enum PresetType
+    {
         Default = 0,
         Low = 1,
         Medium = 2,
@@ -19802,8 +22952,10 @@ namespace Enums.app.GraphicDefaultSettings {
     }
 }
 
-namespace Enums.via.audiorender.fx.mt_equalizer {
-    public enum EQUnit {
+namespace Enums.via.audiorender.fx.mt_equalizer
+{
+    public enum EQUnit
+    {
         Low = 0,
         MidLow = 1,
         MidHigh = 2,
@@ -19812,14 +22964,18 @@ namespace Enums.via.audiorender.fx.mt_equalizer {
     }
 }
 
-namespace Enums.app.GenomeCodexGUISimple {
-    public enum StepType {
+namespace Enums.app.GenomeCodexGUISimple
+{
+    public enum StepType
+    {
         HP = 0,
     }
 }
 
-namespace Enums.via {
-    public enum PropertiedEventInvokeTiming {
+namespace Enums.via
+{
+    public enum PropertiedEventInvokeTiming
+    {
         Equal = 0,
         NotEqual = 1,
         Ever = 2,
@@ -19827,8 +22983,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.BedRoom.BedRoomQuestionBehavior {
-    public enum AnswerType {
+namespace Enums.app.BedRoom.BedRoomQuestionBehavior
+{
+    public enum AnswerType
+    {
         None = 0,
         AnswerOne = 1,
         AnswerTwo = 2,
@@ -19837,8 +22995,10 @@ namespace Enums.app.BedRoom.BedRoomQuestionBehavior {
     }
 }
 
-namespace Enums.app.GasCylinder {
-    public enum Routine {
+namespace Enums.app.GasCylinder
+{
+    public enum Routine
+    {
         Wait = 0,
         StartSpout = 1,
         Spout = 2,
@@ -19846,16 +23006,20 @@ namespace Enums.app.GasCylinder {
     }
 }
 
-namespace Enums.app.LogoControl {
-    public enum UseSlideType {
+namespace Enums.app.LogoControl
+{
+    public enum UseSlideType
+    {
         JP_D = 0,
         JP_Z = 1,
         Other = 2,
     }
 }
 
-namespace Enums.via.render.Outline {
-    public enum DrawMode {
+namespace Enums.via.render.Outline
+{
+    public enum DrawMode
+    {
         Outline = 0,
         Silhouette = 1,
         Both = 2,
@@ -19863,22 +23027,28 @@ namespace Enums.via.render.Outline {
     }
 }
 
-namespace Enums.via.userdata {
-    public enum VariableError {
+namespace Enums.via.userdata
+{
+    public enum VariableError
+    {
         None = 0,
         ChangeValueAtWriteProtect = 1,
     }
 }
 
-namespace Enums.via.navigation.NavigationVolumeSpace {
-    public enum ShapeType {
+namespace Enums.via.navigation.NavigationVolumeSpace
+{
+    public enum ShapeType
+    {
         Sphere = 0,
         Capsule = 1,
     }
 }
 
-namespace Enums.app.Em3102 {
-    public enum ThinkState {
+namespace Enums.app.Em3102
+{
+    public enum ThinkState
+    {
         Idle = 0,
         Goto = 1,
         Em3102 = 2,
@@ -19886,8 +23056,10 @@ namespace Enums.app.Em3102 {
     }
 }
 
-namespace Enums.via.hid {
-    public enum DeviceIndex {
+namespace Enums.via.hid
+{
+    public enum DeviceIndex
+    {
         Index0 = 0,
         Index1 = 1,
         Index2 = 2,
@@ -19943,92 +23115,116 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.storage {
-    public enum ChunkInstalledDevice {
+namespace Enums.via.storage
+{
+    public enum ChunkInstalledDevice
+    {
         None = 0,
         Slow = 1,
         Fast = 2,
     }
 }
 
-namespace Enums.app.Em4100.Action.Move {
-    public enum Type {
+namespace Enums.app.Em4100.Action.Move
+{
+    public enum Type
+    {
         Solo = 0,
         Normal = 1,
         Wanderer = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum AppealAwakenState {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum AppealAwakenState
+    {
         None = 0,
         Action = 1,
         End = 2,
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum eGearState {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum eGearState
+    {
         Front = 0,
         Back = 1,
     }
 }
 
-namespace Enums.via.dynamics.HingeConstraint.Initializer {
-    public enum PositionType {
+namespace Enums.via.dynamics.HingeConstraint.Initializer
+{
+    public enum PositionType
+    {
         World = 0,
         Local = 1,
     }
 }
 
-namespace Enums.via.navigation.PathObject {
-    public enum PortalEndEdgeAttrType {
+namespace Enums.via.navigation.PathObject
+{
+    public enum PortalEndEdgeAttrType
+    {
         P0 = 0,
         P1 = 1,
         TypeNum = 2,
     }
 }
 
-namespace Enums.via.landscape.streaming.beta {
-    public enum StreamingRequestType {
+namespace Enums.via.landscape.streaming.beta
+{
+    public enum StreamingRequestType
+    {
         Load = 0,
         Unload = 1,
     }
 }
 
-namespace Enums.app.fsm.PlayTimeTest {
-    public enum CompareType {
+namespace Enums.app.fsm.PlayTimeTest
+{
+    public enum CompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.app.LookAt {
-    public enum TargetModeEnum {
+namespace Enums.app.LookAt
+{
+    public enum TargetModeEnum
+    {
         Position = 0,
         GameObject = 1,
         Joint = 2,
     }
 }
 
-namespace Enums.via.os.dialog {
-    public enum State {
+namespace Enums.via.os.dialog
+{
+    public enum State
+    {
         None = 0,
         Busy = 1,
     }
 }
 
-namespace Enums.app.CH8CheckOnlySceneFolder {
-    public enum CheckTypeEnum {
+namespace Enums.app.CH8CheckOnlySceneFolder
+{
+    public enum CheckTypeEnum
+    {
         isActivate = 0,
         isDeactivate = 1,
         MAX = 2,
     }
 }
 
-namespace Enums.app.Em3102.Action.Sane {
-    public enum State {
+namespace Enums.app.Em3102.Action.Sane
+{
+    public enum State
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -20036,15 +23232,19 @@ namespace Enums.app.Em3102.Action.Sane {
     }
 }
 
-namespace Enums.app.CH9Em5800.Action.Generate {
-    public enum Type {
+namespace Enums.app.CH9Em5800.Action.Generate
+{
+    public enum Type
+    {
         Em5700 = 0,
         Em5850 = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8HardwareCheck {
-    public enum checkTypeEnum {
+namespace Enums.app.fsm.CH8HardwareCheck
+{
+    public enum checkTypeEnum
+    {
         PS4 = 0,
         Xone = 1,
         PC = 2,
@@ -20053,8 +23253,10 @@ namespace Enums.app.fsm.CH8HardwareCheck {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum GroundType {
+namespace Enums.app.EnemyActionController
+{
+    public enum GroundType
+    {
         Ground = 0,
         Wall = 1,
         Ceil = 2,
@@ -20062,16 +23264,20 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.app.InteractEventActionMarker {
-    public enum Result {
+namespace Enums.app.InteractEventActionMarker
+{
+    public enum Result
+    {
         Success = 0,
         Failure = 1,
         Interacted = 2,
     }
 }
 
-namespace Enums.app.CH9TitleMainLoop {
-    public enum StepType {
+namespace Enums.app.CH9TitleMainLoop
+{
+    public enum StepType
+    {
         WaitSave = 0,
         StartCheck = 1,
         FirstSave = 2,
@@ -20091,16 +23297,20 @@ namespace Enums.app.CH9TitleMainLoop {
     }
 }
 
-namespace Enums.app.Em3102.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em3102.Action.Walk
+{
+    public enum Type
+    {
         None = 0,
         Walk = 1,
         DetectWalk = 2,
     }
 }
 
-namespace Enums.via.effect {
-    public enum GroupType {
+namespace Enums.via.effect
+{
+    public enum GroupType
+    {
         Invalid = -1,
         Free = 0,
         EffectCollision = 1,
@@ -20109,22 +23319,28 @@ namespace Enums.via.effect {
     }
 }
 
-namespace Enums.app.fsm.Wait {
-    public enum WaitTypeEnum {
+namespace Enums.app.fsm.Wait
+{
+    public enum WaitTypeEnum
+    {
         Normal = 0,
         FlagSet = 1,
     }
 }
 
-namespace Enums.app.HIDManager {
-    public enum InputMode {
+namespace Enums.app.HIDManager
+{
+    public enum InputMode
+    {
         Pad = 0,
         MouseAndKeyboard = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum ColorWrite {
+namespace Enums.via.render
+{
+    public enum ColorWrite
+    {
         EnableRed = 1,
         EnableGreen = 2,
         EnableBlue = 4,
@@ -20134,23 +23350,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GamePadEmuButtonThresholdType {
+namespace Enums.via.hid
+{
+    public enum GamePadEmuButtonThresholdType
+    {
         Square = 0,
         Circle = 1,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum OnFindingNavigationVectorType {
+namespace Enums.via.navigation.Navigation
+{
+    public enum OnFindingNavigationVectorType
+    {
         Keep = 0,
         Target = 1,
         Zero = 2,
     }
 }
 
-namespace Enums.app.TableItemExplanation {
-    public enum Player {
+namespace Enums.app.TableItemExplanation
+{
+    public enum Player
+    {
         Start = -1,
         Enemy = 0,
         Player = 1,
@@ -20158,8 +23380,10 @@ namespace Enums.app.TableItemExplanation {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum DistortionParameter {
+namespace Enums.via.audiorender
+{
+    public enum DistortionParameter
+    {
         GainDb = 0,
         MixAmount = 1,
         DistType = 2,
@@ -20168,21 +23392,27 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em3100.Action.WalkEvade {
-    public enum Type {
+namespace Enums.app.Em3100.Action.WalkEvade
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.Em8900Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8900Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.Em2000.Goal {
-    public enum GoalId {
+namespace Enums.app.Em2000.Goal
+{
+    public enum GoalId
+    {
         Chapter1Battle2CloserSlow = 0,
         Chapter1Battle2CloserFast = 1,
         Chapter1Battle2AttackToGrapple = 2,
@@ -20204,8 +23434,10 @@ namespace Enums.app.Em2000.Goal {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Damage {
-    public enum Direction {
+namespace Enums.app.Em8000.Action.Em8000Damage
+{
+    public enum Direction
+    {
         INVALID = -1,
         None = 0,
         Front = 1,
@@ -20216,8 +23448,10 @@ namespace Enums.app.Em8000.Action.Em8000Damage {
     }
 }
 
-namespace Enums.app.SaveMenu {
-    public enum ModeDef {
+namespace Enums.app.SaveMenu
+{
+    public enum ModeDef
+    {
         LoadTitleMenu = 0,
         LoadInGame = 1,
         SaveInGame = 2,
@@ -20225,8 +23459,10 @@ namespace Enums.app.SaveMenu {
     }
 }
 
-namespace Enums.app.VFXCullingZoneGroup {
-    public enum Status {
+namespace Enums.app.VFXCullingZoneGroup
+{
+    public enum Status
+    {
         None = 0,
         CullingOnTrigger = 1,
         CullingOffTrigger = 2,
@@ -20234,8 +23470,10 @@ namespace Enums.app.VFXCullingZoneGroup {
     }
 }
 
-namespace Enums.app.Em3002.Em3002WwiseMonitoredValue {
-    public enum PropertyLayer {
+namespace Enums.app.Em3002.Em3002WwiseMonitoredValue
+{
+    public enum PropertyLayer
+    {
         Discovery = 0,
         UnDiscovery = 1,
         DamageDown = 2,
@@ -20243,8 +23481,10 @@ namespace Enums.app.Em3002.Em3002WwiseMonitoredValue {
     }
 }
 
-namespace Enums.via.clr {
-    public enum BindingFlags {
+namespace Enums.via.clr
+{
+    public enum BindingFlags
+    {
         Default = 0,
         IgnoreCase = 1,
         DeclaredOnly = 2,
@@ -20268,45 +23508,57 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum CalibrationType {
+namespace Enums.via.hid.VrTracker
+{
+    public enum CalibrationType
+    {
         Position = 0,
         All = 1,
     }
 }
 
-namespace Enums.app.fsm.ChangeDamageGUI {
-    public enum VisibleType {
+namespace Enums.app.fsm.ChangeDamageGUI
+{
+    public enum VisibleType
+    {
         NotSet = 0,
         Visible = 1,
         Invisible = 2,
     }
 }
 
-namespace Enums.app.NowOnSaleMenu {
-    public enum ModeDef {
+namespace Enums.app.NowOnSaleMenu
+{
+    public enum ModeDef
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.via.os {
-    public enum FileSeek {
+namespace Enums.via.os
+{
+    public enum FileSeek
+    {
         Begin = 0,
         Current = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum BarDirection {
+namespace Enums.via.gui
+{
+    public enum BarDirection
+    {
         Horizontal = 0,
         Vertical = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum TextureDataFormat {
+namespace Enums.via.landscape
+{
+    public enum TextureDataFormat
+    {
         DataFormat_Unknown = 0,
         DataFormat_R16Unorm = 1,
         DataFormat_R16G16Unorm = 2,
@@ -20314,16 +23566,20 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.motion.ChainResource {
-    public enum DirectionOfEmission {
+namespace Enums.via.motion.ChainResource
+{
+    public enum DirectionOfEmission
+    {
         Global = 0,
         Local = 1,
         GroupLocal = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputDimension {
+namespace Enums.via.audiorender
+{
+    public enum OutputDimension
+    {
         OutputDimension_None = 0,
         OutputDimension_2D = 1,
         OutputDimension_3D = 2,
@@ -20331,16 +23587,20 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.physics {
-    public enum GateType {
+namespace Enums.via.physics
+{
+    public enum GateType
+    {
         Both = 0,
         EnterA = 1,
         EnterB = 2,
     }
 }
 
-namespace Enums.via.motion.detail.MotionFsm2TransitionData {
-    public enum StartType {
+namespace Enums.via.motion.detail.MotionFsm2TransitionData
+{
+    public enum StartType
+    {
         Frame = 0,
         NormalizedTime = 1,
         SyncTime = 2,
@@ -20349,30 +23609,38 @@ namespace Enums.via.motion.detail.MotionFsm2TransitionData {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8StrikeToParry {
-    public enum StrikeType {
+namespace Enums.app.CH8Em4500.Action.CH8StrikeToParry
+{
+    public enum StrikeType
+    {
         Right = 0,
         Left = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum RetargetRigFlipFlag {
+namespace Enums.via.motion
+{
+    public enum RetargetRigFlipFlag
+    {
         Direction = 1,
         UpVector = 2,
     }
 }
 
-namespace Enums.via.render.layer.CubemapCapture {
-    public enum BAKEOPTION {
+namespace Enums.via.render.layer.CubemapCapture
+{
+    public enum BAKEOPTION
+    {
         NONE = 0,
         BOUNCE_PROBE_ENABLE = 1,
         FULL_ILLUMINATION_ENABLE = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum GraphicsFeatures : uint {
+namespace Enums.via.render
+{
+    public enum GraphicsFeatures : uint
+    {
         None = 0,
         HMD = 1,
         InterlacedRendering = 2,
@@ -20413,8 +23681,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.BirthdayFolderSelector {
-    public enum StageSetEnum {
+namespace Enums.app.BirthdayFolderSelector
+{
+    public enum StageSetEnum
+    {
         TypeA = 0,
         TypeB = 1,
         Common = 2,
@@ -20422,8 +23692,10 @@ namespace Enums.app.BirthdayFolderSelector {
     }
 }
 
-namespace Enums.via.render {
-    public enum PrimitiveShadingRate {
+namespace Enums.via.render
+{
+    public enum PrimitiveShadingRate
+    {
         Coarse1x1 = 0,
         Coarse1x2 = 1,
         Coarse2x1 = 2,
@@ -20437,23 +23709,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceEnterButtonAssign {
+namespace Enums.via
+{
+    public enum SystemServiceEnterButtonAssign
+    {
         RRight = 0,
         RDown = 1,
     }
 }
 
-namespace Enums.via.areamap.AreaConnectionObject {
-    public enum ConnectionState {
+namespace Enums.via.areamap.AreaConnectionObject
+{
+    public enum ConnectionState
+    {
         Open = 0,
         Locked = 1,
         Closed = 2,
     }
 }
 
-namespace Enums.via.behaviortree.Action {
-    public enum MethodImpls {
+namespace Enums.via.behaviortree.Action
+{
+    public enum MethodImpls
+    {
         AppendedUpdateStart = 1,
         AppendedUpdate = 2,
         Start = 4,
@@ -20463,8 +23741,10 @@ namespace Enums.via.behaviortree.Action {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraFrameStatus {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraFrameStatus
+    {
         Active = 0,
         NotActive = 1,
         AlreadyRead = 2,
@@ -20474,16 +23754,20 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum RadarNoiseLvDef {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum RadarNoiseLvDef
+    {
         None = 0,
         Lv1 = 1,
         Lv2 = 2,
     }
 }
 
-namespace Enums.app.AI.AIFollowPointManager {
-    public enum PriorityType {
+namespace Enums.app.AI.AIFollowPointManager
+{
+    public enum PriorityType
+    {
         MostHigh = 0,
         High = 1,
         Middle = 2,
@@ -20492,24 +23776,30 @@ namespace Enums.app.AI.AIFollowPointManager {
     }
 }
 
-namespace Enums.app.Em4200.Action.Suspend {
-    public enum Option {
+namespace Enums.app.Em4200.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.Em8001.Action.Base {
-    public enum SequenceEndType {
+namespace Enums.app.Em8001.Action.Base
+{
+    public enum SequenceEndType
+    {
         None = 0,
         ActionEnd = 1,
         NextState = 2,
     }
 }
 
-namespace Enums.via.render.SoftBloom {
-    public enum Algorithm {
+namespace Enums.via.render.SoftBloom
+{
+    public enum Algorithm
+    {
         Standard = 0,
         StandardV2 = 1,
         StandardV3 = 2,
@@ -20517,8 +23807,10 @@ namespace Enums.via.render.SoftBloom {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageParts {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageParts
+    {
         Body = 0,
         Head = 1,
         LeftArm = 2,
@@ -20528,8 +23820,10 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.render {
-    public enum GlobalSparseShadowResolution {
+namespace Enums.via.render
+{
+    public enum GlobalSparseShadowResolution
+    {
         GlobalSparseShadowResolution_64 = 64,
         GlobalSparseShadowResolution_128 = 128,
         GlobalSparseShadowResolution_256 = 256,
@@ -20538,16 +23832,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.FileData {
-    public enum SKUType {
+namespace Enums.app.FileData
+{
+    public enum SKUType
+    {
         All = 0,
         Original = 1,
         CeroD_CeroZ = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum StencilValue {
+namespace Enums.via.render
+{
+    public enum StencilValue
+    {
         Zero = 0,
         All = 255,
         SceneBeauty = 1,
@@ -20558,8 +23856,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.render {
-    public enum OptionFlag : uint {
+namespace Enums.via.render
+{
+    public enum OptionFlag : uint
+    {
         None = 0,
         TextureCube = 4,
         DrawIndirectArgs = 16,
@@ -20592,15 +23892,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH9Em6400ArmController {
-    public enum ArmType {
+namespace Enums.app.CH9Em6400ArmController
+{
+    public enum ArmType
+    {
         Default = 0,
         Extend = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ResolutionAdjustScale {
+namespace Enums.via.gui
+{
+    public enum ResolutionAdjustScale
+    {
         None = 0,
         Stretch = 1,
         FitSmallRatioAxis = 2,
@@ -20609,23 +23913,29 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH9Em5700.Goal.Attack {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Goal.Attack
+{
+    public enum Type
+    {
         Stab = 0,
         Strike = 1,
     }
 }
 
-namespace Enums.app.CH8HUDControl.AirGauge {
-    public enum EventKeyItem {
+namespace Enums.app.CH8HUDControl.AirGauge
+{
+    public enum EventKeyItem
+    {
         None = 0,
         NightVision = 1,
         AirFilter = 2,
     }
 }
 
-namespace Enums.via.Serializer.SerializeType {
-    public enum Kind {
+namespace Enums.via.Serializer.SerializeType
+{
+    public enum Kind
+    {
         Default = 0,
         Array = 1,
         List = 2,
@@ -20633,23 +23943,29 @@ namespace Enums.via.Serializer.SerializeType {
     }
 }
 
-namespace Enums.app.Em3000.Action.Turn {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Turn
+{
+    public enum Type
+    {
         Fast = 0,
         Move = 1,
     }
 }
 
-namespace Enums.via.AnimationCurveData3D {
-    public enum Wrap {
+namespace Enums.via.AnimationCurveData3D
+{
+    public enum Wrap
+    {
         Once = 0,
         Loop = 1,
         Loop_Always = 2,
     }
 }
 
-namespace Enums.via.Window.MessageArgs {
-    public enum ImeEvent {
+namespace Enums.via.Window.MessageArgs
+{
+    public enum ImeEvent
+    {
         StartComposition = 0,
         UpdateComposition = 1,
         CompleteComposition = 2,
@@ -20663,16 +23979,20 @@ namespace Enums.via.Window.MessageArgs {
     }
 }
 
-namespace Enums.via {
-    public enum SharePlayLevel {
+namespace Enums.via
+{
+    public enum SharePlayLevel
+    {
         Full = 0,
         ScreenOnly = 1,
         None = 2,
     }
 }
 
-namespace Enums.via.Frustum {
-    public enum PlaneType {
+namespace Enums.via.Frustum
+{
+    public enum PlaneType
+    {
         Left = 0,
         Right = 1,
         Top = 2,
@@ -20682,16 +24002,20 @@ namespace Enums.via.Frustum {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum EvaluatesEstimatedDurationType {
+namespace Enums.via.wwise
+{
+    public enum EvaluatesEstimatedDurationType
+    {
         None = 0,
         Minimum = 1,
         Maximum = 2,
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum Layer {
+namespace Enums.app.CarInGarage
+{
+    public enum Layer
+    {
         Body = 0,
         Roof = 1,
         Door = 2,
@@ -20701,8 +24025,10 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum ForwardSolidSegment {
+namespace Enums.via.render.layer
+{
+    public enum ForwardSolidSegment
+    {
         ZIgnorePrepassSolid = 0,
         ZIgnorePrepassTwoSide = 1,
         ZIgnorePrepassTwoSideAlphaTest = 2,
@@ -20732,31 +24058,39 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.via.gui.Capture {
-    public enum CaptureAction {
+namespace Enums.via.gui.Capture
+{
+    public enum CaptureAction
+    {
         Idle = 0,
         Clear = 1,
         Capture = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum DistortionType {
+namespace Enums.via.effect.detail
+{
+    public enum DistortionType
+    {
         Blur = 0,
         Refract = 1,
         BlurTexture = 2,
     }
 }
 
-namespace Enums.via.render.command.MultiDrawIndexedInstancedIndirectCount {
-    public enum HINT {
+namespace Enums.via.render.command.MultiDrawIndexedInstancedIndirectCount
+{
+    public enum HINT
+    {
         NONE = 0,
         PREDICATE = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum TouchScreenState {
+namespace Enums.via.hid
+{
+    public enum TouchScreenState
+    {
         Move = 0,
         Down = 1,
         Up = 2,
@@ -20764,15 +24098,19 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.Em3100.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em3100.Action.Dead
+{
+    public enum Type
+    {
         Default = 0,
         DeadWait = 1,
     }
 }
 
-namespace Enums.app.ItemBoxLotteryManagerIMD {
-    public enum ItemBoxType {
+namespace Enums.app.ItemBoxLotteryManagerIMD
+{
+    public enum ItemBoxType
+    {
         BombBox = 0,
         NormalBox = 1,
         RareBox = 2,
@@ -20781,15 +24119,19 @@ namespace Enums.app.ItemBoxLotteryManagerIMD {
     }
 }
 
-namespace Enums.via.dynamics.DefinitionResource {
-    public enum ChannelAttribute {
+namespace Enums.via.dynamics.DefinitionResource
+{
+    public enum ChannelAttribute
+    {
         InitialValue = 0,
         Max = 1,
     }
 }
 
-namespace Enums.app.WeaponChainSaw {
-    public enum LampState {
+namespace Enums.app.WeaponChainSaw
+{
+    public enum LampState
+    {
         Unknown = 0,
         Run = 1,
         Caution = 2,
@@ -20797,16 +24139,20 @@ namespace Enums.app.WeaponChainSaw {
     }
 }
 
-namespace Em5400Effect {
-    public enum IDAlias {
+namespace Em5400Effect
+{
+    public enum IDAlias
+    {
         WingBlur = 0,
         DisperseDead = 1,
         BurnDead = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum ExternType {
+namespace Enums.via.effect.detail
+{
+    public enum ExternType
+    {
         Float = 0,
         Color = 1,
         LimitedFloat = 2,
@@ -20814,8 +24160,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.WeaponGrenadeLauncherAppend {
-    public enum PartsState {
+namespace Enums.app.WeaponGrenadeLauncherAppend
+{
+    public enum PartsState
+    {
         Default = 0,
         ReloadFlame = 1,
         ReloadAcid = 2,
@@ -20824,24 +24172,30 @@ namespace Enums.app.WeaponGrenadeLauncherAppend {
     }
 }
 
-namespace Enums.app.fsm.ChangeDamageGUI {
-    public enum SaturationType {
+namespace Enums.app.fsm.ChangeDamageGUI
+{
+    public enum SaturationType
+    {
         NotSet = 0,
         FullColor = 1,
         Monochrome = 2,
     }
 }
 
-namespace Enums.app.PadManager {
-    public enum PadNo {
+namespace Enums.app.PadManager
+{
+    public enum PadNo
+    {
         Pad1 = 0,
         Pad2 = 1,
         PadMax = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ParameterType {
+namespace Enums.via.gui
+{
+    public enum ParameterType
+    {
         Invalid = 0,
         Bool = 1,
         Integer = 2,
@@ -20868,23 +24222,29 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.motion.IkLookAt {
-    public enum DistanceState {
+namespace Enums.via.motion.IkLookAt
+{
+    public enum DistanceState
+    {
         None = 0,
         Follow = 1,
     }
 }
 
-namespace Enums.app.Em4100.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em4100.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         Air = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ModeDef {
+namespace Enums.app.OptionMenu
+{
+    public enum ModeDef
+    {
         MainMenu = 0,
         MainMenu_VR = 1,
         Ingame = 2,
@@ -20892,8 +24252,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.AdaptiveResolutionControl {
-    public enum ResolutionTypeEnum {
+namespace Enums.app.AdaptiveResolutionControl
+{
+    public enum ResolutionTypeEnum
+    {
         FHD_1080 = 0,
         HD_900 = 1,
         HD_720 = 2,
@@ -20901,8 +24263,10 @@ namespace Enums.app.AdaptiveResolutionControl {
     }
 }
 
-namespace Enums.app.ItemIconUtil.ItemIconController {
-    public enum State {
+namespace Enums.app.ItemIconUtil.ItemIconController
+{
+    public enum State
+    {
         Default = 0,
         Combine = 1,
         Improper = 2,
@@ -20915,15 +24279,19 @@ namespace Enums.app.ItemIconUtil.ItemIconController {
     }
 }
 
-namespace Enums.via.houdini {
-    public enum RenderType {
+namespace Enums.via.houdini
+{
+    public enum RenderType
+    {
         WireFrame = 0,
         Default = 1,
     }
 }
 
-namespace Enums.app.WireTrap {
-    public enum State {
+namespace Enums.app.WireTrap
+{
+    public enum State
+    {
         Wait = 0,
         WireHit = 1,
         Explosion = 2,
@@ -20931,38 +24299,48 @@ namespace Enums.app.WireTrap {
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum AutoExposureReferenceLuminance {
+namespace Enums.via.render.ToneMapping
+{
+    public enum AutoExposureReferenceLuminance
+    {
         Maximum = 0,
         Average = 1,
     }
 }
 
-namespace Enums.app.EPVExpertObjectLandingData {
-    public enum ZDirectionType {
+namespace Enums.app.EPVExpertObjectLandingData
+{
+    public enum ZDirectionType
+    {
         AttackDirection = 0,
         SawRotation = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum HMDResolutionType {
+namespace Enums.via.render
+{
+    public enum HMDResolutionType
+    {
         None = 0,
         FillAfterLighting = 1,
         FillAfterTransparent = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800ActionController.BattleCondition {
-    public enum WanderIdleActionType {
+namespace Enums.app.CH9Em7800ActionController.BattleCondition
+{
+    public enum WanderIdleActionType
+    {
         None = 0,
         AfterNotice = 1,
         BeforeNotice = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodExceptionFlag {
+namespace Enums.via.clr
+{
+    public enum MethodExceptionFlag
+    {
         MethoExceptionFlag_Exception = 0,
         MethoExceptionFlag_Filter = 1,
         MethoExceptionFlag_Finaly = 2,
@@ -20970,15 +24348,19 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8BackWalk {
-    public enum BackWalkType {
+namespace Enums.app.CH8Em4500.Action.CH8BackWalk
+{
+    public enum BackWalkType
+    {
         Standard = 0,
         RequestNextAction = 1,
     }
 }
 
-namespace Enums.app.CH9Em7500.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em7500.Action
+{
+    public enum ActionNo
+    {
         Appear = 4,
         Dive = 5,
         Underwater = 6,
@@ -20990,8 +24372,10 @@ namespace Enums.app.CH9Em7500.Action {
     }
 }
 
-namespace Enums.app.fsm.CheckDoorState {
-    public enum CheckType {
+namespace Enums.app.fsm.CheckDoorState
+{
+    public enum CheckType
+    {
         Locked = 0,
         ManualClose = 1,
         ManualClosed = 2,
@@ -20999,8 +24383,10 @@ namespace Enums.app.fsm.CheckDoorState {
     }
 }
 
-namespace Enums.app.Em3000.Action.Chapter3Battle1Final_Damage {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Chapter3Battle1Final_Damage
+{
+    public enum Type
+    {
         NoDamage = 0,
         RunOverR = 1,
         RunOverL = 2,
@@ -21009,16 +24395,20 @@ namespace Enums.app.Em3000.Action.Chapter3Battle1Final_Damage {
     }
 }
 
-namespace Enums.app.MoldedActionController {
-    public enum Tension {
+namespace Enums.app.MoldedActionController
+{
+    public enum Tension
+    {
         Normal = 0,
         Excite = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.app.CH9ThrowingWp1800 {
-    public enum UpdateRno {
+namespace Enums.app.CH9ThrowingWp1800
+{
+    public enum UpdateRno
+    {
         Wait = 0,
         Move = 1,
         HitWall = 2,
@@ -21034,39 +24424,49 @@ namespace Enums.app.CH9ThrowingWp1800 {
     }
 }
 
-namespace Enums.app.Em4200.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.fsm.PositionCheck {
-    public enum DistCompareType {
+namespace Enums.app.fsm.PositionCheck
+{
+    public enum DistCompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum LightPowerUnitType {
+namespace Enums.via.render
+{
+    public enum LightPowerUnitType
+    {
         Lumen = 0,
         Candela = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ArmController {
-    public enum EntryEffectId {
+namespace Enums.app.CH9Em6400ArmController
+{
+    public enum EntryEffectId
+    {
         ChangeExtendShort = 0,
         ChangeEnd = 1,
         Cancel = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.CH8ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4400.CH8ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Fixed = 1,
         Wanderer = 2,
@@ -21075,8 +24475,10 @@ namespace Enums.app.CH8Em4400.CH8ThinkStateSet {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum ChapterJumpState {
+namespace Enums.app.GameManager
+{
+    public enum ChapterJumpState
+    {
         None = 0,
         StampSave = 1,
         CloseStart = 2,
@@ -21088,15 +24490,19 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraCaptureMemoryType {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraCaptureMemoryType
+    {
         Onion = 1,
         Garlic = 2,
     }
 }
 
-namespace Enums.via.movie.Movie {
-    public enum LoadResourceState {
+namespace Enums.via.movie.Movie
+{
+    public enum LoadResourceState
+    {
         StartProcessing = 0,
         WaitingForResourceValidation = 1,
         AcceptedCreatePlayer = 2,
@@ -21108,31 +24514,39 @@ namespace Enums.via.movie.Movie {
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadHandheldActivationMode {
+namespace Enums.via.hid
+{
+    public enum NpadHandheldActivationMode
+    {
         Dual = 0,
         Single = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8SetDoorState {
-    public enum OverrideType {
+namespace Enums.app.fsm.CH8SetDoorState
+{
+    public enum OverrideType
+    {
         NotSet = 0,
         UseDefault = 1,
         Override = 2,
     }
 }
 
-namespace Enums.app.TabController {
-    public enum TabType {
+namespace Enums.app.TabController
+{
+    public enum TabType
+    {
         Item = 0,
         Skill = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000.CH8ThinkAppearSet {
-    public enum MimicryType {
+namespace Enums.app.CH8Em4000.CH8ThinkAppearSet
+{
+    public enum MimicryType
+    {
         Floor1 = 0,
         Floor2 = 1,
         Lean1 = 2,
@@ -21141,21 +24555,27 @@ namespace Enums.app.CH8Em4000.CH8ThinkAppearSet {
     }
 }
 
-namespace Enums.via.eq.UnaryOperator {
-    public enum Type {
+namespace Enums.via.eq.UnaryOperator
+{
+    public enum Type
+    {
         Min = 0,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum DecalReciveMode {
+namespace Enums.via.landscape
+{
+    public enum DecalReciveMode
+    {
         Enable = 0,
         Disable = 1,
     }
 }
 
-namespace Enums.app.Em3000.Goal {
-    public enum GoalId {
+namespace Enums.app.Em3000.Goal
+{
+    public enum GoalId
+    {
         Discovery = 0,
         UnDiscovery = 1,
         Idle = 2,
@@ -21188,16 +24608,20 @@ namespace Enums.app.Em3000.Goal {
     }
 }
 
-namespace Enums.app.fsm.ItemTest {
-    public enum CompareType {
+namespace Enums.app.fsm.ItemTest
+{
+    public enum CompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum MaskMode {
+namespace Enums.via.gui
+{
+    public enum MaskMode
+    {
         Keep = 0,
         Default = 1,
         Reverse = 2,
@@ -21206,8 +24630,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.network.AutoMatchmaking {
-    public enum MatchPhase {
+namespace Enums.via.network.AutoMatchmaking
+{
+    public enum MatchPhase
+    {
         Phase_None = 0,
         Phase_Init = 1,
         Phase_CreateSession = 2,
@@ -21239,8 +24665,10 @@ namespace Enums.via.network.AutoMatchmaking {
     }
 }
 
-namespace Enums.via.motion.detail.IkNboneSolver {
-    public enum weightType {
+namespace Enums.via.motion.detail.IkNboneSolver
+{
+    public enum weightType
+    {
         Basic = 0,
         Top = 1,
         Bottom = 2,
@@ -21248,32 +24676,40 @@ namespace Enums.via.motion.detail.IkNboneSolver {
     }
 }
 
-namespace Enums.hikako.ActivityManager {
-    public enum ActivityOutcome {
+namespace Enums.hikako.ActivityManager
+{
+    public enum ActivityOutcome
+    {
         COMPLETED = 0,
         FAILED = 1,
         ABANDONED = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum GenderType {
+namespace Enums.via.gui
+{
+    public enum GenderType
+    {
         Male = 0,
         Female = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.app.Em3100.Action.DLC_TestAction {
-    public enum Type {
+namespace Enums.app.Em3100.Action.DLC_TestAction
+{
+    public enum Type
+    {
         OrderBugHoleInstructEnd = 0,
         OrderBusInstructEnd = 1,
         OrderStun = 2,
     }
 }
 
-namespace Enums.via.behaviortree.TreeNode {
-    public enum WorkStatus {
+namespace Enums.via.behaviortree.TreeNode
+{
+    public enum WorkStatus
+    {
         Off = 0,
         Start = 1,
         Work = 2,
@@ -21281,8 +24717,10 @@ namespace Enums.via.behaviortree.TreeNode {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseStorage {
+namespace Enums.via.network.error
+{
+    public enum CauseStorage
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -21313,16 +24751,20 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.navigation.AIMapEffector {
-    public enum EdgePrecisionType {
+namespace Enums.via.navigation.AIMapEffector
+{
+    public enum EdgePrecisionType
+    {
         x1 = 0,
         x10 = 1,
         x100 = 2,
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrModeStatus {
+namespace Enums.via.vr
+{
+    public enum VrModeStatus
+    {
         Invalid = 0,
         Unavailable = 1,
         Available = 2,
@@ -21332,15 +24774,19 @@ namespace Enums.via.vr {
     }
 }
 
-namespace Enums.app.WwisePrefabInitiationTriggerElement {
-    public enum DeleteTypeEnum {
+namespace Enums.app.WwisePrefabInitiationTriggerElement
+{
+    public enum DeleteTypeEnum
+    {
         Trigger = 0,
         Timer = 1,
     }
 }
 
-namespace Enums.app.Collision {
-    public enum PartsType {
+namespace Enums.app.Collision
+{
+    public enum PartsType
+    {
         Default = 0,
         Head = 1,
         Chest = 2,
@@ -21372,8 +24818,10 @@ namespace Enums.app.Collision {
     }
 }
 
-namespace Enums.via.ModalDialogService {
-    public enum ModalDialogState {
+namespace Enums.via.ModalDialogService
+{
+    public enum ModalDialogState
+    {
         Uninitialized = 0,
         Ready = 1,
         Opening = 2,
@@ -21382,8 +24830,10 @@ namespace Enums.via.ModalDialogService {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_714ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_714ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -21400,15 +24850,19 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em3600.Em3600WwiseMonitoredValue {
-    public enum PropertyLayer {
+namespace Enums.app.Em3600.Em3600WwiseMonitoredValue
+{
+    public enum PropertyLayer
+    {
         Low = 0,
         High = 1,
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum BlendTypeEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum BlendTypeEnum
+    {
         Adaptive = 0,
         Bilinear = 1,
         NoBlend = 2,
@@ -21416,8 +24870,10 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum StoreTypeEnum {
+namespace Enums.app.GameManager
+{
+    public enum StoreTypeEnum
+    {
         Normal = 0,
         TrialVer = 1,
         BannedFootage = 2,
@@ -21428,15 +24884,19 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.CH9Em5850 {
-    public enum ThinkState {
+namespace Enums.app.CH9Em5850
+{
+    public enum ThinkState
+    {
         None = 0,
         NoLostPlayer = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum InterpolationMode {
+namespace Enums.via.motion
+{
+    public enum InterpolationMode
+    {
         None = 0,
         FrontFade = 1,
         CrossFade = 2,
@@ -21448,15 +24908,19 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.render.Bloodshed {
-    public enum SourceUV {
+namespace Enums.via.render.Bloodshed
+{
+    public enum SourceUV
+    {
         Primary = 0,
         Secondary = 1,
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum SelectItemState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum SelectItemState
+    {
         DEFAULT = 0,
         FOCUS = 1,
         SELECT = 2,
@@ -21469,23 +24933,29 @@ namespace Enums.app.CraftBenchUIAsset {
     }
 }
 
-namespace Enums.app {
-    public enum ExtraRegionType {
+namespace Enums.app
+{
+    public enum ExtraRegionType
+    {
         Unknown = 0,
         German = 1,
     }
 }
 
-namespace Enums.app.Em2000.Em2000ActionController {
-    public enum Chapter4Stamp {
+namespace Enums.app.Em2000.Em2000ActionController
+{
+    public enum Chapter4Stamp
+    {
         None = 0,
         Separate = 1,
         Battle = 2,
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum RectVertex {
+namespace Enums.via.gui.detail
+{
+    public enum RectVertex
+    {
         LeftTop = 0,
         LeftBottom = 1,
         RightTop = 2,
@@ -21494,22 +24964,28 @@ namespace Enums.via.gui.detail {
     }
 }
 
-namespace Enums.via.motion.tree.BaseSyncBlendNode {
-    public enum SyncBlendType {
+namespace Enums.via.motion.tree.BaseSyncBlendNode
+{
+    public enum SyncBlendType
+    {
         Normal = 0,
         Weight = 1,
     }
 }
 
-namespace Enums.via.motion.ChainResource {
-    public enum LegacyVersion {
+namespace Enums.via.motion.ChainResource
+{
+    public enum LegacyVersion
+    {
         Latest = 0,
         Legacy1 = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum ControllerSupportResult {
+namespace Enums.via.hid
+{
+    public enum ControllerSupportResult
+    {
         None = 0,
         Done = 1,
         Canceled = 2,
@@ -21517,8 +24993,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum FieldType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum FieldType
+    {
         None = 0,
         Vector = 1,
         Volume = 2,
@@ -21526,8 +25004,10 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.via.motion.tree.CompareNode {
-    public enum Operation {
+namespace Enums.via.motion.tree.CompareNode
+{
+    public enum Operation
+    {
         Eq = 0,
         Neq = 1,
         Ge = 2,
@@ -21537,30 +25017,38 @@ namespace Enums.via.motion.tree.CompareNode {
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceAccountPickerResult {
+namespace Enums.via
+{
+    public enum SystemServiceAccountPickerResult
+    {
         Success = 0,
         Cancel = 1,
         Failed = 2,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum RotationType {
+namespace Enums.app.PlayerCamera
+{
+    public enum RotationType
+    {
         Incremental = 0,
         Angular = 1,
     }
 }
 
-namespace Enums.app.Em3102.Em3102WwiseStateList {
-    public enum PropertyStealth {
+namespace Enums.app.Em3102.Em3102WwiseStateList
+{
+    public enum PropertyStealth
+    {
         UnDiscovery = 0,
         Discovery = 1,
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum ListenerBitMask {
+namespace Enums.via.simplewwise
+{
+    public enum ListenerBitMask
+    {
         ListenerBitMask_0 = 1,
         ListenerBitMask_1 = 2,
         ListenerBitMask_2 = 4,
@@ -21572,15 +25060,19 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum PriorityMode {
+namespace Enums.via.simplewwise
+{
+    public enum PriorityMode
+    {
         Newest = 0,
         Oldest = 1,
     }
 }
 
-namespace Enums.app.Havok.ClothWind.Wave {
-    public enum WaveForm {
+namespace Enums.app.Havok.ClothWind.Wave
+{
+    public enum WaveForm
+    {
         WaveType_Sin = 0,
         WaveType_Saw = 1,
         WaveType_RevSaw = 2,
@@ -21590,32 +25082,40 @@ namespace Enums.app.Havok.ClothWind.Wave {
     }
 }
 
-namespace Enums.app.EnemySlipParameter {
-    public enum Type {
+namespace Enums.app.EnemySlipParameter
+{
+    public enum Type
+    {
         Fire = 0,
         Acid = 1,
         Invalid = -1,
     }
 }
 
-namespace Enums.app.AI.AIWanderHelper {
-    public enum EvaluateType {
+namespace Enums.app.AI.AIWanderHelper
+{
+    public enum EvaluateType
+    {
         Random = 0,
         Nearest = 1,
         Farest = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum SparseTexturePriority {
+namespace Enums.via.render
+{
+    public enum SparseTexturePriority
+    {
         High = 0,
         Normal = 1,
         Low = 2,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum WarningType {
+namespace Enums.via.navigation
+{
+    public enum WarningType
+    {
         StartNodeNotFound = 0,
         EndNodeNotFound = 1,
         PathNotFound = 2,
@@ -21625,23 +25125,29 @@ namespace Enums.via.navigation {
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceCpuBoostMode {
+namespace Enums.via
+{
+    public enum SystemServiceCpuBoostMode
+    {
         Normal = 0,
         FastLoad = 1,
     }
 }
 
-namespace Enums.app.CH8VoiceOxygenRemainingAmount.CH8VoiceParam {
-    public enum ConditionTable {
+namespace Enums.app.CH8VoiceOxygenRemainingAmount.CH8VoiceParam
+{
+    public enum ConditionTable
+    {
         Air20 = 0,
         Air30 = 1,
         Air50 = 2,
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum CommuStateDef {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum CommuStateDef
+    {
         Call = 0,
         Incoming = 1,
         Talking = 2,
@@ -21651,16 +25157,20 @@ namespace Enums.app.GenomeCodexGUI {
     }
 }
 
-namespace Enums.via.render.Strands {
-    public enum SimulationStrandSize {
+namespace Enums.via.render.Strands
+{
+    public enum SimulationStrandSize
+    {
         STRAND_SIZE_8 = 0,
         STRAND_SIZE_16 = 1,
         STRAND_SIZE_32 = 2,
     }
 }
 
-namespace Enums.via.gui.MaterialBinding {
-    public enum BindingError {
+namespace Enums.via.gui.MaterialBinding
+{
+    public enum BindingError
+    {
         None = 0,
         InvalidMaterial = 1,
         InvalidClusterName = 2,
@@ -21669,8 +25179,10 @@ namespace Enums.via.gui.MaterialBinding {
     }
 }
 
-namespace Enums.app.Em3102.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3102.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Walk = 1,
         Run = 2,
@@ -21688,16 +25200,20 @@ namespace Enums.app.Em3102.Action {
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum CH9ProgressType {
+namespace Enums.app.Richpresence
+{
+    public enum CH9ProgressType
+    {
         InGame = 0,
         Menu = 1,
         Invalid = -1,
     }
 }
 
-namespace Enums.app.StampController {
-    public enum Type {
+namespace Enums.app.StampController
+{
+    public enum Type
+    {
         Blood = 0,
         Scar = 1,
         Water = 2,
@@ -21706,14 +25222,18 @@ namespace Enums.app.StampController {
     }
 }
 
-namespace Enums.app.Em8910 {
-    public enum ThinkState {
+namespace Enums.app.Em8910
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum GroundDevelopLayerSegment {
+namespace Enums.via.landscape
+{
+    public enum GroundDevelopLayerSegment
+    {
         WireFrame = 1,
         FillWireFrame = 2,
         MaterialDebug = 16,
@@ -21722,15 +25242,19 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.CH8Em4500.CH8ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4500.CH8ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wait = 1,
     }
 }
 
-namespace Enums.app.Em8000.Wind {
-    public enum WindTag {
+namespace Enums.app.Em8000.Wind
+{
+    public enum WindTag
+    {
         None = 0,
         Corpsebag_Idle = 1,
         Corpsebag_Damage_Weak = 2,
@@ -21740,8 +25264,10 @@ namespace Enums.app.Em8000.Wind {
     }
 }
 
-namespace Enums.via.ffts {
-    public enum ErrType {
+namespace Enums.via.ffts
+{
+    public enum ErrType
+    {
         None = 0,
         Critical = -1,
         NoMemory = -2,
@@ -21749,29 +25275,37 @@ namespace Enums.via.ffts {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Dead {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceSpin = 2,
     }
 }
 
-namespace Enums.via.motion.ActorMotion {
-    public enum StartFrameMode {
+namespace Enums.via.motion.ActorMotion
+{
+    public enum StartFrameMode
+    {
         CurrentFrame = 0,
         KeyOriginFrame = 1,
     }
 }
 
-namespace Enums.app.GenomeCodexGUISimple {
-    public enum Mode {
+namespace Enums.app.GenomeCodexGUISimple
+{
+    public enum Mode
+    {
         HP = 0,
     }
 }
 
-namespace Enums.app.PlayerMeshTag {
-    public enum MeshID {
+namespace Enums.app.PlayerMeshTag
+{
+    public enum MeshID
+    {
         Unknown = 0,
         UpperBody = 1,
         LowerBody = 2,
@@ -21787,8 +25321,10 @@ namespace Enums.app.PlayerMeshTag {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum GameOverMainRno {
+namespace Enums.app.GameManager
+{
+    public enum GameOverMainRno
+    {
         MonochromeStart = 0,
         DimAndGUIStart = 1,
         InputWait = 2,
@@ -21812,8 +25348,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.Collision.CollisionSystem.HitResult {
-    public enum PlaneType {
+namespace Enums.app.Collision.CollisionSystem.HitResult
+{
+    public enum PlaneType
+    {
         None = 0,
         Ground = 1,
         Slope = 2,
@@ -21822,8 +25360,10 @@ namespace Enums.app.Collision.CollisionSystem.HitResult {
     }
 }
 
-namespace Enums.app.Em8001.IK.ProcessBase {
-    public enum TransitionChangeState {
+namespace Enums.app.Em8001.IK.ProcessBase
+{
+    public enum TransitionChangeState
+    {
         INVALID = -1,
         None = 0,
         Up = 1,
@@ -21832,8 +25372,10 @@ namespace Enums.app.Em8001.IK.ProcessBase {
     }
 }
 
-namespace Enums.app.Em8000.Message {
-    public enum TagRandomGroup {
+namespace Enums.app.Em8000.Message
+{
+    public enum TagRandomGroup
+    {
         None = 0,
         DeathScissorsAttack = 1,
         GrappleBattleOfSaw = 2,
@@ -21842,22 +25384,28 @@ namespace Enums.app.Em8000.Message {
     }
 }
 
-namespace Enums.via.render.AlphaAA {
-    public enum AntialiasingMethod {
+namespace Enums.via.render.AlphaAA
+{
+    public enum AntialiasingMethod
+    {
         FXAA = 0,
         SMAA1x = 1,
         SMAAT2x = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Grapple
+{
+    public enum Type
+    {
         Mount = 0,
     }
 }
 
-namespace Enums.app.Em8100.Goal.Battle {
-    public enum Message {
+namespace Enums.app.Em8100.Goal.Battle
+{
+    public enum Message
+    {
         Non = 0,
         AppearEnd = 1,
         Battle1 = 2,
@@ -21866,8 +25414,10 @@ namespace Enums.app.Em8100.Goal.Battle {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Strike {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Strike
+{
+    public enum Type
+    {
         Normal = 0,
         Backstep = 1,
         Slash = 2,
@@ -21879,8 +25429,10 @@ namespace Enums.app.CH9Em7700.Action.Strike {
     }
 }
 
-namespace Enums.via.os {
-    public enum FileOptionalAttr {
+namespace Enums.via.os
+{
+    public enum FileOptionalAttr
+    {
         Create = 1,
         Append = 2,
         Trunc = 4,
@@ -21888,84 +25440,106 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum LinePreset {
+namespace Enums.via.effect.detail
+{
+    public enum LinePreset
+    {
         Follow = 0,
         Length = 1,
         Chain = 2,
     }
 }
 
-namespace Enums.app.vr {
-    public enum VrMode {
+namespace Enums.app.vr
+{
+    public enum VrMode
+    {
         None = 0,
         Stereo = 1,
         Screen = 2,
     }
 }
 
-namespace Enums.app.FF030_Ex_MainMenu {
-    public enum Step {
+namespace Enums.app.FF030_Ex_MainMenu
+{
+    public enum Step
+    {
         GoNext = 0,
         Option = 1,
         Main = 2,
     }
 }
 
-namespace Enums.app.CH9Em7550Think {
-    public enum eMotionState {
+namespace Enums.app.CH9Em7550Think
+{
+    public enum eMotionState
+    {
         Idle = 0,
         Attack = 1,
     }
 }
 
-namespace Enums.via.render.SSRControl {
-    public enum SSRResolvePointNum {
+namespace Enums.via.render.SSRControl
+{
+    public enum SSRResolvePointNum
+    {
         SSRResolvePointNum_1 = 0,
         SSRResolvePointNum_2 = 1,
         SSRResolvePointNum_4 = 2,
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapOutput {
-    public enum Axis {
+namespace Enums.via.motion.SubExJointRemapOutput
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.app.CH8VoiceHealthRemaining.CH8VoiceParam {
-    public enum ConditionTable {
+namespace Enums.app.CH8VoiceHealthRemaining.CH8VoiceParam
+{
+    public enum ConditionTable
+    {
         Health20 = 0,
         Health50 = 1,
     }
 }
 
-namespace Enums.via.hid.VrTrackerResultData {
-    public enum RearStatus {
+namespace Enums.via.hid.VrTrackerResultData
+{
+    public enum RearStatus
+    {
         NotReady = 0,
         Ready = 1,
         NotSupported = 2,
     }
 }
 
-namespace Enums.app.Em8900 {
-    public enum ThinkState {
+namespace Enums.app.Em8900
+{
+    public enum ThinkState
+    {
         None = 0,
         Battle = 1,
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusDevice {
-    public enum ReprojectionType {
+namespace Enums.via.hid.hmd.MorpheusDevice
+{
+    public enum ReprojectionType
+    {
         Default = 0,
         WithOverlay = 1,
     }
 }
 
-namespace Enums.app.InteractObjectBase {
-    public enum NarrativeSoundType {
+namespace Enums.app.InteractObjectBase
+{
+    public enum NarrativeSoundType
+    {
         None = 0,
         Icon = 1,
         Icon_EV0 = 2,
@@ -21985,8 +25559,10 @@ namespace Enums.app.InteractObjectBase {
     }
 }
 
-namespace Enums.app.BirthdayBlasterManager {
-    public enum RTPC_BGM_Type_Enum {
+namespace Enums.app.BirthdayBlasterManager
+{
+    public enum RTPC_BGM_Type_Enum
+    {
         SPEED_Lv1 = 0,
         SPEED_Lv2 = 1,
         SPEED_Lv3 = 2,
@@ -21995,16 +25571,20 @@ namespace Enums.app.BirthdayBlasterManager {
     }
 }
 
-namespace Enums.app.vr {
-    public enum PlayerMoveSpeed {
+namespace Enums.app.vr
+{
+    public enum PlayerMoveSpeed
+    {
         Default = 0,
         Slowish = 1,
         Slow = 2,
     }
 }
 
-namespace Enums.via.behaviortree {
-    public enum RestartType {
+namespace Enums.via.behaviortree
+{
+    public enum RestartType
+    {
         ExecuteOn = 0,
         ExecuteOff = 1,
         UseResource = 2,
@@ -22012,31 +25592,39 @@ namespace Enums.via.behaviortree {
     }
 }
 
-namespace Enums.app.VideoControl {
-    public enum VideoTypeDef {
+namespace Enums.app.VideoControl
+{
+    public enum VideoTypeDef
+    {
         Normal = 0,
         TitleMovie = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Kneel {
-    public enum LargeDamageReactionTable {
+namespace Enums.app.CH8Em4400.Action.CH8Kneel
+{
+    public enum LargeDamageReactionTable
+    {
         Large_F = 1000,
         Large_L = 1001,
         Large_R = 1002,
     }
 }
 
-namespace Enums.via.render.command.VKExtension {
-    public enum ExtensionType {
+namespace Enums.via.render.command.VKExtension
+{
+    public enum ExtensionType
+    {
         NewRenderpass = 0,
         NewRenderpassClear = 1,
         PipelineBarrierComputeToTransfer = 2,
     }
 }
 
-namespace Enums.via.sound.GameParameterRequest {
-    public enum Type {
+namespace Enums.via.sound.GameParameterRequest
+{
+    public enum Type
+    {
         None = 0,
         Set = 1,
         SetFloat = 2,
@@ -22044,30 +25632,38 @@ namespace Enums.via.sound.GameParameterRequest {
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum IconPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum IconPanelState
+    {
         ITEM_L = 0,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum OrientDirectionType {
+namespace Enums.via.effect.detail
+{
+    public enum OrientDirectionType
+    {
         None = 0,
         Forward = 1,
         Backward = 2,
     }
 }
 
-namespace Enums.via.motion.JointInfoRef {
-    public enum AttrFlags {
+namespace Enums.via.motion.JointInfoRef
+{
+    public enum AttrFlags
+    {
         EnableEmptyInterpolation = 1,
         PropertyAnimation = 2,
         EnableTransPolarBlend = 4,
     }
 }
 
-namespace Enums.app.CharacterDefine {
-    public enum Condition {
+namespace Enums.app.CharacterDefine
+{
+    public enum Condition
+    {
         Normal = 0,
         Angry = 1,
         Dying = 2,
@@ -22077,8 +25673,10 @@ namespace Enums.app.CharacterDefine {
     }
 }
 
-namespace Enums.app.CH9Em5850FollowBug {
-    public enum State {
+namespace Enums.app.CH9Em5850FollowBug
+{
+    public enum State
+    {
         Normal = 0,
         Attack = 1,
         Return = 2,
@@ -22091,15 +25689,19 @@ namespace Enums.app.CH9Em5850FollowBug {
     }
 }
 
-namespace Enums.app.Em5400.Goal.Attack {
-    public enum Type {
+namespace Enums.app.Em5400.Goal.Attack
+{
+    public enum Type
+    {
         Stab = 0,
         Strike = 1,
     }
 }
 
-namespace Enums.app.GrappleBase {
-    public enum ProcessType {
+namespace Enums.app.GrappleBase
+{
+    public enum ProcessType
+    {
         None = 0,
         MotionWait = 1,
         MotionPlay = 2,
@@ -22107,16 +25709,20 @@ namespace Enums.app.GrappleBase {
     }
 }
 
-namespace Enums.via.motion.CppSampleChild {
-    public enum Test {
+namespace Enums.via.motion.CppSampleChild
+{
+    public enum Test
+    {
         A = 0,
         B = 1,
         C = 2,
     }
 }
 
-namespace Enums.app.PlayerDamageController {
-    public enum DamageDirection {
+namespace Enums.app.PlayerDamageController
+{
+    public enum DamageDirection
+    {
         Unknown = 0,
         FL = 1,
         FR = 2,
@@ -22128,30 +25734,38 @@ namespace Enums.app.PlayerDamageController {
     }
 }
 
-namespace Enums.app.fsm.CH8NoSaveValueControl {
-    public enum ControlTypeEnum {
+namespace Enums.app.fsm.CH8NoSaveValueControl
+{
+    public enum ControlTypeEnum
+    {
         Set = 0,
         Check = 1,
     }
 }
 
-namespace Enums.via.render.LightVolumeDecal {
-    public enum NormalRoughnessMapType {
+namespace Enums.via.render.LightVolumeDecal
+{
+    public enum NormalRoughnessMapType
+    {
         Normal = 0,
         NormalRoughness = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum FrontDirection {
+namespace Enums.via.effect.detail
+{
+    public enum FrontDirection
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.hid.PortInfo {
-    public enum StateThread {
+namespace Enums.via.hid.PortInfo
+{
+    public enum StateThread
+    {
         None = 0,
         Uninitialized = 1,
         Initializing = 2,
@@ -22162,16 +25776,20 @@ namespace Enums.via.hid.PortInfo {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum NodeBillboardShapeType {
+namespace Enums.via.effect.detail
+{
+    public enum NodeBillboardShapeType
+    {
         Box = 0,
         Sphere = 1,
         Num = 2,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataEncryptionType {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataEncryptionType
+    {
         None = 0,
         AutoStrong = 1,
         XOR = 2,
@@ -22180,8 +25798,10 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.Em8940.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8940.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Damage = 1,
         Dead = 2,
@@ -22189,14 +25809,18 @@ namespace Enums.app.Em8940.Action {
     }
 }
 
-namespace Enums.via.effect {
-    public enum BindingType {
+namespace Enums.via.effect
+{
+    public enum BindingType
+    {
         Joint = 0,
     }
 }
 
-namespace Enums.app.Em3002.Goal {
-    public enum AttackMessageStatus {
+namespace Enums.app.Em3002.Goal
+{
+    public enum AttackMessageStatus
+    {
         Non = 0,
         Hit = 1,
         UnHit = 2,
@@ -22204,16 +25828,20 @@ namespace Enums.app.Em3002.Goal {
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Suspend {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Suspend
+{
+    public enum Type
+    {
         Normal = 0,
         SelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum Bounce {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum Bounce
+    {
         Bounce_0 = 0,
         Bounce_1 = 1,
         Bounce_2 = 2,
@@ -22222,8 +25850,10 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraCaptureWaitFrameType {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraCaptureWaitFrameType
+    {
         OnMode0 = 0,
         OffMode0 = 1,
         OnMode1 = 2,
@@ -22231,16 +25861,20 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum TransitionAttribute {
+namespace Enums.via.fsm
+{
+    public enum TransitionAttribute
+    {
         Warp = 0,
         IgnorePuppetMode = 1,
         TransitionAttributeBitNum = 32,
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum Op {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum Op
+    {
         None = 0,
         Add = 1,
         Multiply = 2,
@@ -22249,8 +25883,10 @@ namespace Enums.via.render.RenderTargetOperator {
     }
 }
 
-namespace Enums.via.hid {
-    public enum KeyboardDisplayKey {
+namespace Enums.via.hid
+{
+    public enum KeyboardDisplayKey
+    {
         A = 1,
         B = 2,
         C = 3,
@@ -22324,8 +25960,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum ResolutionAdjust {
+namespace Enums.via.gui.detail
+{
+    public enum ResolutionAdjust
+    {
         StretchAlways = 0,
         StretchExpanding = 1,
         StretchShrinking = 2,
@@ -22340,31 +25978,39 @@ namespace Enums.via.gui.detail {
     }
 }
 
-namespace Enums.via.render {
-    public enum FillMode {
+namespace Enums.via.render
+{
+    public enum FillMode
+    {
         Wireframe = 1,
         Solid = 2,
         Num = 3,
     }
 }
 
-namespace Enums.app.Em4100.Action.Suspend {
-    public enum Option {
+namespace Enums.app.Em4100.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.CH8Oilcan2 {
-    public enum OilcanSetType {
+namespace Enums.app.CH8Oilcan2
+{
+    public enum OilcanSetType
+    {
         Oilcan = 0,
         FakeBox = 1,
     }
 }
 
-namespace Enums.app.LightConditionManager {
-    public enum KindEnum {
+namespace Enums.app.LightConditionManager
+{
+    public enum KindEnum
+    {
         Day = 0,
         Night = 1,
         Midnight = 2,
@@ -22372,8 +26018,10 @@ namespace Enums.app.LightConditionManager {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpSequence {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpSequence
+    {
         None = 0,
         Detection = 1,
         GetTagInfo = 2,
@@ -22386,28 +26034,36 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.via.CoreEntry {
-    public enum CpuBoostMode {
+namespace Enums.via.CoreEntry
+{
+    public enum CpuBoostMode
+    {
         Normal = 0,
         FastLoad = 1,
     }
 }
 
-namespace Enums.app.CH9Em7900ActionPoint {
-    public enum Type {
+namespace Enums.app.CH9Em7900ActionPoint
+{
+    public enum Type
+    {
         DropPoint = 0,
     }
 }
 
-namespace Enums.app.GrappleBase {
-    public enum ConstModeType {
+namespace Enums.app.GrappleBase
+{
+    public enum ConstModeType
+    {
         EnemyToPlayer = 0,
         PlayerToEnemy = 1,
     }
 }
 
-namespace Enums.app.CH9Em6700.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em6700.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         UnDiscovery = 2,
@@ -22429,8 +26085,10 @@ namespace Enums.app.CH9Em6700.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum MaterialDebugTypeEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum MaterialDebugTypeEnum
+    {
         None = 0,
         SampleCount = 1,
         LocalUV = 2,
@@ -22440,22 +26098,28 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.via.storage {
-    public enum CompressionAlgorithm {
+namespace Enums.via.storage
+{
+    public enum CompressionAlgorithm
+    {
         Deflate = 0,
     }
 }
 
-namespace Enums.app.Em3000.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Walk
+{
+    public enum Type
+    {
         Normal = 0,
         Fire = 1,
         TNormal = 2,
     }
 }
 
-namespace Enums.app.ChainClothSelector {
-    public enum Type {
+namespace Enums.app.ChainClothSelector
+{
+    public enum Type
+    {
         Unknown = 0,
         Cloth = 1,
         Chain = 2,
@@ -22463,8 +26127,10 @@ namespace Enums.app.ChainClothSelector {
     }
 }
 
-namespace Enums.via.render.command.NVNExtention {
-    public enum ExtentionType {
+namespace Enums.via.render.command.NVNExtention
+{
+    public enum ExtentionType
+    {
         ResolveDepthBuffer = 0,
         SetTiledCacheTileSize = 1,
         TiledCacheActionEnable = 2,
@@ -22478,8 +26144,10 @@ namespace Enums.via.render.command.NVNExtention {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM6 {
-    public enum CHP8_6 {
+namespace Enums.app.CH8StateSwitchM6
+{
+    public enum CHP8_6
+    {
         SILENCE = 0,
         BGM_CHP8_STORAGE_01 = 1,
         BGM_CHP8_STORAGE_01_END = 2,
@@ -22487,8 +26155,10 @@ namespace Enums.app.CH8StateSwitchM6 {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_71ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_71ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -22501,8 +26171,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app {
-    public enum Group {
+namespace Enums.app
+{
+    public enum Group
+    {
         Player = 0,
         Enemy = 1,
         Weapon = 2,
@@ -22517,8 +26189,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum EffectType {
+namespace Enums.via.audiorender
+{
+    public enum EffectType
+    {
         None = 0,
         LowPassFilter = 1,
         I3DL2Reverb = 2,
@@ -22533,8 +26207,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM8 {
-    public enum CHP8_8 {
+namespace Enums.app.CH8StateSwitchM8
+{
+    public enum CHP8_8
+    {
         SILENCE = 0,
         BGM_CHP8_LABO_EVENT = 1,
         BGM_CHP8_LABO_EVENT_AREA_END = 2,
@@ -22542,30 +26218,38 @@ namespace Enums.app.CH8StateSwitchM8 {
     }
 }
 
-namespace Enums.app.FBIKAttackController {
-    public enum Axis {
+namespace Enums.app.FBIKAttackController
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.motion.IkTrain {
-    public enum TrainRotate {
+namespace Enums.via.motion.IkTrain
+{
+    public enum TrainRotate
+    {
         Default = 0,
         DiffRot = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum FrontDirectionType {
+namespace Enums.via.effect.detail
+{
+    public enum FrontDirectionType
+    {
         ParallelCamera = 0,
         ToCamera = 1,
     }
 }
 
-namespace Enums.app.Em8100.Action.Grab {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Grab
+{
+    public enum Type
+    {
         Front = 0,
         Right = 1,
         Left = 2,
@@ -22574,15 +26258,19 @@ namespace Enums.app.Em8100.Action.Grab {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum FootLockMode {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum FootLockMode
+    {
         Auto = 0,
         SemiAuto = 1,
     }
 }
 
-namespace Enums.via.render.command.XB1Extention {
-    public enum ExtentionType {
+namespace Enums.via.render.command.XB1Extention
+{
+    public enum ExtentionType
+    {
         ExtentionType_PushToEsram = 0,
         ExtentionType_PopFromEsram = 1,
         ExtentionType_DmaTransfer_DtoE = 2,
@@ -22602,16 +26290,20 @@ namespace Enums.via.render.command.XB1Extention {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
-    public enum CurveType {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData
+{
+    public enum CurveType
+    {
         MinMax = 0,
         Function = 1,
         Scaling = 2,
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum RigidBodyState {
+namespace Enums.via.dynamics
+{
+    public enum RigidBodyState
+    {
         Disable = 0,
         Static = 1,
         KeyFramed = 2,
@@ -22622,8 +26314,10 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.app.WeaponShotgunAppend {
-    public enum PartsState {
+namespace Enums.app.WeaponShotgunAppend
+{
+    public enum PartsState
+    {
         Default = 0,
         ReloadBefore = 1,
         ReloadAfter = 2,
@@ -22632,8 +26326,10 @@ namespace Enums.app.WeaponShotgunAppend {
     }
 }
 
-namespace Enums.via.gui.MessageTag {
-    public enum Attr {
+namespace Enums.via.gui.MessageTag
+{
+    public enum Attr
+    {
         None = 0,
         PopEnd = 1,
         BaseColor = 2,
@@ -22644,8 +26340,10 @@ namespace Enums.via.gui.MessageTag {
     }
 }
 
-namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         LuminanceBleed = 1,
         SimpleLuminanceBleed = 2,
@@ -22658,15 +26356,19 @@ namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridCursorType {
+namespace Enums.via.gui
+{
+    public enum GridCursorType
+    {
         Fix = 0,
         Move = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Damage {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000Damage
+{
+    public enum Type
+    {
         INVALID = -1,
         NoDamage = 0,
         MHeadF = 1,
@@ -22685,16 +26387,20 @@ namespace Enums.app.Em8000.Action.Em8000Damage {
     }
 }
 
-namespace Enums.via.gui {
-    public enum UVValueType {
+namespace Enums.via.gui
+{
+    public enum UVValueType
+    {
         Rect = 0,
         UV = 1,
         Legacy = 2,
     }
 }
 
-namespace Enums.via.physics.System.SearchCollisionInfo {
-    public enum SearchMaterialAttributeCondition {
+namespace Enums.via.physics.System.SearchCollisionInfo
+{
+    public enum SearchMaterialAttributeCondition
+    {
         Equal = 0,
         And = 1,
         Or = 2,
@@ -22703,8 +26409,10 @@ namespace Enums.via.physics.System.SearchCollisionInfo {
     }
 }
 
-namespace Enums.via.network.dev.NetworkDataLoggingInternal {
-    public enum Phase {
+namespace Enums.via.network.dev.NetworkDataLoggingInternal
+{
+    public enum Phase
+    {
         None = 0,
         Idle = 1,
         Init = 2,
@@ -22715,15 +26423,19 @@ namespace Enums.via.network.dev.NetworkDataLoggingInternal {
     }
 }
 
-namespace Enums.via.areamap.test.DistanceToSelf {
-    public enum Condition {
+namespace Enums.via.areamap.test.DistanceToSelf
+{
+    public enum Condition
+    {
         Mode_Closest = 0,
         Mode_Farthest = 1,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PipelineStateType {
+namespace Enums.via.render.detail
+{
+    public enum PipelineStateType
+    {
         Transparent = 0,
         TransparentIgnoreDepth = 1,
         DistortionDepth = 2,
@@ -22744,8 +26456,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.Em8000.Em8000AroundTargetAgent {
-    public enum Direction {
+namespace Enums.app.Em8000.Em8000AroundTargetAgent
+{
+    public enum Direction
+    {
         Front = 0,
         Back = 1,
         Left = 2,
@@ -22757,8 +26471,10 @@ namespace Enums.app.Em8000.Em8000AroundTargetAgent {
     }
 }
 
-namespace Enums.app.fsm.StateCheck {
-    public enum BoolType {
+namespace Enums.app.fsm.StateCheck
+{
+    public enum BoolType
+    {
         None = 0,
         Grapple = 1,
         Damage = 2,
@@ -22767,23 +26483,29 @@ namespace Enums.app.fsm.StateCheck {
     }
 }
 
-namespace Enums.app.CH9Em6400HeadController {
-    public enum InsectMotionOrder {
+namespace Enums.app.CH9Em6400HeadController
+{
+    public enum InsectMotionOrder
+    {
         None = 0,
         Play = 1,
         Stop = 2,
     }
 }
 
-namespace Enums.app.MathEx {
-    public enum SliceType {
+namespace Enums.app.MathEx
+{
+    public enum SliceType
+    {
         Round = 0,
         Pizza = 1,
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum UpperActionID {
+namespace Enums.app.PlayerDefine
+{
+    public enum UpperActionID
+    {
         Unknown = 0,
         UseBaseLayer = 1,
         CommonRemoveWeapon = 2,
@@ -23015,30 +26737,38 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround {
-    public enum ROT_TYPE {
+namespace Enums.via.motion.IkSpineConformGround
+{
+    public enum ROT_TYPE
+    {
         SPEED = 0,
         DAMPING = 1,
     }
 }
 
-namespace Enums.app.Em8000.Em8000PropsBreakTarget {
-    public enum TargetType {
+namespace Enums.app.Em8000.Em8000PropsBreakTarget
+{
+    public enum TargetType
+    {
         None = 0,
         Stretcher = 1,
         IronShelf = 2,
     }
 }
 
-namespace Enums.app.CH9WeaponThrowable {
-    public enum eUseType {
+namespace Enums.app.CH9WeaponThrowable
+{
+    public enum eUseType
+    {
         Equip = 0,
         Throwing = 1,
     }
 }
 
-namespace Enums.app.CH9Em5850.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em5850.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Move = 1,
         Attack = 2,
@@ -23050,8 +26780,10 @@ namespace Enums.app.CH9Em5850.Action {
     }
 }
 
-namespace Enums.app.CH9MoldedActionController.LostPartsUnit {
-    public enum Type {
+namespace Enums.app.CH9MoldedActionController.LostPartsUnit
+{
+    public enum Type
+    {
         Head = 0,
         LeftArm = 1,
         RightArm = 2,
@@ -23063,8 +26795,10 @@ namespace Enums.app.CH9MoldedActionController.LostPartsUnit {
     }
 }
 
-namespace Enums.via.motion {
-    public enum BlendType {
+namespace Enums.via.motion
+{
+    public enum BlendType
+    {
         Normal = 0,
         Layer = 1,
         Interpolation = 2,
@@ -23073,15 +26807,19 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridAttribute {
+namespace Enums.via.gui
+{
+    public enum GridAttribute
+    {
         LinkEnabled = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum InputElementFormat {
+namespace Enums.via.render
+{
+    public enum InputElementFormat
+    {
         Float1 = 0,
         Float2 = 1,
         Float3 = 2,
@@ -23109,16 +26847,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app {
-    public enum SelectListMenuResult {
+namespace Enums.app
+{
+    public enum SelectListMenuResult
+    {
         None = 0,
         Decide = 1,
         Cancel = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum WrapMode {
+namespace Enums.via.motion
+{
+    public enum WrapMode
+    {
         Default = 0,
         Once = 1,
         Loop = 2,
@@ -23127,8 +26869,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Listener {
+namespace Enums.via.audiorender
+{
+    public enum Listener
+    {
         Listener_0 = 0,
         Listener_1 = 1,
         Listener_2 = 2,
@@ -23137,8 +26881,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.render {
-    public enum TextureFormat {
+namespace Enums.via.render
+{
+    public enum TextureFormat
+    {
         Unknown = 0,
         R32G32B32A32Typeless = 1,
         R32G32B32A32Float = 2,
@@ -23286,8 +27032,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.InventoryManager {
-    public enum SUB_MODE {
+namespace Enums.app.InventoryManager
+{
+    public enum SUB_MODE
+    {
         ITEM_MAIN_SELECT = 0,
         ITEM_COMMAND_SELECT = 1,
         ITEM_EQUIP_SLOT_SELECT = 2,
@@ -23314,8 +27062,10 @@ namespace Enums.app.InventoryManager {
     }
 }
 
-namespace Enums.via.render {
-    public enum BlendShapePriority {
+namespace Enums.via.render
+{
+    public enum BlendShapePriority
+    {
         blendShapePriority_BlendShape = 0,
         blendShapePriority_AfterBlendShape = 1,
         blendShapePriority_Skinning = 2,
@@ -23326,38 +27076,48 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum LangItem {
+namespace Enums.app.OptionMenu
+{
+    public enum LangItem
+    {
         Voice = 0,
         Caption = 1,
         Caption_Display = 2,
     }
 }
 
-namespace Enums.app.fsm.Sm0113Phone_Exclusive {
-    public enum CheckTypeEnum {
+namespace Enums.app.fsm.Sm0113Phone_Exclusive
+{
+    public enum CheckTypeEnum
+    {
         CK_1st = 0,
         CK_2nd = 1,
         CK_3rd = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8CounterRush {
-    public enum CounterType {
+namespace Enums.app.CH8Em4000.Action.CH8CounterRush
+{
+    public enum CounterType
+    {
         ParryCounter = 0,
         ActiveCounter = 1,
     }
 }
 
-namespace Enums.via.areamap.AreaMemory {
-    public enum Mode {
+namespace Enums.via.areamap.AreaMemory
+{
+    public enum Mode
+    {
         Seconds = 0,
         Frames = 1,
     }
 }
 
-namespace Enums.via.motion.JointRemapValue.RemapValueItem {
-    public enum InputType {
+namespace Enums.via.motion.JointRemapValue.RemapValueItem
+{
+    public enum InputType
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
@@ -23365,15 +27125,19 @@ namespace Enums.via.motion.JointRemapValue.RemapValueItem {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Kneel {
-    public enum SmallDamageReactionTable {
+namespace Enums.app.CH8Em4400.Action.CH8Kneel
+{
+    public enum SmallDamageReactionTable
+    {
         Small_v1 = 0,
         Small_v2 = 1,
     }
 }
 
-namespace Enums.via.hid.mouse.impl {
-    public enum ManipulatorClientType {
+namespace Enums.via.hid.mouse.impl
+{
+    public enum ManipulatorClientType
+    {
         Null = 0,
         DirectInput = 1,
         RawInput = 2,
@@ -23384,14 +27148,18 @@ namespace Enums.via.hid.mouse.impl {
     }
 }
 
-namespace Enums.app.Em5552Order.Appear {
-    public enum Type {
+namespace Enums.app.Em5552Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.via.hid {
-    public enum AdaptiveTriggerState {
+namespace Enums.via.hid
+{
+    public enum AdaptiveTriggerState
+    {
         Off = 0,
         Intercepted = 1,
         Standby = 2,
@@ -23401,30 +27169,38 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum NowOnSaleState {
+namespace Enums.app.GameManager
+{
+    public enum NowOnSaleState
+    {
         None = 0,
         NotSale = 1,
         Sale = 2,
     }
 }
 
-namespace Enums.app.Em3002.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Grapple
+{
+    public enum Type
+    {
         CommonTurn = 0,
         FinishMove = 1,
     }
 }
 
-namespace Enums.via.navigation.NodeFilterInfo {
-    public enum FilterType {
+namespace Enums.via.navigation.NodeFilterInfo
+{
+    public enum FilterType
+    {
         UseOn = 0,
         UseOff = 1,
     }
 }
 
-namespace Enums.via.render.ShaderTimerResource {
-    public enum ShaderTimerIncrType {
+namespace Enums.via.render.ShaderTimerResource
+{
+    public enum ShaderTimerIncrType
+    {
         MILLISEC = 0,
         SECOND = 1,
         FRAME = 2,
@@ -23432,37 +27208,47 @@ namespace Enums.via.render.ShaderTimerResource {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Idle {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumU2 {
+namespace Enums.via.clr
+{
+    public enum EnumU2
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.app.FirstGraphicSettingGuiBehavior {
-    public enum State {
+namespace Enums.app.FirstGraphicSettingGuiBehavior
+{
+    public enum State
+    {
         RAY_TRACING = 0,
         HIGH_FRAMERATE = 1,
         MAX = 2,
     }
 }
 
-namespace Enums.app.CH8PlayerSwingingSound {
-    public enum StompTable {
+namespace Enums.app.CH8PlayerSwingingSound
+{
+    public enum StompTable
+    {
         silence = 0,
         stomp_hit = 1,
         stomp_miss = 2,
     }
 }
 
-namespace Enums.app.Em8001.IK.Em8001HandIKController {
-    public enum Type {
+namespace Enums.app.Em8001.IK.Em8001HandIKController
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         Left = 1,
@@ -23471,36 +27257,46 @@ namespace Enums.app.Em8001.IK.Em8001HandIKController {
     }
 }
 
-namespace Enums.app.CH9Em5901 {
-    public enum ThinkOrder {
+namespace Enums.app.CH9Em5901
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Dead = 1,
     }
 }
 
-namespace Enums.via.Serializer {
-    public enum Options {
+namespace Enums.via.Serializer
+{
+    public enum Options
+    {
         None = 0,
         FloatValueCompression = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Turn {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Turn
+{
+    public enum Type
+    {
         Idle = 0,
         Move = 1,
     }
 }
 
-namespace Enums.app.AI.AIGrappleBeacon {
-    public enum GrappleTypeEnum {
+namespace Enums.app.AI.AIGrappleBeacon
+{
+    public enum GrappleTypeEnum
+    {
         None = 0,
         Chapter1Battle1 = 1,
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum Category {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum Category
+    {
         Group = 0,
         P2pVersion = 1,
         Duties = 2,
@@ -23508,15 +27304,19 @@ namespace Enums.via.network.MatchmakingRules {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum LuminanceBleedSamplingType {
+namespace Enums.via.effect.detail
+{
+    public enum LuminanceBleedSamplingType
+    {
         Default = 0,
         NoSubpixel = 1,
     }
 }
 
-namespace Enums.via.wwise.LQGManager {
-    public enum CreatePhase {
+namespace Enums.via.wwise.LQGManager
+{
+    public enum CreatePhase
+    {
         None = 0,
         Initialize = 1,
         GetSpaceBasicInfo = 2,
@@ -23535,16 +27335,20 @@ namespace Enums.via.wwise.LQGManager {
     }
 }
 
-namespace Enums.via.clr {
-    public enum TokenKind {
+namespace Enums.via.clr
+{
+    public enum TokenKind
+    {
         Type = 0,
         Method = 1,
         Field = 2,
     }
 }
 
-namespace Enums.via.render.layer.PrimitiveSort {
-    public enum PrimitiveSortSegment {
+namespace Enums.via.render.layer.PrimitiveSort
+{
+    public enum PrimitiveSortSegment
+    {
         WaitForUpdate = 0,
         PrimitiveInitializeSort = 1,
         PrimitiveBitonicSort = 2,
@@ -23552,15 +27356,19 @@ namespace Enums.via.render.layer.PrimitiveSort {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ShakeIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum ShakeIndex
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum ConstraintType {
+namespace Enums.via.dynamics
+{
+    public enum ConstraintType
+    {
         Invalid = 0,
         BallAndSocket = 1,
         Hinge = 2,
@@ -23572,16 +27380,20 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Move {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Destination = 1,
         Wanderer = 2,
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum ProgressType {
+namespace Enums.app.Richpresence
+{
+    public enum ProgressType
+    {
         Chapter0 = 0,
         Chapter1 = 1,
         Chapter3 = 2,
@@ -23597,15 +27409,19 @@ namespace Enums.app.Richpresence {
     }
 }
 
-namespace Enums.app.WaveAnnouncementUIAsset {
-    public enum BonusPanelState {
+namespace Enums.app.WaveAnnouncementUIAsset
+{
+    public enum BonusPanelState
+    {
         DEFAULT = 0,
         EVENT = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum ShaderLod {
+namespace Enums.via.render
+{
+    public enum ShaderLod
+    {
         ShaderLod_Automatic = -1,
         ShaderLod_0 = 0,
         ShaderLod_1 = 1,
@@ -23618,8 +27434,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum OperationLayer {
+namespace Enums.app.PlayerDefine
+{
+    public enum OperationLayer
+    {
         Base = 0,
         Menu = 1,
         Interact = 2,
@@ -23627,8 +27445,10 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.via.Entry {
-    public enum Type {
+namespace Enums.via.Entry
+{
+    public enum Type
+    {
         Initialize = 0,
         Setup = 1,
         Start = 2,
@@ -23639,8 +27459,10 @@ namespace Enums.via.Entry {
     }
 }
 
-namespace Enums.via.browser {
-    public enum OpenError {
+namespace Enums.via.browser
+{
+    public enum OpenError
+    {
         None = 0,
         InvalidArgument = 1,
         Busy = 2,
@@ -23649,8 +27471,10 @@ namespace Enums.via.browser {
     }
 }
 
-namespace Enums.via.storage {
-    public enum CompressionServiceTicketStatus {
+namespace Enums.via.storage
+{
+    public enum CompressionServiceTicketStatus
+    {
         Invalid = 0,
         Requested = 1,
         Running = 2,
@@ -23658,8 +27482,10 @@ namespace Enums.via.storage {
     }
 }
 
-namespace Enums.via.network.native {
-    public enum XboNatType {
+namespace Enums.via.network.native
+{
+    public enum XboNatType
+    {
         Open = 0,
         Moderate = 1,
         Strict = 2,
@@ -23667,8 +27493,10 @@ namespace Enums.via.network.native {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum DisplayItem {
+namespace Enums.app.OptionMenu
+{
+    public enum DisplayItem
+    {
         Shake = 0,
         DamageEffect = 1,
         Tutorial = 2,
@@ -23688,22 +27516,28 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app {
-    public enum CameraID {
+namespace Enums.app
+{
+    public enum CameraID
+    {
         MainCamera = 0,
     }
 }
 
-namespace Enums.app.PopupDialog {
-    public enum Result {
+namespace Enums.app.PopupDialog
+{
+    public enum Result
+    {
         None = 0,
         Yes = 1,
         No = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4100.Action
+{
+    public enum CH8ActionNo
+    {
         Attack = 4,
         StrikeScratch = 5,
         StrikeDash = 6,
@@ -23732,8 +27566,10 @@ namespace Enums.app.CH8Em4100.Action {
     }
 }
 
-namespace Enums.via.physics.CharacterController {
-    public enum ContactType {
+namespace Enums.via.physics.CharacterController
+{
+    public enum ContactType
+    {
         Ground = 0,
         Wall = 1,
         Ceiling = 2,
@@ -23741,8 +27577,10 @@ namespace Enums.via.physics.CharacterController {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_1oAmb {
+namespace Enums.via.audiorender
+{
+    public enum Channel_1oAmb
+    {
         Channel_1oAmb_0 = 0,
         Channel_1oAmb_1 = 1,
         Channel_1oAmb_2 = 2,
@@ -23751,8 +27589,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Attack {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Attack
+{
+    public enum Type
+    {
         None = 0,
         SkillA1 = 1000,
         SkillA2 = 1001,
@@ -23786,8 +27626,10 @@ namespace Enums.app.CH9Em6400.Action.Attack {
     }
 }
 
-namespace Enums.via.kernel.bcat {
-    public enum BcatResult {
+namespace Enums.via.kernel.bcat
+{
+    public enum BcatResult
+    {
         OK = 0,
         ConnectFailed = 1,
         SyncFailed = 2,
@@ -23796,16 +27638,20 @@ namespace Enums.via.kernel.bcat {
     }
 }
 
-namespace Enums.via.navigation.QueryObject {
-    public enum WorkStatus {
+namespace Enums.via.navigation.QueryObject
+{
+    public enum WorkStatus
+    {
         Idle = 0,
         Work = 1,
         Finalize = 2,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataOption {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataOption
+    {
         None = 0,
         Encryption = 1,
         CheckOwner = 2,
@@ -23813,16 +27659,20 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.JunkPartsUIAsset {
-    public enum PartsCountState {
+namespace Enums.app.JunkPartsUIAsset
+{
+    public enum PartsCountState
+    {
         DEFAULT = 0,
         EMPTY = 1,
         FULL = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum MemberTypes {
+namespace Enums.via.clr
+{
+    public enum MemberTypes
+    {
         Constructor = 1,
         Event = 2,
         Field = 4,
@@ -23834,8 +27684,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.fsm.CH8ElevatorButtonCheck {
-    public enum CheckType {
+namespace Enums.app.fsm.CH8ElevatorButtonCheck
+{
+    public enum CheckType
+    {
         Use = 0,
         SameFloor = 1,
         OpenDoor = 2,
@@ -23844,14 +27696,18 @@ namespace Enums.app.fsm.CH8ElevatorButtonCheck {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodUser {
+namespace Enums.via.network.error
+{
+    public enum MethodUser
+    {
         Update = 0,
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum CommonSegment {
+namespace Enums.via.render.layer
+{
+    public enum CommonSegment
+    {
         UpdateConstant = 0,
         UpdateBuffer = 0,
         ComputeBase = 1,
@@ -23891,8 +27747,10 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.app.EnemyThinkBase {
-    public enum DirectionType {
+namespace Enums.app.EnemyThinkBase
+{
+    public enum DirectionType
+    {
         Invalid = 0,
         ForwardTo = 1,
         BackFrom = 2,
@@ -23904,15 +27762,19 @@ namespace Enums.app.EnemyThinkBase {
     }
 }
 
-namespace Enums.app.fsm.CH8PlayerDetectCheck {
-    public enum Type {
+namespace Enums.app.fsm.CH8PlayerDetectCheck
+{
+    public enum Type
+    {
         None = 0,
         Enemy = 1,
     }
 }
 
-namespace Enums.app.CH9PlayerMovement {
-    public enum eReturnType {
+namespace Enums.app.CH9PlayerMovement
+{
+    public enum eReturnType
+    {
         Defalut = 0,
         BoatIdle = 1,
         CarryStart = 2,
@@ -23922,8 +27784,10 @@ namespace Enums.app.CH9PlayerMovement {
     }
 }
 
-namespace Enums.via.clr {
-    public enum SystemMethod {
+namespace Enums.via.clr
+{
+    public enum SystemMethod
+    {
         Equals = 0,
         GetHashCode = 1,
         Finalize = 2,
@@ -23942,16 +27806,20 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.BasicAnimationController.AnimatorParam {
-    public enum ParamType {
+namespace Enums.app.BasicAnimationController.AnimatorParam
+{
+    public enum ParamType
+    {
         Int = 0,
         Float = 1,
         Bool = 2,
     }
 }
 
-namespace Enums.via.nnfc {
-    public enum DeviceRegisterResult {
+namespace Enums.via.nnfc
+{
+    public enum DeviceRegisterResult
+    {
         Success = 0,
         ConflictDevice = 1,
         ConflictMode = 2,
@@ -23960,15 +27828,19 @@ namespace Enums.via.nnfc {
     }
 }
 
-namespace Enums.via.render.Stamp {
-    public enum TargetUV {
+namespace Enums.via.render.Stamp
+{
+    public enum TargetUV
+    {
         Primary = 0,
         Secondary = 1,
     }
 }
 
-namespace Enums.via.storage.StaticPropertyContainer {
-    public enum TypeCode {
+namespace Enums.via.storage.StaticPropertyContainer
+{
+    public enum TypeCode
+    {
         Unknown = 0,
         Bool = 1,
         S8 = 2,
@@ -23985,8 +27857,10 @@ namespace Enums.via.storage.StaticPropertyContainer {
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotImageOrientation {
+namespace Enums.via
+{
+    public enum ScreenShotImageOrientation
+    {
         None = 0,
         Rotate90 = 1,
         Rotate180 = 2,
@@ -23994,8 +27868,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em8001.Override.Em8001OverrideController {
-    public enum State {
+namespace Enums.app.Em8001.Override.Em8001OverrideController
+{
+    public enum State
+    {
         None = 0,
         WalkNormal = 1,
         WalkTurn = 2,
@@ -24004,16 +27880,20 @@ namespace Enums.app.Em8001.Override.Em8001OverrideController {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BuildMeshFor {
+namespace Enums.via.landscape
+{
+    public enum BuildMeshFor
+    {
         Collision = 0,
         Export = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ControlItem {
+namespace Enums.app.OptionMenu
+{
+    public enum ControlItem
+    {
         Vibration = 0,
         AimAssist = 1,
         WalkSpeed = 2,
@@ -24038,22 +27918,28 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.movie.MovieEntry {
-    public enum DefaultVideoDecoderMode {
+namespace Enums.via.movie.MovieEntry
+{
+    public enum DefaultVideoDecoderMode
+    {
         Hardware = 0,
         Cpu = 1,
     }
 }
 
-namespace Enums.via.motion.JointMapData {
-    public enum AttributeFlags {
+namespace Enums.via.motion.JointMapData
+{
+    public enum AttributeFlags
+    {
         Deform = 1,
         JointWeight = 2,
     }
 }
 
-namespace Enums.app.GrappleBase.SafeSpaceParam {
-    public enum FindType {
+namespace Enums.app.GrappleBase.SafeSpaceParam
+{
+    public enum FindType
+    {
         None = 0,
         Position = 1,
         Direction = 2,
@@ -24061,35 +27947,45 @@ namespace Enums.app.GrappleBase.SafeSpaceParam {
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum CalculationAddRotation {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum CalculationAddRotation
+    {
         SpecificJoint = 0,
         AllJoint = 1,
     }
 }
 
-namespace Enums.app.PlayerMeshController {
-    public enum LHandPartsState {
+namespace Enums.app.PlayerMeshController
+{
+    public enum LHandPartsState
+    {
         Normal = 0,
         LHandCut = 1,
     }
 }
 
-namespace Enums.via.fluidflock.FluidFlockSimulationModelBase {
-    public enum SimulationMethod {
+namespace Enums.via.fluidflock.FluidFlockSimulationModelBase
+{
+    public enum SimulationMethod
+    {
         SPH = 0,
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum Lean {
+namespace Enums.via.motion.IkLeg
+{
+    public enum Lean
+    {
         Center = 0,
         CenterAndHeal = 1,
     }
 }
 
-namespace Enums.via.motion.detail.ContactHelper {
-    public enum VirtualGroundShape {
+namespace Enums.via.motion.detail.ContactHelper
+{
+    public enum VirtualGroundShape
+    {
         None = 0,
         Plane = 1,
         Sphere = 2,
@@ -24098,8 +27994,10 @@ namespace Enums.via.motion.detail.ContactHelper {
     }
 }
 
-namespace Enums.via.motion {
-    public enum AxisDirection {
+namespace Enums.via.motion
+{
+    public enum AxisDirection
+    {
         Undef = 0,
         X = 1,
         Y = 2,
@@ -24110,8 +28008,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.dev1lab.AnalysisLogTransmitter {
-    public enum Phase {
+namespace Enums.app.dev1lab.AnalysisLogTransmitter
+{
+    public enum Phase
+    {
         Invalid = 0,
         Wait = 1,
         Initialize = 2,
@@ -24126,16 +28026,20 @@ namespace Enums.app.dev1lab.AnalysisLogTransmitter {
     }
 }
 
-namespace Enums.app.Havok.HavokClothAnimationTrack {
-    public enum Mode {
+namespace Enums.app.Havok.HavokClothAnimationTrack
+{
+    public enum Mode
+    {
         Simulation = 0,
         Animation = 1,
         AnimationEvent = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum MiddleActionType {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum MiddleActionType
+    {
         StepInCommon = 0,
         GuardFollow = 1,
         Max = 2,
@@ -24143,22 +28047,28 @@ namespace Enums.app.CH9Em6400ActionController {
     }
 }
 
-namespace Enums.via.userdata.LogicNode {
-    public enum Operation {
+namespace Enums.via.userdata.LogicNode
+{
+    public enum Operation
+    {
         And = 0,
         Or = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400ActionController {
-    public enum Limb {
+namespace Enums.app.CH8Em4400ActionController
+{
+    public enum Limb
+    {
         RIGHT_ARM = 0,
         LEFT_ARM = 1,
     }
 }
 
-namespace Enums.app.CH8RushCheckSwitch {
-    public enum RushStateID {
+namespace Enums.app.CH8RushCheckSwitch
+{
+    public enum RushStateID
+    {
         SILENCE = 0,
         CHP8_RUSH_START = 1,
         END = 2,
@@ -24166,54 +28076,68 @@ namespace Enums.app.CH8RushCheckSwitch {
     }
 }
 
-namespace Enums.via.render.Cloudscape {
-    public enum RenderingMode {
+namespace Enums.via.render.Cloudscape
+{
+    public enum RenderingMode
+    {
         Camera = 0,
         IBL = 1,
     }
 }
 
-namespace Enums.app.DamageController.DamageRecord {
-    public enum DamageType {
+namespace Enums.app.DamageController.DamageRecord
+{
+    public enum DamageType
+    {
         Hit = 0,
         Manual = 1,
         Debug = 2,
     }
 }
 
-namespace Enums.via.navigation.map.VertexXZ {
-    public enum Attribute {
+namespace Enums.via.navigation.map.VertexXZ
+{
+    public enum Attribute
+    {
         FREE = 0,
         EDGE_START = 1,
         EDGE_END = 2,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataMountMode {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataMountMode
+    {
         Read = 0,
         Write = 1,
         CreateWrite = 2,
     }
 }
 
-namespace Enums.app.CH8FadeControl {
-    public enum FadeRequestEnum {
+namespace Enums.app.CH8FadeControl
+{
+    public enum FadeRequestEnum
+    {
         None = 0,
         FadeIn = 1,
         FadeOut = 2,
     }
 }
 
-namespace Enums.via.render.ProjectionSpotLight {
-    public enum LightingMode {
+namespace Enums.via.render.ProjectionSpotLight
+{
+    public enum LightingMode
+    {
         All = 0,
         Beauty = 1,
     }
 }
 
-namespace Enums.app.fsm.StandbyFolderActivate {
-    public enum ParamType {
+namespace Enums.app.fsm.StandbyFolderActivate
+{
+    public enum ParamType
+    {
         Activate = 0,
         Deactivate = 1,
         StandbyOn = 2,
@@ -24221,8 +28145,10 @@ namespace Enums.app.fsm.StandbyFolderActivate {
     }
 }
 
-namespace Enums.app.CH8GameManager {
-    public enum PresencePregress {
+namespace Enums.app.CH8GameManager
+{
+    public enum PresencePregress
+    {
         Title = 0,
         Play_Casual = 1,
         Play_Normal = 2,
@@ -24230,8 +28156,10 @@ namespace Enums.app.CH8GameManager {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.AttackEx {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.AttackEx
+{
+    public enum Type
+    {
         None = 0,
         SkillExSwingR1 = 100,
         SkillExSwingL1 = 200,
@@ -24244,8 +28172,10 @@ namespace Enums.app.CH9Em6400.Action.AttackEx {
     }
 }
 
-namespace Enums.app.WwiseFrontSpeakerAngle {
-    public enum Device {
+namespace Enums.app.WwiseFrontSpeakerAngle
+{
+    public enum Device
+    {
         StereoSpeaker = 0,
         StereoHeadphone = 1,
         Surround = 2,
@@ -24253,8 +28183,10 @@ namespace Enums.app.WwiseFrontSpeakerAngle {
     }
 }
 
-namespace Enums.app.AI.CH8AIWorldBlackBoard {
-    public enum MoldedStateEnum {
+namespace Enums.app.AI.CH8AIWorldBlackBoard
+{
+    public enum MoldedStateEnum
+    {
         FULL = 0,
         LAYER = 1,
         BASS = 2,
@@ -24265,23 +28197,29 @@ namespace Enums.app.AI.CH8AIWorldBlackBoard {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterUpdateStatus {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterUpdateStatus
+    {
         Idle = 0,
         Running = 1,
         RunUntilDie = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerRoadBakeType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerRoadBakeType
+    {
         Splat = 0,
         SDF = 1,
     }
 }
 
-namespace Enums.app.Em8001.Message {
-    public enum Group {
+namespace Enums.app.Em8001.Message
+{
+    public enum Group
+    {
         None = 0,
         General_Attack_Start = 1,
         General_Attack_Hitted = 2,
@@ -24306,15 +28244,19 @@ namespace Enums.app.Em8001.Message {
     }
 }
 
-namespace Enums.via.navigation.map {
-    public enum VerticesMatrixType {
+namespace Enums.via.navigation.map
+{
+    public enum VerticesMatrixType
+    {
         Original = 0,
         TransformPtrMatrix = 1,
     }
 }
 
-namespace Enums.via.network.AutoMasterBase {
-    public enum Mode {
+namespace Enums.via.network.AutoMasterBase
+{
+    public enum Mode
+    {
         Independent = 0,
         ForceMaster = 1,
         ForcePuppet = 2,
@@ -24324,43 +28266,55 @@ namespace Enums.via.network.AutoMasterBase {
     }
 }
 
-namespace Enums.app.fsm.IntTest {
-    public enum CompareType {
+namespace Enums.app.fsm.IntTest
+{
+    public enum CompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Suspend {
-    public enum Option {
+namespace Enums.app.CH8Em4000.Action.CH8Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000Grapple {
-    public enum AttackType {
+namespace Enums.app.CH8Em4000Grapple
+{
+    public enum AttackType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.Em3100Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3100Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.cutin.CutinHandleNoInput {
-    public enum ResultDef {
+namespace Enums.app.cutin.CutinHandleNoInput
+{
+    public enum ResultDef
+    {
         NoButton = 0,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Damage {
-    public enum DownState {
+namespace Enums.app.Em8000.Action.Em8000Damage
+{
+    public enum DownState
+    {
         INVALID = -1,
         None = 0,
         NoDelegateProcess = 1,
@@ -24368,8 +28322,10 @@ namespace Enums.app.Em8000.Action.Em8000Damage {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveResult {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveResult
+    {
         Null = 0,
         Doing = 1,
         Success = 2,
@@ -24503,15 +28459,19 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.PlayerHandLight {
-    public enum ControlStatus {
+namespace Enums.app.PlayerHandLight
+{
+    public enum ControlStatus
+    {
         Free = 0,
         External = 1,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimitiveShaderType {
+namespace Enums.via.render.detail
+{
+    public enum PrimitiveShaderType
+    {
         LensflareIris = 0,
         LensflareHoop = 1,
         LensflareGeneric = 2,
@@ -24520,8 +28480,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.CH9Em5850Order.Appear {
-    public enum Type {
+namespace Enums.app.CH9Em5850Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Born = 1,
         Gather = 2,
@@ -24529,15 +28491,19 @@ namespace Enums.app.CH9Em5850Order.Appear {
     }
 }
 
-namespace Enums.app.CH8HUDControl {
-    public enum VrGaugeDisableFlag {
+namespace Enums.app.CH8HUDControl
+{
+    public enum VrGaugeDisableFlag
+    {
         QUICK_EQUIP_FLAG = 1,
         MESSAGE_FLAG = 2,
     }
 }
 
-namespace Enums.app.Em8001.Motion.Em8001MotionID.Tag {
-    public enum Weapon {
+namespace Enums.app.Em8001.Motion.Em8001MotionID.Tag
+{
+    public enum Weapon
+    {
         Idle = 0,
         BattleIdle = 1,
         EngineStop_Start = 2,
@@ -24553,8 +28519,10 @@ namespace Enums.app.Em8001.Motion.Em8001MotionID.Tag {
     }
 }
 
-namespace Enums.app.Em4100ActionController {
-    public enum WallAttackQueType {
+namespace Enums.app.Em4100ActionController
+{
+    public enum WallAttackQueType
+    {
         LeftWall = 0,
         RightWall = 1,
         Ceil = 2,
@@ -24562,8 +28530,10 @@ namespace Enums.app.Em4100ActionController {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum VrFilterModeIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum VrFilterModeIndex
+    {
         Off = 0,
         Small = 1,
         Large = 2,
@@ -24571,8 +28541,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.motion {
-    public enum EulerOrder {
+namespace Enums.via.motion
+{
+    public enum EulerOrder
+    {
         XYZ = 0,
         YZX = 1,
         ZXY = 2,
@@ -24582,24 +28554,30 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.Em3100.Action.Walk {
-    public enum Type {
+namespace Enums.app.Em3100.Action.Walk
+{
+    public enum Type
+    {
         Default = 0,
         Fret_v1 = 1,
         Fret_v2 = 2,
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum ItemBGPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum ItemBGPanelState
+    {
         DEFAULT = 0,
         LEVELMAX = 1,
         LEVELUP = 2,
     }
 }
 
-namespace Enums.app.CH8Em4000Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH8Em4000Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -24609,22 +28587,28 @@ namespace Enums.app.CH8Em4000Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.via.gui.BlurFilter {
-    public enum BlurType {
+namespace Enums.via.gui.BlurFilter
+{
+    public enum BlurType
+    {
         Instant = 0,
         System = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum Lean {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum Lean
+    {
         Center = 0,
         CenterAndHeal = 1,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServicePerformanceConfiguration {
+namespace Enums.via
+{
+    public enum SystemServicePerformanceConfiguration
+    {
         Invalid = 0,
         Cpu1020MhzGpu307MhzEmc1331Mhz = 1,
         Cpu1020MhzGpu384MhzEmc1331Mhz = 2,
@@ -24633,8 +28617,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotReportOption {
+namespace Enums.via
+{
+    public enum ScreenShotReportOption
+    {
         NoReport = 0,
         ReportOnSuccess = 1,
         ReportOnFailure = 2,
@@ -24642,39 +28628,49 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.motion.IkTrain {
-    public enum ResetPoseMode {
+namespace Enums.via.motion.IkTrain
+{
+    public enum ResetPoseMode
+    {
         Auto = 0,
         SemiAuto = 1,
         Manual = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum ParamModifier {
+namespace Enums.via.clr
+{
+    public enum ParamModifier
+    {
         None = 0,
         Ptr = 1,
         ByRef = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum EffectorTarget {
+namespace Enums.via.motion.IkLeg
+{
+    public enum EffectorTarget
+    {
         Heal = 0,
         Toe = 1,
     }
 }
 
-namespace Enums.app.Inventory {
-    public enum ExtendLvDef {
+namespace Enums.app.Inventory
+{
+    public enum ExtendLvDef
+    {
         Lv1 = 0,
         Lv2 = 1,
         Lv3 = 2,
     }
 }
 
-namespace Enums.via {
-    public enum Err {
+namespace Enums.via
+{
+    public enum Err
+    {
         NoError = 0,
         BadAlloc = 1,
         NoResource = 2,
@@ -24707,16 +28703,20 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Kneel {
-    public enum StateTable {
+namespace Enums.app.CH8Em4400.Action.CH8Kneel
+{
+    public enum StateTable
+    {
         Start = 0,
         Loop = 1,
         End = 2,
     }
 }
 
-namespace Enums.app.CH8MainMenu {
-    public enum MainMenu {
+namespace Enums.app.CH8MainMenu
+{
+    public enum MainMenu
+    {
         NewGame = 0,
         Continue = 1,
         LoadGame = 2,
@@ -24724,8 +28724,10 @@ namespace Enums.app.CH8MainMenu {
     }
 }
 
-namespace Enums.app.vr.VrSystemService {
-    public enum Request2DVRTypeEnum {
+namespace Enums.app.vr.VrSystemService
+{
+    public enum Request2DVRTypeEnum
+    {
         None = 0,
         Loading = 1,
         EventAction = 2,
@@ -24742,31 +28744,39 @@ namespace Enums.app.vr.VrSystemService {
     }
 }
 
-namespace Enums.via.physics.CastRayResult {
-    public enum Result {
+namespace Enums.via.physics.CastRayResult
+{
+    public enum Result
+    {
         Success = 0,
         Failure = 1,
         Error = 2,
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapOutput {
-    public enum TRS {
+namespace Enums.via.motion.SubExJointRemapOutput
+{
+    public enum TRS
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
     }
 }
 
-namespace Enums.app.PanelBoardHandle {
-    public enum State {
+namespace Enums.app.PanelBoardHandle
+{
+    public enum State
+    {
         Red = 0,
         Green = 1,
     }
 }
 
-namespace Enums.via.rebe {
-    public enum RebeWorkingState {
+namespace Enums.via.rebe
+{
+    public enum RebeWorkingState
+    {
         Unknown = 0,
         Alive = 1,
         Busy = 2,
@@ -24776,8 +28786,10 @@ namespace Enums.via.rebe {
     }
 }
 
-namespace Enums.app.Em8000BattleDirective.ScissorsBattleParameter.AttackActionParameter {
-    public enum AttackActionType {
+namespace Enums.app.Em8000BattleDirective.ScissorsBattleParameter.AttackActionParameter
+{
+    public enum AttackActionType
+    {
         None = 0,
         Zero_Front_Swing = 1,
         Zero_Front_Scissors = 2,
@@ -24804,14 +28816,18 @@ namespace Enums.app.Em8000BattleDirective.ScissorsBattleParameter.AttackActionPa
     }
 }
 
-namespace Enums.app.Em8950 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8950
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Nightmare.NightmareTrapUnitDestroyUpdater {
-    public enum State {
+namespace Enums.app.Nightmare.NightmareTrapUnitDestroyUpdater
+{
+    public enum State
+    {
         None = 0,
         WaitStart = 1,
         CheckDestroyAble = 2,
@@ -24820,8 +28836,10 @@ namespace Enums.app.Nightmare.NightmareTrapUnitDestroyUpdater {
     }
 }
 
-namespace Enums.app.CH8Em4450.Goal.CH8GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH8Em4450.Goal.CH8GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         UnDiscovery = 1,
         Discovery = 2,
@@ -24837,8 +28855,10 @@ namespace Enums.app.CH8Em4450.Goal.CH8GoalGenerator {
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum TargetCheckResult {
+namespace Enums.app.GameEventAction
+{
+    public enum TargetCheckResult
+    {
         Valid = 0,
         NoSetting = 1,
         NoExistContainer = 2,
@@ -24847,16 +28867,20 @@ namespace Enums.app.GameEventAction {
     }
 }
 
-namespace Enums.via.gui {
-    public enum FilterType {
+namespace Enums.via.gui
+{
+    public enum FilterType
+    {
         None = 0,
         BlurInstant = 1,
         BlurSystem = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum TexturecubeFace {
+namespace Enums.via.render
+{
+    public enum TexturecubeFace
+    {
         PositiveX = 0,
         NegativeX = 1,
         PositiveY = 2,
@@ -24866,8 +28890,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.hikako.ActivityManager {
-    public enum ActivityType {
+namespace Enums.hikako.ActivityManager
+{
+    public enum ActivityType
+    {
         START = 0,
         END = 1,
         AVAILABLECHANGE = 2,
@@ -24875,8 +28901,10 @@ namespace Enums.hikako.ActivityManager {
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapInput {
-    public enum InputType {
+namespace Enums.via.motion.SubExJointRemapInput
+{
+    public enum InputType
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
@@ -24884,16 +28912,20 @@ namespace Enums.via.motion.SubExJointRemapInput {
     }
 }
 
-namespace Enums.via.navigation.NavigationWaypoint {
-    public enum TraceTarget {
+namespace Enums.via.navigation.NavigationWaypoint
+{
+    public enum TraceTarget
+    {
         Waypoint = 0,
         NavMesh = 1,
         VolumeSpace = 2,
     }
 }
 
-namespace Enums.hikako.playlog.HikakoPlayLogManager {
-    public enum ConfigType {
+namespace Enums.hikako.playlog.HikakoPlayLogManager
+{
+    public enum ConfigType
+    {
         Disable = 0,
         Default = 1,
         ForceDevelop = 2,
@@ -24902,22 +28934,28 @@ namespace Enums.hikako.playlog.HikakoPlayLogManager {
     }
 }
 
-namespace Enums.via.effect.detail.EffectExecutor {
-    public enum ResourceType {
+namespace Enums.via.effect.detail.EffectExecutor
+{
+    public enum ResourceType
+    {
         Handle = 0,
         Stream = 1,
         Data = 2,
     }
 }
 
-namespace Enums.via.motion.LowerBodyRetarget {
-    public enum HipControlMode {
+namespace Enums.via.motion.LowerBodyRetarget
+{
+    public enum HipControlMode
+    {
         Default = 0,
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum Operate {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum Operate
+    {
         Distance = 0,
         GreaterThan = 1,
         GreaterEqual = 2,
@@ -24926,23 +28964,29 @@ namespace Enums.via.network.MatchmakingRules {
     }
 }
 
-namespace Enums.via.effect.gpgpu.BillboardCS.BillboardResource {
-    public enum BillboardComputeShaderType {
+namespace Enums.via.effect.gpgpu.BillboardCS.BillboardResource
+{
+    public enum BillboardComputeShaderType
+    {
         InitializeCS = 0,
         MaxType = 1,
     }
 }
 
-namespace Enums.via {
-    public enum FileAccessPriority {
+namespace Enums.via
+{
+    public enum FileAccessPriority
+    {
         TimeCritical = 0,
         Normal = 16383,
         Idle = 32767,
     }
 }
 
-namespace Enums.app.Em3002.Goal {
-    public enum GoalId {
+namespace Enums.app.Em3002.Goal
+{
+    public enum GoalId
+    {
         Discovery = 0,
         UnDiscovery = 1,
         Idle = 2,
@@ -24956,8 +29000,10 @@ namespace Enums.app.Em3002.Goal {
     }
 }
 
-namespace Enums.app.CH9Em6400MessageController {
-    public enum Type {
+namespace Enums.app.CH9Em6400MessageController
+{
+    public enum Type
+    {
         CommonCH92Battle = 0,
         FirstKnockDownCH92Battle = 1,
         FirstRevaivalCH92Battle = 2,
@@ -24972,8 +29018,10 @@ namespace Enums.app.CH9Em6400MessageController {
     }
 }
 
-namespace Enums.app.Em8001.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em8001.Action.Attack
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         Zero_Front_Back = 1,
@@ -24990,16 +29038,20 @@ namespace Enums.app.Em8001.Action.Attack {
     }
 }
 
-namespace Enums.app.AsyncLoadManager {
-    public enum DisebleItemFolderTypeEnum {
+namespace Enums.app.AsyncLoadManager
+{
+    public enum DisebleItemFolderTypeEnum
+    {
         None = 0,
         Em8000_Battle = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.effect {
-    public enum DevelopFlag {
+namespace Enums.via.effect
+{
+    public enum DevelopFlag
+    {
         DevelopDraw = 0,
         EffectCollision = 1,
         ZTestDraw = 2,
@@ -25025,15 +29077,19 @@ namespace Enums.via.effect {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Idle {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum Interpolation {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum Interpolation
+    {
         Linear = 0,
         Slow = 1,
         Fast = 2,
@@ -25041,8 +29097,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
     }
 }
 
-namespace Enums.app.EnemyResistParameter {
-    public enum EnemyResistParts {
+namespace Enums.app.EnemyResistParameter
+{
+    public enum EnemyResistParts
+    {
         Chest = 0,
         Stomach = 1,
         Head = 2,
@@ -25078,8 +29136,10 @@ namespace Enums.app.EnemyResistParameter {
     }
 }
 
-namespace Enums.app.Em3600.Action.Sneak {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Sneak
+{
+    public enum Type
+    {
         roof = 0,
         floor = 1,
         floor_v1 = 2,
@@ -25087,8 +29147,10 @@ namespace Enums.app.Em3600.Action.Sneak {
     }
 }
 
-namespace Enums.app.CH9TimeAttackTimerHUD {
-    public enum SEType {
+namespace Enums.app.CH9TimeAttackTimerHUD
+{
+    public enum SEType
+    {
         None = 0,
         Start = 1,
         Clear = 2,
@@ -25097,8 +29159,10 @@ namespace Enums.app.CH9TimeAttackTimerHUD {
     }
 }
 
-namespace Enums.via.render.BlendShapeController {
-    public enum BakedTextureSize {
+namespace Enums.via.render.BlendShapeController
+{
+    public enum BakedTextureSize
+    {
         BakedTextureSize_32 = 32,
         BakedTextureSize_64 = 64,
         BakedTextureSize_128 = 128,
@@ -25109,23 +29173,29 @@ namespace Enums.via.render.BlendShapeController {
     }
 }
 
-namespace Enums.app.fsm.MapPlayerPosLock {
-    public enum ControlTypes {
+namespace Enums.app.fsm.MapPlayerPosLock
+{
+    public enum ControlTypes
+    {
         None = 0,
         Lock = 1,
         Unlock = 2,
     }
 }
 
-namespace Enums.via.gui.Effect {
-    public enum ExternType {
+namespace Enums.via.gui.Effect
+{
+    public enum ExternType
+    {
         Float = 0,
         Color = 1,
     }
 }
 
-namespace Enums.via.render.command.VKExtension {
-    public enum ClearTargetBit {
+namespace Enums.via.render.command.VKExtension
+{
+    public enum ClearTargetBit
+    {
         ColorAttachment1 = 1,
         ColorAttachment2 = 2,
         ColorAttachment3 = 4,
@@ -25136,16 +29206,20 @@ namespace Enums.via.render.command.VKExtension {
     }
 }
 
-namespace Enums.via.network.native.StadiaEntitlementInfo {
-    public enum ItemType {
+namespace Enums.via.network.native.StadiaEntitlementInfo
+{
+    public enum ItemType
+    {
         Consumable = 0,
         Durable = 1,
         Invalid = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum WireframeType {
+namespace Enums.via.landscape
+{
+    public enum WireframeType
+    {
         None = 0,
         Wire = 1,
         FilledWire = 2,
@@ -25153,8 +29227,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.fsm.InteractTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.InteractTest
+{
+    public enum TestTypeParam
+    {
         Normal = 0,
         SwitchOn = 1,
         SwitchOff = 2,
@@ -25170,8 +29246,10 @@ namespace Enums.app.fsm.InteractTest {
     }
 }
 
-namespace Enums.app.CH8StateSwitchStory {
-    public enum CHP8_STORY {
+namespace Enums.app.CH8StateSwitchStory
+{
+    public enum CHP8_STORY
+    {
         silence = 0,
         last_rescue = 1,
         train_event_start = 2,
@@ -25186,8 +29264,10 @@ namespace Enums.app.CH8StateSwitchStory {
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum StartStatus {
+namespace Enums.via.hid.VrTracker
+{
+    public enum StartStatus
+    {
         Success = 0,
         NotSupported = -1,
         AlreadyStarted = -2,
@@ -25199,16 +29279,20 @@ namespace Enums.via.hid.VrTracker {
     }
 }
 
-namespace Enums.app.Em2000.Em2000FaceController {
-    public enum PartsNo {
+namespace Enums.app.Em2000.Em2000FaceController
+{
+    public enum PartsNo
+    {
         p000 = 0,
         p001 = 1,
         p002 = 2,
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotOverlayImageIndex {
+namespace Enums.via
+{
+    public enum ScreenShotOverlayImageIndex
+    {
         Index0 = 0,
         Index1 = 1,
         Index2 = 2,
@@ -25223,15 +29307,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.render {
-    public enum AutoExposureHistogramMode {
+namespace Enums.via.render
+{
+    public enum AutoExposureHistogramMode
+    {
         Default = 0,
         Mobile = 1,
     }
 }
 
-namespace Enums.app.CH9Em7900Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH9Em7900Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -25241,8 +29329,10 @@ namespace Enums.app.CH9Em7900Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.via.gui.Material {
-    public enum ParamType {
+namespace Enums.via.gui.Material
+{
+    public enum ParamType
+    {
         Unknown = 0,
         Float = 1,
         Float4 = 2,
@@ -25251,8 +29341,10 @@ namespace Enums.via.gui.Material {
     }
 }
 
-namespace Enums.via.JobScheduler {
-    public enum Priority {
+namespace Enums.via.JobScheduler
+{
+    public enum Priority
+    {
         High = 0,
         Normal = 1,
         Low = 2,
@@ -25260,8 +29352,10 @@ namespace Enums.via.JobScheduler {
     }
 }
 
-namespace Enums.app.Havok.HavokSystem {
-    public enum FramerateType {
+namespace Enums.app.Havok.HavokSystem
+{
+    public enum FramerateType
+    {
         Variable = 0,
         Fix30Fps = 1,
         Fix60Fps = 2,
@@ -25269,15 +29363,19 @@ namespace Enums.app.Havok.HavokSystem {
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround {
-    public enum INTERVAL_OPTION {
+namespace Enums.via.motion.IkSpineConformGround
+{
+    public enum INTERVAL_OPTION
+    {
         NONE = 0,
         SPINE_TAIL = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum ShaderType {
+namespace Enums.via.render
+{
+    public enum ShaderType
+    {
         GBuffer = 0,
         GBufferInstancing = 1,
         GBufferInstancing2 = 2,
@@ -25373,38 +29471,48 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.navigation.map.PathInfo {
-    public enum DistanceType {
+namespace Enums.via.navigation.map.PathInfo
+{
+    public enum DistanceType
+    {
         Raw = 0,
         Path = 1,
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum OptionSetting {
+namespace Enums.via.render.RenderConfig
+{
+    public enum OptionSetting
+    {
         OFF = 0,
         ON = 1,
         CUSTOM = 2,
     }
 }
 
-namespace Enums.via.motion.HipLegRig {
-    public enum LegSolverMode {
+namespace Enums.via.motion.HipLegRig
+{
+    public enum LegSolverMode
+    {
         LegSolverMode_2Bone = 0,
         LegSolverMode_3BoneTypeC = 1,
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraChannel {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraChannel
+    {
         Left = 0,
         Right = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.PlayerBonus {
-    public enum BonusType {
+namespace Enums.app.PlayerBonus
+{
+    public enum BonusType
+    {
         None = 0,
         NormalBonus = 1,
         EventBonus = 2,
@@ -25412,14 +29520,18 @@ namespace Enums.app.PlayerBonus {
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4500.Action.CH8Grapple
+{
+    public enum Type
+    {
         Mount = 0,
     }
 }
 
-namespace Enums.app.Em3002.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3002.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         IdleBattle = 1,
         Rest = 2,
@@ -25436,8 +29548,10 @@ namespace Enums.app.Em3002.Action {
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapItemDef {
+namespace Enums.app.MapManager
+{
+    public enum MapItemDef
+    {
         Chapter1Map = 0,
         Chapter3_2Map = 1,
         Chapter3_2MapB1F = 2,
@@ -25450,8 +29564,10 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.via.render {
-    public enum SkinWeightCount {
+namespace Enums.via.render
+{
+    public enum SkinWeightCount
+    {
         SkinWeightCount_4 = 0,
         SkinWeightCount_6 = 1,
         SkinWeightCount_8 = 2,
@@ -25460,15 +29576,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum FadeCurveType {
+namespace Enums.via.audiorender
+{
+    public enum FadeCurveType
+    {
         FadeCurveType_Linear = 0,
         FadeCurveType_3dB = 1,
     }
 }
 
-namespace Enums.via.octree {
-    public enum NodeDirection {
+namespace Enums.via.octree
+{
+    public enum NodeDirection
+    {
         BottomSE = 0,
         BottomNE = 1,
         TopSE = 2,
@@ -25486,15 +29606,19 @@ namespace Enums.via.octree {
     }
 }
 
-namespace Enums.via.gui {
-    public enum SVGAssetType {
+namespace Enums.via.gui
+{
+    public enum SVGAssetType
+    {
         SVGSequence = 0,
         SVG = 1,
     }
 }
 
-namespace Enums.app.Em8001.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em8001.Action.Grapple
+{
+    public enum Type
+    {
         None = 0,
         Cutting = 1,
         CuttingBack = 2,
@@ -25502,8 +29626,10 @@ namespace Enums.app.Em8001.Action.Grapple {
     }
 }
 
-namespace Enums.via.render {
-    public enum RAYTRACING_INSTANCE_FLAGS {
+namespace Enums.via.render
+{
+    public enum RAYTRACING_INSTANCE_FLAGS
+    {
         RAYTRACING_INSTANCE_FLAG_NONE = 0,
         RAYTRACING_INSTANCE_FLAG_TRIANGLE_CULL_DISABLE = 0,
         RAYTRACING_INSTANCE_FLAG_TRIANGLE_FRONT_COUNTERCLOCKWISE = 0,
@@ -25515,8 +29641,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em3000.Goal {
-    public enum AttackMessageStatus {
+namespace Enums.app.Em3000.Goal
+{
+    public enum AttackMessageStatus
+    {
         Non = 0,
         Hit = 1,
         UnHit = 2,
@@ -25524,8 +29652,10 @@ namespace Enums.app.Em3000.Goal {
     }
 }
 
-namespace Enums.app.CH9Em7700Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH9Em7700Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -25535,8 +29665,10 @@ namespace Enums.app.CH9Em7700Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.via.render {
-    public enum PQCurve {
+namespace Enums.via.render
+{
+    public enum PQCurve
+    {
         ST2084 = 0,
         PQ1000 = 1,
         PQ2000 = 2,
@@ -25544,15 +29676,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH9EnemyOrder.FinishBlowInfo {
-    public enum InputButton {
+namespace Enums.app.CH9EnemyOrder.FinishBlowInfo
+{
+    public enum InputButton
+    {
         AttackRight = 0,
         AttackLeft = 1,
     }
 }
 
-namespace Enums.via.attribute.AreaQueryCategoryAttribute {
-    public enum Category {
+namespace Enums.via.attribute.AreaQueryCategoryAttribute
+{
+    public enum Category
+    {
         Unknown = 0,
         AreaItem = 1,
         Position = 2,
@@ -25562,15 +29698,19 @@ namespace Enums.via.attribute.AreaQueryCategoryAttribute {
     }
 }
 
-namespace Enums.via.network.Matchmaking {
-    public enum Option {
+namespace Enums.via.network.Matchmaking
+{
+    public enum Option
+    {
         Normal = 0,
         Standby = 1,
     }
 }
 
-namespace Enums.via.kernel.bcat {
-    public enum BcatStatus {
+namespace Enums.via.kernel.bcat
+{
+    public enum BcatStatus
+    {
         None = 0,
         Connecting = 1,
         ConnectCompleted = 2,
@@ -25589,8 +29729,10 @@ namespace Enums.via.kernel.bcat {
     }
 }
 
-namespace Enums.app.AI.AILookAtAgent {
-    public enum Direction {
+namespace Enums.app.AI.AILookAtAgent
+{
+    public enum Direction
+    {
         Front = 0,
         FrontLeft = 1,
         FrontRight = 2,
@@ -25605,8 +29747,10 @@ namespace Enums.app.AI.AILookAtAgent {
     }
 }
 
-namespace Enums.app.CH9Em7800ActionPoint {
-    public enum Type {
+namespace Enums.app.CH9Em7800ActionPoint
+{
+    public enum Type
+    {
         ClimbWall40 = 0,
         ClimbWall79 = 1,
         ClimbWall80 = 2,
@@ -25619,8 +29763,10 @@ namespace Enums.app.CH9Em7800ActionPoint {
     }
 }
 
-namespace Enums.app.CH9Em5800.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em5800.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Damage = 1,
         Dead = 2,
@@ -25628,15 +29774,19 @@ namespace Enums.app.CH9Em5800.Action {
     }
 }
 
-namespace Enums.app.LastWaveUIAsset.TimePanel {
-    public enum TimeState {
+namespace Enums.app.LastWaveUIAsset.TimePanel
+{
+    public enum TimeState
+    {
         TIME_AM = 0,
         TIME_PM = 1,
     }
 }
 
-namespace Enums.app.MoldedActionController.ExtraHatUnit {
-    public enum Type {
+namespace Enums.app.MoldedActionController.ExtraHatUnit
+{
+    public enum Type
+    {
         PartyHat = 0,
         Cap01 = 1,
         Cap02 = 2,
@@ -25649,8 +29799,10 @@ namespace Enums.app.MoldedActionController.ExtraHatUnit {
     }
 }
 
-namespace Enums.app.LookAtMarker {
-    public enum Level {
+namespace Enums.app.LookAtMarker
+{
+    public enum Level
+    {
         None = 0,
         Low = 1,
         Normal = 2,
@@ -25658,8 +29810,10 @@ namespace Enums.app.LookAtMarker {
     }
 }
 
-namespace Enums.app.Havok.HavokClothSkeletonBlendTrack {
-    public enum Mode {
+namespace Enums.app.Havok.HavokClothSkeletonBlendTrack
+{
+    public enum Mode
+    {
         None = 0,
         AnimationToCurrent = 1,
         SimulationToCurrent = 2,
@@ -25667,23 +29821,29 @@ namespace Enums.app.Havok.HavokClothSkeletonBlendTrack {
     }
 }
 
-namespace Enums.app.Em3102.Message {
-    public enum CorresponceExistMessageType {
+namespace Enums.app.Em3102.Message
+{
+    public enum CorresponceExistMessageType
+    {
         Retire = 0,
         Override = 1,
         WaitForEnd = 2,
     }
 }
 
-namespace Enums.app.SaveMenu {
-    public enum ListElemID {
+namespace Enums.app.SaveMenu
+{
+    public enum ListElemID
+    {
         Restart = 0,
         End = 1,
     }
 }
 
-namespace Enums.via.gui.Capture {
-    public enum RenderTargetFormat {
+namespace Enums.via.gui.Capture
+{
+    public enum RenderTargetFormat
+    {
         R10G10B10A2Unorm = 24,
         R11G11B10Float = 26,
         R8G8B8A8Unorm = 28,
@@ -25692,23 +29852,29 @@ namespace Enums.via.gui.Capture {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.Dead {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.Dead
+{
+    public enum Type
+    {
         Fall = 0,
         Disperse = 1,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum AttrFlags {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum AttrFlags
+    {
         None = 0,
         BasePose = 1,
         World = 2,
     }
 }
 
-namespace Enums.app.AI.GoalArbitrator {
-    public enum Mode {
+namespace Enums.app.AI.GoalArbitrator
+{
+    public enum Mode
+    {
         HighScore = 0,
         Step = 1,
         StepLoop = 2,
@@ -25717,8 +29883,10 @@ namespace Enums.app.AI.GoalArbitrator {
     }
 }
 
-namespace Enums.via.render {
-    public enum GlobalSDFClipmapNum {
+namespace Enums.via.render
+{
+    public enum GlobalSDFClipmapNum
+    {
         GlobalSDFClipmapNum_1 = 1,
         GlobalSDFClipmapNum_2 = 2,
         GlobalSDFClipmapNum_3 = 3,
@@ -25726,8 +29894,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.gui {
-    public enum FontRasterSizeFitType {
+namespace Enums.via.gui
+{
+    public enum FontRasterSizeFitType
+    {
         None = 0,
         FitFontSizeToRasterSize = 1,
         UndoFitFontSize = 2,
@@ -25736,8 +29906,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum CancelTimingType {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum CancelTimingType
+    {
         HasAttackPermit = 0,
         NearPlayer = 1,
         Guarded = 2,
@@ -25747,8 +29919,10 @@ namespace Enums.app.CH9MoldedActionController {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
-    public enum InputType {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData
+{
+    public enum InputType
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
@@ -25758,8 +29932,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum RequestType {
+namespace Enums.via.simplewwise
+{
+    public enum RequestType
+    {
         None = 0,
         SetSpeakerAngles = 1,
         PostEvent = 2,
@@ -25802,8 +29978,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.physics {
-    public enum ShapeType {
+namespace Enums.via.physics
+{
+    public enum ShapeType
+    {
         Aabb = 0,
         Sphere = 1,
         ContinuousSphere = 2,
@@ -25823,22 +30001,28 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.areamap.AreaItem {
-    public enum Mode {
+namespace Enums.via.areamap.AreaItem
+{
+    public enum Mode
+    {
         Seconds = 0,
         Frames = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum EventFlag {
+namespace Enums.via.clr
+{
+    public enum EventFlag
+    {
         SpecialName = 512,
         RTSpecialName = 1024,
     }
 }
 
-namespace Enums.app.CH9Em6700.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em6700.Action
+{
+    public enum ActionNo
+    {
         Appear = 4,
         Dodge = 5,
         Lean = 6,
@@ -25848,23 +30032,29 @@ namespace Enums.app.CH9Em6700.Action {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum VirtualSurroundOnOffIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum VirtualSurroundOnOffIndex
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.app.CH9Em5800ActionController {
-    public enum Size {
+namespace Enums.app.CH9Em5800ActionController
+{
+    public enum Size
+    {
         Small = 0,
         Middle = 1,
         Large = 2,
     }
 }
 
-namespace Enums.via.puppet {
-    public enum SyncConditions {
+namespace Enums.via.puppet
+{
+    public enum SyncConditions
+    {
         Sync_Always = 0,
         GreaterMid = 1,
         GreaterHigh = 2,
@@ -25872,8 +30062,10 @@ namespace Enums.via.puppet {
     }
 }
 
-namespace Enums.app.CH8MainMenu {
-    public enum Process {
+namespace Enums.app.CH8MainMenu
+{
+    public enum Process
+    {
         eProc_Init = 0,
         eProc_MainSelect = 1,
         eProc_WaitMainSelect = 2,
@@ -25896,23 +30088,29 @@ namespace Enums.app.CH8MainMenu {
     }
 }
 
-namespace Enums.via.fsm.action.SetBool {
-    public enum Status {
+namespace Enums.via.fsm.action.SetBool
+{
+    public enum Status
+    {
         False = 0,
         True = 1,
     }
 }
 
-namespace Enums.via.motion.Motion {
-    public enum JointMergeMode {
+namespace Enums.via.motion.Motion
+{
+    public enum JointMergeMode
+    {
         None = 0,
         Default = 1,
         GameObjectNameSpace = 2,
     }
 }
 
-namespace Enums.app.CH9CountManager {
-    public enum CountType {
+namespace Enums.app.CH9CountManager
+{
+    public enum CountType
+    {
         ManualSave = 0,
         GetAttackAmulet = 1,
         GetGuardAmulet = 2,
@@ -25925,29 +30123,37 @@ namespace Enums.app.CH9CountManager {
     }
 }
 
-namespace Enums.via.octree {
-    public enum SplitType {
+namespace Enums.via.octree
+{
+    public enum SplitType
+    {
         Capacity = 0,
         Depth = 1,
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum ItemSelectChildPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum ItemSelectChildPanelState
+    {
         SIZE1 = 0,
         SIZE2 = 1,
     }
 }
 
-namespace Enums.app.Em2000.Action.Chapter1Battle4StabAttack {
-    public enum Type {
+namespace Enums.app.Em2000.Action.Chapter1Battle4StabAttack
+{
+    public enum Type
+    {
         StabNormal = 0,
         StabLong = 1,
     }
 }
 
-namespace Enums.app.SaveMenu {
-    public enum Step {
+namespace Enums.app.SaveMenu
+{
+    public enum Step
+    {
         Main = 0,
         LoadGame = 1,
         SaveGame = 2,
@@ -25994,16 +30200,20 @@ namespace Enums.app.SaveMenu {
     }
 }
 
-namespace Enums.app.CardGameObjectSawGauge.FlipRotate {
-    public enum FlipType {
+namespace Enums.app.CardGameObjectSawGauge.FlipRotate
+{
+    public enum FlipType
+    {
         Bet = 0,
         Banker = 1,
         Player = 2,
     }
 }
 
-namespace Enums.app.SceneFolderCtrlRequester {
-    public enum ControlTypeEnum {
+namespace Enums.app.SceneFolderCtrlRequester
+{
+    public enum ControlTypeEnum
+    {
         None = 0,
         Standby_True = 1,
         Standby_False = 2,
@@ -26014,42 +30224,54 @@ namespace Enums.app.SceneFolderCtrlRequester {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodContext {
+namespace Enums.via.network.error
+{
+    public enum MethodContext
+    {
         Update = 0,
         Start = 1,
     }
 }
 
-namespace Enums.via.navigation.AIMapEffectorCore.ExtraLinkCreationInfo {
-    public enum State {
+namespace Enums.via.navigation.AIMapEffectorCore.ExtraLinkCreationInfo
+{
+    public enum State
+    {
         Wait = 0,
         Link = 1,
     }
 }
 
-namespace Enums.app.Em5540 {
-    public enum ThinkState {
+namespace Enums.app.Em5540
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em8000.Em8000ActionTargetPoint {
-    public enum TargetType {
+namespace Enums.app.Em8000.Em8000ActionTargetPoint
+{
+    public enum TargetType
+    {
         None = 0,
         GetScissors = 1,
     }
 }
 
-namespace Enums.via.motion.IkSpine {
-    public enum COG_MANAGE_TYPE {
+namespace Enums.via.motion.IkSpine
+{
+    public enum COG_MANAGE_TYPE
+    {
         INTERNAL = 0,
         EXTERNAL = 1,
     }
 }
 
-namespace Enums.app.Em3600.Action.Appear {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Appear
+{
+    public enum Type
+    {
         FirePlace_1F = 0,
         Floor_1F = 1,
         SmallRoomCeiling_1F = 2,
@@ -26067,8 +30289,10 @@ namespace Enums.app.Em3600.Action.Appear {
     }
 }
 
-namespace Enums.app.Collision.CalculatePress {
-    public enum PressType {
+namespace Enums.app.Collision.CalculatePress
+{
+    public enum PressType
+    {
         High = 0,
         Middle = 1,
         Low = 2,
@@ -26076,8 +30300,10 @@ namespace Enums.app.Collision.CalculatePress {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em5700.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         GroundIdleReaction = 1,
         Attack = 2,
@@ -26097,16 +30323,20 @@ namespace Enums.app.CH9Em5700.Action {
     }
 }
 
-namespace Enums.app.SmoothAnimator {
-    public enum SimilarityOptionType {
+namespace Enums.app.SmoothAnimator
+{
+    public enum SimilarityOptionType
+    {
         None = 0,
         AppendData = 1,
         DummyMotion = 2,
     }
 }
 
-namespace Enums.via.render.FFTBloom {
-    public enum SceneFFTSize {
+namespace Enums.via.render.FFTBloom
+{
+    public enum SceneFFTSize
+    {
         Fix512x512 = 0,
         Fix1024x512 = 1,
         Fix1024x1024 = 2,
@@ -26116,8 +30346,10 @@ namespace Enums.via.render.FFTBloom {
     }
 }
 
-namespace Enums.via.clr {
-    public enum TypeFlag {
+namespace Enums.via.clr
+{
+    public enum TypeFlag
+    {
         VisibilityMask = 7,
         NotPublic = 0,
         Public = 1,
@@ -26158,15 +30390,19 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.fsm.CH8AreaHitTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.CH8AreaHitTest
+{
+    public enum TestTypeParam
+    {
         InArea = 0,
         OutArea = 1,
     }
 }
 
-namespace Enums.via.dynamics.gjk.EPA {
-    public enum ClosestType {
+namespace Enums.via.dynamics.gjk.EPA
+{
+    public enum ClosestType
+    {
         Face = 0,
         VertexA = 1,
         VertexB = 2,
@@ -26178,8 +30414,10 @@ namespace Enums.via.dynamics.gjk.EPA {
     }
 }
 
-namespace Enums.app.Em3001.Action {
-    public enum ActionMid {
+namespace Enums.app.Em3001.Action
+{
+    public enum ActionMid
+    {
         StepInStraight = 0,
         StepInSide = 1,
         StepInGrab = 2,
@@ -26188,8 +30426,10 @@ namespace Enums.app.Em3001.Action {
     }
 }
 
-namespace Enums.via.gui {
-    public enum UVReverseType {
+namespace Enums.via.gui
+{
+    public enum UVReverseType
+    {
         None = 0,
         ReverseU = 1,
         ReverseV = 2,
@@ -26197,8 +30437,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8StrikeToParry {
-    public enum StrikeType {
+namespace Enums.app.CH8Em4000.Action.CH8StrikeToParry
+{
+    public enum StrikeType
+    {
         AUTO = 0,
         Right = 1,
         Left = 2,
@@ -26206,8 +30448,10 @@ namespace Enums.app.CH8Em4000.Action.CH8StrikeToParry {
     }
 }
 
-namespace Enums.app.Em5400.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em5400.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         VolumeSpaceMoveToTarget = 2,
@@ -26249,8 +30493,10 @@ namespace Enums.app.Em5400.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.rebe {
-    public enum RebeErrorCause {
+namespace Enums.via.rebe
+{
+    public enum RebeErrorCause
+    {
         None = 0,
         NativeApi = 1,
         ServerResponse = 2,
@@ -26260,8 +30506,10 @@ namespace Enums.via.rebe {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraSetConfigResult : uint {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraSetConfigResult : uint
+    {
         OK = 1,
         ErrorStarted = 0x80000001u,
         ErrorInvalidType = 0x80000002u,
@@ -26269,8 +30517,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.via.dynamics.@internal {
-    public enum TriangleVoronoiId {
+namespace Enums.via.dynamics.@internal
+{
+    public enum TriangleVoronoiId
+    {
         Internal = 0,
         Edge01 = 1,
         Edge20 = 2,
@@ -26282,8 +30532,10 @@ namespace Enums.via.dynamics.@internal {
     }
 }
 
-namespace Enums.app.MessageSystem {
-    public enum DispPriority {
+namespace Enums.app.MessageSystem
+{
+    public enum DispPriority
+    {
         Default = 100,
         Monologue = 200,
         EnemyVoice = 300,
@@ -26293,8 +30545,10 @@ namespace Enums.app.MessageSystem {
     }
 }
 
-namespace Enums.app.CH9Em7500.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em7500.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         Surface = 1,
         Presage = 2,
@@ -26303,14 +30557,18 @@ namespace Enums.app.CH9Em7500.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum CH9MapLegendType {
+namespace Enums.app.MapManager
+{
+    public enum CH9MapLegendType
+    {
         Boat = 61,
     }
 }
 
-namespace Enums.via {
-    public enum ScreenShotSaveResult {
+namespace Enums.via
+{
+    public enum ScreenShotSaveResult
+    {
         Unknown = 0,
         Success = 1,
         AlbumUnknown = 2,
@@ -26322,55 +30580,69 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.EPVExpertPartsDamageData {
-    public enum DamageTypeEnum {
+namespace Enums.app.EPVExpertPartsDamageData
+{
+    public enum DamageTypeEnum
+    {
         Fire = 0,
         Acid = 1,
         Num = 2,
     }
 }
 
-namespace Enums.app.AI.Em2000WallBreakMansionAISetInfo {
-    public enum InteractEventType {
+namespace Enums.app.AI.Em2000WallBreakMansionAISetInfo
+{
+    public enum InteractEventType
+    {
         None = 0,
         em2000_WallBreak_Front = 1,
         em2000_WallBreak_Back = 2,
     }
 }
 
-namespace Enums.via.render.command.DirectXExtention {
-    public enum ExtentionType {
+namespace Enums.via.render.command.DirectXExtention
+{
+    public enum ExtentionType
+    {
         CommandBufferSplitBarrierBegin = 0,
         CommandBufferSplitBarrierEnd = 1,
         DLSSEvaluateSuperSampling = 2,
     }
 }
 
-namespace Enums.via.detail.atomic {
-    public enum TypeClassifier {
+namespace Enums.via.detail.atomic
+{
+    public enum TypeClassifier
+    {
         Default = 0,
         Integer = 1,
         Pointer = 2,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum State {
+namespace Enums.via.navigation.Navigation
+{
+    public enum State
+    {
         Stop = 0,
         Navigation = 1,
         Navigaiton = 1,
     }
 }
 
-namespace Enums.via {
-    public enum DisplayOrientation {
+namespace Enums.via
+{
+    public enum DisplayOrientation
+    {
         Landscape = 0,
         Portrait = 1,
     }
 }
 
-namespace Enums.app.CH8SaveMenu {
-    public enum Step {
+namespace Enums.app.CH8SaveMenu
+{
+    public enum Step
+    {
         Main = 0,
         LoadGame = 1,
         SaveGame = 2,
@@ -26406,8 +30678,10 @@ namespace Enums.app.CH8SaveMenu {
     }
 }
 
-namespace Enums.app.EPVTargetIDHelper {
-    public enum IDType {
+namespace Enums.app.EPVTargetIDHelper
+{
+    public enum IDType
+    {
         ExpertCharacterBlood = 0,
         ExpertGunSmoke = 1,
         ExpertMuzzleFlush = 2,
@@ -26417,8 +30691,10 @@ namespace Enums.app.EPVTargetIDHelper {
     }
 }
 
-namespace Enums.app.CH8Em4000ActionPoint {
-    public enum Type {
+namespace Enums.app.CH8Em4000ActionPoint
+{
+    public enum Type
+    {
         ClimbWall40 = 0,
         ClimbWall79 = 1,
         ClimbWall80 = 2,
@@ -26430,8 +30706,10 @@ namespace Enums.app.CH8Em4000ActionPoint {
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum ProcessType {
+namespace Enums.app.Richpresence
+{
+    public enum ProcessType
+    {
         Idle = 0,
         Requested = 1,
         RequestWaiting = 2,
@@ -26439,8 +30717,10 @@ namespace Enums.app.Richpresence {
     }
 }
 
-namespace Enums.via.motion.Chain {
-    public enum CalculateMode {
+namespace Enums.via.motion.Chain
+{
+    public enum CalculateMode
+    {
         Default = 0,
         Performance = 1,
         Balance = 2,
@@ -26448,8 +30728,10 @@ namespace Enums.via.motion.Chain {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Walk {
-    public enum WalkType {
+namespace Enums.app.Em8000.Action.Em8000Walk
+{
+    public enum WalkType
+    {
         INVALID = -1,
         None = 0,
         Normal = 1,
@@ -26458,8 +30740,10 @@ namespace Enums.app.Em8000.Action.Em8000Walk {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum ShadowType {
+namespace Enums.via.effect.detail
+{
+    public enum ShadowType
+    {
         None = 0,
         Enable = 1,
         ShadowOnly = 2,
@@ -26468,8 +30752,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseP2p {
+namespace Enums.via.network.error
+{
+    public enum CauseP2p
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -26504,29 +30790,37 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em5552 {
-    public enum ThinkOrder {
+namespace Enums.app.Em5552
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Dead = 1,
     }
 }
 
-namespace Enums.app.CH9MoldedActionController.BattleConditionBase {
-    public enum FinishBlowResult {
+namespace Enums.app.CH9MoldedActionController.BattleConditionBase
+{
+    public enum FinishBlowResult
+    {
         None = 0,
         Dead = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum CullingTarget {
+namespace Enums.via.effect.detail
+{
+    public enum CullingTarget
+    {
         Emitter = 0,
         Particle = 1,
     }
 }
 
-namespace Enums.via.dev.net {
-    public enum ConnectionState {
+namespace Enums.via.dev.net
+{
+    public enum ConnectionState
+    {
         Initialize = 0,
         OpenConnection = 1,
         WaitForConnection = 2,
@@ -26541,8 +30835,10 @@ namespace Enums.via.dev.net {
     }
 }
 
-namespace Enums.via.landscape.layer.SplineLayer {
-    public enum SplinePipelineStateType {
+namespace Enums.via.landscape.layer.SplineLayer
+{
+    public enum SplinePipelineStateType
+    {
         DrawSpline = 0,
         DrawSplineEnableMask = 1,
         DownSampleSpline = 2,
@@ -26550,8 +30846,10 @@ namespace Enums.via.landscape.layer.SplineLayer {
     }
 }
 
-namespace Enums.via.motion.RetargetRig {
-    public enum RotScaleAxis {
+namespace Enums.via.motion.RetargetRig
+{
+    public enum RotScaleAxis
+    {
         LocalX = 0,
         LocalY = 1,
         LocalZ = 2,
@@ -26559,8 +30857,10 @@ namespace Enums.via.motion.RetargetRig {
     }
 }
 
-namespace Enums.app.CH9PlayerDefine {
-    public enum HandEquipType {
+namespace Enums.app.CH9PlayerDefine
+{
+    public enum HandEquipType
+    {
         Knuckle = 0,
         GauntletR = 1,
         Gauntlet = 2,
@@ -26569,22 +30869,28 @@ namespace Enums.app.CH9PlayerDefine {
     }
 }
 
-namespace Enums.via.motion.chain {
-    public enum ChainSpringCalcType {
+namespace Enums.via.motion.chain
+{
+    public enum ChainSpringCalcType
+    {
         Position = 0,
         Rotation = 1,
     }
 }
 
-namespace Enums.app.Em3102.Action.Run {
-    public enum Type {
+namespace Enums.app.Em3102.Action.Run
+{
+    public enum Type
+    {
         None = 0,
         Run = 1,
     }
 }
 
-namespace Enums.app.fsm.CheckDoorAngle {
-    public enum CompareType {
+namespace Enums.app.fsm.CheckDoorAngle
+{
+    public enum CompareType
+    {
         LessThan = 0,
         LessThanOrEqualTo = 1,
         GreaterThan = 2,
@@ -26592,31 +30898,39 @@ namespace Enums.app.fsm.CheckDoorAngle {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8BlownAway {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         Parry = 2,
     }
 }
 
-namespace Enums.app.Em3001Think {
-    public enum FacialBasicID {
+namespace Enums.app.Em3001Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Dead = 700,
     }
 }
 
-namespace Enums.app.Em4100.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.Em4100.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.GameEventActionController {
-    public enum ProcessType {
+namespace Enums.app.GameEventActionController
+{
+    public enum ProcessType
+    {
         Stop = 0,
         Setup = 1,
         MoveInterp = 2,
@@ -26628,8 +30942,10 @@ namespace Enums.app.GameEventActionController {
     }
 }
 
-namespace Enums.app.Nightmare.NightmareTrapUnitBase {
-    public enum CraftResult {
+namespace Enums.app.Nightmare.NightmareTrapUnitBase
+{
+    public enum CraftResult
+    {
         Success = 0,
         Failed_Cost = 1,
         Failed_Fatal_HasInstance = 2,
@@ -26638,15 +30954,19 @@ namespace Enums.app.Nightmare.NightmareTrapUnitBase {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum ContactMode {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum ContactMode
+    {
         RayCast = 0,
         DualRayCast = 1,
     }
 }
 
-namespace Enums.via.dynamics.ConstraintSet.ConstraintInfo {
-    public enum ConstraintType {
+namespace Enums.via.dynamics.ConstraintSet.ConstraintInfo
+{
+    public enum ConstraintType
+    {
         BallAndSocket = 0,
         Hinge = 1,
         ConeTwist = 2,
@@ -26655,8 +30975,10 @@ namespace Enums.via.dynamics.ConstraintSet.ConstraintInfo {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action {
-    public enum CH8ActionNo {
+namespace Enums.app.CH8Em4000.Action
+{
+    public enum CH8ActionNo
+    {
         BiteTry = 4,
         NearBiteTry = 5,
         Strike = 6,
@@ -26697,8 +31019,10 @@ namespace Enums.app.CH8Em4000.Action {
     }
 }
 
-namespace Enums.via {
-    public enum RenderType {
+namespace Enums.via
+{
+    public enum RenderType
+    {
         Default = 0,
         Diffuse = 1,
         Specular = 2,
@@ -26735,30 +31059,38 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum LightSelection {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum LightSelection
+    {
         Default = 0,
         CDF = 1,
     }
 }
 
-namespace Enums.app.Em3102.Action.DoorOpen {
-    public enum Type {
+namespace Enums.app.Em3102.Action.DoorOpen
+{
+    public enum Type
+    {
         None = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.Cp7AchievementDataControl {
-    public enum VrTrackingType {
+namespace Enums.app.Cp7AchievementDataControl
+{
+    public enum VrTrackingType
+    {
         InGame = 0,
         EndGame = 1,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum TextureType {
+namespace Enums.via.render.detail
+{
+    public enum TextureType
+    {
         Untyped = -1,
         IBL = 0,
         CubeMap = 1,
@@ -26768,15 +31100,19 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum NetworkError {
+namespace Enums.app.GameManager
+{
+    public enum NetworkError
+    {
         None = 0,
         NetworkInitFailed = 1,
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum BaseActionID {
+namespace Enums.app.PlayerDefine
+{
+    public enum BaseActionID
+    {
         Unknown = 0,
         Idle = 1,
         Move = 2,
@@ -26842,8 +31178,10 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapSheetDef {
+namespace Enums.app.MapManager
+{
+    public enum MapSheetDef
+    {
         Chapter3_2_Main1F = 0,
         Chapter3_2_Main2F = 1,
         Chapter3_2_Main3F = 2,
@@ -26870,8 +31208,10 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum PtLifeStatus : uint {
+namespace Enums.via.effect.detail
+{
+    public enum PtLifeStatus : uint
+    {
         Initialize = 0,
         Appear = 1,
         Keep = 2,
@@ -26881,8 +31221,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.Em3600ActionController {
-    public enum Em3600DamageParts {
+namespace Enums.app.Em3600ActionController
+{
+    public enum Em3600DamageParts
+    {
         Head = 0,
         Body = 100,
         LeftArm = 200,
@@ -26892,8 +31234,10 @@ namespace Enums.app.Em3600ActionController {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum DlcEpisodeNo {
+namespace Enums.app.GameManager
+{
+    public enum DlcEpisodeNo
+    {
         Dlc1 = 1,
         Dlc2 = 2,
         Dlc3 = 3,
@@ -26902,15 +31246,19 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.MaterialBloodRateController {
-    public enum BloodType {
+namespace Enums.app.MaterialBloodRateController
+{
+    public enum BloodType
+    {
         Blood = 0,
         Risotto = 1,
     }
 }
 
-namespace Enums.app.Collision {
-    public enum PriorityLevel {
+namespace Enums.app.Collision
+{
+    public enum PriorityLevel
+    {
         Priority0_Low = 0,
         Priority1 = 1,
         Priority2 = 2,
@@ -26921,16 +31269,20 @@ namespace Enums.app.Collision {
     }
 }
 
-namespace Enums.via.navigation.map.Utility {
-    public enum order {
+namespace Enums.via.navigation.map.Utility
+{
+    public enum order
+    {
         begin = 0,
         cont = 1,
         end = 2,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum RayCtrl {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum RayCtrl
+    {
         None = 0,
         Local = 1,
         World = 2,
@@ -26940,8 +31292,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app {
-    public enum GUISegmentOrder {
+namespace Enums.app
+{
+    public enum GUISegmentOrder
+    {
         AccountErrorCutin = 60,
         SaveIcon = 60,
         Calibration = 60,
@@ -26995,8 +31349,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.via.render.Atmosphere {
-    public enum DebugView {
+namespace Enums.via.render.Atmosphere
+{
+    public enum DebugView
+    {
         None = 0,
         TransmittanceToAtmosphere = 1,
         Contribution = 2,
@@ -27009,15 +31365,19 @@ namespace Enums.via.render.Atmosphere {
     }
 }
 
-namespace Enums.via.gui.GUIUtility {
-    public enum AssociationAnlyzeContext {
+namespace Enums.via.gui.GUIUtility
+{
+    public enum AssociationAnlyzeContext
+    {
         SearchEqual = 0,
         SearchDoubleQuot = 1,
     }
 }
 
-namespace Enums.app.vr.VrStopFlow {
-    public enum Phase {
+namespace Enums.app.vr.VrStopFlow
+{
+    public enum Phase
+    {
         FadeOut = 0,
         Request = 1,
         Success = 2,
@@ -27027,15 +31387,19 @@ namespace Enums.app.vr.VrStopFlow {
     }
 }
 
-namespace Enums.app.fsm.CH8RequestFadeInOut {
-    public enum FadeTypeEnum {
+namespace Enums.app.fsm.CH8RequestFadeInOut
+{
+    public enum FadeTypeEnum
+    {
         FadeOut = 0,
         FadeIn = 1,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveServiceMode {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveServiceMode
+    {
         SaveServiceMode_Default = 131072,
         SaveServiceMode_1_Byte = 1,
         SaveServiceMode_512_Sector = 512,
@@ -27050,52 +31414,66 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.via.houdini {
-    public enum TargetComponent {
+namespace Enums.via.houdini
+{
+    public enum TargetComponent
+    {
         Mesh = 0,
         GeometryBrush = 1,
         PathDevelop = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum CenterAdjust {
+namespace Enums.via.motion.IkLeg
+{
+    public enum CenterAdjust
+    {
         None = 0,
         ToRoot = 1,
         Center = 2,
     }
 }
 
-namespace Enums.app.Em3100.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3100.Action.Grapple
+{
+    public enum Type
+    {
         FFDeathGrapple = 0,
         FallDownGrapple = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum MessageType {
+namespace Enums.via.gui
+{
+    public enum MessageType
+    {
         Dynamic = 0,
         Static = 1,
     }
 }
 
-namespace Enums.app.Em3002.Action.AttackToGrapple {
-    public enum Type {
+namespace Enums.app.Em3002.Action.AttackToGrapple
+{
+    public enum Type
+    {
         CommonGrab = 0,
         TCommonGrab = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum PauseGroup_hdVibration {
+namespace Enums.via.hid
+{
+    public enum PauseGroup_hdVibration
+    {
         PauseGroup_00 = 0,
         PauseGroup_01 = 1,
     }
 }
 
-namespace Enums.via.AABB {
-    public enum VoronoiId {
+namespace Enums.via.AABB
+{
+    public enum VoronoiId
+    {
         X_MinBit = 1,
         X_MaxBit = 2,
         Y_MinBit = 4,
@@ -27132,8 +31510,10 @@ namespace Enums.via.AABB {
     }
 }
 
-namespace Enums.via.navigation.map.LinkObject {
-    public enum LinkStatus {
+namespace Enums.via.navigation.map.LinkObject
+{
+    public enum LinkStatus
+    {
         LinkStatus_Enabled = 0,
         LinkStatus_Unload = 1,
         LinkStatus_02 = 2,
@@ -27146,8 +31526,10 @@ namespace Enums.via.navigation.map.LinkObject {
     }
 }
 
-namespace Enums.app.AI.AIChildBeacon {
-    public enum ProcessType {
+namespace Enums.app.AI.AIChildBeacon
+{
+    public enum ProcessType
+    {
         InActive = 0,
         Activate = 1,
         Running = 2,
@@ -27155,8 +31537,10 @@ namespace Enums.app.AI.AIChildBeacon {
     }
 }
 
-namespace Enums.app.FootEffectController {
-    public enum WwiseSpecialMaterialID {
+namespace Enums.app.FootEffectController
+{
+    public enum WwiseSpecialMaterialID
+    {
         None = 0,
         LittleWet = 1,
         SoakingWet = 2,
@@ -27164,8 +31548,10 @@ namespace Enums.app.FootEffectController {
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodSectType {
+namespace Enums.via.clr
+{
+    public enum MethodSectType
+    {
         EHTable = 1,
         OptILTable = 2,
         FatFormat = 64,
@@ -27173,8 +31559,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.EPVDefine {
-    public enum AttackTypeEnum {
+namespace Enums.app.EPVDefine
+{
+    public enum AttackTypeEnum
+    {
         Slash = 96,
         Stab = 97,
         Shoot = 98,
@@ -27185,14 +31573,18 @@ namespace Enums.app.EPVDefine {
     }
 }
 
-namespace Enums.app.CH9Em6700.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em6700.Action.Grapple
+{
+    public enum Type
+    {
         SneakB = 0,
     }
 }
 
-namespace Enums.app.Em3600.Em3600WwiseMonitoredValue {
-    public enum PropertyPhase {
+namespace Enums.app.Em3600.Em3600WwiseMonitoredValue
+{
+    public enum PropertyPhase
+    {
         Normal = 0,
         FirstDiscovery = 1,
         Last = 2,
@@ -27201,29 +31593,37 @@ namespace Enums.app.Em3600.Em3600WwiseMonitoredValue {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Idle {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.fsm.CallCp7EndNoise {
-    public enum ElementNumber {
+namespace Enums.app.fsm.CallCp7EndNoise
+{
+    public enum ElementNumber
+    {
         Step0 = 0,
         Step1 = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterFlags {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterFlags
+    {
         Root = 1,
         Ungrouped = 2,
     }
 }
 
-namespace Enums.app.InGameContentTimer {
-    public enum ContentTypeEnum {
+namespace Enums.app.InGameContentTimer
+{
+    public enum ContentTypeEnum
+    {
         GarageBattle = 0,
         ScissorBattle = 1,
         FinalFatherBattle = 2,
@@ -27236,8 +31636,10 @@ namespace Enums.app.InGameContentTimer {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard {
-    public enum VirtualKeyboardShowResult {
+namespace Enums.via.hid.virtualKeyboard
+{
+    public enum VirtualKeyboardShowResult
+    {
         OK = 0,
         Busy = 1,
         Error = 2,
@@ -27245,8 +31647,10 @@ namespace Enums.via.hid.virtualKeyboard {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveTransferring {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveTransferring
+    {
         Default = 0,
         Setting_1 = 1,
         Setting_2 = 2,
@@ -27360,56 +31764,72 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Guard {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Guard
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.ItemSlotManager {
-    public enum StateType {
+namespace Enums.app.ItemSlotManager
+{
+    public enum StateType
+    {
         Normal = 0,
         ItemMove = 1,
     }
 }
 
-namespace Enums.app.PauseMenu {
-    public enum ModeDef {
+namespace Enums.app.PauseMenu
+{
+    public enum ModeDef
+    {
         Normal = 0,
         FoundFootage = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum RotateAnimFlagType {
+namespace Enums.via.effect.detail
+{
+    public enum RotateAnimFlagType
+    {
         EnableReverseRandom = 1,
     }
 }
 
-namespace Enums.app.Em8001.Em8001Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8001.Em8001Order.Appear
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard {
-    public enum CollapseSetting {
+namespace Enums.via.hid.virtualKeyboard
+{
+    public enum CollapseSetting
+    {
         None = 0,
         CollapseIfHardwareKeyboardIsConnected = 1,
         CollapseIfHardwareKeyboardIsOperated = 2,
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpCfgBit {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpCfgBit
+    {
         UseDialogOnCommonError = 1,
         AutoRunApplet = 2,
         Default = 3,
     }
 }
 
-namespace Enums.app.Cp7AchievementDataControl {
-    public enum MenuType {
+namespace Enums.app.Cp7AchievementDataControl
+{
+    public enum MenuType
+    {
         Menu7_2 = 0,
         Menu7_3 = 1,
         InGame7_2 = 2,
@@ -27420,8 +31840,10 @@ namespace Enums.app.Cp7AchievementDataControl {
     }
 }
 
-namespace Enums.via.effect.vortexel {
-    public enum VelocityDirectionType {
+namespace Enums.via.effect.vortexel
+{
+    public enum VelocityDirectionType
+    {
         Straight = 0,
         Spread = 1,
         SpreadXZ = 2,
@@ -27429,15 +31851,19 @@ namespace Enums.via.effect.vortexel {
     }
 }
 
-namespace Enums.app.Em3600.Action.BackJump {
-    public enum Type {
+namespace Enums.app.Em3600.Action.BackJump
+{
+    public enum Type
+    {
         Normal = 0,
         NoWallStick = 1,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum FovValue {
+namespace Enums.app.PlayerCamera
+{
+    public enum FovValue
+    {
         Fov70 = 0,
         Fov75 = 1,
         Fov80 = 2,
@@ -27446,8 +31872,10 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.app.SmoothAnimator {
-    public enum State {
+namespace Enums.app.SmoothAnimator
+{
+    public enum State
+    {
         Start = 0,
         Requested = 1,
         RequestedLoop = 2,
@@ -27458,8 +31886,10 @@ namespace Enums.app.SmoothAnimator {
     }
 }
 
-namespace Enums.app.Em3100 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3100
+{
+    public enum ThinkOrder
+    {
         None = 0,
         PLSearchGoTo = 1,
         OverLook_L = 2,
@@ -27484,8 +31914,10 @@ namespace Enums.app.Em3100 {
     }
 }
 
-namespace Enums.via.gui {
-    public enum MouseEventType {
+namespace Enums.via.gui
+{
+    public enum MouseEventType
+    {
         Unknown = 0,
         Enter = 1,
         Over = 2,
@@ -27493,22 +31925,28 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Em8000BattleDirective.ScissorsBattleParameter {
-    public enum ChainsawEngineDamageTrigger {
+namespace Enums.app.Em8000BattleDirective.ScissorsBattleParameter
+{
+    public enum ChainsawEngineDamageTrigger
+    {
         None = 0,
         Grapple_BattleOfSaw = 1,
         RepelPlayerChainsawAttack = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerFoliageMapBakeType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerFoliageMapBakeType
+    {
         SDF = 0,
     }
 }
 
-namespace Em5540Effect {
-    public enum IDAlias {
+namespace Em5540Effect
+{
+    public enum IDAlias
+    {
         Fire = 0,
         BugWait_00 = 1,
         BugWait_01 = 2,
@@ -27524,8 +31962,10 @@ namespace Em5540Effect {
     }
 }
 
-namespace Enums.via.network.bson {
-    public enum ElementId {
+namespace Enums.via.network.bson
+{
+    public enum ElementId
+    {
         EOO = 0,
         Double = 1,
         String = 2,
@@ -27539,16 +31979,20 @@ namespace Enums.via.network.bson {
     }
 }
 
-namespace Enums.via.motion.JointRemapValue.RemapValueItem {
-    public enum Axis {
+namespace Enums.via.motion.JointRemapValue.RemapValueItem
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.charset {
-    public enum EncodingType {
+namespace Enums.via.charset
+{
+    public enum EncodingType
+    {
         Unknown = 0,
         Ascii = 1,
         ShiftJIS = 2,
@@ -27557,8 +32001,10 @@ namespace Enums.via.charset {
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum EventEnabledState {
+namespace Enums.via.network.wrangler
+{
+    public enum EventEnabledState
+    {
         Undefined = 0,
         Off = 1,
         ProviderDefault = 2,
@@ -27566,8 +32012,10 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.via.render.AreaLight {
-    public enum LTCAreaLightShape {
+namespace Enums.via.render.AreaLight
+{
+    public enum LTCAreaLightShape
+    {
         Quad = 0,
         Line = 1,
         Disk = 2,
@@ -27575,8 +32023,10 @@ namespace Enums.via.render.AreaLight {
     }
 }
 
-namespace Enums.app.EmLoadControl {
-    public enum EmLoadTypeEnum {
+namespace Enums.app.EmLoadControl
+{
+    public enum EmLoadTypeEnum
+    {
         Em2000 = 0,
         Em2000Chapter4 = 1,
         Em3000 = 2,
@@ -27602,15 +32052,19 @@ namespace Enums.app.EmLoadControl {
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum TabPanelState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum TabPanelState
+    {
         DEFAULT = 0,
         SELECT = 1,
     }
 }
 
-namespace Enums.via.physics.CharacterController {
-    public enum State {
+namespace Enums.via.physics.CharacterController
+{
+    public enum State
+    {
         FirstUpdate = 0,
         OverwritePosition = 1,
         IgnoreVerticalRiseAdjust = 2,
@@ -27621,22 +32075,28 @@ namespace Enums.via.physics.CharacterController {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum AreaRangeType {
+namespace Enums.via.landscape
+{
+    public enum AreaRangeType
+    {
         Aabb = 0,
         Obb = 1,
     }
 }
 
-namespace Enums.app.fsm.EnemyStateCheck {
-    public enum EnemyBoolType {
+namespace Enums.app.fsm.EnemyStateCheck
+{
+    public enum EnemyBoolType
+    {
         None = 0,
         Discovery = 1,
     }
 }
 
-namespace Enums.app.Interpolation {
-    public enum State {
+namespace Enums.app.Interpolation
+{
+    public enum State
+    {
         LerpPos = 0,
         LerpRot = 1,
         LerpLocalPos = 2,
@@ -27647,8 +32107,10 @@ namespace Enums.app.Interpolation {
     }
 }
 
-namespace Enums.via.render {
-    public enum OutputLimitConfigMode {
+namespace Enums.via.render
+{
+    public enum OutputLimitConfigMode
+    {
         Disable = 0,
         LowerLimit = 1,
         UpperLimit = 2,
@@ -27656,8 +32118,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum SinkTypeXboxOne {
+namespace Enums.via.wwise
+{
+    public enum SinkTypeXboxOne
+    {
         Main = 0,
         MergeToMain = 1,
         BGM = 2,
@@ -27669,16 +32133,20 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.via.os {
-    public enum SanityCheckLevel {
+namespace Enums.via.os
+{
+    public enum SanityCheckLevel
+    {
         Surface = 0,
         Shallow = 1,
         Deep = 2,
     }
 }
 
-namespace Enums.via.gui.MaterialText {
-    public enum ParamType {
+namespace Enums.via.gui.MaterialText
+{
+    public enum ParamType
+    {
         Unknown = 0,
         Float = 1,
         Float4 = 2,
@@ -27687,40 +32155,50 @@ namespace Enums.via.gui.MaterialText {
     }
 }
 
-namespace Enums.app.MissionDetail {
-    public enum DifficultyBits {
+namespace Enums.app.MissionDetail
+{
+    public enum DifficultyBits
+    {
         Casual = 1,
         Normal = 2,
         Hard = 4,
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum FovType {
+namespace Enums.app.PlayerCamera
+{
+    public enum FovType
+    {
         Narrow = -10,
         Normal = 0,
         Wide = 10,
     }
 }
 
-namespace Enums.via.motion.tree.SelectMotionNode {
-    public enum BankSelect {
+namespace Enums.via.motion.tree.SelectMotionNode
+{
+    public enum BankSelect
+    {
         Base = 0,
         Tbl = 1,
         Direct = 2,
     }
 }
 
-namespace Enums.app.TipsGUI {
-    public enum PanelState {
+namespace Enums.app.TipsGUI
+{
+    public enum PanelState
+    {
         DEFAULT = 0,
         DECIDE = 1,
         DISABLE = 2,
     }
 }
 
-namespace Enums.app.fsm.ShadowPuzzleSet {
-    public enum LoadState {
+namespace Enums.app.fsm.ShadowPuzzleSet
+{
+    public enum LoadState
+    {
         NotStart = 0,
         LoadInit = 1,
         LoadWait = 2,
@@ -27729,8 +32207,10 @@ namespace Enums.app.fsm.ShadowPuzzleSet {
     }
 }
 
-namespace Enums.app.LastWaveUIDesc {
-    public enum DescriptionType {
+namespace Enums.app.LastWaveUIDesc
+{
+    public enum DescriptionType
+    {
         OPEN = 0,
         DISPLAY_BONUS = 1,
         DISPLAY_TEXT = 2,
@@ -27738,8 +32218,10 @@ namespace Enums.app.LastWaveUIDesc {
     }
 }
 
-namespace Enums.app.Em8001.Action.EngineStop {
-    public enum State {
+namespace Enums.app.Em8001.Action.EngineStop
+{
+    public enum State
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -27747,8 +32229,10 @@ namespace Enums.app.Em8001.Action.EngineStop {
     }
 }
 
-namespace Enums.app.TableItemExplanation {
-    public enum ItemSlot {
+namespace Enums.app.TableItemExplanation
+{
+    public enum ItemSlot
+    {
         Start = -1,
         Slot1 = 0,
         Slot2 = 1,
@@ -27760,8 +32244,10 @@ namespace Enums.app.TableItemExplanation {
     }
 }
 
-namespace Enums.app.fsm.CheckGenomeCodexState {
-    public enum Mode {
+namespace Enums.app.fsm.CheckGenomeCodexState
+{
+    public enum Mode
+    {
         Scan = 0,
         Install = 1,
         TraceScan = 2,
@@ -27770,8 +32256,10 @@ namespace Enums.app.fsm.CheckGenomeCodexState {
     }
 }
 
-namespace Enums.via.render {
-    public enum SamplerQuality {
+namespace Enums.via.render
+{
+    public enum SamplerQuality
+    {
         Bilinear = 0,
         Trilinear = 1,
         Anisotropic2 = 2,
@@ -27781,8 +32269,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GpuItemConstantBufferType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GpuItemConstantBufferType
+    {
         FieldParameter = 0,
         MeshEmitter = 1,
         DirectionalField = 2,
@@ -27790,8 +32280,10 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Em8100Effect {
-    public enum IDAlias {
+namespace Em8100Effect
+{
+    public enum IDAlias
+    {
         BeamFloor = 0,
         Explosion = 1,
         Burn = 2,
@@ -27849,15 +32341,19 @@ namespace Em8100Effect {
     }
 }
 
-namespace Enums.via.navigation {
-    public enum GraphDrawMode {
+namespace Enums.via.navigation
+{
+    public enum GraphDrawMode
+    {
         Normal = 0,
         Light = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000EngineStop {
-    public enum State {
+namespace Enums.app.Em8000.Action.Em8000EngineStop
+{
+    public enum State
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -27865,45 +32361,57 @@ namespace Enums.app.Em8000.Action.Em8000EngineStop {
     }
 }
 
-namespace Enums.app.CH8Em4500QuickJumpNavigation {
-    public enum NavigationStatus {
+namespace Enums.app.CH8Em4500QuickJumpNavigation
+{
+    public enum NavigationStatus
+    {
         Stop = 0,
         Active = 1,
     }
 }
 
-namespace Enums.app.Em5400Think {
-    public enum Mode {
+namespace Enums.app.Em5400Think
+{
+    public enum Mode
+    {
         Ground = 0,
         Fly = 1,
     }
 }
 
-namespace Enums.app.FileArtContainer {
-    public enum FileArtState {
+namespace Enums.app.FileArtContainer
+{
+    public enum FileArtState
+    {
         Hide = 0,
         Standby = 1,
         Show = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum TonemapFunction {
+namespace Enums.via.render
+{
+    public enum TonemapFunction
+    {
         Karis = 0,
         TripleSection = 1,
     }
 }
 
-namespace Enums.app.Em3600Think {
-    public enum LegState {
+namespace Enums.app.Em3600Think
+{
+    public enum LegState
+    {
         TwoLeg = 0,
         FourLeg = 1,
         FourLegRev = 2,
     }
 }
 
-namespace Enums.via.landscape.UserAttributeMapBaker {
-    public enum State {
+namespace Enums.via.landscape.UserAttributeMapBaker
+{
+    public enum State
+    {
         Ready = 0,
         ClearTexture = 1,
         WaitVoxelize = 2,
@@ -27911,24 +32419,30 @@ namespace Enums.via.landscape.UserAttributeMapBaker {
     }
 }
 
-namespace Enums.via.houdini {
-    public enum UpdateType {
+namespace Enums.via.houdini
+{
+    public enum UpdateType
+    {
         Manual = 0,
         SemiAuto = 1,
         Auto = 2,
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig {
-    public enum LimbSolverType {
+namespace Enums.via.motion.FullBodyIKRig
+{
+    public enum LimbSolverType
+    {
         Chain = 0,
         Hinge = 1,
         Hinge_3Convex = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8LiftCheck {
-    public enum CheckType {
+namespace Enums.app.fsm.CH8LiftCheck
+{
+    public enum CheckType
+    {
         OpenDoor = 0,
         CloseDoor = 1,
         IsSameFloor = 2,
@@ -27936,8 +32450,10 @@ namespace Enums.app.fsm.CH8LiftCheck {
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum ClearTimeType {
+namespace Enums.app.Telemetry
+{
+    public enum ClearTimeType
+    {
         GarageBattle = 0,
         ScissorBattle = 1,
         FinalFatherBattle = 2,
@@ -27948,31 +32464,39 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum DevicePickerResult {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum DevicePickerResult
+    {
         Done = 0,
         Canceled = 1,
         Failed = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum DecalReciveMode {
+namespace Enums.via.render
+{
+    public enum DecalReciveMode
+    {
         Automatic = 0,
         Enable = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerBakeTextureType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerBakeTextureType
+    {
         Height = 0,
         Splat = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum SignatureType {
+namespace Enums.via.clr
+{
+    public enum SignatureType
+    {
         Default = 0,
         C = 1,
         StdCall = 2,
@@ -27987,8 +32511,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum Material {
+namespace Enums.app.CarInGarage
+{
+    public enum Material
+    {
         LeftHeadLightLarge = 0,
         LeftHeadLightSmall = 1,
         RightHeadLightLarge = 2,
@@ -28000,8 +32526,10 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.via.clr {
-    public enum EvalType {
+namespace Enums.via.clr
+{
+    public enum EvalType
+    {
         Int32 = 0,
         Int64 = 1,
         Float = 2,
@@ -28012,8 +32540,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.fsm.VRTutorialFlow {
-    public enum MoveStateType {
+namespace Enums.app.fsm.VRTutorialFlow
+{
+    public enum MoveStateType
+    {
         NEXT = 0,
         BACK = 1,
         REPEAT = 2,
@@ -28022,8 +32552,10 @@ namespace Enums.app.fsm.VRTutorialFlow {
     }
 }
 
-namespace Enums.app.BlackOutManager {
-    public enum RequestTypeEnum {
+namespace Enums.app.BlackOutManager
+{
+    public enum RequestTypeEnum
+    {
         None = 0,
         SceneJump = 1,
         ShadowPazzle = 2,
@@ -28039,8 +32571,10 @@ namespace Enums.app.BlackOutManager {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum StateThread {
+namespace Enums.via.wwise
+{
+    public enum StateThread
+    {
         None = 0,
         Uninitialized = 1,
         Initializing = 2,
@@ -28051,8 +32585,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.via.charset {
-    public enum UTF16Type {
+namespace Enums.via.charset
+{
+    public enum UTF16Type
+    {
         LE = 0,
         BE = 1,
         LE_BOM = 2,
@@ -28061,23 +32597,29 @@ namespace Enums.via.charset {
     }
 }
 
-namespace Enums.via.os {
-    public enum SemaphoreError {
+namespace Enums.via.os
+{
+    public enum SemaphoreError
+    {
         None = 0,
         Failed = 1,
     }
 }
 
-namespace Enums.via.motion.IkBodyRig {
-    public enum SourcePosMode {
+namespace Enums.via.motion.IkBodyRig
+{
+    public enum SourcePosMode
+    {
         Animation = 0,
         Set = 1,
         Add = 2,
     }
 }
 
-namespace Enums.app.Em8010.Em8010Core {
-    public enum MotionFSMState {
+namespace Enums.app.Em8010.Em8010Core
+{
+    public enum MotionFSMState
+    {
         None = 0,
         CloseLoop = 1,
         Open = 2,
@@ -28089,8 +32631,10 @@ namespace Enums.app.Em8010.Em8010Core {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum PlayType {
+namespace Enums.via.effect.detail
+{
+    public enum PlayType
+    {
         Pause = 0,
         Loop = 1,
         Finish = 2,
@@ -28098,8 +32642,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.CH8OperatorManager2 {
-    public enum MessagePriority {
+namespace Enums.app.CH8OperatorManager2
+{
+    public enum MessagePriority
+    {
         Default = 1,
         Monologue = 2,
         EnemyVoice = 3,
@@ -28109,16 +32655,20 @@ namespace Enums.app.CH8OperatorManager2 {
     }
 }
 
-namespace Enums.app.fsm.CH8SystemDataSave {
-    public enum State {
+namespace Enums.app.fsm.CH8SystemDataSave
+{
+    public enum State
+    {
         Init = 0,
         Saveing = 1,
         SaveFailed = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum GraphicItem {
+namespace Enums.app.OptionMenu
+{
+    public enum GraphicItem
+    {
         Dr = 0,
         Mode = 1,
         Refreshrate = 2,
@@ -28152,16 +32702,20 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.gui {
-    public enum RenderLayerType {
+namespace Enums.via.gui
+{
+    public enum RenderLayerType
+    {
         Overlay = 0,
         Transparent = 1,
         SubScene = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum KeyboardKey {
+namespace Enums.via.hid
+{
+    public enum KeyboardKey
+    {
         None = 0,
         LButton = 1,
         RButton = 2,
@@ -28313,38 +32867,48 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.network.Codec {
-    public enum Mode {
+namespace Enums.via.network.Codec
+{
+    public enum Mode
+    {
         Dict = 0,
         Comp = 1,
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Move {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.via.render.VolumeOccludee {
-    public enum VISIBILITY {
+namespace Enums.via.render.VolumeOccludee
+{
+    public enum VISIBILITY
+    {
         Invisible = 0,
         Visible = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.via.path {
-    public enum PathKind {
+namespace Enums.via.path
+{
+    public enum PathKind
+    {
         RelativeOrAbsolute = 0,
         Absolute = 1,
         Relative = 2,
     }
 }
 
-namespace Enums.app.OptionKeyBind {
-    public enum KeyBindGroupType {
+namespace Enums.app.OptionKeyBind
+{
+    public enum KeyBindGroupType
+    {
         PlayerCommand = 0,
         InGameOpenMenu = 1,
         CommonUICommand = 2,
@@ -28356,8 +32920,10 @@ namespace Enums.app.OptionKeyBind {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail.DrawPipelineCache {
-    public enum Type {
+namespace Enums.via.effect.gpgpu.detail.DrawPipelineCache
+{
+    public enum Type
+    {
         Default = 0,
         Prepass = 1,
         DepthOperator = 2,
@@ -28366,8 +32932,10 @@ namespace Enums.via.effect.gpgpu.detail.DrawPipelineCache {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_512ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_512ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -28380,8 +32948,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.wwise.WwiseDriver {
-    public enum OutputChannel {
+namespace Enums.via.wwise.WwiseDriver
+{
+    public enum OutputChannel
+    {
         Mono = 0,
         Stereo = 1,
         Surround5_1 = 2,
@@ -28389,24 +32959,30 @@ namespace Enums.via.wwise.WwiseDriver {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum AddLayerState {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum AddLayerState
+    {
         Default = 0,
         Generating = 1,
         Break = 2,
     }
 }
 
-namespace Enums.via {
-    public enum GroupUIStyle {
+namespace Enums.via
+{
+    public enum GroupUIStyle
+    {
         Box = 0,
         NoBorder = 1,
         Expander = 2,
     }
 }
 
-namespace Enums.app.Em8000ScarController {
-    public enum TimelineFrame {
+namespace Enums.app.Em8000ScarController
+{
+    public enum TimelineFrame
+    {
         Normal = 0,
         RecoverHead = 1,
         RecoverRightArm = 2,
@@ -28418,8 +32994,10 @@ namespace Enums.app.Em8000ScarController {
     }
 }
 
-namespace Enums.via {
-    public enum AccountPickerResult {
+namespace Enums.via
+{
+    public enum AccountPickerResult
+    {
         None = 0,
         Busy = 1,
         Done = 2,
@@ -28433,30 +33011,38 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CH8Em4200ActionController {
-    public enum AngerStatus {
+namespace Enums.app.CH8Em4200ActionController
+{
+    public enum AngerStatus
+    {
         Normal = 0,
         NeedAnger = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.via.str {
-    public enum ComparisonType {
+namespace Enums.via.str
+{
+    public enum ComparisonType
+    {
         Ordinal = 0,
         OrdinalIgnoreCase = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum HeadRotIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum HeadRotIndex
+    {
         None = 0,
         AxisZ = 1,
     }
 }
 
-namespace Enums.app.Em3000.IK.Em8000HandIKController {
-    public enum Type {
+namespace Enums.app.Em3000.IK.Em8000HandIKController
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         Left = 1,
@@ -28465,8 +33051,10 @@ namespace Enums.app.Em3000.IK.Em8000HandIKController {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum GameObjectIdIndex {
+namespace Enums.via.wwise
+{
+    public enum GameObjectIdIndex
+    {
         WwiseDriver = 1,
         WwiseManager = 2,
         Listener_0 = 3,
@@ -28481,8 +33069,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Breath {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Breath
+{
+    public enum Type
+    {
         Vertical = 0,
         Horizontal = 1,
         Walk = 2,
@@ -28491,8 +33081,10 @@ namespace Enums.app.CH9Em7900.Action.Breath {
     }
 }
 
-namespace Enums.CH8Em4500Effect {
-    public enum IDAlias {
+namespace Enums.CH8Em4500Effect
+{
+    public enum IDAlias
+    {
         SpitBeam = 0,
         SpitBeamEnd = 1,
         Explosion = 2,
@@ -28502,30 +33094,38 @@ namespace Enums.CH8Em4500Effect {
     }
 }
 
-namespace Enums.app.CH8ChangeToneMapProxy {
-    public enum REQUEST_MODE {
+namespace Enums.app.CH8ChangeToneMapProxy
+{
+    public enum REQUEST_MODE
+    {
         NONE = 0,
         NORMAL = 1,
         NIGHT_VISION = 2,
     }
 }
 
-namespace Enums.app.Em3101.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3101.Action.Grapple
+{
+    public enum Type
+    {
         BedRoomGrapple = 0,
     }
 }
 
-namespace Enums.app.Collision.CollisionSystem {
-    public enum AsyncCastRayMode {
+namespace Enums.app.Collision.CollisionSystem
+{
+    public enum AsyncCastRayMode
+    {
         IsHit = 0,
         NearHitDetail = 1,
         AllHitsDetail = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterExecuteState {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterExecuteState
+    {
         Update = 1,
         Reset = 2,
         Kill = 4,
@@ -28533,23 +33133,29 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.navigation.AIMapEffector {
-    public enum NeedUpdate {
+namespace Enums.via.navigation.AIMapEffector
+{
+    public enum NeedUpdate
+    {
         No = 0,
         Yes = 1,
         Force = 2,
     }
 }
 
-namespace Enums.app.CH8FadeControlForEvent {
-    public enum FadeStatusEnum {
+namespace Enums.app.CH8FadeControlForEvent
+{
+    public enum FadeStatusEnum
+    {
         OffBlack = 0,
         OnBlack = 1,
     }
 }
 
-namespace Enums.via.render.Cloudscape {
-    public enum Visualization {
+namespace Enums.via.render.Cloudscape
+{
+    public enum Visualization
+    {
         None = 0,
         Position = 1,
         Texcoord = 2,
@@ -28569,8 +33175,10 @@ namespace Enums.via.render.Cloudscape {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraBaseFormat {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraBaseFormat
+    {
         YUV422 = 0,
         RAW16 = 1,
         RAW8 = 2,
@@ -28579,8 +33187,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.Em3001.Action.AttackRush {
-    public enum Type {
+namespace Enums.app.Em3001.Action.AttackRush
+{
+    public enum Type
+    {
         Forward = 0,
         Right = 1,
         Left = 2,
@@ -28588,8 +33198,10 @@ namespace Enums.app.Em3001.Action.AttackRush {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageDirection {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageDirection
+    {
         Front = 0,
         Back = 1,
         Left = 2,
@@ -28597,29 +33209,37 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum DeinterlaceType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum DeinterlaceType
+    {
         Fast = 0,
         Fine = 1,
         TemporalBlend = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum ChainNodeConstMode {
+namespace Enums.via.motion
+{
+    public enum ChainNodeConstMode
+    {
         Default = 0,
         Matrix = 1,
     }
 }
 
-namespace Enums.via.storage.saveService.detail.exportToMemory {
-    public enum ExportToMemoryOption {
+namespace Enums.via.storage.saveService.detail.exportToMemory
+{
+    public enum ExportToMemoryOption
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em3001.Action {
-    public enum ActionShort {
+namespace Enums.app.Em3001.Action
+{
+    public enum ActionShort
+    {
         Straight = 0,
         SwingDown = 1,
         LSwingDown = 2,
@@ -28639,43 +33259,55 @@ namespace Enums.app.Em3001.Action {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Grapple
+{
+    public enum Type
+    {
         Bite = 0,
         Mount = 1,
         Slash = 2,
     }
 }
 
-namespace Enums.via.motion.IkHand2.EffectorInfo {
-    public enum InputType {
+namespace Enums.via.motion.IkHand2.EffectorInfo
+{
+    public enum InputType
+    {
         Joint = 0,
         Weight = 1,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapObjectState {
+namespace Enums.app.MapManager
+{
+    public enum MapObjectState
+    {
         Enable = 0,
         Disable = 1,
     }
 }
 
-namespace Enums.app.Em8001.Override.Em8001OverrideController {
-    public enum OverrideActionArg {
+namespace Enums.app.Em8001.Override.Em8001OverrideController
+{
+    public enum OverrideActionArg
+    {
         Gesture = 0,
     }
 }
 
-namespace Enums.app.Em8100.Action.GrabTurn {
-    public enum Type {
+namespace Enums.app.Em8100.Action.GrabTurn
+{
+    public enum Type
+    {
         Right = 0,
         Left = 1,
     }
 }
 
-namespace Enums.app.Em3600.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Attack
+{
+    public enum Type
+    {
         LPunchL = 0,
         LPunchR = 1,
         LPunchDown = 2,
@@ -28702,15 +33334,19 @@ namespace Enums.app.Em3600.Action.Attack {
     }
 }
 
-namespace Enums.app.WaveAnnouncementUIAsset {
-    public enum TimePanelState {
+namespace Enums.app.WaveAnnouncementUIAsset
+{
+    public enum TimePanelState
+    {
         TIME_AM = 0,
         TIME_PM = 1,
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpApplet {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpApplet
+    {
         Invalid = 0,
         Register = 1,
         Remove = 2,
@@ -28718,8 +33354,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.CH9Em7700ActionController {
-    public enum LostPartsByStomp {
+namespace Enums.app.CH9Em7700ActionController
+{
+    public enum LostPartsByStomp
+    {
         LeftArm = 0,
         RightArm = 1,
         LeftLeg = 2,
@@ -28728,24 +33366,30 @@ namespace Enums.app.CH9Em7700ActionController {
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum PopulationSample {
+namespace Enums.via.network.wrangler
+{
+    public enum PopulationSample
+    {
         UseProviderPopulationSample = -2,
         UseSystemPopulationSample = -1,
         Undefined = 0,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Dead {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceSpin = 2,
     }
 }
 
-namespace Enums.app.DoorPush {
-    public enum State {
+namespace Enums.app.DoorPush
+{
+    public enum State
+    {
         Closed = 0,
         Locked = 1,
         LittleOpen = 2,
@@ -28756,15 +33400,19 @@ namespace Enums.app.DoorPush {
     }
 }
 
-namespace Enums.app.Em4100ActionController {
-    public enum DodgeQueType {
+namespace Enums.app.Em4100ActionController
+{
+    public enum DodgeQueType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapCategoryDef {
+namespace Enums.app.MapManager
+{
+    public enum MapCategoryDef
+    {
         None = 0,
         Chapter3_Main = 1,
         Chapter3_Main_East = 2,
@@ -28788,15 +33436,19 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.app.fsm.ElevatorDoor {
-    public enum ActionType {
+namespace Enums.app.fsm.ElevatorDoor
+{
+    public enum ActionType
+    {
         Open = 0,
         Close = 1,
     }
 }
 
-namespace Enums.app.Em8000.Override.Em8000OverrideController {
-    public enum State {
+namespace Enums.app.Em8000.Override.Em8000OverrideController
+{
+    public enum State
+    {
         None = 0,
         WalkNormalC3B2Final = 1,
         WalkTurn = 2,
@@ -28806,15 +33458,19 @@ namespace Enums.app.Em8000.Override.Em8000OverrideController {
     }
 }
 
-namespace Enums.via.navigation.NavigationSurface {
-    public enum PortalOffsetSizeType {
+namespace Enums.via.navigation.NavigationSurface
+{
+    public enum PortalOffsetSizeType
+    {
         Ratio = 0,
         Distance = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8InitSystemSaveData {
-    public enum State {
+namespace Enums.app.fsm.CH8InitSystemSaveData
+{
+    public enum State
+    {
         Init = 0,
         SystemLoading = 1,
         SystemSaveing = 2,
@@ -28827,16 +33483,20 @@ namespace Enums.app.fsm.CH8InitSystemSaveData {
     }
 }
 
-namespace Enums.via.render.RichDecal {
-    public enum HeightBlendMode {
+namespace Enums.via.render.RichDecal
+{
+    public enum HeightBlendMode
+    {
         Ignore = 0,
         Add = 1,
         Mul = 2,
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraResolution {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraResolution
+    {
         PSCameraResolution_1280X800 = 0,
         PSCameraResolution_640X400 = 1,
         PSCameraResolution_320X200 = 2,
@@ -28847,22 +33507,28 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.CH8Em4450.CH8Em4450ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4450.CH8Em4450ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceSpin = 2,
     }
 }
 
-namespace Enums.app.Em8001.Override.Em8001OverrideController {
-    public enum BlendState {
+namespace Enums.app.Em8001.Override.Em8001OverrideController
+{
+    public enum BlendState
+    {
         None = 0,
         StartBlend = 1,
         Blend = 2,
@@ -28870,8 +33536,10 @@ namespace Enums.app.Em8001.Override.Em8001OverrideController {
     }
 }
 
-namespace Enums.app.GasBomb {
-    public enum Rno {
+namespace Enums.app.GasBomb
+{
+    public enum Rno
+    {
         Running = 0,
         Detonation = 1,
         Interval = 2,
@@ -28880,16 +33548,20 @@ namespace Enums.app.GasBomb {
     }
 }
 
-namespace Enums.via.render.WaveOpticalLensFlare {
-    public enum LensFlareType {
+namespace Enums.via.render.WaveOpticalLensFlare
+{
+    public enum LensFlareType
+    {
         First = 0,
         Second = 1,
         Third = 2,
     }
 }
 
-namespace Enums.via.AABB {
-    public enum EdgeId {
+namespace Enums.via.AABB
+{
+    public enum EdgeId
+    {
         EdgeId_011_TO_111 = 0,
         EdgeId_111_TO_101 = 1,
         EdgeId_101_TO_001 = 2,
@@ -28906,15 +33578,19 @@ namespace Enums.via.AABB {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodP2p {
+namespace Enums.via.network.error
+{
+    public enum MethodP2p
+    {
         Update = 0,
         Connect = 1,
     }
 }
 
-namespace Enums.app.CH9Em7800.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em7800.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Wall1 = 1,
         NoUse_Wall2 = 2,
@@ -28933,14 +33609,18 @@ namespace Enums.app.CH9Em7800.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.CH8Em4450.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4450.Action.CH8Grapple
+{
+    public enum Type
+    {
         Exprotion = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum DefaultResolution {
+namespace Enums.via.render
+{
+    public enum DefaultResolution
+    {
         DefaultResolution_1080p = 1080,
         DefaultResolution_1260p = 1260,
         DefaultResolution_1440p = 1440,
@@ -28953,15 +33633,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.vr {
-    public enum StickRotationMode {
+namespace Enums.app.vr
+{
+    public enum StickRotationMode
+    {
         Analogue = 0,
         Digital = 1,
     }
 }
 
-namespace Enums.via.hid.detail.SceneObserver {
-    public enum SceneStatus {
+namespace Enums.via.hid.detail.SceneObserver
+{
+    public enum SceneStatus
+    {
         Paused = 0,
         Resumed = 1,
         Construct = 2,
@@ -28969,8 +33653,10 @@ namespace Enums.via.hid.detail.SceneObserver {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum SkipStatus {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum SkipStatus
+    {
         None = 0,
         Start = 1,
         Skip = 2,
@@ -28978,37 +33664,47 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.via.dynamics.PrismaticConstraint.Initializer {
-    public enum PositionType {
+namespace Enums.via.dynamics.PrismaticConstraint.Initializer
+{
+    public enum PositionType
+    {
         World = 0,
         Local = 1,
     }
 }
 
-namespace Enums.app.TutorialGUI {
-    public enum VRAdjustMode {
+namespace Enums.app.TutorialGUI
+{
+    public enum VRAdjustMode
+    {
         NORMAL = 0,
         CLOSE = 1,
         VERY_CLOSE = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadJoyAssignmentMode {
+namespace Enums.via.hid
+{
+    public enum NpadJoyAssignmentMode
+    {
         Dual = 0,
         Single = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum ClearTimeTypeDLC {
+namespace Enums.app.Telemetry
+{
+    public enum ClearTimeTypeDLC
+    {
         CrazyHouse = 0,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_7ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_7ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -29020,24 +33716,30 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.FinishBlow {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.FinishBlow
+{
+    public enum Type
+    {
         SneakB = 0,
         FinishblowL = 1,
         FinishblowR = 2,
     }
 }
 
-namespace Enums.app.CH9DifficultySelectGUI {
-    public enum StepType {
+namespace Enums.app.CH9DifficultySelectGUI
+{
+    public enum StepType
+    {
         Wait = 0,
         Decide = 1,
         Cancel = 2,
     }
 }
 
-namespace Enums.app.WeaponProperties {
-    public enum CustomizeWeaponType {
+namespace Enums.app.WeaponProperties
+{
+    public enum CustomizeWeaponType
+    {
         Handgun = 0,
         Shotgun = 1,
         Machinegun = 2,
@@ -29050,15 +33752,19 @@ namespace Enums.app.WeaponProperties {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum PackFlags {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum PackFlags
+    {
         None = 0,
         InputPack = 1,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageAttribute {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageAttribute
+    {
         None = 0,
         Fire = 1,
         Acid = 2,
@@ -29066,38 +33772,48 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.app.EnvironmentEffectManager {
-    public enum RequestStatus {
+namespace Enums.app.EnvironmentEffectManager
+{
+    public enum RequestStatus
+    {
         None = 0,
         Create = 1,
     }
 }
 
-namespace Enums.via.behaviortree.SelectorSequence {
-    public enum RunType {
+namespace Enums.via.behaviortree.SelectorSequence
+{
+    public enum RunType
+    {
         Loop = 0,
         Once = 1,
         OnceEnd = 2,
     }
 }
 
-namespace Enums.app.FirstSettingMenu {
-    public enum ListElemID {
+namespace Enums.app.FirstSettingMenu
+{
+    public enum ListElemID
+    {
         GoNext = 0,
         Option = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum IndexBufferFormat {
+namespace Enums.via.render
+{
+    public enum IndexBufferFormat
+    {
         U16 = 0,
         U32 = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.via.CoreEntry {
-    public enum DevelopPlatform {
+namespace Enums.via.CoreEntry
+{
+    public enum DevelopPlatform
+    {
         Default = 0,
         X64 = 1,
         PS4 = 2,
@@ -29119,30 +33835,38 @@ namespace Enums.via.CoreEntry {
     }
 }
 
-namespace Enums.app.Em4000.Action.Idle {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum ShapeType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum ShapeType
+    {
         AABB = 0,
         OBB = 1,
         Sphere = 2,
     }
 }
 
-namespace Enums.via.render.VolumetricFogControl {
-    public enum TextureSize {
+namespace Enums.via.render.VolumetricFogControl
+{
+    public enum TextureSize
+    {
         W160xH90xD64 = 0,
         W160xH90xD128 = 1,
     }
 }
 
-namespace Enums.app.Em8000BattleDirective.HandBattleParameter {
-    public enum ZeroAttackType {
+namespace Enums.app.Em8000BattleDirective.HandBattleParameter
+{
+    public enum ZeroAttackType
+    {
         None = 0,
         Throw = 1,
         Knee = 2,
@@ -29150,8 +33874,10 @@ namespace Enums.app.Em8000BattleDirective.HandBattleParameter {
     }
 }
 
-namespace Enums.via.effect.lensflare {
-    public enum FilterType {
+namespace Enums.via.effect.lensflare
+{
+    public enum FilterType
+    {
         Global = 0,
         Glow = 1,
         Iris = 2,
@@ -29161,8 +33887,10 @@ namespace Enums.via.effect.lensflare {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraConfigType {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraConfigType
+    {
         Unknown = 0,
         Type1 = 1,
         Type2 = 2,
@@ -29172,8 +33900,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle2 {
-    public enum Message {
+namespace Enums.app.Em3000.Goal.Chapter3Battle2
+{
+    public enum Message
+    {
         Non = 0,
         AppearEnd = 1,
         Battle1 = 2,
@@ -29182,23 +33912,29 @@ namespace Enums.app.Em3000.Goal.Chapter3Battle2 {
     }
 }
 
-namespace Enums.via.physics.Shape {
-    public enum State {
+namespace Enums.via.physics.Shape
+{
+    public enum State
+    {
         Enabled = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.os.http_client {
-    public enum Error {
+namespace Enums.via.os.http_client
+{
+    public enum Error
+    {
         Unavailable = -2,
         Pending = -1,
         None = 0,
     }
 }
 
-namespace Enums.app.OverrideAction {
-    public enum Layer {
+namespace Enums.app.OverrideAction
+{
+    public enum Layer
+    {
         Layer1 = 0,
         Layer2 = 1,
         Layer3 = 2,
@@ -29212,8 +33948,10 @@ namespace Enums.app.OverrideAction {
     }
 }
 
-namespace Enums.app.InventoryContextMenu {
-    public enum Mode {
+namespace Enums.app.InventoryContextMenu
+{
+    public enum Mode
+    {
         Item = 0,
         ItemBox2Inventory = 1,
         ItemBox2InventoryOne = 2,
@@ -29222,29 +33960,37 @@ namespace Enums.app.InventoryContextMenu {
     }
 }
 
-namespace Enums.app.FileMenu {
-    public enum ProcDef {
+namespace Enums.app.FileMenu
+{
+    public enum ProcDef
+    {
         File = 0,
         List = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8RequestFade {
-    public enum FadeTypeEnum {
+namespace Enums.app.fsm.CH8RequestFade
+{
+    public enum FadeTypeEnum
+    {
         FadeOut = 0,
         FadeIn = 1,
     }
 }
 
-namespace Enums.app.Em4000.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.motion.IkSpine.ManageJoint {
-    public enum JOINT_TYPE {
+namespace Enums.via.motion.IkSpine.ManageJoint
+{
+    public enum JOINT_TYPE
+    {
         NON = 0,
         START = 1,
         RAY = 2,
@@ -29252,8 +33998,10 @@ namespace Enums.via.motion.IkSpine.ManageJoint {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum LetterAlignmentV {
+namespace Enums.via.gui.detail
+{
+    public enum LetterAlignmentV
+    {
         Top = 0,
         Center = 1,
         Bottom = 2,
@@ -29261,24 +34009,30 @@ namespace Enums.via.gui.detail {
     }
 }
 
-namespace Enums.via.render {
-    public enum VolumetricFogType {
+namespace Enums.via.render
+{
+    public enum VolumetricFogType
+    {
         Global = 0,
         Box = 1,
         BoxWorldOffset = 2,
     }
 }
 
-namespace Enums.via.navigation.NavigationWaypoint {
-    public enum SearchRegion {
+namespace Enums.via.navigation.NavigationWaypoint
+{
+    public enum SearchRegion
+    {
         None = 0,
         Only = 1,
         Priority = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400ArmController {
-    public enum State {
+namespace Enums.app.CH9Em6400ArmController
+{
+    public enum State
+    {
         DefaultArm = 0,
         ChangeExtendArm = 1,
         ExtendArm = 2,
@@ -29286,38 +34040,48 @@ namespace Enums.app.CH9Em6400ArmController {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum DeviceSelectionRule {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum DeviceSelectionRule
+    {
         AssignButtonDown = 0,
         AssignButtonUp = 1,
     }
 }
 
-namespace Enums.app.PlayerExternalRequestController {
-    public enum State {
+namespace Enums.app.PlayerExternalRequestController
+{
+    public enum State
+    {
         Enter = 0,
         Run = 1,
         Exit = 2,
     }
 }
 
-namespace Enums.app.WaveEndDesc {
-    public enum Type {
+namespace Enums.app.WaveEndDesc
+{
+    public enum Type
+    {
         Continue = 0,
         Last = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500.CH8ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4500.CH8ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         Stand = 1,
         Fall = 2,
     }
 }
 
-namespace Enums.app.Em4100.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.Em4100.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -29334,8 +34098,10 @@ namespace Enums.app.Em4100.Goal {
     }
 }
 
-namespace Enums.app.MapObject {
-    public enum MapObjectTypeDef {
+namespace Enums.app.MapObject
+{
+    public enum MapObjectTypeDef
+    {
         None = 0,
         Item = 2,
         SavePoint = 3,
@@ -29347,8 +34113,10 @@ namespace Enums.app.MapObject {
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainDebugMode {
+namespace Enums.via.motion.detail
+{
+    public enum ChainDebugMode
+    {
         DebugDraw = 0,
         CheckBlendRate = 1,
         CheckFreezePose = 2,
@@ -29356,28 +34124,36 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.app.PlayerBreathController {
-    public enum HealthConditionEnum {
+namespace Enums.app.PlayerBreathController
+{
+    public enum HealthConditionEnum
+    {
         Fine = 0,
         Dying = 1,
     }
 }
 
-namespace Enums.app.InteractNumberLock {
-    public enum NumberLockModeParam {
+namespace Enums.app.InteractNumberLock
+{
+    public enum NumberLockModeParam
+    {
         Normal = 0,
         ForceError = 1,
     }
 }
 
-namespace Enums.app.GameOverScreen {
-    public enum ModeDef {
+namespace Enums.app.GameOverScreen
+{
+    public enum ModeDef
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.app.VrGui {
-    public enum VrTrackModeDef {
+namespace Enums.app.VrGui
+{
+    public enum VrTrackModeDef
+    {
         GameObject = 0,
         Controller = 1,
         SpecifyPosition = 2,
@@ -29387,16 +34163,20 @@ namespace Enums.app.VrGui {
     }
 }
 
-namespace Enums.app.Em4000.Action.Suspend {
-    public enum Option {
+namespace Enums.app.Em4000.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.Em5510.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em5510.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         Interval = 2,
@@ -29411,8 +34191,10 @@ namespace Enums.app.Em5510.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.motion {
-    public enum JointExType {
+namespace Enums.via.motion
+{
+    public enum JointExType
+    {
         None = 0,
         Rotation = 1,
         RotToScale = 2,
@@ -29433,8 +34215,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraConfigType {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraConfigType
+    {
         Unknown = 0,
         Type1 = 1,
         Type2 = 2,
@@ -29445,8 +34229,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum MaskLayer {
+namespace Enums.via.gui.detail
+{
+    public enum MaskLayer
+    {
         Default = 0,
         Top = 1,
         TopMost = 2,
@@ -29454,8 +34240,10 @@ namespace Enums.via.gui.detail {
     }
 }
 
-namespace Enums.app.CH9EnemyOrder.FinishBlowInfo {
-    public enum Type {
+namespace Enums.app.CH9EnemyOrder.FinishBlowInfo
+{
+    public enum Type
+    {
         SneakB = 0,
         Down = 1,
         Chase = 2,
@@ -29463,8 +34251,10 @@ namespace Enums.app.CH9EnemyOrder.FinishBlowInfo {
     }
 }
 
-namespace Enums.via.motion {
-    public enum MotionAppendDataClassType {
+namespace Enums.via.motion
+{
+    public enum MotionAppendDataClassType
+    {
         Unknown = 0,
         Vec2 = 1,
         Vec3 = 2,
@@ -29474,8 +34264,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Breath {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Breath
+{
+    public enum Type
+    {
         Vertical = 0,
         Horizontal = 1,
         Walk = 2,
@@ -29483,8 +34275,10 @@ namespace Enums.app.CH8Em4200.Action.CH8Breath {
     }
 }
 
-namespace Enums.LibJson {
-    public enum ValueType {
+namespace Enums.LibJson
+{
+    public enum ValueType
+    {
         Unknown = 0,
         Object = 1,
         Array = 2,
@@ -29496,8 +34290,10 @@ namespace Enums.LibJson {
     }
 }
 
-namespace Enums.app.Em8950.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8950.Action
+{
+    public enum ActionNo
+    {
         Idle_Move = 0,
         Idle_Offense = 1,
         MoveForward = 2,
@@ -29509,8 +34305,10 @@ namespace Enums.app.Em8950.Action {
     }
 }
 
-namespace Enums.app.CH9Em7800.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em7800.Action
+{
+    public enum ActionNo
+    {
         Attack = 4,
         StrikeScratch = 5,
         StrikeDash = 6,
@@ -29542,23 +34340,29 @@ namespace Enums.app.CH9Em7800.Action {
     }
 }
 
-namespace Enums.via.motion.tree {
-    public enum NodeType {
+namespace Enums.via.motion.tree
+{
+    public enum NodeType
+    {
         Unknown = 0,
         Motion = 1,
         Param = 2,
     }
 }
 
-namespace Enums.via.areamap.test.DistanceFromQueryRegion {
-    public enum Condition {
+namespace Enums.via.areamap.test.DistanceFromQueryRegion
+{
+    public enum Condition
+    {
         Mode_Closest = 0,
         Mode_Farthest = 1,
     }
 }
 
-namespace Enums.app.Em4000ActionPoint {
-    public enum Type {
+namespace Enums.app.Em4000ActionPoint
+{
+    public enum Type
+    {
         ClimbWall40 = 0,
         ClimbWall79 = 1,
         ClimbWall80 = 2,
@@ -29570,8 +34374,10 @@ namespace Enums.app.Em4000ActionPoint {
     }
 }
 
-namespace Enums.via.navigation.map.LineSegmentXZ {
-    public enum CrossCond {
+namespace Enums.via.navigation.map.LineSegmentXZ
+{
+    public enum CrossCond
+    {
         NO_CONTACT = 0,
         CROSS = 1,
         OVERLAP = 2,
@@ -29586,30 +34392,38 @@ namespace Enums.via.navigation.map.LineSegmentXZ {
     }
 }
 
-namespace Enums.app.SampleShell {
-    public enum ShellType {
+namespace Enums.app.SampleShell
+{
+    public enum ShellType
+    {
         Normal = 0,
         Homing = 1,
     }
 }
 
-namespace Enums.via.eq.Var {
-    public enum Type {
+namespace Enums.via.eq.Var
+{
+    public enum Type
+    {
         Float = 0,
         Color = 1,
     }
 }
 
-namespace Enums.via {
-    public enum GamePresetsSubtitles {
+namespace Enums.via
+{
+    public enum GamePresetsSubtitles
+    {
         Default = 0,
         Off = 1,
         On = 2,
     }
 }
 
-namespace Enums.app.fsm.ElevatorButtonCheck {
-    public enum CheckType {
+namespace Enums.app.fsm.ElevatorButtonCheck
+{
+    public enum CheckType
+    {
         Use = 0,
         SameFloor = 1,
         OpenDoor = 2,
@@ -29618,15 +34432,19 @@ namespace Enums.app.fsm.ElevatorButtonCheck {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
-    public enum Message {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1Final
+{
+    public enum Message
+    {
         Non = 0,
         AppearEnd = 1,
     }
 }
 
-namespace Enums.via {
-    public enum Language {
+namespace Enums.via
+{
+    public enum Language
+    {
         Japanese = 0,
         English = 1,
         French = 2,
@@ -29665,23 +34483,29 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.motion.IkLookAt {
-    public enum ViewState {
+namespace Enums.via.motion.IkLookAt
+{
+    public enum ViewState
+    {
         None = 0,
         Move = 1,
         Follow = 2,
     }
 }
 
-namespace Enums.app.VrMotSickMeasureGui {
-    public enum TypeDef {
+namespace Enums.app.VrMotSickMeasureGui
+{
+    public enum TypeDef
+    {
         None = 0,
         Type1 = 1,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum ChapterSaveSlot {
+namespace Enums.app.MapManager
+{
+    public enum ChapterSaveSlot
+    {
         Chapter1 = 0,
         Chapter3 = 1,
         Chapter4 = 2,
@@ -29689,8 +34513,10 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.via.audiorender.fx {
-    public enum FxUnitType {
+namespace Enums.via.audiorender.fx
+{
+    public enum FxUnitType
+    {
         None = 0,
         MTLimitter = 1,
         MTCompressor = 2,
@@ -29713,8 +34539,10 @@ namespace Enums.via.audiorender.fx {
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodSemanticsFlag {
+namespace Enums.via.clr
+{
+    public enum MethodSemanticsFlag
+    {
         Setter = 1,
         Getter = 2,
         Other = 4,
@@ -29724,15 +34552,19 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.AttackBack {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.AttackBack
+{
+    public enum Type
+    {
         PunchBR = 0,
         PunchBL = 1,
     }
 }
 
-namespace Enums.via.curve {
-    public enum EaseType {
+namespace Enums.via.curve
+{
+    public enum EaseType
+    {
         Linear = 0,
         InSine = 1,
         OutSine = 2,
@@ -29767,8 +34599,10 @@ namespace Enums.via.curve {
     }
 }
 
-namespace Enums.via.render {
-    public enum LocalCubemapInternalResolution {
+namespace Enums.via.render
+{
+    public enum LocalCubemapInternalResolution
+    {
         Low = 128,
         Default = 256,
         High = 512,
@@ -29776,8 +34610,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Pad {
-    public enum Button {
+namespace Enums.app.Pad
+{
+    public enum Button
+    {
         LeftUp = 1,
         LeftRight = 2,
         LeftDown = 3,
@@ -29804,8 +34640,10 @@ namespace Enums.app.Pad {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum SimpleFdnReverbParameter {
+namespace Enums.via.audiorender
+{
+    public enum SimpleFdnReverbParameter
+    {
         DryVolume = 0,
         DryVolumeDb = 1,
         WetVolumeDb = 2,
@@ -29816,36 +34654,46 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.ItemCombiner {
-    public enum Index {
+namespace Enums.app.ItemCombiner
+{
+    public enum Index
+    {
         First = 0,
         Second = 1,
         Num = 2,
     }
 }
 
-namespace Enums.app.CH9PlayerEquipManager {
-    public enum WwiseSwitchListForEquipGauntlet {
+namespace Enums.app.CH9PlayerEquipManager
+{
+    public enum WwiseSwitchListForEquipGauntlet
+    {
         None = 0,
         LeftOnly = 1,
         Both = 2,
     }
 }
 
-namespace Enums.via.timeline {
-    public enum StartType {
+namespace Enums.via.timeline
+{
+    public enum StartType
+    {
         OverFrame = 0,
         StartFrame = 1,
     }
 }
 
-namespace Enums.via.dialog.core {
-    public enum dummy {
+namespace Enums.via.dialog.core
+{
+    public enum dummy
+    {
     }
 }
 
-namespace Enums.app.AI.AIWorldBlackBoard {
-    public enum MoldedStateEnum {
+namespace Enums.app.AI.AIWorldBlackBoard
+{
+    public enum MoldedStateEnum
+    {
         FULL = 0,
         LAYER = 1,
         BASS = 2,
@@ -29856,8 +34704,10 @@ namespace Enums.app.AI.AIWorldBlackBoard {
     }
 }
 
-namespace Enums.via.render.VolumeDecal {
-    public enum OpacityFlag {
+namespace Enums.via.render.VolumeDecal
+{
+    public enum OpacityFlag
+    {
         None = 0,
         BaseColor = 1,
         Normal = 2,
@@ -29869,8 +34719,10 @@ namespace Enums.via.render.VolumeDecal {
     }
 }
 
-namespace Enums.via.hid.HIDEntry {
-    public enum RemotePlayKeyAssign {
+namespace Enums.via.hid.HIDEntry
+{
+    public enum RemotePlayKeyAssign
+    {
         PatternA = 0,
         PatternB = 1,
         PatternC = 2,
@@ -29882,8 +34734,10 @@ namespace Enums.via.hid.HIDEntry {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_4oAmb {
+namespace Enums.via.audiorender
+{
+    public enum Channel_4oAmb
+    {
         Channel_4oAmb_0 = 0,
         Channel_4oAmb_1 = 1,
         Channel_4oAmb_2 = 2,
@@ -29913,16 +34767,20 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.EnemyMessage {
-    public enum Tag {
+namespace Enums.app.EnemyMessage
+{
+    public enum Tag
+    {
         CounterableForGrapple = 0,
         CounterableBombForGrapple = 1,
         ResistableForGrapple = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridInputDirection {
+namespace Enums.via.gui
+{
+    public enum GridInputDirection
+    {
         Up = 0,
         Right = 1,
         Down = 2,
@@ -29930,31 +34788,39 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1FinalDrivePL {
-    public enum PLDriveStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1FinalDrivePL
+{
+    public enum PLDriveStatus
+    {
         Non = 0,
         GotoCarFront = 1,
         ArriveCarFront = 2,
     }
 }
 
-namespace Enums.app.fsm.ItemTest {
-    public enum CheckTarget {
+namespace Enums.app.fsm.ItemTest
+{
+    public enum CheckTarget
+    {
         Inventory = 0,
         ItemBox = 1,
         InventoryAndItemBox = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceOperationMode {
+namespace Enums.via
+{
+    public enum SystemServiceOperationMode
+    {
         Handheld = 0,
         Console = 1,
     }
 }
 
-namespace Enums.via.motion.IkHand2 {
-    public enum SkipStatus {
+namespace Enums.via.motion.IkHand2
+{
+    public enum SkipStatus
+    {
         None = 0,
         Start = 1,
         Skip = 2,
@@ -29962,8 +34828,10 @@ namespace Enums.via.motion.IkHand2 {
     }
 }
 
-namespace Enums.via.sound {
-    public enum SoundCurveYValueType {
+namespace Enums.via.sound
+{
+    public enum SoundCurveYValueType
+    {
         FloatValue = 0,
         IntValue = 1,
         BoolValue = 2,
@@ -29972,8 +34840,10 @@ namespace Enums.via.sound {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum VectorFieldFlags {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum VectorFieldFlags
+    {
         Tiled = 1,
         Local = 2,
         NormalizeLocalVector = 4,
@@ -29992,8 +34862,10 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum RotationSpeedType {
+namespace Enums.app.PlayerCamera
+{
+    public enum RotationSpeedType
+    {
         Speed0 = 0,
         Speed1 = 1,
         Speed2 = 2,
@@ -30008,38 +34880,48 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.app.AI.CH8MoldedCommonBoard {
-    public enum RenderTargetStatusEnum {
+namespace Enums.app.AI.CH8MoldedCommonBoard
+{
+    public enum RenderTargetStatusEnum
+    {
         None = 0,
         Used = 1,
         UsedFromDead = 2,
     }
 }
 
-namespace Enums.via.render.BlendShapeController {
-    public enum BakedTextureUV {
+namespace Enums.via.render.BlendShapeController
+{
+    public enum BakedTextureUV
+    {
         Primary = 0,
         Secondary = 1,
     }
 }
 
-namespace Enums.app.FsmBirthday.FirstTutorial {
-    public enum OpTypeEnum {
+namespace Enums.app.FsmBirthday.FirstTutorial
+{
+    public enum OpTypeEnum
+    {
         CheckFlag = 0,
         SetFlag = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.areamap.test.DistanceFromItemWithTag {
-    public enum Limit {
+namespace Enums.via.areamap.test.DistanceFromItemWithTag
+{
+    public enum Limit
+    {
         CurrentArea = 0,
         AllAreas = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400ActionController {
-    public enum Egg {
+namespace Enums.app.CH8Em4400ActionController
+{
+    public enum Egg
+    {
         Head = 0,
         Chest = 1,
         Stomach = 2,
@@ -30047,8 +34929,10 @@ namespace Enums.app.CH8Em4400ActionController {
     }
 }
 
-namespace Enums.via.keyframe.ChannelBase {
-    public enum DataType {
+namespace Enums.via.keyframe.ChannelBase
+{
+    public enum DataType
+    {
         Bool = 0,
         S8 = 1,
         U8 = 2,
@@ -30069,23 +34953,29 @@ namespace Enums.via.keyframe.ChannelBase {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum CsPriority {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum CsPriority
+    {
         CSUpdate_0 = 0,
         CSUpdate_1 = 16,
         CSUpdate_2 = 32,
     }
 }
 
-namespace Enums.via.hid.detail {
-    public enum HidAllocatorGpuBuss {
+namespace Enums.via.hid.detail
+{
+    public enum HidAllocatorGpuBuss
+    {
         Onion = 0,
         Garlic = 1,
     }
 }
 
-namespace Enums.app.AdditionalItemManager {
-    public enum AdditionalKindEnum {
+namespace Enums.app.AdditionalItemManager
+{
+    public enum AdditionalKindEnum
+    {
         StorePrivilege_A = 0,
         StorePrivilege_B = 1,
         StorePrivilege_C = 2,
@@ -30116,8 +35006,10 @@ namespace Enums.app.AdditionalItemManager {
     }
 }
 
-namespace Enums.via.dialog {
-    public enum ButtonType {
+namespace Enums.via.dialog
+{
+    public enum ButtonType
+    {
         Ok = 0,
         YesNo = 1,
         None = 2,
@@ -30127,8 +35019,10 @@ namespace Enums.via.dialog {
     }
 }
 
-namespace Enums.via {
-    public enum AppletResult {
+namespace Enums.via
+{
+    public enum AppletResult
+    {
         None = 0,
         Done = 1,
         Skipped = 2,
@@ -30137,14 +35031,18 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Dead {
-    public enum Type {
+namespace Enums.app.Em8000.Action.Em8000Dead
+{
+    public enum Type
+    {
         LegBreak = 0,
     }
 }
 
-namespace Enums.app.fsm.CH8SetDoorState {
-    public enum SetState {
+namespace Enums.app.fsm.CH8SetDoorState
+{
+    public enum SetState
+    {
         NotSet = 0,
         Lock = 1,
         Unlock = 2,
@@ -30163,23 +35061,29 @@ namespace Enums.app.fsm.CH8SetDoorState {
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum ItemBoxMode {
+namespace Enums.app.InventoryMenu
+{
+    public enum ItemBoxMode
+    {
         Default = 0,
         ItemSetting = 1,
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraStopResult : uint {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraStopResult : uint
+    {
         OK = 1,
         Stoped = 1,
         ErrInternal = 0x80001000u,
     }
 }
 
-namespace Enums.app.Em8100.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Attack
+{
+    public enum Type
+    {
         StrikeR = 0,
         StrikeL = 1,
         StrikeOnBeamR = 2,
@@ -30202,22 +35106,28 @@ namespace Enums.app.Em8100.Action.Attack {
     }
 }
 
-namespace Enums.via.motion.CppSampleTracks {
-    public enum Test {
+namespace Enums.via.motion.CppSampleTracks
+{
+    public enum Test
+    {
         A = 0,
         B = 1,
         C = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100.CH8ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4100.CH8ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.gui {
-    public enum TextAnimationCondition {
+namespace Enums.via.gui
+{
+    public enum TextAnimationCondition
+    {
         Start = 0,
         Play = 1,
         Pause = 2,
@@ -30225,24 +35135,30 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH8PlayerDeathSound {
-    public enum DeathTable {
+namespace Enums.app.CH8PlayerDeathSound
+{
+    public enum DeathTable
+    {
         silence = 0,
         death_roar = 1,
         death_end = 2,
     }
 }
 
-namespace Enums.app.Em3002Think {
-    public enum FacialBasicID {
+namespace Enums.app.Em3002Think
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Ghost = 100,
     }
 }
 
-namespace Enums.app.Em8001.Define.Grapple {
-    public enum FsmState {
+namespace Enums.app.Em8001.Define.Grapple
+{
+    public enum FsmState
+    {
         Start = 0,
         Loop = 1,
         End = 2,
@@ -30250,8 +35166,10 @@ namespace Enums.app.Em8001.Define.Grapple {
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodImplFlag {
+namespace Enums.via.clr
+{
+    public enum MethodImplFlag
+    {
         CodeTypeMask = 3,
         IL = 0,
         Native = 1,
@@ -30276,8 +35194,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum SendTimingType {
+namespace Enums.app.Telemetry
+{
+    public enum SendTimingType
+    {
         SelectQuit = 0,
         SelectRestart = 1,
         YouAreDead = 2,
@@ -30295,8 +35215,10 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.app.fsm.CH8StateCheck {
-    public enum BoolType {
+namespace Enums.app.fsm.CH8StateCheck
+{
+    public enum BoolType
+    {
         None = 0,
         Grapple = 1,
         Damage = 2,
@@ -30305,8 +35227,10 @@ namespace Enums.app.fsm.CH8StateCheck {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseInvitation {
+namespace Enums.via.network.error
+{
+    public enum CauseInvitation
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -30337,14 +35261,18 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum FsmSelectorType {
+namespace Enums.via.fsm
+{
+    public enum FsmSelectorType
+    {
         Graph = 0,
     }
 }
 
-namespace Enums.app.PlayerCamera.CameraController {
-    public enum TransitionState {
+namespace Enums.app.PlayerCamera.CameraController
+{
+    public enum TransitionState
+    {
         None = 0,
         Fadein = 1,
         Peek = 2,
@@ -30352,8 +35280,10 @@ namespace Enums.app.PlayerCamera.CameraController {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GpuEmitterShape {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GpuEmitterShape
+    {
         None = 0,
         Sphere = 1,
         Cylinder = 2,
@@ -30361,8 +35291,10 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum EffectorCtrl {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum EffectorCtrl
+    {
         None = 0,
         LocalOffset = 1,
         WorldOffset = 2,
@@ -30371,15 +35303,19 @@ namespace Enums.via.motion.IkLeg2 {
     }
 }
 
-namespace Enums.app.EnemyGrappleBase {
-    public enum PosLerpProcessType {
+namespace Enums.app.EnemyGrappleBase
+{
+    public enum PosLerpProcessType
+    {
         None = 0,
         ToNullOffsetMove = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseUser {
+namespace Enums.via.network.error
+{
+    public enum CauseUser
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -30409,24 +35345,30 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.vr {
-    public enum DeviceStatus {
+namespace Enums.app.vr
+{
+    public enum DeviceStatus
+    {
         Disabled = 0,
         Inactive = 1,
         Active = 2,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum DamageScale {
+namespace Enums.app.EnemyActionController
+{
+    public enum DamageScale
+    {
         S = 0,
         M = 1,
         L = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_2oAmb {
+namespace Enums.via.audiorender
+{
+    public enum Channel_2oAmb
+    {
         Channel_2oAmb_0 = 0,
         Channel_2oAmb_1 = 1,
         Channel_2oAmb_2 = 2,
@@ -30440,24 +35382,30 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em3002.Goal.BattleRest {
-    public enum LeaveStatus {
+namespace Enums.app.Em3002.Goal.BattleRest
+{
+    public enum LeaveStatus
+    {
         Non = 0,
         Leave = 1,
         Arrive = 2,
     }
 }
 
-namespace Enums.app.fsm.EmLoadRequest {
-    public enum LoadTypeEnum {
+namespace Enums.app.fsm.EmLoadRequest
+{
+    public enum LoadTypeEnum
+    {
         Load = 0,
         UnLoad = 1,
         MAX = 2,
     }
 }
 
-namespace Enums.app.OptionKeyBind {
-    public enum ErrorCheckType {
+namespace Enums.app.OptionKeyBind
+{
+    public enum ErrorCheckType
+    {
         PlayerInGameMenu = 0,
         PauseCommon = 1,
         MapCommon = 2,
@@ -30469,16 +35417,20 @@ namespace Enums.app.OptionKeyBind {
     }
 }
 
-namespace Enums.app.CH8PlayerGrowthManager {
-    public enum SiteScope {
+namespace Enums.app.CH8PlayerGrowthManager
+{
+    public enum SiteScope
+    {
         TypeA = 0,
         TypeB = 1,
         TypeC = 2,
     }
 }
 
-namespace Enums.app.Em4200.Action {
-    public enum ActionNo {
+namespace Enums.app.Em4200.Action
+{
+    public enum ActionNo
+    {
         MountTry = 4,
         Grapple = 5,
         Appear = 6,
@@ -30504,8 +35456,10 @@ namespace Enums.app.Em4200.Action {
     }
 }
 
-namespace Enums.via {
-    public enum DateFormat {
+namespace Enums.via
+{
+    public enum DateFormat
+    {
         YYYYMMDD = 0,
         DDMMYYYY = 1,
         MMDDYYYY = 2,
@@ -30514,8 +35468,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BlendType {
+namespace Enums.via.landscape
+{
+    public enum BlendType
+    {
         Adaptive = 0,
         Bilinear = 1,
         NoBlend = 2,
@@ -30523,8 +35479,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.render {
-    public enum LightingOption {
+namespace Enums.via.render
+{
+    public enum LightingOption
+    {
         Legacy = 0,
         Default = 1,
         High = 2,
@@ -30533,16 +35491,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8001.Define.Facial {
-    public enum FacialBasicID {
+namespace Enums.app.Em8001.Define.Facial
+{
+    public enum FacialBasicID
+    {
         NoDefault = -1,
         Normal = 0,
         Dead = 700,
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusDevice {
-    public enum StartResult {
+namespace Enums.via.hid.hmd.MorpheusDevice
+{
+    public enum StartResult
+    {
         OK = 0,
         ErrorNotSupported = 1,
         ErrorNotStandby = 2,
@@ -30550,32 +35512,40 @@ namespace Enums.via.hid.hmd.MorpheusDevice {
     }
 }
 
-namespace Enums.app.PlayerLighter {
-    public enum AssistLightState {
+namespace Enums.app.PlayerLighter
+{
+    public enum AssistLightState
+    {
         Off = 0,
         On = 1,
         LighterOn = 2,
     }
 }
 
-namespace Enums.via.motion.detail.CashSkeleton {
-    public enum ConstructStatus {
+namespace Enums.via.motion.detail.CashSkeleton
+{
+    public enum ConstructStatus
+    {
         NotBuild = 0,
         PartlyBuilt = 1,
         FullBuilt = 2,
     }
 }
 
-namespace Enums.app.Collision.HitController.DamageInfo {
-    public enum Scale {
+namespace Enums.app.Collision.HitController.DamageInfo
+{
+    public enum Scale
+    {
         L = 0,
         M = 1,
         S = 2,
     }
 }
 
-namespace Enums.app.Em8001.IK.Em8001FBIKController.FBIKStatus {
-    public enum State {
+namespace Enums.app.Em8001.IK.Em8001FBIKController.FBIKStatus
+{
+    public enum State
+    {
         INVALID = -1,
         None = 0,
         Start = 1,
@@ -30587,15 +35557,19 @@ namespace Enums.app.Em8001.IK.Em8001FBIKController.FBIKStatus {
     }
 }
 
-namespace Enums.via.gui {
-    public enum FontColorType {
+namespace Enums.via.gui
+{
+    public enum FontColorType
+    {
         Fill = 0,
         Vertical = 1,
     }
 }
 
-namespace Enums.app.Inventory {
-    public enum AddItemResult {
+namespace Enums.app.Inventory
+{
+    public enum AddItemResult
+    {
         Put = 0,
         Integration = 1,
         IntegrationAndNoPut = 2,
@@ -30604,15 +35578,19 @@ namespace Enums.app.Inventory {
     }
 }
 
-namespace Enums.app.WaveNotifyTimerUIDesc {
-    public enum Meridiem {
+namespace Enums.app.WaveNotifyTimerUIDesc
+{
+    public enum Meridiem
+    {
         AM = 0,
         PM = 1,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum MegusuriType {
+namespace Enums.app.GameManager
+{
+    public enum MegusuriType
+    {
         Item = 0,
         Drawer = 1,
         Destruct = 2,
@@ -30621,16 +35599,20 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.detail_bitset {
-    public enum BIT_IMPL {
+namespace Enums.via.detail_bitset
+{
+    public enum BIT_IMPL
+    {
         BIT_IMPL_32 = 0,
         BIT_IMPL_64 = 1,
         BIT_IMPL_ARRAY = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum PrimitiveError {
+namespace Enums.via.render
+{
+    public enum PrimitiveError
+    {
         NoError = 0,
         InsufficientMemory = 1,
         InvalidState = 2,
@@ -30639,8 +35621,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em3000.Action.TurnForWander {
-    public enum Type {
+namespace Enums.app.Em3000.Action.TurnForWander
+{
+    public enum Type
+    {
         Right = 0,
         Left = 1,
         BranchR = 2,
@@ -30648,8 +35632,10 @@ namespace Enums.app.Em3000.Action.TurnForWander {
     }
 }
 
-namespace Enums.via.wwise.WwiseIdNameInfo {
-    public enum LanguageType {
+namespace Enums.via.wwise.WwiseIdNameInfo
+{
+    public enum LanguageType
+    {
         None = 0,
         Japanese = 1,
         English_US = 2,
@@ -30665,8 +35651,10 @@ namespace Enums.via.wwise.WwiseIdNameInfo {
     }
 }
 
-namespace Enums.app.BirthdaySelect {
-    public enum RankingStateEnum {
+namespace Enums.app.BirthdaySelect
+{
+    public enum RankingStateEnum
+    {
         None = 0,
         Init = 1,
         InitWait = 2,
@@ -30675,24 +35663,30 @@ namespace Enums.app.BirthdaySelect {
     }
 }
 
-namespace Enums.via.behaviortree.SelectorCallerArg {
-    public enum EventType {
+namespace Enums.via.behaviortree.SelectorCallerArg
+{
+    public enum EventType
+    {
         None = 0,
         EveryFrame = 1,
         ChildEnd = 2,
     }
 }
 
-namespace Enums.via {
-    public enum ProjectionType {
+namespace Enums.via
+{
+    public enum ProjectionType
+    {
         PerspectiveFovRH = 0,
         OrthographicRH = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.hid.hmd.Morpheus {
-    public enum VrModeStatus {
+namespace Enums.via.hid.hmd.Morpheus
+{
+    public enum VrModeStatus
+    {
         Unavailable = 0,
         Available = 1,
         Initializing = 2,
@@ -30701,8 +35695,10 @@ namespace Enums.via.hid.hmd.Morpheus {
     }
 }
 
-namespace Enums.app.Em3600.Action.FourLegRevEnd {
-    public enum Type {
+namespace Enums.app.Em3600.Action.FourLegRevEnd
+{
+    public enum Type
+    {
         Front = 0,
         Back = 1,
         Left = 2,
@@ -30710,30 +35706,38 @@ namespace Enums.app.Em3600.Action.FourLegRevEnd {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Move {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Move
+{
+    public enum Type
+    {
         Normal = 0,
         Destination = 1,
         Wanderer = 2,
     }
 }
 
-namespace Enums.app.ItemSlotData {
-    public enum FindSlotType {
+namespace Enums.app.ItemSlotData
+{
+    public enum FindSlotType
+    {
         Normal = 0,
         LowPriorityShortcut = 1,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum ErrorSimulationV2 {
+namespace Enums.via.storage.saveService
+{
+    public enum ErrorSimulationV2
+    {
         None = 0,
         UpdateSaveFileDetailFailed = 1,
     }
 }
 
-namespace Enums.app.Em8000.Em8000AroundTargetAgent {
-    public enum SelectType {
+namespace Enums.app.Em8000.Em8000AroundTargetAgent
+{
+    public enum SelectType
+    {
         CurrentPointPos = 0,
         QueryPointPos = 1,
         QueryNodePos = 2,
@@ -30742,8 +35746,10 @@ namespace Enums.app.Em8000.Em8000AroundTargetAgent {
     }
 }
 
-namespace Enums.app.CH9Telemetry {
-    public enum UseRewardPattern {
+namespace Enums.app.CH9Telemetry
+{
+    public enum UseRewardPattern
+    {
         RingBattle = 0,
         BossBattle = 1,
         ThroughPlay = 2,
@@ -30751,8 +35757,10 @@ namespace Enums.app.CH9Telemetry {
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum DamageTransition {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum DamageTransition
+    {
         Non = 0,
         Impact = 1,
         Transition = 2,
@@ -30760,23 +35768,29 @@ namespace Enums.via.motion.IkMultipleDamageAction {
     }
 }
 
-namespace Enums.app.Cp7GameOverChoice {
-    public enum Choice {
+namespace Enums.app.Cp7GameOverChoice
+{
+    public enum Choice
+    {
         Restart = 0,
         Quit = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.physics.System {
-    public enum DirtyType {
+namespace Enums.via.physics.System
+{
+    public enum DirtyType
+    {
         RequestSetColliders = 0,
         Max = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em7700.Action
+{
+    public enum ActionNo
+    {
         BiteTry = 4,
         NearBiteTry = 5,
         Strike = 6,
@@ -30815,15 +35829,19 @@ namespace Enums.app.CH9Em7700.Action {
     }
 }
 
-namespace Enums.via.render.layer.Transparent {
-    public enum UITargetType {
+namespace Enums.via.render.layer.Transparent
+{
+    public enum UITargetType
+    {
         Default = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum LegSolverMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum LegSolverMode
+    {
         LegSolverMode_2Bone = 0,
         LegSolverMode_3Bone = 1,
         LegSolverMode_3BoneV2 = 2,
@@ -30832,8 +35850,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.Collision.PressUserData {
-    public enum Attribute {
+namespace Enums.app.Collision.PressUserData
+{
+    public enum Attribute
+    {
         SkipPressX = 0,
         SkipPressY = 1,
         SkipPressZ = 2,
@@ -30845,16 +35865,20 @@ namespace Enums.app.Collision.PressUserData {
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum AutoExposure {
+namespace Enums.via.render.ToneMapping
+{
+    public enum AutoExposure
+    {
         Enable = 0,
         FixedEnable = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app.Em4000.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em4000.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Release = 2,
@@ -30905,8 +35929,10 @@ namespace Enums.app.Em4000.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.storage.ProprietaryDLC {
-    public enum DownloadStatus {
+namespace Enums.via.storage.ProprietaryDLC
+{
+    public enum DownloadStatus
+    {
         InvalidToken = 0,
         Queued = 1,
         Downloading = 2,
@@ -30915,8 +35941,10 @@ namespace Enums.via.storage.ProprietaryDLC {
     }
 }
 
-namespace Enums.app.CH8Em4100ActionController {
-    public enum WallAttackQueType {
+namespace Enums.app.CH8Em4100ActionController
+{
+    public enum WallAttackQueType
+    {
         LeftWall = 0,
         RightWall = 1,
         Ceil = 2,
@@ -30924,8 +35952,10 @@ namespace Enums.app.CH8Em4100ActionController {
     }
 }
 
-namespace Enums.app.Em5520Order.Appear {
-    public enum Type {
+namespace Enums.app.Em5520Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Born = 1,
         Gather = 2,
@@ -30933,27 +35963,35 @@ namespace Enums.app.Em5520Order.Appear {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum IndexSetStrategy {
+namespace Enums.via.landscape
+{
+    public enum IndexSetStrategy
+    {
         Default = 0,
         IndexSetStragety_SeparateAndIncrementOnly = 1,
     }
 }
 
-namespace Enums.CH8Em4100Effect {
-    public enum CH8IDAlias {
+namespace Enums.CH8Em4100Effect
+{
+    public enum CH8IDAlias
+    {
         LostHead = 0,
     }
 }
 
-namespace Enums.via.fsm.StateGraph {
-    public enum StateAttribute {
+namespace Enums.via.fsm.StateGraph
+{
+    public enum StateAttribute
+    {
         StateAttributeBitNum = 32,
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum ShaderTypeEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum ShaderTypeEnum
+    {
         Auto = 0,
         Near = 1,
         Far = 2,
@@ -30961,16 +35999,20 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.via.motion.DevelopRetarget {
-    public enum Mode {
+namespace Enums.via.motion.DevelopRetarget
+{
+    public enum Mode
+    {
         None = 0,
         Child = 1,
         Constraint = 2,
     }
 }
 
-namespace Enums.app.GameOverScreen {
-    public enum Step {
+namespace Enums.app.GameOverScreen
+{
+    public enum Step
+    {
         Main = 0,
         Restart = 1,
         Quit = 2,
@@ -30982,8 +36024,10 @@ namespace Enums.app.GameOverScreen {
     }
 }
 
-namespace Enums.via.motion {
-    public enum JointType {
+namespace Enums.via.motion
+{
+    public enum JointType
+    {
         Root = 0,
         Hips = 1,
         Spine = 2,
@@ -31047,8 +36091,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.Em8001.Damage {
-    public enum Tag {
+namespace Enums.app.Em8001.Damage
+{
+    public enum Tag
+    {
         NoDamage = 0,
         Small_Head_F = 1,
         Small_Head_B = 2,
@@ -31103,28 +36149,36 @@ namespace Enums.app.Em8001.Damage {
     }
 }
 
-namespace Enums.app.Em3001 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3001
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em8001.Em8001ActionController.ProgramableTurnProcess {
-    public enum RatioUpdateType {
+namespace Enums.app.Em8001.Em8001ActionController.ProgramableTurnProcess
+{
+    public enum RatioUpdateType
+    {
         Time = 0,
     }
 }
 
-namespace Enums.app.AI.AINavigationHelper {
-    public enum StateType {
+namespace Enums.app.AI.AINavigationHelper
+{
+    public enum StateType
+    {
         None = 0,
         Stopping = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.network.Matchmaking {
-    public enum Phase {
+namespace Enums.via.network.Matchmaking
+{
+    public enum Phase
+    {
         None = 0,
         Init = 1,
         CreateSession = 2,
@@ -31154,8 +36208,10 @@ namespace Enums.via.network.Matchmaking {
     }
 }
 
-namespace Enums.via.os.http_client {
-    public enum Security {
+namespace Enums.via.os.http_client
+{
+    public enum Security
+    {
         IgnoreUnknownCA = 1,
         IgnoreCertCnInvalid = 2,
         IgnoreCertDateInvalid = 4,
@@ -31165,8 +36221,10 @@ namespace Enums.via.os.http_client {
     }
 }
 
-namespace Enums.app.AI {
-    public enum AttackPermitReturnReason {
+namespace Enums.app.AI
+{
+    public enum AttackPermitReturnReason
+    {
         Hitted = 0,
         NotHitted = 1,
         Canceled = 2,
@@ -31175,46 +36233,58 @@ namespace Enums.app.AI {
     }
 }
 
-namespace Enums.app.CH8Em4450.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4450.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.render.SSAOControl {
-    public enum SampleQuality {
+namespace Enums.via.render.SSAOControl
+{
+    public enum SampleQuality
+    {
         Low = 0,
         Standard = 1,
         High = 2,
     }
 }
 
-namespace Enums.via {
-    public enum bitset_assign_option {
+namespace Enums.via
+{
+    public enum bitset_assign_option
+    {
         bits = 0,
         pos = 1,
     }
 }
 
-namespace Enums.via.gui.Capture {
-    public enum CaptureRequest {
+namespace Enums.via.gui.Capture
+{
+    public enum CaptureRequest
+    {
         None = 0,
         Clear = 1,
         Capture = 2,
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum RadarCautionStateDef {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum RadarCautionStateDef
+    {
         None = 0,
         Near = 1,
         Reached = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum AccountPickerState {
+namespace Enums.via.hid
+{
+    public enum AccountPickerState
+    {
         Null = 0,
         Idle = 1,
         Executing = 2,
@@ -31222,8 +36292,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.motion.IkBodyRig {
-    public enum JointTypes {
+namespace Enums.via.motion.IkBodyRig
+{
+    public enum JointTypes
+    {
         Head = 0,
         Neck = 1,
         RightClavicle = 2,
@@ -31247,8 +36319,10 @@ namespace Enums.via.motion.IkBodyRig {
     }
 }
 
-namespace Enums.app.SkillProperties {
-    public enum SkillType {
+namespace Enums.app.SkillProperties
+{
+    public enum SkillType
+    {
         RecoveryRateUp = 0,
         HealthMaxUp = 1,
         ReloadSpeedUp = 2,
@@ -31256,8 +36330,10 @@ namespace Enums.app.SkillProperties {
     }
 }
 
-namespace Enums.app.TitleSubMenu {
-    public enum Step {
+namespace Enums.app.TitleSubMenu
+{
+    public enum Step
+    {
         Main = 0,
         Continue = 1,
         Load = 2,
@@ -31275,24 +36351,30 @@ namespace Enums.app.TitleSubMenu {
     }
 }
 
-namespace Enums.app.vr.VrCameraQualitySetting {
-    public enum ImageQuality {
+namespace Enums.app.vr.VrCameraQualitySetting
+{
+    public enum ImageQuality
+    {
         None = 0,
         Default = 1,
         DotByDot = 2,
     }
 }
 
-namespace Enums.via.CoreEntry {
-    public enum VrDeviceRequirement {
+namespace Enums.via.CoreEntry
+{
+    public enum VrDeviceRequirement
+    {
         No = 0,
         Maybe = 1,
         Require = 2,
     }
 }
 
-namespace Enums.app.NightmareFrameOutController {
-    public enum Type {
+namespace Enums.app.NightmareFrameOutController
+{
+    public enum Type
+    {
         CraftBenchA = 0,
         CraftBenchB = 1,
         Crusher = 2,
@@ -31301,8 +36383,10 @@ namespace Enums.app.NightmareFrameOutController {
     }
 }
 
-namespace Enums.via.houdini {
-    public enum HoudiniPipelineState {
+namespace Enums.via.houdini
+{
+    public enum HoudiniPipelineState
+    {
         ShapeDefault = 0,
         ShapeWire = 1,
         ShapeShadow = 2,
@@ -31312,15 +36396,19 @@ namespace Enums.via.houdini {
     }
 }
 
-namespace Enums.via.motion.tree.BaseGamePadStickNode {
-    public enum StickKind {
+namespace Enums.via.motion.tree.BaseGamePadStickNode
+{
+    public enum StickKind
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.Em8001.Action.DamageDown {
-    public enum Type {
+namespace Enums.app.Em8001.Action.DamageDown
+{
+    public enum Type
+    {
         INVALID = -1,
         DownF = 0,
         DownB = 1,
@@ -31331,8 +36419,10 @@ namespace Enums.app.Em8001.Action.DamageDown {
     }
 }
 
-namespace Enums.app.VFXLoadZone {
-    public enum Status {
+namespace Enums.app.VFXLoadZone
+{
+    public enum Status
+    {
         None = 0,
         ActiveTrigger = 1,
         Active = 2,
@@ -31341,8 +36431,10 @@ namespace Enums.app.VFXLoadZone {
     }
 }
 
-namespace Em5552Effect {
-    public enum IDAlias {
+namespace Em5552Effect
+{
+    public enum IDAlias
+    {
         BugWait_00 = 0,
         BugWait_01 = 1,
         BugWait_02 = 2,
@@ -31356,8 +36448,10 @@ namespace Em5552Effect {
     }
 }
 
-namespace Enums.via.render {
-    public enum ValidFlag {
+namespace Enums.via.render
+{
+    public enum ValidFlag
+    {
         None = 0,
         Color = 1,
         Alpha = 2,
@@ -31370,8 +36464,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum PixelFormat {
+namespace Enums.via.landscape
+{
+    public enum PixelFormat
+    {
         Unknown = 0,
         R16Unorm = 1,
         R16G16Unorm = 2,
@@ -31379,8 +36475,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.AI.GoalArbitrator {
-    public enum State {
+namespace Enums.app.AI.GoalArbitrator
+{
+    public enum State
+    {
         InActive = 0,
         Active = 1,
         Suspend = 2,
@@ -31388,8 +36486,10 @@ namespace Enums.app.AI.GoalArbitrator {
     }
 }
 
-namespace Enums.app.WwiseContainerApp {
-    public enum Level {
+namespace Enums.app.WwiseContainerApp
+{
+    public enum Level
+    {
         Lv0 = 0,
         Lv1 = 1,
         Lv2 = 2,
@@ -31399,16 +36499,20 @@ namespace Enums.app.WwiseContainerApp {
     }
 }
 
-namespace Enums.app.vr.VrScreenFilter {
-    public enum FilterType {
+namespace Enums.app.vr.VrScreenFilter
+{
+    public enum FilterType
+    {
         Vertical = 0,
         Horizon = 1,
         Overall = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceCaps {
+namespace Enums.via
+{
+    public enum SystemServiceCaps
+    {
         None = 0,
         Language = 1,
         DateFormat = 2,
@@ -31441,15 +36545,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.CardGameManager {
-    public enum HandItemRemoveRequestType {
+namespace Enums.app.CardGameManager
+{
+    public enum HandItemRemoveRequestType
+    {
         RemoveAll = -1,
         RemoveHalf = -2,
     }
 }
 
-namespace Enums.app.Em4200.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.Em4200.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -31468,23 +36576,29 @@ namespace Enums.app.Em4200.Goal {
     }
 }
 
-namespace Enums.app.Em3101 {
-    public enum ThinkOrder {
+namespace Enums.app.Em3101
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Targetting = 1,
     }
 }
 
-namespace Enums.via {
-    public enum SystemServiceNgWordsDetectingResult {
+namespace Enums.via
+{
+    public enum SystemServiceNgWordsDetectingResult
+    {
         OK = 0,
         NG = 1,
         Error = 2,
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum Quality {
+namespace Enums.via.render.RenderConfig
+{
+    public enum Quality
+    {
         LOWEST = 0,
         LOW = 1,
         STANDARD = 2,
@@ -31494,16 +36608,20 @@ namespace Enums.via.render.RenderConfig {
     }
 }
 
-namespace Enums.via.hid.VrTrackerResultData {
-    public enum Validation {
+namespace Enums.via.hid.VrTrackerResultData
+{
+    public enum Validation
+    {
         Active = 0,
         Inactive = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum FieldFlag {
+namespace Enums.via.clr
+{
+    public enum FieldFlag
+    {
         FieldAccessMask = 7,
         PrivateScope = 0,
         Private = 1,
@@ -31528,8 +36646,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraStartResult : uint {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraStartResult : uint
+    {
         OK = 1,
         Started = 1,
         ErrorConfigType = 0x80000001u,
@@ -31537,8 +36657,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.app.fsm.CH8ElevatorCheck {
-    public enum CheckType {
+namespace Enums.app.fsm.CH8ElevatorCheck
+{
+    public enum CheckType
+    {
         UseFloor = 0,
         CurrentFloor = 1,
         SecurityLock = 2,
@@ -31546,8 +36668,10 @@ namespace Enums.app.fsm.CH8ElevatorCheck {
     }
 }
 
-namespace Enums.via.motion.TransitionData {
-    public enum EndType {
+namespace Enums.via.motion.TransitionData
+{
+    public enum EndType
+    {
         None = 0,
         EndOfMotion = 1,
         ExitFrame = 2,
@@ -31555,8 +36679,10 @@ namespace Enums.via.motion.TransitionData {
     }
 }
 
-namespace Enums.app.BirthdayGameData {
-    public enum StageIDEnum {
+namespace Enums.app.BirthdayGameData
+{
+    public enum StageIDEnum
+    {
         Stage1_A = 0,
         Stage1_B = 1,
         Stage2_A = 2,
@@ -31567,8 +36693,10 @@ namespace Enums.app.BirthdayGameData {
     }
 }
 
-namespace Enums.via.physics {
-    public enum TriangleVoronoiId {
+namespace Enums.via.physics
+{
+    public enum TriangleVoronoiId
+    {
         Internal = 0,
         Edge01 = 1,
         Edge20 = 2,
@@ -31580,8 +36708,10 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.render {
-    public enum ParticleLightingResolution {
+namespace Enums.via.render
+{
+    public enum ParticleLightingResolution
+    {
         Best = 0,
         High = 1,
         Medium = 2,
@@ -31590,22 +36720,28 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8900 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8900
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH8Em4450.Action.CH8Suspend {
-    public enum Option {
+namespace Enums.app.CH8Em4450.Action.CH8Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.Em8001.Action.DamageDown {
-    public enum State {
+namespace Enums.app.Em8001.Action.DamageDown
+{
+    public enum State
+    {
         None = 0,
         Start = 1,
         Loop = 2,
@@ -31616,15 +36752,19 @@ namespace Enums.app.Em8001.Action.DamageDown {
     }
 }
 
-namespace Enums.via.navigation.NavigationSurface {
-    public enum PortalOffsetDirectionType {
+namespace Enums.via.navigation.NavigationSurface
+{
+    public enum PortalOffsetDirectionType
+    {
         InOut = 0,
         LeftRight = 1,
     }
 }
 
-namespace Enums.app.CraftSkillData {
-    public enum Type {
+namespace Enums.app.CraftSkillData
+{
+    public enum Type
+    {
         WeaponCustomize = 0,
         PlayerSkill = 1,
         CrusherCustomize = 2,
@@ -31632,8 +36772,10 @@ namespace Enums.app.CraftSkillData {
     }
 }
 
-namespace Enums.via.motion.MotionBindFook {
-    public enum DirtyFlags {
+namespace Enums.via.motion.MotionBindFook
+{
+    public enum DirtyFlags
+    {
         None = 0,
         Motion = 1,
         MotionId = 2,
@@ -31649,8 +36791,10 @@ namespace Enums.via.motion.MotionBindFook {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_74ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_74ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -31666,8 +36810,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GamePadExtraButton {
+namespace Enums.via.hid
+{
+    public enum GamePadExtraButton
+    {
         None = 0,
         TrigTopInHorizontalMode = 1,
         TrigBottomInHorizontalMode = 2,
@@ -31675,8 +36821,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.Triangle {
-    public enum NGLevel {
+namespace Enums.via.Triangle
+{
+    public enum NGLevel
+    {
         None = 0,
         EdgeShort = 1,
         LS = 2,
@@ -31689,8 +36837,10 @@ namespace Enums.via.Triangle {
     }
 }
 
-namespace Enums.app.CutinMenu {
-    public enum Category {
+namespace Enums.app.CutinMenu
+{
+    public enum Category
+    {
         Normal = 0,
         NormalHigh = 1,
         VR = 2,
@@ -31702,8 +36852,10 @@ namespace Enums.app.CutinMenu {
     }
 }
 
-namespace Enums.app.Em5540.Action {
-    public enum ActionNo {
+namespace Enums.app.Em5540.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Attack = 1,
         Damage = 2,
@@ -31711,8 +36863,10 @@ namespace Enums.app.Em5540.Action {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodAchievements {
+namespace Enums.via.network.error
+{
+    public enum MethodAchievements
+    {
         Update = 0,
         Write = 1,
         Read = 2,
@@ -31721,15 +36875,19 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.CH9ShellManager {
-    public enum ForceSleepType {
+namespace Enums.app.CH9ShellManager
+{
+    public enum ForceSleepType
+    {
         ActiveAll = 0,
         OnBrokenFloorOnly = 1,
     }
 }
 
-namespace Enums.app.AAASceneTransitionController {
-    public enum TargetTypeEnum {
+namespace Enums.app.AAASceneTransitionController
+{
+    public enum TargetTypeEnum
+    {
         AmbassadorTrial = 0,
         FF030_Ex = 1,
         AmbassadorTrial_TU = 2,
@@ -31737,8 +36895,10 @@ namespace Enums.app.AAASceneTransitionController {
     }
 }
 
-namespace Enums.via.wwise.WwiseListener {
-    public enum ListenerIndex {
+namespace Enums.via.wwise.WwiseListener
+{
+    public enum ListenerIndex
+    {
         ListenerIndex_0 = 0,
         ListenerIndex_1 = 1,
         ListenerIndex_2 = 2,
@@ -31750,8 +36910,10 @@ namespace Enums.via.wwise.WwiseListener {
     }
 }
 
-namespace Enums.via.hid.VrTrackerResultData {
-    public enum Status {
+namespace Enums.via.hid.VrTrackerResultData
+{
+    public enum Status
+    {
         NotStarted = 0,
         Tracking = 1,
         NotTracking = 2,
@@ -31760,14 +36922,18 @@ namespace Enums.via.hid.VrTrackerResultData {
     }
 }
 
-namespace Enums.app.CH9Em7700.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em7700.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render.Stamp {
-    public enum StampBlendMethod {
+namespace Enums.via.render.Stamp
+{
+    public enum StampBlendMethod
+    {
         Opaque = 0,
         Add = 1,
         AddBlend = 2,
@@ -31778,16 +36944,20 @@ namespace Enums.via.render.Stamp {
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum ShipShakeType {
+namespace Enums.app.PlayerCamera
+{
+    public enum ShipShakeType
+    {
         None = 0,
         Small = 1,
         Large = 2,
     }
 }
 
-namespace Enums.app.Em5400 {
-    public enum ThinkState {
+namespace Enums.app.Em5400
+{
+    public enum ThinkState
+    {
         None = 0,
         BugHole = 1,
         NoLostPlayer = 2,
@@ -31796,31 +36966,39 @@ namespace Enums.app.Em5400 {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum DamageEffectType {
+namespace Enums.app.OptionMenu
+{
+    public enum DamageEffectType
+    {
         Normal = 0,
         Less = 1,
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig {
-    public enum SetupLevel {
+namespace Enums.via.motion.FullBodyIKRig
+{
+    public enum SetupLevel
+    {
         None = 0,
         Normal = 1,
         Resource = 2,
     }
 }
 
-namespace Enums.via.os {
-    public enum FileAttr {
+namespace Enums.via.os
+{
+    public enum FileAttr
+    {
         Read = 0,
         Write = 1,
         ReadWrite = 2,
     }
 }
 
-namespace Enums.app.CH9MoldedActionController.ExtraHatUnit {
-    public enum Type {
+namespace Enums.app.CH9MoldedActionController.ExtraHatUnit
+{
+    public enum Type
+    {
         PartyHat = 0,
         Cap01 = 1,
         Cap02 = 2,
@@ -31833,32 +37011,40 @@ namespace Enums.app.CH9MoldedActionController.ExtraHatUnit {
     }
 }
 
-namespace Enums.via.network.native.NswPresence {
-    public enum Status {
+namespace Enums.via.network.native.NswPresence
+{
+    public enum Status
+    {
         Offline = 0,
         Online = 1,
         NotActivated = 2,
     }
 }
 
-namespace Enums.via.physics.System {
-    public enum SearchCondition {
+namespace Enums.via.physics.System
+{
+    public enum SearchCondition
+    {
         Search_Equal = 0,
         Search_And = 1,
         Search_Or = 2,
     }
 }
 
-namespace Enums.app.AI.AIGrappleBeacon {
-    public enum StatusType {
+namespace Enums.app.AI.AIGrappleBeacon
+{
+    public enum StatusType
+    {
         InActive = 0,
         Active = 1,
         Terminate = 2,
     }
 }
 
-namespace Enums.app.CardGameMaster {
-    public enum Result {
+namespace Enums.app.CardGameMaster
+{
+    public enum Result
+    {
         None = 0,
         Win = 1,
         Lose = 2,
@@ -31866,8 +37052,10 @@ namespace Enums.app.CardGameMaster {
     }
 }
 
-namespace Enums.via.render {
-    public enum DeviceChangeReason {
+namespace Enums.via.render
+{
+    public enum DeviceChangeReason
+    {
         None = 0,
         DisplayMode = 1,
         Adapter = 2,
@@ -31876,8 +37064,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.fsm.FsmUnlockAchievement {
-    public enum WrappedID {
+namespace Enums.app.fsm.FsmUnlockAchievement
+{
+    public enum WrappedID
+    {
         GetTreasureByDetailSearch = 0,
         Progress0 = 1,
         Progress1 = 2,
@@ -31891,14 +37081,18 @@ namespace Enums.app.fsm.FsmUnlockAchievement {
     }
 }
 
-namespace Enums.app.CH8Em4200Message {
-    public enum Tag {
+namespace Enums.app.CH8Em4200Message
+{
+    public enum Tag
+    {
         FirstLiquidBomb = 0,
     }
 }
 
-namespace Enums.via.Triangle {
-    public enum VoronoiId {
+namespace Enums.via.Triangle
+{
+    public enum VoronoiId
+    {
         Internal = 0,
         Edge01 = 1,
         Edge20 = 2,
@@ -31910,22 +37104,28 @@ namespace Enums.via.Triangle {
     }
 }
 
-namespace Enums.app.Em3001.Action.AttackBack {
-    public enum Type {
+namespace Enums.app.Em3001.Action.AttackBack
+{
+    public enum Type
+    {
         SwingB = 0,
         PunchB = 1,
     }
 }
 
-namespace Enums.app.Em8100.Action.SplashAttack {
-    public enum Type {
+namespace Enums.app.Em8100.Action.SplashAttack
+{
+    public enum Type
+    {
         Normal = 0,
         Grab = 1,
     }
 }
 
-namespace Enums.rapidxml {
-    public enum node_type {
+namespace Enums.rapidxml
+{
+    public enum node_type
+    {
         node_document = 0,
         node_element = 1,
         node_data = 2,
@@ -31937,36 +37137,46 @@ namespace Enums.rapidxml {
     }
 }
 
-namespace Enums.app.CH9Em7500.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em7500.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.via.effect.lensflare {
-    public enum ResourceType {
+namespace Enums.via.effect.lensflare
+{
+    public enum ResourceType
+    {
         Handle = 0,
         Stream = 1,
     }
 }
 
-namespace Enums.app.fsm.Sm0113Phone_Exclusive {
-    public enum StepEnum {
+namespace Enums.app.fsm.Sm0113Phone_Exclusive
+{
+    public enum StepEnum
+    {
         CK_Length_Sep = 0,
         CK_Length_Con = 1,
         CK_Time = 2,
     }
 }
 
-namespace Enums.via.render.streaming_detail {
-    public enum StreamingOption {
+namespace Enums.via.render.streaming_detail
+{
+    public enum StreamingOption
+    {
         Protect = 1,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum RayCastCallbackID {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum RayCastCallbackID
+    {
         PartsMask = 255,
         BackLeft = 1,
         BackRight = 2,
@@ -32018,8 +37228,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckMessageState {
-    public enum StateCheckType {
+namespace Enums.app.fsm.CH8CheckMessageState
+{
+    public enum StateCheckType
+    {
         None = 0,
         TimeCount = 1,
         MessageEnd = 2,
@@ -32028,8 +37240,10 @@ namespace Enums.app.fsm.CH8CheckMessageState {
     }
 }
 
-namespace Enums.via.effect.gpgpu.MeshCS.MeshCSResource {
-    public enum MeshComputeShaderType {
+namespace Enums.via.effect.gpgpu.MeshCS.MeshCSResource
+{
+    public enum MeshComputeShaderType
+    {
         InitializeCS = 0,
         ConstructCS = 1,
         ConstructDeformableCS = 2,
@@ -32134,8 +37348,10 @@ namespace Enums.via.effect.gpgpu.MeshCS.MeshCSResource {
     }
 }
 
-namespace Enums.app.InteractEventAction {
-    public enum ProcessType {
+namespace Enums.app.InteractEventAction
+{
+    public enum ProcessType
+    {
         Stop = 0,
         Setup = 1,
         Interp = 2,
@@ -32143,15 +37359,19 @@ namespace Enums.app.InteractEventAction {
     }
 }
 
-namespace Enums.app.BirthdayMainMenu {
-    public enum ScreenTypeEnum {
+namespace Enums.app.BirthdayMainMenu
+{
+    public enum ScreenTypeEnum
+    {
         Title = 0,
         Select = 1,
     }
 }
 
-namespace Enums.app.Em3600Think {
-    public enum Phase {
+namespace Enums.app.Em3600Think
+{
+    public enum Phase
+    {
         Generate = 0,
         Sneak = 1,
         Angry = 2,
@@ -32160,8 +37380,10 @@ namespace Enums.app.Em3600Think {
     }
 }
 
-namespace Enums.app {
-    public enum UpdateOrder {
+namespace Enums.app
+{
+    public enum UpdateOrder
+    {
         Default = 0,
         MotionManager = 1,
         FsmStateTracker = 2,
@@ -32368,8 +37590,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum DLCProgressType {
+namespace Enums.app.Richpresence
+{
+    public enum DLCProgressType
+    {
         Bedroom = 0,
         Nightmare = 1,
         CrazyHouse = 2,
@@ -32382,8 +37606,10 @@ namespace Enums.app.Richpresence {
     }
 }
 
-namespace Enums.app.IKBase {
-    public enum EffectorRotation {
+namespace Enums.app.IKBase
+{
+    public enum EffectorRotation
+    {
         Default = 0,
         KeepWorldRotation = 0,
         KeepLocalRotation = 1,
@@ -32391,8 +37617,10 @@ namespace Enums.app.IKBase {
     }
 }
 
-namespace Enums.app.Em3600.Action.Suspend {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Suspend
+{
+    public enum Type
+    {
         FirePlace_1F = 0,
         Floor_1F = 1,
         SmallRoomCeiling_1F = 2,
@@ -32409,8 +37637,10 @@ namespace Enums.app.Em3600.Action.Suspend {
     }
 }
 
-namespace Enums.app.EnemyThinkBase {
-    public enum ReasonType {
+namespace Enums.app.EnemyThinkBase
+{
+    public enum ReasonType
+    {
         Outer = 0,
         SensedVision = 1,
         SensedHearing = 2,
@@ -32420,8 +37650,10 @@ namespace Enums.app.EnemyThinkBase {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000ActionStatus {
-    public enum Direction {
+namespace Enums.app.Em8000.Action.Em8000ActionStatus
+{
+    public enum Direction
+    {
         None = 0,
         Front = 1,
         Back = 2,
@@ -32430,15 +37662,19 @@ namespace Enums.app.Em8000.Action.Em8000ActionStatus {
     }
 }
 
-namespace Enums.via.hid {
-    public enum VirtualDeviceOwnerType {
+namespace Enums.via.hid
+{
+    public enum VirtualDeviceOwnerType
+    {
         VirtualInput = 1,
         RemoteInput = 2,
     }
 }
 
-namespace Enums.app.dev1lab.AnalysisLogUtil {
-    public enum SupportEnvironment {
+namespace Enums.app.dev1lab.AnalysisLogUtil
+{
+    public enum SupportEnvironment
+    {
         Invalid = 0,
         PS4 = 1,
         PS5 = 2,
@@ -32448,16 +37684,20 @@ namespace Enums.app.dev1lab.AnalysisLogUtil {
     }
 }
 
-namespace Enums.via.render.FakeLensflare {
-    public enum ResolutionLevel {
+namespace Enums.via.render.FakeLensflare
+{
+    public enum ResolutionLevel
+    {
         Full = 0,
         Half = 1,
         Quarter = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum TypingCommand {
+namespace Enums.via.gui
+{
+    public enum TypingCommand
+    {
         Resume = 0,
         Pause = 1,
         End = 2,
@@ -32465,8 +37705,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.ReticleGUI {
-    public enum DisplayState {
+namespace Enums.app.ReticleGUI
+{
+    public enum DisplayState
+    {
         NoHold = 0,
         CasualHold = 1,
         Hold = 2,
@@ -32475,8 +37717,10 @@ namespace Enums.app.ReticleGUI {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM7 {
-    public enum CHP8_7 {
+namespace Enums.app.CH8StateSwitchM7
+{
+    public enum CHP8_7
+    {
         SILENCE = 0,
         CHP8_RUSH_START = 1,
         CHP8_BGM_COUNTDOWN = 2,
@@ -32484,8 +37728,10 @@ namespace Enums.app.CH8StateSwitchM7 {
     }
 }
 
-namespace Enums.via.geometry {
-    public enum BrushPrimitive {
+namespace Enums.via.geometry
+{
+    public enum BrushPrimitive
+    {
         Box = 0,
         Frustum = 1,
         Cylinder = 2,
@@ -32501,8 +37747,10 @@ namespace Enums.via.geometry {
     }
 }
 
-namespace Enums.via.vr {
-    public enum VrSdkType {
+namespace Enums.via.vr
+{
+    public enum VrSdkType
+    {
         None = 0,
         PSVR = 1,
         OpenVR = 2,
@@ -32510,8 +37758,10 @@ namespace Enums.via.vr {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum CsPriority {
+namespace Enums.via.render.detail
+{
+    public enum CsPriority
+    {
         CSUpdate_0 = 0,
         CSUpdate_1 = 256,
         CSUpdate_2 = 512,
@@ -32519,8 +37769,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputDevice {
+namespace Enums.via.audiorender
+{
+    public enum OutputDevice
+    {
         None = 0,
         HDMI = 1,
         Speaker = 2,
@@ -32530,22 +37782,28 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em8100Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8100Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Restart = 1,
         ForceBattleStart = 2,
     }
 }
 
-namespace Enums.app.GenomeCodexGUI {
-    public enum Mode {
+namespace Enums.app.GenomeCodexGUI
+{
+    public enum Mode
+    {
         HP = 0,
     }
 }
 
-namespace Enums.via.os {
-    public enum ThreadState {
+namespace Enums.via.os
+{
+    public enum ThreadState
+    {
         Ready = 0,
         Executing = 1,
         Running = 2,
@@ -32553,15 +37811,19 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.WaveTimerUIAsset {
-    public enum MainPanelState {
+namespace Enums.app.WaveTimerUIAsset
+{
+    public enum MainPanelState
+    {
         DEFAULT = 0,
         FADE_OUT = 1,
     }
 }
 
-namespace Enums.via.navigation.PathObject {
-    public enum ObjectAttribute {
+namespace Enums.via.navigation.PathObject
+{
+    public enum ObjectAttribute
+    {
         GlobalPortalPosition = 0,
         PossibleNearEnd = 1,
         FixNodeCenter = 2,
@@ -32572,16 +37834,20 @@ namespace Enums.via.navigation.PathObject {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8Damage {
-    public enum Type {
+namespace Enums.app.CH8Em4100.Action.CH8Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         Air = 2,
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum SaveSlot {
+namespace Enums.app.CH8SaveManager
+{
+    public enum SaveSlot
+    {
         SaveSlotMax = -80,
         SaveSlotMin = -86,
         SystemData = -80,
@@ -32594,8 +37860,10 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.via.eq.Function {
-    public enum Type {
+namespace Enums.via.eq.Function
+{
+    public enum Type
+    {
         Sin = 0,
         Cos = 1,
         ASin = 2,
@@ -32620,8 +37888,10 @@ namespace Enums.via.eq.Function {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckDoorState {
-    public enum CheckType {
+namespace Enums.app.fsm.CH8CheckDoorState
+{
+    public enum CheckType
+    {
         Locked = 0,
         ManualClose = 1,
         ManualClosed = 2,
@@ -32630,16 +37900,20 @@ namespace Enums.app.fsm.CH8CheckDoorState {
     }
 }
 
-namespace Enums.via.render {
-    public enum ShadowFilter {
+namespace Enums.via.render
+{
+    public enum ShadowFilter
+    {
         Custom = 0,
         Fast = 1,
         Default = 2,
     }
 }
 
-namespace Enums.via.physics {
-    public enum ForceFillMode {
+namespace Enums.via.physics
+{
+    public enum ForceFillMode
+    {
         None = 0,
         Solid = 1,
         WireFrame = 2,
@@ -32647,22 +37921,28 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum FootLockMode {
+namespace Enums.via.motion.IkLeg
+{
+    public enum FootLockMode
+    {
         Auto = 0,
         SemiAuto = 1,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum WallLimitCtrl {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum WallLimitCtrl
+    {
         Default = 0,
         Normal = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum ObfuscationLevel {
+namespace Enums.via.os
+{
+    public enum ObfuscationLevel
+    {
         Low = 0,
         Normal = 1,
         High = 2,
@@ -32670,16 +37950,20 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Suspend {
-    public enum Option {
+namespace Enums.app.CH8Em4200.Action.CH8Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.app.CH8Em4500.Goal {
-    public enum CH8EvaluatorID {
+namespace Enums.app.CH8Em4500.Goal
+{
+    public enum CH8EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -32703,8 +37987,10 @@ namespace Enums.app.CH8Em4500.Goal {
     }
 }
 
-namespace Enums.app.Em3001.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3001.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         IdleBattle = 1,
         Rest = 2,
@@ -32727,8 +38013,10 @@ namespace Enums.app.Em3001.Action {
     }
 }
 
-namespace Enums.app.Em5400.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em5400.Action.Attack
+{
+    public enum Type
+    {
         Stab = 0,
         RearStab = 1,
         GroundStab = 2,
@@ -32736,8 +38024,10 @@ namespace Enums.app.Em5400.Action.Attack {
     }
 }
 
-namespace Enums.app.CH9Em7500.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em7500.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         UnDiscovery = 2,
@@ -32764,51 +38054,65 @@ namespace Enums.app.CH9Em7500.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.render.CaptureToTexture {
-    public enum ReplayCapturedTarget {
+namespace Enums.via.render.CaptureToTexture
+{
+    public enum ReplayCapturedTarget
+    {
         Default = 0,
         DepthOnly = 1,
         ColorOnly = 2,
     }
 }
 
-namespace Enums.via.landscape.GroundUtility {
-    public enum TextureBlendType {
+namespace Enums.via.landscape.GroundUtility
+{
+    public enum TextureBlendType
+    {
         Add = 0,
         Subtract = 1,
         Multiply = 2,
     }
 }
 
-namespace Enums.app.fsm.VideoDisp {
-    public enum SetState {
+namespace Enums.app.fsm.VideoDisp
+{
+    public enum SetState
+    {
         Play = 0,
         Stop = 1,
         Clear = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8PlayerRequestCommandForce {
-    public enum CommandType {
+namespace Enums.app.fsm.CH8PlayerRequestCommandForce
+{
+    public enum CommandType
+    {
         Guard = 0,
     }
 }
 
-namespace Enums.app.Em3002.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Attack
+{
+    public enum Type
+    {
         PunchL = 0,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Idle {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         ForLostTarget = 1,
     }
 }
 
-namespace Enums.app.Em8100.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8100.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         IdleGrab = 1,
         Walk = 2,
@@ -32826,15 +38130,19 @@ namespace Enums.app.Em8100.Action {
     }
 }
 
-namespace Enums.app.CH8Achievement {
-    public enum AchievementIndex {
+namespace Enums.app.CH8Achievement
+{
+    public enum AchievementIndex
+    {
         Achievement_0 = 57,
         Achievement_1 = 58,
     }
 }
 
-namespace Enums.app.CraftBenchUIAsset {
-    public enum SlotSizeState {
+namespace Enums.app.CraftBenchUIAsset
+{
+    public enum SlotSizeState
+    {
         DEFAULT = 0,
         SIZE1 = 1,
         SIZE2 = 2,
@@ -32842,23 +38150,29 @@ namespace Enums.app.CraftBenchUIAsset {
     }
 }
 
-namespace Enums.app {
-    public enum SaveDataType {
+namespace Enums.app
+{
+    public enum SaveDataType
+    {
         Optional = 0,
         Auto = 1,
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Dead {
-    public enum Type {
+namespace Enums.app.CH9Em7700.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         ForceSpin = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.MeshCS.MeshTrailCSResource {
-    public enum MeshTrailComputeShaderType {
+namespace Enums.via.effect.gpgpu.MeshCS.MeshTrailCSResource
+{
+    public enum MeshTrailComputeShaderType
+    {
         MeshComputeShaderType_InitializeUV1CS = 100,
         MeshComputeShaderType_InitializeDeformableUV1CS = 101,
         MeshComputeShaderType_InitializeUV2CS = 102,
@@ -32873,23 +38187,29 @@ namespace Enums.via.effect.gpgpu.MeshCS.MeshTrailCSResource {
     }
 }
 
-namespace Enums.via.gui.Effect2D {
-    public enum ExternType {
+namespace Enums.via.gui.Effect2D
+{
+    public enum ExternType
+    {
         Float = 0,
         Color = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ListScrollDirection {
+namespace Enums.via.gui
+{
+    public enum ListScrollDirection
+    {
         None = 0,
         Prev = 1,
         Next = 2,
     }
 }
 
-namespace Enums.app.EPVExpertFootLandingData {
-    public enum FootStepType {
+namespace Enums.app.EPVExpertFootLandingData
+{
+    public enum FootStepType
+    {
         Contact = 0,
         Lift = 1,
         Step = 2,
@@ -32897,8 +38217,10 @@ namespace Enums.app.EPVExpertFootLandingData {
     }
 }
 
-namespace Enums.app.CardGameObjectElectricMachine {
-    public enum SeType {
+namespace Enums.app.CardGameObjectElectricMachine
+{
+    public enum SeType
+    {
         MachineDown = 0,
         MachineUp = 1,
         BetFlipStart = 2,
@@ -32909,16 +38231,20 @@ namespace Enums.app.CardGameObjectElectricMachine {
     }
 }
 
-namespace Enums.app.AdjustBrightnessGUI {
-    public enum ModeDef {
+namespace Enums.app.AdjustBrightnessGUI
+{
+    public enum ModeDef
+    {
         BootFlow = 0,
         Normal = 1,
         HDRBootFlow2nd = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum AudioItem {
+namespace Enums.app.OptionMenu
+{
+    public enum AudioItem
+    {
         Volume = 0,
         Volume_BGM = 1,
         Volume_SE = 2,
@@ -32930,21 +38256,27 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.render.UIColorCorrect {
-    public enum SourceType {
+namespace Enums.via.render.UIColorCorrect
+{
+    public enum SourceType
+    {
         LDRPostProcess = 0,
         UIPostProcess = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumI8 {
+namespace Enums.via.clr
+{
+    public enum EnumI8
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.app.AI.AILookAtAgent {
-    public enum PositionType {
+namespace Enums.app.AI.AILookAtAgent
+{
+    public enum PositionType
+    {
         CurrentAgentPos = 0,
         QueryAgentPos = 1,
         QueryNodePos = 2,
@@ -32952,15 +38284,19 @@ namespace Enums.app.AI.AILookAtAgent {
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig.LimbChain {
-    public enum EndEffectorMode {
+namespace Enums.via.motion.FullBodyIKRig.LimbChain
+{
+    public enum EndEffectorMode
+    {
         None = 0,
         Set = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum MaskType {
+namespace Enums.via.gui
+{
+    public enum MaskType
+    {
         Target = 0,
         NonTarget = 1,
         Mask = 2,
@@ -32969,8 +38305,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Em5510Effect {
-    public enum IDAlias {
+namespace Em5510Effect
+{
+    public enum IDAlias
+    {
         BugGenerate_00 = 0,
         BugGenerate_01 = 1,
         BugGenerate_02 = 2,
@@ -32986,15 +38324,19 @@ namespace Em5510Effect {
     }
 }
 
-namespace Enums.app.CH8Em4100.CH8ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4100.CH8ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapWindowState {
+namespace Enums.app.MapManager
+{
+    public enum MapWindowState
+    {
         Disable = 0,
         MapControl = 1,
         LegendViewer = 2,
@@ -33003,8 +38345,10 @@ namespace Enums.app.MapManager {
     }
 }
 
-namespace Enums.app.CH8StateSwitchBtlMolded {
-    public enum CHP8_BTL_MOLDED {
+namespace Enums.app.CH8StateSwitchBtlMolded
+{
+    public enum CHP8_BTL_MOLDED
+    {
         SILENCE = 0,
         ENCOUNT = 1,
         BATTLE = 2,
@@ -33013,8 +38357,10 @@ namespace Enums.app.CH8StateSwitchBtlMolded {
     }
 }
 
-namespace Enums.app.Em3102 {
-    public enum ThinkMode {
+namespace Enums.app.Em3102
+{
+    public enum ThinkMode
+    {
         None = 0,
         Patrol = 1,
         Search = 2,
@@ -33023,15 +38369,19 @@ namespace Enums.app.Em3102 {
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Idle {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Idle
+{
+    public enum Type
+    {
         Normal = 0,
         Homing = 1,
     }
 }
 
-namespace Enums.via.navigation.map.NodeObject {
-    public enum NodeStatus {
+namespace Enums.via.navigation.map.NodeObject
+{
+    public enum NodeStatus
+    {
         Enabled = 0,
         DivideReserved = 1,
         Dividing = 2,
@@ -33044,14 +38394,18 @@ namespace Enums.via.navigation.map.NodeObject {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum EffectBaseParameter {
+namespace Enums.via.audiorender
+{
+    public enum EffectBaseParameter
+    {
         Bypass = 0,
     }
 }
 
-namespace Enums.app.EnemySpawnInfo {
-    public enum SuspendType {
+namespace Enums.app.EnemySpawnInfo
+{
+    public enum SuspendType
+    {
         None = 0,
         Specified = 1,
         Self = 2,
@@ -33060,8 +38414,10 @@ namespace Enums.app.EnemySpawnInfo {
     }
 }
 
-namespace Enums.app.Em8000FirstStamp {
-    public enum Routine {
+namespace Enums.app.Em8000FirstStamp
+{
+    public enum Routine
+    {
         Cleanup = 0,
         Dirty = 1,
         Wait = 2,
@@ -33069,8 +38425,10 @@ namespace Enums.app.Em8000FirstStamp {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum WeaponActionType {
+namespace Enums.app.PlayerDefine
+{
+    public enum WeaponActionType
+    {
         Hands = 0,
         Melee = 1,
         Gun = 2,
@@ -33080,8 +38438,10 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.app.NowLoadingMovieManager {
-    public enum PlayState {
+namespace Enums.app.NowLoadingMovieManager
+{
+    public enum PlayState
+    {
         Stop = 0,
         Standby = 1,
         Show = 2,
@@ -33089,15 +38449,19 @@ namespace Enums.app.NowLoadingMovieManager {
     }
 }
 
-namespace Enums.app.cutin.CutinProc3Scroll {
-    public enum MouseDrag {
+namespace Enums.app.cutin.CutinProc3Scroll
+{
+    public enum MouseDrag
+    {
         NormalMode = 0,
         DragMode = 1,
     }
 }
 
-namespace Enums.app.TipsVariableDefine {
-    public enum Tag {
+namespace Enums.app.TipsVariableDefine
+{
+    public enum Tag
+    {
         Tips_SlowMolded = 0,
         Tips_QuickMolded = 1,
         Tips_FatMolded = 2,
@@ -33125,8 +38489,10 @@ namespace Enums.app.TipsVariableDefine {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckFront {
-    public enum TargetPontIndex {
+namespace Enums.app.fsm.CH8CheckFront
+{
+    public enum TargetPontIndex
+    {
         root = 0,
         Head = 1,
         Chest = 2,
@@ -33134,8 +38500,10 @@ namespace Enums.app.fsm.CH8CheckFront {
     }
 }
 
-namespace Enums.app.Em3001.Action.StepIn {
-    public enum Type {
+namespace Enums.app.Em3001.Action.StepIn
+{
+    public enum Type
+    {
         Straight = 0,
         Side = 1,
         Grab = 2,
@@ -33145,8 +38513,10 @@ namespace Enums.app.Em3001.Action.StepIn {
     }
 }
 
-namespace Enums.app.LastWaveUIAsset.JunkpartsAnimationPanel {
-    public enum PanelState {
+namespace Enums.app.LastWaveUIAsset.JunkpartsAnimationPanel
+{
+    public enum PanelState
+    {
         DEFAULT = 0,
         DISABLE = 1,
         FADE_IN = 2,
@@ -33154,23 +38524,29 @@ namespace Enums.app.LastWaveUIAsset.JunkpartsAnimationPanel {
     }
 }
 
-namespace Enums.app.Em3600.Action.Jump {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Jump
+{
+    public enum Type
+    {
         JumpS = 0,
         JumpM = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum MouseSelectType {
+namespace Enums.via.gui
+{
+    public enum MouseSelectType
+    {
         None = 0,
         MouseOver = 1,
         LeftClick = 2,
     }
 }
 
-namespace Enums.app.Em3001.Action {
-    public enum ActionZero {
+namespace Enums.app.Em3001.Action
+{
+    public enum ActionZero
+    {
         StepBack = 0,
         GrappleHeadButt = 1,
         GrappleKnee = 2,
@@ -33179,8 +38555,10 @@ namespace Enums.app.Em3001.Action {
     }
 }
 
-namespace Enums.app.fsm.ElevatorCheck {
-    public enum CheckType {
+namespace Enums.app.fsm.ElevatorCheck
+{
+    public enum CheckType
+    {
         UseFloor = 0,
         CurrentFloor = 1,
         SecurityLock = 2,
@@ -33188,8 +38566,10 @@ namespace Enums.app.fsm.ElevatorCheck {
     }
 }
 
-namespace Enums.via {
-    public enum FsmCategory {
+namespace Enums.via
+{
+    public enum FsmCategory
+    {
         None = 0,
         Fsm = 1,
         Mot = 2,
@@ -33199,15 +38579,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.vr.VrSettingData.Camera {
-    public enum CameraPositionType {
+namespace Enums.app.vr.VrSettingData.Camera
+{
+    public enum CameraPositionType
+    {
         Original = 0,
         UseXZRoot = 1,
     }
 }
 
-namespace Enums.app.EPVExpertCharacterBloodData {
-    public enum ZDirectionType {
+namespace Enums.app.EPVExpertCharacterBloodData
+{
+    public enum ZDirectionType
+    {
         CollisionNormal = 0,
         InverseCollisionNormal = 1,
         AttackDirection = 2,
@@ -33216,30 +38600,38 @@ namespace Enums.app.EPVExpertCharacterBloodData {
     }
 }
 
-namespace Enums.app.AI {
-    public enum CommonThinkState {
+namespace Enums.app.AI
+{
+    public enum CommonThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.fsm.MotionPlay {
-    public enum AdjustStartFrameTypeEnum {
+namespace Enums.app.fsm.MotionPlay
+{
+    public enum AdjustStartFrameTypeEnum
+    {
         None = 0,
         NormalizeTime = 1,
         ReverseNormalizeTime = 2,
     }
 }
 
-namespace Enums.via.gui.BlurManager {
-    public enum ParentRenderLayerType {
+namespace Enums.via.gui.BlurManager
+{
+    public enum ParentRenderLayerType
+    {
         None = 0,
         Scene = 1,
         Composite = 2,
     }
 }
 
-namespace Enums.via.navigation.FailReport {
-    public enum FailAttribute {
+namespace Enums.via.navigation.FailReport
+{
+    public enum FailAttribute
+    {
         DestPosNotSpecified = 0,
         StartNodeNotFound = 1,
         DestNodeNotFound = 2,
@@ -33249,8 +38641,10 @@ namespace Enums.via.navigation.FailReport {
     }
 }
 
-namespace Enums.via.render {
-    public enum DebugSeverity {
+namespace Enums.via.render
+{
+    public enum DebugSeverity
+    {
         None = 0,
         Level0 = 1,
         Level1 = 2,
@@ -33258,8 +38652,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8100.Goal {
-    public enum GoalId {
+namespace Enums.app.Em8100.Goal
+{
+    public enum GoalId
+    {
         Idle = 0,
         Discovery = 1,
         UnDiscovery = 2,
@@ -33268,8 +38664,10 @@ namespace Enums.app.Em8100.Goal {
     }
 }
 
-namespace Enums.app.Em8940ActionController {
-    public enum LayerIndex {
+namespace Enums.app.Em8940ActionController
+{
+    public enum LayerIndex
+    {
         Body = 0,
         T1 = 1,
         T2 = 2,
@@ -33284,22 +38682,28 @@ namespace Enums.app.Em8940ActionController {
     }
 }
 
-namespace Enums.via.motion.IkMotionData {
-    public enum IkType {
+namespace Enums.via.motion.IkMotionData
+{
+    public enum IkType
+    {
         IkType_2Bone = 0,
         IkType_3BoneTypeC = 1,
     }
 }
 
-namespace Enums.app.Em5510.Action.Generate {
-    public enum Type {
+namespace Enums.app.Em5510.Action.Generate
+{
+    public enum Type
+    {
         Em5400 = 0,
         Em5520 = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum CodecType {
+namespace Enums.via.audiorender
+{
+    public enum CodecType
+    {
         None = 0,
         Wave = 1,
         Vorbis = 2,
@@ -33309,15 +38713,19 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapOutput {
-    public enum CalculateMode {
+namespace Enums.via.motion.SubExJointRemapOutput
+{
+    public enum CalculateMode
+    {
         Sum = 0,
         Average = 1,
     }
 }
 
-namespace Enums.app.VFXEmitZoneGroup {
-    public enum Status {
+namespace Enums.app.VFXEmitZoneGroup
+{
+    public enum Status
+    {
         None = 0,
         EmitOffTrigger = 1,
         EmitOnTrigger = 2,
@@ -33325,15 +38733,19 @@ namespace Enums.app.VFXEmitZoneGroup {
     }
 }
 
-namespace Enums.app.NightmareFrameOutIconData {
-    public enum Type {
+namespace Enums.app.NightmareFrameOutIconData
+{
+    public enum Type
+    {
         CraftBench = 0,
         Crusher = 1,
     }
 }
 
-namespace Enums.app.MotionDelegate {
-    public enum Priority {
+namespace Enums.app.MotionDelegate
+{
+    public enum Priority
+    {
         High = 0,
         Middle = 1,
         Low = 2,
@@ -33341,20 +38753,26 @@ namespace Enums.app.MotionDelegate {
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumU8 {
+namespace Enums.via.clr
+{
+    public enum EnumU8
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.app.Em3102.Em3102Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3102.Em3102Order.Appear
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.motion.FullBodyIKRig.BodyLoop {
-    public enum JointSide {
+namespace Enums.via.motion.FullBodyIKRig.BodyLoop
+{
+    public enum JointSide
+    {
         Left = 0,
         Right = 1,
         Root = 2,
@@ -33362,15 +38780,19 @@ namespace Enums.via.motion.FullBodyIKRig.BodyLoop {
     }
 }
 
-namespace Enums.app.Em8001.Em8001WwiseStateList {
-    public enum PropertyStealth {
+namespace Enums.app.Em8001.Em8001WwiseStateList
+{
+    public enum PropertyStealth
+    {
         UnDiscovery = 0,
         Discovery = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum VelocityType {
+namespace Enums.via.effect.detail
+{
+    public enum VelocityType
+    {
         Direction = 0,
         Normal = 1,
         Radial = 2,
@@ -33379,8 +38801,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Em4000Effect {
-    public enum IDAlias {
+namespace Em4000Effect
+{
+    public enum IDAlias
+    {
         LostHead = 0,
         LostLeftArm = 1,
         LostRightArm = 2,
@@ -33389,8 +38813,10 @@ namespace Em4000Effect {
     }
 }
 
-namespace Enums.app.CH9TutorialManager {
-    public enum TutorialType {
+namespace Enums.app.CH9TutorialManager
+{
+    public enum TutorialType
+    {
         NoWeapon_1 = 0,
         NoWeapon_2 = 1,
         Harpoon = 2,
@@ -33416,24 +38842,30 @@ namespace Enums.app.CH9TutorialManager {
     }
 }
 
-namespace Enums.via.landscape.path {
-    public enum InterpolateType {
+namespace Enums.via.landscape.path
+{
+    public enum InterpolateType
+    {
         Bezier = 0,
         Liner = 1,
         Spline = 2,
     }
 }
 
-namespace Enums.app.Em8100 {
-    public enum ThinkState {
+namespace Enums.app.Em8100
+{
+    public enum ThinkState
+    {
         None = 0,
         Idle = 1,
         Battle = 2,
     }
 }
 
-namespace Enums.via.uds {
-    public enum UdsEventState {
+namespace Enums.via.uds
+{
+    public enum UdsEventState
+    {
         Initial = 0,
         Created = 1,
         Posting = 2,
@@ -33442,8 +38874,10 @@ namespace Enums.via.uds {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum InvalidButtonFlag {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum InvalidButtonFlag
+    {
         None = 0,
         AnalogStickL = 2,
         AnalogStickR = 4,
@@ -33452,38 +38886,48 @@ namespace Enums.via.hid.virtualKeyboard.nsw {
     }
 }
 
-namespace Enums.app.Em4200.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.CH8Em4100ActionController {
-    public enum MoveType {
+namespace Enums.app.CH8Em4100ActionController
+{
+    public enum MoveType
+    {
         Default = 0,
         ForceSolo = 1,
         ForceAround = 2,
     }
 }
 
-namespace Enums.via.attribute.RemotePropertyAttribute {
-    public enum SyncMode {
+namespace Enums.via.attribute.RemotePropertyAttribute
+{
+    public enum SyncMode
+    {
         Copy = 0,
         Kill = 1,
         Transaction = 2,
     }
 }
 
-namespace Enums.via.render.Atmosphere {
-    public enum DebugViewTextureIndex {
+namespace Enums.via.render.Atmosphere
+{
+    public enum DebugViewTextureIndex
+    {
         Current = 0,
         Next = 1,
     }
 }
 
-namespace Enums.app.Em2000.Goal {
-    public enum Battle4State {
+namespace Enums.app.Em2000.Goal
+{
+    public enum Battle4State
+    {
         FirstFlow = 0,
         SecondFlow = 1,
         ThirdFlow = 2,
@@ -33491,52 +38935,66 @@ namespace Enums.app.Em2000.Goal {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum DownsamplerType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum DownsamplerType
+    {
         Default = 0,
         FidelityFXSPD = 1,
     }
 }
 
-namespace Enums.app.PauseMenu {
-    public enum RestratStateEnum {
+namespace Enums.app.PauseMenu
+{
+    public enum RestratStateEnum
+    {
         SelectWait = 0,
         StartWait = 1,
         LoadWait = 2,
     }
 }
 
-namespace Enums.app.InventoryMenu.CursorParam {
-    public enum ModeDef {
+namespace Enums.app.InventoryMenu.CursorParam
+{
+    public enum ModeDef
+    {
         ItemSlotOnly = 0,
         ItemBoxMode = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.AttackToGrapple {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.AttackToGrapple
+{
+    public enum Type
+    {
         None = 0,
         CommonGrab = 1,
         CommonGrabSp = 2,
     }
 }
 
-namespace Enums.via.fsm.action.Trace {
-    public enum TraceType {
+namespace Enums.via.fsm.action.Trace
+{
+    public enum TraceType
+    {
         Info = 0,
         Warning = 1,
         Error = 2,
     }
 }
 
-namespace Enums.via.motion.SubExJointRemapOutput {
-    public enum JointLimitFlags {
+namespace Enums.via.motion.SubExJointRemapOutput
+{
+    public enum JointLimitFlags
+    {
         BasePose = 1,
     }
 }
 
-namespace Enums.via.attribute {
-    public enum MemorySizeUnit {
+namespace Enums.via.attribute
+{
+    public enum MemorySizeUnit
+    {
         Byte = 0,
         KiB = 1,
         MiB = 2,
@@ -33544,8 +39002,10 @@ namespace Enums.via.attribute {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraAttr : uint {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraAttr : uint
+    {
         Ignore = 0xffffffffu,
         AecAgcEnable = 0,
         AecAgcDisable = 1,
@@ -33558,16 +39018,20 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum InputFormMode {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum InputFormMode
+    {
         OneLine = 0,
         MultiLine = 1,
         Separate = 2,
     }
 }
 
-namespace Enums.app.HIDManager {
-    public enum UserType {
+namespace Enums.app.HIDManager
+{
+    public enum UserType
+    {
         User0 = 0,
         User1 = 1,
         Merged = 2,
@@ -33577,38 +39041,48 @@ namespace Enums.app.HIDManager {
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum StadiaStatsID {
+namespace Enums.app.Achievement
+{
+    public enum StadiaStatsID
+    {
         RestartCount = 1,
         OpenItemBoxCount = 2,
         UsedCureCount = 3,
     }
 }
 
-namespace Enums.app.Em8900Think {
-    public enum MessageType {
+namespace Enums.app.Em8900Think
+{
+    public enum MessageType
+    {
         Move = 0,
         Damage = 1,
         DeathAttack = 2,
     }
 }
 
-namespace Enums.app.Gunturret {
-    public enum LampState {
+namespace Enums.app.Gunturret
+{
+    public enum LampState
+    {
         Sleep = 0,
         Searching = 1,
         Detected = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum BufferexSrvFlag {
+namespace Enums.via.render
+{
+    public enum BufferexSrvFlag
+    {
         Raw = 1,
     }
 }
 
-namespace Enums.app.PlayerHandTouch {
-    public enum State {
+namespace Enums.app.PlayerHandTouch
+{
+    public enum State
+    {
         Search = 0,
         Action = 1,
         Attach = 2,
@@ -33618,14 +39092,18 @@ namespace Enums.app.PlayerHandTouch {
     }
 }
 
-namespace Enums.app.Em4100.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em4100.Action.Grapple
+{
+    public enum Type
+    {
         Thrust = 0,
     }
 }
 
-namespace Enums.app.CH8Em4200Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH8Em4200Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -33635,16 +39113,20 @@ namespace Enums.app.CH8Em4200Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.app.Chain.WindParameter {
-    public enum Priority {
+namespace Enums.app.Chain.WindParameter
+{
+    public enum Priority
+    {
         Low = 0,
         Normal = 1,
         High = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum StochasticTransparentResolution {
+namespace Enums.via.render
+{
+    public enum StochasticTransparentResolution
+    {
         Best = 0,
         High = 1,
         Medium = 2,
@@ -33652,23 +39134,29 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em5540 {
-    public enum ThinkOrder {
+namespace Enums.app.Em5540
+{
+    public enum ThinkOrder
+    {
         None = 0,
         Dead = 1,
         Revive = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Kneel {
-    public enum RequestType {
+namespace Enums.app.CH8Em4400.Action.CH8Kneel
+{
+    public enum RequestType
+    {
         Normal = 0,
         Force = 1,
     }
 }
 
-namespace Enums.via.timeline {
-    public enum BindType {
+namespace Enums.via.timeline
+{
+    public enum BindType
+    {
         Children = 0,
         Scene = 1,
         Fixed = 2,
@@ -33676,8 +39164,10 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.app.Em4100.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.Em4100.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Wall1 = 1,
         NoUse_Wall2 = 2,
@@ -33696,29 +39186,37 @@ namespace Enums.app.Em4100.ThinkAppearSet {
     }
 }
 
-namespace Enums.via.motion.RetargetRig {
-    public enum CalcAxis {
+namespace Enums.via.motion.RetargetRig
+{
+    public enum CalcAxis
+    {
         BaseRoot = 0,
         BaseFrontDirection = 1,
     }
 }
 
-namespace Enums.app.CH8HandgunBulletSound {
-    public enum CHP8_HandgunBullet {
+namespace Enums.app.CH8HandgunBulletSound
+{
+    public enum CHP8_HandgunBullet
+    {
         Normal = 1,
         Strong = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ListInputDirection {
+namespace Enums.via.gui
+{
+    public enum ListInputDirection
+    {
         Prev = 0,
         Next = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2Data {
-    public enum Flags {
+namespace Enums.via.motion.IkLeg2Data
+{
+    public enum Flags
+    {
         EnableGroundAdjust = 1,
         EnableRaycastSkipByDistance = 2,
         EnableRaycastFromVirtualGround = 4,
@@ -33728,8 +39226,10 @@ namespace Enums.via.motion.IkLeg2Data {
     }
 }
 
-namespace Enums.app.CarInGarage.HijackedByEnemy {
-    public enum Routine {
+namespace Enums.app.CarInGarage.HijackedByEnemy
+{
+    public enum Routine
+    {
         FirstMove = 0,
         TurnForPrepare = 1,
         BreakShelf = 2,
@@ -33741,8 +39241,10 @@ namespace Enums.app.CarInGarage.HijackedByEnemy {
     }
 }
 
-namespace Enums.app.AI.UseDoorInfo {
-    public enum useDoorStatus {
+namespace Enums.app.AI.UseDoorInfo
+{
+    public enum useDoorStatus
+    {
         None = 0,
         Close = 1,
         FrontHalfOpen = 2,
@@ -33752,8 +39254,10 @@ namespace Enums.app.AI.UseDoorInfo {
     }
 }
 
-namespace Enums.via.fsm {
-    public enum RestartType {
+namespace Enums.via.fsm
+{
+    public enum RestartType
+    {
         ExecuteOn = 0,
         ExecuteOff = 1,
         UseResource = 2,
@@ -33761,8 +39265,10 @@ namespace Enums.via.fsm {
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum EventPriority {
+namespace Enums.via.network.wrangler
+{
+    public enum EventPriority
+    {
         Undefined = 0,
         Normal = 1,
         Critical = 2,
@@ -33770,24 +39276,30 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.app.CH8Em4100.Action.CH8StrikeToParry {
-    public enum StrikeToParryType {
+namespace Enums.app.CH8Em4100.Action.CH8StrikeToParry
+{
+    public enum StrikeToParryType
+    {
         Right = 0,
         Left = 1,
         Head = 2,
     }
 }
 
-namespace Enums.via.render.streaming_detail {
-    public enum StreamingState {
+namespace Enums.via.render.streaming_detail
+{
+    public enum StreamingState
+    {
         Ready = 0,
         Request = 1,
         Complete = 2,
     }
 }
 
-namespace Enums.app.CH8StateSwitchM9 {
-    public enum CHP8_9 {
+namespace Enums.app.CH8StateSwitchM9
+{
+    public enum CHP8_9
+    {
         SILENCE = 0,
         BLADE_LV1 = 1,
         BLADE_LV2 = 2,
@@ -33795,8 +39307,10 @@ namespace Enums.app.CH8StateSwitchM9 {
     }
 }
 
-namespace Enums.via.os {
-    public enum SanityCheckSection {
+namespace Enums.via.os
+{
+    public enum SanityCheckSection
+    {
         Text = 0,
         Rdata = 1,
         Antitamper = 2,
@@ -33804,8 +39318,10 @@ namespace Enums.via.os {
     }
 }
 
-namespace Enums.app.GameEventTask {
-    public enum ProcessType {
+namespace Enums.app.GameEventTask
+{
+    public enum ProcessType
+    {
         Stop = 0,
         Setup = 1,
         Interp = 2,
@@ -33813,21 +39329,27 @@ namespace Enums.app.GameEventTask {
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum CenterDistance {
+namespace Enums.via.motion.IkLeg
+{
+    public enum CenterDistance
+    {
         OriginalLeg = 0,
         LeachLeg = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MapBakerHeightIntersectBakeType {
+namespace Enums.via.landscape
+{
+    public enum MapBakerHeightIntersectBakeType
+    {
         SDF = 0,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum RequiredTexture {
+namespace Enums.via.render.detail
+{
+    public enum RequiredTexture
+    {
         IBL = 1,
         CubeMap = 2,
         LocalCubeMap = 4,
@@ -33835,14 +39357,18 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Em5520Effect {
-    public enum IDAlias {
+namespace Em5520Effect
+{
+    public enum IDAlias
+    {
         Fire = 0,
     }
 }
 
-namespace Enums.via.hid {
-    public enum MouseCursorImageIndex {
+namespace Enums.via.hid
+{
+    public enum MouseCursorImageIndex
+    {
         Index0 = 0,
         Index1 = 1,
         Index2 = 2,
@@ -33852,16 +39378,20 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.navigation.map {
-    public enum SegmentLayer {
+namespace Enums.via.navigation.map
+{
+    public enum SegmentLayer
+    {
         Lower = 0,
         Upper = 1,
         SegmentLayerNum = 2,
     }
 }
 
-namespace Enums.via.autoplay.AutoPlayArg {
-    public enum AutoPlayStatus {
+namespace Enums.via.autoplay.AutoPlayArg
+{
+    public enum AutoPlayStatus
+    {
         Change = 0,
         Start = 1,
         Stop = 2,
@@ -33872,8 +39402,10 @@ namespace Enums.via.autoplay.AutoPlayArg {
     }
 }
 
-namespace Enums.via.dialog {
-    public enum Result {
+namespace Enums.via.dialog
+{
+    public enum Result
+    {
         Ok = 0,
         UserCanceled = 1,
         Running = 2,
@@ -33884,8 +39416,10 @@ namespace Enums.via.dialog {
     }
 }
 
-namespace Enums.via.render {
-    public enum ForceShaderLod {
+namespace Enums.via.render
+{
+    public enum ForceShaderLod
+    {
         ForceShaderLod_None = -1,
         ForceShaderLod_0 = 0,
         ForceShaderLod_1 = 1,
@@ -33898,15 +39432,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.StrikeController {
-    public enum Result {
+namespace Enums.app.StrikeController
+{
+    public enum Result
+    {
         Normal = 0,
         Grapple = 1,
     }
 }
 
-namespace Enums.app.Em8000.Effect.Em8000EffectID {
-    public enum Tag {
+namespace Enums.app.Em8000.Effect.Em8000EffectID
+{
+    public enum Tag
+    {
         None = 0,
         Jack_DeadSplash = 1,
         Corpsebag_CompleteSpawn = 2,
@@ -33917,37 +39455,47 @@ namespace Enums.app.Em8000.Effect.Em8000EffectID {
     }
 }
 
-namespace Enums.via.render.LDRLensDistortion {
-    public enum DistortionType {
+namespace Enums.via.render.LDRLensDistortion
+{
+    public enum DistortionType
+    {
         Default = 0,
         Panini = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum Repeat {
+namespace Enums.via.effect.detail
+{
+    public enum Repeat
+    {
         None = 0,
         U = 1,
         V = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum CullingMode {
+namespace Enums.via.effect.detail
+{
+    public enum CullingMode
+    {
         Draw = 0,
         DrawAndMove = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500GeneratePoint {
-    public enum Order {
+namespace Enums.app.CH8Em4500GeneratePoint
+{
+    public enum Order
+    {
         None = 0,
         Generate = 1,
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum LegacySetting {
+namespace Enums.via.navigation.Navigation
+{
+    public enum LegacySetting
+    {
         Trace3D = 0,
         AStar = 1,
         PortalAStar = 2,
@@ -33955,8 +39503,10 @@ namespace Enums.via.navigation.Navigation {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum ForbidDamageReactionType {
+namespace Enums.app.EnemyActionController
+{
+    public enum ForbidDamageReactionType
+    {
         Small = 0,
         Middle = 1,
         Large = 2,
@@ -33966,23 +39516,29 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum FramerateType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum FramerateType
+    {
         FIXING30 = 0,
         FIXING60 = 1,
         VARIABLE = 2,
     }
 }
 
-namespace Enums.via.motion.MotionCameraSkeleton {
-    public enum JointHash {
+namespace Enums.via.motion.MotionCameraSkeleton
+{
+    public enum JointHash
+    {
         JointNo_Transform = 0,
         JointNo_Camera = 1,
     }
 }
 
-namespace Enums.via.uvsequence {
-    public enum TextureUsageType {
+namespace Enums.via.uvsequence
+{
+    public enum TextureUsageType
+    {
         Albedo = 0,
         Normal = 1,
         Specular = 2,
@@ -33992,8 +39548,10 @@ namespace Enums.via.uvsequence {
     }
 }
 
-namespace Enums.via.render {
-    public enum TextureType {
+namespace Enums.via.render
+{
+    public enum TextureType
+    {
         Default = 0,
         Base = 1,
         BaseAlpha = 2,
@@ -34018,15 +39576,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Command {
-    public enum AnalogButtonType {
+namespace Enums.app.Command
+{
+    public enum AnalogButtonType
+    {
         LT = 0,
         RT = 1,
     }
 }
 
-namespace Enums.app.Em4200.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em4200.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Fixed = 2,
@@ -34064,8 +39626,10 @@ namespace Enums.app.Em4200.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.render {
-    public enum SysValSemantic {
+namespace Enums.via.render
+{
+    public enum SysValSemantic
+    {
         Undefined = 0,
         Position = 1,
         Clip_Distance = 2,
@@ -34091,15 +39655,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum TargetType {
+namespace Enums.via.wwise
+{
+    public enum TargetType
+    {
         OnlyThisGameObject = 0,
         IncludesOtherRelatingSounds = 1,
     }
 }
 
-namespace Enums.via.motion {
-    public enum EndType {
+namespace Enums.via.motion
+{
+    public enum EndType
+    {
         None = 0,
         EndOfMotion = 1,
         ExitFrame = 2,
@@ -34109,23 +39677,29 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.fsm.CH8FadeControlAction {
-    public enum FadeTypeEnum {
+namespace Enums.app.fsm.CH8FadeControlAction
+{
+    public enum FadeTypeEnum
+    {
         FadeOut = 0,
         FadeIn = 1,
     }
 }
 
-namespace Enums.app.CH8TramPuzzleSensor {
-    public enum SensorType {
+namespace Enums.app.CH8TramPuzzleSensor
+{
+    public enum SensorType
+    {
         Disable = 0,
         Stop = 1,
         Barricade = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em7900.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Fixed = 2,
@@ -34163,15 +39737,19 @@ namespace Enums.app.CH9Em7900.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.PlayerGrappleEm2000 {
-    public enum GrappleAutoCorrectType {
+namespace Enums.app.PlayerGrappleEm2000
+{
+    public enum GrappleAutoCorrectType
+    {
         SafePosition = 0,
         SafeDirection = 1,
     }
 }
 
-namespace Enums.app {
-    public enum EnemyID {
+namespace Enums.app
+{
+    public enum EnemyID
+    {
         Em0000 = 0,
         Em0010 = 1,
         Em2000 = 2,
@@ -34260,8 +39838,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.PlayerDefine {
-    public enum LArmCondition {
+namespace Enums.app.PlayerDefine
+{
+    public enum LArmCondition
+    {
         Normal = 0,
         HemostasisStart = 1,
         Hemostasis = 2,
@@ -34269,30 +39849,38 @@ namespace Enums.app.PlayerDefine {
     }
 }
 
-namespace Enums.app.Em4000.Action.Strike {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Strike
+{
+    public enum Type
+    {
         Normal = 0,
         Backstep = 1,
         Slash = 2,
     }
 }
 
-namespace Enums.app.CH9Em5800Order.Appear {
-    public enum Type {
+namespace Enums.app.CH9Em5800Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.Em2000.Action.Chapter1Battle4WalkStrafe {
-    public enum Type {
+namespace Enums.app.Em2000.Action.Chapter1Battle4WalkStrafe
+{
+    public enum Type
+    {
         Slow = 0,
         Normal = 1,
         Fast = 2,
     }
 }
 
-namespace Enums.via.motion.detail.ChainNodeData {
-    public enum AngleMode {
+namespace Enums.via.motion.detail.ChainNodeData
+{
+    public enum AngleMode
+    {
         Free = 0,
         LimitCone = 1,
         LimitHinge = 2,
@@ -34302,8 +39890,10 @@ namespace Enums.via.motion.detail.ChainNodeData {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodStorage {
+namespace Enums.via.network.error
+{
+    public enum MethodStorage
+    {
         Update = 0,
         GetInfo = 1,
         Unlink = 2,
@@ -34313,8 +39903,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.GrappleFromPlayer {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.GrappleFromPlayer
+{
+    public enum Type
+    {
         None = 0,
         FromPlayer_Skill00 = 1,
         FromPlayer_Skill02 = 2,
@@ -34323,8 +39915,10 @@ namespace Enums.app.CH9Em6400.Action.GrappleFromPlayer {
     }
 }
 
-namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource {
-    public enum Lightning3DComputeShaderType {
+namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource
+{
+    public enum Lightning3DComputeShaderType
+    {
         InitializeCS = 0,
         InitializePointPoolCS = 1,
         ConstructCS = 2,
@@ -34332,8 +39926,10 @@ namespace Enums.via.effect.gpgpu.Lightning3DCS.Lightning3DResource {
     }
 }
 
-namespace Enums.app.Em2000.Goal {
-    public enum Message {
+namespace Enums.app.Em2000.Goal
+{
+    public enum Message
+    {
         Chapter1Battle2Walking = 0,
         Chapter1Battle4Walking = 1,
         Chapter1Battle4Attack = 2,
@@ -34346,8 +39942,10 @@ namespace Enums.app.Em2000.Goal {
     }
 }
 
-namespace Enums.app.CH8LastBattleMessageData {
-    public enum MessageIDTable {
+namespace Enums.app.CH8LastBattleMessageData
+{
+    public enum MessageIDTable
+    {
         CH8_pl1050_4422_CH8_op1050_4433 = 0,
         CH8_pl1050_4424 = 1,
         CH8_pl1050_4429 = 2,
@@ -34372,8 +39970,10 @@ namespace Enums.app.CH8LastBattleMessageData {
     }
 }
 
-namespace Enums.app.cutin.CutinHandle3Scroll {
-    public enum ResultDef {
+namespace Enums.app.cutin.CutinHandle3Scroll
+{
+    public enum ResultDef
+    {
         Select1 = 0,
         Select2 = 1,
         Select3 = 2,
@@ -34381,15 +39981,19 @@ namespace Enums.app.cutin.CutinHandle3Scroll {
     }
 }
 
-namespace Enums.app.Command {
-    public enum ThresholdType {
+namespace Enums.app.Command
+{
+    public enum ThresholdType
+    {
         MoreThan = 0,
         LessThan = 1,
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum BlobType {
+namespace Enums.via.network.wrangler
+{
+    public enum BlobType
+    {
         Unknown = 0,
         String = 1,
         GUID = 2,
@@ -34403,8 +40007,10 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.app.Em3000.Action.AttackRush {
-    public enum Type {
+namespace Enums.app.Em3000.Action.AttackRush
+{
+    public enum Type
+    {
         Forward = 0,
         Right = 1,
         Left = 2,
@@ -34412,73 +40018,93 @@ namespace Enums.app.Em3000.Action.AttackRush {
     }
 }
 
-namespace Enums.via.render {
-    public enum DisplaySyncExtension {
+namespace Enums.via.render
+{
+    public enum DisplaySyncExtension
+    {
         None = 0,
         FreeSync2 = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum VrTrackerDeviceType {
+namespace Enums.via.hid
+{
+    public enum VrTrackerDeviceType
+    {
         HMD = 0,
         Dualshock4 = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum StreamingTextureRequestStrategy {
+namespace Enums.via.render
+{
+    public enum StreamingTextureRequestStrategy
+    {
         Default = 0,
         InsideBounding = 1,
         DistanceFromBounding = 2,
     }
 }
 
-namespace Enums.via.motion.IkSpine {
-    public enum RAY_TYPE {
+namespace Enums.via.motion.IkSpine
+{
+    public enum RAY_TYPE
+    {
         DEFAULT = 0,
         JOINT = 1,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.ConeInputData {
-    public enum AttrFlags {
+namespace Enums.via.motion.JointExMultiRemapValue.ConeInputData
+{
+    public enum AttrFlags
+    {
         None = 0,
         BasePose = 1,
     }
 }
 
-namespace Enums.app.DebugFolderActivater {
-    public enum ActiveTypeEnum {
+namespace Enums.app.DebugFolderActivater
+{
+    public enum ActiveTypeEnum
+    {
         RootDebug = 0,
         ChapterDebug = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimitiveRayTracingMode {
+namespace Enums.via.render.detail
+{
+    public enum PrimitiveRayTracingMode
+    {
         TwoWay = 0,
         FourWay = 1,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum LeanTarget {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum LeanTarget
+    {
         Center = 0,
         CenterAndHeal = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum RushState {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum RushState
+    {
         Normal = 0,
         Anger = 1,
     }
 }
 
-namespace Enums.app.GameOverScreen {
-    public enum Result {
+namespace Enums.app.GameOverScreen
+{
+    public enum Result
+    {
         Unknown = 0,
         Restart = 1,
         Quit = 2,
@@ -34486,16 +40112,20 @@ namespace Enums.app.GameOverScreen {
     }
 }
 
-namespace Enums.via.gui {
-    public enum SoftParticleDistType {
+namespace Enums.via.gui
+{
+    public enum SoftParticleDistType
+    {
         System = 0,
         Component = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum DeviceTypeNSW {
+namespace Enums.via.simplewwise
+{
+    public enum DeviceTypeNSW
+    {
         None = 0,
         Main = 1,
         MergeToMain = 2,
@@ -34503,8 +40133,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum SaveSlotTextType {
+namespace Enums.app.CH8SaveManager
+{
+    public enum SaveSlotTextType
+    {
         SLOT_TEXT_DIFFICULTY = 0,
         SLOT_TEXT_PLAY_TIME = 1,
         SLOT_TEXT_PLACE = 2,
@@ -34512,22 +40144,28 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.via.nnfc {
-    public enum ERRORVIEWER_CODE {
+namespace Enums.via.nnfc
+{
+    public enum ERRORVIEWER_CODE
+    {
         ERRORVIEWER_WIRELESS_OFF = 0,
         ERRORVIEWER_NFP_NOT_SUPPORT = 1,
         ERRORVIEWER_NFP_INVALID_FORMAT_VER = 2,
     }
 }
 
-namespace Enums.app.CH8Em4200.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4200.Action.CH8Grapple
+{
+    public enum Type
+    {
         Mount = 0,
     }
 }
 
-namespace Enums.app.Em3001.Action.TurnAttack {
-    public enum Type {
+namespace Enums.app.Em3001.Action.TurnAttack
+{
+    public enum Type
+    {
         Forward = 0,
         Right = 1,
         Left = 2,
@@ -34536,8 +40174,10 @@ namespace Enums.app.Em3001.Action.TurnAttack {
     }
 }
 
-namespace Enums.app.Em3001.Goal {
-    public enum AppearMessageStatus {
+namespace Enums.app.Em3001.Goal
+{
+    public enum AppearMessageStatus
+    {
         Non = 0,
         UnDiscovery = 1,
         DiscoveryShort = 2,
@@ -34545,16 +40185,20 @@ namespace Enums.app.Em3001.Goal {
     }
 }
 
-namespace Enums.app.WetPlayer {
-    public enum Routine {
+namespace Enums.app.WetPlayer
+{
+    public enum Routine
+    {
         Start = 0,
         WaitApply = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
-    public enum AttrFlags {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData
+{
+    public enum AttrFlags
+    {
         None = 0,
         BasePose = 1,
         MidPoint = 2,
@@ -34562,8 +40206,10 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
     }
 }
 
-namespace Enums.via.motion.IkMultiBone {
-    public enum IkMethod {
+namespace Enums.via.motion.IkMultiBone
+{
+    public enum IkMethod
+    {
         OneBone = 0,
         TwoBone = 1,
         ThreeBoneZigzag = 2,
@@ -34573,16 +40219,20 @@ namespace Enums.via.motion.IkMultiBone {
     }
 }
 
-namespace Enums.app.Em4100ActionController {
-    public enum BackstepQueType {
+namespace Enums.app.Em4100ActionController
+{
+    public enum BackstepQueType
+    {
         Back = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum HitAreaShape {
+namespace Enums.via.gui
+{
+    public enum HitAreaShape
+    {
         Triangle = 0,
         Rect = 1,
         Hexagon = 2,
@@ -34591,15 +40241,19 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.behaviortree.SelectorCallerChildNodeEnd {
-    public enum CheckType {
+namespace Enums.via.behaviortree.SelectorCallerChildNodeEnd
+{
+    public enum CheckType
+    {
         AnyNode = 0,
         AllNode = 1,
     }
 }
 
-namespace Enums.via.memory {
-    public enum AllocatorType {
+namespace Enums.via.memory
+{
+    public enum AllocatorType
+    {
         Boot = 0,
         Default = 1,
         Permanent = 2,
@@ -34612,16 +40266,20 @@ namespace Enums.via.memory {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum RenderingMethod {
+namespace Enums.via.render.RenderConfig
+{
+    public enum RenderingMethod
+    {
         Normal = 0,
         Checkerboard = 1,
         Interlaced = 2,
     }
 }
 
-namespace Enums.app.CH9Em7700.ThinkAppearSet {
-    public enum MimicryType {
+namespace Enums.app.CH9Em7700.ThinkAppearSet
+{
+    public enum MimicryType
+    {
         Floor1 = 0,
         Floor2 = 1,
         Lean1 = 2,
@@ -34630,16 +40288,20 @@ namespace Enums.app.CH9Em7700.ThinkAppearSet {
     }
 }
 
-namespace Enums.via.render.AmbientOcclusionGeometryElement {
-    public enum GeometryType {
+namespace Enums.via.render.AmbientOcclusionGeometryElement
+{
+    public enum GeometryType
+    {
         Sphere = 0,
         Capsule = 1,
         None = 2,
     }
 }
 
-namespace Enums.via {
-    public enum memory_order {
+namespace Enums.via
+{
+    public enum memory_order
+    {
         relaxed = 0,
         consume = 1,
         acquire = 2,
@@ -34649,23 +40311,29 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum Shape2DType {
+namespace Enums.via.effect.detail
+{
+    public enum Shape2DType
+    {
         Square = 0,
         Circle = 1,
     }
 }
 
-namespace Enums.via.motion.detail.ChainLinkData {
-    public enum ConnectionFlags {
+namespace Enums.via.motion.detail.ChainLinkData
+{
+    public enum ConnectionFlags
+    {
         Neighbour = 1,
         Upper = 2,
         Bottom = 4,
     }
 }
 
-namespace Enums.app.CH8GetEventItem {
-    public enum Process {
+namespace Enums.app.CH8GetEventItem
+{
+    public enum Process
+    {
         WaitInteract = 0,
         WaitDailog = 1,
         WaitDailog2 = 2,
@@ -34673,15 +40341,19 @@ namespace Enums.app.CH8GetEventItem {
     }
 }
 
-namespace Enums.app.fsm.OpenCloseCreditsScene {
-    public enum Action {
+namespace Enums.app.fsm.OpenCloseCreditsScene
+{
+    public enum Action
+    {
         Open = 0,
         End = 1,
     }
 }
 
-namespace Enums.via.hid.hmd.Morpheus {
-    public enum VrModeStatusCheckLevel {
+namespace Enums.via.hid.hmd.Morpheus
+{
+    public enum VrModeStatusCheckLevel
+    {
         Nothing = 0,
         Warning = 1,
         Error = 2,
@@ -34689,31 +40361,39 @@ namespace Enums.via.hid.hmd.Morpheus {
     }
 }
 
-namespace Enums.via.network.MatchmakingHopper {
-    public enum Option {
+namespace Enums.via.network.MatchmakingHopper
+{
+    public enum Option
+    {
         Flex = 0,
         HostFix = 1,
     }
 }
 
-namespace Enums.via.AnimationCurveData {
-    public enum Wrap {
+namespace Enums.via.AnimationCurveData
+{
+    public enum Wrap
+    {
         Once = 0,
         Loop = 1,
         Loop_Always = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum IndexSetStrategy {
+namespace Enums.via.render
+{
+    public enum IndexSetStrategy
+    {
         Default = 0,
         IndexSetStragety_SeparateAndIncrementOnly = 1,
         IndexSetStragety_DirtyCheck = 2,
     }
 }
 
-namespace Enums.app.Nightmare {
-    public enum TrapID {
+namespace Enums.app.Nightmare
+{
+    public enum TrapID
+    {
         None = 0,
         OilCan = 1,
         WireTrap = 2,
@@ -34722,8 +40402,10 @@ namespace Enums.app.Nightmare {
     }
 }
 
-namespace Enums.via.render.PrimitiveMaterial {
-    public enum Shader {
+namespace Enums.via.render.PrimitiveMaterial
+{
+    public enum Shader
+    {
         Billboard = 0,
         BillboardLighting = 1,
         BillboardPerPixelLighting = 2,
@@ -34860,8 +40542,10 @@ namespace Enums.via.render.PrimitiveMaterial {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum Num10 {
+namespace Enums.app.OptionMenu
+{
+    public enum Num10
+    {
         Value0 = 0,
         Value1 = 1,
         Value2 = 2,
@@ -34876,8 +40560,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadStyle {
+namespace Enums.via.hid
+{
+    public enum NpadStyle
+    {
         Handheld = 1,
         FullKey = 2,
         JoyDual = 4,
@@ -34886,8 +40572,10 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.AI {
-    public enum CH8AttackPermitReturnReason {
+namespace Enums.app.AI
+{
+    public enum CH8AttackPermitReturnReason
+    {
         Hitted = 0,
         NotHitted = 1,
         Canceled = 2,
@@ -34896,16 +40584,20 @@ namespace Enums.app.AI {
     }
 }
 
-namespace Enums.via.render {
-    public enum DepthWriteMask {
+namespace Enums.via.render
+{
+    public enum DepthWriteMask
+    {
         Zero = 0,
         All = 1,
         Num = 2,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum CullingDataType {
+namespace Enums.via.render.detail
+{
+    public enum CullingDataType
+    {
         None = 0,
         OBB = 1,
         Sphere = 2,
@@ -34915,14 +40607,18 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.CH9Em5901 {
-    public enum ThinkState {
+namespace Enums.app.CH9Em5901
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.MoldedActionController {
-    public enum DodgeVariation {
+namespace Enums.app.MoldedActionController
+{
+    public enum DodgeVariation
+    {
         Left = 0,
         LeftBack = 1,
         Right = 2,
@@ -34930,28 +40626,36 @@ namespace Enums.app.MoldedActionController {
     }
 }
 
-namespace Enums.app.Em4100.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.Em4100.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.Grapple
+{
+    public enum Type
+    {
         Thrust = 0,
     }
 }
 
-namespace Enums.via.motion.IkJacobian.Link {
-    public enum AxisType {
+namespace Enums.via.motion.IkJacobian.Link
+{
+    public enum AxisType
+    {
         X = 1,
         Y = 2,
         Z = 4,
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveDataVersion {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveDataVersion
+    {
         SaveDataVersion_None = 0,
         SaveDataVersion_1_ClassInheritance = 1,
         SaveDataVersion_2_IsNotFindSystemType = 2,
@@ -34960,31 +40664,39 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.IK2Bone {
-    public enum EffectorJointType {
+namespace Enums.app.IK2Bone
+{
+    public enum EffectorJointType
+    {
         Default = 0,
         TargetJoint2 = 0,
         TargetJoint3 = 1,
     }
 }
 
-namespace Enums.via.motion.GpuMotion {
-    public enum WrapMode {
+namespace Enums.via.motion.GpuMotion
+{
+    public enum WrapMode
+    {
         Once = 0,
         Loop = 1,
         Motion = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum MegusuriIconType {
+namespace Enums.app.GameManager
+{
+    public enum MegusuriIconType
+    {
         Yellow = 0,
         Red = 1,
     }
 }
 
-namespace Enums.app.Em3600Think {
-    public enum Mode {
+namespace Enums.app.Em3600Think
+{
+    public enum Mode
+    {
         Normal = 0,
         Wall = 1,
         Sneak = 2,
@@ -34999,8 +40711,10 @@ namespace Enums.app.Em3600Think {
     }
 }
 
-namespace Enums.via.hid {
-    public enum GamePadMotor {
+namespace Enums.via.hid
+{
+    public enum GamePadMotor
+    {
         Motor0 = 0,
         Motor1 = 1,
         Motor2 = 2,
@@ -35015,32 +40729,40 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum CheckExistingResult {
+namespace Enums.via.storage.saveService
+{
+    public enum CheckExistingResult
+    {
         Null = 0,
         Existing = 1,
         NotExisting = 2,
     }
 }
 
-namespace Enums.via.fsm {
-    public enum ExpressionReferenceType {
+namespace Enums.via.fsm
+{
+    public enum ExpressionReferenceType
+    {
         LocalUserData = 0,
         GlobalUserData = 1,
         Direct = 2,
     }
 }
 
-namespace Enums.app.CardGameMaster {
-    public enum PosType {
+namespace Enums.app.CardGameMaster
+{
+    public enum PosType
+    {
         Stock = 0,
         Banker = 1,
         Player = 2,
     }
 }
 
-namespace Enums.app.Em3000.Action {
-    public enum ActionShort {
+namespace Enums.app.Em3000.Action
+{
+    public enum ActionShort
+    {
         Straight = 0,
         SwingDown = 1,
         LSwingDown = 2,
@@ -35066,8 +40788,10 @@ namespace Enums.app.Em3000.Action {
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadConnectionAttribute : uint {
+namespace Enums.via.hid
+{
+    public enum NpadConnectionAttribute : uint
+    {
         IsConnected = 1,
         IsWired = 2,
         IsLeftConnected = 4,
@@ -35078,23 +40802,29 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.JunkPartsChangedAnimation {
-    public enum ChangeContext {
+namespace Enums.app.JunkPartsChangedAnimation
+{
+    public enum ChangeContext
+    {
         Get = 0,
         Lost = 1,
     }
 }
 
-namespace Enums.app.CarInGarage.Action {
-    public enum WallHitStatus {
+namespace Enums.app.CarInGarage.Action
+{
+    public enum WallHitStatus
+    {
         None = 0,
         Hit = 1,
         Crash = 2,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_3ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_3ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -35102,8 +40832,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum QuadTreeTextureEnum {
+namespace Enums.via.landscape
+{
+    public enum QuadTreeTextureEnum
+    {
         Invalid = -1,
         Heightmap = 0,
         Normal = 1,
@@ -35113,8 +40845,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum OutlineRenderSegment {
+namespace Enums.via.render.layer
+{
+    public enum OutlineRenderSegment
+    {
         DrawMask = 0,
         DrawOutline = 5,
         Copy = 7,
@@ -35122,16 +40856,20 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.via.os.dma {
-    public enum DMA_RESULT {
+namespace Enums.via.os.dma
+{
+    public enum DMA_RESULT
+    {
         DMA_SUCCESS = 0,
         DMA_INVARG = 0,
         DMA_FAIL = 0,
     }
 }
 
-namespace Enums.app.Cp7PCLockNumberFsm {
-    public enum Step {
+namespace Enums.app.Cp7PCLockNumberFsm
+{
+    public enum Step
+    {
         StartCamera = 0,
         StartInput = 1,
         WaitInput = 2,
@@ -35140,8 +40878,10 @@ namespace Enums.app.Cp7PCLockNumberFsm {
     }
 }
 
-namespace Enums.app.Collision.DamageUserData {
-    public enum Attribute {
+namespace Enums.app.Collision.DamageUserData
+{
+    public enum Attribute
+    {
         SkipHitStop = 0,
         SkipStageAtari = 1,
         ___b2 = 2,
@@ -35164,22 +40904,28 @@ namespace Enums.app.Collision.DamageUserData {
     }
 }
 
-namespace Enums.via.network.log {
-    public enum Period {
+namespace Enums.via.network.log
+{
+    public enum Period
+    {
         Develop = 0,
         QA = 1,
     }
 }
 
-namespace Enums.app.WaveAnnouncementUIAsset {
-    public enum ScorePanelState {
+namespace Enums.app.WaveAnnouncementUIAsset
+{
+    public enum ScorePanelState
+    {
         DISABLE = 0,
         FADE_IN = 1,
     }
 }
 
-namespace Enums.via.hid {
-    public enum VibrationPriority {
+namespace Enums.via.hid
+{
+    public enum VibrationPriority
+    {
         Lowest = 0,
         Low = 2,
         Middle = 3,
@@ -35188,15 +40934,19 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.motion.MotionData {
-    public enum AttrFlags {
+namespace Enums.via.motion.MotionData
+{
+    public enum AttrFlags
+    {
         GpuMot = 1,
         JointPose = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXResolution {
+namespace Enums.via.render
+{
+    public enum VFXResolution
+    {
         Full = 0,
         Half = 1,
         One_Third = 2,
@@ -35204,32 +40954,40 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion.CppSampleAppendData {
-    public enum Test {
+namespace Enums.via.motion.CppSampleAppendData
+{
+    public enum Test
+    {
         A = 0,
         B = 1,
         C = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum InterleaveSettingInitialValue {
+namespace Enums.via.render
+{
+    public enum InterleaveSettingInitialValue
+    {
         Automatic = 0,
         Disable = 1,
         Enable = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ReNetIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum ReNetIndex
+    {
         Web = 0,
         OnOff = 1,
         Detail = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.GrappleAttack {
-    public enum Type {
+namespace Enums.app.Em3600.Action.GrappleAttack
+{
+    public enum Type
+    {
         ThrowF = 0,
         Mount = 1,
         MountFourLeg = 2,
@@ -35242,8 +41000,10 @@ namespace Enums.app.Em3600.Action.GrappleAttack {
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum InvalidCharFlag {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum InvalidCharFlag
+    {
         None = 0,
         Space = 2,
         AtMark = 4,
@@ -35256,8 +41016,10 @@ namespace Enums.via.hid.virtualKeyboard.nsw {
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum GpuItemType : uint {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum GpuItemType : uint
+    {
         Billboard = 0,
         Polygon = 1,
         RibbonFollow = 2,
@@ -35290,24 +41052,30 @@ namespace Enums.via.effect.gpgpu.detail {
     }
 }
 
-namespace Enums.via.motion.IkJacobian {
-    public enum InverseMethodType {
+namespace Enums.via.motion.IkJacobian
+{
+    public enum InverseMethodType
+    {
         LU = 0,
         Cholesky = 1,
         DebugCompare = 2,
     }
 }
 
-namespace Enums.app.CH9Em5800Think {
-    public enum BreakState {
+namespace Enums.app.CH9Em5800Think
+{
+    public enum BreakState
+    {
         None = 0,
         FirstBreak = 1,
         SecondBreak = 2,
     }
 }
 
-namespace Enums.app.Em3000Order.Appear {
-    public enum Type {
+namespace Enums.app.Em3000Order.Appear
+{
+    public enum Type
+    {
         None = 0,
         Dummy = 1,
         AppearF = 2,
@@ -35321,8 +41089,10 @@ namespace Enums.app.Em3000Order.Appear {
     }
 }
 
-namespace Enums.via.network.session {
-    public enum SearchByFilterOption {
+namespace Enums.via.network.session
+{
+    public enum SearchByFilterOption
+    {
         None = 0,
         GetPerformance = 2,
         AscendingOrderByTime = 4,
@@ -35331,16 +41101,20 @@ namespace Enums.via.network.session {
     }
 }
 
-namespace Enums.app.DoomsUpdater {
-    public enum StepType {
+namespace Enums.app.DoomsUpdater
+{
+    public enum StepType
+    {
         Start = 0,
         Next = 1,
         AfterNext = 2,
     }
 }
 
-namespace Enums.app.FirstSettingMenu {
-    public enum Step {
+namespace Enums.app.FirstSettingMenu
+{
+    public enum Step
+    {
         Main = 0,
         GoNext = 1,
         Option = 2,
@@ -35354,8 +41128,10 @@ namespace Enums.app.FirstSettingMenu {
     }
 }
 
-namespace Enums.app.EnemyRankParameter {
-    public enum SpeedRateType {
+namespace Enums.app.EnemyRankParameter
+{
+    public enum SpeedRateType
+    {
         None = 0,
         Attack = 1,
         Damage = 2,
@@ -35363,46 +41139,58 @@ namespace Enums.app.EnemyRankParameter {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ItemMode {
+namespace Enums.app.OptionMenu
+{
+    public enum ItemMode
+    {
         Normal = 0,
         Button = 1,
     }
 }
 
-namespace Enums.via.navigation.map {
-    public enum NodeShapeType {
+namespace Enums.via.navigation.map
+{
+    public enum NodeShapeType
+    {
         Undefined = 0,
         Triangle = 1,
     }
 }
 
-namespace Enums.app.RecordSystem.RecordOrder {
-    public enum OrderTypeEnum {
+namespace Enums.app.RecordSystem.RecordOrder
+{
+    public enum OrderTypeEnum
+    {
         Stamp = 1,
         Decal = 2,
         StampAndDecal = 3,
     }
 }
 
-namespace Enums.via.network.core {
-    public enum InterfaceType {
+namespace Enums.via.network.core
+{
+    public enum InterfaceType
+    {
         Unknown = 0,
         Wireless = 1,
         Wired = 2,
     }
 }
 
-namespace Enums.via.behaviortree {
-    public enum NetworkNodeSyncPhase {
+namespace Enums.via.behaviortree
+{
+    public enum NetworkNodeSyncPhase
+    {
         Activate = 0,
         Start = 1,
         Manual = 2,
     }
 }
 
-namespace Enums.via.attribute.RemoteField {
-    public enum SyncMode {
+namespace Enums.via.attribute.RemoteField
+{
+    public enum SyncMode
+    {
         Copy = 0,
         Kill = 1,
         Transaction = 2,
@@ -35410,8 +41198,10 @@ namespace Enums.via.attribute.RemoteField {
     }
 }
 
-namespace Enums.app.TableItemExplanation.TableItemSoundController {
-    public enum Type {
+namespace Enums.app.TableItemExplanation.TableItemSoundController
+{
+    public enum Type
+    {
         Start = 0,
         NotStart = 1,
         End = 2,
@@ -35419,8 +41209,10 @@ namespace Enums.app.TableItemExplanation.TableItemSoundController {
     }
 }
 
-namespace Enums.app.CH9Em7800ActionController {
-    public enum WallAttackQueType {
+namespace Enums.app.CH9Em7800ActionController
+{
+    public enum WallAttackQueType
+    {
         LeftWall = 0,
         RightWall = 1,
         Ceil = 2,
@@ -35428,16 +41220,20 @@ namespace Enums.app.CH9Em7800ActionController {
     }
 }
 
-namespace Enums.via.render {
-    public enum LodResourceType {
+namespace Enums.via.render
+{
+    public enum LodResourceType
+    {
         Global = 0,
         Local = 1,
         Unknown = 2,
     }
 }
 
-namespace Enums.via {
-    public enum CurveType {
+namespace Enums.via
+{
+    public enum CurveType
+    {
         FlatHermite = 0,
         Linear = 1,
         Constant = 2,
@@ -35448,8 +41244,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em3000.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3000.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         IdleBattle = 1,
         Rest = 2,
@@ -35492,16 +41290,20 @@ namespace Enums.app.Em3000.Action {
     }
 }
 
-namespace Enums.app.Em3002 {
-    public enum ThinkState {
+namespace Enums.app.Em3002
+{
+    public enum ThinkState
+    {
         None = 0,
         Idle = 1,
         Battle = 2,
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum ShadowCastStrategy {
+namespace Enums.via.render.layer
+{
+    public enum ShadowCastStrategy
+    {
         ExplicitStaticMesh = 1,
         ImplicitStaticMesh = 2,
         DynamicMesh = 4,
@@ -35511,14 +41313,18 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.app.Em8001 {
-    public enum OverrideActionNo {
+namespace Enums.app.Em8001
+{
+    public enum OverrideActionNo
+    {
         Test = 0,
     }
 }
 
-namespace Enums.via.render.detail.CopyUtility {
-    public enum DownSampleFilterType {
+namespace Enums.via.render.detail.CopyUtility
+{
+    public enum DownSampleFilterType
+    {
         DownSample = 0,
         Gaussian = 1,
         Variance = 2,
@@ -35526,29 +41332,37 @@ namespace Enums.via.render.detail.CopyUtility {
     }
 }
 
-namespace Enums.app.Em4200.Action.Move {
-    public enum Type {
+namespace Enums.app.Em4200.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterColorOperator {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterColorOperator
+    {
         Overwrite = 0,
         Multiply = 1,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum FilterTarget {
+namespace Enums.via.navigation
+{
+    public enum FilterTarget
+    {
         Default = 0,
         Groups = 1,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseCommon {
+namespace Enums.via.network.error
+{
+    public enum CauseCommon
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -35577,15 +41391,19 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.Em3600.Action.PoseChange {
-    public enum Type {
+namespace Enums.app.Em3600.Action.PoseChange
+{
+    public enum Type
+    {
         Default = 0,
         FourLegStartTurn = 1,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard.nsw {
-    public enum Preset {
+namespace Enums.via.hid.virtualKeyboard.nsw
+{
+    public enum Preset
+    {
         Default = 0,
         Password = 1,
         UserName = 2,
@@ -35593,8 +41411,10 @@ namespace Enums.via.hid.virtualKeyboard.nsw {
     }
 }
 
-namespace Enums.via.network.log {
-    public enum Level {
+namespace Enums.via.network.log
+{
+    public enum Level
+    {
         Verbose = 0,
         Warning = 1,
         Info = 2,
@@ -35603,8 +41423,10 @@ namespace Enums.via.network.log {
     }
 }
 
-namespace Enums.app.fsm.CH8CompareContaminationLevel {
-    public enum CompareOp {
+namespace Enums.app.fsm.CH8CompareContaminationLevel
+{
+    public enum CompareOp
+    {
         Equal = 0,
         NotEqual = 1,
         Less = 2,
@@ -35614,21 +41436,27 @@ namespace Enums.app.fsm.CH8CompareContaminationLevel {
     }
 }
 
-namespace Enums.app.ClockTime {
-    public enum MeridiemType {
+namespace Enums.app.ClockTime
+{
+    public enum MeridiemType
+    {
         AM = 0,
         PM = 1,
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumU4 {
+namespace Enums.via.clr
+{
+    public enum EnumU4
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.hikako.raytracing.RayTracingManager {
-    public enum MachineDetailType {
+namespace Enums.hikako.raytracing.RayTracingManager
+{
+    public enum MachineDetailType
+    {
         INVALID = 0,
         PS4Base = 1,
         PS4NEO = 2,
@@ -35641,15 +41469,19 @@ namespace Enums.hikako.raytracing.RayTracingManager {
     }
 }
 
-namespace Enums.app.fsm.CH8EnemyStateCheck {
-    public enum EnemyBoolType {
+namespace Enums.app.fsm.CH8EnemyStateCheck
+{
+    public enum EnemyBoolType
+    {
         None = 0,
         Discovery = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000ActionController.BattleCondition {
-    public enum CounterRushResult {
+namespace Enums.app.CH8Em4000ActionController.BattleCondition
+{
+    public enum CounterRushResult
+    {
         None = 0,
         TimeOut = 1,
         Stagger = 2,
@@ -35660,8 +41492,10 @@ namespace Enums.app.CH8Em4000ActionController.BattleCondition {
     }
 }
 
-namespace Enums.app.Em8100.Em8100WwiseMonitoredValue {
-    public enum GameRank {
+namespace Enums.app.Em8100.Em8100WwiseMonitoredValue
+{
+    public enum GameRank
+    {
         Zero = 0,
         One = 1,
         Two = 2,
@@ -35676,15 +41510,19 @@ namespace Enums.app.Em8100.Em8100WwiseMonitoredValue {
     }
 }
 
-namespace Enums.via.render.SSAOControl {
-    public enum FilterQuality {
+namespace Enums.via.render.SSAOControl
+{
+    public enum FilterQuality
+    {
         Low = 0,
         Standard = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_54ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_54ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -35698,8 +41536,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum DrawType {
+namespace Enums.app.CardGameItem
+{
+    public enum DrawType
+    {
         NoUse = 0,
         Normal = 1,
         SP_PerfectDraw = 2,
@@ -35708,15 +41548,19 @@ namespace Enums.app.CardGameItem {
     }
 }
 
-namespace Enums.app.AI.AIThinkActionOrderSetParam {
-    public enum TargetType {
+namespace Enums.app.AI.AIThinkActionOrderSetParam
+{
+    public enum TargetType
+    {
         ApproachTarget = 0,
         WatchTarget = 1,
     }
 }
 
-namespace Enums.app.RewardData {
-    public enum RewardType {
+namespace Enums.app.RewardData
+{
+    public enum RewardType
+    {
         MainGameDifficulty = 0,
         GameMode = 1,
         Weapon = 2,
@@ -35726,16 +41570,20 @@ namespace Enums.app.RewardData {
     }
 }
 
-namespace Enums.app.Em4000.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em4000.Action.Grapple
+{
+    public enum Type
+    {
         Bite = 0,
         Mount = 1,
         Slash = 2,
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum DetailState {
+namespace Enums.via.nnfc.nfp
+{
+    public enum DetailState
+    {
         Init = 0,
         Search = 1,
         Active = 2,
@@ -35747,8 +41595,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.via.render {
-    public enum GBufferType {
+namespace Enums.via.render
+{
+    public enum GBufferType
+    {
         Static = 0,
         Dynamic = 1,
         Transparent = 2,
@@ -35757,8 +41607,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum DeviceTypePS4 {
+namespace Enums.via.simplewwise
+{
+    public enum DeviceTypePS4
+    {
         None = 0,
         Main = 1,
         MergeToMain = 2,
@@ -35772,8 +41624,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.render {
-    public enum LodMode {
+namespace Enums.via.render
+{
+    public enum LodMode
+    {
         Automatic = 0,
         Manual = 1,
         FollowParent = 2,
@@ -35781,8 +41635,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via {
-    public enum CameraType {
+namespace Enums.via
+{
+    public enum CameraType
+    {
         Game = 0,
         Debug = 1,
         Scene = 2,
@@ -35793,8 +41649,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.render {
-    public enum SemanticType {
+namespace Enums.via.render
+{
+    public enum SemanticType
+    {
         Position = 0,
         Normal = 1,
         Binormal = 2,
@@ -35812,76 +41670,96 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.os.detail {
-    public enum SocketDtlsSubError {
+namespace Enums.via.os.detail
+{
+    public enum SocketDtlsSubError
+    {
         None = 0,
         ConnectNotReceiveAnyPacket = 1,
     }
 }
 
-namespace Enums.app.PlayerHandLight {
-    public enum PowerActionRequest {
+namespace Enums.app.PlayerHandLight
+{
+    public enum PowerActionRequest
+    {
         None = 0,
         ForceOn = 1,
         ForceOff = 2,
     }
 }
 
-namespace Enums.app.AI.AILookAtAgent {
-    public enum Priority {
+namespace Enums.app.AI.AILookAtAgent
+{
+    public enum Priority
+    {
         Low = 0,
         Normal = 1,
         High = 2,
     }
 }
 
-namespace Enums.via.str {
-    public enum SplitOptionType {
+namespace Enums.via.str
+{
+    public enum SplitOptionType
+    {
         None = 0,
         RemoveEmptyEntries = 1,
     }
 }
 
-namespace Enums.via.motion.IkBodyRig {
-    public enum SetupLevel {
+namespace Enums.via.motion.IkBodyRig
+{
+    public enum SetupLevel
+    {
         None = 0,
         Normal = 1,
         Resource = 2,
     }
 }
 
-namespace Enums.app.AI.AIWanderHelper.StartNodeParamInfo {
-    public enum DirectionPriority {
+namespace Enums.app.AI.AIWanderHelper.StartNodeParamInfo
+{
+    public enum DirectionPriority
+    {
         Nothing = 0,
         Front = 1,
         Back = 2,
     }
 }
 
-namespace Enums.via.hid.VibrationResource {
-    public enum VibrationResourceType {
+namespace Enums.via.hid.VibrationResource
+{
+    public enum VibrationResourceType
+    {
         DirectMotor = 0,
         WaveFile = 1,
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Strike {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Strike
+{
+    public enum Type
+    {
         Normal = 0,
         Backstep = 1,
         Slash = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum ChainType {
+namespace Enums.via.motion
+{
+    public enum ChainType
+    {
         Chain = 0,
         Shooter = 1,
     }
 }
 
-namespace Enums.via.os.asyncTaskQueue {
-    public enum TaskType {
+namespace Enums.via.os.asyncTaskQueue
+{
+    public enum TaskType
+    {
         ThreadPool = 0,
         Normal = 1,
         Low = 2,
@@ -35893,8 +41771,10 @@ namespace Enums.via.os.asyncTaskQueue {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputPortType {
+namespace Enums.via.audiorender
+{
+    public enum OutputPortType
+    {
         Main = 0,
         BGM = 1,
         Personal = 2,
@@ -35906,23 +41786,29 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum MultiPositionType {
+namespace Enums.via.simplewwise
+{
+    public enum MultiPositionType
+    {
         SingleSource = 0,
         MultiSources = 1,
         MultiDirections = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8BuySkill {
-    public enum SkillID {
+namespace Enums.app.fsm.CH8BuySkill
+{
+    public enum SkillID
+    {
         None = 0,
         StepUpNightGoggle = 1,
     }
 }
 
-namespace Enums.app.DifficultySelectGUI {
-    public enum SelectStep {
+namespace Enums.app.DifficultySelectGUI
+{
+    public enum SelectStep
+    {
         Select = 0,
         MadInfo = 1,
         MadWarning = 2,
@@ -35930,8 +41816,10 @@ namespace Enums.app.DifficultySelectGUI {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum MultiBandEqParameter {
+namespace Enums.via.audiorender
+{
+    public enum MultiBandEqParameter
+    {
         UnitNumber = 0,
         UnitEnable = 1,
         FilterType = 2,
@@ -35941,22 +41829,28 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.motion.RetargetRig {
-    public enum EffectorTarget {
+namespace Enums.via.motion.RetargetRig
+{
+    public enum EffectorTarget
+    {
         Heal = 0,
         Toe = 1,
     }
 }
 
-namespace Enums.app.ItemHereIcon {
-    public enum IconTypeDef {
+namespace Enums.app.ItemHereIcon
+{
+    public enum IconTypeDef
+    {
         Normal = 0,
         Gorgeous = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum SparseShadowTreeResolution {
+namespace Enums.via.render
+{
+    public enum SparseShadowTreeResolution
+    {
         SparseShadowTreeResolution_4K = 4,
         SparseShadowTreeResolution_8K = 8,
         SparseShadowTreeResolution_16K = 16,
@@ -35967,15 +41861,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion.IkDog {
-    public enum FootLockMode {
+namespace Enums.via.motion.IkDog
+{
+    public enum FootLockMode
+    {
         Auto = 0,
         SemiAuto = 1,
     }
 }
 
-namespace Enums.app.CH8Em4200.CH8ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4200.CH8ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         First = 1,
         Summon = 2,
@@ -35983,8 +41881,10 @@ namespace Enums.app.CH8Em4200.CH8ThinkAppearSet {
     }
 }
 
-namespace Enums.app.PlayerCamera {
-    public enum RotationDirectionType {
+namespace Enums.app.PlayerCamera
+{
+    public enum RotationDirectionType
+    {
         Normal = 0,
         InvertHorizontal = 1,
         InvertVertical = 2,
@@ -35992,16 +41892,20 @@ namespace Enums.app.PlayerCamera {
     }
 }
 
-namespace Enums.app.Em3002.Action.Appear {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Appear
+{
+    public enum Type
+    {
         Front = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.via.motion.detail.MotionFsm2TransitionData {
-    public enum EndType {
+namespace Enums.via.motion.detail.MotionFsm2TransitionData
+{
+    public enum EndType
+    {
         None = 0,
         EndOfMotion = 1,
         ExitFrame = 2,
@@ -36013,8 +41917,10 @@ namespace Enums.via.motion.detail.MotionFsm2TransitionData {
     }
 }
 
-namespace Enums.app.Cp7PCLockNumber {
-    public enum State {
+namespace Enums.app.Cp7PCLockNumber
+{
+    public enum State
+    {
         Normal = 0,
         EndNormal = 1,
         StartError = 2,
@@ -36024,8 +41930,10 @@ namespace Enums.app.Cp7PCLockNumber {
     }
 }
 
-namespace Enums.app.Cp7MainMenu {
-    public enum Step {
+namespace Enums.app.Cp7MainMenu
+{
+    public enum Step
+    {
         Main = 0,
         Sub = 1,
         Cutin = 2,
@@ -36040,15 +41948,19 @@ namespace Enums.app.Cp7MainMenu {
     }
 }
 
-namespace Enums.via.gui {
-    public enum EffectAlphaType {
+namespace Enums.via.gui
+{
+    public enum EffectAlphaType
+    {
         Independence = 0,
         MultiplyTextColorAlpha = 1,
     }
 }
 
-namespace Enums.via.motion.ChainDynamicCollisionNode {
-    public enum ShapeType {
+namespace Enums.via.motion.ChainDynamicCollisionNode
+{
+    public enum ShapeType
+    {
         Sphere = 0,
         Capsule = 1,
         OBB = 2,
@@ -36057,8 +41969,10 @@ namespace Enums.via.motion.ChainDynamicCollisionNode {
     }
 }
 
-namespace Enums.app.CH9InstallationWp1900 {
-    public enum eInstallationType {
+namespace Enums.app.CH9InstallationWp1900
+{
+    public enum eInstallationType
+    {
         OnGround = 0,
         OnWater = 1,
         OnShallowWater = 2,
@@ -36067,8 +41981,10 @@ namespace Enums.app.CH9InstallationWp1900 {
     }
 }
 
-namespace Enums.app.Havok.ClothAnimationColtroller {
-    public enum PhysicsGroup {
+namespace Enums.app.Havok.ClothAnimationColtroller
+{
+    public enum PhysicsGroup
+    {
         None = 0,
         Group0 = 1,
         Group1 = 2,
@@ -36077,30 +41993,38 @@ namespace Enums.app.Havok.ClothAnimationColtroller {
     }
 }
 
-namespace Enums.app.CH8Em4500ActionController.BattleCondition {
-    public enum Status {
+namespace Enums.app.CH8Em4500ActionController.BattleCondition
+{
+    public enum Status
+    {
         Fast = 0,
         Second = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum ViewType {
+namespace Enums.via.gui
+{
+    public enum ViewType
+    {
         Screen = 0,
         World = 1,
     }
 }
 
-namespace Enums.via.os {
-    public enum MemoryBus {
+namespace Enums.via.os
+{
+    public enum MemoryBus
+    {
         WB = 256,
         WC = 512,
         Default = 256,
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimitiveVfxShaderInputLayout {
+namespace Enums.via.render.detail
+{
+    public enum PrimitiveVfxShaderInputLayout
+    {
         Billboard3DIL = 0,
         Billboard3DCutoutIL = 1,
         Billboard3DTexUnitIL = 2,
@@ -36121,16 +42045,20 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.app.LightConditionManager {
-    public enum ProbesTypeEnum {
+namespace Enums.app.LightConditionManager
+{
+    public enum ProbesTypeEnum
+    {
         InSide = 0,
         OutSide = 1,
         Max = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail.GpgpuResource {
-    public enum ComputeShaderType {
+namespace Enums.via.effect.gpgpu.detail.GpgpuResource
+{
+    public enum ComputeShaderType
+    {
         EmitCS = 0,
         EmitShapeOperatorCS = 1,
         EmitOnMeshContourCS = 2,
@@ -36258,8 +42186,10 @@ namespace Enums.via.effect.gpgpu.detail.GpgpuResource {
     }
 }
 
-namespace Enums.app.Em3000.Action {
-    public enum ActionMid {
+namespace Enums.app.Em3000.Action
+{
+    public enum ActionMid
+    {
         StepInStraight = 0,
         StepInSide = 1,
         StepInThrust = 2,
@@ -36269,22 +42199,28 @@ namespace Enums.app.Em3000.Action {
     }
 }
 
-namespace Enums.app.GrappleBase.SafeSpaceParam {
-    public enum BaseObjectType {
+namespace Enums.app.GrappleBase.SafeSpaceParam
+{
+    public enum BaseObjectType
+    {
         Default = 0,
         PlayerY = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8CheckEm4500Action {
-    public enum CompareTable {
+namespace Enums.app.fsm.CH8CheckEm4500Action
+{
+    public enum CompareTable
+    {
         Equal = 0,
         NotEqual = 1,
     }
 }
 
-namespace Enums.via.gui.renderer.GUIPrimitiveResource {
-    public enum ShaderType {
+namespace Enums.via.gui.renderer.GUIPrimitiveResource
+{
+    public enum ShaderType
+    {
         GUIPoly2D = 0,
         GUIPoly2DMask = 1,
         GUIPoly2DMaskReverse = 2,
@@ -36485,32 +42421,40 @@ namespace Enums.via.gui.renderer.GUIPrimitiveResource {
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum DLCContextType {
+namespace Enums.app.Richpresence
+{
+    public enum DLCContextType
+    {
         DLC1 = 0,
         DLC2 = 1,
         Invalid = -1,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum VFXResolution {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum VFXResolution
+    {
         Full = 0,
         Half = 1,
         Quarter = 2,
     }
 }
 
-namespace Enums.via.hid.VrTracker {
-    public enum ResultType {
+namespace Enums.via.hid.VrTracker
+{
+    public enum ResultType
+    {
         Predicted = 0,
         Raw = 1,
         Default = 0,
     }
 }
 
-namespace Enums.via.gui {
-    public enum MaterialParamType {
+namespace Enums.via.gui
+{
+    public enum MaterialParamType
+    {
         Unknown = 0,
         Float = 1,
         Float4 = 2,
@@ -36519,8 +42463,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.sound {
-    public enum SoundCurveYDbValueType {
+namespace Enums.via.sound
+{
+    public enum SoundCurveYDbValueType
+    {
         Linear0to1 = 0,
         DbLinear0to1 = 1,
         Linear0toInf = 2,
@@ -36528,14 +42474,18 @@ namespace Enums.via.sound {
     }
 }
 
-namespace Enums.app.Em3102.Action.Grapple {
-    public enum Type {
+namespace Enums.app.Em3102.Action.Grapple
+{
+    public enum Type
+    {
         Finish = 0,
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraStartResult : uint {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraStartResult : uint
+    {
         OK = 1,
         Started = 2,
         ErrorConfigType = 0x80000001u,
@@ -36543,8 +42493,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.via.hid {
-    public enum DeviceKind {
+namespace Enums.via.hid
+{
+    public enum DeviceKind
+    {
         Unknown = 0,
         GamePad = 1,
         Keyboard = 2,
@@ -36556,23 +42508,29 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum VRSType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum VRSType
+    {
         Off = 0,
         Balanced = 1,
         Performance = 2,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum StretchDampingMode {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum StretchDampingMode
+    {
         None = 0,
         EaseOutQuad = 1,
     }
 }
 
-namespace Enums.via.gui.MessageAnalyzer {
-    public enum Error {
+namespace Enums.via.gui.MessageAnalyzer
+{
+    public enum Error
+    {
         None = 0,
         TagAlloc = 1,
         InvalidChar = 2,
@@ -36584,31 +42542,39 @@ namespace Enums.via.gui.MessageAnalyzer {
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum PositionType {
+namespace Enums.via.dynamics
+{
+    public enum PositionType
+    {
         Normal = 0,
         Previous = 1,
         Skinning = 2,
     }
 }
 
-namespace Enums.via.os {
-    public enum IpAddressType {
+namespace Enums.via.os
+{
+    public enum IpAddressType
+    {
         Default = 0,
         V4 = 1,
         V6 = 2,
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum Calculation {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum Calculation
+    {
         Default = 0,
         AddDirection = 1,
     }
 }
 
-namespace Enums.via.render.LightProbes {
-    public enum LightProbesMerge {
+namespace Enums.via.render.LightProbes
+{
+    public enum LightProbesMerge
+    {
         Disable = 0,
         A = 1,
         B = 2,
@@ -36623,8 +42589,10 @@ namespace Enums.via.render.LightProbes {
     }
 }
 
-namespace Enums.via {
-    public enum ShareServiceCaps {
+namespace Enums.via
+{
+    public enum ShareServiceCaps
+    {
         None = 0,
         ScreenShot = 1,
         ScreenShotControl = 2,
@@ -36648,15 +42616,19 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum OnOff {
+namespace Enums.app.OptionMenu
+{
+    public enum OnOff
+    {
         On = 0,
         Off = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum ShadowResolution {
+namespace Enums.via.render
+{
+    public enum ShadowResolution
+    {
         Lowest = 384,
         Low = 512,
         Normal = 768,
@@ -36666,47 +42638,59 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion.MotionBankDataSolver {
-    public enum SetupState {
+namespace Enums.via.motion.MotionBankDataSolver
+{
+    public enum SetupState
+    {
         None = 0,
         Reload = 1,
         Setuped = 2,
     }
 }
 
-namespace Enums.app.CH8TramPuzzle {
-    public enum ColliderIndex {
+namespace Enums.app.CH8TramPuzzle
+{
+    public enum ColliderIndex
+    {
         Marker_Front = 2,
         Marker_Back = 3,
         Sensor = 4,
     }
 }
 
-namespace Enums.app.CH9Em6400.Evaluator.CheckRangeFromJoint {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Evaluator.CheckRangeFromJoint
+{
+    public enum Type
+    {
         Simple = 0,
         NormalizedRateScore = 1,
         RateScore = 2,
     }
 }
 
-namespace Enums.via.navigation.FilterInfo {
-    public enum TraceDestination {
+namespace Enums.via.navigation.FilterInfo
+{
+    public enum TraceDestination
+    {
         Optimize = 0,
         PortalCenter = 1,
         NodeCenterWithExtraLink = 2,
     }
 }
 
-namespace Enums.app.EPVDataBase {
-    public enum RotateBase {
+namespace Enums.app.EPVDataBase
+{
+    public enum RotateBase
+    {
         ParentJoint = 0,
         ModelNull = 1,
     }
 }
 
-namespace Enums.app.CH8LastBattleMessageData {
-    public enum ExecuteIDTable {
+namespace Enums.app.CH8LastBattleMessageData
+{
+    public enum ExecuteIDTable
+    {
         Stun = 0,
         Shots6 = 1,
         Air10 = 2,
@@ -36724,8 +42708,10 @@ namespace Enums.app.CH8LastBattleMessageData {
     }
 }
 
-namespace Enums.via.motion.CameraAnimation {
-    public enum AnimType {
+namespace Enums.via.motion.CameraAnimation
+{
+    public enum AnimType
+    {
         Trans = 1,
         Quat = 2,
         Fov = 4,
@@ -36733,16 +42719,20 @@ namespace Enums.via.motion.CameraAnimation {
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXResolutionCompose {
+namespace Enums.via.render
+{
+    public enum VFXResolutionCompose
+    {
         SimpleMagnify = 0,
         Biliner = 1,
         Debug = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum ParamFlag {
+namespace Enums.via.clr
+{
+    public enum ParamFlag
+    {
         In = 1,
         Out = 2,
         Lcid = 4,
@@ -36753,66 +42743,84 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.render {
-    public enum FenceState : uint {
+namespace Enums.via.render
+{
+    public enum FenceState : uint
+    {
         Invalidate = 0xffffffffu,
         DoNotWait = 0xfffffffeu,
         UAVSync = 0xfffffffdu,
     }
 }
 
-namespace Enums.app.Em8950Order.Appear {
-    public enum Type {
+namespace Enums.app.Em8950Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
     }
 }
 
-namespace Enums.app.Em5520 {
-    public enum ThinkOrder {
+namespace Enums.app.Em5520
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.navigation.PathObjectOperator {
-    public enum ForwardResult {
+namespace Enums.via.navigation.PathObjectOperator
+{
+    public enum ForwardResult
+    {
         None = 0,
         Forward = 1,
         End = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400BulletBaby {
-    public enum Status {
+namespace Enums.app.CH8Em4400BulletBaby
+{
+    public enum Status
+    {
         Enable = 0,
         Desable = 1,
     }
 }
 
-namespace Enums.app.Em3100.Action.DoorOpen {
-    public enum Type {
+namespace Enums.app.Em3100.Action.DoorOpen
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.network.storage {
-    public enum Type {
+namespace Enums.via.network.storage
+{
+    public enum Type
+    {
         None = 0,
         Title = 1,
         User = 2,
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum ProviderLatency {
+namespace Enums.via.network.wrangler
+{
+    public enum ProviderLatency
+    {
         Undefined = 0,
         Normal = 1,
         RealTime = 2,
     }
 }
 
-namespace Enums.app.CH9PlayerMessageController {
-    public enum Type {
+namespace Enums.app.CH9PlayerMessageController
+{
+    public enum Type
+    {
         EatInsect = 0,
         Sneaking = 1,
         SneakKill = 2,
@@ -36830,8 +42838,10 @@ namespace Enums.app.CH9PlayerMessageController {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckFront2.TargetStatus {
-    public enum JointIndexTable {
+namespace Enums.app.fsm.CH8CheckFront2.TargetStatus
+{
+    public enum JointIndexTable
+    {
         root = 0,
         Head = 1,
         Chest = 2,
@@ -36839,8 +42849,10 @@ namespace Enums.app.fsm.CH8CheckFront2.TargetStatus {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
-    public enum TangentType {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData
+{
+    public enum TangentType
+    {
         Auto = 0,
         Spline = 1,
         Linear = 2,
@@ -36855,30 +42867,38 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData {
     }
 }
 
-namespace Enums.via.render {
-    public enum HazeCompositorResolution {
+namespace Enums.via.render
+{
+    public enum HazeCompositorResolution
+    {
         Low = 0,
         Mid = 1,
         High = 2,
     }
 }
 
-namespace Enums.via.motion.IkDamageAction {
-    public enum CalculationBendRotation {
+namespace Enums.via.motion.IkDamageAction
+{
+    public enum CalculationBendRotation
+    {
         Parent = 0,
         Root = 1,
     }
 }
 
-namespace Enums.via.hid.mouse {
-    public enum ManipulatorClientDefaultTypeDev {
+namespace Enums.via.hid.mouse
+{
+    public enum ManipulatorClientDefaultTypeDev
+    {
         WindowMessage = 3,
         GlobalParameter = 4,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000KneeDown {
-    public enum State {
+namespace Enums.app.Em8000.Action.Em8000KneeDown
+{
+    public enum State
+    {
         None = 0,
         Start = 1,
         NoMotionStart = 2,
@@ -36892,8 +42912,10 @@ namespace Enums.app.Em8000.Action.Em8000KneeDown {
     }
 }
 
-namespace Enums.app.TitleSubMenu {
-    public enum Mode {
+namespace Enums.app.TitleSubMenu
+{
+    public enum Mode
+    {
         Invalid = 0,
         Normal = 1,
         VR = 2,
@@ -36901,8 +42923,10 @@ namespace Enums.app.TitleSubMenu {
     }
 }
 
-namespace Enums.app.EnemyVariablesHash {
-    public enum Tag {
+namespace Enums.app.EnemyVariablesHash
+{
+    public enum Tag
+    {
         BATTLE_CounterableForGrapple = 0,
         BATTLE_ResistableForGrapple = 1,
         BATTLE_CounterableBombForGrapple = 2,
@@ -36910,31 +42934,39 @@ namespace Enums.app.EnemyVariablesHash {
     }
 }
 
-namespace Enums.appFSM.CH8ArmBombTimerControl {
-    public enum RequestTypeEnum {
+namespace Enums.appFSM.CH8ArmBombTimerControl
+{
+    public enum RequestTypeEnum
+    {
         Start = 0,
         Stop = 1,
         Reset = 2,
     }
 }
 
-namespace Enums.via.behaviortree {
-    public enum ExecLine {
+namespace Enums.via.behaviortree
+{
+    public enum ExecLine
+    {
         LINE0 = 0,
         LINE1 = 1,
         LINE2 = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum RotTypeIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum RotTypeIndex
+    {
         Incremental = 0,
         Angular = 1,
     }
 }
 
-namespace Enums.via {
-    public enum GameIntentType {
+namespace Enums.via
+{
+    public enum GameIntentType
+    {
         Unknown = 0,
         JoinSession = 1,
         LaunchActivity = 2,
@@ -36942,8 +42974,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.effect.lensflare {
-    public enum TranslationType {
+namespace Enums.via.effect.lensflare
+{
+    public enum TranslationType
+    {
         Free = 0,
         Horizontal = 1,
         Vertical = 2,
@@ -36951,8 +42985,10 @@ namespace Enums.via.effect.lensflare {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseWebSocketClient {
+namespace Enums.via.network.error
+{
+    public enum CauseWebSocketClient
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -36993,8 +43029,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.userdata {
-    public enum TypeKind {
+namespace Enums.via.userdata
+{
+    public enum TypeKind
+    {
         Unknown = 0,
         Enum = 1,
         Boolean = 2,
@@ -37021,8 +43059,10 @@ namespace Enums.via.userdata {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum AutoPlayFlag {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum AutoPlayFlag
+    {
         None = 0,
         SkipDialog = 2,
         AutoAssign = 4,
@@ -37030,8 +43070,10 @@ namespace Enums.via.hid.gamePlayer {
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum EffectorCtrl {
+namespace Enums.via.motion.IkLeg
+{
+    public enum EffectorCtrl
+    {
         None = 0,
         LocalOffset = 1,
         WorldOffset = 2,
@@ -37040,8 +43082,10 @@ namespace Enums.via.motion.IkLeg {
     }
 }
 
-namespace Enums.app.CH9Em5850.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em5850.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         ReturnMove = 2,
@@ -37068,8 +43112,10 @@ namespace Enums.app.CH9Em5850.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.Em3000.Action {
-    public enum ActionZero {
+namespace Enums.app.Em3000.Action
+{
+    public enum ActionZero
+    {
         StepBack = 0,
         GrappleHeadButt = 1,
         GrappleKnee = 2,
@@ -37078,22 +43124,28 @@ namespace Enums.app.Em3000.Action {
     }
 }
 
-namespace Enums.via.render.LightProbes {
-    public enum LightProbesType {
+namespace Enums.via.render.LightProbes
+{
+    public enum LightProbesType
+    {
         Indoor = 0,
         Outdoor = 1,
         Sparse = 2,
     }
 }
 
-namespace Enums.via.network.session {
-    public enum SearchByUniqueIdOption {
+namespace Enums.via.network.session
+{
+    public enum SearchByUniqueIdOption
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.navigation.FilterInfo {
-    public enum FilterType {
+namespace Enums.via.navigation.FilterInfo
+{
+    public enum FilterType
+    {
         Cost = 0,
         NotWalkable = 1,
         Walkable = 2,
@@ -37101,16 +43153,20 @@ namespace Enums.via.navigation.FilterInfo {
     }
 }
 
-namespace Enums.via.render.Stamp {
-    public enum RasterMode {
+namespace Enums.via.render.Stamp
+{
+    public enum RasterMode
+    {
         Standard = 0,
         Wireframe = 2,
         NeighborSample = 3,
     }
 }
 
-namespace Enums.via.render.PrimitiveMaterial {
-    public enum SolidExpensiveShader {
+namespace Enums.via.render.PrimitiveMaterial
+{
+    public enum SolidExpensiveShader
+    {
         BillboardMaterial = 0,
         RibbonMaterial = 1,
         PolygonMaterial = 2,
@@ -37123,30 +43179,38 @@ namespace Enums.via.render.PrimitiveMaterial {
     }
 }
 
-namespace Enums.via.movie {
-    public enum BlendMode {
+namespace Enums.via.movie
+{
+    public enum BlendMode
+    {
         Normal = 0,
         Add = 1,
     }
 }
 
-namespace Enums.app.Em3001.Action.OpenDoor {
-    public enum Type {
+namespace Enums.app.Em3001.Action.OpenDoor
+{
+    public enum Type
+    {
         Normal = 0,
         Kick = 1,
     }
 }
 
-namespace Enums.app.CH9EverywhereMissionBase {
-    public enum Progress {
+namespace Enums.app.CH9EverywhereMissionBase
+{
+    public enum Progress
+    {
         Idle = 0,
         Start = 1,
         End = 2,
     }
 }
 
-namespace Enums.via.effect.lensflare {
-    public enum RotationOrder {
+namespace Enums.via.effect.lensflare
+{
+    public enum RotationOrder
+    {
         XYZ = 0,
         XZY = 1,
         YXZ = 2,
@@ -37156,8 +43220,10 @@ namespace Enums.via.effect.lensflare {
     }
 }
 
-namespace Enums.app.Em8000.Em8000Define.WeaponGroup {
-    public enum Group {
+namespace Enums.app.Em8000.Em8000Define.WeaponGroup
+{
+    public enum Group
+    {
         INVALID = -1,
         None = 0,
         Handgun = 1,
@@ -37169,16 +43235,20 @@ namespace Enums.app.Em8000.Em8000Define.WeaponGroup {
     }
 }
 
-namespace Enums.app.fsm.PlayerStateCheck {
-    public enum PlayerIntType {
+namespace Enums.app.fsm.PlayerStateCheck
+{
+    public enum PlayerIntType
+    {
         None = 0,
         LoadNum = 1,
         NoGuardDamageChain = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum IntermediateTargetList {
+namespace Enums.via.render
+{
+    public enum IntermediateTargetList
+    {
         Target0 = 0,
         Target1 = 1,
         Target2 = 2,
@@ -37187,8 +43257,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8000.Motion.Em8000MotionID.Tag {
-    public enum Weapon {
+namespace Enums.app.Em8000.Motion.Em8000MotionID.Tag
+{
+    public enum Weapon
+    {
         Idle = 0,
         Rest_WarCry = 1,
         EngineStop_Start = 2,
@@ -37210,22 +43282,28 @@ namespace Enums.app.Em8000.Motion.Em8000MotionID.Tag {
     }
 }
 
-namespace Enums.via.str {
-    public enum SplitSeparatorType {
+namespace Enums.via.str
+{
+    public enum SplitSeparatorType
+    {
         String = 0,
         CharArray = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXResolutionTarget {
+namespace Enums.via.render
+{
+    public enum VFXResolutionTarget
+    {
         Primitive = 0,
         PrimitivePlusPrimitiveMesh = 1,
     }
 }
 
-namespace Enums.via.physics {
-    public enum ShapeCastOption {
+namespace Enums.via.physics
+{
+    public enum ShapeCastOption
+    {
         AllHits = 0,
         DisableBackFacingTriangleHits = 1,
         DisableFrontFacingTriangleHits = 2,
@@ -37237,15 +43315,19 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.app.EPVStandardData.Element {
-    public enum HideModeForVREnum {
+namespace Enums.app.EPVStandardData.Element
+{
+    public enum HideModeForVREnum
+    {
         None = 0,
         HideOn3DVR = 1,
     }
 }
 
-namespace Enums.app.CH9Em7800.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em7800.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         HasAttackRight = 1,
         CanGrapple = 2,
@@ -37262,30 +43344,38 @@ namespace Enums.app.CH9Em7800.Goal {
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusDevice {
-    public enum FovType {
+namespace Enums.via.hid.hmd.MorpheusDevice
+{
+    public enum FovType
+    {
         DeviceDefault = 0,
         SystemOverride = 1,
     }
 }
 
-namespace Enums.app.CH9Em7800.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em7800.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainDebugDisplayMode {
+namespace Enums.via.motion.detail
+{
+    public enum ChainDebugDisplayMode
+    {
         HighLight = 0,
         SelectOnly = 1,
         None = 2,
     }
 }
 
-namespace Enums.via.render.VolumeDecal {
-    public enum ValidFlag {
+namespace Enums.via.render.VolumeDecal
+{
+    public enum ValidFlag
+    {
         None = 0,
         BaseColor = 1,
         Normal = 2,
@@ -37300,15 +43390,19 @@ namespace Enums.via.render.VolumeDecal {
     }
 }
 
-namespace Enums.via.navigation.ObstacleFilterInfo {
-    public enum FilterType {
+namespace Enums.via.navigation.ObstacleFilterInfo
+{
+    public enum FilterType
+    {
         Avoid = 0,
         Through = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.CH8Em4400Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -37318,22 +43412,28 @@ namespace Enums.app.CH8Em4400Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.app.Em8000.Message {
-    public enum CorresponceExistMessageType {
+namespace Enums.app.Em8000.Message
+{
+    public enum CorresponceExistMessageType
+    {
         Retire = 0,
         Override = 1,
     }
 }
 
-namespace Enums.via.motion.DevelopRetarget {
-    public enum HipPositionType {
+namespace Enums.via.motion.DevelopRetarget
+{
+    public enum HipPositionType
+    {
         None = 0,
         AxisY = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8PlayerStateCheck {
-    public enum PlayerBoolType {
+namespace Enums.app.fsm.CH8PlayerStateCheck
+{
+    public enum PlayerBoolType
+    {
         None = 0,
         FullyOperatable = 1,
         Move = 2,
@@ -37376,8 +43476,10 @@ namespace Enums.app.fsm.CH8PlayerStateCheck {
     }
 }
 
-namespace Enums.app.CH9Telemetry {
-    public enum OtherFlagType {
+namespace Enums.app.CH9Telemetry
+{
+    public enum OtherFlagType
+    {
         RingBattleItem002 = 0,
         RingBattleWP000 = 1,
         RingBattleWP006 = 2,
@@ -37393,8 +43495,10 @@ namespace Enums.app.CH9Telemetry {
     }
 }
 
-namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         LuminanceBleed = 1,
         SimpleLuminanceBleed = 2,
@@ -37406,8 +43510,10 @@ namespace Enums.via.effect.gpgpu.NodeBillboardCS.NodeBillboardResource {
     }
 }
 
-namespace Enums.via.Serializer.JsonToken {
-    public enum Kind {
+namespace Enums.via.Serializer.JsonToken
+{
+    public enum Kind
+    {
         Map = 0,
         Array = 1,
         Boolean = 2,
@@ -37421,14 +43527,18 @@ namespace Enums.via.Serializer.JsonToken {
     }
 }
 
-namespace Enums.app.CH9Em5700 {
-    public enum ThinkOrder {
+namespace Enums.app.CH9Em5700
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.motion {
-    public enum RootPlayMode {
+namespace Enums.via.motion
+{
+    public enum RootPlayMode
+    {
         None = 0,
         Fixed = 1,
         Continuance = 2,
@@ -37437,8 +43547,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.motion {
-    public enum ExitType {
+namespace Enums.via.motion
+{
+    public enum ExitType
+    {
         None = 0,
         End = 1,
         Frame = 2,
@@ -37446,16 +43558,20 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.gui {
-    public enum BarVisibility {
+namespace Enums.via.gui
+{
+    public enum BarVisibility
+    {
         Always = 0,
         AutoHideBar = 1,
         AutoHideAll = 2,
     }
 }
 
-namespace Enums.app.GPISwitch {
-    public enum SlotType {
+namespace Enums.app.GPISwitch
+{
+    public enum SlotType
+    {
         DipSwitch = 0,
         DebugCamera = 1,
         DrawFrameRate = 2,
@@ -37467,14 +43583,18 @@ namespace Enums.app.GPISwitch {
     }
 }
 
-namespace Enums.via.clr {
-    public enum EnumI2 {
+namespace Enums.via.clr
+{
+    public enum EnumI2
+    {
         Dummy = 0,
     }
 }
 
-namespace Enums.via.network.AutoMatchmaking {
-    public enum RuleCategory {
+namespace Enums.via.network.AutoMatchmaking
+{
+    public enum RuleCategory
+    {
         Group = 0,
         Region = 1,
         P2pVersion = 2,
@@ -37482,22 +43602,28 @@ namespace Enums.via.network.AutoMatchmaking {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterDimType {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterDimType
+    {
         EmitterDimType_2D = 0,
         EmitterDimType_3D = 1,
     }
 }
 
-namespace Enums.via.motion.detail.IkNboneSolver {
-    public enum calcType {
+namespace Enums.via.motion.detail.IkNboneSolver
+{
+    public enum calcType
+    {
         Basic = 0,
         Heavy = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum RenderDeviceAPI {
+namespace Enums.via.render
+{
+    public enum RenderDeviceAPI
+    {
         DirectX11 = 0,
         DirectX12 = 1,
         OpenGL = 2,
@@ -37517,22 +43643,28 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.render {
-    public enum StochasticTransparentSample {
+namespace Enums.via.render
+{
+    public enum StochasticTransparentSample
+    {
         StochasticTransparentSample_4 = 0,
         StochasticTransparentSample_8 = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.detail {
-    public enum NodeBillboardBlendType {
+namespace Enums.via.effect.gpgpu.detail
+{
+    public enum NodeBillboardBlendType
+    {
         AlphaBlend = 0,
         Physical = 1,
     }
 }
 
-namespace Enums.via.effect.vortexel {
-    public enum VelocityAttenuationType {
+namespace Enums.via.effect.vortexel
+{
+    public enum VelocityAttenuationType
+    {
         None = 0,
         ExpCurve = 1,
         Exp2Curve = 2,
@@ -37541,8 +43673,10 @@ namespace Enums.via.effect.vortexel {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseSession {
+namespace Enums.via.network.error
+{
+    public enum CauseSession
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -37599,30 +43733,38 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Dead {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Dead
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.DifficultySelectGUI {
-    public enum ModeDef {
+namespace Enums.app.DifficultySelectGUI
+{
+    public enum ModeDef
+    {
         BootFlow = 0,
         Title = 1,
     }
 }
 
-namespace Enums.via.AnimationCurve3D {
-    public enum Wrap {
+namespace Enums.via.AnimationCurve3D
+{
+    public enum Wrap
+    {
         Once = 0,
         Loop = 1,
         Loop_Always = 2,
     }
 }
 
-namespace Enums.app.CH9WireTrap {
-    public enum State {
+namespace Enums.app.CH9WireTrap
+{
+    public enum State
+    {
         Wait = 0,
         WireHit = 1,
         Explosion = 2,
@@ -37630,14 +43772,18 @@ namespace Enums.app.CH9WireTrap {
     }
 }
 
-namespace Enums.app.CH8Em4200ActionPoint {
-    public enum Type {
+namespace Enums.app.CH8Em4200ActionPoint
+{
+    public enum Type
+    {
         DropPoint = 0,
     }
 }
 
-namespace Enums.via.effect.EffectTest {
-    public enum EmitterLifeState {
+namespace Enums.via.effect.EffectTest
+{
+    public enum EmitterLifeState
+    {
         EmitterLifeState_Unknown = 0,
         EmitterLifeState_Wait = 1,
         EmitterLifeState_Initialize = 2,
@@ -37649,16 +43795,20 @@ namespace Enums.via.effect.EffectTest {
     }
 }
 
-namespace Enums.via.motion.IkLookAt {
-    public enum LookAtState {
+namespace Enums.via.motion.IkLookAt
+{
+    public enum LookAtState
+    {
         None = 0,
         Move = 1,
         Follow = 2,
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum LeanCtrl {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum LeanCtrl
+    {
         None = 0,
         Local = 1,
         World = 2,
@@ -37669,23 +43819,29 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.app.CH8OperatorManager2 {
-    public enum CaseTable {
+namespace Enums.app.CH8OperatorManager2
+{
+    public enum CaseTable
+    {
         Failure = 0,
         Success = 1,
         Forced = 2,
     }
 }
 
-namespace Enums.app.MotionGroupTable.MotionInfo {
-    public enum InfoType {
+namespace Enums.app.MotionGroupTable.MotionInfo
+{
+    public enum InfoType
+    {
         Motion = 0,
         State = 1,
     }
 }
 
-namespace Enums.app.Em2000.Em2000FaceModeController {
-    public enum ProcessType {
+namespace Enums.app.Em2000.Em2000FaceModeController
+{
+    public enum ProcessType
+    {
         NormalMove = 0,
         FullControllStart = 1,
         FullControllMove = 2,
@@ -37693,45 +43849,57 @@ namespace Enums.app.Em2000.Em2000FaceModeController {
     }
 }
 
-namespace Enums.app.CH8Em4000.Action.CH8Damage {
-    public enum Type {
+namespace Enums.app.CH8Em4000.Action.CH8Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum FootAdjust {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum FootAdjust
+    {
         KeepDistanceFromGround = 0,
         PushedGround = 1,
     }
 }
 
-namespace Enums.app.CH9Em5700.Goal.SideMove {
-    public enum MoveDirect {
+namespace Enums.app.CH9Em5700.Goal.SideMove
+{
+    public enum MoveDirect
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.fsm.SetDoorState {
-    public enum OverrideType {
+namespace Enums.app.fsm.SetDoorState
+{
+    public enum OverrideType
+    {
         NotSet = 0,
         UseDefault = 1,
         Override = 2,
     }
 }
 
-namespace Enums.via.physics {
-    public enum GateEventType {
+namespace Enums.via.physics
+{
+    public enum GateEventType
+    {
         None = 0,
         Enter = 1,
         Leave = 2,
     }
 }
 
-namespace Enums.app.CH8Em4100.CH8ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4100.CH8ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Wall1 = 1,
         NoUse_Wall2 = 2,
@@ -37752,65 +43920,83 @@ namespace Enums.app.CH8Em4100.CH8ThinkAppearSet {
     }
 }
 
-namespace Enums.via.dynamics.@internal.BoundingVolumeHierarchy {
-    public enum ErrorCode {
+namespace Enums.via.dynamics.@internal.BoundingVolumeHierarchy
+{
+    public enum ErrorCode
+    {
         None = 0,
         FunctorAbort = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.Em5552 {
-    public enum ThinkState {
+namespace Enums.app.Em5552
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.DebugRecordRequest {
-    public enum Type {
+namespace Enums.app.DebugRecordRequest
+{
+    public enum Type
+    {
         Attacker = 0,
         Victim = 1,
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum PlayerOtherDeviceHandling {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum PlayerOtherDeviceHandling
+    {
         UseFirstSelected = 1,
         UseLastSelected = 2,
         AssignToOtherPlayer = 3,
     }
 }
 
-namespace Enums.via.navigation.algorithm.MapGraphAstar {
-    public enum PassStateFlags {
+namespace Enums.via.navigation.algorithm.MapGraphAstar
+{
+    public enum PassStateFlags
+    {
         EnterWallMask0 = 1,
         EnterWallMask1 = 2,
     }
 }
 
-namespace Enums.app.EventActionController {
-    public enum ProcessType {
+namespace Enums.app.EventActionController
+{
+    public enum ProcessType
+    {
         Running = 0,
         End = 1,
     }
 }
 
-namespace Enums.app.fsm.PartsEnable {
-    public enum PartsSetType {
+namespace Enums.app.fsm.PartsEnable
+{
+    public enum PartsSetType
+    {
         EnableSet = 0,
         DisableSet = 1,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum RayTracingSamplingPattern {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum RayTracingSamplingPattern
+    {
         BlueNoise = 0,
         SudokuBasedBlueNoise = 1,
     }
 }
 
-namespace Enums.app.Em3000.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Attack
+{
+    public enum Type
+    {
         SwingR = 0,
         SwingL = 1,
         SwingDown = 2,
@@ -37829,8 +44015,10 @@ namespace Enums.app.Em3000.Action.Attack {
     }
 }
 
-namespace Enums.via.hid.mouse {
-    public enum ManipulatorClientDefaultType {
+namespace Enums.via.hid.mouse
+{
+    public enum ManipulatorClientDefaultType
+    {
         DirectInput = 1,
         RawInput = 2,
         WindowMessage = 3,
@@ -37838,32 +44026,40 @@ namespace Enums.via.hid.mouse {
     }
 }
 
-namespace Enums.app.ItemCheckParam {
-    public enum CompareType {
+namespace Enums.app.ItemCheckParam
+{
+    public enum CompareType
+    {
         Equal = 0,
         LessThan = 1,
         GreaterThan = 2,
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum RemoveType {
+namespace Enums.app.CardGameItem
+{
+    public enum RemoveType
+    {
         NoUse = 0,
         Remove = 1,
         Return = 2,
     }
 }
 
-namespace Enums.via.motion {
-    public enum PlayState {
+namespace Enums.via.motion
+{
+    public enum PlayState
+    {
         Play = 0,
         Pause = 1,
         Stop = 2,
     }
 }
 
-namespace Enums.via.effect.gpgpu.PolygonCS.PolygonResource {
-    public enum ShaderType {
+namespace Enums.via.effect.gpgpu.PolygonCS.PolygonResource
+{
+    public enum ShaderType
+    {
         Default = 0,
         LuminanceBleed = 1,
         SimpleLuminanceBleed = 2,
@@ -37876,23 +44072,29 @@ namespace Enums.via.effect.gpgpu.PolygonCS.PolygonResource {
     }
 }
 
-namespace Enums.app.fsm.CH8CheckSeceFolder {
-    public enum CheckType {
+namespace Enums.app.fsm.CH8CheckSeceFolder
+{
+    public enum CheckType
+    {
         IsActivate = 0,
         IsDeactivate = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum IconColorType {
+namespace Enums.via.gui
+{
+    public enum IconColorType
+    {
         None = 0,
         AlphaOnly = 1,
         RGBA = 2,
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum Parts {
+namespace Enums.app.CarInGarage
+{
+    public enum Parts
+    {
         None = -1,
         LeftDoor = 1,
         FrontBody = 2,
@@ -37915,8 +44117,10 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.via.memory {
-    public enum DebugMode {
+namespace Enums.via.memory
+{
+    public enum DebugMode
+    {
         AllocZeroClear = 1,
         AllocFill = 2,
         FreeZeroClear = 4,
@@ -37927,8 +44131,10 @@ namespace Enums.via.memory {
     }
 }
 
-namespace Enums.app.Em8100Think {
-    public enum Status {
+namespace Enums.app.Em8100Think
+{
+    public enum Status
+    {
         Front = 0,
         Right = 1,
         Left = 2,
@@ -37936,16 +44142,20 @@ namespace Enums.app.Em8100Think {
     }
 }
 
-namespace Enums.app.Em3090 {
-    public enum ActionStepEnum {
+namespace Enums.app.Em3090
+{
+    public enum ActionStepEnum
+    {
         Wait = 0,
         Eat = 1,
         Reaction = 2,
     }
 }
 
-namespace Enums.via.render.layer.Overlay {
-    public enum SegmentOrder {
+namespace Enums.via.render.layer.Overlay
+{
+    public enum SegmentOrder
+    {
         PostFilter = 0,
         PushToEsram = 0,
         OverlayPostEffect = 62,
@@ -37954,24 +44164,30 @@ namespace Enums.via.render.layer.Overlay {
     }
 }
 
-namespace Enums.app.Em3100.Action.DiscoveryTurn {
-    public enum Type {
+namespace Enums.app.Em3100.Action.DiscoveryTurn
+{
+    public enum Type
+    {
         Default = 0,
         Patrol = 1,
         OrderTurn = 2,
     }
 }
 
-namespace Enums.app.wwise.WwiseOptionMenu {
-    public enum Speaker {
+namespace Enums.app.wwise.WwiseOptionMenu
+{
+    public enum Speaker
+    {
         TV = 0,
         Headphone = 1,
         Surround = 2,
     }
 }
 
-namespace Enums.via.crypto.pkc {
-    public enum Type {
+namespace Enums.via.crypto.pkc
+{
+    public enum Type
+    {
         Type_1 = 0,
         Type_2 = 1,
         Type_3 = 2,
@@ -37980,30 +44196,38 @@ namespace Enums.via.crypto.pkc {
     }
 }
 
-namespace Enums.app.UICursor {
-    public enum TypeDef {
+namespace Enums.app.UICursor
+{
+    public enum TypeDef
+    {
         Type1 = 0,
         Type2 = 1,
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum NeighborhoodClamp {
+namespace Enums.via.render.ToneMapping
+{
+    public enum NeighborhoodClamp
+    {
         AABBClip = 0,
         VarianceClip = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum StreamType {
+namespace Enums.via.audiorender
+{
+    public enum StreamType
+    {
         None = 0,
         MemoryStream = 1,
         FileStream = 2,
     }
 }
 
-namespace Enums.app.CH8OperatorManager {
-    public enum MessagePriority {
+namespace Enums.app.CH8OperatorManager
+{
+    public enum MessagePriority
+    {
         Default = 100,
         Monologue = 200,
         EnemyVoice = 300,
@@ -38013,8 +44237,10 @@ namespace Enums.app.CH8OperatorManager {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraFormatLevel {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraFormatLevel
+    {
         Level0 = 1,
         Level1 = 2,
         Level2 = 4,
@@ -38024,8 +44250,10 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterStateType {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterStateType
+    {
         Idle = 0,
         Start = 1,
         Running = 2,
@@ -38034,8 +44262,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.Collision.HitController.DamageInfo {
-    public enum Type {
+namespace Enums.app.Collision.HitController.DamageInfo
+{
+    public enum Type
+    {
         Slash = 0,
         Stab = 1,
         Shoot = 2,
@@ -38049,23 +44279,29 @@ namespace Enums.app.Collision.HitController.DamageInfo {
     }
 }
 
-namespace Enums.app.PlayerMelee {
-    public enum AttackDirection {
+namespace Enums.app.PlayerMelee
+{
+    public enum AttackDirection
+    {
         LeftDown = 0,
         RightDown = 1,
     }
 }
 
-namespace Enums.via.render.SwingWind {
-    public enum WindType {
+namespace Enums.via.render.SwingWind
+{
+    public enum WindType
+    {
         Directional = 0,
         Point = 1,
         Push = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8InteractTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.CH8InteractTest
+{
+    public enum TestTypeParam
+    {
         Normal = 0,
         SwitchOn = 1,
         SwitchOff = 2,
@@ -38081,8 +44317,10 @@ namespace Enums.app.fsm.CH8InteractTest {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum RayCastMode {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum RayCastMode
+    {
         Default = 0,
         Normal = 1,
         Joint = 2,
@@ -38090,8 +44328,10 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.via.motion {
-    public enum ConstraintsUpdate {
+namespace Enums.via.motion
+{
+    public enum ConstraintsUpdate
+    {
         PrevLateUpdate = 0,
         AfterLateUpdate = 1,
         Last = 2,
@@ -38099,8 +44339,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.ConeInputData {
-    public enum ConeAxis {
+namespace Enums.via.motion.JointExMultiRemapValue.ConeInputData
+{
+    public enum ConeAxis
+    {
         X = 0,
         Y = 1,
         Z = 2,
@@ -38111,15 +44353,19 @@ namespace Enums.via.motion.JointExMultiRemapValue.ConeInputData {
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround {
-    public enum RAY_TYPE {
+namespace Enums.via.motion.IkSpineConformGround
+{
+    public enum RAY_TYPE
+    {
         DEFAULT = 0,
         JOINT = 1,
     }
 }
 
-namespace Enums.app.Em5400.Action.Generate {
-    public enum Type {
+namespace Enums.app.Em5400.Action.Generate
+{
+    public enum Type
+    {
         GenerateS = 0,
         GenerateM = 1,
         GenerateL = 2,
@@ -38127,8 +44373,10 @@ namespace Enums.app.Em5400.Action.Generate {
     }
 }
 
-namespace Enums.via.navigation.Pathfinder {
-    public enum PathfindResult {
+namespace Enums.via.navigation.Pathfinder
+{
+    public enum PathfindResult
+    {
         Fail = 0,
         Success = 1,
         SuccessNearPossible = 2,
@@ -38136,8 +44384,10 @@ namespace Enums.via.navigation.Pathfinder {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseOverlaySession {
+namespace Enums.via.network.error
+{
+    public enum CauseOverlaySession
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -38171,15 +44421,19 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.app.InteractDetailSearch {
-    public enum SearchEventRotAxisSign {
+namespace Enums.app.InteractDetailSearch
+{
+    public enum SearchEventRotAxisSign
+    {
         Plus = 0,
         Minus = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum RecordItem {
+namespace Enums.app.OptionMenu
+{
+    public enum RecordItem
+    {
         Difficulty = 0,
         Playtime = 1,
         Restart = 2,
@@ -38193,15 +44447,19 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum PriorityMode {
+namespace Enums.via.wwise
+{
+    public enum PriorityMode
+    {
         Newest = 0,
         Oldest = 1,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum ClipKeyType {
+namespace Enums.via.effect.detail
+{
+    public enum ClipKeyType
+    {
         Bool = 0,
         Int32 = 1,
         Int64 = 2,
@@ -38212,8 +44470,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.hikako {
-    public enum WeaponTriggerState {
+namespace Enums.hikako
+{
+    public enum WeaponTriggerState
+    {
         Idle = 0,
         Wait = 1,
         Fire = 2,
@@ -38221,8 +44481,10 @@ namespace Enums.hikako {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum AccountPickerResult {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum AccountPickerResult
+    {
         UserChanged = 0,
         UserUnchanged = 1,
         Canceled = 2,
@@ -38231,15 +44493,19 @@ namespace Enums.via.hid.gamePlayer {
     }
 }
 
-namespace Enums.app.Em3002Think {
-    public enum Mode {
+namespace Enums.app.Em3002Think
+{
+    public enum Mode
+    {
         Idle = 0,
         Battle = 1,
     }
 }
 
-namespace Enums.app.Em3600.Action.WallAttack {
-    public enum Type {
+namespace Enums.app.Em3600.Action.WallAttack
+{
+    public enum Type
+    {
         FallAttack = 0,
         FallAttackLow = 1,
         CellAttack = 2,
@@ -38248,23 +44514,29 @@ namespace Enums.app.Em3600.Action.WallAttack {
     }
 }
 
-namespace Enums.app.CH9Em7800ActionController {
-    public enum BackstepQueType {
+namespace Enums.app.CH9Em7800ActionController
+{
+    public enum BackstepQueType
+    {
         Back = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.Em3000.Action.AttackKnock {
-    public enum Type {
+namespace Enums.app.Em3000.Action.AttackKnock
+{
+    public enum Type
+    {
         Forward = 0,
         Back = 1,
     }
 }
 
-namespace Enums.app.Em3100.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em3100.Goal.GoalGenerator
+{
+    public enum ID
+    {
         OneAction = 0,
         OneAction2 = 1,
         UnDiscovery = 2,
@@ -38311,8 +44583,10 @@ namespace Enums.app.Em3100.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.render.ColorCorrectLinearParams {
-    public enum LinearCorrector {
+namespace Enums.via.render.ColorCorrectLinearParams
+{
+    public enum LinearCorrector
+    {
         None = 0,
         Hue = 1,
         Chroma = 2,
@@ -38330,8 +44604,10 @@ namespace Enums.via.render.ColorCorrectLinearParams {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum PropertyType {
+namespace Enums.via.timeline
+{
+    public enum PropertyType
+    {
         Unknown = 0,
         Bool = 1,
         S8 = 2,
@@ -38392,8 +44668,10 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.via.navigation.AIMapEffector {
-    public enum ShapeType {
+namespace Enums.via.navigation.AIMapEffector
+{
+    public enum ShapeType
+    {
         ColliderBoundary = 0,
         AABB = 1,
         OBB = 2,
@@ -38402,15 +44680,19 @@ namespace Enums.via.navigation.AIMapEffector {
     }
 }
 
-namespace Enums.via.physics.CollisionHeightFieldResource {
-    public enum PointState {
+namespace Enums.via.physics.CollisionHeightFieldResource
+{
+    public enum PointState
+    {
         Removed = 0,
         Max = 1,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard {
-    public enum VirtualKeyboardCloseResult {
+namespace Enums.via.hid.virtualKeyboard
+{
+    public enum VirtualKeyboardCloseResult
+    {
         OK = 0,
         AlreadyClosed = 1,
         AlreadyClosing = 2,
@@ -38419,8 +44701,10 @@ namespace Enums.via.hid.virtualKeyboard {
     }
 }
 
-namespace Enums.app {
-    public enum WeaponID {
+namespace Enums.app
+{
+    public enum WeaponID
+    {
         Hand = 0,
         HandAxe = 1,
         CircularSaw = 2,
@@ -38497,8 +44781,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum OptionScreenType {
+namespace Enums.app.OptionMenu
+{
+    public enum OptionScreenType
+    {
         Option = 0,
         ExtraGame = 1,
         SpecialFeature = 2,
@@ -38506,8 +44792,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum OutputConfig {
+namespace Enums.via.audiorender
+{
+    public enum OutputConfig
+    {
         OutputConfig_None = 0,
         OutputConfig_1ch = 1,
         OutputConfig_2ch = 2,
@@ -38528,24 +44816,30 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.UICommand {
-    public enum MouseConfirmType {
+namespace Enums.app.UICommand
+{
+    public enum MouseConfirmType
+    {
         Trigger = 0,
         Down = 1,
         Release = 2,
     }
 }
 
-namespace Enums.app.DoorPush {
-    public enum KnockType {
+namespace Enums.app.DoorPush
+{
+    public enum KnockType
+    {
         None = 0,
         Immediately = 1,
         Delay = 2,
     }
 }
 
-namespace Enums.via {
-    public enum SharePlayControllerMode {
+namespace Enums.via
+{
+    public enum SharePlayControllerMode
+    {
         Disable = -1,
         Failed = -2,
         Invalid = -3,
@@ -38555,16 +44849,20 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Em3000.Em3000ActionController {
-    public enum MotionSpeedControlGroup {
+namespace Enums.app.Em3000.Em3000ActionController
+{
+    public enum MotionSpeedControlGroup
+    {
         Base = 0,
         Attack = 1,
         Rank = 2,
     }
 }
 
-namespace Enums.via.gui {
-    public enum PageAlignment {
+namespace Enums.via.gui
+{
+    public enum PageAlignment
+    {
         LeftTop = 0,
         LeftCenter = 4,
         LeftBottom = 8,
@@ -38577,8 +44875,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.octree {
-    public enum InsertType {
+namespace Enums.via.octree
+{
+    public enum InsertType
+    {
         Position = 0,
         Collider = 1,
         Collidable = 2,
@@ -38586,8 +44886,10 @@ namespace Enums.via.octree {
     }
 }
 
-namespace Enums.app.InventoryManager {
-    public enum QuickEquipSlotNo {
+namespace Enums.app.InventoryManager
+{
+    public enum QuickEquipSlotNo
+    {
         Up = 0,
         Down = 1,
         Left = 2,
@@ -38596,29 +44898,37 @@ namespace Enums.app.InventoryManager {
     }
 }
 
-namespace Enums.app.CH8SaveMenu {
-    public enum ListElemID {
+namespace Enums.app.CH8SaveMenu
+{
+    public enum ListElemID
+    {
         Restart = 0,
         End = 1,
     }
 }
 
-namespace Enums.app.CH9EPVExpertKnuckleLandingData {
-    public enum ZDirectionType {
+namespace Enums.app.CH9EPVExpertKnuckleLandingData
+{
+    public enum ZDirectionType
+    {
         AttackDirection = 0,
         SawRotation = 1,
     }
 }
 
-namespace Enums.via {
-    public enum GamePresetsAudioLanguage {
+namespace Enums.via
+{
+    public enum GamePresetsAudioLanguage
+    {
         System = 0,
         Original = 1,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum SelfDieReasonType {
+namespace Enums.app.EnemyActionController
+{
+    public enum SelfDieReasonType
+    {
         Falling = 0,
         Explosion = 1,
         Force = 2,
@@ -38626,8 +44936,10 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusTrackerState {
-    public enum StatusCombination {
+namespace Enums.via.hid.hmd.MorpheusTrackerState
+{
+    public enum StatusCombination
+    {
         None = 0,
         Position = 4,
         Velocity = 8,
@@ -38643,8 +44955,10 @@ namespace Enums.via.hid.hmd.MorpheusTrackerState {
     }
 }
 
-namespace Enums.app.Em3001.Action.Attack {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Attack
+{
+    public enum Type
+    {
         SwingR = 0,
         SwingL = 1,
         SwingDown = 2,
@@ -38663,8 +44977,10 @@ namespace Enums.app.Em3001.Action.Attack {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveParcentCompleteStatus {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveParcentCompleteStatus
+    {
         Start = 0,
         Serialize = 1,
         SizeCheck = 25,
@@ -38674,8 +44990,10 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app {
-    public enum ItemID {
+namespace Enums.app
+{
+    public enum ItemID
+    {
         NoName = 0,
         FoundFootage000 = 1,
         FoundFootage010 = 2,
@@ -38924,8 +45242,10 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.Em2000Order.Appear {
-    public enum Type {
+namespace Enums.app.Em2000Order.Appear
+{
+    public enum Type
+    {
         Idle = 0,
         Chp1_Battle1_Before = 1,
         Chp1_Battle2_Before = 2,
@@ -38935,8 +45255,10 @@ namespace Enums.app.Em2000Order.Appear {
     }
 }
 
-namespace Enums.via.render.command.PS5Extention {
-    public enum ExtentionType {
+namespace Enums.via.render.command.PS5Extention
+{
+    public enum ExtentionType
+    {
         ExtentionType_4KCheckerBoardRenderingEnable = 0,
         ExtentionType_4KCheckerBoardRenderingEvenFrameEnable = 0,
         ExtentionType_4KCheckerBoardRenderingOddFrameEnable = 1,
@@ -38948,8 +45270,10 @@ namespace Enums.via.render.command.PS5Extention {
     }
 }
 
-namespace Enums.app.Em2000 {
-    public enum ThinkState {
+namespace Enums.app.Em2000
+{
+    public enum ThinkState
+    {
         None = 0,
         Chapter1Battle1 = 1,
         Chapter1Battle2 = 2,
@@ -38960,8 +45284,10 @@ namespace Enums.app.Em2000 {
     }
 }
 
-namespace Enums.hikako {
-    public enum VibrationTrigger {
+namespace Enums.hikako
+{
+    public enum VibrationTrigger
+    {
         None = 0,
         TEST_ALPHA = 1,
         TEST_BETA = 2,
@@ -39025,23 +45351,29 @@ namespace Enums.hikako {
     }
 }
 
-namespace Enums.via.motion.IkLeg2 {
-    public enum FootLockType {
+namespace Enums.via.motion.IkLeg2
+{
+    public enum FootLockType
+    {
         MotionPos = 0,
         CurrentPos = 1,
         NoLockInterpolating = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.FourLegMoveTurn {
-    public enum Type {
+namespace Enums.app.Em3600.Action.FourLegMoveTurn
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum EventLatency {
+namespace Enums.via.network.wrangler
+{
+    public enum EventLatency
+    {
         Undefined = 0,
         Normal = 1,
         RealTime = 2,
@@ -39049,8 +45381,10 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.via.navigation.Navigation {
-    public enum StopType {
+namespace Enums.via.navigation.Navigation
+{
+    public enum StopType
+    {
         Arrived = 0,
         Blocked = 1,
         CallStop = 2,
@@ -39061,8 +45395,10 @@ namespace Enums.via.navigation.Navigation {
     }
 }
 
-namespace Enums.via {
-    public enum HardwareServiceCaps {
+namespace Enums.via
+{
+    public enum HardwareServiceCaps
+    {
         None = 0,
         GeneralName = 1,
         InternalName = 2,
@@ -39083,8 +45419,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum PauseRequestType {
+namespace Enums.app.GameManager
+{
+    public enum PauseRequestType
+    {
         None = 0,
         Title = 1,
         MenuSub = 2,
@@ -39108,29 +45446,37 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.app.CardGameObjectElectricMachine.BetFlip {
-    public enum StopNoDefine {
+namespace Enums.app.CardGameObjectElectricMachine.BetFlip
+{
+    public enum StopNoDefine
+    {
         Random = -1,
         NoDisp = 100,
     }
 }
 
-namespace Enums.app.Em4200Message {
-    public enum Tag {
+namespace Enums.app.Em4200Message
+{
+    public enum Tag
+    {
         FirstLiquidBomb = 0,
     }
 }
 
-namespace Enums.via.clr {
-    public enum SignatureFlag {
+namespace Enums.via.clr
+{
+    public enum SignatureFlag
+    {
         Generic = 16,
         HasThis = 32,
         ExplicitThis = 64,
     }
 }
 
-namespace Enums.via.wwise.FreeArea {
-    public enum FreeArea8to11 : uint {
+namespace Enums.via.wwise.FreeArea
+{
+    public enum FreeArea8to11 : uint
+    {
         FreeArea8to11_None = 0xffffffffu,
         FreeArea8to11_8 = 8,
         FreeArea8to11_9 = 9,
@@ -39139,8 +45485,10 @@ namespace Enums.via.wwise.FreeArea {
     }
 }
 
-namespace Enums.via.render.fluid {
-    public enum TextureResourceType {
+namespace Enums.via.render.fluid
+{
+    public enum TextureResourceType
+    {
         Element1 = 0,
         Element2 = 1,
         Element4 = 2,
@@ -39148,8 +45496,10 @@ namespace Enums.via.render.fluid {
     }
 }
 
-namespace Enums.via.hid.mouse {
-    public enum ManipulatorClientTypeDev {
+namespace Enums.via.hid.mouse
+{
+    public enum ManipulatorClientTypeDev
+    {
         Null = 0,
         WindowMessage = 3,
         GlobalParameter = 4,
@@ -39157,8 +45507,10 @@ namespace Enums.via.hid.mouse {
     }
 }
 
-namespace Enums.via.render.layer.Overlay {
-    public enum PriorityOrder : uint {
+namespace Enums.via.render.layer.Overlay
+{
+    public enum PriorityOrder : uint
+    {
         CaptureSrcTex = 0,
         PushToEsram = 1,
         DrawDistortionSourceImage = 2,
@@ -39168,65 +45520,83 @@ namespace Enums.via.render.layer.Overlay {
     }
 }
 
-namespace Enums.app.CH8_EffectChainMeshAnim {
-    public enum PlayTypeEnum {
+namespace Enums.app.CH8_EffectChainMeshAnim
+{
+    public enum PlayTypeEnum
+    {
         Once = 0,
         Loop = 1,
         Pause = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Grapple {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Grapple
+{
+    public enum Type
+    {
         Mount = 0,
         AllFoursSmash = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8PlayerStateCheck {
-    public enum PlayerIntType {
+namespace Enums.app.fsm.CH8PlayerStateCheck
+{
+    public enum PlayerIntType
+    {
         None = 0,
         LoadNum = 1,
         NoGuardDamageChain = 2,
     }
 }
 
-namespace Enums.app.Em8940 {
-    public enum ThinkState {
+namespace Enums.app.Em8940
+{
+    public enum ThinkState
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.DebugEMActionChanger {
-    public enum Enemy_Type {
+namespace Enums.app.DebugEMActionChanger
+{
+    public enum Enemy_Type
+    {
         em2000 = 0,
         em3000 = 1,
     }
 }
 
-namespace Enums.app.fsm.EnemyThinkAction {
-    public enum ActionOrderType {
+namespace Enums.app.fsm.EnemyThinkAction
+{
+    public enum ActionOrderType
+    {
         ActionSet = 0,
         ActionEnd = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8SteelGateAction {
-    public enum ActionType {
+namespace Enums.app.fsm.CH8SteelGateAction
+{
+    public enum ActionType
+    {
         ManualOpen = 0,
     }
 }
 
-namespace Enums.app.CH8Em4400ActionController {
-    public enum AngerStatus {
+namespace Enums.app.CH8Em4400ActionController
+{
+    public enum AngerStatus
+    {
         Normal = 0,
         NeedAnger = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum SplatTextureType {
+namespace Enums.via.landscape
+{
+    public enum SplatTextureType
+    {
         Albedo = 0,
         NRRC = 1,
         Height = 2,
@@ -39234,8 +45604,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.via.render {
-    public enum RegisterComponent {
+namespace Enums.via.render
+{
+    public enum RegisterComponent
+    {
         Unknown = 0,
         Uint32 = 1,
         Sint32 = 2,
@@ -39243,15 +45615,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.areamap.test.RegionDensity {
-    public enum Condition {
+namespace Enums.via.areamap.test.RegionDensity
+{
+    public enum Condition
+    {
         Densest = 0,
         Sparsest = 1,
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum PrimitiveShaderType {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum PrimitiveShaderType
+    {
         GUIPoly2D = 0,
         GUIPoly2DMask = 1,
         GUIPoly2DMaskReverse = 2,
@@ -39413,8 +45789,10 @@ namespace Enums.via.gui.renderer.detail {
     }
 }
 
-namespace Enums.via.render.Stamp {
-    public enum StampChannelMask {
+namespace Enums.via.render.Stamp
+{
+    public enum StampChannelMask
+    {
         All = 15,
         R = 1,
         G = 2,
@@ -39434,8 +45812,10 @@ namespace Enums.via.render.Stamp {
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000Dead {
-    public enum State {
+namespace Enums.app.Em8000.Action.Em8000Dead
+{
+    public enum State
+    {
         INVALID = -1,
         None = 0,
         Start = 1,
@@ -39444,8 +45824,10 @@ namespace Enums.app.Em8000.Action.Em8000Dead {
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum FieldType {
+namespace Enums.via.network.wrangler
+{
+    public enum FieldType
+    {
         UnicodeString = 0,
         Int8 = 1,
         UInt8 = 2,
@@ -39469,31 +45851,39 @@ namespace Enums.via.network.wrangler {
     }
 }
 
-namespace Enums.via.render.VolumeDecal {
-    public enum WholeBlendMode {
+namespace Enums.via.render.VolumeDecal
+{
+    public enum WholeBlendMode
+    {
         None = 0,
         BaseColor = 1,
         Normal = 2,
     }
 }
 
-namespace Enums.via {
-    public enum AccountPickerTarget {
+namespace Enums.via
+{
+    public enum AccountPickerTarget
+    {
         Auto = 0,
         UnmanagedDevice = 1,
         LastInputDevice = 2,
     }
 }
 
-namespace Enums.app.Em4200.Action.BlownAway {
-    public enum Type {
+namespace Enums.app.Em4200.Action.BlownAway
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.Em3000.IK.ProcessBase {
-    public enum TransitionChangeState {
+namespace Enums.app.Em3000.IK.ProcessBase
+{
+    public enum TransitionChangeState
+    {
         INVALID = -1,
         None = 0,
         Up = 1,
@@ -39502,8 +45892,10 @@ namespace Enums.app.Em3000.IK.ProcessBase {
     }
 }
 
-namespace Enums.app.Em4100.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.Em4100.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Discovery = 2,
@@ -39541,15 +45933,19 @@ namespace Enums.app.Em4100.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.autoplay.action.AutoAttack {
-    public enum Unit {
+namespace Enums.via.autoplay.action.AutoAttack
+{
+    public enum Unit
+    {
         Second = 0,
         Frame = 1,
     }
 }
 
-namespace Enums.via.os.PackReader {
-    public enum Source {
+namespace Enums.via.os.PackReader
+{
+    public enum Source
+    {
         Unknown = 0,
         Package = 1,
         DLC = 2,
@@ -39558,16 +45954,20 @@ namespace Enums.via.os.PackReader {
     }
 }
 
-namespace Enums.app.cutin.CutinProc3Scroll {
-    public enum InputMode {
+namespace Enums.app.cutin.CutinProc3Scroll
+{
+    public enum InputMode
+    {
         TextScroll = 0,
         PreSelectItem = 1,
         SelectItem = 2,
     }
 }
 
-namespace Enums.via.eq.Parser {
-    public enum Error {
+namespace Enums.via.eq.Parser
+{
+    public enum Error
+    {
         None = 0,
         Syntax = 1,
         InvalidUnaryOperator = 2,
@@ -39579,8 +45979,10 @@ namespace Enums.via.eq.Parser {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraCaptureFrameResult : uint {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraCaptureFrameResult : uint
+    {
         OK = 1,
         OKNotFrameUpdated = 2,
         ErrorStoped = 0x80000001u,
@@ -39589,16 +45991,20 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.InteractLongPressSendFSM {
-    public enum ProcStep {
+namespace Enums.app.InteractLongPressSendFSM
+{
+    public enum ProcStep
+    {
         LongPressWait = 0,
         Success = 1,
         InteractInterruption = 2,
     }
 }
 
-namespace Enums.app.Em3000.Em8000CorpsebagManager {
-    public enum Group {
+namespace Enums.app.Em3000.Em8000CorpsebagManager
+{
+    public enum Group
+    {
         Corpsebag = 0,
         CorpsebagShort = 1,
         CorpsebagNoBattle = 2,
@@ -39606,8 +46012,10 @@ namespace Enums.app.Em3000.Em8000CorpsebagManager {
     }
 }
 
-namespace Enums.app.Em3600Zone {
-    public enum Type {
+namespace Enums.app.Em3600Zone
+{
+    public enum Type
+    {
         None = 0,
         DropGrapple = 1,
         ShieldingSpot = 2,
@@ -39615,8 +46023,10 @@ namespace Enums.app.Em3600Zone {
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum Window {
+namespace Enums.app.CarInGarage
+{
+    public enum Window
+    {
         None = 0,
         Front = 1,
         FrontLeft = 2,
@@ -39627,8 +46037,10 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.via.wwise.WwiseGlobalUserVariablesValue {
-    public enum TypeKind {
+namespace Enums.via.wwise.WwiseGlobalUserVariablesValue
+{
+    public enum TypeKind
+    {
         Unknown = 0,
         Boolean = 1,
         Int32 = 2,
@@ -39637,16 +46049,20 @@ namespace Enums.via.wwise.WwiseGlobalUserVariablesValue {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum ExecuteGroup {
+namespace Enums.via.timeline
+{
+    public enum ExecuteGroup
+    {
         ExecuteGroup_00 = 0,
         ExecuteGroup_01 = 1,
         ExecuteGroup_02 = 2,
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum eMotionID {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum eMotionID
+    {
         Invalid = -1,
         Idle = 0,
         Forward_Start = 30,
@@ -39661,22 +46077,28 @@ namespace Enums.app.CH9SM2644Movement {
     }
 }
 
-namespace Enums.via.areamap.test.RegionArea {
-    public enum Condition {
+namespace Enums.via.areamap.test.RegionArea
+{
+    public enum Condition
+    {
         Biggest = 0,
         Smallest = 1,
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum PressPriorityType {
+namespace Enums.app.GameEventAction
+{
+    public enum PressPriorityType
+    {
         Default = 0,
         SpecialFix = 1,
     }
 }
 
-namespace Enums.app.Em3002.Goal.Battle {
-    public enum Message {
+namespace Enums.app.Em3002.Goal.Battle
+{
+    public enum Message
+    {
         Non = 0,
         AppearEnd = 1,
         Battle1 = 2,
@@ -39686,15 +46108,19 @@ namespace Enums.app.Em3002.Goal.Battle {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum PlayType {
+namespace Enums.via.timeline
+{
+    public enum PlayType
+    {
         Normal = 0,
         LastKey = 1,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainCollisionType {
+namespace Enums.via.motion.detail
+{
+    public enum ChainCollisionType
+    {
         Self = 0,
         Model = 1,
         Collider = 2,
@@ -39702,8 +46128,10 @@ namespace Enums.via.motion.detail {
     }
 }
 
-namespace Enums.app.Telemetry {
-    public enum LostPartsType {
+namespace Enums.app.Telemetry
+{
+    public enum LostPartsType
+    {
         Em4000Head = 0,
         Em4000LeftArm = 1,
         Em4000RightArm = 2,
@@ -39718,8 +46146,10 @@ namespace Enums.app.Telemetry {
     }
 }
 
-namespace Enums.via.clr {
-    public enum VMObjType {
+namespace Enums.via.clr
+{
+    public enum VMObjType
+    {
         Null = 0,
         Object = 1,
         Array = 2,
@@ -39729,37 +46159,47 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.render.layer.ParticleLighting {
-    public enum Segment {
+namespace Enums.via.render.layer.ParticleLighting
+{
+    public enum Segment
+    {
         Preprocess = 0,
         UpdateBuffer = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8CountAddTest {
-    public enum TestTypeParam {
+namespace Enums.app.fsm.CH8CountAddTest
+{
+    public enum TestTypeParam
+    {
         CoinCounter = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum CloudShapeNoiseType {
+namespace Enums.via.render
+{
+    public enum CloudShapeNoiseType
+    {
         BaseShape = 0,
         Detail = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.fsm.ElevatorButtonAction {
-    public enum ActionType {
+namespace Enums.app.fsm.ElevatorButtonAction
+{
+    public enum ActionType
+    {
         DoorOpen = 0,
         DoorClose = 1,
         Call = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum MethodFlag {
+namespace Enums.via.clr
+{
+    public enum MethodFlag
+    {
         AccessibilityMask = 7,
         PrivateScope = 0,
         Private = 1,
@@ -39783,15 +46223,19 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.MotionDelegate {
-    public enum ExitModeEnum {
+namespace Enums.app.MotionDelegate
+{
+    public enum ExitModeEnum
+    {
         OtherTag = 0,
         TransitionOfMotion = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum InstanceMask {
+namespace Enums.via.render
+{
+    public enum InstanceMask
+    {
         Default = 1,
         Shadow = 2,
         Solid = 4,
@@ -39800,8 +46244,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.wwise.FreeArea {
-    public enum FreeArea12to15 : uint {
+namespace Enums.via.wwise.FreeArea
+{
+    public enum FreeArea12to15 : uint
+    {
         FreeArea12to15_None = 0xffffffffu,
         FreeArea12to15_12 = 12,
         FreeArea12to15_13 = 13,
@@ -39810,8 +46256,10 @@ namespace Enums.via.wwise.FreeArea {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue {
-    public enum ConstraintType {
+namespace Enums.via.motion.JointExMultiRemapValue
+{
+    public enum ConstraintType
+    {
         Outputs = 0,
         RotExpression = 1,
         Multi = 2,
@@ -39820,14 +46268,18 @@ namespace Enums.via.motion.JointExMultiRemapValue {
     }
 }
 
-namespace Enums.app.Em3000.Em3000ActionController.ProgramableTurnProcess {
-    public enum RatioUpdateType {
+namespace Enums.app.Em3000.Em3000ActionController.ProgramableTurnProcess
+{
+    public enum RatioUpdateType
+    {
         Time = 0,
     }
 }
 
-namespace Enums.app.fsm.InGameContentAction {
-    public enum OperationTypeEnum {
+namespace Enums.app.fsm.InGameContentAction
+{
+    public enum OperationTypeEnum
+    {
         TimerStart = 0,
         TimerStop = 1,
         TimerReset = 2,
@@ -39836,58 +46288,74 @@ namespace Enums.app.fsm.InGameContentAction {
     }
 }
 
-namespace Enums.app.fsm.CH8ChangeMapShutterState {
-    public enum ChangeMapShutterStateType {
+namespace Enums.app.fsm.CH8ChangeMapShutterState
+{
+    public enum ChangeMapShutterStateType
+    {
         Close = 0,
         Open = 1,
     }
 }
 
-namespace Enums.via.hid.textInput {
-    public enum TextInputArgKindDetails {
+namespace Enums.via.hid.textInput
+{
+    public enum TextInputArgKindDetails
+    {
         Common = 0,
         PlayStation4 = 1,
         PlayStation5 = 2,
     }
 }
 
-namespace Enums.app.CH9Credit {
-    public enum StepType {
+namespace Enums.app.CH9Credit
+{
+    public enum StepType
+    {
         Logo = 0,
         Page = 1,
     }
 }
 
-namespace Enums.app.Em5400 {
-    public enum ThinkOrder {
+namespace Enums.app.Em5400
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em5400.Goal.SideMove {
-    public enum MoveDirect {
+namespace Enums.app.Em5400.Goal.SideMove
+{
+    public enum MoveDirect
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum WarningStatus {
+namespace Enums.via.navigation
+{
+    public enum WarningStatus
+    {
         Enable = 0,
         EnableContinuous = 1,
         Disable = 2,
     }
 }
 
-namespace Enums.app.ExpansionData {
-    public enum Expansion {
+namespace Enums.app.ExpansionData
+{
+    public enum Expansion
+    {
         Dummy = 0,
         Max = 512,
     }
 }
 
-namespace Enums.app.CH8Em4200.Goal.CH8GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH8Em4200.Goal.CH8GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Fixed = 2,
@@ -39926,23 +46394,29 @@ namespace Enums.app.CH8Em4200.Goal.CH8GoalGenerator {
     }
 }
 
-namespace Enums.via.effect.vortexel {
-    public enum VelocityEmitType {
+namespace Enums.via.effect.vortexel
+{
+    public enum VelocityEmitType
+    {
         Overwrite = 0,
         Acceleration = 1,
     }
 }
 
-namespace Enums.via.render.MultiInstanceMesh {
-    public enum BoundingBoxStrategyType {
+namespace Enums.via.render.MultiInstanceMesh
+{
+    public enum BoundingBoxStrategyType
+    {
         Static = 0,
         Skinning = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.RenderTargetTextureSerializer.SerializeProcess {
-    public enum RoutineNo {
+namespace Enums.app.RenderTargetTextureSerializer.SerializeProcess
+{
+    public enum RoutineNo
+    {
         PreReserve = 0,
         CalcSize = 1,
         PrepareBuffer = 2,
@@ -39952,8 +46426,10 @@ namespace Enums.app.RenderTargetTextureSerializer.SerializeProcess {
     }
 }
 
-namespace Enums.app.CH8Em4000.CH8ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4000.CH8ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Low1 = 10,
         FromLow2_Speedy = 11,
@@ -39985,8 +46461,10 @@ namespace Enums.app.CH8Em4000.CH8ThinkAppearSet {
     }
 }
 
-namespace Enums.app.EPVExpertPartsDamageData {
-    public enum DamagePartsEnum {
+namespace Enums.app.EPVExpertPartsDamageData
+{
+    public enum DamagePartsEnum
+    {
         Head = 0,
         Chest = 1,
         Stomach = 2,
@@ -40023,16 +46501,20 @@ namespace Enums.app.EPVExpertPartsDamageData {
     }
 }
 
-namespace Enums.via.render {
-    public enum DistortionType {
+namespace Enums.via.render
+{
+    public enum DistortionType
+    {
         None = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.CH9Em7700.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em7700.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Release = 2,
@@ -40087,8 +46569,10 @@ namespace Enums.app.CH9Em7700.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.fsm.CH8PlayerAction {
-    public enum PlayerActionType {
+namespace Enums.app.fsm.CH8PlayerAction
+{
+    public enum PlayerActionType
+    {
         None = 0,
         ForceCrawl = 1,
         LeftArmCut = 2,
@@ -40096,8 +46580,10 @@ namespace Enums.app.fsm.CH8PlayerAction {
     }
 }
 
-namespace Enums.via.motion.MotionAppendData {
-    public enum PropertyType {
+namespace Enums.via.motion.MotionAppendData
+{
+    public enum PropertyType
+    {
         Unknown = 0,
         Enum = 1,
         Boolean = 2,
@@ -40120,8 +46606,10 @@ namespace Enums.via.motion.MotionAppendData {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ImageQuality_Value {
+namespace Enums.app.OptionMenu
+{
+    public enum ImageQuality_Value
+    {
         ImageQuality_05 = 0,
         ImageQuality_06 = 1,
         ImageQuality_07 = 2,
@@ -40143,22 +46631,28 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.CH9Em6400Grapple {
-    public enum LerpScaleMode {
+namespace Enums.app.CH9Em6400Grapple
+{
+    public enum LerpScaleMode
+    {
         LerpGrappleScale = 0,
         LerpOriginalScale = 1,
         None = 2,
     }
 }
 
-namespace Enums.app.Em4200ActionPoint {
-    public enum Type {
+namespace Enums.app.Em4200ActionPoint
+{
+    public enum Type
+    {
         DropPoint = 0,
     }
 }
 
-namespace Enums.app.CH9GauntletChargeGauge {
-    public enum eChargeLevel {
+namespace Enums.app.CH9GauntletChargeGauge
+{
+    public enum eChargeLevel
+    {
         NoCharge = 0,
         Level1 = 1,
         Level2 = 2,
@@ -40166,8 +46660,10 @@ namespace Enums.app.CH9GauntletChargeGauge {
     }
 }
 
-namespace Enums.via.render.VolumeDecal {
-    public enum Priority {
+namespace Enums.via.render.VolumeDecal
+{
+    public enum Priority
+    {
         Highest = 0,
         Higher = 1,
         High = 2,
@@ -40180,16 +46676,20 @@ namespace Enums.via.render.VolumeDecal {
     }
 }
 
-namespace Enums.app.InterpolationJointGroup {
-    public enum StateType {
+namespace Enums.app.InterpolationJointGroup
+{
+    public enum StateType
+    {
         None = 0,
         Setup = 1,
         Reset = 2,
     }
 }
 
-namespace Enums.via.network.error {
-    public enum CauseRanking {
+namespace Enums.via.network.error
+{
+    public enum CauseRanking
+    {
         Debug = 1,
         ActiveRelease = 2,
         NoEnoughMemory = 17,
@@ -40218,8 +46718,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GlyphAtlasSize {
+namespace Enums.via.gui
+{
+    public enum GlyphAtlasSize
+    {
         Size512x512 = 0,
         Size1024x512 = 1,
         Size1024x1024 = 2,
@@ -40230,8 +46732,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.motion.SymmetryMirrorData {
-    public enum AxisMirrorFlags {
+namespace Enums.via.motion.SymmetryMirrorData
+{
+    public enum AxisMirrorFlags
+    {
         AxisFlags_X = 1,
         AxisFlags_Y = 2,
         AxisFlags_Z = 4,
@@ -40239,16 +46743,20 @@ namespace Enums.via.motion.SymmetryMirrorData {
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraChannel {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraChannel
+    {
         Left = 0,
         Right = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.Em3600Message {
-    public enum MessageTag {
+namespace Enums.app.Em3600Message
+{
+    public enum MessageTag
+    {
         BossRoomEnter = 0,
         MountStart_v0 = 1,
         MountStart_v1 = 2,
@@ -40300,8 +46808,10 @@ namespace Enums.app.Em3600Message {
     }
 }
 
-namespace Enums.via.render.PrimitiveMesh.Attribute {
-    public enum PipelineIndex {
+namespace Enums.via.render.PrimitiveMesh.Attribute
+{
+    public enum PipelineIndex
+    {
         Default = 0,
         DistortionDepth = 1,
         Prepass = 2,
@@ -40312,8 +46822,10 @@ namespace Enums.via.render.PrimitiveMesh.Attribute {
     }
 }
 
-namespace Enums.app.DebugEMActionChanger {
-    public enum Chapter_Battle {
+namespace Enums.app.DebugEMActionChanger
+{
+    public enum Chapter_Battle
+    {
         Battle_c01_2 = 0,
         Battle_c01_4 = 1,
         Battle_c03_1 = 2,
@@ -40321,8 +46833,10 @@ namespace Enums.app.DebugEMActionChanger {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraScaleFormat {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraScaleFormat
+    {
         YUV422 = 0,
         Y16 = 3,
         Y8 = 4,
@@ -40331,8 +46845,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.via.puppet.RemoteGameObject {
-    public enum SyncOption {
+namespace Enums.via.puppet.RemoteGameObject
+{
+    public enum SyncOption
+    {
         ReceiveTransform = 0,
         TrailTransform = 1,
         ReceiveBehaviorTree = 2,
@@ -40347,22 +46863,28 @@ namespace Enums.via.puppet.RemoteGameObject {
     }
 }
 
-namespace Enums.app.CH9SaveMenu {
-    public enum ModeType {
+namespace Enums.app.CH9SaveMenu
+{
+    public enum ModeType
+    {
         Load = 0,
         Save = 1,
     }
 }
 
-namespace Enums.app.MoveCharacter {
-    public enum TEST_RE_STATE_PITCH {
+namespace Enums.app.MoveCharacter
+{
+    public enum TEST_RE_STATE_PITCH
+    {
         PITCH_DOWN = 0,
         PITCH_NORMAL = 1,
     }
 }
 
-namespace Enums.app.Cp7GameEndControl {
-    public enum Step {
+namespace Enums.app.Cp7GameEndControl
+{
+    public enum Step
+    {
         StartClear = 0,
         WaitClear = 1,
         StartResult = 2,
@@ -40373,16 +46895,20 @@ namespace Enums.app.Cp7GameEndControl {
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum HeroStatsID {
+namespace Enums.app.Achievement
+{
+    public enum HeroStatsID
+    {
         ClearGame = 0,
         KillEnemy = 1,
         GetItem = 2,
     }
 }
 
-namespace Enums.via.render.ToneMapping {
-    public enum TemporalAA {
+namespace Enums.via.render.ToneMapping
+{
+    public enum TemporalAA
+    {
         Legacy = 0,
         Manual = 1,
         Weak = 2,
@@ -40392,8 +46918,10 @@ namespace Enums.via.render.ToneMapping {
     }
 }
 
-namespace Enums.via.render {
-    public enum DrawMode {
+namespace Enums.via.render
+{
+    public enum DrawMode
+    {
         Default = 1,
         ShadowCast = 2,
         Envmap = 4,
@@ -40402,8 +46930,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.render.layer {
-    public enum GBufferSegment {
+namespace Enums.via.render.layer
+{
+    public enum GBufferSegment
+    {
         ZIgnorePrepassSolid = 0,
         ZIgnorePrepassTwoSide = 1,
         ZIgnorePrepassTwoSideAlphaTest = 2,
@@ -40449,8 +46979,10 @@ namespace Enums.via.render.layer {
     }
 }
 
-namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
-    public enum InfinityType {
+namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData
+{
+    public enum InfinityType
+    {
         Const = 0,
         Linear = 1,
         Oscilate = 2,
@@ -40459,15 +46991,19 @@ namespace Enums.via.motion.JointExMultiRemapValue.OutputData.JointDriverData {
     }
 }
 
-namespace Enums.via.os {
-    public enum MemoryPage {
+namespace Enums.via.os
+{
+    public enum MemoryPage
+    {
         Default = 0,
         Large = 1024,
     }
 }
 
-namespace Enums.app.PlayerTerrainMoveChecker {
-    public enum CheckFallResult {
+namespace Enums.app.PlayerTerrainMoveChecker
+{
+    public enum CheckFallResult
+    {
         None = 0,
         Success = 1,
         Failure_TooLow = 2,
@@ -40476,15 +47012,19 @@ namespace Enums.app.PlayerTerrainMoveChecker {
     }
 }
 
-namespace Enums.via.render {
-    public enum PerPixelLightCorrectType {
+namespace Enums.via.render
+{
+    public enum PerPixelLightCorrectType
+    {
         None = 0,
         UseSceneTex = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum RenderOutputID {
+namespace Enums.via.render
+{
+    public enum RenderOutputID
+    {
         Primary = 1,
         Secondary = 2,
         Tertiary = 4,
@@ -40494,15 +47034,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BakerPriority {
+namespace Enums.via.landscape
+{
+    public enum BakerPriority
+    {
         ClearRenderTarget = 0,
         Bake = 1,
     }
 }
 
-namespace Enums.app.DebugDrawJoint {
-    public enum ColorDef {
+namespace Enums.app.DebugDrawJoint
+{
+    public enum ColorDef
+    {
         Default = 0,
         White = 1,
         Gray = 2,
@@ -40515,15 +47059,19 @@ namespace Enums.app.DebugDrawJoint {
     }
 }
 
-namespace Enums.via.render.TextureScaler {
-    public enum DebugDrawModeType {
+namespace Enums.via.render.TextureScaler
+{
+    public enum DebugDrawModeType
+    {
         RGBA = 0,
         RGB = 1,
     }
 }
 
-namespace Enums.app.cutin.CutinHandle3Choice {
-    public enum ResultDef {
+namespace Enums.app.cutin.CutinHandle3Choice
+{
+    public enum ResultDef
+    {
         Select1 = 0,
         Select2 = 1,
         Select3 = 2,
@@ -40531,8 +47079,10 @@ namespace Enums.app.cutin.CutinHandle3Choice {
     }
 }
 
-namespace Enums.via.motion {
-    public enum MotionStateFlag {
+namespace Enums.via.motion
+{
+    public enum MotionStateFlag
+    {
         None = 0,
         EndFrame = 1,
         NextEndFrame = 2,
@@ -40544,22 +47094,28 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.app.wwise.WwiseOptionMenu {
-    public enum DynamicRangeControl {
+namespace Enums.app.wwise.WwiseOptionMenu
+{
+    public enum DynamicRangeControl
+    {
         Small = 0,
         Large = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Kneel {
-    public enum TutorialLineTable {
+namespace Enums.app.CH8Em4400.Action.CH8Kneel
+{
+    public enum TutorialLineTable
+    {
         ON = 0,
         OFF = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum SparseShadowTreeReductionPixel {
+namespace Enums.via.render
+{
+    public enum SparseShadowTreeReductionPixel
+    {
         SparseShadowTreeReductionPixel_None = 0,
         SparseShadowTreeReductionPixel_2px = 2,
         SparseShadowTreeReductionPixel_4px = 4,
@@ -40572,8 +47128,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.fsm.PositionCheck {
-    public enum DirectionTypeEnum {
+namespace Enums.app.fsm.PositionCheck
+{
+    public enum DirectionTypeEnum
+    {
         Front = 0,
         Back = 1,
         Left = 2,
@@ -40581,8 +47139,10 @@ namespace Enums.app.fsm.PositionCheck {
     }
 }
 
-namespace Enums.app.Em4100.Action {
-    public enum ActionNo {
+namespace Enums.app.Em4100.Action
+{
+    public enum ActionNo
+    {
         Attack = 4,
         StrikeScratch = 5,
         StrikeDash = 6,
@@ -40610,16 +47170,20 @@ namespace Enums.app.Em4100.Action {
     }
 }
 
-namespace Enums.via.render {
-    public enum LightingTarget {
+namespace Enums.via.render
+{
+    public enum LightingTarget
+    {
         Scene = 1,
         Bake = 2,
         All = 3,
     }
 }
 
-namespace Enums.app.CharacterExistActionRestrictZoneGroup.ActionRestrictWork {
-    public enum Type {
+namespace Enums.app.CharacterExistActionRestrictZoneGroup.ActionRestrictWork
+{
+    public enum Type
+    {
         Em4000Grapple = 0,
         Em4100WallAttack = 1,
         Em4100AroundFlewover = 2,
@@ -40629,8 +47193,10 @@ namespace Enums.app.CharacterExistActionRestrictZoneGroup.ActionRestrictWork {
     }
 }
 
-namespace Enums.via.sound {
-    public enum SamplesPerAudioFrame {
+namespace Enums.via.sound
+{
+    public enum SamplesPerAudioFrame
+    {
         SamplesPerAudioFrame_32 = 32,
         SamplesPerAudioFrame_64 = 64,
         SamplesPerAudioFrame_128 = 128,
@@ -40641,8 +47207,10 @@ namespace Enums.via.sound {
     }
 }
 
-namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
-    public enum RideCarStatus {
+namespace Enums.app.Em3000.Goal.Chapter3Battle1Final
+{
+    public enum RideCarStatus
+    {
         Non = 0,
         GotoRideCar = 1,
         CanRideCar = 2,
@@ -40650,8 +47218,10 @@ namespace Enums.app.Em3000.Goal.Chapter3Battle1Final {
     }
 }
 
-namespace Enums.app.Em3100.Action.PatrolBugInstruct {
-    public enum State {
+namespace Enums.app.Em3100.Action.PatrolBugInstruct
+{
+    public enum State
+    {
         INVALID = 0,
         Start = 1,
         Loop = 2,
@@ -40659,8 +47229,10 @@ namespace Enums.app.Em3100.Action.PatrolBugInstruct {
     }
 }
 
-namespace Enums.via {
-    public enum TimeFormat {
+namespace Enums.via
+{
+    public enum TimeFormat
+    {
         H12 = 0,
         H24 = 1,
         Max = 2,
@@ -40668,16 +47240,20 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.app.Collision {
-    public enum SideType {
+namespace Enums.app.Collision
+{
+    public enum SideType
+    {
         None = 0,
         Right = 1,
         Left = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum Phase {
+namespace Enums.app.GameManager
+{
+    public enum Phase
+    {
         Setup = 0,
         Entry = 1,
         stStoreActivateGameOverlayInit = 2,
@@ -40732,15 +47308,19 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.fsm.Core {
-    public enum WorkAttribute {
+namespace Enums.via.fsm.Core
+{
+    public enum WorkAttribute
+    {
         WorkAttributeSelectBeforeAction = 0,
         WorkAttributeBitNum = 32,
     }
 }
 
-namespace Enums.app.Em8000.Override.Em8000OverrideController {
-    public enum BlendState {
+namespace Enums.app.Em8000.Override.Em8000OverrideController
+{
+    public enum BlendState
+    {
         None = 0,
         StartBlend = 1,
         Blend = 2,
@@ -40748,14 +47328,18 @@ namespace Enums.app.Em8000.Override.Em8000OverrideController {
     }
 }
 
-namespace Enums.app.AI.MansionAIEffectorZoneGroup {
-    public enum EffectorTypeEnum {
+namespace Enums.app.AI.MansionAIEffectorZoneGroup
+{
+    public enum EffectorTypeEnum
+    {
         ForbidDespawn = 0,
     }
 }
 
-namespace Enums.app.CarInGarage.WheelSpinStart {
-    public enum Routine {
+namespace Enums.app.CarInGarage.WheelSpinStart
+{
+    public enum Routine
+    {
         RevUp = 0,
         IdleSpin = 1,
         Accel = 2,
@@ -40765,29 +47349,37 @@ namespace Enums.app.CarInGarage.WheelSpinStart {
     }
 }
 
-namespace Enums.app.BirthdayFood {
-    public enum MapIconTypeDef {
+namespace Enums.app.BirthdayFood
+{
+    public enum MapIconTypeDef
+    {
         BirthdayFood = 50,
     }
 }
 
-namespace Enums.app.CH9Em7500.Action.Dive {
-    public enum Type {
+namespace Enums.app.CH9Em7500.Action.Dive
+{
+    public enum Type
+    {
         Normal = 0,
         Into = 1,
     }
 }
 
-namespace Enums.via.wwiselib {
-    public enum AudioAPIType {
+namespace Enums.via.wwiselib
+{
+    public enum AudioAPIType
+    {
         AudioAPI_Default = 0,
         AudioAPI_XAudio2 = 1,
         AudioAPI_WASAPI = 2,
     }
 }
 
-namespace Enums.app.CH9InGameContentTimer {
-    public enum ContentTypeEnum {
+namespace Enums.app.CH9InGameContentTimer
+{
+    public enum ContentTypeEnum
+    {
         Chp9BossClearTime = 0,
         Chp9CrocodileBattle = 1,
         Chp9MissionNo01 = 2,
@@ -40802,16 +47394,20 @@ namespace Enums.app.CH9InGameContentTimer {
     }
 }
 
-namespace Enums.via.motion.IkJacobian {
-    public enum MomentumModeType {
+namespace Enums.via.motion.IkJacobian
+{
+    public enum MomentumModeType
+    {
         Zero = 0,
         Animation = 1,
         TargetPos = 2,
     }
 }
 
-namespace Enums.app.CH9Em7900.ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH9Em7900.ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Fixed = 1,
         Wanderer = 2,
@@ -40820,8 +47416,10 @@ namespace Enums.app.CH9Em7900.ThinkStateSet {
     }
 }
 
-namespace Enums.via.gui {
-    public enum MouseButton {
+namespace Enums.via.gui
+{
+    public enum MouseButton
+    {
         NONE = 0,
         L = 1,
         R = 2,
@@ -40833,23 +47431,29 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Em3102.Goal.BattleRest {
-    public enum LeaveStatus {
+namespace Enums.app.Em3102.Goal.BattleRest
+{
+    public enum LeaveStatus
+    {
         Non = 0,
         Leave = 1,
         Arrive = 2,
     }
 }
 
-namespace Enums.app.CH8Em4500AimEvaluatorMarker {
-    public enum MarkerPartsType {
+namespace Enums.app.CH8Em4500AimEvaluatorMarker
+{
+    public enum MarkerPartsType
+    {
         Head = 0,
         Body = 1,
     }
 }
 
-namespace Enums.app.Nightmare.NightmareTrapManager.TrapTask {
-    public enum State {
+namespace Enums.app.Nightmare.NightmareTrapManager.TrapTask
+{
+    public enum State
+    {
         None = 0,
         WaitCraft = 1,
         Active = 2,
@@ -40859,16 +47463,20 @@ namespace Enums.app.Nightmare.NightmareTrapManager.TrapTask {
     }
 }
 
-namespace Enums.app.AI.MansionAIEvaluationParameter {
-    public enum VisibleType {
+namespace Enums.app.AI.MansionAIEvaluationParameter
+{
+    public enum VisibleType
+    {
         None = 0,
         Visible = 1,
         Invisible = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum MaterialParameterType {
+namespace Enums.via.effect.detail
+{
+    public enum MaterialParameterType
+    {
         None = 0,
         Float = 1,
         Range = 2,
@@ -40876,22 +47484,28 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.via.render.LightVolumeDecal {
-    public enum BaseAlphaMapType {
+namespace Enums.via.render.LightVolumeDecal
+{
+    public enum BaseAlphaMapType
+    {
         BaseAlpha = 0,
         Msk1ch = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400ActionController {
-    public enum WwiseSwitchListForDamage {
+namespace Enums.app.CH9Em6400ActionController
+{
+    public enum WwiseSwitchListForDamage
+    {
         Head = 0,
         Other = 1,
     }
 }
 
-namespace Enums.app.CH8Em4100ActionPoint {
-    public enum Type {
+namespace Enums.app.CH8Em4100ActionPoint
+{
+    public enum Type
+    {
         ClimbWall40 = 0,
         ClimbWall79 = 1,
         ClimbWall80 = 2,
@@ -40904,15 +47518,19 @@ namespace Enums.app.CH8Em4100ActionPoint {
     }
 }
 
-namespace Enums.via.navigation.QueryObject {
-    public enum WorkAttribute {
+namespace Enums.via.navigation.QueryObject
+{
+    public enum WorkAttribute
+    {
         MapChanged = 0,
         WorkAttributeNum = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400ActionController {
-    public enum MeshParts {
+namespace Enums.app.CH8Em4400ActionController
+{
+    public enum MeshParts
+    {
         Parts0 = 0,
         Parts1 = 1,
         Parts2 = 2,
@@ -40924,24 +47542,30 @@ namespace Enums.app.CH8Em4400ActionController {
     }
 }
 
-namespace Enums.app.Em8000ZoneGroup {
-    public enum Property {
+namespace Enums.app.Em8000ZoneGroup
+{
+    public enum Property
+    {
         INVALID = -1,
         None = 0,
         AroundPillar = 1,
     }
 }
 
-namespace Enums.via.landscape {
-    public enum InterpolateType {
+namespace Enums.via.landscape
+{
+    public enum InterpolateType
+    {
         Liner = 0,
         Bezier = 1,
         Spline = 2,
     }
 }
 
-namespace Enums.via.network {
-    public enum ServiceType {
+namespace Enums.via.network
+{
+    public enum ServiceType
+    {
         None = 0,
         Lamm = 1,
         Steam = 2,
@@ -40963,22 +47587,28 @@ namespace Enums.via.network {
     }
 }
 
-namespace Enums.app.EffectShakeCamera {
-    public enum ShakeTypeEnum {
+namespace Enums.app.EffectShakeCamera
+{
+    public enum ShakeTypeEnum
+    {
         Small = 1,
         Large = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum AtmosphericDirectionalLight {
+namespace Enums.via.render
+{
+    public enum AtmosphericDirectionalLight
+    {
         None = 0,
         Enabled = 1,
     }
 }
 
-namespace Enums.app.BirthdayTransitionController {
-    public enum StageJumpStepEnum {
+namespace Enums.app.BirthdayTransitionController
+{
+    public enum StageJumpStepEnum
+    {
         PreScenedeActivateWait = 0,
         WaitActivatePlayer = 1,
         WaitActivateStageSet = 2,
@@ -40991,8 +47621,10 @@ namespace Enums.app.BirthdayTransitionController {
     }
 }
 
-namespace Enums.CH9Em7900Effect {
-    public enum IDAlias {
+namespace Enums.CH9Em7900Effect
+{
+    public enum IDAlias
+    {
         Explosion = 0,
         Splash = 1,
         VerticalSplash = 2,
@@ -41012,16 +47644,20 @@ namespace Enums.CH9Em7900Effect {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum ControlPointH {
+namespace Enums.via.gui.detail
+{
+    public enum ControlPointH
+    {
         Left = 0,
         Center = 1,
         Right = 2,
     }
 }
 
-namespace Enums.via.simplewwise {
-    public enum User {
+namespace Enums.via.simplewwise
+{
+    public enum User
+    {
         User_0 = 0,
         User_1 = 1,
         User_2 = 2,
@@ -41030,8 +47666,10 @@ namespace Enums.via.simplewwise {
     }
 }
 
-namespace Enums.via.wwise.WwiseFloatEnumConverterElement {
-    public enum FloatEnum {
+namespace Enums.via.wwise.WwiseFloatEnumConverterElement
+{
+    public enum FloatEnum
+    {
         FloatEnum_0 = 0,
         FloatEnum_1 = 1,
         FloatEnum_2 = 2,
@@ -41046,8 +47684,10 @@ namespace Enums.via.wwise.WwiseFloatEnumConverterElement {
     }
 }
 
-namespace Enums.app.CH9PurifierEquipment {
-    public enum EffectTypeEnum {
+namespace Enums.app.CH9PurifierEquipment
+{
+    public enum EffectTypeEnum
+    {
         Numa1 = 0,
         Numa2 = 1,
         Numa3 = 2,
@@ -41056,8 +47696,10 @@ namespace Enums.app.CH9PurifierEquipment {
     }
 }
 
-namespace Enums.via.render {
-    public enum RtvDimension {
+namespace Enums.via.render
+{
+    public enum RtvDimension
+    {
         Unknown = 0,
         Buffer = 1,
         Texture1d = 2,
@@ -41070,8 +47712,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8000.Em8000Define.WpScissors {
-    public enum State {
+namespace Enums.app.Em8000.Em8000Define.WpScissors
+{
+    public enum State
+    {
         Idle = 0,
         Start = 1,
         Loop = 2,
@@ -41080,8 +47724,10 @@ namespace Enums.app.Em8000.Em8000Define.WpScissors {
     }
 }
 
-namespace Enums.app.AI.CH8MoldedCommonBoard {
-    public enum RenderTargetType {
+namespace Enums.app.AI.CH8MoldedCommonBoard
+{
+    public enum RenderTargetType
+    {
         Slow = 0,
         WhiteSlow = 1,
         Quick = 2,
@@ -41091,8 +47737,10 @@ namespace Enums.app.AI.CH8MoldedCommonBoard {
     }
 }
 
-namespace Enums.app.InteractCardanGrille {
-    public enum CardanState {
+namespace Enums.app.InteractCardanGrille
+{
+    public enum CardanState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -41108,8 +47756,10 @@ namespace Enums.app.InteractCardanGrille {
     }
 }
 
-namespace Enums.via.gui {
-    public enum GridPos {
+namespace Enums.via.gui
+{
+    public enum GridPos
+    {
         LT = 0,
         CT = 1,
         RT = 2,
@@ -41122,15 +47772,19 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.Em5400.Action.Dead {
-    public enum Type {
+namespace Enums.app.Em5400.Action.Dead
+{
+    public enum Type
+    {
         Fall = 0,
         Disperse = 1,
     }
 }
 
-namespace Enums.app.Command {
-    public enum CommandType {
+namespace Enums.app.Command
+{
+    public enum CommandType
+    {
         ButtonTrigger = 0,
         ButtonDown = 1,
         ButtonRelease = 2,
@@ -41149,8 +47803,10 @@ namespace Enums.app.Command {
     }
 }
 
-namespace Enums.via.timeline {
-    public enum PauseGroup {
+namespace Enums.via.timeline
+{
+    public enum PauseGroup
+    {
         PauseGroup_00 = 0,
         PauseGroup_01 = 1,
         PauseGroup_02 = 2,
@@ -41164,15 +47820,19 @@ namespace Enums.via.timeline {
     }
 }
 
-namespace Enums.app.Em3001.Action.Turn {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Turn
+{
+    public enum Type
+    {
         Fast = 0,
         Move = 1,
     }
 }
 
-namespace Enums.app.Em8010.Em8010Core {
-    public enum Order {
+namespace Enums.app.Em8010.Em8010Core
+{
+    public enum Order
+    {
         None = 0,
         Open = 1,
         OpenGrapple = 2,
@@ -41184,16 +47844,20 @@ namespace Enums.app.Em8010.Em8010Core {
     }
 }
 
-namespace Enums.via.render {
-    public enum TargetFlag {
+namespace Enums.via.render
+{
+    public enum TargetFlag
+    {
         None = 0,
         NeedIDBuffer = 1,
         Num = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum AxisType {
+namespace Enums.via.effect.detail
+{
+    public enum AxisType
+    {
         PositiveX = 0,
         PositiveY = 1,
         PositiveZ = 2,
@@ -41203,8 +47867,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.CH9Em6400.Goal {
-    public enum EvaluatorID {
+namespace Enums.app.CH9Em6400.Goal
+{
+    public enum EvaluatorID
+    {
         HasTarget = 0,
         OutRange = 1,
         InRange = 2,
@@ -41219,8 +47885,10 @@ namespace Enums.app.CH9Em6400.Goal {
     }
 }
 
-namespace Enums.via.render {
-    public enum ClearType {
+namespace Enums.via.render
+{
+    public enum ClearType
+    {
         RTV = 0,
         UAVUint = 1,
         UAVFloat = 2,
@@ -41234,8 +47902,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.gui.renderer.detail {
-    public enum ConstantBufferType {
+namespace Enums.via.gui.renderer.detail
+{
+    public enum ConstantBufferType
+    {
         None = 0,
         Polygon3D = 1,
         Polygon2D = 2,
@@ -41244,8 +47914,10 @@ namespace Enums.via.gui.renderer.detail {
     }
 }
 
-namespace Enums.via.motion.JointExBsplineConstraint {
-    public enum Axis {
+namespace Enums.via.motion.JointExBsplineConstraint
+{
+    public enum Axis
+    {
         X = 0,
         Y = 1,
         Z = 2,
@@ -41255,45 +47927,57 @@ namespace Enums.via.motion.JointExBsplineConstraint {
     }
 }
 
-namespace Enums.via.hid.HIDEntry {
-    public enum EnterButton {
+namespace Enums.via.hid.HIDEntry
+{
+    public enum EnterButton
+    {
         RRight = 1,
         RDown = 2,
         SystemSetting = 3,
     }
 }
 
-namespace Enums.app.fsm.CH8ElevatorButtonAction {
-    public enum ActionType {
+namespace Enums.app.fsm.CH8ElevatorButtonAction
+{
+    public enum ActionType
+    {
         DoorOpen = 0,
         DoorClose = 1,
         Call = 2,
     }
 }
 
-namespace Enums.via.render.VolumetricFogControl {
-    public enum IntegrationType {
+namespace Enums.via.render.VolumetricFogControl
+{
+    public enum IntegrationType
+    {
         Blurry = 0,
         Accurate = 1,
     }
 }
 
-namespace Enums.via.dynamics.RagdollConstraint.Initializer {
-    public enum PositionType {
+namespace Enums.via.dynamics.RagdollConstraint.Initializer
+{
+    public enum PositionType
+    {
         World = 0,
         Local = 1,
     }
 }
 
-namespace Enums.app.GameOverScreen {
-    public enum ListElemID {
+namespace Enums.app.GameOverScreen
+{
+    public enum ListElemID
+    {
         Restart = 0,
         End = 1,
     }
 }
 
-namespace Enums.app.CH9EndingControl {
-    public enum Flow {
+namespace Enums.app.CH9EndingControl
+{
+    public enum Flow
+    {
         ReadyWait = 0,
         Movie = 1,
         Credit = 2,
@@ -41303,45 +47987,57 @@ namespace Enums.app.CH9EndingControl {
     }
 }
 
-namespace Enums.app.Em3100.Action.WalkLookBack {
-    public enum Type {
+namespace Enums.app.Em3100.Action.WalkLookBack
+{
+    public enum Type
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.CH8Em4400.CH8ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH8Em4400.CH8ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         First = 1,
         Summon = 2,
     }
 }
 
-namespace Enums.app.CH9SM2644Movement {
-    public enum eEngineState {
+namespace Enums.app.CH9SM2644Movement
+{
+    public enum eEngineState
+    {
         Stop = 0,
         Driving = 1,
     }
 }
 
-namespace Enums.via.motion.IkMultipleDamageAction {
-    public enum Calculation {
+namespace Enums.via.motion.IkMultipleDamageAction
+{
+    public enum Calculation
+    {
         Default = 0,
         AddDirection = 1,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum Spp {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum Spp
+    {
         Spp_1 = 0,
         Spp_2 = 1,
         Spp_4 = 2,
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum StandbyFolderNo {
+namespace Enums.app.GameManager
+{
+    public enum StandbyFolderNo
+    {
         Chapter123 = 0,
         Chapter324 = 1,
         Chapter3 = 2,
@@ -41351,8 +48047,10 @@ namespace Enums.app.GameManager {
     }
 }
 
-namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource {
-    public enum SkinningType {
+namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource
+{
+    public enum SkinningType
+    {
         None = 0,
         Weight4 = 1,
         Weight6 = 2,
@@ -41362,8 +48060,10 @@ namespace Enums.via.effect.gpgpu.DeformedMesh.MeshCsResource {
     }
 }
 
-namespace Enums.app.JunkPartsUIAsset {
-    public enum LostPartsState {
+namespace Enums.app.JunkPartsUIAsset
+{
+    public enum LostPartsState
+    {
         DEFAULT = 0,
         FADE_IN = 1,
         FADE_OUT = 2,
@@ -41371,46 +48071,58 @@ namespace Enums.app.JunkPartsUIAsset {
     }
 }
 
-namespace Enums.app.Em3002.Action.Rest {
-    public enum Type {
+namespace Enums.app.Em3002.Action.Rest
+{
+    public enum Type
+    {
         Rest1 = 0,
         Rest2 = 1,
         Rest3 = 2,
     }
 }
 
-namespace Enums.via.network.wrangler {
-    public enum ProviderPriority {
+namespace Enums.via.network.wrangler
+{
+    public enum ProviderPriority
+    {
         Undefined = 0,
         Normal = 1,
         Critical = 2,
     }
 }
 
-namespace Enums.via.collision.detail {
-    public enum CalcToiRet {
+namespace Enums.via.collision.detail
+{
+    public enum CalcToiRet
+    {
         NoHit = 0,
         HitNoMove = 1,
         HitCcd = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum GeometryAOQuality {
+namespace Enums.via.render
+{
+    public enum GeometryAOQuality
+    {
         Low = 0,
         Middle = 1,
     }
 }
 
-namespace Enums.via.motion.IkSpineConformGround {
-    public enum COG_MANAGE_TYPE {
+namespace Enums.via.motion.IkSpineConformGround
+{
+    public enum COG_MANAGE_TYPE
+    {
         INTERNAL = 0,
         EXTERNAL = 1,
     }
 }
 
-namespace Enums.app.Em3600.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3600.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         TwoLegMove = 1,
         TwoLegStrafeMove = 2,
@@ -41454,8 +48166,10 @@ namespace Enums.app.Em3600.Action {
     }
 }
 
-namespace Enums.via.hid.HIDEntry {
-    public enum KeyboardCooperativeLevel {
+namespace Enums.via.hid.HIDEntry
+{
+    public enum KeyboardCooperativeLevel
+    {
         Background = 0,
         Foreground = 1,
         ForegroundNoWinKey = 2,
@@ -41463,45 +48177,57 @@ namespace Enums.via.hid.HIDEntry {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum MethodInvitation {
+namespace Enums.via.network.error
+{
+    public enum MethodInvitation
+    {
         Update = 0,
         Accept = 1,
         Join = 2,
     }
 }
 
-namespace Enums.via.os.asyncTaskQueue {
-    public enum WorkType {
+namespace Enums.via.os.asyncTaskQueue
+{
+    public enum WorkType
+    {
         Work = 0,
         Complete = 1,
     }
 }
 
-namespace Enums.via.navigation {
-    public enum UpdateTiming {
+namespace Enums.via.navigation
+{
+    public enum UpdateTiming
+    {
         Default = 0,
         Prev = 1,
         Late = 2,
     }
 }
 
-namespace Enums.app.fsm.StateCheck {
-    public enum IntType {
+namespace Enums.app.fsm.StateCheck
+{
+    public enum IntType
+    {
         None = 0,
         Life = 1,
     }
 }
 
-namespace Enums.via.render.RenderTargetTextureResource {
-    public enum ResolutionType {
+namespace Enums.via.render.RenderTargetTextureResource
+{
+    public enum ResolutionType
+    {
         Absolute = 0,
         Relative = 1,
     }
 }
 
-namespace Enums.app.Chain.ContactSettingParameter {
-    public enum ContactLevel {
+namespace Enums.app.Chain.ContactSettingParameter
+{
+    public enum ContactLevel
+    {
         Small = 0,
         Middle = 1,
         Large = 2,
@@ -41509,15 +48235,19 @@ namespace Enums.app.Chain.ContactSettingParameter {
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum OptionPage {
+namespace Enums.app.OptionMenu
+{
+    public enum OptionPage
+    {
         Brightness = 0,
         Screen = 1,
     }
 }
 
-namespace Enums.app.AI.CH9AIWorldBlackBoard {
-    public enum MoldedStateEnum {
+namespace Enums.app.AI.CH9AIWorldBlackBoard
+{
+    public enum MoldedStateEnum
+    {
         FULL = 0,
         LAYER = 1,
         BASS = 2,
@@ -41528,32 +48258,40 @@ namespace Enums.app.AI.CH9AIWorldBlackBoard {
     }
 }
 
-namespace Enums.app.EPVExpertWeaponLandingData {
-    public enum ZDirectionType {
+namespace Enums.app.EPVExpertWeaponLandingData
+{
+    public enum ZDirectionType
+    {
         Random = 0,
         AttackDirection = 1,
         SawRotation = 2,
     }
 }
 
-namespace Enums.via.simpleJson.Base.SuffixType {
-    public enum TypeCode {
+namespace Enums.via.simpleJson.Base.SuffixType
+{
+    public enum TypeCode
+    {
         Empty = 0,
         StrC8 = 1,
         SizeT = 2,
     }
 }
 
-namespace Enums.app.AI.MoldedCommonBoard {
-    public enum RenderTargetStatusEnum {
+namespace Enums.app.AI.MoldedCommonBoard
+{
+    public enum RenderTargetStatusEnum
+    {
         None = 0,
         Used = 1,
         UsedFromDead = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum SignatureModFlag {
+namespace Enums.via.clr
+{
+    public enum SignatureModFlag
+    {
         Ptr = 1,
         ByRef = 2,
         ValueType = 4,
@@ -41571,24 +48309,30 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.via.timeline.DialogueTimelinePlayer {
-    public enum DevPlayState {
+namespace Enums.via.timeline.DialogueTimelinePlayer
+{
+    public enum DevPlayState
+    {
         Disable = 0,
         Play = 1,
         Pause = 2,
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum Rotate90 {
+namespace Enums.via.effect.detail
+{
+    public enum Rotate90
+    {
         None = 0,
         Rotate = 1,
         RandomRotate = 2,
     }
 }
 
-namespace Enums.via.render.layer.Transparent {
-    public enum SegmentOrder {
+namespace Enums.via.render.layer.Transparent
+{
+    public enum SegmentOrder
+    {
         PreTransparent = 0,
         PreNoDepthStencil = 1,
         Transparent = 2,
@@ -41615,8 +48359,10 @@ namespace Enums.via.render.layer.Transparent {
     }
 }
 
-namespace Enums.via.landscape.GroundManager {
-    public enum GroundPipelineStateType {
+namespace Enums.via.landscape.GroundManager
+{
+    public enum GroundPipelineStateType
+    {
         CSUpdateVirtualTexture2 = 0,
         CSBuildGroundNodeList = 1,
         CSClearGroundNodeList = 2,
@@ -41652,16 +48398,20 @@ namespace Enums.via.landscape.GroundManager {
     }
 }
 
-namespace Enums.via.puppet {
-    public enum SyncPriority {
+namespace Enums.via.puppet
+{
+    public enum SyncPriority
+    {
         High = 0,
         Normal = 1,
         Low = 2,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum RayTracingDenoiserDebugView {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum RayTracingDenoiserDebugView
+    {
         GI_Reflection = 0,
         GI = 1,
         Reflection = 2,
@@ -41673,8 +48423,10 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.via.gui {
-    public enum SamplerType {
+namespace Enums.via.gui
+{
+    public enum SamplerType
+    {
         PointWrap = 0,
         PointClamp = 1,
         BilinearWrap = 4,
@@ -41687,58 +48439,74 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.StaffRollData {
-    public enum SKUType {
+namespace Enums.app.StaffRollData
+{
+    public enum SKUType
+    {
         All = 0,
         WW = 1,
         JP = 2,
     }
 }
 
-namespace Enums.app.InteractPadlock {
-    public enum PadlockNumType {
+namespace Enums.app.InteractPadlock
+{
+    public enum PadlockNumType
+    {
         Num3 = 0,
         Num5 = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum CoordinateSystemType {
+namespace Enums.via.audiorender
+{
+    public enum CoordinateSystemType
+    {
         World = 0,
         Local = 1,
     }
 }
 
-namespace Enums.app.Em8100 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8100
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.fsm.requestMenuFromFsm {
-    public enum RequestTargetMenuEnum {
+namespace Enums.app.fsm.requestMenuFromFsm
+{
+    public enum RequestTargetMenuEnum
+    {
         AmbassadorTrialInGameTitle = 0,
         AmbassadorTrialObjective = 1,
         FF030_Ex_Objective = 2,
     }
 }
 
-namespace Enums.app.LucasTrapMessage {
-    public enum TrapType {
+namespace Enums.app.LucasTrapMessage
+{
+    public enum TrapType
+    {
         Wire = 0,
         FakeBox = 1,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum RayTracingResolution {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum RayTracingResolution
+    {
         Origin_Res = 0,
         Half_Res = 1,
     }
 }
 
-namespace Enums.app.CH8Em4500ActionController.BattleCondition {
-    public enum ThinkMode {
+namespace Enums.app.CH8Em4500ActionController.BattleCondition
+{
+    public enum ThinkMode
+    {
         Free = 0,
         Rush = 1,
         SpitBeam = 2,
@@ -41748,30 +48516,38 @@ namespace Enums.app.CH8Em4500ActionController.BattleCondition {
     }
 }
 
-namespace Enums.via.render {
-    public enum TextureStreamingType {
+namespace Enums.via.render
+{
+    public enum TextureStreamingType
+    {
         None = 0,
         Streaming = 1,
         HighMap = 2,
     }
 }
 
-namespace Enums.via.network.MatchmakingRules {
-    public enum RuleType {
+namespace Enums.via.network.MatchmakingRules
+{
+    public enum RuleType
+    {
         Must = 0,
         Should = 1,
     }
 }
 
-namespace Enums.app.CheckSceneFolder {
-    public enum ControlTypeEnum {
+namespace Enums.app.CheckSceneFolder
+{
+    public enum ControlTypeEnum
+    {
         isActivate = 0,
         MAX = 1,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Grapple {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Grapple
+{
+    public enum Type
+    {
         None = 0,
         CommonTurn = 1,
         CommonHeadButt = 2,
@@ -41783,8 +48559,10 @@ namespace Enums.app.CH9Em6400.Action.Grapple {
     }
 }
 
-namespace Enums.app.CH9Em5800.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em5800.Goal.GoalGenerator
+{
+    public enum ID
+    {
         UnDiscovery = 0,
         Discovery = 1,
         Interval = 2,
@@ -41799,15 +48577,19 @@ namespace Enums.app.CH9Em5800.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.via.hid.hmd.Morpheus {
-    public enum VrModeStatusCheckTiming {
+namespace Enums.via.hid.hmd.Morpheus
+{
+    public enum VrModeStatusCheckTiming
+    {
         VrTrackerStarted = 0,
         VrVideoModeEnabled = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum ReticleColor {
+namespace Enums.app.OptionMenu
+{
+    public enum ReticleColor
+    {
         White = 0,
         Red = 1,
         Blue = 2,
@@ -41816,24 +48598,30 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.app.CH9StartCheck {
-    public enum ResultType {
+namespace Enums.app.CH9StartCheck
+{
+    public enum ResultType
+    {
         Checking = 0,
         ReturnExtraContents = 1,
         StartMainMenu = 2,
     }
 }
 
-namespace Enums.via.wwise {
-    public enum StopAllTargetType {
+namespace Enums.via.wwise
+{
+    public enum StopAllTargetType
+    {
         StopAllType_GameObject = 0,
         StopAllType_EntireComponent = 1,
         StopAllType_Global = 2,
     }
 }
 
-namespace Enums.app.CH9Em6400.Action.Step {
-    public enum Type {
+namespace Enums.app.CH9Em6400.Action.Step
+{
+    public enum Type
+    {
         In = 0,
         InLong = 1,
         Back = 2,
@@ -41845,8 +48633,10 @@ namespace Enums.app.CH9Em6400.Action.Step {
     }
 }
 
-namespace Enums.app.CH9Em5700.Action.Attack {
-    public enum Type {
+namespace Enums.app.CH9Em5700.Action.Attack
+{
+    public enum Type
+    {
         Stab = 0,
         RearStab = 1,
         GroundStab = 2,
@@ -41854,8 +48644,10 @@ namespace Enums.app.CH9Em5700.Action.Attack {
     }
 }
 
-namespace Enums.hikako.ChallengeActivityManager {
-    public enum ChallengeType {
+namespace Enums.hikako.ChallengeActivityManager
+{
+    public enum ChallengeType
+    {
         INVALID = 0,
         Nightmare = 1,
         Nightmare_Terror = 2,
@@ -41863,8 +48655,10 @@ namespace Enums.hikako.ChallengeActivityManager {
     }
 }
 
-namespace Enums.via.gui.detail {
-    public enum SceneInfoAttribute {
+namespace Enums.via.gui.detail
+{
+    public enum SceneInfoAttribute
+    {
         GUICameraOnly = 0,
         PrimaryOnly = 1,
         Both = 2,
@@ -41872,8 +48666,10 @@ namespace Enums.via.gui.detail {
     }
 }
 
-namespace Enums.via.Window {
-    public enum Message {
+namespace Enums.via.Window
+{
+    public enum Message
+    {
         Create = 0,
         Close = 1,
         Redraw = 2,
@@ -41903,16 +48699,20 @@ namespace Enums.via.Window {
     }
 }
 
-namespace Enums.via {
-    public enum AccountPickerState {
+namespace Enums.via
+{
+    public enum AccountPickerState
+    {
         NotSupported = 0,
         Idle = 1,
         Running = 2,
     }
 }
 
-namespace Enums.app.Richpresence {
-    public enum CH9ContextType {
+namespace Enums.app.Richpresence
+{
+    public enum CH9ContextType
+    {
         Easy = 0,
         Normal = 1,
         Hard = 2,
@@ -41920,8 +48720,10 @@ namespace Enums.app.Richpresence {
     }
 }
 
-namespace Enums.app.Cp7MainMenu {
-    public enum ListElementSub {
+namespace Enums.app.Cp7MainMenu
+{
+    public enum ListElementSub
+    {
         Continue = 0,
         NewGame = 1,
         Survival = 2,
@@ -41932,31 +48734,39 @@ namespace Enums.app.Cp7MainMenu {
     }
 }
 
-namespace Enums.via.motion.CppSampleAppendChild {
-    public enum Test {
+namespace Enums.via.motion.CppSampleAppendChild
+{
+    public enum Test
+    {
         A = 0,
         B = 1,
         C = 2,
     }
 }
 
-namespace Enums.app.OptionListItem {
-    public enum Mode {
+namespace Enums.app.OptionListItem
+{
+    public enum Mode
+    {
         Normal = 0,
         Button = 1,
         Record = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800ActionController {
-    public enum DodgeQueType {
+namespace Enums.app.CH9Em7800ActionController
+{
+    public enum DodgeQueType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.via.dialog {
-    public enum Error {
+namespace Enums.via.dialog
+{
+    public enum Error
+    {
         Nothing = 0,
         NotSupported = -1,
         InvalidParam = -2,
@@ -41966,16 +48776,20 @@ namespace Enums.via.dialog {
     }
 }
 
-namespace Enums.app.EnemyGrappleBase {
-    public enum GrappleStartType {
+namespace Enums.app.EnemyGrappleBase
+{
+    public enum GrappleStartType
+    {
         Sync = 0,
         Delay = 1,
         NoPosLerp = 2,
     }
 }
 
-namespace Enums.app.EffectDecal {
-    public enum DecalUpEnum {
+namespace Enums.app.EffectDecal
+{
+    public enum DecalUpEnum
+    {
         XPlus = 0,
         XMinus = 1,
         YPlus = 2,
@@ -41985,16 +48799,20 @@ namespace Enums.app.EffectDecal {
     }
 }
 
-namespace Enums.app.ItemCombiner {
-    public enum Result {
+namespace Enums.app.ItemCombiner
+{
+    public enum Result
+    {
         Success = 0,
         Fail = 1,
         FailSerum = 2,
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum ProcessType {
+namespace Enums.app.Achievement
+{
+    public enum ProcessType
+    {
         Idle = 0,
         SetupEvent = 1,
         SetupAchievement = 2,
@@ -42003,8 +48821,10 @@ namespace Enums.app.Achievement {
     }
 }
 
-namespace Enums.app.CH8Em4400ActionController.BattleCondition {
-    public enum KneelDamageReaction {
+namespace Enums.app.CH8Em4400ActionController.BattleCondition
+{
+    public enum KneelDamageReaction
+    {
         None = 0,
         Small_v1 = 1,
         Small_v2 = 2,
@@ -42014,8 +48834,10 @@ namespace Enums.app.CH8Em4400ActionController.BattleCondition {
     }
 }
 
-namespace Enums.app.CH9MoldedActionController {
-    public enum DodgeVariation {
+namespace Enums.app.CH9MoldedActionController
+{
+    public enum DodgeVariation
+    {
         Left = 0,
         LeftBack = 1,
         Right = 2,
@@ -42023,8 +48845,10 @@ namespace Enums.app.CH9MoldedActionController {
     }
 }
 
-namespace Enums.via.wwise {
-    public enum EventStatusType {
+namespace Enums.via.wwise
+{
+    public enum EventStatusType
+    {
         None = 0,
         Reserved = 1,
         Posted = 2,
@@ -42035,8 +48859,10 @@ namespace Enums.via.wwise {
     }
 }
 
-namespace Enums.app.CH8Em4000.CH8ThinkStateSet {
-    public enum Type {
+namespace Enums.app.CH8Em4000.CH8ThinkStateSet
+{
+    public enum Type
+    {
         Default = 0,
         Mimicry = 1,
         Dregs = 2,
@@ -42048,16 +48874,20 @@ namespace Enums.app.CH8Em4000.CH8ThinkStateSet {
     }
 }
 
-namespace Enums.via.hid.hmd.MorpheusDevice {
-    public enum StereoEye {
+namespace Enums.via.hid.hmd.MorpheusDevice
+{
+    public enum StereoEye
+    {
         Left = 0,
         Right = 1,
         Count = 2,
     }
 }
 
-namespace Enums.app.Em3000.IK.Em8000FBIKController.FBIKStatus {
-    public enum State {
+namespace Enums.app.Em3000.IK.Em8000FBIKController.FBIKStatus
+{
+    public enum State
+    {
         INVALID = -1,
         None = 0,
         Start = 1,
@@ -42069,8 +48899,10 @@ namespace Enums.app.Em3000.IK.Em8000FBIKController.FBIKStatus {
     }
 }
 
-namespace Enums.app.Collision.MaterialId {
-    public enum TypeLabel {
+namespace Enums.app.Collision.MaterialId
+{
+    public enum TypeLabel
+    {
         NoneA = 0,
         SoilA = 1,
         SandA = 2,
@@ -42122,8 +48954,10 @@ namespace Enums.app.Collision.MaterialId {
     }
 }
 
-namespace Enums.app.Elevator {
-    public enum Floor {
+namespace Enums.app.Elevator
+{
+    public enum Floor
+    {
         Floor_4F = 0,
         Floor_3F = 1,
         Floor_2F = 2,
@@ -42133,8 +48967,10 @@ namespace Enums.app.Elevator {
     }
 }
 
-namespace Enums.via.effect.EffectTest {
-    public enum PtLifeState {
+namespace Enums.via.effect.EffectTest
+{
+    public enum PtLifeState
+    {
         PtLifeState_Unknown = 0,
         PtLifeState_Wait = 1,
         PtLifeState_Initialize = 2,
@@ -42146,8 +48982,10 @@ namespace Enums.via.effect.EffectTest {
     }
 }
 
-namespace Enums.via.render {
-    public enum Topology {
+namespace Enums.via.render
+{
+    public enum Topology
+    {
         Undefined = 0,
         PointList = 1,
         LineList = 2,
@@ -42193,8 +49031,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum NfpErrorSelector {
+namespace Enums.via.nnfc.nfp
+{
+    public enum NfpErrorSelector
+    {
         None = 0,
         NotSupport = 1,
         InvalidFormat = 2,
@@ -42209,8 +49049,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.Em8001.Action.AttackCombo {
-    public enum Type {
+namespace Enums.app.Em8001.Action.AttackCombo
+{
+    public enum Type
+    {
         INVALID = -1,
         None = 0,
         Combo_Swing = 1,
@@ -42219,16 +49061,20 @@ namespace Enums.app.Em8001.Action.AttackCombo {
     }
 }
 
-namespace Enums.via.render.RenderConfig {
-    public enum SharpnessType {
+namespace Enums.via.render.RenderConfig
+{
+    public enum SharpnessType
+    {
         Custom = 0,
         Default = 1,
         FidelityFXCAS = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Generate {
-    public enum GenerateTable {
+namespace Enums.app.CH8Em4400.Action.CH8Generate
+{
+    public enum GenerateTable
+    {
         HeadStart = 1001,
         HeadEnd = 1002,
         ChestStart = 2001,
@@ -42240,8 +49086,10 @@ namespace Enums.app.CH8Em4400.Action.CH8Generate {
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum ResistResult {
+namespace Enums.app.EnemyActionController
+{
+    public enum ResistResult
+    {
         Succeeded = 0,
         Damaged = 1,
         Lost = 2,
@@ -42252,8 +49100,10 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.app.CarInGarage.HijackedByEnemy {
-    public enum DestinationGroup {
+namespace Enums.app.CarInGarage.HijackedByEnemy
+{
+    public enum DestinationGroup
+    {
         WallSouth = 1,
         WallWest = 2,
         WallNorth = 4,
@@ -42275,8 +49125,10 @@ namespace Enums.app.CarInGarage.HijackedByEnemy {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em7900.Action
+{
+    public enum ActionNo
+    {
         MountTry = 4,
         Grapple = 5,
         Appear = 6,
@@ -42302,8 +49154,10 @@ namespace Enums.app.CH9Em7900.Action {
     }
 }
 
-namespace Enums.via.gui {
-    public enum ResolutionAdjustCondition {
+namespace Enums.via.gui
+{
+    public enum ResolutionAdjustCondition
+    {
         Always = 0,
         Expanding = 1,
         Shrinking = 2,
@@ -42311,22 +49165,28 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.physics.ShapeClosestResult {
-    public enum Result {
+namespace Enums.via.physics.ShapeClosestResult
+{
+    public enum Result
+    {
         Success = 0,
         Failure = 1,
     }
 }
 
-namespace Enums.via.motion.ChainResource {
-    public enum ChainAttrFlags {
+namespace Enums.via.motion.ChainResource
+{
+    public enum ChainAttrFlags
+    {
         None = 0,
         ModelCollisionPreset = 1,
     }
 }
 
-namespace Enums.via.charset.detail {
-    public enum ElementType {
+namespace Enums.via.charset.detail
+{
+    public enum ElementType
+    {
         Unknown = 0,
         Ascii = 1,
         Kana = 2,
@@ -42335,23 +49195,29 @@ namespace Enums.via.charset.detail {
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum ParentSettingAfterEvent {
+namespace Enums.app.GameEventAction
+{
+    public enum ParentSettingAfterEvent
+    {
         NoChange = 0,
         RestoreBeforeEvent = 1,
         Clear = 2,
     }
 }
 
-namespace Enums.via.sound.SoundTriggerElement {
-    public enum PositionType {
+namespace Enums.via.sound.SoundTriggerElement
+{
+    public enum PositionType
+    {
         Set = 0,
         Follow = 1,
     }
 }
 
-namespace Enums.app.Em4000.Action {
-    public enum ActionNo {
+namespace Enums.app.Em4000.Action
+{
+    public enum ActionNo
+    {
         BiteTry = 4,
         NearBiteTry = 5,
         Strike = 6,
@@ -42383,8 +49249,10 @@ namespace Enums.app.Em4000.Action {
     }
 }
 
-namespace Enums.app.CH9Em5700 {
-    public enum ThinkState {
+namespace Enums.app.CH9Em5700
+{
+    public enum ThinkState
+    {
         None = 0,
         BugHole = 1,
         NoLostPlayer = 2,
@@ -42393,8 +49261,10 @@ namespace Enums.app.CH9Em5700 {
     }
 }
 
-namespace Enums.via.effect {
-    public enum PlayerAction {
+namespace Enums.via.effect
+{
+    public enum PlayerAction
+    {
         Idle = 0,
         Start = 1,
         Kill = 2,
@@ -42406,8 +49276,10 @@ namespace Enums.via.effect {
     }
 }
 
-namespace Enums.via.network.protocol {
-    public enum SendOption {
+namespace Enums.via.network.protocol
+{
+    public enum SendOption
+    {
         None = 0,
         Unreliable = 0,
         Unreliable_Low = 0,
@@ -42423,8 +49295,10 @@ namespace Enums.via.network.protocol {
     }
 }
 
-namespace Enums.app.Em3000.Em8000CorpsebagManager {
-    public enum State {
+namespace Enums.app.Em3000.Em8000CorpsebagManager
+{
+    public enum State
+    {
         INVALID = -1,
         None = 0,
         PlayerInRoom = 1,
@@ -42434,23 +49308,29 @@ namespace Enums.app.Em3000.Em8000CorpsebagManager {
     }
 }
 
-namespace Enums.via.motion.JointRemapValue.RemapValueItem {
-    public enum TRS {
+namespace Enums.via.motion.JointRemapValue.RemapValueItem
+{
+    public enum TRS
+    {
         Trans = 0,
         Rot = 1,
         Scale = 2,
     }
 }
 
-namespace Enums.app.wwise.WwiseOptionMenu {
-    public enum VirtualSurround {
+namespace Enums.app.wwise.WwiseOptionMenu
+{
+    public enum VirtualSurround
+    {
         NoUse = 0,
         Use = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum I3DL2ReverbParameter {
+namespace Enums.via.audiorender
+{
+    public enum I3DL2ReverbParameter
+    {
         DryVolume = 0,
         OutputChannels = 1,
         Room = 2,
@@ -42468,8 +49348,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.via.hid.gamePlayer {
-    public enum PlayerOtherDeviceHandlingCaps {
+namespace Enums.via.hid.gamePlayer
+{
+    public enum PlayerOtherDeviceHandlingCaps
+    {
         None = 0,
         UseFirstSelected = 2,
         UseLastSelected = 4,
@@ -42477,8 +49359,10 @@ namespace Enums.via.hid.gamePlayer {
     }
 }
 
-namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource {
-    public enum RibbonFollowComputeShaderType {
+namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource
+{
+    public enum RibbonFollowComputeShaderType
+    {
         InitializeCS = 0,
         ConstructCS = 1,
         DepthOcclusion = 2,
@@ -42487,14 +49371,18 @@ namespace Enums.via.effect.gpgpu.RibbonFollowCS.RibbonFollowResource {
     }
 }
 
-namespace Em4100Effect {
-    public enum IDAlias {
+namespace Em4100Effect
+{
+    public enum IDAlias
+    {
         LostHead = 0,
     }
 }
 
-namespace Enums.app.Em3100 {
-    public enum ThinkState {
+namespace Enums.app.Em3100
+{
+    public enum ThinkState
+    {
         None = 0,
         FF = 1,
         FFLast = 2,
@@ -42510,16 +49398,20 @@ namespace Enums.app.Em3100 {
     }
 }
 
-namespace Enums.via.motion.Chain {
-    public enum GravityCoord {
+namespace Enums.via.motion.Chain
+{
+    public enum GravityCoord
+    {
         Default = 0,
         World = 1,
         Local = 2,
     }
 }
 
-namespace Enums.via.render.RenderTargetOperator {
-    public enum CompareFunc {
+namespace Enums.via.render.RenderTargetOperator
+{
+    public enum CompareFunc
+    {
         AlwaysPass = 0,
         AlwaysIgnore = 1,
         GreaterEqual = 2,
@@ -42527,29 +49419,37 @@ namespace Enums.via.render.RenderTargetOperator {
     }
 }
 
-namespace Enums.app.CH8HUDControl {
-    public enum Monster {
+namespace Enums.app.CH8HUDControl
+{
+    public enum Monster
+    {
         Mather = 0,
         WhiteMoldead = 1,
     }
 }
 
-namespace Enums.via.render.RenderOutput {
-    public enum RenderMode {
+namespace Enums.via.render.RenderOutput
+{
+    public enum RenderMode
+    {
         Default = 0,
         LightWeight = 1,
     }
 }
 
-namespace Enums.app.vr.VrPlayerVisibleController {
-    public enum PlayerVisibleType {
+namespace Enums.app.vr.VrPlayerVisibleController
+{
+    public enum PlayerVisibleType
+    {
         Default = 0,
         OnlyArm = 1,
     }
 }
 
-namespace Enums.app.FsmStateTracker {
-    public enum Transition {
+namespace Enums.app.FsmStateTracker
+{
+    public enum Transition
+    {
         None = 0,
         Start = 1,
         Update = 2,
@@ -42557,8 +49457,10 @@ namespace Enums.app.FsmStateTracker {
     }
 }
 
-namespace Enums.via.movie.Movie {
-    public enum PlayState {
+namespace Enums.via.movie.Movie
+{
+    public enum PlayState
+    {
         Idle = 0,
         InitializeStart = 1,
         Initialized = 2,
@@ -42578,8 +49480,10 @@ namespace Enums.via.movie.Movie {
     }
 }
 
-namespace Enums.app {
-    public enum EnemyActionCategory {
+namespace Enums.app
+{
+    public enum EnemyActionCategory
+    {
         General = 0,
         Move = 1,
         Attack = 2,
@@ -42590,46 +49494,58 @@ namespace Enums.app {
     }
 }
 
-namespace Enums.app.MessageLabelGUI {
-    public enum VrGuiParamIndex {
+namespace Enums.app.MessageLabelGUI
+{
+    public enum VrGuiParamIndex
+    {
         Subtitle = 0,
         Interact = 1,
     }
 }
 
-namespace Enums.app.CH8Em4100ActionController {
-    public enum BackstepQueType {
+namespace Enums.app.CH8Em4100ActionController
+{
+    public enum BackstepQueType
+    {
         Back = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8PartsEnable {
-    public enum PartsSetType {
+namespace Enums.app.fsm.CH8PartsEnable
+{
+    public enum PartsSetType
+    {
         EnableSet = 0,
         DisableSet = 1,
     }
 }
 
-namespace Enums.app.CH9Em7900.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em7900.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         First = 1,
         Summon = 2,
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.Damage {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
         Air = 2,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum FramerateType {
+namespace Enums.app.OptionMenu
+{
+    public enum FramerateType
+    {
         FIX30 = 0,
         FIX60 = 1,
         VARIABLE = 2,
@@ -42637,8 +49553,10 @@ namespace Enums.app.OptionMenu {
     }
 }
 
-namespace Enums.via.navigation.algorithm.MapGraphAstar {
-    public enum Result {
+namespace Enums.via.navigation.algorithm.MapGraphAstar
+{
+    public enum Result
+    {
         Success = 0,
         Fail = 1,
         Interrupt = 2,
@@ -42647,15 +49565,19 @@ namespace Enums.via.navigation.algorithm.MapGraphAstar {
     }
 }
 
-namespace Enums.via.hid {
-    public enum NpadJoyDeviceType {
+namespace Enums.via.hid
+{
+    public enum NpadJoyDeviceType
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.CH8ActivateObjectOperation.OperationData {
-    public enum OperationType {
+namespace Enums.app.CH8ActivateObjectOperation.OperationData
+{
+    public enum OperationType
+    {
         AND = 0,
         OR = 1,
         EXOR = 2,
@@ -42663,15 +49585,19 @@ namespace Enums.app.CH8ActivateObjectOperation.OperationData {
     }
 }
 
-namespace Enums.app.CH9Em6700.Action.Move {
-    public enum Type {
+namespace Enums.app.CH9Em6700.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.CardGameItem {
-    public enum BetUpDownType {
+namespace Enums.app.CardGameItem
+{
+    public enum BetUpDownType
+    {
         NoUse = 0,
         BetUp = 1,
         MyBetDown = 2,
@@ -42683,15 +49609,19 @@ namespace Enums.app.CardGameItem {
     }
 }
 
-namespace Enums.app.EPVExpertCharacterBloodData {
-    public enum DamageHitTypeEnum {
+namespace Enums.app.EPVExpertCharacterBloodData
+{
+    public enum DamageHitTypeEnum
+    {
         None = 0,
         WeakPoint = 1,
     }
 }
 
-namespace Enums.app.GameFlowFsmManager {
-    public enum GameFlowKindEnum {
+namespace Enums.app.GameFlowFsmManager
+{
+    public enum GameFlowKindEnum
+    {
         C00_Main = 0,
         C01_Main = 1,
         C03_1_Main = 2,
@@ -42717,8 +49647,10 @@ namespace Enums.app.GameFlowFsmManager {
     }
 }
 
-namespace Enums.app.Havok.ClothAnimationColtroller {
-    public enum AnimationStatus {
+namespace Enums.app.Havok.ClothAnimationColtroller
+{
+    public enum AnimationStatus
+    {
         AnimationStatus_Animation = 0,
         AnimationStatus_Simulation = 1,
         AnimationStatus_AnimationToSimulationEvent = 2,
@@ -42726,15 +49658,19 @@ namespace Enums.app.Havok.ClothAnimationColtroller {
     }
 }
 
-namespace Enums.app.Em3001.Action.Zigzag {
-    public enum Type {
+namespace Enums.app.Em3001.Action.Zigzag
+{
+    public enum Type
+    {
         Normal = 0,
         TNormal = 1,
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum CommandIconType {
+namespace Enums.app.InventoryMenu
+{
+    public enum CommandIconType
+    {
         Use = 0,
         Search = 1,
         Combine = 2,
@@ -42747,8 +49683,10 @@ namespace Enums.app.InventoryMenu {
     }
 }
 
-namespace Enums.app.Em8910.Action {
-    public enum ActionNo {
+namespace Enums.app.Em8910.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Idle_L = 1,
         Idle_R = 2,
@@ -42768,8 +49706,10 @@ namespace Enums.app.Em8910.Action {
     }
 }
 
-namespace Enums.app.Collision.AttackUserData {
-    public enum Attribute {
+namespace Enums.app.Collision.AttackUserData
+{
+    public enum Attribute
+    {
         DirLine = 0,
         DirCenter = 1,
         DirAngleY = 2,
@@ -42840,24 +49780,30 @@ namespace Enums.app.Collision.AttackUserData {
     }
 }
 
-namespace Enums.app.fsm.ChangeDamageGUI {
-    public enum ConnectType {
+namespace Enums.app.fsm.ChangeDamageGUI
+{
+    public enum ConnectType
+    {
         NotSet = 0,
         Connect = 1,
         Disconnect = 2,
     }
 }
 
-namespace Enums.app.Em3100.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em3100.Action.Damage
+{
+    public enum Type
+    {
         Head = 0,
         Left = 1,
         Right = 2,
     }
 }
 
-namespace Enums.app.Em4400.Goal {
-    public enum CH8EvaluatorID {
+namespace Enums.app.Em4400.Goal
+{
+    public enum CH8EvaluatorID
+    {
         HasTarget = 0,
         CanGrapple = 1,
         Front = 2,
@@ -42879,8 +49825,10 @@ namespace Enums.app.Em4400.Goal {
     }
 }
 
-namespace Enums.app.CH8StateSwitchM1 {
-    public enum CHP8_1 {
+namespace Enums.app.CH8StateSwitchM1
+{
+    public enum CHP8_1
+    {
         SILENCE = 0,
         CHP8_INTRO_START = 1,
         CHP8_EM4600_BT_START = 2,
@@ -42890,23 +49838,29 @@ namespace Enums.app.CH8StateSwitchM1 {
     }
 }
 
-namespace Enums.via.motion.ContinueOptions {
-    public enum ContinueType {
+namespace Enums.via.motion.ContinueOptions
+{
+    public enum ContinueType
+    {
         Non = 0,
         PrevEnd = 1,
         ExitFrame = 2,
     }
 }
 
-namespace Enums.app.CH8Em4400.Action.CH8Damage {
-    public enum Type {
+namespace Enums.app.CH8Em4400.Action.CH8Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.app.Em3000.Action.Rest {
-    public enum Type {
+namespace Enums.app.Em3000.Action.Rest
+{
+    public enum Type
+    {
         Rest1 = 0,
         Rest2 = 1,
         Rest3 = 2,
@@ -42916,8 +49870,10 @@ namespace Enums.app.Em3000.Action.Rest {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_514ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_514ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -42932,28 +49888,36 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app {
-    public enum CERO {
+namespace Enums.app
+{
+    public enum CERO
+    {
         None = 0,
         D = 1,
         Z = 2,
     }
 }
 
-namespace Enums.via.render {
-    public enum VFXResolutionDepthShrink {
+namespace Enums.via.render
+{
+    public enum VFXResolutionDepthShrink
+    {
         Farthest = 0,
     }
 }
 
-namespace Enums.app.CH9Em7800.ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH9Em7800.ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.Em9900.Em9900Parameter {
-    public enum Group {
+namespace Enums.app.Em9900.Em9900Parameter
+{
+    public enum Group
+    {
         NONE = 0,
         A = 1,
         B = 2,
@@ -42962,8 +49926,10 @@ namespace Enums.app.Em9900.Em9900Parameter {
     }
 }
 
-namespace Enums.app.AdditionalTutorial {
-    public enum AdditionalChapter {
+namespace Enums.app.AdditionalTutorial
+{
+    public enum AdditionalChapter
+    {
         Chapter7_1 = 0,
         Chapter7_2 = 1,
         Chapter7_3 = 2,
@@ -42971,29 +49937,37 @@ namespace Enums.app.AdditionalTutorial {
     }
 }
 
-namespace Enums.app.Em3000.Action.OpenDoor {
-    public enum Type {
+namespace Enums.app.Em3000.Action.OpenDoor
+{
+    public enum Type
+    {
         Normal = 0,
         Kick = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum TrackingParamType {
+namespace Enums.app.OptionMenu
+{
+    public enum TrackingParamType
+    {
         Ingame = 0,
         MainMenu = 1,
         IngameTitle = 2,
     }
 }
 
-namespace Enums.app.CH9Em6800 {
-    public enum eMotionBankID {
+namespace Enums.app.CH9Em6800
+{
+    public enum eMotionBankID
+    {
         Base = 0,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum Channel_712ch {
+namespace Enums.via.audiorender
+{
+    public enum Channel_712ch
+    {
         L = 0,
         R = 1,
         C = 2,
@@ -43008,38 +49982,48 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.Em5520 {
-    public enum ThinkState {
+namespace Enums.app.Em5520
+{
+    public enum ThinkState
+    {
         None = 0,
         NoLostPlayer = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum MouseBtnRev {
+namespace Enums.app.OptionMenu
+{
+    public enum MouseBtnRev
+    {
         Normal = 0,
         Reverse = 1,
     }
 }
 
-namespace Enums.app.CH8RewardArticle {
-    public enum Category {
+namespace Enums.app.CH8RewardArticle
+{
+    public enum Category
+    {
         Item = 0,
         Weapon = 1,
         PowerUp = 2,
     }
 }
 
-namespace Enums.via.motion.detail {
-    public enum ChainDebugColFilterDisplayMode {
+namespace Enums.via.motion.detail
+{
+    public enum ChainDebugColFilterDisplayMode
+    {
         All = 0,
         Group = 1,
         ModelCollision = 2,
     }
 }
 
-namespace Enums.app.Em4000.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.Em4000.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Low1 = 10,
         FromLow2_Speedy = 11,
@@ -43070,23 +50054,29 @@ namespace Enums.app.Em4000.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.MotionGroupTable {
-    public enum VersionNo {
+namespace Enums.app.MotionGroupTable
+{
+    public enum VersionNo
+    {
         Initial = 0,
         EnableBankType = 2,
     }
 }
 
-namespace Enums.via.render.PrimitiveCS {
-    public enum DrawType {
+namespace Enums.via.render.PrimitiveCS
+{
+    public enum DrawType
+    {
         Transparent = 0,
         Overlay = 1,
         StochasticTransparent = 2,
     }
 }
 
-namespace Enums.via.navigation.map {
-    public enum SectionType : uint {
+namespace Enums.via.navigation.map
+{
+    public enum SectionType : uint
+    {
         NoSection = 0,
         Owner = 1,
         Section = 2,
@@ -43096,8 +50086,10 @@ namespace Enums.via.navigation.map {
     }
 }
 
-namespace Enums.via.motion.MultiTransitionSolver {
-    public enum LocalFlagIdx {
+namespace Enums.via.motion.MultiTransitionSolver
+{
+    public enum LocalFlagIdx
+    {
         IgnoreFirstInterpolation = 0,
         ForceFrontFade = 1,
         MultiTransEnd = 2,
@@ -43108,8 +50100,10 @@ namespace Enums.via.motion.MultiTransitionSolver {
     }
 }
 
-namespace Enums.app.InventoryMenu {
-    public enum StepType {
+namespace Enums.app.InventoryMenu
+{
+    public enum StepType
+    {
         Invalid = 0,
         OpenWait = 1,
         ItemSlot = 2,
@@ -43137,8 +50131,10 @@ namespace Enums.app.InventoryMenu {
     }
 }
 
-namespace Enums.via.render.detail {
-    public enum PrimDrawType {
+namespace Enums.via.render.detail
+{
+    public enum PrimDrawType
+    {
         Unknown = 0,
         Billboard2D = 1,
         Billboard3D = 2,
@@ -43159,8 +50155,10 @@ namespace Enums.via.render.detail {
     }
 }
 
-namespace Enums.via.vr.psCamera {
-    public enum PSCameraAttr : uint {
+namespace Enums.via.vr.psCamera
+{
+    public enum PSCameraAttr : uint
+    {
         Ignore = 0xffffffffu,
         AecAgcEnable = 0,
         AecAgcDisable = 1,
@@ -43173,8 +50171,10 @@ namespace Enums.via.vr.psCamera {
     }
 }
 
-namespace Enums.app.CrusherUIAsset {
-    public enum CounterPanelState {
+namespace Enums.app.CrusherUIAsset
+{
+    public enum CounterPanelState
+    {
         DEFAULT = 0,
         EMPTY = 1,
         FULL = 2,
@@ -43182,8 +50182,10 @@ namespace Enums.app.CrusherUIAsset {
     }
 }
 
-namespace Enums.via.detail_qt {
-    public enum qt_cell_link_bit {
+namespace Enums.via.detail_qt
+{
+    public enum qt_cell_link_bit
+    {
         qt_cell_link_bit_none = 0,
         qt_cell_link_bit_00 = 1,
         qt_cell_link_bit_01 = 2,
@@ -43192,8 +50194,10 @@ namespace Enums.via.detail_qt {
     }
 }
 
-namespace Enums.via {
-    public enum SharePlayConnectionStatus {
+namespace Enums.via
+{
+    public enum SharePlayConnectionStatus
+    {
         Disable = -1,
         Failed = -2,
         Dormant = 0,
@@ -43202,8 +50206,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum WireframeTypeEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum WireframeTypeEnum
+    {
         None = 0,
         Wire = 1,
         FilledWire = 2,
@@ -43211,8 +50217,10 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.app.Em4200Grapple.Hash.Fsm {
-    public enum MountFinishType {
+namespace Enums.app.Em4200Grapple.Hash.Fsm
+{
+    public enum MountFinishType
+    {
         Kill = 0,
         BlownAway = 1,
         HeadShot = 2,
@@ -43222,21 +50230,27 @@ namespace Enums.app.Em4200Grapple.Hash.Fsm {
     }
 }
 
-namespace Enums.app.Em8940 {
-    public enum ThinkOrder {
+namespace Enums.app.Em8940
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.navigation.RelationMapInfo {
-    public enum Attribute {
+namespace Enums.via.navigation.RelationMapInfo
+{
+    public enum Attribute
+    {
         UseOpimizedData = 0,
         AttributeNum = 1,
     }
 }
 
-namespace Enums.app.Collision.ShapeUserData {
-    public enum SideCalcType {
+namespace Enums.app.Collision.ShapeUserData
+{
+    public enum SideCalcType
+    {
         None = 0,
         FixR = 1,
         FixL = 2,
@@ -43244,8 +50258,10 @@ namespace Enums.app.Collision.ShapeUserData {
     }
 }
 
-namespace Enums.hikako.ActivityManager {
-    public enum ExtraActivityType {
+namespace Enums.hikako.ActivityManager
+{
+    public enum ExtraActivityType
+    {
         Objective_74 = 0,
         Objective_08 = 1,
         Objective_09 = 2,
@@ -43259,15 +50275,19 @@ namespace Enums.hikako.ActivityManager {
     }
 }
 
-namespace Enums.app.GameManager {
-    public enum PlayerChangeType {
+namespace Enums.app.GameManager
+{
+    public enum PlayerChangeType
+    {
         Pl0000 = 0,
         Pl2000 = 1,
     }
 }
 
-namespace Enums.via.gui {
-    public enum LightGroupId {
+namespace Enums.via.gui
+{
+    public enum LightGroupId
+    {
         Group0 = 0,
         Group1 = 1,
         Group2 = 2,
@@ -43279,8 +50299,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.hikako {
-    public enum PadIndex {
+namespace Enums.hikako
+{
+    public enum PadIndex
+    {
         Pad_00 = 0,
         Pad_01 = 1,
         Pad_02 = 2,
@@ -43294,8 +50316,10 @@ namespace Enums.hikako {
     }
 }
 
-namespace Enums.app.Em8100.Em8100ActionController {
-    public enum Message {
+namespace Enums.app.Em8100.Em8100ActionController
+{
+    public enum Message
+    {
         Idle = 0,
         IdleBurnEnd = 1,
         Attack = 2,
@@ -43306,8 +50330,10 @@ namespace Enums.app.Em8100.Em8100ActionController {
     }
 }
 
-namespace Enums.via.gui {
-    public enum ControlPoint {
+namespace Enums.via.gui
+{
+    public enum ControlPoint
+    {
         LeftTop = 0,
         LeftCenter = 4,
         LeftBottom = 8,
@@ -43320,15 +50346,19 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.app.CH8CheckSceneFolder {
-    public enum ControlTypeEnum {
+namespace Enums.app.CH8CheckSceneFolder
+{
+    public enum ControlTypeEnum
+    {
         isActivate = 0,
         MAX = 1,
     }
 }
 
-namespace Enums.app.PlayerTerrainMoveChecker {
-    public enum CheckClimbResult {
+namespace Enums.app.PlayerTerrainMoveChecker
+{
+    public enum CheckClimbResult
+    {
         None = 0,
         Success_Stand = 1,
         Success_Crouch = 2,
@@ -43345,8 +50375,10 @@ namespace Enums.app.PlayerTerrainMoveChecker {
     }
 }
 
-namespace Enums.app.CharacterDefine {
-    public enum MoveType {
+namespace Enums.app.CharacterDefine
+{
+    public enum MoveType
+    {
         Idle = 0,
         Walk = 1,
         Run = 2,
@@ -43357,8 +50389,10 @@ namespace Enums.app.CharacterDefine {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum MaterialDebugType {
+namespace Enums.via.landscape
+{
+    public enum MaterialDebugType
+    {
         None = 0,
         SampleCount = 1,
         LocalUV = 2,
@@ -43368,14 +50402,18 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.FirstSettingMenu {
-    public enum ModeDef {
+namespace Enums.app.FirstSettingMenu
+{
+    public enum ModeDef
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.app.CarInGarage {
-    public enum CollisionID {
+namespace Enums.app.CarInGarage
+{
+    public enum CollisionID
+    {
         PressNormal = 0,
         PressInForwardMove = 1,
         PressInReverseMove = 2,
@@ -43404,8 +50442,10 @@ namespace Enums.app.CarInGarage {
     }
 }
 
-namespace Enums.app.Achievement {
-    public enum ID {
+namespace Enums.app.Achievement
+{
+    public enum ID
+    {
         PLATINUM_000 = 0,
         GOLD_000 = 1,
         GOLD_001 = 2,
@@ -43469,8 +50509,10 @@ namespace Enums.app.Achievement {
     }
 }
 
-namespace Enums.via.effect.detail {
-    public enum EmitterContextType {
+namespace Enums.via.effect.detail
+{
+    public enum EmitterContextType
+    {
         Unknown = 0,
         Billboard2D = 1,
         Billboard3D = 2,
@@ -43513,8 +50555,10 @@ namespace Enums.via.effect.detail {
     }
 }
 
-namespace Enums.app.Em3000.Em3000ActionController {
-    public enum Message {
+namespace Enums.app.Em3000.Em3000ActionController
+{
+    public enum Message
+    {
         AppearUnDiscovery = 0,
         AppearDiscoveryShort = 1,
         AppearDiscoveryMiddle = 2,
@@ -43540,16 +50584,20 @@ namespace Enums.app.Em3000.Em3000ActionController {
     }
 }
 
-namespace Enums.via.motion.detail.ChainNodeData {
-    public enum AttrFlags {
+namespace Enums.via.motion.detail.ChainNodeData
+{
+    public enum AttrFlags
+    {
         None = 0,
         PartMotionBlend = 1,
         Jiggle = 2,
     }
 }
 
-namespace Enums.via.dynamics {
-    public enum RayCastOption {
+namespace Enums.via.dynamics
+{
+    public enum RayCastOption
+    {
         AllHits = 0,
         DisableBackFacingTriangleHits = 1,
         DisableFrontFacingTriangleHits = 2,
@@ -43562,8 +50610,10 @@ namespace Enums.via.dynamics {
     }
 }
 
-namespace Enums.via {
-    public enum UserIndex {
+namespace Enums.via
+{
+    public enum UserIndex
+    {
         User0 = 0,
         User1 = 1,
         User2 = 2,
@@ -43588,8 +50638,10 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.landscape.beta {
-    public enum SplatTextureEnum {
+namespace Enums.via.landscape.beta
+{
+    public enum SplatTextureEnum
+    {
         Albedo = 0,
         Normal = 1,
         Height = 2,
@@ -43597,8 +50649,10 @@ namespace Enums.via.landscape.beta {
     }
 }
 
-namespace Enums.via.sound {
-    public enum SoundIdCategory {
+namespace Enums.via.sound
+{
+    public enum SoundIdCategory
+    {
         None = 999000000,
         Trigger = 999000001,
         Bus = 999000002,
@@ -43607,8 +50661,10 @@ namespace Enums.via.sound {
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum GuideMapResolution {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum GuideMapResolution
+    {
         GuideMapResolution_32x32 = 6,
         GuideMapResolution_64x64 = 7,
         GuideMapResolution_128x128 = 8,
@@ -43617,8 +50673,10 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.via.render {
-    public enum CullMode {
+namespace Enums.via.render
+{
+    public enum CullMode
+    {
         None = 1,
         Front = 2,
         Back = 3,
@@ -43626,16 +50684,20 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.Em8001.Message {
-    public enum CorresponceExistMessageType {
+namespace Enums.app.Em8001.Message
+{
+    public enum CorresponceExistMessageType
+    {
         Retire = 0,
         Override = 1,
         WaitForEnd = 2,
     }
 }
 
-namespace Enums.app.Em3600.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em3600.Action.Damage
+{
+    public enum Type
+    {
         TwoLegDamage = 0,
         FourLegDamage = 1,
         FireDamage = 2,
@@ -43645,50 +50707,64 @@ namespace Enums.app.Em3600.Action.Damage {
     }
 }
 
-namespace Enums.app.MenuManager {
-    public enum InteractOperationCursorType {
+namespace Enums.app.MenuManager
+{
+    public enum InteractOperationCursorType
+    {
         Down = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.PlayerDamageController {
-    public enum WwiseDamageType {
+namespace Enums.app.PlayerDamageController
+{
+    public enum WwiseDamageType
+    {
         Damage = 0,
         Guard = 1,
     }
 }
 
-namespace Enums.app.OptionMenu {
-    public enum VrFilterTypeIndex {
+namespace Enums.app.OptionMenu
+{
+    public enum VrFilterTypeIndex
+    {
         Horizon = 0,
         Overall = 1,
     }
 }
 
-namespace Enums.app.CH8ActivateObjectOperation.OperationData {
-    public enum IntCompareTarget {
+namespace Enums.app.CH8ActivateObjectOperation.OperationData
+{
+    public enum IntCompareTarget
+    {
         Variable = 0,
         Input = 1,
     }
 }
 
-namespace Enums.via.hid.textInput {
-    public enum TextInputSystemMessage {
+namespace Enums.via.hid.textInput
+{
+    public enum TextInputSystemMessage
+    {
         Decided = 0,
         Canceled = 1,
         CanceledAndEnded = 2,
     }
 }
 
-namespace Enums.via.telemetry.GetServerTimeRequest {
-    public enum DateTimeFormat {
+namespace Enums.via.telemetry.GetServerTimeRequest
+{
+    public enum DateTimeFormat
+    {
         ISO8601 = 0,
     }
 }
 
-namespace Enums.via.gui {
-    public enum LinkInputDirection {
+namespace Enums.via.gui
+{
+    public enum LinkInputDirection
+    {
         Up = 0,
         Right = 1,
         Down = 2,
@@ -43696,8 +50772,10 @@ namespace Enums.via.gui {
     }
 }
 
-namespace Enums.via.render.DepthOfField {
-    public enum CircularDOFKernelRadius {
+namespace Enums.via.render.DepthOfField
+{
+    public enum CircularDOFKernelRadius
+    {
         Radius4 = 0,
         Radius6 = 1,
         Radius8 = 2,
@@ -43705,8 +50783,10 @@ namespace Enums.via.render.DepthOfField {
     }
 }
 
-namespace Enums.app.Havok {
-    public enum LayerType {
+namespace Enums.app.Havok
+{
+    public enum LayerType
+    {
         CollideAll = 0,
         CollideNone = 1,
         Dummy02 = 2,
@@ -43731,8 +50811,10 @@ namespace Enums.app.Havok {
     }
 }
 
-namespace Enums.via.physics {
-    public enum RequestState {
+namespace Enums.via.physics
+{
+    public enum RequestState
+    {
         None = 0,
         Faulted = 1,
         RanToCompletion = 2,
@@ -43741,8 +50823,10 @@ namespace Enums.via.physics {
     }
 }
 
-namespace Enums.app.QuickSlotItemIcon {
-    public enum State {
+namespace Enums.app.QuickSlotItemIcon
+{
+    public enum State
+    {
         Default = 0,
         Focus = 1,
         UnFocus = 2,
@@ -43752,8 +50836,10 @@ namespace Enums.app.QuickSlotItemIcon {
     }
 }
 
-namespace Enums.via.storage.saveService {
-    public enum SaveSlot {
+namespace Enums.via.storage.saveService
+{
+    public enum SaveSlot
+    {
         Auto = 0,
         SystemMaxOffset = -128,
         System = -1,
@@ -43762,8 +50848,10 @@ namespace Enums.via.storage.saveService {
     }
 }
 
-namespace Enums.app.CH9Em6400.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em6400.Action
+{
+    public enum ActionNo
+    {
         Appear = 4,
         Walk = 5,
         Confront = 6,
@@ -43786,8 +50874,10 @@ namespace Enums.app.CH9Em6400.Action {
     }
 }
 
-namespace Enums.app.CH9PlayerFinishMoveChecker {
-    public enum FinishMoveType {
+namespace Enums.app.CH9PlayerFinishMoveChecker
+{
+    public enum FinishMoveType
+    {
         None = 0,
         AttackDown = 1,
         SneakB = 2,
@@ -43798,8 +50888,10 @@ namespace Enums.app.CH9PlayerFinishMoveChecker {
     }
 }
 
-namespace Enums.via.gui.renderer {
-    public enum PrimitiveError {
+namespace Enums.via.gui.renderer
+{
+    public enum PrimitiveError
+    {
         NoError = 0,
         InsufficientMemory = 1,
         InvalidState = 2,
@@ -43808,22 +50900,28 @@ namespace Enums.via.gui.renderer {
     }
 }
 
-namespace Enums.app.Em4000ActionController {
-    public enum DestinationType {
+namespace Enums.app.Em4000ActionController
+{
+    public enum DestinationType
+    {
         ChangeThink = 0,
         SelfKill = 1,
     }
 }
 
-namespace Enums.app.fsm.CH8CheckEnemySpawned {
-    public enum CheckTable {
+namespace Enums.app.fsm.CH8CheckEnemySpawned
+{
+    public enum CheckTable
+    {
         IsSpawned = 0,
         IsUpdate = 1,
     }
 }
 
-namespace Enums.via.autoplay.AutoPlayManager {
-    public enum AutoPlayStatus {
+namespace Enums.via.autoplay.AutoPlayManager
+{
+    public enum AutoPlayStatus
+    {
         Wait = 0,
         Play = 1,
         Convert = 2,
@@ -43831,8 +50929,10 @@ namespace Enums.via.autoplay.AutoPlayManager {
     }
 }
 
-namespace Enums.app.EffectCommonDefine {
-    public enum EffectActionOnParentDisappear {
+namespace Enums.app.EffectCommonDefine
+{
+    public enum EffectActionOnParentDisappear
+    {
         None = 0,
         Finish = 1,
         Kill = 2,
@@ -43840,15 +50940,19 @@ namespace Enums.app.EffectCommonDefine {
     }
 }
 
-namespace Enums.app.Em4000.Action.Move {
-    public enum CrawlMode {
+namespace Enums.app.Em4000.Action.Move
+{
+    public enum CrawlMode
+    {
         Wait = 0,
         Walk = 1,
     }
 }
 
-namespace Enums.via.render.ExperimentalRayTrace {
-    public enum VFXMedianFilter {
+namespace Enums.via.render.ExperimentalRayTrace
+{
+    public enum VFXMedianFilter
+    {
         Vertical = 0,
         Horizontal = 1,
         Plus = 2,
@@ -43857,8 +50961,10 @@ namespace Enums.via.render.ExperimentalRayTrace {
     }
 }
 
-namespace Enums.app.CH9Em7800.Goal.GoalGenerator {
-    public enum ID {
+namespace Enums.app.CH9Em7800.Goal.GoalGenerator
+{
+    public enum ID
+    {
         Appear = 0,
         Wander = 1,
         Discovery = 2,
@@ -43900,8 +51006,10 @@ namespace Enums.app.CH9Em7800.Goal.GoalGenerator {
     }
 }
 
-namespace Enums.app.CH8ResultMenu {
-    public enum Process {
+namespace Enums.app.CH8ResultMenu
+{
+    public enum Process
+    {
         eProc_Prepare = 0,
         eProc_Wait = 1,
         eProc_LogoDisp = 2,
@@ -43915,8 +51023,10 @@ namespace Enums.app.CH8ResultMenu {
     }
 }
 
-namespace Enums.via.render {
-    public enum MaterialShadingType {
+namespace Enums.via.render
+{
+    public enum MaterialShadingType
+    {
         Standard = 0,
         Decal = 1,
         DecalWithMetallic = 2,
@@ -43943,15 +51053,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion.tree.GamePadTriggerNode {
-    public enum TriggerKind {
+namespace Enums.via.motion.tree.GamePadTriggerNode
+{
+    public enum TriggerKind
+    {
         Left = 0,
         Right = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000KneeDown {
-    public enum KneeDownAttackType {
+namespace Enums.app.Em8000.Action.Em8000KneeDown
+{
+    public enum KneeDownAttackType
+    {
         None = 0,
         SwingAttack = 1,
         CrazyAttack = 2,
@@ -43959,22 +51073,28 @@ namespace Enums.app.Em8000.Action.Em8000KneeDown {
     }
 }
 
-namespace Enums.app.CH9Em5850 {
-    public enum ThinkOrder {
+namespace Enums.app.CH9Em5850
+{
+    public enum ThinkOrder
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.render {
-    public enum HDROutputFormat {
+namespace Enums.via.render
+{
+    public enum HDROutputFormat
+    {
         None = 0,
         HDR10 = 1,
         scRGB = 2,
     }
 }
 
-namespace Enums.app.InteractShadowPuzzle {
-    public enum PuzzleState {
+namespace Enums.app.InteractShadowPuzzle
+{
+    public enum PuzzleState
+    {
         NotStart = 0,
         Init = 1,
         MainMove = 2,
@@ -43987,8 +51107,10 @@ namespace Enums.app.InteractShadowPuzzle {
     }
 }
 
-namespace Enums.via.network.session {
-    public enum CompOperator {
+namespace Enums.via.network.session
+{
+    public enum CompOperator
+    {
         None = 0,
         EQ = 1,
         NE = 2,
@@ -43999,16 +51121,20 @@ namespace Enums.via.network.session {
     }
 }
 
-namespace Enums.app.Attention {
-    public enum Type {
+namespace Enums.app.Attention
+{
+    public enum Type
+    {
         Player = 0,
         Enemy = 1,
         Marker = 2,
     }
 }
 
-namespace Enums.via.render.Shadow {
-    public enum ShadowPriority {
+namespace Enums.via.render.Shadow
+{
+    public enum ShadowPriority
+    {
         Low = 0,
         Normal = 1,
         High = 2,
@@ -44016,8 +51142,10 @@ namespace Enums.via.render.Shadow {
     }
 }
 
-namespace Enums.app.MoldedActionController {
-    public enum WwiseSwitchList {
+namespace Enums.app.MoldedActionController
+{
+    public enum WwiseSwitchList
+    {
         HeadON = 0,
         HeadOFF = 1,
         LeftArmON = 2,
@@ -44027,8 +51155,10 @@ namespace Enums.app.MoldedActionController {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum LowPassFilterParameter {
+namespace Enums.via.audiorender
+{
+    public enum LowPassFilterParameter
+    {
         OutputGain = 0,
         OutputGainDb = 1,
         Frequency = 2,
@@ -44038,35 +51168,45 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH9Em7900ActionController {
-    public enum AngerStatus {
+namespace Enums.app.CH9Em7900ActionController
+{
+    public enum AngerStatus
+    {
         Normal = 0,
         NeedAnger = 1,
         Anger = 2,
     }
 }
 
-namespace Enums.app.GameEventAction {
-    public enum InterpStartTypeEnum {
+namespace Enums.app.GameEventAction
+{
+    public enum InterpStartTypeEnum
+    {
         DelayPosAndRot = 0,
         DelayPosOnly = 1,
     }
 }
 
-namespace Enums.app.Humanoid {
-    public enum HandAdjustModeType {
+namespace Enums.app.Humanoid
+{
+    public enum HandAdjustModeType
+    {
         AdjustFromRoot = 0,
         AdjustFromElbow = 1,
     }
 }
 
-namespace Enums.via.effect.graph {
-    public enum ItemType {
+namespace Enums.via.effect.graph
+{
+    public enum ItemType
+    {
     }
 }
 
-namespace Enums.via.nnfc.nfp {
-    public enum ErrorDialogCode {
+namespace Enums.via.nnfc.nfp
+{
+    public enum ErrorDialogCode
+    {
         None = 0,
         WirelessOff = 1,
         NotSupport = 2,
@@ -44074,8 +51214,10 @@ namespace Enums.via.nnfc.nfp {
     }
 }
 
-namespace Enums.app.Gunturret {
-    public enum Rno {
+namespace Enums.app.Gunturret
+{
+    public enum Rno
+    {
         Searching = 0,
         Detected = 1,
         Shooting = 2,
@@ -44084,23 +51226,29 @@ namespace Enums.app.Gunturret {
     }
 }
 
-namespace Enums.app.MissionDetail {
-    public enum Category {
+namespace Enums.app.MissionDetail
+{
+    public enum Category
+    {
         Main = 0,
         Sub = 1,
         Other = 2,
     }
 }
 
-namespace Enums.via.physics.ShapeCastResult {
-    public enum Result {
+namespace Enums.via.physics.ShapeCastResult
+{
+    public enum Result
+    {
         Success = 0,
         Failure = 1,
     }
 }
 
-namespace Enums.via.motion.SecondaryRetarget {
-    public enum IkCalcType {
+namespace Enums.via.motion.SecondaryRetarget
+{
+    public enum IkCalcType
+    {
         Ik2Bone = 0,
         Ik2BoneBeast = 1,
         Ik3BoneZigzag = 2,
@@ -44108,8 +51256,10 @@ namespace Enums.via.motion.SecondaryRetarget {
     }
 }
 
-namespace Enums.via.Window.MessageArgs {
-    public enum Button {
+namespace Enums.via.Window.MessageArgs
+{
+    public enum Button
+    {
         L = 0,
         R = 1,
         M = 2,
@@ -44118,16 +51268,20 @@ namespace Enums.via.Window.MessageArgs {
     }
 }
 
-namespace Enums.app.HandLightDirectionDelayController {
-    public enum FollowState {
+namespace Enums.app.HandLightDirectionDelayController
+{
+    public enum FollowState
+    {
         Wait = 0,
         FollowSlow = 1,
         FollowFast = 2,
     }
 }
 
-namespace Enums.app.Em3002.Em3002WwiseMonitoredValue {
-    public enum GameRank {
+namespace Enums.app.Em3002.Em3002WwiseMonitoredValue
+{
+    public enum GameRank
+    {
         Zero = 0,
         One = 1,
         Two = 2,
@@ -44142,30 +51296,38 @@ namespace Enums.app.Em3002.Em3002WwiseMonitoredValue {
     }
 }
 
-namespace Enums.app.CH9Em5800Think {
-    public enum ThinkMode {
+namespace Enums.app.CH9Em5800Think
+{
+    public enum ThinkMode
+    {
         Normal = 0,
         NoThink = 1,
         Passive = 2,
     }
 }
 
-namespace Enums.app.BedRoom.BedRoomMonitoringGimick {
-    public enum FalidMessageSituation {
+namespace Enums.app.BedRoom.BedRoomMonitoringGimick
+{
+    public enum FalidMessageSituation
+    {
         EnterRoom = 0,
         TraySurvice = 1,
     }
 }
 
-namespace Enums.app.Em3100.Action.Run {
-    public enum Type {
+namespace Enums.app.Em3100.Action.Run
+{
+    public enum Type
+    {
         Default = 0,
         Patrol = 1,
     }
 }
 
-namespace Enums.app.CH9Em5901.Action {
-    public enum ActionNo {
+namespace Enums.app.CH9Em5901.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Attack = 1,
         Damage = 2,
@@ -44173,8 +51335,10 @@ namespace Enums.app.CH9Em5901.Action {
     }
 }
 
-namespace Enums.via.motion.IkLegSpine {
-    public enum RayCastSkipOption {
+namespace Enums.via.motion.IkLegSpine
+{
+    public enum RayCastSkipOption
+    {
         None = 1,
         DIV2 = 2,
         DIV4 = 4,
@@ -44182,24 +51346,30 @@ namespace Enums.via.motion.IkLegSpine {
     }
 }
 
-namespace Enums.via.autoplay.action.AutoAttack {
-    public enum TurningSpeed {
+namespace Enums.via.autoplay.action.AutoAttack
+{
+    public enum TurningSpeed
+    {
         Turning_Fast = 0,
         Turning_Normal = 1,
         Turning_Slow = 2,
     }
 }
 
-namespace Enums.via.fsm.TreeNode {
-    public enum Attribute {
+namespace Enums.via.fsm.TreeNode
+{
+    public enum Attribute
+    {
         BranchOnly = 0,
         DisableNetworkSync = 1,
         AttributeBitNum = 32,
     }
 }
 
-namespace Enums.app.Cp7TwentyOneInGameData {
-    public enum BoolType {
+namespace Enums.app.Cp7TwentyOneInGameData
+{
+    public enum BoolType
+    {
         IsFingerBetGame = 0,
         IsElectricBetGame = 1,
         IsSawBetGame = 2,
@@ -44207,16 +51377,20 @@ namespace Enums.app.Cp7TwentyOneInGameData {
     }
 }
 
-namespace Enums.app {
-    public enum ActiveUserPadPairingResult {
+namespace Enums.app
+{
+    public enum ActiveUserPadPairingResult
+    {
         OK = 0,
         NecessaryAccountPicker = 1,
         NecessaryLastInputDevice = 2,
     }
 }
 
-namespace Enums.via.hid {
-    public enum MouseButton : uint {
+namespace Enums.via.hid
+{
+    public enum MouseButton : uint
+    {
         NONE = 0,
         L = 1,
         R = 2,
@@ -44229,15 +51403,19 @@ namespace Enums.via.hid {
     }
 }
 
-namespace Enums.app.Em3002.Action.OpenDoor {
-    public enum Type {
+namespace Enums.app.Em3002.Action.OpenDoor
+{
+    public enum Type
+    {
         Normal = 0,
         Kick = 1,
     }
 }
 
-namespace Enums.via.effect.vortexel {
-    public enum VelocityShapeType {
+namespace Enums.via.effect.vortexel
+{
+    public enum VelocityShapeType
+    {
         Box = 0,
         Sphere = 1,
         Cone = 2,
@@ -44245,51 +51423,65 @@ namespace Enums.via.effect.vortexel {
     }
 }
 
-namespace Enums.app.CH9Em7800.Action.WanderIdle {
-    public enum Type {
+namespace Enums.app.CH9Em7800.Action.WanderIdle
+{
+    public enum Type
+    {
         Normal = 0,
     }
 }
 
-namespace Enums.app.PharmacyDictionary {
-    public enum PageMoveTo {
+namespace Enums.app.PharmacyDictionary
+{
+    public enum PageMoveTo
+    {
         Prev = -1,
         Next = 1,
     }
 }
 
-namespace Enums.app.CH9Em7800ActionController {
-    public enum MoveType {
+namespace Enums.app.CH9Em7800ActionController
+{
+    public enum MoveType
+    {
         Default = 0,
         ForceSolo = 1,
     }
 }
 
-namespace Enums.via.effect.gpgpu.PolygonCS.PolygonResource {
-    public enum PolygonComputeShaderType {
+namespace Enums.via.effect.gpgpu.PolygonCS.PolygonResource
+{
+    public enum PolygonComputeShaderType
+    {
         InitializeCS = 0,
         MaxType = 1,
     }
 }
 
-namespace Enums.app.Em8000.Action.Em8000ActionBase {
-    public enum SequenceEndType {
+namespace Enums.app.Em8000.Action.Em8000ActionBase
+{
+    public enum SequenceEndType
+    {
         None = 0,
         ActionEnd = 1,
         NextState = 2,
     }
 }
 
-namespace Enums.app.fsm.CH8ItemTest {
-    public enum CheckTarget {
+namespace Enums.app.fsm.CH8ItemTest
+{
+    public enum CheckTarget
+    {
         Inventory = 0,
         ItemBox = 1,
         InventoryAndItemBox = 2,
     }
 }
 
-namespace Enums.via.hid.virtualKeyboard {
-    public enum VirtualKeyboardResult {
+namespace Enums.via.hid.virtualKeyboard
+{
+    public enum VirtualKeyboardResult
+    {
         OK = 0,
         Canceled = 1,
         Aborted = 2,
@@ -44298,8 +51490,10 @@ namespace Enums.via.hid.virtualKeyboard {
     }
 }
 
-namespace Enums.via.network.error {
-    public enum Level {
+namespace Enums.via.network.error
+{
+    public enum Level
+    {
         None = 0,
         Request = 1,
         Service = 2,
@@ -44309,8 +51503,10 @@ namespace Enums.via.network.error {
     }
 }
 
-namespace Enums.via.motion {
-    public enum JointGroup {
+namespace Enums.via.motion
+{
+    public enum JointGroup
+    {
         Default = 0,
         Group1 = 1,
         Group2 = 2,
@@ -44321,8 +51517,10 @@ namespace Enums.via.motion {
     }
 }
 
-namespace Enums.via.os.http_client {
-    public enum RedirectPolicy {
+namespace Enums.via.os.http_client
+{
+    public enum RedirectPolicy
+    {
         Never = 0,
         Always = 1,
         DisallowHttpsToHttp = 2,
@@ -44331,8 +51529,10 @@ namespace Enums.via.os.http_client {
     }
 }
 
-namespace Enums.app.Em8001.Message {
-    public enum Tag {
+namespace Enums.app.Em8001.Message
+{
+    public enum Tag
+    {
         None = 0,
         General_Player_Encount_Near_A = 10100,
         General_Player_Encount_Near_B = 10101,
@@ -44437,8 +51637,10 @@ namespace Enums.app.Em8001.Message {
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum WavChunkTag {
+namespace Enums.via.audiorender
+{
+    public enum WavChunkTag
+    {
         Riff = 1380533830,
         Fmt = 1718449184,
         Data = 1684108385,
@@ -44455,8 +51657,10 @@ namespace Enums.via.audiorender {
     }
 }
 
-namespace Enums.app.CH8Em4500WwiseStateList {
-    public enum Em4500StateID {
+namespace Enums.app.CH8Em4500WwiseStateList
+{
+    public enum Em4500StateID
+    {
         BLADE_LV1 = 0,
         BLADE_LV2 = 1,
         END = 2,
@@ -44465,8 +51669,10 @@ namespace Enums.app.CH8Em4500WwiseStateList {
     }
 }
 
-namespace Enums.via.landscape {
-    public enum BakerBakeTarget {
+namespace Enums.via.landscape
+{
+    public enum BakerBakeTarget
+    {
         Mesh = 0,
         Path = 1,
         Road = 2,
@@ -44477,8 +51683,10 @@ namespace Enums.via.landscape {
     }
 }
 
-namespace Enums.app.Weapon {
-    public enum MotionID {
+namespace Enums.app.Weapon
+{
+    public enum MotionID
+    {
         Idle = 0,
         Attack = 1,
         GetWeapon = 2,
@@ -44498,16 +51706,20 @@ namespace Enums.app.Weapon {
     }
 }
 
-namespace Enums.app.InventoryContextMenu {
-    public enum ResultType {
+namespace Enums.app.InventoryContextMenu
+{
+    public enum ResultType
+    {
         NowSelecting = 0,
         Canceled = 1,
         Selected = 2,
     }
 }
 
-namespace Enums.via.clr {
-    public enum PropertyFlag {
+namespace Enums.via.clr
+{
+    public enum PropertyFlag
+    {
         SpecialName = 512,
         RTSpecialName = 1024,
         HasDefault = 4096,
@@ -44515,8 +51727,10 @@ namespace Enums.via.clr {
     }
 }
 
-namespace Enums.app.CarInGarage.DrivedByEnemy {
-    public enum Mode {
+namespace Enums.app.CarInGarage.DrivedByEnemy
+{
+    public enum Mode
+    {
         CrashInReverse = 0,
         CrashInFront = 1,
         Front = 2,
@@ -44529,27 +51743,35 @@ namespace Enums.app.CarInGarage.DrivedByEnemy {
     }
 }
 
-namespace Enums.via.network.context {
-    public enum Option {
+namespace Enums.via.network.context
+{
+    public enum Option
+    {
         None = 0,
     }
 }
 
-namespace Enums.app.CH9Em7500Order {
-    public enum OrderType {
+namespace Enums.app.CH9Em7500Order
+{
+    public enum OrderType
+    {
         WarpTo = 0,
     }
 }
 
-namespace Enums.app.fsm.CH8TramPuzzleAction {
-    public enum Type {
+namespace Enums.app.fsm.CH8TramPuzzleAction
+{
+    public enum Type
+    {
         None = 0,
         Overlapping = 1,
     }
 }
 
-namespace Enums.via.render.compress {
-    public enum JpegSamplingRatio {
+namespace Enums.via.render.compress
+{
+    public enum JpegSamplingRatio
+    {
         YUV444 = 0,
         YUV422 = 1,
         YUV420 = 2,
@@ -44557,15 +51779,19 @@ namespace Enums.via.render.compress {
     }
 }
 
-namespace Enums.via.geometry {
-    public enum BrushType {
+namespace Enums.via.geometry
+{
+    public enum BrushType
+    {
         Additive = 0,
         Subtractive = 1,
     }
 }
 
-namespace Enums.via.wwiselib {
-    public enum WwiseModuleType {
+namespace Enums.via.wwiselib
+{
+    public enum WwiseModuleType
+    {
         Default = 0,
         SimpleWwise = 1,
         Wwise = 2,
@@ -44573,30 +51799,38 @@ namespace Enums.via.wwiselib {
     }
 }
 
-namespace Enums.via.timeline.UserCurvePlayer {
-    public enum DevPlayState {
+namespace Enums.via.timeline.UserCurvePlayer
+{
+    public enum DevPlayState
+    {
         Disable = 0,
         Play = 1,
         Pause = 2,
     }
 }
 
-namespace Enums.app.MapManager {
-    public enum MapChangeDir {
+namespace Enums.app.MapManager
+{
+    public enum MapChangeDir
+    {
         Up = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.audiorender {
-    public enum WavTypeId {
+namespace Enums.via.audiorender
+{
+    public enum WavTypeId
+    {
         WAVE = 1463899717,
         adtl = 1633973356,
     }
 }
 
-namespace Enums.app.OptionKeyBind {
-    public enum State {
+namespace Enums.app.OptionKeyBind
+{
+    public enum State
+    {
         Selection = 0,
         KeyReceiving = 1,
         EmptyCutin = 2,
@@ -44605,38 +51839,48 @@ namespace Enums.app.OptionKeyBind {
     }
 }
 
-namespace Enums.app.ClothCollision.CollisionInfo {
-    public enum ShapeType {
+namespace Enums.app.ClothCollision.CollisionInfo
+{
+    public enum ShapeType
+    {
         Plane = 0,
         Sphere = 1,
         Capsule = 2,
     }
 }
 
-namespace Enums.app.CH8Em4500.Action.CH8Damage {
-    public enum Type {
+namespace Enums.app.CH8Em4500.Action.CH8Damage
+{
+    public enum Type
+    {
         Normal = 0,
         Down = 1,
     }
 }
 
-namespace Enums.via.behaviortree.action.Trace {
-    public enum TraceType {
+namespace Enums.via.behaviortree.action.Trace
+{
+    public enum TraceType
+    {
         Info = 0,
         Warning = 1,
         Error = 2,
     }
 }
 
-namespace Enums.via.detail.atomic {
-    public enum SizeClassifier {
+namespace Enums.via.detail.atomic
+{
+    public enum SizeClassifier
+    {
         Default = 0,
         Native = 1,
     }
 }
 
-namespace Enums.via.behaviortree.action {
-    public enum DataSetOn {
+namespace Enums.via.behaviortree.action
+{
+    public enum DataSetOn
+    {
         Start = 0,
         Update = 1,
         NodeEndNotified = 2,
@@ -44644,8 +51888,10 @@ namespace Enums.via.behaviortree.action {
     }
 }
 
-namespace Enums.via.render {
-    public enum BlueNoiseSpp {
+namespace Enums.via.render
+{
+    public enum BlueNoiseSpp
+    {
         BlueNoiseSpp_1spp = 0,
         BlueNoiseSpp_2spp = 1,
         BlueNoiseSpp_4spp = 2,
@@ -44659,8 +51905,10 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.via.motion.JointInfo {
-    public enum Type {
+namespace Enums.via.motion.JointInfo
+{
+    public enum Type
+    {
         Joint = 0,
         Append = 1,
         Extra = 2,
@@ -44668,8 +51916,10 @@ namespace Enums.via.motion.JointInfo {
     }
 }
 
-namespace Enums.via {
-    public enum UserState {
+namespace Enums.via
+{
+    public enum UserState
+    {
         Invalid = 65535,
         Login = 0,
         Logout = 1,
@@ -44677,24 +51927,30 @@ namespace Enums.via {
     }
 }
 
-namespace Enums.via.motion.IkLeg {
-    public enum RayCastSkipOption {
+namespace Enums.via.motion.IkLeg
+{
+    public enum RayCastSkipOption
+    {
         None = 1,
         DIV2 = 2,
         DIV4 = 4,
     }
 }
 
-namespace Enums.app.Em3001.Em3001WwiseMonitoredValue {
-    public enum PropertyEncount {
+namespace Enums.app.Em3001.Em3001WwiseMonitoredValue
+{
+    public enum PropertyEncount
+    {
         InCamera = 0,
         OutCamera = 1,
         Max = 2,
     }
 }
 
-namespace Enums.app.CH8GameRankManager {
-    public enum RankPointType {
+namespace Enums.app.CH8GameRankManager
+{
+    public enum RankPointType
+    {
         PlGetItem = 0,
         EmAttackFailed = 1,
         PlDying = 2,
@@ -44704,8 +51960,10 @@ namespace Enums.app.CH8GameRankManager {
     }
 }
 
-namespace Enums.via.render.PrimitiveMesh.Attribute {
-    public enum BufferType {
+namespace Enums.via.render.PrimitiveMesh.Attribute
+{
+    public enum BufferType
+    {
         None = 0,
         Instancing = 1,
         GpuInstacing = 2,
@@ -44714,8 +51972,10 @@ namespace Enums.via.render.PrimitiveMesh.Attribute {
     }
 }
 
-namespace Enums.via.motion.RetargetFourLegRig {
-    public enum JointTypes {
+namespace Enums.via.motion.RetargetFourLegRig
+{
+    public enum JointTypes
+    {
         Head = 0,
         EndNeck = 1,
         BaseNeck = 2,
@@ -44732,8 +51992,10 @@ namespace Enums.via.motion.RetargetFourLegRig {
     }
 }
 
-namespace Enums.app.CH9ShellManager {
-    public enum ThrowingWeaponType {
+namespace Enums.app.CH9ShellManager
+{
+    public enum ThrowingWeaponType
+    {
         Knuckle = 0,
         CH9_WP000 = 1,
         CH9_WP001 = 2,
@@ -44748,28 +52010,36 @@ namespace Enums.app.CH9ShellManager {
     }
 }
 
-namespace Enums.app.TutorialGUI {
-    public enum VRFixMenu {
+namespace Enums.app.TutorialGUI
+{
+    public enum VRFixMenu
+    {
         CRAFTBENCHINVENTORY = 4,
     }
 }
 
-namespace Enums.via.render.layer.PostDeferredLighting {
-    public enum Segment {
+namespace Enums.via.render.layer.PostDeferredLighting
+{
+    public enum Segment
+    {
         Default = 0,
     }
 }
 
-namespace Enums.app.Em3101.Action {
-    public enum ActionNo {
+namespace Enums.app.Em3101.Action
+{
+    public enum ActionNo
+    {
         Idle = 0,
         Run = 1,
         Grapple = 2,
     }
 }
 
-namespace Enums.app.EnemyActionController {
-    public enum StandingType {
+namespace Enums.app.EnemyActionController
+{
+    public enum StandingType
+    {
         Standing = 0,
         Downing = 1,
         Crouching = 2,
@@ -44777,37 +52047,47 @@ namespace Enums.app.EnemyActionController {
     }
 }
 
-namespace Enums.via.render {
-    public enum GlobalSDFResolution {
+namespace Enums.via.render
+{
+    public enum GlobalSDFResolution
+    {
         W128xH64xD128 = 0,
     }
 }
 
-namespace Enums.via.memory {
-    public enum AllocPolicy {
+namespace Enums.via.memory
+{
+    public enum AllocPolicy
+    {
         Efficiency = 0,
         Default = 1,
         Performance = 2,
     }
 }
 
-namespace Enums.via.wwise.SetState2 {
-    public enum SetTiming {
+namespace Enums.via.wwise.SetState2
+{
+    public enum SetTiming
+    {
         Start = 0,
         End = 1,
     }
 }
 
-namespace Enums.via.fighter.FighterActionContainer {
-    public enum DevPlayState {
+namespace Enums.via.fighter.FighterActionContainer
+{
+    public enum DevPlayState
+    {
         Disable = 0,
         Play = 1,
         Pause = 2,
     }
 }
 
-namespace Enums.via.render.FFX {
-    public enum UpscaleType {
+namespace Enums.via.render.FFX
+{
+    public enum UpscaleType
+    {
         None = 0,
         UltraQuality = 1,
         Quality = 2,
@@ -44816,8 +52096,10 @@ namespace Enums.via.render.FFX {
     }
 }
 
-namespace Enums.via.reflection {
-    public enum TypeKind {
+namespace Enums.via.reflection
+{
+    public enum TypeKind
+    {
         Unknown = 0,
         Enum = 1,
         Boolean = 2,
@@ -44841,16 +52123,20 @@ namespace Enums.via.reflection {
     }
 }
 
-namespace Enums.via.gui.BlurManager {
-    public enum BlurFilterType {
+namespace Enums.via.gui.BlurManager
+{
+    public enum BlurFilterType
+    {
         BlurMipMapHorizontal = 0,
         BlurMipMapVertical = 1,
         BlurFinal = 2,
     }
 }
 
-namespace Enums.via.hid.camera {
-    public enum PlayStationCameraCaptureWaitFrameType {
+namespace Enums.via.hid.camera
+{
+    public enum PlayStationCameraCaptureWaitFrameType
+    {
         OffMode0 = 1,
         OffMode1 = 2,
         OnMode0 = 3,
@@ -44858,15 +52144,19 @@ namespace Enums.via.hid.camera {
     }
 }
 
-namespace Enums.app.CassettLabelPartsController {
-    public enum PartsNo {
+namespace Enums.app.CassettLabelPartsController
+{
+    public enum PartsNo
+    {
         Normal = 0,
         Arabic = 1,
     }
 }
 
-namespace Enums.app.Em8100.Action.Damage {
-    public enum Type {
+namespace Enums.app.Em8100.Action.Damage
+{
+    public enum Type
+    {
         NoDamage = 0,
         LFront = 1,
         LFrontR = 2,
@@ -44889,8 +52179,10 @@ namespace Enums.app.Em8100.Action.Damage {
     }
 }
 
-namespace Enums.app.OptionListItem {
-    public enum DisableMessageType {
+namespace Enums.app.OptionListItem
+{
+    public enum DisableMessageType
+    {
         General = 0,
         VrOn = 1,
         VrOff = 2,
@@ -44905,15 +52197,19 @@ namespace Enums.app.OptionListItem {
     }
 }
 
-namespace Enums.via.audiorender.fx.mt_equalizer {
-    public enum EQUnitEnable {
+namespace Enums.via.audiorender.fx.mt_equalizer
+{
+    public enum EQUnitEnable
+    {
         False = 0,
         True = 1,
     }
 }
 
-namespace Enums.via.render {
-    public enum AccelerationStructureBuildFlag {
+namespace Enums.via.render
+{
+    public enum AccelerationStructureBuildFlag
+    {
         PreferFastTrace = 1,
         PreferFastBuild = 2,
         AllowUpdate = 4,
@@ -44926,15 +52222,19 @@ namespace Enums.via.render {
     }
 }
 
-namespace Enums.app.CH9Em7900.Action.Move {
-    public enum Type {
+namespace Enums.app.CH9Em7900.Action.Move
+{
+    public enum Type
+    {
         Normal = 0,
         Wanderer = 1,
     }
 }
 
-namespace Enums.app.MoldedActionController {
-    public enum CancelTimingType {
+namespace Enums.app.MoldedActionController
+{
+    public enum CancelTimingType
+    {
         HasAttackPermit = 0,
         NearPlayer = 1,
         Guarded = 2,
@@ -44944,8 +52244,10 @@ namespace Enums.app.MoldedActionController {
     }
 }
 
-namespace Enums.via.autoplay {
-    public enum PlayerIndex {
+namespace Enums.via.autoplay
+{
+    public enum PlayerIndex
+    {
         Player1 = 0,
         Player2 = 1,
         Player3 = 2,
@@ -44953,23 +52255,29 @@ namespace Enums.via.autoplay {
     }
 }
 
-namespace Enums.app.CH9Em7700.Action.Suspend {
-    public enum Option {
+namespace Enums.app.CH9Em7700.Action.Suspend
+{
+    public enum Option
+    {
         None = 0,
         WithSelfDie = 1,
         Hide = 2,
     }
 }
 
-namespace Enums.via.motion.IkDog {
-    public enum RayCastMode {
+namespace Enums.via.motion.IkDog
+{
+    public enum RayCastMode
+    {
         Default = 0,
         Normal = 1,
     }
 }
 
-namespace Enums.via.network.ranking.ScoreInfoTbl {
-    public enum SortMode {
+namespace Enums.via.network.ranking.ScoreInfoTbl
+{
+    public enum SortMode
+    {
         None = 0,
         RankAscend = 1,
         RankDescend = 2,
@@ -44978,15 +52286,19 @@ namespace Enums.via.network.ranking.ScoreInfoTbl {
     }
 }
 
-namespace Enums.via.graph {
-    public enum VertexRemoveOption {
+namespace Enums.via.graph
+{
+    public enum VertexRemoveOption
+    {
         None = 0,
         WithEdge = 1,
     }
 }
 
-namespace Enums.app.CH8SaveManager {
-    public enum SaveTextIndex {
+namespace Enums.app.CH8SaveManager
+{
+    public enum SaveTextIndex
+    {
         SLOT_TEXT_INDEX_GUID = 0,
         SLOT_TEXT_INDEX_DIFFICULTY = 1,
         SLOT_TEXT_INDEX_PLAY_TIME = 2,
@@ -44995,14 +52307,18 @@ namespace Enums.app.CH8SaveManager {
     }
 }
 
-namespace Enums.app.CH8Em4500.CH8ThinkOrderSet {
-    public enum Type {
+namespace Enums.app.CH8Em4500.CH8ThinkOrderSet
+{
+    public enum Type
+    {
         None = 0,
     }
 }
 
-namespace Enums.via.motion.tree {
-    public enum ParamType {
+namespace Enums.via.motion.tree
+{
+    public enum ParamType
+    {
         Bool = 0,
         U8 = 1,
         S8 = 2,
@@ -45026,8 +52342,10 @@ namespace Enums.via.motion.tree {
     }
 }
 
-namespace Enums.app.CH9Em7700.ThinkAppearSet {
-    public enum Type {
+namespace Enums.app.CH9Em7700.ThinkAppearSet
+{
+    public enum Type
+    {
         Default = 0,
         NoUse_Low1 = 10,
         FromLow2_Speedy = 11,
@@ -45060,8 +52378,10 @@ namespace Enums.app.CH9Em7700.ThinkAppearSet {
     }
 }
 
-namespace Enums.app.EffectManager {
-    public enum CacheAccessStatusEnum {
+namespace Enums.app.EffectManager
+{
+    public enum CacheAccessStatusEnum
+    {
         None = 0,
         Alloc = 1,
         Release = 2,

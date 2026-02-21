@@ -1,80 +1,76 @@
-﻿using System;
-using System.Text;
+﻿namespace Biohazard.BioRand.RE7;
 
-namespace Biohazard.BioRand.RE7
+internal sealed class RandomizerLoggerIO
 {
-    internal sealed class RandomizerLoggerIO
+    public RandomizerLogger Input { get; } = new();
+    public RandomizerLogger Process { get; } = new();
+    public RandomizerLogger Output { get; } = new();
+}
+
+internal sealed class RandomizerLogger
+{
+    private readonly StringBuilder _sb = new StringBuilder();
+    private readonly string _hr = new string('-', 80);
+    private int _indent;
+
+    public string Output => _sb.ToString();
+
+    public void Push()
     {
-        public RandomizerLogger Input { get; } = new();
-        public RandomizerLogger Process { get; } = new();
-        public RandomizerLogger Output { get; } = new();
+        _indent++;
     }
 
-    internal sealed class RandomizerLogger
+    public void Push(string header)
     {
-        private readonly StringBuilder _sb = new StringBuilder();
-        private readonly string _hr = new string('-', 80);
-        private int _indent;
+        LogLine(header);
+        Push();
+    }
 
-        public string Output => _sb.ToString();
+    public void Pop()
+    {
+        _indent--;
+    }
 
-        public void Push()
+    public void LogVersion()
+    {
+        var crf = RE7RandomizerFactory.Default;
+
+        _sb.AppendLine(crf.CurrentVersionInfo);
+        _sb.AppendLine("by IntelOrca, Descole & BioRand Team");
+        _sb.AppendLine($"Generated at {DateTime.Now}");
+    }
+
+    public void LogHr()
+    {
+        _sb.AppendLine(_hr);
+    }
+
+    public void LogHeader(string header)
+    {
+        _sb.AppendLine();
+        LogHr();
+        _sb.AppendLine(header);
+        LogHr();
+    }
+
+    public void LogLine(string line)
+    {
+        _sb.Append(' ', _indent * 2);
+        _sb.AppendLine(line);
+    }
+
+    public void LogLine(params object[] columns)
+    {
+        _sb.Append(' ', _indent * 2);
+        if (columns.Length > 0)
         {
-            _indent++;
-        }
-
-        public void Push(string header)
-        {
-            LogLine(header);
-            Push();
-        }
-
-        public void Pop()
-        {
-            _indent--;
-        }
-
-        public void LogVersion()
-        {
-            var crf = RE7RandomizerFactory.Default;
-
-            _sb.AppendLine(crf.CurrentVersionInfo);
-            _sb.AppendLine("by IntelOrca, Descole & BioRand Team");
-            _sb.AppendLine($"Generated at {DateTime.Now}");
-        }
-
-        public void LogHr()
-        {
-            _sb.AppendLine(_hr);
-        }
-
-        public void LogHeader(string header)
-        {
-            _sb.AppendLine();
-            LogHr();
-            _sb.AppendLine(header);
-            LogHr();
-        }
-
-        public void LogLine(string line)
-        {
-            _sb.Append(' ', _indent * 2);
-            _sb.AppendLine(line);
-        }
-
-        public void LogLine(params object[] columns)
-        {
-            _sb.Append(' ', _indent * 2);
-            if (columns.Length > 0)
+            foreach (var column in columns)
             {
-                foreach (var column in columns)
-                {
-                    _sb.Append(column);
-                    _sb.Append(" ");
-                }
-                _sb.Remove(_sb.Length - 1, 1);
+                _sb.Append(column);
+                _sb.Append(' ');
             }
-            _sb.AppendLine();
+            _sb.Remove(_sb.Length - 1, 1);
         }
+        _sb.AppendLine();
     }
 }

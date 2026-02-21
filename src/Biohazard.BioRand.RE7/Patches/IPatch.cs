@@ -1,7 +1,6 @@
-﻿namespace Biohazard.BioRand.RE7.Patches
+﻿namespace Biohazard.BioRand.RE7.Patches;
+
+internal interface IPatch
 {
-    internal interface IPatch
-    {
-        void Apply();
-    }
+    void Apply();
 }

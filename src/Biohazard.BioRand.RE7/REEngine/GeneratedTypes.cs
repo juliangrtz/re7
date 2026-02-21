@@ -2,8 +2,6 @@
 #pragma warning disable IDE1006 // These words must begin with upper case characters
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 
 namespace app
