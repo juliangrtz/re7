@@ -1,4 +1,11 @@
 {
   "game-version": "dx12_rt",
-  "random-recipes": true
+  "random-starting-inventory": true,
+  "random-starting-inventory-mode": "balanced",
+  "recipes-add-new": true,
+  "recipes-replace-original": false,
+  "recipes-show-in-menu": true,
+  "recipes-randomization-mode": "balanced",
+  "recipe-new-min": 8,
+  "recipe-new-max": 20
 }

@@ -59,3 +59,12 @@ public static class StringExtensions
     public static string Without(this string str, string needle)
         => str.Replace(needle, "");
 }
+
+public static class PakPath
+{
+    /// <summary>
+    /// Appends "natives/stm/" to avoid redundancy.
+    /// </summary>
+    public static string Of(this string path)
+        => $"natives/stm/{path}";
+}

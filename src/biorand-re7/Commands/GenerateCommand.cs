@@ -97,6 +97,10 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         {
             reporter.RunTask($"Writing {outputPath}", () =>
             {
+#if DEBUG
+                if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
+                    return;
+#endif
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                 pakFile.WriteToFile(outputPath);
             });
@@ -136,10 +140,6 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
 
     private static void ExtractNatives(byte[] zipFile, string outputPath)
     {
-        var nativesDirectory = Path.Combine(outputPath, "natives");
-        if (Directory.Exists(nativesDirectory))
-            Directory.Delete(nativesDirectory, true);
-
         using var zip = new ZipArchive(new MemoryStream(zipFile));
         foreach (var entry in zip.Entries)
         {

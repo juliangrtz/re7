@@ -1,124 +1,267 @@
+using app;
+using Biohazard.BioRand.RE7.Items;
+using Enums.app;
+using Enums.app.Item;
+
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-/// <summary>
-/// TODO Implement
-/// </summary>
 internal class RecipeModifier : Modifier
 {
-    /**
-     * TODO: Construct these types of strings in a better way
-     * Especially to improve testability and reusability
-     */
+    // The combine GUI only allows 20 slots, even in a modded state (4 cols, 5 rows).
+    // REFramework is required for this -> scripts/reframework/autorun/
+    public const int MaxRecipeCount = 20;
 
-    private const string DictionaryCombineDataPath = "natives/stm/prefab/item/dictionarycombinedata.user.2";
-    private const string ItemCombineDataPath = "natives/stm/prefab/item/itemcombinedata.user.2";
-    private const string ItemCombineDataBedroomDlcPath = "natives/stm/prefab/item/itemcombinedata_c07_1.user.2";
-    private const string ItemCombineDataBirthdayDlcPath = "natives/stm/prefab/item/itemcombinedata_birthday.user.2";
-    // TODO: Add other DLCs
+    private const string RandomizerKey = "recipes";
+    private static readonly string DictionaryCombineDataPath = PakPath.Of("prefab/item/dictionarycombinedata.user.2");
+    private static readonly string ItemCombineDataPath = PakPath.Of("prefab/item/itemcombinedata.user.2");
+
+    private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
+    private List<Recipe> originalRecipes = new();
+    private List<DictionaryCombineData.Data> originalDictCombineData = new();
 
     public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
     {
-        var itemCombineData = randomizer.FileRepository.DeserializeUserFile<app.ItemCombineData>(ItemCombineDataPath);
-        logger.Push("Vanilla crafting recipes");
-        foreach (var item in itemCombineData._Datas)
-        {
-            logger.LogLine($"{item.SrcItemNum1}x {item.SrcItemID1} + {item.SrcItemNum2}x {item.SrcItemID2} -> {item.ResultItemNum}x {item.ResultItemID}");
-        }
+        originalRecipes = randomizer.FileRepository.DeserializeUserFile<ItemCombineData>(ItemCombineDataPath)._Datas;
+        originalDictCombineData = randomizer.FileRepository.DeserializeUserFile<DictionaryCombineData>(DictionaryCombineDataPath)._Datas;
+
+        logger.Push("Original crafting recipes");
+
+        foreach (var recipe in originalRecipes)
+            logger.LogLine(itemDefinitions.FormatRecipe(recipe));
+
         logger.Pop();
     }
 
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
-        var randomizationMode = randomizer.GetConfigOption<string>("recipe-randomization-mode");
-        switch (randomizationMode)
+        var mode = randomizer.GetConfigOption<string>("recipes-randomization-mode");
+        var rng = randomizer.GetRng(RandomizerKey);
+        var pool = mode switch
         {
-            case "off":
-                return;
+            "easy" => CreateEasyPool(rng),
+            "balanced" => CreateBalancedPool(rng),
+            "chaos" => CreateChaosPool(rng),
+            "crazy" => CreateCrazyPool(rng),
+            _ => throw new NotImplementedException($"Invalid recipe randomization mode {mode} supplied!")
+        };
 
-            case "shuffle_outputs":
-                HandleShuffleOutputsMode(randomizer);
-                break;
-
-            case "shuffle_inputs":
-                HandleShuffleInputsMode(randomizer);
-                break;
-
-            case "full_random":
-                HandleFullRandomMode(randomizer);
-                break;
-
-            case "chaos":
-                HandleChaosMode(randomizer);
-                break;
-
-            default:
-                logger.LogLine($"Unknown recipe randomization mode '{randomizationMode}' supplied!");
-                logger.LogLine("Not randomizing recipes.");
-                break;
-        }
-    }
-
-    private void HandleShuffleOutputsMode(RE7Randomizer randomizer)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void HandleShuffleInputsMode(RE7Randomizer randomizer)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void HandleFullRandomMode(RE7Randomizer randomizer)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void HandleChaosMode(RE7Randomizer randomizer)
-    {
-        var onlyAdd = randomizer.GetConfigOption<bool>("recipe-only-add");
-
-        if (onlyAdd)
+        var addedRecipes = new List<Recipe>();
+        if (randomizer.GetConfigOption<bool>("recipes-add-new"))
         {
-            var min = randomizer.GetConfigOption<int>("recipe-new-entries-min");
-            var max = randomizer.GetConfigOption<int>("recipe-new-entries-max");
-            var amount = randomizer.GetRng("recipe").Next(min, max);
+            var min = randomizer.GetConfigOption<int>("recipe-new-min");
+            var max = randomizer.GetConfigOption<int>("recipe-new-max");
+            var amount = rng.Next(min, max);
 
-            for (int i = 0; i < amount; i++)
+            for (var i = 0; i < amount; i++)
             {
-                // TODO Implement
+                var recipe = rng.Next(pool);
+                AddRecipe(randomizer, recipe);
+                addedRecipes.Add(recipe);
             }
         }
-        else
+
+        if (randomizer.GetConfigOption<bool>("recipes-replace-original"))
         {
+            ReplaceOriginalRecipes(randomizer, rng, pool);
         }
 
-        randomizer.FileRepository.ModifyUserFile<app.DictionaryCombineData>(DictionaryCombineDataPath, root =>
-        {
-            root._Datas.Add(new app.DictionaryCombineData.Data
-            {
-                ItemDataID = "Handgun_Albert"
-            });
+        // Rebuild dictionarycombinedata.user.2
+        // This file holds the result item IDs of the items that are displayed in the combine GUI.
+        RebuildDictionary(randomizer, addedRecipes);
 
+        // Finally, write the spoiler log.
+        logger.Push("New crafting recipes");
+
+        foreach (var newRecipe in addedRecipes)
+            logger.LogLine(itemDefinitions.FormatRecipe(newRecipe));
+
+        logger.Pop();
+    }
+
+    private static void RebuildDictionary(RE7Randomizer randomizer, List<Recipe> newRecipes)
+    {
+        randomizer.FileRepository.ModifyUserFile<DictionaryCombineData>(
+            DictionaryCombineDataPath,
+            root =>
+            {
+                root._Datas.Clear();
+
+                for (int i = 0; i < newRecipes.Count && i < MaxRecipeCount; i++)
+                {
+                    root._Datas.Add(new DictionaryCombineData.Data { ItemDataID = newRecipes[i].ResultItemID });
+                }
+
+                return root;
+            });
+    }
+
+    private static Recipe CreateRecipeByIds(
+        int srcItem1Count,
+        string srcItemId1,
+        int srcItem2Count,
+        string srcItemId2,
+        int resultItemCount,
+        string resultItemId
+    )
+        => new Recipe()
+        {
+            _Comment = "Generated by BioRand.",
+            DataID = $"{resultItemId}",
+            SrcItemID1 = srcItemId1,
+            SrcItemNum1 = srcItem1Count,
+            SrcItemID2 = srcItemId2,
+            SrcItemNum2 = srcItem2Count,
+            ResultItemID = resultItemId,
+            ResultItemNum = resultItemCount,
+            EnableFlag = Guid.Empty,
+            IsTutorialTarget = true, // TODO What exactly is this?
+            IsTrophyTarget = true, // TODO What exactly is this?
+        };
+
+    private static Recipe CreateRecipeByNames(
+        int combine,
+        string srcItemId1,
+        int with,
+        string srcItemId2,
+        int toGet,
+        string resultItemId
+    ) => CreateRecipeByIds(
+            combine,
+            itemDefinitions.GetId(srcItemId1),
+            with,
+            itemDefinitions.GetId(srcItemId2),
+            toGet,
+            itemDefinitions.GetId(resultItemId)
+        );
+
+    private readonly List<ItemCategoryType> typeBlacklist = new()
+    {
+        ItemCategoryType.KeyItem, ItemCategoryType.DiscardableKeyItem, ItemCategoryType.UsableKeyItem,
+        ItemCategoryType.Map, ItemCategoryType.File
+    };
+
+    private readonly List<Recipe> easyModeRecipePool = new()
+    {
+        // ======== Ammo ========
+        CreateRecipeByNames(combine: 20, "Enhanced Handgun Ammo", with: 2, "Gunpowder", toGet: 15, "Shotgun Shells"),
+        CreateRecipeByNames(combine: 30, "Machine Gun Ammo", with: 20, "Handgun Ammo", toGet: 5, "44 MAG Ammo"),
+        CreateRecipeByNames(combine: 10, "Shotgun Shells", with: 2, "Gunpowder", toGet: 5, "44 MAG Ammo"),
+        CreateRecipeByNames(combine: 20, "Enhanced Handgun Ammo", with: 1, "Strong Chem Fluid", toGet: 10, "44 MAG Ammo"),
+        CreateRecipeByNames(combine: 1, "Neuro Rounds", with: 1, "Chem Fluid", toGet: 1, "Flame Rounds"),
+        CreateRecipeByNames(combine: 1, "Flame Rounds", with: 1, "Chem Fluid", toGet: 1, "Neuro Rounds"),
+
+        // ======== Heal ========
+        CreateRecipeByNames(combine: 1, "First Aid Med", with: 1, "First Aid Med", toGet: 1, "Strong First Aid Med"),
+        CreateRecipeByNames(combine: 1, "Strong First Aid Med", with: 1, "Separating Agent", toGet: 2, "First Aid Med"),
+        CreateRecipeByNames(combine: 1, "Strong Chem Fluid", with: 1, "First Aid Med", toGet: 1, "Strong First Aid Med"),
+        CreateRecipeByNames(combine: 1, "Psychostimulants", with: 1, "Herb", toGet: 1, "First Aid Med"),
+
+        // ======== Drugs ========
+        CreateRecipeByNames(combine: 10, "44 MAG Ammo", with: 1, "Strong First Aid Med", toGet: 1, "Steroids"),
+        CreateRecipeByNames(combine: 10, "Shotgun Shells", with: 1, "Strong First Aid Med", toGet: 1, "Stabilizer")
+    };
+
+    private List<Recipe> CreateEasyPool(Rng rng)
+    {
+        var balanced = new List<Recipe>();
+        var mixedPool = easyModeRecipePool.OrderBy(_ => rng.Next()).ToList();
+
+        foreach (var recipe in mixedPool)
+        {
+            //if (!balanced.Any(r => r.ResultItemID == recipe.ResultItemID))
+            balanced.Add(recipe);
+        }
+
+        return balanced;
+    }
+
+    private static List<Recipe> CreateBalancedPool(Rng rng)
+    {
+        // TODO
+        var recipes = new List<Recipe>();
+        return recipes;
+    }
+
+    private static List<Recipe> CreateChaosPool(Rng rng)
+    {
+        // TODO
+        var recipes = new List<Recipe>();
+        return recipes;
+    }
+
+    private List<Recipe> CreateCrazyPool(Rng rng)
+    {
+        var crazyItems = new List<string> {
+            ItemID.EthanLeg.ToString(),
+            ItemID.HandCutOff.ToString(),
+            ItemID.ChainCutter.ToString(),
+            ItemID.EntranceHallKey.ToString(),
+            ItemID.FlameBulletS.ToString(),
+            ItemID.HandAxe.ToString(),
+            ItemID.MiaDriversLicense.ToString(),
+            ItemID.SerumMaterialA.ToString(),
+            ItemID.SerumMaterialB.ToString(),
+            ItemID.Magnum.ToString(),
+            "Coin", // Antique coin
+            "CoinOld" // Dirty coin
+        };
+
+        var valid = itemDefinitions
+            .Where(i => crazyItems.Contains(i.Id))
+            .ToList();
+
+        var recipes = new List<Recipe>();
+
+        foreach (var result in valid)
+        {
+            if (valid.Count < 2)
+                break;
+
+            var src1 = rng.Next(valid);
+            var src2 = rng.Next(valid);
+
+            var recipe = CreateRecipeByIds(
+                rng.Next(1, 1000), src1.Id,
+                rng.Next(1, 1000), src2.Id,
+                rng.Next(1, 1000), result.Id
+            );
+
+            recipes.Add(recipe);
+        }
+
+        return recipes
+            .GroupBy(r => r.ResultItemID)
+            .Select(g => g.First())
+            .ToList();
+    }
+
+    private static void AddRecipe(RE7Randomizer randomizer, Recipe recipe)
+    {
+        randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root =>
+        {
+            root._Datas.Add(recipe);
             return root;
         });
+    }
 
-        randomizer.FileRepository.ModifyUserFile<app.ItemCombineData>(ItemCombineDataPath, root =>
+    private void ReplaceOriginalRecipes(RE7Randomizer randomizer, Rng rng, List<Recipe> pool)
+    {
+        randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root =>
         {
-            root._Datas.Add(new app.ItemCombineData.Data()
+            var updatedRecipes = root._Datas;
+            for (int i = updatedRecipes.Count - 1; i >= 0; i--)
             {
-                _Comment = "Test",
-                DataID = "ChemicalM",
-                SrcItemID1 = "Herb",
-                SrcItemNum1 = 1,
-                SrcItemID2 = "Herb",
-                SrcItemNum2 = 1,
-                ResultItemID = "Handgun_Albert",
-                ResultItemNum = 10,
-                EnableFlag = Guid.Empty,
-                IsTrophyTarget = false,
-                IsTutorialTarget = false,
-            });
+                var recipe = updatedRecipes[i];
+                if (!originalRecipes.Contains(recipe))
+                    continue;
 
+                if (recipe.ResultItemID == ItemID.DybbukMedicine.ToString()) // Prevent Evie sample softlock
+                    continue;
+
+                updatedRecipes[i] = rng.Next(pool);
+            }
+
+            root._Datas = updatedRecipes;
             return root;
         });
     }

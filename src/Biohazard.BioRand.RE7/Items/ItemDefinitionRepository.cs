@@ -59,6 +59,11 @@ public class ItemDefinitionRepository : List<ItemDefinition>
         return Find(id)?.Name ?? id.ToString();
     }
 
+    public string GetId(string name)
+    {
+        return this.Single(item => item.Name == name).Id;
+    }
+
     public ItemDefinition? FromWeaponId(WeaponID id)
     {
         WeaponIdToItemMap.TryGetValue(id, out var item);
@@ -69,5 +74,19 @@ public class ItemDefinitionRepository : List<ItemDefinition>
     {
         var items = KindToItemMap[kind].ToArray();
         return items;
+    }
+
+    private const int NumWidth = 3;
+    private const int NameWidth = 30;
+
+    public string FormatRecipe(Recipe recipe)
+    {
+        var readableSrc1 = Find(recipe.SrcItemID1)?.Name ?? recipe.SrcItemID1;
+        var readableSrc2 = Find(recipe.SrcItemID2)?.Name ?? recipe.SrcItemID2;
+        var readableResult = Find(recipe.ResultItemID)?.Name ?? recipe.ResultItemID;
+
+        return $"{recipe.SrcItemNum1,NumWidth}x {readableSrc1,-NameWidth} + " +
+            $"{recipe.SrcItemNum2,NumWidth}x {readableSrc2,-NameWidth} ⇒ " +
+            $"{recipe.ResultItemNum,NumWidth}x {readableResult,-NameWidth}";
     }
 }

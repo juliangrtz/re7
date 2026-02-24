@@ -8,7 +8,7 @@ internal static class RszExtensions
     public static RszObjectNode? FindComponent(this IRszSceneNode sceneNode, Guid gameObjectGuid, string componentName)
     {
         var gameObject = sceneNode.FindGameObject(gameObjectGuid);
-        return gameObject != null ? gameObject.FindComponent(componentName) : null;
+        return gameObject?.FindComponent(componentName);
     }
 
     public static T? FindComponent<T>(this RszGameObject gameObject)
