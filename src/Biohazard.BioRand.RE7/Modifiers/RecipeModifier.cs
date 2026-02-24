@@ -34,6 +34,12 @@ internal class RecipeModifier : Modifier
 
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
+        var addNewRecipes = randomizer.GetConfigOption<bool>("recipes-add-new");
+        var replaceOriginalRecipes = randomizer.GetConfigOption<bool>("recipes-replace-original");
+
+        if (!addNewRecipes && !replaceOriginalRecipes)
+            return;
+
         var mode = randomizer.GetConfigOption<string>("recipes-randomization-mode");
         var rng = randomizer.GetRng(RandomizerKey);
         var pool = mode switch
@@ -46,7 +52,7 @@ internal class RecipeModifier : Modifier
         };
 
         var addedRecipes = new List<Recipe>();
-        if (randomizer.GetConfigOption<bool>("recipes-add-new"))
+        if (addNewRecipes)
         {
             var min = randomizer.GetConfigOption<int>("recipe-new-min");
             var max = randomizer.GetConfigOption<int>("recipe-new-max");
@@ -60,7 +66,7 @@ internal class RecipeModifier : Modifier
             }
         }
 
-        if (randomizer.GetConfigOption<bool>("recipes-replace-original"))
+        if (replaceOriginalRecipes)
         {
             ReplaceOriginalRecipes(randomizer, rng, pool);
         }
