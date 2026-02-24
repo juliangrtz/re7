@@ -54,8 +54,8 @@ internal class RecipeModifier : Modifier
         var addedRecipes = new List<Recipe>();
         if (addNewRecipes)
         {
-            var min = randomizer.GetConfigOption<int>("recipe-new-min");
-            var max = randomizer.GetConfigOption<int>("recipe-new-max");
+            var min = randomizer.GetConfigOption<int>("recipes-new-min");
+            var max = randomizer.GetConfigOption<int>("recipes-new-max");
             var amount = rng.Next(min, max);
 
             for (var i = 0; i < amount; i++)

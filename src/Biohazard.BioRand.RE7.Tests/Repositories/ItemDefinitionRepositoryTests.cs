@@ -3,7 +3,7 @@ using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Tests.Repositories;
 
-public class ItemDefinitionRepositoryTest
+public class ItemDefinitionRepositoryTests
 {
     private readonly ItemDefinitionRepository repository = ItemDefinitionRepository.Default;
 

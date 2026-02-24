@@ -29,6 +29,9 @@ internal class RE7Randomizer : IDisposable
     public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
     public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
 
+    // These options must be bools!
+    private static string[] _optionsThatRequireREFramework = ["debug-force-reframework", "recipes-add-new", "recipes-replace-original"];
+
     public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
     {
         Input = input;
@@ -61,7 +64,8 @@ internal class RE7Randomizer : IDisposable
         RandomizerOutput? result = null;
         Reporter.RunTask("Building mod", () =>
         {
-            var output = new RE7RandomizerOutput(input, _fileRepository.GetOutputPakFile(), _logFiles, PakVersion);
+            var isWithREFramework = _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option));
+            var output = new RE7RandomizerOutput(input, _fileRepository.GetOutputPakFile(), _logFiles, PakVersion, isWithREFramework);
             result = new RandomizerOutput(
                 [
                     new RandomizerOutputAsset(
