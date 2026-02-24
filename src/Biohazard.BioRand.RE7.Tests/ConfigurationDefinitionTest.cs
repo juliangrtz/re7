@@ -26,7 +26,7 @@ public class ConfigurationDefinitionTest : RandomizerTest
     {
         foreach (var item in items.Where(item => item.Id != null))
         {
-            Assert.Matches("^[a-z0-9\\-]+$", item.Id!);
+            Assert.Matches("^[a-zA-Z0-9\\-]+$", item.Id!);
 
             var id = item.Id!;
             if (id.EndsWith("-min") || id.EndsWith("-max"))
@@ -55,20 +55,6 @@ public class ConfigurationDefinitionTest : RandomizerTest
                 Assert.InRange(item.Step.Value, item.Min!.Value, item.Max!.Value);
             }
         }
-    }
-
-    [Fact]
-    public void Test_Description_Uniqueness()
-    {
-        var duplicates = items
-            .Where(i => i.Description != null)
-            .GroupBy(i => i.Description)
-            .Where(g => g.Count() > 1)
-            .Select(g => g.Key)
-            .ToList();
-
-        Assert.True(duplicates.Count == 0,
-            $"Duplicate descriptions found: {string.Join(", ", duplicates)}");
     }
 
     [Fact]

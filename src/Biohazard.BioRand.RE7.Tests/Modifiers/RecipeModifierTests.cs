@@ -11,8 +11,7 @@ public class RecipeModifierTests : RandomizerTest
         // Given
         var config = """
             {
-              "game-version": "dx12_rt",
-              "recipe-randomization-mode": "off"
+              "game-version": "dx12_rt"
             }
             """;
 
@@ -26,13 +25,18 @@ public class RecipeModifierTests : RandomizerTest
     }
 
     [SkipCIFact]
-    public void Test_Random_Recipes_Config_Chaos_DX12()
+    public void Test_Random_Recipes_Config_Crazy_DX12()
     {
         // Given
         var config = """
             {
               "game-version": "dx12_rt",
-              "recipe-randomization-mode": "chaos"
+              "recipes-add-new": true,
+              "recipes-replace-original": false,
+              "recipes-show-in-menu": true,
+              "recipes-randomization-mode": "crazy",
+              "recipe-new-min": 20,
+             "recipe-new-max": 20
             }
             """;
 
