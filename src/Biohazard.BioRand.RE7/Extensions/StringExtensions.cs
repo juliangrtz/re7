@@ -62,9 +62,14 @@ public static class StringExtensions
 
 public static class PakPath
 {
+    private const string Prefix = "natives/stm/";
+
     /// <summary>
     /// Appends "natives/stm/" to avoid redundancy.
     /// </summary>
     public static string Of(this string path)
-        => $"natives/stm/{path}";
+        => $"{Prefix}{path}";
+
+    public static string FromAbsolutePath(this string absolutePath)
+        => Of(absolutePath.Without(absolutePath.SubstringBefore(Prefix)));
 }

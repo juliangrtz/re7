@@ -30,7 +30,11 @@ internal class RE7Randomizer : IDisposable
     public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
 
     // These options must be bools!
-    private static string[] _optionsThatRequireREFramework = ["debug-force-reframework", "recipes-add-new", "recipes-replace-original"];
+    private static readonly string[] _optionsThatRequireREFramework = [
+        "debug-force-reframework",
+        "recipes-add-new",
+        "recipes-replace-original"
+    ];
 
     public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
     {

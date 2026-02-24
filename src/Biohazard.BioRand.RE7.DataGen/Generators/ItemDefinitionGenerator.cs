@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DataGen._Data;
-using Biohazard.BioRand.RE7.DLC;
+﻿using Biohazard.BioRand.RE7.DLC;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Enums.app;
