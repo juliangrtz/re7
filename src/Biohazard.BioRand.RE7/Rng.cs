@@ -52,6 +52,9 @@ public sealed class Rng
         return _random.Next(min, max);
     }
 
+    public int Next()
+        => _random.Next();
+
     public T NextOf<T>(params T[] values)
     {
         var i = _random.Next(0, values.Length);

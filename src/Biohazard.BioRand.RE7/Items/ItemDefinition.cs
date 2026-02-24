@@ -83,7 +83,6 @@ public sealed class ItemDefinition
     [JsonIgnore]
     public bool IsDlcItem => Dlc != null;
 
-    [JsonIgnore]
     public ItemID? ItemId => EnumExtensions.ParseOrNull<ItemID>(Id);
 
     public override string ToString() => Name ?? Id;

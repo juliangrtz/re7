@@ -1,3 +1,5 @@
+using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Modifiers;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
@@ -5,6 +7,8 @@ namespace Biohazard.BioRand.RE7;
 
 internal static class RE7RandomizerConfigurationDefinition
 {
+    private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
+
     public static RandomizerConfigurationDefinition Create()
     {
         var configDefinition = new RandomizerConfigurationDefinition();
@@ -27,95 +31,120 @@ internal static class RE7RandomizerConfigurationDefinition
 
         #endregion General
 
-        #region Recipes
+        #region Inventory
 
-        page = configDefinition.CreatePage("Recipes");
-        group = page.CreateGroup("");
+        page = configDefinition.CreatePage("Inventory");
+
+        group = page.CreateGroup("Starting inventory");
+        group.Warning = "Not working yet.";
         group.Items.Add(new GroupItem()
         {
-            Id = $"recipe-randomization-mode",
-            Label = "Recipe randomization mode",
-            Description = "Off: No changes.\n" +
-            "Shuffle outputs: Only target items change.\n" +
-            "Shuffle inputs: Only source items change.\n" +
-            "Full random: Both source and target items change with safeguards.\n" +
-            "Chaos: Anything can craft anything. No safeguards!",
-            Type = "dropdown",
-            Options = ["off", "shuffle_outputs", "shuffle_inputs", "full_random", "chaos"],
-            Default = "off"
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "recipe-only-add",
-            Label = "Only add new recipes",
-            Description = "Whether to only add new crafting recipes.",
+            Id = "random-starting-inventory",
+            Label = "Random starting inventory",
+            Description = "Whether to start with a random inventory.",
             Type = "switch",
             Default = true
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"recipe-new-entries-min",
+            Id = "random-starting-inventory-mode",
+            Label = "Inventory quality",
+            Description = "Controls the quality of your starting inventory.\n" +
+            "Bad: You'll get rather poor items...\n" +
+            "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
+            "Good: The randomizer will make things a bit easier for you.\n" +
+            "Overpowered: Nighty-night, Molded!",
+            Type = "dropdown",
+            Options = ["bad", "balanced", "good", "overpowered"],
+            Default = "balanced"
+        });
+
+        group = page.CreateGroup("Recipes");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-add-new",
+            Label = "Add new recipes",
+            Description = "Whether to add new, random recipes.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-replace-original",
+            Label = "Replace original recipes",
+            Description = "Whether to replace the original recipes.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-allow-drugs",
+            Label = "Allow stabilizers and steroids",
+            Description = "Whether to allow stabilizers and steroids in the item pool.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-randomization-mode",
+            Label = "Recipe generation mode",
+            Description = "Controls how ingredients and results are selected.\n" +
+            "Balanced: Recipes are chosen within a well-defined pool (ammo -> ammo, healing -> healing, etc.)\n" +
+            "Chaos: Anything could craft anything.\n" +
+            "Crazy: Deliberately stupid recipes.",
+            Type = "dropdown",
+            Options = ["easy", "balanced", "chaos", "crazy"],
+            Default = "balanced"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipe-new-min",
             Label = "Min. amount of new recipes",
+            Description = "Only relevant if you decide to add new recipes.",
             Type = "range",
             Min = 1,
-            Max = 20,
+            Max = RecipeModifier.MaxRecipeCount,
             Default = 4
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"recipe-new-entries-max",
+            Id = $"recipe-new-max",
             Label = "Max. amount of new recipes",
+            Description = "Only relevant if you decide to add new recipes.",
             Type = "range",
             Min = 1,
-            Max = 20,
+            Max = RecipeModifier.MaxRecipeCount,
             Default = 8
         });
 
-        group = page.CreateGroup("");
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"recipe-source-count-min",
-            Label = "Min. amount of source items",
-            Type = "range",
-            Min = 1,
-            Max = 5,
-            Default = 1
-        });
+        group = page.CreateGroup("Stack Limits");
+        group.Advanced = true;
 
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"recipe-source-count-max",
-            Label = "Max. amount of source items",
-            Type = "range",
-            Min = 1,
-            Max = 5,
-            Default = 2
-        });
+        var items = from item in itemDefinitions
+                    where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
+                    select (item.Id, item.Name);
 
-        group.Items.Add(new GroupItem()
+        foreach ((string itemId, string itemName) in items)
         {
-            Id = $"recipe-target-count-min",
-            Label = "Min. amount of target items",
-            Type = "range",
-            Min = 1,
-            Max = 5,
-            Default = 1
-        });
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"inventory-stack-limit-{itemId}",
+                Label = itemName,
+                Type = "range",
+                Min = 0,
+                Max = 999,
+                Step = 1,
+                Default = 0
+            });
+        }
 
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"recipe-target-count-max",
-            Label = "Max. amount of target items",
-            Type = "range",
-            Min = 1,
-            Max = 5,
-            Default = 2
-        });
-
-        #endregion Recipes
+        #endregion Inventory
 
         #region Debug
 

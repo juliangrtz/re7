@@ -48,7 +48,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "AcidBulletS"
   },
   {
     "Id": "Alcohol",
@@ -89,7 +90,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "透視メガネ"
+    "DeveloperComment": "透視メガネ",
+    "ItemId": "AlphaGrass"
   },
   {
     "Id": "BackDoorKey",
@@ -119,7 +121,8 @@
     "MaxStack": 1,
     "WeaponId": "Bar",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Bar"
   },
   {
     "Id": "Battery",
@@ -129,7 +132,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Battery"
   },
   {
     "Id": "BetDown_1",
@@ -229,7 +233,8 @@
     "MaxStack": 1,
     "WeaponId": "BlueBlaster",
     "CanStoreInItemBox": false,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BlueBlaster"
   },
   {
     "Id": "BookDefence01",
@@ -239,7 +244,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "防御の極意"
+    "DeveloperComment": "防御の極意",
+    "ItemId": "BookDefence01"
   },
   {
     "Id": "BookDefence02",
@@ -249,7 +255,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "防御の神髄"
+    "DeveloperComment": "防御の神髄",
+    "ItemId": "BookDefence02"
   },
   {
     "Id": "BrokenHandgun_M19",
@@ -259,7 +266,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BrokenHandgun_M19"
   },
   {
     "Id": "BrokenShotgun_DB",
@@ -269,7 +277,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BrokenShotgun_DB"
   },
   {
     "Id": "Burner",
@@ -280,7 +289,8 @@
     "MaxStack": 1,
     "WeaponId": "Burner",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Burner"
   },
   {
     "Id": "BurnerBullet",
@@ -290,7 +300,8 @@
     "IsUnlockable": false,
     "MaxStack": 500,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BurnerBullet"
   },
   {
     "Id": "BurnerPartsA",
@@ -300,7 +311,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BurnerPartsA"
   },
   {
     "Id": "BurnerPartsB",
@@ -310,7 +322,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "BurnerPartsB"
   },
   {
     "Id": "CabinKey",
@@ -331,7 +344,8 @@
     "MaxStack": 1,
     "WeaponId": "Candle",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Candle"
   },
   {
     "Id": "Candle_Lighted",
@@ -341,7 +355,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Candle_Lighted"
   },
   {
     "Id": "CarKey",
@@ -363,7 +378,8 @@
     "MaxStack": 1,
     "WeaponId": "ChainCutter",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ChainCutter"
   },
   {
     "Id": "ChainSaw",
@@ -374,7 +390,8 @@
     "MaxStack": 1,
     "WeaponId": "ChainSaw",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ChainSaw"
   },
   {
     "Id": "Chapter1Map",
@@ -384,7 +401,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Chapter1Map"
   },
   {
     "Id": "Chapter3_2Map",
@@ -394,7 +412,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Chapter3_2Map"
   },
   {
     "Id": "Chapter3_2MapB1F",
@@ -414,7 +433,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Chapter3_3Map"
   },
   {
     "Id": "Chapter3_4MAP",
@@ -424,7 +444,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Chapter3_4MAP"
   },
   {
     "Id": "Chapter4_1MAP",
@@ -464,7 +485,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "薬液（強）"
+    "DeveloperComment": "薬液（強）",
+    "ItemId": "ChemicalL"
   },
   {
     "Id": "ChemicalM",
@@ -474,7 +496,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "薬液（中）"
+    "DeveloperComment": "薬液（中）",
+    "ItemId": "ChemicalM"
   },
   {
     "Id": "ChemicalS",
@@ -484,7 +507,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "薬液（小）"
+    "DeveloperComment": "薬液（小）",
+    "ItemId": "ChemicalS"
   },
   {
     "Id": "CircularSaw",
@@ -495,7 +519,8 @@
     "MaxStack": 1,
     "WeaponId": "CircularSaw",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "CircularSaw"
   },
   {
     "Id": "CircularSawNo",
@@ -600,7 +625,8 @@
     "IsUnlockable": false,
     "MaxStack": 20,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "CylinderKey"
   },
   {
     "Id": "DeadSilence",
@@ -622,7 +648,8 @@
     "MaxStack": 1,
     "WeaponId": "Depressant",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Depressant"
   },
   {
     "Id": "Desire",
@@ -871,7 +898,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "血清"
+    "DeveloperComment": "血清",
+    "ItemId": "DybbukMedicine"
   },
   {
     "Id": "EasyBoots",
@@ -881,7 +909,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "歩きやすい靴"
+    "DeveloperComment": "歩きやすい靴",
+    "ItemId": "EasyBoots"
   },
   {
     "Id": "EasyBoots_IMD",
@@ -892,7 +921,8 @@
     "Dlc": "EthanMustDie",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "イーサンマストダイ専用歩きやすい靴"
+    "DeveloperComment": "イーサンマストダイ専用歩きやすい靴",
+    "ItemId": "EasyBoots_IMD"
   },
   {
     "Id": "EntranceHallKey",
@@ -902,7 +932,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "EntranceHallKey"
   },
   {
     "Id": "Escape",
@@ -923,7 +954,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "イーサンの車のカギ"
+    "DeveloperComment": "イーサンの車のカギ",
+    "ItemId": "EthanCarKey"
   },
   {
     "Id": "EthanLeg",
@@ -933,7 +965,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "イーサンの足"
+    "DeveloperComment": "イーサンの足",
+    "ItemId": "EthanLeg"
   },
   {
     "Id": "EvCable",
@@ -954,7 +987,8 @@
     "MaxStack": 1,
     "WeaponId": "EvelynRadar",
     "CanStoreInItemBox": false,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "EvelynRadar"
   },
   {
     "Id": "EvelynRadar1",
@@ -1026,7 +1060,8 @@
     "MaxStack": 5,
     "WeaponId": "EyeDrops",
     "CanStoreInItemBox": true,
-    "DeveloperComment": "目薬（仮）"
+    "DeveloperComment": "目薬（仮）",
+    "ItemId": "EyeDrops"
   },
   {
     "Id": "FlameBulletS",
@@ -1036,7 +1071,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "FlameBulletS"
   },
   {
     "Id": "FloorDoorKey",
@@ -1111,7 +1147,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "フルーツビール"
+    "DeveloperComment": "フルーツビール",
+    "ItemId": "food005"
   },
   {
     "Id": "food006",
@@ -1166,7 +1203,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スパイシーチキン"
+    "DeveloperComment": "スパイシーチキン",
+    "ItemId": "food010"
   },
   {
     "Id": "food011",
@@ -1188,7 +1226,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トムヤムクン"
+    "DeveloperComment": "トムヤムクン",
+    "ItemId": "food012"
   },
   {
     "Id": "food013",
@@ -1199,7 +1238,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "チーズフォンデュ"
+    "DeveloperComment": "チーズフォンデュ",
+    "ItemId": "food013"
   },
   {
     "Id": "food014",
@@ -1221,7 +1261,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "シュガーケーキ"
+    "DeveloperComment": "シュガーケーキ",
+    "ItemId": "food015"
   },
   {
     "Id": "food016",
@@ -1232,7 +1273,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "チーズケーキ"
+    "DeveloperComment": "チーズケーキ",
+    "ItemId": "food016"
   },
   {
     "Id": "food017",
@@ -1243,7 +1285,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "フルーツケーキ"
+    "DeveloperComment": "フルーツケーキ",
+    "ItemId": "food017"
   },
   {
     "Id": "food018",
@@ -1265,7 +1308,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベイカー・スペシャル"
+    "DeveloperComment": "ベイカー・スペシャル",
+    "ItemId": "food019"
   },
   {
     "Id": "FoundFootage000",
@@ -1275,7 +1319,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "FoundFootage000"
   },
   {
     "Id": "FoundFootage030",
@@ -1285,7 +1330,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "FoundFootage030"
   },
   {
     "Id": "FoundFootage040",
@@ -1295,7 +1341,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "FoundFootage040"
   },
   {
     "Id": "FoundFootage050",
@@ -1315,7 +1362,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Fuse"
   },
   {
     "Id": "FuseCh4",
@@ -1370,7 +1418,8 @@
     "MaxStack": 1,
     "WeaponId": "GimmickKnife",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "GimmickKnife"
   },
   {
     "Id": "GimmickLighter",
@@ -1447,7 +1496,8 @@
     "MaxStack": 1,
     "WeaponId": "Glasses",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Glasses"
   },
   {
     "Id": "Glasses_End",
@@ -1467,7 +1517,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Glasses_Washed"
   },
   {
     "Id": "Goal_17",
@@ -1512,7 +1563,8 @@
     "MaxStack": 1,
     "WeaponId": "GoldenBar",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "GoldenBar"
   },
   {
     "Id": "GoldenBarNo",
@@ -1600,7 +1652,8 @@
     "MaxStack": 1,
     "WeaponId": "GrenadeLauncher",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "GrenadeLauncher"
   },
   {
     "Id": "Gunpowder",
@@ -1610,7 +1663,8 @@
     "IsUnlockable": false,
     "MaxStack": 10,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ガンパウダー"
+    "DeveloperComment": "ガンパウダー",
+    "ItemId": "Gunpowder"
   },
   {
     "Id": "HandAxe",
@@ -1621,7 +1675,8 @@
     "MaxStack": 1,
     "WeaponId": "HandAxe",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "HandAxe"
   },
   {
     "Id": "HandCutOff",
@@ -1631,7 +1686,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "HandCutOff"
   },
   {
     "Id": "Handgun_Albert",
@@ -1642,7 +1698,8 @@
     "MaxStack": 1,
     "WeaponId": "Handgun_Albert",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Handgun_Albert"
   },
   {
     "Id": "Handgun_Albert_Reward",
@@ -1653,7 +1710,8 @@
     "MaxStack": 1,
     "WeaponId": "Handgun_Albert_Reward",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Handgun_Albert_Reward"
   },
   {
     "Id": "Handgun_G17",
@@ -1664,7 +1722,8 @@
     "MaxStack": 1,
     "WeaponId": "Handgun_G17",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Handgun_G17"
   },
   {
     "Id": "Handgun_M19",
@@ -1675,7 +1734,8 @@
     "MaxStack": 1,
     "WeaponId": "Handgun_M19",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Handgun_M19"
   },
   {
     "Id": "Handgun_MPM",
@@ -1686,7 +1746,8 @@
     "MaxStack": 1,
     "WeaponId": "Handgun_MPM",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Handgun_MPM"
   },
   {
     "Id": "HandgunBullet",
@@ -1696,7 +1757,8 @@
     "IsUnlockable": false,
     "MaxStack": 30,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "HandgunBullet"
   },
   {
     "Id": "HandgunBulletL",
@@ -1706,7 +1768,8 @@
     "IsUnlockable": false,
     "MaxStack": 20,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "HandgunBulletL"
   },
   {
     "Id": "Happiness",
@@ -1727,7 +1790,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハーブ"
+    "DeveloperComment": "ハーブ",
+    "ItemId": "Herb"
   },
   {
     "Id": "HyperBlaster",
@@ -1739,7 +1803,8 @@
     "MaxStack": 1,
     "WeaponId": "HyperBlaster",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "HyperBlaster"
   },
   {
     "Id": "HyperBlasterNo",
@@ -1772,7 +1837,8 @@
     "MaxStack": 1,
     "WeaponId": "Knife",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Knife"
   },
   {
     "Id": "Lantern",
@@ -1795,7 +1861,8 @@
     "MaxStack": 1,
     "WeaponId": "Lantern_C",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Lantern_C"
   },
   {
     "Id": "LanternHookA",
@@ -1839,7 +1906,8 @@
     "MaxStack": 1,
     "WeaponId": "Lighter_Z",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Lighter_Z"
   },
   {
     "Id": "Lighter_Z_NoEquip",
@@ -1861,7 +1929,8 @@
     "MaxStack": 20,
     "WeaponId": "LiquidBomb",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "LiquidBomb"
   },
   {
     "Id": "LucasCardKey",
@@ -1892,7 +1961,8 @@
     "MaxStack": 1,
     "WeaponId": "MachineGun",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MachineGun"
   },
   {
     "Id": "MachineGunBullet",
@@ -1902,7 +1972,8 @@
     "IsUnlockable": false,
     "MaxStack": 300,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MachineGunBullet"
   },
   {
     "Id": "Magnesium",
@@ -1923,7 +1994,8 @@
     "MaxStack": 1,
     "WeaponId": "Magnum",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Magnum"
   },
   {
     "Id": "MagnumBullet",
@@ -1933,7 +2005,8 @@
     "IsUnlockable": false,
     "MaxStack": 20,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MagnumBullet"
   },
   {
     "Id": "MailMia",
@@ -1963,7 +2036,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "3-4で取る「最後の鍵」「マスターキー」"
+    "DeveloperComment": "3-4で取る「最後の鍵」「マスターキー」",
+    "ItemId": "MasterKey"
   },
   {
     "Id": "MiaDriversLicense",
@@ -1973,7 +2047,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MiaDriversLicense"
   },
   {
     "Id": "MiaKnife",
@@ -1984,7 +2059,8 @@
     "MaxStack": 1,
     "WeaponId": "MiaKnife",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MiaKnife"
   },
   {
     "Id": "MiddleFood",
@@ -2026,7 +2102,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "MorgueKey"
   },
   {
     "Id": "Oblivion",
@@ -2162,7 +2239,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Quill"
   },
   {
     "Id": "RedBlaster",
@@ -2174,7 +2252,8 @@
     "MaxStack": 1,
     "WeaponId": "RedBlaster",
     "CanStoreInItemBox": false,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "RedBlaster"
   },
   {
     "Id": "RemedyL",
@@ -2184,7 +2263,8 @@
     "IsUnlockable": false,
     "MaxStack": 3,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "RemedyL"
   },
   {
     "Id": "RemedyM",
@@ -2194,7 +2274,8 @@
     "IsUnlockable": false,
     "MaxStack": 3,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "RemedyM"
   },
   {
     "Id": "Remove",
@@ -2237,7 +2318,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ResurrectionMedium"
   },
   {
     "Id": "Return",
@@ -2259,7 +2341,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "緊急回避用割れたビン"
+    "DeveloperComment": "緊急回避用割れたビン",
+    "ItemId": "SafeBottle"
   },
   {
     "Id": "SaveTape",
@@ -2279,7 +2362,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ScrewFinger"
   },
   {
     "Id": "SerumComplete",
@@ -2299,7 +2383,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "SerumMaterialA"
   },
   {
     "Id": "SerumMaterialB",
@@ -2309,7 +2394,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "SerumMaterialB"
   },
   {
     "Id": "SerumTypeE",
@@ -2363,7 +2449,8 @@
     "MaxStack": 1,
     "WeaponId": "Shotgun_DB",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Shotgun_DB"
   },
   {
     "Id": "Shotgun_M37",
@@ -2374,7 +2461,8 @@
     "MaxStack": 1,
     "WeaponId": "Shotgun_M37",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Shotgun_M37"
   },
   {
     "Id": "ShotgunBullet",
@@ -2384,7 +2472,8 @@
     "IsUnlockable": false,
     "MaxStack": 30,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ShotgunBullet"
   },
   {
     "Id": "SilhouettePazzlePiece",
@@ -2394,7 +2483,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "SilhouettePazzlePiece"
   },
   {
     "Id": "SilhouettePazzlePieceChildroom",
@@ -2424,7 +2514,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "SkinnyDoll"
   },
   {
     "Id": "skl001",
@@ -2950,7 +3041,8 @@
     "IsUnlockable": false,
     "MaxStack": 10,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "溶解剤(旧スペアキー)"
+    "DeveloperComment": "溶解剤(旧スペアキー)",
+    "ItemId": "SpareKey"
   },
   {
     "Id": "SPChange",
@@ -2982,7 +3074,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "SpringCoil"
   },
   {
     "Id": "StepUpBomb",
@@ -3136,7 +3229,8 @@
     "MaxStack": 1,
     "WeaponId": "Stimulant",
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Stimulant"
   },
   {
     "Id": "SyntheticDetergent",
@@ -3156,7 +3250,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "TalismanKey"
   },
   {
     "Id": "Timebomb",
@@ -3167,7 +3262,8 @@
     "MaxStack": 1,
     "WeaponId": "Timebomb",
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ルーカスパズルタイマー爆弾"
+    "DeveloperComment": "ルーカスパズルタイマー爆弾",
+    "ItemId": "Timebomb"
   },
   {
     "Id": "ToyShotgun",
@@ -3177,7 +3273,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "ToyShotgun"
   },
   {
     "Id": "Trap_Barricade",
@@ -3284,7 +3381,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "宝の地図02(合体後)"
+    "DeveloperComment": "宝の地図02(合体後)",
+    "ItemId": "TreasureMap02"
   },
   {
     "Id": "TreasureMap03",
@@ -3294,7 +3392,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "宝の地図03(合体後)"
+    "DeveloperComment": "宝の地図03(合体後)",
+    "ItemId": "TreasureMap03"
   },
   {
     "Id": "TrophySwitch",
@@ -3315,7 +3414,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "無限弾薬"
+    "DeveloperComment": "無限弾薬",
+    "ItemId": "UnlimitedAmmo"
   },
   {
     "Id": "Valve",
@@ -3325,7 +3425,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "ItemId": "Valve"
   },
   {
     "Id": "WorkroomKey",

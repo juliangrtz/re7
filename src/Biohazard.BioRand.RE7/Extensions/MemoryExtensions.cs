@@ -1,4 +1,6 @@
-﻿namespace Biohazard.BioRand.RE7.Extensions;
+﻿using System.Diagnostics;
+
+namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class MemoryExtensions
 {
@@ -45,4 +47,6 @@ public static class MemoryExtensions
         stream.CopyTo(memory);
         return memory.ToArray();
     }
+
+    public static bool IsProcessRunning(string name) => Process.GetProcessesByName(name).Length > 0;
 }

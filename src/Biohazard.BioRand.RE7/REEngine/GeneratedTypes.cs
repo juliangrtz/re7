@@ -1,6 +1,7 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 #pragma warning disable IDE1006 // These words must begin with upper case characters
 #pragma warning disable IDE0130 // Namespace does not match folder structure
+#pragma warning disable IDE0001 // Underscore as first character in properties
 
 using System.Numerics;
 
