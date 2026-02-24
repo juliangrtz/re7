@@ -61,6 +61,7 @@ internal static class RE7RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Recipes");
+        group.Label = "To configure recipes like in the vanilla version disable the option 'Add new recipes'.";
         group.Warning = "This feature requires RE Framework.";
         group.Items.Add(new GroupItem()
         {
@@ -82,7 +83,7 @@ internal static class RE7RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
-            Id = "recipes-allow-drugs",
+            Id = "recipes-allow-stabilizers-and-steroids",
             Label = "Allow stabilizers and steroids",
             Description = "Whether to allow stabilizers and steroids in the item pool.",
             Type = "switch",
@@ -94,11 +95,13 @@ internal static class RE7RandomizerConfigurationDefinition
             Id = "recipes-randomization-mode",
             Label = "Recipe generation mode",
             Description = "Controls how ingredients and results are selected.\n" +
-            "Balanced: Recipes are chosen within a well-defined pool (ammo -> ammo, healing -> healing, etc.)\n" +
+            "Easy: You'll get useful recipes only. Recipes are chosen within a well-defined pool.\n" +
+            "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.)\n" +
             "Chaos: Anything could craft anything.\n" +
-            "Crazy: Deliberately stupid recipes.",
+            "Crazy: Deliberately nonsensical recipes." +
+            "No crafting: You cannot craft anything. For hardcore players only.\n",
             Type = "dropdown",
-            Options = ["easy", "balanced", "chaos", "crazy"],
+            Options = ["easy", "balanced", "chaos", "crazy", "no_crafting"],
             Default = "balanced"
         });
 
@@ -106,7 +109,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = $"recipes-new-min",
             Label = "Min. amount of new recipes",
-            Description = "Only relevant if you decide to add new recipes.",
+            Description = "Only relevant if you add new recipes.",
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
@@ -117,11 +120,11 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = $"recipes-new-max",
             Label = "Max. amount of new recipes",
-            Description = "Only relevant if you decide to add new recipes.",
+            Description = "Only relevant if you add new recipes.",
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
-            Default = 8
+            Default = 12
         });
 
         group = page.CreateGroup("Stack Limits");

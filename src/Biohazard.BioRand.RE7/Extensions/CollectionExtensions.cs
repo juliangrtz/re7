@@ -86,6 +86,14 @@ public static class CollectionExtensions
         return result;
     }
 
+    public static void PrependValues<T>(this List<T> source, List<T> valuesToPrepend)
+    {
+        if (valuesToPrepend == null || valuesToPrepend.Count == 0)
+            return;
+
+        source.InsertRange(0, valuesToPrepend);
+    }
+
     private readonly struct ProportionalGrouping<TKey, TValue>(TKey key, List<TValue> items) : IGrouping<TKey, TValue>
     {
         public TKey Key => key;

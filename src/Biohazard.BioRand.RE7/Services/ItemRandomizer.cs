@@ -17,7 +17,7 @@ internal class ItemRandomizer
     public string[] PlacedItemIds => _placedItemIds.ToArray();
 
     public ItemDefinition[] PlacedItems => _placedItemIds
-        .Select(x => ItemDefinitionRepository.Default.Find(x)!)
+        .Select(x => ItemDefinitionRepository.Default.FromId(x)!)
         .ToArray();
 
     public ItemRandomizer(RE7Randomizer randomizer)
@@ -108,7 +108,7 @@ internal class ItemRandomizer
     {
         var itemDef = itemId == null
             ? GetRandomItemDefinition(rng, ItemCategoryType.Shell)
-            : ItemDefinitionRepository.Default.Find(itemId);
+            : ItemDefinitionRepository.Default.FromId(itemId);
         if (itemDef == null)
             return null;
 

@@ -1,7 +1,7 @@
 ﻿using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Rsz;
 
-namespace Biohazard.BioRand.RE7;
+namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class PatchContextExtensions
 {

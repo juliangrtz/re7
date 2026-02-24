@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Biohazard.BioRand.RE7.DataGen._Data;
+namespace Biohazard.BioRand.RE7.DataGen;
 
 internal class EmbeddedResource
 {

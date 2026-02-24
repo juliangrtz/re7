@@ -17,8 +17,6 @@ public abstract class RandomizerTest : IDisposable
     private readonly RE7RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
     private const int DefaultTestingSeed = 0x42424242;
 
-    public RandomizerConfiguration Configuration { get; private set; }
-
     public (ZipArchive, PakFile) RunRandomizer(string configJson, int seed = DefaultTestingSeed)
     {
         var input = new RandomizerInput()

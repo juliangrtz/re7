@@ -1,4 +1,4 @@
-﻿namespace RE7Randomizer.Enums.RE7;
+﻿namespace Biohazard.BioRand.RE7.Enemies;
 
 // TODO: Reverse engineer IDs
 public enum EnemyIDLegacy

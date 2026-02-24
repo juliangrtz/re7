@@ -1,25 +1,32 @@
 
 # RE7 Randomizer roadmap for 2026 and general thoughts
 
-All estimates provided are non-binding and subject to change. Features will likely be implemented in descending order.
+All estimates provided are non-binding and subject to change.
 
-## 1. Recipe randomization
+## 1. Inventory and recipe randomization
+
+Inventory:
+
+* Random start inventory for both Ethan and Mia
+* Ability to change item stack sizes
+
+Recipes:
 
 * Only potential softlock: `SerumMaterialA + 1x SerumMaterialB -> 1x DybbukMedicine`
-* Strange recipe: `1x Flower + 1x ChemicalS -> 1x EyeDrops`, ID "Flower" does not exist!
 * Always enabled:
-  * Anti-softlock
-  * New recipes in crafting menu
-* Starting recipe randomization
-* Probabilities for most wanted recipes
-* Option to disable nonsensical recipes entirely
+  * Softlock prevention
+  * New recipes are visible in the crafting menu
+* Option to replace original recipes
+* Option to disable nonsensical recipes entirely => Different modes
+* Probabilities for most wanted recipes?
 * Pre-defined additional recipes like in RE4RR:
   * Chem Fluid + Chem Fluid => Strong Chem Fluid
   * Strong Chem Fluid + Separating agent => 3x Chem Fluid
   * Separating Agent + Ammo => Gunpowder
   * etc.
 
-**Estimated completion: February**
+*Estimated completion: February*  
+Status: **In development**
 
 ## 2. Item randomization
 
@@ -39,9 +46,10 @@ All estimates provided are non-binding and subject to change. Features will like
   * Backpack randomization
   * Stack Limits (-> RE4R)
 
-**Estimated completion: March**
+*Estimated completion: March*  
+Status: **In development**
 
-------- This is probably a good time to allow alpha testing -------
+==================== BETA TESTING PHASE 1 ====================
 
 ## 3. Enemy randomization
 
@@ -60,8 +68,8 @@ All estimates provided are non-binding and subject to change. Features will like
 * Roaming Jack can't die => Careful with elevators, they won't move!
 * Must be tested *very* carefully
 
-**Estimated completion: May**
-
+*Estimated completion: May*  
+Status: **Not completed**
 
 ## 4. Quality of Life
 
@@ -69,33 +77,31 @@ All estimates provided are non-binding and subject to change. Features will like
 * Softlock prevention
 * Code refactoring
 
-**Estimated completion: June**
+*Estimated completion: June*  
+Status: **Not completed**
 
-------- This is probably a good time to allow beta testing -------
+==================== BETA TESTING PHASE 2 ====================
 
 ## 5. 100 % DLC content in main game
 
- * Goal: *Full item and enemy integration*
- * Challenging, can't just bring the assets over
- * Banned Footage content is easier to mod in than End of Zoe and Not a Hero
- * In-depth reverse engineering required
- * In the worst case binary patching might be necessary!
- * Ethan Must Die crate quality concept in main game
+* Goal: *Full item and enemy integration*
+* Challenging, can't just bring the assets over
+* Banned Footage content is easier to mod in than End of Zoe and Not a Hero
+* In-depth reverse engineering required
+* In the worst case binary patching might be necessary!
+* Ethan Must Die crate quality concept in main game
 
-**Estimated completion: August**
+*Estimated completion: August*  
+Status: **Not completed**
 
 ## 6. Chapter shuffling
 
- * Certain triggers might break
- * Possibly certain chapter order subsets must be preserved
- * Testing required
- * Have to manipulate flags (userdata/globalvariables.uvar.2)
+* Certain triggers might break
+* Possibly certain chapter order subsets must be preserved
+* Testing required
+* Have to manipulate flags (userdata/globalvariables.uvar.2)
 
- **Estimated completion: September**
+*Estimated completion: September*  
+Status: **Not completed**
 
- ## 7. Additional features
- * Remains to be seen
-
-<br>
-
-**Estimated initial public access: October**
+### Estimated initial public access: **October**

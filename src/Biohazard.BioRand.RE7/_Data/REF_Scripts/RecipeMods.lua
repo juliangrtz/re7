@@ -2,6 +2,10 @@
 This script is needed
 A) to increase the original slot size of the combine GUI from 8 to 20 and
 B) to bypass internal restrictions of the combine GUI that filter certain items and recipes.
+
+TODO:
+- allow mouse usage for additional recipes
+- fix icon glitches for items that take more than one slot
 ]]
 
 sdk.hook(

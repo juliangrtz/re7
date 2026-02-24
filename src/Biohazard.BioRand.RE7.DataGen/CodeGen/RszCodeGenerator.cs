@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DataGen._Data;
-using IntelOrca.Biohazard.REE.Rsz;
+﻿using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 
