@@ -61,6 +61,7 @@ internal static class RE7RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Recipes");
+        group.Warning = "This feature requires RE Framework.";
         group.Items.Add(new GroupItem()
         {
             Id = "recipes-add-new",
@@ -103,7 +104,7 @@ internal static class RE7RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"recipe-new-min",
+            Id = $"recipes-new-min",
             Label = "Min. amount of new recipes",
             Description = "Only relevant if you decide to add new recipes.",
             Type = "range",
@@ -114,7 +115,7 @@ internal static class RE7RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"recipe-new-max",
+            Id = $"recipes-new-max",
             Label = "Max. amount of new recipes",
             Description = "Only relevant if you decide to add new recipes.",
             Type = "range",
@@ -124,6 +125,7 @@ internal static class RE7RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Stack Limits");
+        group.Warning = "Not working yet.";
         group.Advanced = true;
 
         var items = from item in itemDefinitions
@@ -155,9 +157,9 @@ internal static class RE7RandomizerConfigurationDefinition
 #if ENABLE_BETA_FEATURES
         group.Items.Add(new GroupItem()
         {
-            Id = "debug-download-data",
-            Label = "Download Data",
-            Description = "Download latest spreadsheet data before generating the randomizer.",
+            Id = "debug-force-reframework",
+            Label = "Force RE Framework installation",
+            Description = "Always forces the installation of RE Framework, regardless of the configuration.",
             Type = "switch",
             Default = false
         });

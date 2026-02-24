@@ -2,6 +2,7 @@
 using BioHazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
+using System.IO.Compression;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -18,7 +19,7 @@ public abstract class RandomizerTest : IDisposable
 
     public RandomizerConfiguration Configuration { get; private set; }
 
-    public PakFile RunRandomizer(string configJson, int seed = DefaultTestingSeed)
+    public (ZipArchive, PakFile) RunRandomizer(string configJson, int seed = DefaultTestingSeed)
     {
         var input = new RandomizerInput()
         {
@@ -29,15 +30,17 @@ public abstract class RandomizerTest : IDisposable
         var output = executor.Randomize(input);
         Assert.NotNull(output);
 
-        var zipAsset = output.Assets.FirstOrDefault(asset => asset.Key == "1-patch");
+        var zipAsset = output.Assets.FirstOrDefault(asset => asset.Key == "1-patch")?.Data.Unzip();
         Assert.NotNull(zipAsset);
 
-        return new PakFile(zipAsset
-            .Data
-            .Unzip()
-            .Entries
-            .Single(entry => entry.Name.EndsWith(".pak"))
-            .GetBytes()
+        return (
+            zipAsset,
+            new PakFile(
+                zipAsset
+                .Entries
+                .Single(entry => entry.Name.EndsWith(".pak"))
+                .GetBytes()
+            )
         );
     }
 

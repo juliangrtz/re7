@@ -1,10 +1,10 @@
 ﻿namespace Biohazard.BioRand.RE7.Serialization;
 
-internal class ZipFileBuilder
+internal class OutputZipFileBuilder()
 {
     private readonly Dictionary<string, byte[]> _entries = new();
 
-    public ZipFileBuilder AddEntry(string path, byte[] data)
+    public OutputZipFileBuilder AddEntry(string path, byte[] data)
     {
         _entries.Add(path, data);
         return this;

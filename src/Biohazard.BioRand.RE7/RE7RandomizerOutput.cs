@@ -13,13 +13,15 @@ public sealed class RE7RandomizerOutput
     public PakFileBuilder PakFile { get; }
     public Dictionary<string, string> LogFiles { get; }
     public int PakVersion { get; }
+    public bool IsWithREFramework { get; }
 
-    internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion)
+    internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
     {
         Input = input;
         PakFile = pakFile;
         LogFiles = logFiles;
         PakVersion = pakVersion;
+        IsWithREFramework = isWithREFramework;
     }
 
     public byte[] GetOutputZip()
@@ -28,6 +30,7 @@ public sealed class RE7RandomizerOutput
             return _zipFile;
 
         _zipFile = BuildZipFile()
+            //.AddEntry("dinput8.dll", EmbeddedData.GetFile("dinput8.dll.gz").Ungzip())
             .AddEntry($"re_chunk_000.pak.patch_{PakVersion:000}.pak", PakFile.ToByteArray())
             .Build();
         return _zipFile;
@@ -50,14 +53,25 @@ public sealed class RE7RandomizerOutput
         return _modFile;
     }
 
-    private ZipFileBuilder BuildZipFile(string logPrefix = "")
+    private OutputZipFileBuilder BuildZipFile(string logPrefix = "")
     {
-        var builder = new ZipFileBuilder();
+        var builder = new OutputZipFileBuilder();
         builder.AddEntry($"{logPrefix}config.json", Encoding.UTF8.GetBytes(Input.Configuration.ToJson()));
         foreach (var logFile in LogFiles)
         {
             builder.AddEntry($"{logPrefix}{logFile.Key}", Encoding.UTF8.GetBytes(logFile.Value));
         }
+
+        if (IsWithREFramework)
+        {
+            var scripts = EmbeddedData.GetREFrameworkScripts();
+            scripts.ForEach(tuple =>
+            {
+                var (path, data) = tuple;
+                builder.AddEntry(path, data);
+            });
+        }
+
         return builder;
     }
 
@@ -69,18 +83,25 @@ public sealed class RE7RandomizerOutput
         var description = SanitizeParagraph(
             $"{Sanitize(Input.ProfileName)} by {Sanitize(Input.ProfileAuthor)} [{Input.Seed}]\n" +
             Input.ProfileDescription);
-        var author = "BioRand by IntelOrca & BioRand Team";
+        var author = "BioRand 7 by IntelOrca, Descole & BioRand Team";
         var version = $"{rf.CurrentVersionNumber} ({rf.GitHash})";
 
-        var lines = new[] {
+        var lines = new List<string> {
             $"name={name}",
             $"version={version}",
             $"description={description}",
             "screenshot=pic.jpg",
             $"author={author}",
-            "category=!Other > Misc",
-            ""
+            "category=!Other > Misc"
         };
+
+        if (IsWithREFramework)
+        {
+            lines.Add("requirement=RE Framework");
+        }
+
+        lines.Add("");
+
         var content = string.Join('\n', lines);
         return Encoding.UTF8.GetBytes(content);
     }

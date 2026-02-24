@@ -16,7 +16,7 @@ public class RecipeModifierTests : RandomizerTest
             """;
 
         // When
-        var resultPak = RunRandomizer(config);
+        var (_, resultPak) = RunRandomizer(config);
 
         // Then
         // TODO: Find better way to test the result
@@ -35,13 +35,13 @@ public class RecipeModifierTests : RandomizerTest
               "recipes-replace-original": false,
               "recipes-show-in-menu": true,
               "recipes-randomization-mode": "crazy",
-              "recipe-new-min": 20,
-             "recipe-new-max": 20
+              "recipes-new-min": 20,
+              "recipes-new-max": 20
             }
             """;
 
         // When
-        var resultPak = RunRandomizer(config);
+        var (_, resultPak) = RunRandomizer(config);
 
         // Then
         // TODO: Find better way to test the result
