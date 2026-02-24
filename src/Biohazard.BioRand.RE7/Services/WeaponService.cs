@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Enums.app;
 
-namespace Biohazard.BioRand.RE7.Services {
+namespace Biohazard.BioRand.RE7.Services;
+
 #pragma warning disable CS9113 // Parameter is unread.
-    internal class WeaponService(RE7Randomizer randomizer)
+
+internal class WeaponService(RE7Randomizer randomizer)
 #pragma warning restore CS9113 // Parameter is unread.
+{
+    private readonly List<WeaponID> _restrictedUpgrades = [];
+
+    public void RestrictUpgrades(WeaponID wp)
     {
-        private readonly List<int> _restrictedUpgrades = [];
-
-        public void RestrictUpgrades(int wp) {
-            _restrictedUpgrades.Add(wp);
-        }
-
-        public bool IsRestricted(int wp) => _restrictedUpgrades.Contains(wp);
+        _restrictedUpgrades.Add(wp);
     }
+
+    public bool IsRestricted(WeaponID wp) =>
+        _restrictedUpgrades.Contains(wp);
 }

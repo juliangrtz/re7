@@ -1,20 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
+﻿using System.Collections.Immutable;
 
-namespace Biohazard.BioRand.RE7.REEngine {
-    internal readonly struct SceneHierachyPath {
-        public ImmutableArray<string> Hierachy { get; }
+namespace Biohazard.BioRand.RE7.REEngine;
 
-        public IReadOnlyList<string> Folders => Hierachy.SkipLast(1).ToImmutableArray();
-        public string Name => Hierachy.Last();
+internal readonly struct SceneHierachyPath
+{
+    public ImmutableArray<string> Hierachy { get; }
 
-        public SceneHierachyPath(string path) {
-            Hierachy = path.Split('/').ToImmutableArray();
-        }
+    public IReadOnlyList<string> Folders => Hierachy.SkipLast(1).ToImmutableArray();
+    public string Name => Hierachy.Last();
 
-        public override string ToString() => string.Join('/', Hierachy);
-
-        public static implicit operator SceneHierachyPath(string path) => new(path);
+    public SceneHierachyPath(string path)
+    {
+        Hierachy = path.Split('/').ToImmutableArray();
     }
+
+    public override string ToString() => string.Join('/', Hierachy);
+
+    public static implicit operator SceneHierachyPath(string path) => new(path);
 }

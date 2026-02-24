@@ -1,30 +1,31 @@
-﻿using System.Collections.Generic;
+﻿namespace Biohazard.BioRand.RE7.Services;
 
-namespace Biohazard.BioRand.RE7.Services {
 #pragma warning disable CS9113 // Parameter is unread.
-    internal class FileService(RE7Randomizer chainsaw)
+
+internal class FileService(RE7Randomizer chainsaw)
 #pragma warning restore CS9113 // Parameter is unread.
+{
+    private int _id = 2;
+
+    public List<FilePlacement> FilePlacements { get; private set; } = [];
+
+    internal int GetNextId()
     {
-        private int _id = 2;
-
-        public List<FilePlacement> FilePlacements { get; private set; } = [];
-
-        internal int GetNextId() {
-            return _id++;
-        }
+        return _id++;
     }
+}
 
-    internal class FilePlacement {
-        public int TemplateId { get; set; }
-        public int Id { get; set; }
-        public string Content { get; set; } = "";
+internal class FilePlacement
+{
+    public int TemplateId { get; set; }
+    public int Id { get; set; }
+    public string Content { get; set; } = "";
 
-        public int Stage { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-        public float Yaw { get; set; }
-        public float Pitch { get; set; }
-        public float Roll { get; set; }
-    }
+    public int Stage { get; set; }
+    public float X { get; set; }
+    public float Y { get; set; }
+    public float Z { get; set; }
+    public float Yaw { get; set; }
+    public float Pitch { get; set; }
+    public float Roll { get; set; }
 }

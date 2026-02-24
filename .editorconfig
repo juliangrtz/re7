@@ -1,0 +1,16 @@
+﻿[*.cs]
+
+# IDE0090: "new(...)"
+dotnet_diagnostic.IDE0090.severity = silent
+
+# IDE0028: Simplify collection initialization
+dotnet_diagnostic.IDE0028.severity = silent
+dotnet_diagnostic.IDE0305.severity = silent
+
+# IDE0057: Use .. operator
+dotnet_diagnostic.IDE0057.severity = silent
+
+# SYSLIB1045: GeneratedRegexAttribute
+dotnet_diagnostic.SYSLIB1045.severity = silent
+
+csharp_style_namespace_declarations=file_scoped:suggestion

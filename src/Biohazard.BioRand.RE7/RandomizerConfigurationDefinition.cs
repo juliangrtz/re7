@@ -1,92 +1,204 @@
+using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Modifiers;
 using IntelOrca.Biohazard.BioRand;
-using System.Text;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
-namespace Biohazard.BioRand.RE7 {
-    internal static class RE7RandomizerConfigurationDefinition {
-        public static RandomizerConfigurationDefinition Create() {
-            var configDefinition = new RandomizerConfigurationDefinition();
+namespace Biohazard.BioRand.RE7;
 
-            #region General
+internal static class RE7RandomizerConfigurationDefinition
+{
+    private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
-            var page = configDefinition.CreatePage("General");
-            var group = page.CreateGroup("");
-            group.Items.Add(new GroupItem() {
-                Id = "game-version",
-                Label = "Game Version",
-                Description = "What version of the game to generate for. Check what version you're using on Steam.",
-                Type = "dropdown",
-                Options = ["rt", "non-rt"],
-                Default = "rt"
-            });
+    public static RandomizerConfigurationDefinition Create()
+    {
+        var configDefinition = new RandomizerConfigurationDefinition();
 
-            group.Items.Add(new GroupItem() {
-                Id = $"start-chapter",
-                Label = "Start Chapter",
-                Description = "Which chapter to start on.",
+        #region General
+
+        var page = configDefinition.CreatePage("General");
+        var group = page.CreateGroup("");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "game-version",
+            Label = "Game Version",
+            Description = "What version of the game to generate for." +
+            " You can identify it in Steam by right-clicking the game," +
+            " selecting 'Properties' and then 'Game Versions & Betas'.",
+            Type = "dropdown",
+            Options = ["dx12_rt", "dx11_non-rt"],
+            Default = "dx12_rt"
+        });
+
+        #endregion General
+
+        #region Inventory
+
+        page = configDefinition.CreatePage("Inventory");
+
+        group = page.CreateGroup("Starting inventory");
+        group.Warning = "Not working yet.";
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory",
+            Label = "Random starting inventory",
+            Description = "Whether to start with a random inventory.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-mode",
+            Label = "Inventory quality",
+            Description = "Controls the quality of your starting inventory.\n" +
+            "Bad: You'll get rather poor items...\n" +
+            "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
+            "Good: The randomizer will make things a bit easier for you.\n" +
+            "Overpowered: Nighty-night, Molded!",
+            Type = "dropdown",
+            Options = ["bad", "balanced", "good", "overpowered"],
+            Default = "balanced"
+        });
+
+        group = page.CreateGroup("Recipes");
+        group.Label = "To configure recipes like in the vanilla version disable the option 'Add new recipes'.";
+        group.Warning = "This feature requires RE Framework.";
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-add-new",
+            Label = "Add new recipes",
+            Description = "Whether to add new, random recipes.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-replace-original",
+            Label = "Replace original recipes",
+            Description = "Whether to replace the original recipes.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-allow-stabilizers-and-steroids",
+            Label = "Allow stabilizers and steroids",
+            Description = "Whether to allow stabilizers and steroids in the item pool.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-randomization-mode",
+            Label = "Recipe generation mode",
+            Description = "Controls how ingredients and results are selected.\n" +
+            "Easy: You'll get useful recipes only. Recipes are chosen within a well-defined pool.\n" +
+            "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.)\n" +
+            "Chaos: Anything could craft anything.\n" +
+            "Crazy: Deliberately nonsensical recipes." +
+            "No crafting: You cannot craft anything. For hardcore players only.\n",
+            Type = "dropdown",
+            Options = ["easy", "balanced", "chaos", "crazy", "no_crafting"],
+            Default = "balanced"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-new-min",
+            Label = "Min. amount of new recipes",
+            Description = "Only relevant if you add new recipes.",
+            Type = "range",
+            Min = 1,
+            Max = RecipeModifier.MaxRecipeCount,
+            Default = 4
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-new-max",
+            Label = "Max. amount of new recipes",
+            Description = "Only relevant if you add new recipes.",
+            Type = "range",
+            Min = 1,
+            Max = RecipeModifier.MaxRecipeCount,
+            Default = 12
+        });
+
+        group = page.CreateGroup("Stack Limits");
+        group.Warning = "Not working yet.";
+        group.Advanced = true;
+
+        var items = from item in itemDefinitions
+                    where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
+                    select (item.Id, item.Name);
+
+        foreach ((string itemId, string itemName) in items)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"inventory-stack-limit-{itemId}",
+                Label = itemName,
                 Type = "range",
-                Min = 1,
-                Max = 16,
-                Default = 1
+                Min = 0,
+                Max = 999,
+                Step = 1,
+                Default = 0
             });
-
-            #endregion
-
-            #region Items
-
-            page = configDefinition.CreatePage("Items");
-            group = page.CreateGroup("");
-            group.Items.Add(new GroupItem() {
-                Id = $"random-recipes",
-                Label = "Random Recipes",
-                Description = "Let Biorand randomize all the crafting recipes in the game.",
-                Type = "switch",
-                Default = false
-            });
-         
-            #endregion
-
-            #region Debug
-
-            page = configDefinition.CreatePage("Debug");
-            page.Advanced = true;
-            group = page.CreateGroup("");
-            group.Warning = "These options are only for testing / debugging the randomizer.";
-#if ENABLE_BETA_FEATURES
-            group.Items.Add(new GroupItem() {
-                Id = "debug-download-data",
-                Label = "Download Data",
-                Description = "Download latest spreadsheet data before generating the randomizer.",
-                Type = "switch",
-                Default = false
-            });
-#endif
-            group.Items.Add(new GroupItem() {
-                Id = $"enable-special",
-                Label = "Enable Personal Touch",
-                Description = "Enables a personal touch or meme for the current user.",
-                Type = "switch",
-                Default = true
-            });
-            group.Items.Add(new GroupItem() {
-                Id = $"debug-unique-enemy-hp",
-                Label = "Unique Enemy HP",
-                Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
-                Type = "switch",
-                Default = false
-            });
-
-            #endregion
-
-            var defaultProfileBytes = RE7RandomizerFactory.GetDefaultProfile();
-            var defaultProfileJson = Encoding.UTF8.GetString(defaultProfileBytes);
-            var defaultProfile = RandomizerConfiguration.FromJson(defaultProfileJson);
-            foreach (var item in configDefinition.AllItems) {
-                if (defaultProfile.TryGetValue(item.Id!, out var defaultOverride)) {
-                    item.Default = defaultOverride;
-                }
-            }
-            return configDefinition;
         }
+
+        #endregion Inventory
+
+        #region Debug
+
+        page = configDefinition.CreatePage("Debug");
+        page.Advanced = true;
+        group = page.CreateGroup("");
+        group.Warning = "These options are only for testing / debugging the randomizer.";
+#if ENABLE_BETA_FEATURES
+        group.Items.Add(new GroupItem()
+        {
+            Id = "debug-force-reframework",
+            Label = "Force RE Framework installation",
+            Description = "Always forces the installation of RE Framework, regardless of the configuration.",
+            Type = "switch",
+            Default = false
+        });
+#endif
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enable-special",
+            Label = "Enable Personal Touch",
+            Description = "Enables a personal touch or meme for the current user.",
+            Type = "switch",
+            Default = true
+        });
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"debug-unique-enemy-hp",
+            Label = "Unique Enemy HP",
+            Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
+            Type = "switch",
+            Default = false
+        });
+
+        #endregion Debug
+
+        var defaultProfileBytes = RE7RandomizerFactory.GetDefaultProfile();
+        var defaultProfileJson = Encoding.UTF8.GetString(defaultProfileBytes);
+        var defaultProfile = RandomizerConfiguration.FromJson(defaultProfileJson);
+        foreach (var item in configDefinition.AllItems)
+        {
+            if (defaultProfile.TryGetValue(item.Id!, out var defaultOverride))
+            {
+                item.Default = defaultOverride;
+            }
+        }
+        return configDefinition;
     }
+
+    // TODO: Add extension methods like
+    // public static void AddDropdown(this Group group, GroupItem item) { ... }
 }
