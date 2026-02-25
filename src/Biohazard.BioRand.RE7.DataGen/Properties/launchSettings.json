@@ -8,9 +8,13 @@
       "commandName": "Project",
       "commandLineArgs": "rsz-to-cs via.Prefab"
     },
-    "Generate items": {
+    "Generate config": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v items"
+      "commandLineArgs": "generate -c -v -f json config"
+    },
+    "Generate item definitions": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json item_definitions"
     }
   }
 }

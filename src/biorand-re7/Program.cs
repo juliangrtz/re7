@@ -1,6 +1,7 @@
 ﻿using BioHazard.BioRand.RE7.Commands;
 using Spectre.Console.Cli;
 using System.Reflection;
+using System.Text;
 
 namespace BioHazard.BioRand.RE7;
 
@@ -9,6 +10,10 @@ internal class Program
     public static int Main(string[] args)
     {
         // return DebugCode();
+
+        Console.OutputEncoding = Encoding.UTF8;
+        Console.InputEncoding = Encoding.UTF8;
+
         var app = new CommandApp();
         app.Configure(config =>
         {
