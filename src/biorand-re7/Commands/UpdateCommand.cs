@@ -25,7 +25,7 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings>
         var dynamicData = new DynamicData(download: true);
         foreach (var dataName in Enum.GetValues<DynamicDataName>())
         {
-            var filename = dynamicData.GetFileName(dataName)!;
+            var filename = DynamicData.GetFileName(dataName)!;
 
             var destinationPath = Path.Combine(dataDir, filename);
             Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
