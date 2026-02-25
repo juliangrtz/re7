@@ -1,11 +1,10 @@
 ﻿using Enums.app.ReticleGUI;
-using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
 internal static class StartingWeaponCategory
 {
-    public static ImmutableArray<string> Values = new()
+    public static List<string> Values => new()
     {
         "Knife",
         "Chainsaw",

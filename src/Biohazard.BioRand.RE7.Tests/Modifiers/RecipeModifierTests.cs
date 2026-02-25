@@ -34,7 +34,7 @@ public class RecipeModifierTests : RandomizerTest
               "recipes-add-new": true,
               "recipes-replace-original": false,
               "recipes-show-in-menu": true,
-              "recipes-randomization-mode": "crazy",
+              "recipes-randomization-mode": "Crazy",
               "recipes-new-min": 20,
               "recipes-new-max": 20
             }

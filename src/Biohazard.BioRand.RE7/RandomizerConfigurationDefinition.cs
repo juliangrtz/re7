@@ -111,7 +111,7 @@ internal static class RE7RandomizerConfigurationDefinition
             {
                 group.Items.Add(new GroupItem()
                 {
-                    Id = $"inventory-weapon-{category.ToLowerInvariant()}-{character.ToLowerInvariant()}",
+                    Id = $"inventory-weapon-{category.ToLowerInvariant().Replace(" ", "-")}-{character.ToLowerInvariant()}",
                     Label = category.ToTitleCase(),
                     Type = "switch",
                     Default = true
@@ -160,7 +160,7 @@ internal static class RE7RandomizerConfigurationDefinition
             "No crafting: You cannot craft anything. For hardcore players only.\n",
             Type = "dropdown",
             Options = ["Easy", "Balanced", "Chaos", "Crazy", "No crafting"],
-            Default = "balanced"
+            Default = "Balanced"
         });
 
         group.Items.Add(new GroupItem()
