@@ -109,6 +109,17 @@ namespace app
             public int Num { get; set; }
         }
     }
+
+    public class SetInventoryExtend
+    {
+        public bool v0_Enabled { get; set; }
+        public bool v1_Modified { get; set; }
+        public uint v2_UID { get; set; }
+        public byte v3_ListNo { get; set; }
+        public System.Guid _TargetGameObject { get; set; }
+        public Enums.app.Inventory.ExtendLvDef _SetExtendLv { get; set; }
+        public bool isSetExtendLv { get; set; }
+    }
 }
 
 namespace via
@@ -128,5 +139,31 @@ namespace via
     {
         public bool Standby { get; set; }
         public object Path { get; set; } // Actually a via.Resource
+    }
+
+    namespace fsm
+    {
+        public class SceneFsmData
+        {
+            public ulong v0_ResourceID { get; set; }
+            public object v1_Actions { get; set; }
+            public object v2_Conditions { get; set; }
+        }
+
+        public class Fsm
+        {
+            public object Resource { get; set; } // Actually a via.Resource
+            public ReadOnlyMemory<byte> v1 { get; set; }
+            public ReadOnlyMemory<byte> v2 { get; set; }
+            public ReadOnlyMemory<byte> v3 { get; set; }
+            public object v4 { get; set; }
+            public ReadOnlyMemory<byte> v5 { get; set; }
+            public ReadOnlyMemory<byte> v6 { get; set; }
+            public ReadOnlyMemory<byte> v7 { get; set; }
+            public ReadOnlyMemory<byte> v8 { get; set; }
+            public ReadOnlyMemory<byte> v9 { get; set; }
+            public ReadOnlyMemory<byte> v10 { get; set; }
+            public ReadOnlyMemory<byte> v11 { get; set; }
+        }
     }
 }

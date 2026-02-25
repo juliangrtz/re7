@@ -48,6 +48,7 @@ internal class RE7Randomizer : IDisposable
             false
 #endif
         );
+        PakPath.IsOnRT = IsOnRaytracingVersion;
     }
 
     public void Dispose()
@@ -175,6 +176,15 @@ internal class RE7Randomizer : IDisposable
         if (Input.Configuration == null)
             return defaultValue;
         return Input.Configuration.GetValueOrDefault<T>(key, defaultValue);
+    }
+
+    public T? GetEnumConfigOption<T>(string key) where T : struct, Enum
+    {
+        var value = Input.Configuration.GetValueOrDefault<string>(key);
+        if (Input.Configuration == null || value == null)
+            return default;
+
+        return EnumExtensions.ParseOrNull<T>(value);
     }
 
     public bool IsOnRaytracingVersion
