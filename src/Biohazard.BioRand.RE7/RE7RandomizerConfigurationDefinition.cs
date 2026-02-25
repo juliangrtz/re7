@@ -1,6 +1,6 @@
+using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
-using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
@@ -60,9 +60,9 @@ internal static class RE7RandomizerConfigurationDefinition
             Id = "random-starting-inventory-mode-ethan",
             Label = "Ethan: Inventory quality",
             Description = "Controls the quality of your starting inventory as Ethan.\n" +
-            "Bad: You'll get rather poor items...\n" +
+            "Bad: You'll get rather poor weapons...\n" +
             "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
-            "Good: The randomizer will make things a bit easier for you.\n" +
+            "Good: The randomizer will make things a bit easier for you with good weapons.\n" +
             "Overpowered: Nighty-night, Molded!",
             Type = "dropdown",
             Options = ["Bad", "Balanced", "Good", "Overpowered"],
@@ -75,9 +75,9 @@ internal static class RE7RandomizerConfigurationDefinition
             Label = "Mia: Inventory quality",
             Description = "Controls the quality of your starting inventory as Mia.\n" +
             "Empty: You'll start with nothing, not even the Machine Gun.\n" +
-            "Bad: You'll get rather poor items...\n" +
+            "Bad: You'll get rather poor weapons...\n" +
             "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
-            "Good: The randomizer will make things a bit easier for you.\n" +
+            "Good: The randomizer will make things a bit easier for you with good weapons.\n" +
             "Overpowered: Nighty-night, Molded!",
             Type = "dropdown",
             Options = ["Empty", "Bad", "Balanced", "Good", "Overpowered"],
@@ -104,15 +104,17 @@ internal static class RE7RandomizerConfigurationDefinition
             Default = "8"
         });
 
+        var categories = Enum.GetValues<StartingWeaponCategory>();
         foreach (var character in new[] { "Ethan", "Mia" })
         {
             group = page.CreateGroup($"{character}: Allowed weapon categories");
-            foreach (var category in StartingWeaponCategory.Values)
+            foreach (var category in categories)
             {
                 group.Items.Add(new GroupItem()
                 {
-                    Id = $"inventory-weapon-{category.ToLowerInvariant().Replace(" ", "-")}-{character.ToLowerInvariant()}",
-                    Label = category.ToTitleCase(),
+                    Id = $"inventory-weapon-{category.ToString().ToLowerInvariant()}-{character.ToLowerInvariant()}",
+                    Description = (category == StartingWeaponCategory.Bladed ? "Knives and Axe" : null),
+                    Label = category.GetLabel(),
                     Type = "switch",
                     Default = true
                 });
@@ -186,7 +188,7 @@ internal static class RE7RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Stack Limits");
-        group.Warning = "Not working yet.";
+        group.Warning = "Zero means that the original stack limits stay.";
         group.Advanced = true;
 
         var items = from item in itemDefinitions
