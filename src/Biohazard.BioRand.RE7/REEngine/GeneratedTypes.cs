@@ -98,6 +98,17 @@ namespace app
             public Enums.app.WeaponInfoType WeaponInfoType { get; set; }
         }
     }
+
+    public class AddItemListData
+    {
+        public List<Data> _AddItems { get; set; } = [];
+
+        public class Data
+        {
+            public string ItemDataID { get; set; } = "";
+            public int Num { get; set; }
+        }
+    }
 }
 
 namespace via

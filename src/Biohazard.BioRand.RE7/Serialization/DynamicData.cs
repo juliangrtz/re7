@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Net.Http;
+using System.Threading;
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
@@ -18,9 +19,9 @@ public sealed class DynamicData(bool download)
     }.ToImmutableDictionary();
 
     private readonly Dictionary<DynamicDataName, byte[]> _map = [];
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
 
-    public string? GetFileName(DynamicDataName name)
+    public static string? GetFileName(DynamicDataName name)
     {
         if (g_map.TryGetValue(name, out var entry))
         {
