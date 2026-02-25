@@ -108,7 +108,7 @@ Ideas for new recipes:
         CreateRecipe("EyeDrops", 1, "Herb", 1, "Depressant", 1), // Psychostimulants + Herb => Stabilizer
 ```
 
-## Starting inventory
+## Inventory
 
 Ethan starting inventory: natives\stm\leveldesign\fsm\chapter1\other -> tested successfully with chainsaw
 
@@ -116,4 +116,33 @@ Mia starting inventory (VHS): natives\stm\leveldesign\fsm\chapter4\chapter4_1\ot
 
 Mia starting inventory (w/ machine gun): natives\stm\leveldesign\fsm\ff050\other\ff050_startinventory.user.2
 
-Clancy VHS starting inventory? natives\stm\leveldesign\fsm\ff000\other\startinventory_ff000.user.2
+Clancy VHS starting inventory natives\stm\leveldesign\fsm\ff000\other\startinventory_ff000.user.2
+
+---------
+
+Files where inventory size is changed:
+
+- levelfsm_c07_3_normalmode.scn.20
+- levelfsm_c07_3_survivalmode.scn.20
+- stage1_seta.scn.20
+- stage1_setb.scn.20
+- stage2_seta.scn.20
+- stage2_setb.scn.20
+- stage3_seta.scn.20
+- stage3_setb.scn.20
+- ship1f.scn.20
+- shipoutside.scn.20
+- mainhouse_east.scn.20
+- oldhouse.scn.20
+- levelfsm_ff000.scn.20
+- level_fsm_ff050.scn.20
+- levelfsm_c07_2_storymode.scn.20
+- levelfsm_c04_1.scn.20
+- levelfsm_c04_2.scn.20
+- mainflow_gimmick.scn.20
+- levelfsm_c09_4.scn.20
+- ch8_game.scn.20
+
+## Enemies
+
+Initial Jack (Em3000) encounter: natives\stm\leveldesign\fsm\chapter1\amaro.scn.20

@@ -2,11 +2,15 @@
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Enums.app;
+using Enums.app.Inventory;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class InventoryModifier : Modifier
 {
+    private const string RandomizerKey = "modifier/inventory";
+
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new()
     {
         { MainCampaignCharacter.Ethan, PakPath.Of("leveldesign/fsm/chapter1/other/ch1_startinventory.user.2") },
@@ -48,7 +52,7 @@ internal class InventoryModifier : Modifier
         if (character == MainCampaignCharacter.ClancyVHS)
         {
             // There are no options for Clancy's starting inventory as the section is pretty much an interactive cutscene.
-            // For the memes we are randomizing his inventory anyways ;)
+            // For the memes we are "randomizing" his inventory anyways ;)
             randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
             {
                 root._AddItems.Add(new() { ItemDataID = ItemID.Handgun_Albert.ToString(), Num = 1 });
@@ -70,6 +74,53 @@ internal class InventoryModifier : Modifier
         }
     }
 
+    private ExtendLvDef? ToExtendLvDef(string str, Rng rng) => str switch
+    {
+        "random" => rng.Next(Enum.GetValues<ExtendLvDef>()),
+        "8" => null,
+        "12" => ExtendLvDef.Lv1,
+        "16" => ExtendLvDef.Lv2,
+        "20" => ExtendLvDef.Lv3,
+        _ => throw new ArgumentException($"Invalid size '{str}' specified")
+    };
+
+    private void SetInventorySizes(
+        RE7Randomizer randomizer,
+        Rng rng,
+        string ethanInventorySize,
+        string miaInventorySize
+    )
+    {
+        var ethanExtendLv = ToExtendLvDef(ethanInventorySize, rng);
+        if (ethanExtendLv != null)
+        {
+            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/chapter1/c01_tutorial.scn.20"), scene =>
+            {
+                var tutorialWalkGuid = new Guid("305daaa1-c01e-4bc5-88f2-e37e4e44d356");
+                var tutorialWalkGameObject = scene.FindGameObject(tutorialWalkGuid)!;
+                var fsm = tutorialWalkGameObject.FindComponent<via.fsm.Fsm>();
+                // TODO: Edit fsm
+                return scene;
+            });
+        }
+
+        var miaExtendLv = ToExtendLvDef(miaInventorySize, rng);
+        if (miaExtendLv != null)
+        {
+            // Wake up in front of ship
+            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/chapter4/c04_tutorial.scn.20"), scene =>
+            {
+                return scene;
+            });
+
+            // VHS
+            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/ff050/ff050_tutorial.scn.20"), scene =>
+            {
+                return scene;
+            });
+        }
+    }
+
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
         var randomizeEthanInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
@@ -80,10 +131,10 @@ internal class InventoryModifier : Modifier
             return;
         }
 
-        var ethanInventoryMode = randomizer.GetConfigOption<string>("random-starting-inventory-mode-ethan");
-        var miaInventoryMode = randomizer.GetConfigOption<string>("random-starting-inventory-mode-mia");
-        var ethanInventorySize = randomizer.GetConfigOption<string>("random-starting-inventory-size-ethan");
-        var miaInventorySize = randomizer.GetConfigOption<string>("random-starting-inventory-size-mia");
+        var rng = randomizer.GetRng(RandomizerKey);
+        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "8")!;
+        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "8")!;
+        SetInventorySizes(randomizer, rng, ethanInventorySize, miaInventorySize);
 
         //var characterToWeaponMap = new Dictionary<MainCampaignCharacter, List<StartingWeaponCategory>>();
         var categories = Enum.GetValues<StartingWeaponCategory>();

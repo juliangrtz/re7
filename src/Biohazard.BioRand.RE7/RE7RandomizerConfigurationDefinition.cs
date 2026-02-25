@@ -41,7 +41,8 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-ethan",
             Label = "Ethan: Random starting inventory",
-            Description = "Whether to start with a random inventory as Ethan.",
+            Description = "Whether to start with a random inventory as Ethan. " +
+            "You'll receive a random gun and a random bladed weapon.",
             Type = "switch",
             Default = true
         });
@@ -50,38 +51,10 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-mia",
             Label = "Mia: Random starting inventory",
-            Description = "Whether to start with a random inventory as Mia.",
+            Description = "Whether to start with a random inventory as Mia. " +
+            "You'll receive a random gun and a random bladed weapon.",
             Type = "switch",
             Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "random-starting-inventory-mode-ethan",
-            Label = "Ethan: Inventory quality",
-            Description = "Controls the quality of your starting inventory as Ethan.\n" +
-            "Bad: You'll get rather poor weapons...\n" +
-            "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
-            "Good: The randomizer will make things a bit easier for you with good weapons.\n" +
-            "Overpowered: Nighty-night, Molded!",
-            Type = "dropdown",
-            Options = ["Bad", "Balanced", "Good", "Overpowered"],
-            Default = "Balanced"
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "random-starting-inventory-mode-mia",
-            Label = "Mia: Inventory quality",
-            Description = "Controls the quality of your starting inventory as Mia.\n" +
-            "Empty: You'll start with nothing, not even the Machine Gun.\n" +
-            "Bad: You'll get rather poor weapons...\n" +
-            "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
-            "Good: The randomizer will make things a bit easier for you with good weapons.\n" +
-            "Overpowered: Nighty-night, Molded!",
-            Type = "dropdown",
-            Options = ["Empty", "Bad", "Balanced", "Good", "Overpowered"],
-            Default = "Balanced"
         });
 
         group.Items.Add(new GroupItem()
@@ -90,7 +63,7 @@ internal static class RE7RandomizerConfigurationDefinition
             Label = "Ethan: Inventory size",
             Description = "Controls the size of your starting inventory as Ethan.",
             Type = "dropdown",
-            Options = ["8", "12", "16", "20"],
+            Options = ["random", "8", "12", "16", "20"],
             Default = "8"
         });
 
@@ -100,7 +73,7 @@ internal static class RE7RandomizerConfigurationDefinition
             Label = "Mia: Inventory size",
             Description = "Controls the size of your starting inventory as Mia.",
             Type = "dropdown",
-            Options = ["8", "12", "16", "20"],
+            Options = ["random", "8", "12", "16", "20"],
             Default = "8"
         });
 
