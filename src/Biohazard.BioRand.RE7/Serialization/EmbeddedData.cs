@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
-internal static class EmbeddedData
+public static class EmbeddedData
 {
-    private static readonly Assembly assembly = Assembly.GetExecutingAssembly()!;
+    private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
     private const string DataDirectoryName = "_Data";
     private const string REFrameworkScriptDirectoryName = "REF_Scripts";
 

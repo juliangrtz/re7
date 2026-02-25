@@ -2,7 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Tests;
 
-public class REFrameworkTests : RandomizerTest
+public class REFrameworkTests
 {
     private const string REFrameworkDirectoryName = "reframework";
 
@@ -30,7 +30,7 @@ public class REFrameworkTests : RandomizerTest
             """;
 
         // When
-        var (resultZip, _) = RunRandomizer(config);
+        var (resultZip, _) = RandomizerTest.Run(config);
 
         // Then
         Assert.True(ContainsREFramework(resultZip));
@@ -47,7 +47,7 @@ public class REFrameworkTests : RandomizerTest
             """;
 
         // When
-        var (resultZip, _) = RunRandomizer(config);
+        var (resultZip, _) = RandomizerTest.Run(config);
 
         // Then
         Assert.False(ContainsREFramework(resultZip));
@@ -71,7 +71,7 @@ public class REFrameworkTests : RandomizerTest
             """;
 
         // When
-        var (resultZip, _) = RunRandomizer(config);
+        var (resultZip, _) = RandomizerTest.Run(config);
 
         // Then
         Assert.True(ContainsREFramework(resultZip));

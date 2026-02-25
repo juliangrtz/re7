@@ -1,11 +1,11 @@
 ﻿namespace Biohazard.BioRand.RE7.Tests.Modifiers;
 
-public class RecipeModifierTests : RandomizerTest
+public class RecipeModifierTests
 {
     private readonly string ItemCombineDataPath = @"natives\stm\prefab\item\itemcombinedata.user.2";
     private readonly string DictionaryCombineDataPath = @"natives\stm\prefab\item\dictionarycombinedata.user.2";
 
-    [SkipCIFact]
+    [Fact]
     public void Test_Random_Recipes_Config_Off_DX12()
     {
         // Given
@@ -16,7 +16,7 @@ public class RecipeModifierTests : RandomizerTest
             """;
 
         // When
-        var (_, resultPak) = RunRandomizer(config);
+        var (_, resultPak) = RandomizerTest.Run(config);
 
         // Then
         // TODO: Find better way to test the result
@@ -24,7 +24,7 @@ public class RecipeModifierTests : RandomizerTest
         Assert.Null(resultPak.GetEntryData(DictionaryCombineDataPath));
     }
 
-    [SkipCIFact]
+    [Fact]
     public void Test_Random_Recipes_Config_Crazy_DX12()
     {
         // Given
@@ -41,7 +41,7 @@ public class RecipeModifierTests : RandomizerTest
             """;
 
         // When
-        var (_, resultPak) = RunRandomizer(config);
+        var (_, resultPak) = RandomizerTest.Run(config);
 
         // Then
         // TODO: Find better way to test the result

@@ -1,4 +1,5 @@
-﻿using IntelOrca.Biohazard.REE.Rsz;
+﻿using Biohazard.BioRand.RE7.Serialization;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 
@@ -8,7 +9,7 @@ namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 /// </summary>
 internal class RszCodeGenerator
 {
-    private static readonly byte[] rszJsonGz = EmbeddedResource.Get("rszre7rt.json.gz");
+    private static readonly byte[] rszJsonGz = EmbeddedData.GetFile("rszre7rt.json.gz");
     private static readonly RszTypeRepository _rszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJsonGz);
 
     public static string Generate(string typeName, bool generateEnums = false)
