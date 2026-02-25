@@ -13,7 +13,7 @@ public class REFrameworkTests
             .Any(name => name.StartsWith($"{REFrameworkDirectoryName}/"));
     }
 
-    [SkipCIFact]
+    [Fact]
     public void Test_REFramework_Included()
     {
         // Given
@@ -36,7 +36,7 @@ public class REFrameworkTests
         Assert.True(ContainsREFramework(resultZip));
     }
 
-    [SkipCIFact]
+    [Fact]
     public void Test_REFramework_Excluded()
     {
         // Given
@@ -53,7 +53,7 @@ public class REFrameworkTests
         Assert.False(ContainsREFramework(resultZip));
     }
 
-    [SkipCIFact]
+    [Fact]
     public void Test_REFramework_Force_Debug()
     {
         // Given
