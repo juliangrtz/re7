@@ -23,7 +23,7 @@ public class REFrameworkTests : RandomizerTest
               "recipes-add-new": true,
               "recipes-replace-original": true,
               "recipes-show-in-menu": true,
-              "recipes-randomization-mode": "crazy",
+              "recipes-randomization-mode": "Crazy",
               "recipes-new-min": 20,
               "recipes-new-max": 20
             }
@@ -63,7 +63,7 @@ public class REFrameworkTests : RandomizerTest
               "recipes-add-new": false,
               "recipes-replace-original": false,
               "recipes-show-in-menu": false,
-              "recipes-randomization-mode": "crazy",
+              "recipes-randomization-mode": "Crazy",
               "recipes-new-min": 0,
               "recipes-new-max": 0,
               "debug-force-reframework": true

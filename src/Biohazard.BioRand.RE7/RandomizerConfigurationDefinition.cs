@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
@@ -36,32 +37,89 @@ internal static class RE7RandomizerConfigurationDefinition
         page = configDefinition.CreatePage("Inventory");
 
         group = page.CreateGroup("Starting inventory");
-        group.Warning = "Not working yet.";
         group.Items.Add(new GroupItem()
         {
-            Id = "random-starting-inventory",
-            Label = "Random starting inventory",
-            Description = "Whether to start with a random inventory.",
+            Id = "random-starting-inventory-ethan",
+            Label = "Ethan: Random starting inventory",
+            Description = "Whether to start with a random inventory as Ethan.",
             Type = "switch",
             Default = true
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = "random-starting-inventory-mode",
-            Label = "Inventory quality",
-            Description = "Controls the quality of your starting inventory.\n" +
+            Id = "random-starting-inventory-mia",
+            Label = "Mia: Random starting inventory",
+            Description = "Whether to start with a random inventory as Mia.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-mode-ethan",
+            Label = "Ethan: Inventory quality",
+            Description = "Controls the quality of your starting inventory as Ethan.\n" +
             "Bad: You'll get rather poor items...\n" +
             "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
             "Good: The randomizer will make things a bit easier for you.\n" +
             "Overpowered: Nighty-night, Molded!",
             Type = "dropdown",
-            Options = ["bad", "balanced", "good", "overpowered"],
-            Default = "balanced"
+            Options = ["Bad", "Balanced", "Good", "Overpowered"],
+            Default = "Balanced"
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-mode-mia",
+            Label = "Mia: Inventory quality",
+            Description = "Controls the quality of your starting inventory as Mia.\n" +
+            "Empty: You'll start with nothing, not even the Machine Gun.\n" +
+            "Bad: You'll get rather poor items...\n" +
+            "Balanced: The quality depends on how hard you've configured the randomizer.\n" +
+            "Good: The randomizer will make things a bit easier for you.\n" +
+            "Overpowered: Nighty-night, Molded!",
+            Type = "dropdown",
+            Options = ["Empty", "Bad", "Balanced", "Good", "Overpowered"],
+            Default = "Balanced"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-size-ethan",
+            Label = "Ethan: Inventory size",
+            Description = "Controls the size of your starting inventory as Ethan.",
+            Type = "dropdown",
+            Options = ["8", "12", "16", "20"],
+            Default = "8"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-size-mia",
+            Label = "Mia: Inventory size",
+            Description = "Controls the size of your starting inventory as Mia.",
+            Type = "dropdown",
+            Options = ["8", "12", "16", "20"],
+            Default = "8"
+        });
+
+        foreach (var character in new[] { "Ethan", "Mia" })
+        {
+            group = page.CreateGroup($"{character}: Allowed weapon categories");
+            foreach (var category in StartingWeaponCategory.Values)
+            {
+                group.Items.Add(new GroupItem()
+                {
+                    Id = $"inventory-weapon-{category.ToLowerInvariant().Replace(" ", "-")}-{character.ToLowerInvariant()}",
+                    Label = category.ToTitleCase(),
+                    Type = "switch",
+                    Default = true
+                });
+            }
+        }
+
         group = page.CreateGroup("Recipes");
-        group.Label = "To configure recipes like in the vanilla version disable the option 'Add new recipes'.";
         group.Warning = "This feature requires RE Framework.";
         group.Items.Add(new GroupItem()
         {
@@ -96,13 +154,13 @@ internal static class RE7RandomizerConfigurationDefinition
             Label = "Recipe generation mode",
             Description = "Controls how ingredients and results are selected.\n" +
             "Easy: You'll get useful recipes only. Recipes are chosen within a well-defined pool.\n" +
-            "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.)\n" +
+            "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.).\n" +
             "Chaos: Anything could craft anything.\n" +
             "Crazy: Deliberately nonsensical recipes." +
             "No crafting: You cannot craft anything. For hardcore players only.\n",
             Type = "dropdown",
-            Options = ["easy", "balanced", "chaos", "crazy", "no_crafting"],
-            Default = "balanced"
+            Options = ["Easy", "Balanced", "Chaos", "Crazy", "No crafting"],
+            Default = "Balanced"
         });
 
         group.Items.Add(new GroupItem()
@@ -157,7 +215,15 @@ internal static class RE7RandomizerConfigurationDefinition
         page.Advanced = true;
         group = page.CreateGroup("");
         group.Warning = "These options are only for testing / debugging the randomizer.";
-#if ENABLE_BETA_FEATURES
+        group.Items.Add(new GroupItem()
+        {
+            Id = "debug-download-data",
+            Label = "Download Data",
+            Description = "Download latest spreadsheet data before generating the randomizer.",
+            Type = "switch",
+            Default = false
+        });
+
         group.Items.Add(new GroupItem()
         {
             Id = "debug-force-reframework",
@@ -166,7 +232,7 @@ internal static class RE7RandomizerConfigurationDefinition
             Type = "switch",
             Default = false
         });
-#endif
+
         group.Items.Add(new GroupItem()
         {
             Id = $"enable-special",

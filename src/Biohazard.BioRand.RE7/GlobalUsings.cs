@@ -10,3 +10,4 @@ global using Biohazard.BioRand.RE7.Extensions;
 
 // Syntactic sugar for RSZ types
 global using Recipe = app.ItemCombineData.Data;
+global using StartingInventoryItem = app.AddItemListData.Data;

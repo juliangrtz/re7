@@ -155,6 +155,7 @@ internal class RE7Randomizer : IDisposable
     {
         return
         [
+            new InventoryModifier(),
             new RecipeModifier(),
         ];
     }

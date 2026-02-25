@@ -13,4 +13,7 @@ dotnet_diagnostic.IDE0057.severity = silent
 # SYSLIB1045: GeneratedRegexAttribute
 dotnet_diagnostic.SYSLIB1045.severity = silent
 
+# CA1822: Mark member as static
+dotnet_diagnostic.CA1822.severity = silent
+
 csharp_style_namespace_declarations=file_scoped:suggestion

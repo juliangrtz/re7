@@ -73,6 +73,7 @@ Status: **Not completed**
 
 ## 4. Quality of Life
 
+* DX11 support
 * Bugfixes
 * Softlock prevention
 * Code refactoring

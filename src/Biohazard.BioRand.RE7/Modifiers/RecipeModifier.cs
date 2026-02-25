@@ -1,6 +1,5 @@
 using app;
 using Biohazard.BioRand.RE7.Items;
-using Enums.app;
 using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -14,7 +13,7 @@ internal class RecipeModifier : Modifier
     // The combine GUI only allows 20 slots, even in a modded state (4 cols, 5 rows).
     public const int MaxRecipeCount = 20;
 
-    private const string RandomizerKey = "recipes";
+    private const string RandomizerKey = "modifier/recipes";
 
     private static readonly string DictionaryCombineDataPath = PakPath.Of("prefab/item/dictionarycombinedata.user.2");
     private static readonly string ItemCombineDataPath = PakPath.Of("prefab/item/itemcombinedata.user.2");
@@ -146,7 +145,7 @@ internal class RecipeModifier : Modifier
 
         var mode = randomizer.GetConfigOption<string>("recipes-randomization-mode");
         var rng = randomizer.GetRng(RandomizerKey);
-        if (mode == "no_crafting")
+        if (mode == "No crafting")
         {
             // Disable crafting entirely.
             AddRecipes(randomizer, [], clear: true);
@@ -157,10 +156,10 @@ internal class RecipeModifier : Modifier
         // Apply config
         var recipePool = mode switch
         {
-            "easy" => CreateEasyPool(rng),
-            "balanced" => CreateBalancedPool(rng),
-            "chaos" => CreateChaosPool(rng),
-            "crazy" => CreateCrazyPool(rng),
+            "Easy" => CreateEasyPool(rng),
+            "Balanced" => CreateBalancedPool(rng),
+            "Chaos" => CreateChaosPool(rng),
+            "Crazy" => CreateCrazyPool(rng),
             _ => throw new ArgumentException($"Invalid recipe randomization mode '{mode}' supplied!")
         };
 
