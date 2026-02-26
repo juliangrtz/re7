@@ -1,13 +1,11 @@
 ﻿using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
 public static class EmbeddedData
 {
     private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
-    private const string DataDirectoryName = "_Data";
-    private const string REFrameworkScriptDirectoryName = "REF_Scripts";
+    public const string DataDirectoryName = "_Data";
 
     public static Stream? GetStream(string name)
     {
@@ -24,29 +22,6 @@ public static class EmbeddedData
     public static byte[] GetFile(string name)
     {
         return TryGetFile(name) ?? throw new FileNotFoundException($"{name} not found");
-    }
-
-    public static List<(string, byte[])> GetREFrameworkScripts()
-    {
-        var scripts = assembly
-            .GetManifestResourceNames()
-            .Where(res => Regex.IsMatch(res, $"{REFrameworkScriptDirectoryName}.*\\.lua$"));
-
-        var prefix = $"{DataDirectoryName}.{REFrameworkScriptDirectoryName}.";
-
-        return scripts
-            .Select(script =>
-            {
-                var resourcePath = script.SubstringAfter(prefix);
-                var outputPath = $"reframework/autorun/{resourcePath}";
-
-                return (
-                    outputPath,
-                    TryGetFile($"{REFrameworkScriptDirectoryName}.{resourcePath}")
-                    ?? throw new FileNotFoundException($"{script} not found")
-                );
-            })
-            .ToList();
     }
 
     public static byte[]? TryGetFile(string name)

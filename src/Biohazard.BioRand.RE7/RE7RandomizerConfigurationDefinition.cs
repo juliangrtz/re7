@@ -40,7 +40,7 @@ internal static class RE7RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = "random-starting-inventory-ethan",
-            Label = "Ethan: Random starting inventory",
+            Label = "Ethan: Random starting weapons",
             Description = "Whether to start with a random inventory as Ethan. " +
             "You'll receive a random gun and a random bladed weapon.",
             Type = "switch",
@@ -50,7 +50,7 @@ internal static class RE7RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = "random-starting-inventory-mia",
-            Label = "Mia: Random starting inventory",
+            Label = "Mia: Random starting weapons",
             Description = "Whether to start with a random inventory as Mia. " +
             "You'll receive a random gun and a random bladed weapon.",
             Type = "switch",
@@ -61,20 +61,20 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-size-ethan",
             Label = "Ethan: Inventory size",
-            Description = "Controls the size of your starting inventory as Ethan.",
+            Description = "Controls the size of your starting inventory as Ethan. Requires RE Framework.",
             Type = "dropdown",
-            Options = ["random", "8", "12", "16", "20"],
-            Default = "8"
+            Options = ["random", "12", "16", "20"],
+            Default = "12"
         });
 
         group.Items.Add(new GroupItem()
         {
             Id = "random-starting-inventory-size-mia",
             Label = "Mia: Inventory size",
-            Description = "Controls the size of your starting inventory as Mia.",
+            Description = "Controls the size of your starting inventory as Mia. Requires RE Framework.",
             Type = "dropdown",
-            Options = ["random", "8", "12", "16", "20"],
-            Default = "8"
+            Options = ["random", "12", "16", "20"],
+            Default = "12"
         });
 
         var categories = Enum.GetValues<StartingWeaponCategory>();

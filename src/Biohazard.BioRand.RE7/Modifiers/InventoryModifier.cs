@@ -3,13 +3,15 @@ using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Enums.app;
 using Enums.app.Inventory;
-using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class InventoryModifier : Modifier
 {
     private const string RandomizerKey = "modifier/inventory";
+    private const string InventoryLuaScriptName = "InventoryMods.lua";
+    private const int AntiqueCoinsProbabilityPct = 1;
+    private const int AntiqueCoinsCount = 2;
 
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new()
     {
@@ -42,9 +44,41 @@ internal class InventoryModifier : Modifier
         }
     }
 
-    private void RandomizeInventory(
+    private (ItemID?, ItemID?) PickRandomWeaponPair(Rng rng, List<StartingWeaponCategory> weapons)
+    {
+        if (weapons.Count == 0)
+            return (null, null);
+
+        ItemID? primaryWeapon = null;
+        ItemID? secondaryWeapon = null;
+
+        var allowedWeapons = weapons.ToDictionary(
+            category => category,
+            category => category.GetItemIds()
+        );
+
+        var primaryCandidates = allowedWeapons.Keys
+            .Where(cat => cat != StartingWeaponCategory.Bladed)
+            .ToList();
+
+        if (primaryCandidates.Count > 0)
+        {
+            var primaryCategory = rng.Next(primaryCandidates);
+            primaryWeapon = rng.Next(allowedWeapons[primaryCategory]);
+        }
+
+        if (allowedWeapons.TryGetValue(StartingWeaponCategory.Bladed, out var bladedItems))
+        {
+            secondaryWeapon = rng.Next(bladedItems);
+        }
+
+        return (primaryWeapon, secondaryWeapon);
+    }
+
+    private void RandomizeStartingInventory(
         RE7Randomizer randomizer,
         RandomizerLogger logger,
+        Rng rng,
         MainCampaignCharacter character,
         List<StartingWeaponCategory> weapons
     )
@@ -62,11 +96,31 @@ internal class InventoryModifier : Modifier
 
             return;
         }
-        else if (character == MainCampaignCharacter.Ethan)
+        else if (character == MainCampaignCharacter.Ethan || character.ToString().StartsWith("Mia", StringComparison.InvariantCultureIgnoreCase))
         {
-        }
-        else if (character.ToString().StartsWith("Mia", StringComparison.InvariantCultureIgnoreCase))
-        {
+            var (primary, secondary) = PickRandomWeaponPair(rng, weapons);
+            randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
+            {
+                if (primary != null)
+                {
+                    root._AddItems.Add(
+                        new StartingInventoryItem() { ItemDataID = primary.Value.ToString(), Num = 1 }
+                    );
+                }
+
+                if (secondary != null)
+                {
+                    root._AddItems.Add(
+                        new StartingInventoryItem() { ItemDataID = secondary.Value.ToString()!, Num = 1 }
+                    );
+                }
+
+                if (rng.NextProbability(AntiqueCoinsProbabilityPct))
+                {
+                    root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
+                }
+                return root;
+            });
         }
         else
         {
@@ -76,84 +130,74 @@ internal class InventoryModifier : Modifier
 
     private ExtendLvDef? ToExtendLvDef(string str, Rng rng) => str switch
     {
-        "random" => rng.Next(Enum.GetValues<ExtendLvDef>()),
-        "8" => null,
-        "12" => ExtendLvDef.Lv1,
+        "random" => ToExtendLvDef(rng.Next(["12", "16", "20"]), rng),
+        "12" => null,
         "16" => ExtendLvDef.Lv2,
         "20" => ExtendLvDef.Lv3,
         _ => throw new ArgumentException($"Invalid size '{str}' specified")
     };
 
     private void SetInventorySizes(
-        RE7Randomizer randomizer,
         Rng rng,
         string ethanInventorySize,
         string miaInventorySize
     )
     {
         var ethanExtendLv = ToExtendLvDef(ethanInventorySize, rng);
-        if (ethanExtendLv != null)
-        {
-            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/chapter1/c01_tutorial.scn.20"), scene =>
-            {
-                var tutorialWalkGuid = new Guid("305daaa1-c01e-4bc5-88f2-e37e4e44d356");
-                var tutorialWalkGameObject = scene.FindGameObject(tutorialWalkGuid)!;
-                var fsm = tutorialWalkGameObject.FindComponent<via.fsm.Fsm>();
-                // TODO: Edit fsm
-                return scene;
-            });
-        }
-
         var miaExtendLv = ToExtendLvDef(miaInventorySize, rng);
-        if (miaExtendLv != null)
-        {
-            // Wake up in front of ship
-            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/chapter4/c04_tutorial.scn.20"), scene =>
-            {
-                return scene;
-            });
 
-            // VHS
-            randomizer.FileRepository.ModifyScnFile(PakPath.Of("leveldesign/fsm/ff050/ff050_tutorial.scn.20"), scene =>
-            {
-                return scene;
-            });
+        if (ethanExtendLv == null && miaExtendLv == null)
+        {
+            return;
         }
+
+        var variables = new Dictionary<string, string>
+        {
+            { "%INVENTORY_LV_ETHAN%", ethanExtendLv != null ? ((int)ethanExtendLv).ToString() : "nil" },
+            { "%INVENTORY_LV_MIA%", miaExtendLv != null ? ((int)miaExtendLv).ToString() : "nil" }
+        };
+        REFrameworkScriptService.RegisterParametrizedScript(InventoryLuaScriptName, variables);
     }
 
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
-        var randomizeEthanInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
-        var randomizeMiaInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
+        var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
+        var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
 
-        if (!randomizeEthanInventory && !randomizeMiaInventory)
+        if (!randomizeEthansInventory && !randomizeMiasInventory)
         {
             return;
         }
 
         var rng = randomizer.GetRng(RandomizerKey);
-        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "8")!;
-        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "8")!;
-        SetInventorySizes(randomizer, rng, ethanInventorySize, miaInventorySize);
 
-        //var characterToWeaponMap = new Dictionary<MainCampaignCharacter, List<StartingWeaponCategory>>();
+        // Inventory sizes
+        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "12")!;
+        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "12")!;
+        SetInventorySizes(rng, ethanInventorySize, miaInventorySize);
+
+        // Starter weapons
         var categories = Enum.GetValues<StartingWeaponCategory>();
-
         foreach (var character in Enum.GetValues<MainCampaignCharacter>())
         {
-            var list = new List<StartingWeaponCategory>();
+            if (character == MainCampaignCharacter.Ethan && !randomizeEthansInventory)
+                continue;
+
+            if ((character == MainCampaignCharacter.Mia || character == MainCampaignCharacter.MiaVHS) && !randomizeMiasInventory)
+                continue;
+
+            var configuredCategories = new List<StartingWeaponCategory>();
             foreach (var category in categories)
             {
                 if (randomizer.GetConfigOption<bool>(
                     $"inventory-weapon-{category.ToString().ToLowerInvariant()}-{character.ToString().ToLowerInvariant()}")
                 )
                 {
-                    list.Add(category);
+                    configuredCategories.Add(category);
                 }
             }
 
-            //characterToWeaponMap.Add(character, list);
-            RandomizeInventory(randomizer, logger, character, list);
+            RandomizeStartingInventory(randomizer, logger, rng, character, configuredCategories);
         }
     }
 }
