@@ -1,22 +1,34 @@
-﻿using Biohazard.BioRand.RE7.Items;
+﻿using app;
+using Biohazard.BioRand.RE7.Inventory;
+using Biohazard.BioRand.RE7.Items;
+using Enums.app;
+using Enums.app.Inventory;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class InventoryModifier : Modifier
 {
-    private readonly string EthanStartingInventoryPath = PakPath.Of("leveldesign/fsm/chapter1/other/ch1_startinventory.user.2");
-    private readonly string MiaStartingInventoryPath = PakPath.Of("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user.2");
-    private readonly string MiaStartingInventoryFF050Path = PakPath.Of("leveldesign/fsm/ff050/other/ff050_startinventory.user.2"); // VHS: Old Videotape
-    private readonly string ClancyStartingInventoryFF000Path = PakPath.Of("leveldesign/fsm/ff000/other/startinventory_ff000.user.2"); // VHS: "Derelict House Footage"
+    private const string RandomizerKey = "modifier/inventory";
+    private const string InventoryLuaScriptName = "InventoryMods.lua";
+    private const int AntiqueCoinsProbabilityPct = 1;
+    private const int AntiqueCoinsCount = 2;
+
+    private readonly Dictionary<MainCampaignCharacter, string> _paths = new()
+    {
+        { MainCampaignCharacter.Ethan, PakPath.Of("leveldesign/fsm/chapter1/other/ch1_startinventory.user.2") },
+        { MainCampaignCharacter.ClancyVHS, PakPath.Of("leveldesign/fsm/ff000/other/startinventory_ff000.user.2") }, // "Derelict House Footage" (Guest House)
+        { MainCampaignCharacter.Mia, PakPath.Of("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user.2") },
+        { MainCampaignCharacter.MiaVHS,  PakPath.Of("leveldesign/fsm/ff050/other/ff050_startinventory.user.2") }, // Old Videotape (Ship)
+    };
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
-    private List<StartingInventoryItem> GetInventory(RE7Randomizer randomizer, string path)
-        => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(path)._AddItems;
+    private List<StartingInventoryItem> GetInventory(RE7Randomizer randomizer, MainCampaignCharacter character)
+        => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(_paths[character])._AddItems;
 
-    private static void LogVanillaInventory(RandomizerLogger logger, string name, List<StartingInventoryItem> items)
+    private static void LogVanillaInventory(RandomizerLogger logger, MainCampaignCharacter character, List<StartingInventoryItem> items)
     {
-        logger.Push($"{name} starting inventory");
+        logger.Push($"{character}'s starting inventory");
 
         foreach (var item in items)
             logger.LogLine(itemDefinitions.FromId(item.ItemDataID)!.Name!);
@@ -26,14 +38,166 @@ internal class InventoryModifier : Modifier
 
     public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
     {
-        LogVanillaInventory(logger, "Ethan (Chapter 1)", GetInventory(randomizer, EthanStartingInventoryPath));
-        LogVanillaInventory(logger, "Mia (Chapter 4)", GetInventory(randomizer, MiaStartingInventoryPath));
-        LogVanillaInventory(logger, "Mia (Chapter 4, VHS)", GetInventory(randomizer, MiaStartingInventoryFF050Path));
-        LogVanillaInventory(logger, "Clancy (Chapter 1, VHS)", GetInventory(randomizer, ClancyStartingInventoryFF000Path));
+        foreach (var character in Enum.GetValues<MainCampaignCharacter>())
+        {
+            LogVanillaInventory(logger, character, GetInventory(randomizer, character));
+        }
+    }
+
+    private (ItemID?, ItemID?) PickRandomWeaponPair(Rng rng, List<StartingWeaponCategory> weapons)
+    {
+        if (weapons.Count == 0)
+            return (null, null);
+
+        ItemID? primaryWeapon = null;
+        ItemID? secondaryWeapon = null;
+
+        var allowedWeapons = weapons.ToDictionary(
+            category => category,
+            category => category.GetItemIds()
+        );
+
+        var primaryCandidates = allowedWeapons.Keys
+            .Where(cat => cat != StartingWeaponCategory.Bladed)
+            .ToList();
+
+        if (primaryCandidates.Count > 0)
+        {
+            var primaryCategory = rng.Next(primaryCandidates);
+            primaryWeapon = rng.Next(allowedWeapons[primaryCategory]);
+        }
+
+        if (allowedWeapons.TryGetValue(StartingWeaponCategory.Bladed, out var bladedItems))
+        {
+            secondaryWeapon = rng.Next(bladedItems);
+        }
+
+        return (primaryWeapon, secondaryWeapon);
+    }
+
+    private void RandomizeStartingInventory(
+        RE7Randomizer randomizer,
+        RandomizerLogger logger,
+        Rng rng,
+        MainCampaignCharacter character,
+        List<StartingWeaponCategory> weapons
+    )
+    {
+        if (character == MainCampaignCharacter.ClancyVHS)
+        {
+            // There are no options for Clancy's starting inventory as the section is pretty much an interactive cutscene.
+            // For the memes we are "randomizing" his inventory anyways ;)
+            randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
+            {
+                root._AddItems.Add(new() { ItemDataID = ItemID.Handgun_Albert.ToString(), Num = 1 });
+                root._AddItems.Add(new() { ItemDataID = "UnlimitedAmmo", Num = 1 });
+                return root;
+            });
+
+            return;
+        }
+        else if (character == MainCampaignCharacter.Ethan || character.ToString().StartsWith("Mia", StringComparison.InvariantCultureIgnoreCase))
+        {
+            var (primary, secondary) = PickRandomWeaponPair(rng, weapons);
+            randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
+            {
+                if (primary != null)
+                {
+                    root._AddItems.Add(
+                        new StartingInventoryItem() { ItemDataID = primary.Value.ToString(), Num = 1 }
+                    );
+                }
+
+                if (secondary != null)
+                {
+                    root._AddItems.Add(
+                        new StartingInventoryItem() { ItemDataID = secondary.Value.ToString()!, Num = 1 }
+                    );
+                }
+
+                if (rng.NextProbability(AntiqueCoinsProbabilityPct))
+                {
+                    root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
+                }
+                return root;
+            });
+        }
+        else
+        {
+            logger.LogLine($"Unknown character '{character}'!");
+        }
+    }
+
+    private ExtendLvDef? ToExtendLvDef(string str, Rng rng) => str switch
+    {
+        "random" => ToExtendLvDef(rng.Next(["12", "16", "20"]), rng),
+        "12" => null,
+        "16" => ExtendLvDef.Lv2,
+        "20" => ExtendLvDef.Lv3,
+        _ => throw new ArgumentException($"Invalid size '{str}' specified")
+    };
+
+    private void SetInventorySizes(
+        Rng rng,
+        string ethanInventorySize,
+        string miaInventorySize
+    )
+    {
+        var ethanExtendLv = ToExtendLvDef(ethanInventorySize, rng);
+        var miaExtendLv = ToExtendLvDef(miaInventorySize, rng);
+
+        if (ethanExtendLv == null && miaExtendLv == null)
+        {
+            return;
+        }
+
+        var variables = new Dictionary<string, string>
+        {
+            { "%INVENTORY_LV_ETHAN%", ethanExtendLv != null ? ((int)ethanExtendLv).ToString() : "nil" },
+            { "%INVENTORY_LV_MIA%", miaExtendLv != null ? ((int)miaExtendLv).ToString() : "nil" }
+        };
+        REFrameworkScriptService.RegisterParametrizedScript(InventoryLuaScriptName, variables);
     }
 
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
-        // TODO
+        var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
+        var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
+
+        if (!randomizeEthansInventory && !randomizeMiasInventory)
+        {
+            return;
+        }
+
+        var rng = randomizer.GetRng(RandomizerKey);
+
+        // Inventory sizes
+        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "12")!;
+        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "12")!;
+        SetInventorySizes(rng, ethanInventorySize, miaInventorySize);
+
+        // Starter weapons
+        var categories = Enum.GetValues<StartingWeaponCategory>();
+        foreach (var character in Enum.GetValues<MainCampaignCharacter>())
+        {
+            if (character == MainCampaignCharacter.Ethan && !randomizeEthansInventory)
+                continue;
+
+            if ((character == MainCampaignCharacter.Mia || character == MainCampaignCharacter.MiaVHS) && !randomizeMiasInventory)
+                continue;
+
+            var configuredCategories = new List<StartingWeaponCategory>();
+            foreach (var category in categories)
+            {
+                if (randomizer.GetConfigOption<bool>(
+                    $"inventory-weapon-{category.ToString().ToLowerInvariant()}-{character.ToString().ToLowerInvariant()}")
+                )
+                {
+                    configuredCategories.Add(category);
+                }
+            }
+
+            RandomizeStartingInventory(randomizer, logger, rng, character, configuredCategories);
+        }
     }
 }

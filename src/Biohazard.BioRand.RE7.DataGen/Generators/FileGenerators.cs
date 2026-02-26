@@ -6,6 +6,8 @@ internal interface IFileGenerator
 {
     string Id { get; }
 
+    string? FileName => null;
+
     object Generate(GenerateSettings settings);
 }
 

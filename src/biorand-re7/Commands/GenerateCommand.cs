@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO.Compression;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -72,6 +73,11 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             {
                 var configJson = File.ReadAllText(settings.ConfigPath);
                 input.Configuration = RandomizerConfiguration.FromJson(configJson);
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[yellow]No configuration path provided. Using the default configuration.[/]");
+                input.Configuration = RE7RandomizerExecutor.DefaultConfiguration;
             }
         }
 

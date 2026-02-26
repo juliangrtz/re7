@@ -1,6 +1,7 @@
 ﻿using Biohazard.BioRand.RE7.DLC;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Messages;
@@ -13,18 +14,21 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
+/// <summary>
+/// TODO: non-RT
+/// </summary>
 internal class ItemDefinitionGenerator : IFileGenerator
 {
-    public string Id => "items";
+    public string Id => "item_definitions";
 
     private readonly RszTypeRepository _rszRepository =
-        RszRepositorySerializer.Default.FromJsonGz(EmbeddedResource.Get("rszre7rt.json.gz"));
+        RszRepositorySerializer.Default.FromJsonGz(EmbeddedData.GetFile("rszre7rt.json.gz"));
 
     private readonly PakFile _pakFile =
-        new(EmbeddedResource.Get("biorand-re7.pak"));
+        new(EmbeddedData.GetFile("biorand-re7.pak"));
 
     private readonly PakList _pakList =
-        new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedResource.Get("pakcontentsrt.txt.gz"))));
+        new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
     private readonly string _itemPathPrefix = @"natives/stm/prefab/item/";
     private readonly string _messagesPathPrefix = @"natives/stm/message/";

@@ -3,7 +3,7 @@ using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
-public class ConfigurationDefinitionTest : RandomizerTest
+public class ConfigurationDefinitionTest
 {
     private readonly IEnumerable<GroupItem> items = RE7RandomizerExecutor.ConfigurationDefinition.AllItems;
 

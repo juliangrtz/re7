@@ -20,7 +20,7 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
         [CommandArgument(0, "<generators>")]
         public string[] Generators { get; set; } = default!;
 
-        [CommandOption("--format")]
+        [CommandOption("-f|--format")]
         [DefaultValue(new[] { OutputFormat.Csv, OutputFormat.Json })]
         public OutputFormat[] Formats { get; set; } = default!;
 
@@ -38,7 +38,8 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
 
     private static readonly IFileGenerator[] _fileGenerators =
     [
-        new ItemDefinitionGenerator()
+        new ItemDefinitionGenerator(),
+        new ConfigGenerator()
     ];
 
     private readonly JsonSerializerOptions _serializationOptions = new()
@@ -78,7 +79,7 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
                 var result = generator.Generate(settings);
                 foreach (var format in settings.Formats)
                 {
-                    var outputFileName = $"{generator.Id}.{format.ToString().ToLowerInvariant()}";
+                    var outputFileName = $"{generator.FileName ?? generator.Id}.{format.ToString().ToLowerInvariant()}";
                     var output = format switch
                     {
                         OutputFormat.Json => JsonSerializer.Serialize(result, _serializationOptions),
@@ -94,7 +95,8 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
                         );
 
 #if DEBUG
-                        File.Copy(outputPath, $"F:\\RE_Modding\\BioRand\\re7\\src\\Biohazard.BioRand.RE7\\_Data\\{Path.GetFileName(outputPath)}", true);
+                        var dest = $"F:\\RE_Modding\\BioRand\\re7\\src\\Biohazard.BioRand.RE7\\_Data\\{Path.GetFileName(outputPath)}";
+                        File.Copy(outputPath, dest, true);
 #endif
                     }
                     else
