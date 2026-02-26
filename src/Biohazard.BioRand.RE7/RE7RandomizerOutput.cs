@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 
@@ -30,7 +31,6 @@ public sealed class RE7RandomizerOutput
             return _zipFile;
 
         _zipFile = BuildZipFile()
-            //.AddEntry("dinput8.dll", EmbeddedData.GetFile("dinput8.dll.gz").Ungzip())
             .AddEntry($"re_chunk_000.pak.patch_{PakVersion:000}.pak", PakFile.ToByteArray())
             .Build();
         return _zipFile;
@@ -64,7 +64,7 @@ public sealed class RE7RandomizerOutput
 
         if (IsWithREFramework)
         {
-            var scripts = EmbeddedData.GetREFrameworkScripts();
+            var scripts = REFrameworkScriptService.GetREFrameworkScripts();
             scripts.ForEach(tuple =>
             {
                 var (path, data) = tuple;
