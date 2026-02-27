@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.IO.Compression;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -54,7 +53,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         var reporter = new ConsoleReporter();
         if (settings.Kill)
         {
-            reporter.RunTask("Killing re7.exe", () => KillRe7());
+            reporter.RunTask("Killing re7.exe", KillRe7);
         }
 
         var randomizer = new RE7RandomizerExecutor(settings.InputPath ?? "", reporter);

@@ -19,7 +19,6 @@ public class RecipeModifierTests
         var (_, resultPak) = RandomizerTest.Run(config);
 
         // Then
-        // TODO: Find better way to test the result
         Assert.Null(resultPak.GetEntryData(ItemCombineDataPath));
         Assert.Null(resultPak.GetEntryData(DictionaryCombineDataPath));
     }
@@ -44,7 +43,6 @@ public class RecipeModifierTests
         var (_, resultPak) = RandomizerTest.Run(config);
 
         // Then
-        // TODO: Find better way to test the result
         Assert.NotNull(resultPak.GetEntryData(ItemCombineDataPath));
         Assert.NotNull(resultPak.GetEntryData(DictionaryCombineDataPath));
     }

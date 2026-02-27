@@ -22,7 +22,6 @@ public class REFrameworkTests
               "game-version": "dx12_rt",
               "recipes-add-new": true,
               "recipes-replace-original": true,
-              "recipes-show-in-menu": true,
               "recipes-randomization-mode": "Crazy",
               "recipes-new-min": 20,
               "recipes-new-max": 20
@@ -42,7 +41,10 @@ public class REFrameworkTests
         // Given
         var config = """
             {
-              "game-version": "dx12_rt"
+              "game-version": "dx12_rt",
+              "recipes-add-new": false,
+              "random-starting-inventory-size-ethan": 12,
+              "random-starting-inventory-size-mia": 12
             }
             """;
 
