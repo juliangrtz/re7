@@ -61,7 +61,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-size-ethan",
             Label = "Ethan: Inventory size",
-            Description = "Controls the size of your starting inventory as Ethan. Requires RE Framework.",
+            Description = "Controls the size of your starting inventory as Ethan. The default is 12. Requires RE Framework.",
             Type = "dropdown",
             Options = ["random", "12", "16", "20"],
             Default = "12"
@@ -71,7 +71,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-size-mia",
             Label = "Mia: Inventory size",
-            Description = "Controls the size of your starting inventory as Mia. Requires RE Framework.",
+            Description = "Controls the size of your starting inventory as Mia. The default is 12. Requires RE Framework.",
             Type = "dropdown",
             Options = ["random", "12", "16", "20"],
             Default = "12"

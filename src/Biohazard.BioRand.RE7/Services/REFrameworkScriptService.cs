@@ -14,6 +14,8 @@ internal static class REFrameworkScriptService
 
     private static readonly Dictionary<string, string> ParametrizedScripts = new();
 
+    public static List<string> Exclusions { get; private set; } = new();
+
     private static Dictionary<string, byte[]> LoadStaticScripts()
     {
         return assembly
@@ -66,10 +68,10 @@ internal static class REFrameworkScriptService
     {
         var result = new List<(string, byte[])>();
 
-        foreach (var (path, content) in StaticScripts)
+        foreach (var (path, content) in StaticScripts.Where(s => !Exclusions.Contains(s.Key)))
             result.Add((path, content));
 
-        foreach (var (fileName, script) in ParametrizedScripts)
+        foreach (var (fileName, script) in ParametrizedScripts.Where(s => !Exclusions.Contains(s.Key)))
             result.Add(($"reframework/autorun/{fileName}", Encoding.UTF8.GetBytes(script)));
 
         return result;

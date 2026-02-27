@@ -94,6 +94,17 @@ public static class CollectionExtensions
         source.InsertRange(0, valuesToPrepend);
     }
 
+    public static IEnumerable<T> Except<T>(this IEnumerable<T> orgList, IEnumerable<T> toRemove)
+    {
+        var list = orgList.OrderBy(x => x).ToList();
+        foreach (var x in toRemove)
+        {
+            var inx = list.BinarySearch(x);
+            if (inx >= 0) list.RemoveAt(inx);
+        }
+        return list;
+    }
+
     private readonly struct ProportionalGrouping<TKey, TValue>(TKey key, List<TValue> items) : IGrouping<TKey, TValue>
     {
         public TKey Key => key;
