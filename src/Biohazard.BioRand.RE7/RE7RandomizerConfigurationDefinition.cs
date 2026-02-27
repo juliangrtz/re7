@@ -89,7 +89,7 @@ internal static class RE7RandomizerConfigurationDefinition
                     Description = (category == StartingWeaponCategory.Bladed ? "Knives and Axe" : null),
                     Label = category.GetLabel(),
                     Type = "switch",
-                    Default = true
+                    Default = category is StartingWeaponCategory.Bladed or StartingWeaponCategory.Handgun
                 });
             }
         }
