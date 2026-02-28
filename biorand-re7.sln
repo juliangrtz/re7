@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.REFrameworkPlugins", "src\Biohazard.BioRand.RE7.REFrameworkPlugins\Biohazard.BioRand.RE7.REFrameworkPlugins.csproj", "{2375B9DD-33A3-453C-B1F3-EC9275A84944}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F39039EE-DA05-4396-A844-998D0B6A4E41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{CCCDB04C-7D3B-425F-AC0E-C2EEC5A0C7BB} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{2C763BDF-0236-45C0-BEE3-A1C32DA74E97} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{F39039EE-DA05-4396-A844-998D0B6A4E41} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5780D5E9-A2CD-4CCE-AF3A-F785EC19D2AB}
