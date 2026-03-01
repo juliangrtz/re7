@@ -2,7 +2,6 @@
 
 public class InventoryModifierTests
 {
-    private const string InventoryLuaScript = "reframework/autorun/InventoryMods.lua";
     private const string EthanStartingInventoryFile = "natives/stm/leveldesign/fsm/chapter1/other/ch1_startinventory.user.2";
     private const string MiaStartingInventoryFile = "natives/stm/leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user.2";
     private const string MiaStartingInventoryFF050File = "natives/stm/leveldesign/fsm/ff050/other/ff050_startinventory.user.2";
@@ -23,7 +22,6 @@ public class InventoryModifierTests
         var (resultZip, resultPak) = RandomizerTest.Run(config);
 
         // Then
-        Assert.Null(resultZip.GetEntry(InventoryLuaScript));
         Assert.Null(resultPak.GetEntryData(EthanStartingInventoryFile));
         Assert.Null(resultPak.GetEntryData(MiaStartingInventoryFile));
         Assert.Null(resultPak.GetEntryData(MiaStartingInventoryFF050File));
@@ -51,7 +49,6 @@ public class InventoryModifierTests
         var (resultZip, resultPak) = RandomizerTest.Run(config);
 
         // Then
-        Assert.Null(resultZip.GetEntry(InventoryLuaScript));
         Assert.NotNull(resultPak.GetEntryData(EthanStartingInventoryFile));
         Assert.NotNull(resultPak.GetEntryData(MiaStartingInventoryFile));
         Assert.NotNull(resultPak.GetEntryData(MiaStartingInventoryFF050File));
@@ -79,7 +76,7 @@ public class InventoryModifierTests
         var (resultZip, resultPak) = RandomizerTest.Run(config);
 
         // Then
-        Assert.NotNull(resultZip.GetEntry(InventoryLuaScript));
+        // TODO
         Assert.NotNull(resultPak.GetEntryData(EthanStartingInventoryFile));
         Assert.NotNull(resultPak.GetEntryData(MiaStartingInventoryFile));
         Assert.NotNull(resultPak.GetEntryData(MiaStartingInventoryFF050File));

@@ -63,12 +63,13 @@ public sealed class RE7RandomizerOutput
 
         if (IsWithREFramework)
         {
-            var scripts = REFrameworkScriptService.GetREFrameworkScripts();
-            scripts.ForEach(tuple =>
-            {
-                var (path, data) = tuple;
-                builder.AddEntry(path, data);
-            });
+            // TODO
+            //var scripts = REFrameworkScriptService.GetREFrameworkScripts();
+            //scripts.ForEach(tuple =>
+            //{
+            //    var (path, data) = tuple;
+            //    builder.AddEntry(path, data);
+            //});
         }
 
         return builder;

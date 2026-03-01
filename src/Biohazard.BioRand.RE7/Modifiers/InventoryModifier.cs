@@ -1,6 +1,7 @@
 ﻿using app;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.REFrameworkPlugins;
 using Enums.app;
 using Enums.app.Inventory;
 
@@ -9,7 +10,6 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class InventoryModifier : Modifier
 {
     private const string RandomizerKey = "modifier/inventory";
-    private const string InventoryLuaScriptName = "InventoryMods.lua";
     private const int AntiqueCoinsProbabilityPct = 1;
     private const int AntiqueCoinsCount = 2;
 
@@ -151,12 +151,8 @@ internal class InventoryModifier : Modifier
             return;
         }
 
-        var variables = new Dictionary<string, string>
-        {
-            { "%INVENTORY_LV_ETHAN%", ethanExtendLv != null ? ((int)ethanExtendLv).ToString() : "nil" },
-            { "%INVENTORY_LV_MIA%", miaExtendLv != null ? ((int)miaExtendLv).ToString() : "nil" }
-        };
-        REFrameworkScriptService.RegisterParametrizedScript(InventoryLuaScriptName, variables);
+        REFPlugin.DesiredEthanExtendLv = (int)ethanExtendLv!;
+        REFPlugin.DesiredMiaExtendLv = (int)miaExtendLv!;
     }
 
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
