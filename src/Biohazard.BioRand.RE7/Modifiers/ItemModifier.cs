@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Items;
-using Enums.app.OptionMenu;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -19,7 +18,7 @@ internal class ItemModifier : Modifier
                 continue;
 
             var configuredStackSize = randomizer.GetConfigOption($"inventory-stack-limit-{item.Id.ToLowerInvariant()}", 0);
-            if (configuredStackSize != 0 && configuredStackSize != item.MaxStack)
+            if (configuredStackSize > 0 && configuredStackSize != item.MaxStack)
             {
                 result[item] = configuredStackSize;
             }
