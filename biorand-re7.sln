@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 18.3.11505.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "biorand-re7", "src\biorand-re7\biorand-re7.csproj", "{2693B039-0FDF-4F19-9B4C-9604BB67B6A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2375B9DD-33A3-453C-B1F3-EC9275A84944} = {2375B9DD-33A3-453C-B1F3-EC9275A84944}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C63AE2CF-8873-4DD8-9E14-01E099F90870}"
 EndProject

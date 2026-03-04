@@ -2,7 +2,7 @@
   "game-version": "dx12_rt",
   "random-starting-inventory-ethan": true,
   "random-starting-inventory-mia": true,
-  "random-starting-inventory-size-ethan": "12",
+  "random-starting-inventory-size-ethan": "16",
   "random-starting-inventory-size-mia": "12",
   "inventory-weapon-bladed-ethan": true,
   "inventory-weapon-chainsaw-ethan": true,
