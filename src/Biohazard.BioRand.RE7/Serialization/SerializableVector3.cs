@@ -2,18 +2,11 @@
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
-public class SerializableVector3
+public class SerializableVector3(float x, float y, float z)
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
-
-    public SerializableVector3(float x, float y, float z)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-    }
+    public float X { get; set; } = x;
+    public float Y { get; set; } = y;
+    public float Z { get; set; } = z;
 
     public override string ToString()
         => $"[{X}, {Y}, {Z}]";

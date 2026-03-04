@@ -7,12 +7,12 @@
         <member name="T:HexaGen.Runtime.Bitfield">
              <summary>
              A utility for accessing bit fields.
-            
+
              Fast enough™
-            
+
              .NET 9.0.7 (9.0.725.31616), X64 RyuJIT AVX-512F+CD+BW+DQ+VL+VBMI
              HardwareIntrinsics=AVX-512F+CD+BW+DQ+VL+VBMI,AES,BMI1,BMI2,FMA,LZCNT,PCLMUL,POPCNT VectorSize=256
-            
+
              | Method | Mean     | Error     | StdDev    |
              |------- |---------:|----------:|----------:|
              | GetA   | 1.077 ns | 0.0078 ns | 0.0065 ns |
@@ -38,7 +38,7 @@
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.#ctor(`0)">
             <summary>
-            Initializes a new instance of the <see cref="T:HexaGen.Runtime.NativeCallback`1"/> struct.
+            Initializes a new instance of the <see cref="T:HexaGen.Runtime.NativeCallback`1" /> struct.
             </summary>
             <param name="callback">The delegate to be used as the callback.</param>
         </member>
@@ -63,27 +63,27 @@
             </summary>
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.Equals(System.Object)">
-            <inheritdoc/>
+            <inheritdoc />
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.Equals(HexaGen.Runtime.NativeCallback{`0})">
-            <inheritdoc/>
+            <inheritdoc />
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.GetHashCode">
-            <inheritdoc/>
+            <inheritdoc />
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.op_Equality(HexaGen.Runtime.NativeCallback{`0},HexaGen.Runtime.NativeCallback{`0})">
             <summary>
-            Determines whether two <see cref="T:HexaGen.Runtime.NativeCallback`1"/> instances are equal.
+            Determines whether two <see cref="T:HexaGen.Runtime.NativeCallback`1" /> instances are equal.
             </summary>
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.op_Inequality(HexaGen.Runtime.NativeCallback{`0},HexaGen.Runtime.NativeCallback{`0})">
             <summary>
-            Determines whether two <see cref="T:HexaGen.Runtime.NativeCallback`1"/> instances are not equal.
+            Determines whether two <see cref="T:HexaGen.Runtime.NativeCallback`1" /> instances are not equal.
             </summary>
         </member>
         <member name="M:HexaGen.Runtime.NativeCallback`1.op_Implicit(HexaGen.Runtime.NativeCallback{`0})~`0">
             <summary>
-            Implicitly converts a <see cref="T:HexaGen.Runtime.NativeCallback`1"/> instance to its underlying delegate type.
+            Implicitly converts a <see cref="T:HexaGen.Runtime.NativeCallback`1" /> instance to its underlying delegate type.
             </summary>
         </member>
         <member name="F:HexaGen.Runtime.Utils.MaxStackallocSize">
@@ -91,7 +91,7 @@
             Gets or sets the maximum allowed size for <c>stackalloc</c> during marshalling (default: 2 KiB).
             </summary>
             <remarks>
-            <para><strong>Warning:</strong> Setting this value too high may cause a <see cref="T:System.StackOverflowException"/>.</para>
+            <para><strong>Warning:</strong> Setting this value too high may cause a <see cref="T:System.StackOverflowException" />.</para>
             <para>Adjust with caution based on available stack space and application needs.</para>
             </remarks>
         </member>

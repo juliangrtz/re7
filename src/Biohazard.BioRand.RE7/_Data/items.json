@@ -177,6 +177,31 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
+    "Guid": "3b580821-f20e-4c20-b83b-0ea1c683763c",
+    "SaveGuid": "c2af51f3-080f-0f1b-33d4-4c11bd76b5d7",
+    "Position": {
+      "X": -19.26732,
+      "Y": 1.200284,
+      "Z": 4.510814
+    },
+    "Rotation": {
+      "X": -0.7071068,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.7071068
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Weapon/wp1112_AcidBullet/wp1112_AcidBullet.mesh",
+    "Material": "Weapon/wp1112_AcidBullet/wp1112.mdf2"
+  },
+  {
+    "Id": "AcidBulletS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
     "Guid": "323c9f2e-4660-4650-8f21-4fdecdecace0",
     "SaveGuid": "cbcbc6fc-bc61-056b-04ce-0d6eb6196f0b",
     "Position": {
@@ -241,31 +266,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
-    "Mesh": "Weapon/wp1112_AcidBullet/wp1112_AcidBullet.mesh",
-    "Material": "Weapon/wp1112_AcidBullet/wp1112.mdf2"
-  },
-  {
-    "Id": "AcidBulletS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "3b580821-f20e-4c20-b83b-0ea1c683763c",
-    "SaveGuid": "c2af51f3-080f-0f1b-33d4-4c11bd76b5d7",
-    "Position": {
-      "X": -19.26732,
-      "Y": 1.200284,
-      "Z": 4.510814
-    },
-    "Rotation": {
-      "X": -0.7071068,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.7071068
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
     "Mesh": "Weapon/wp1112_AcidBullet/wp1112_AcidBullet.mesh",
     "Material": "Weapon/wp1112_AcidBullet/wp1112.mdf2"
   },
@@ -474,31 +474,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "3230d2cc-0af9-48e0-ad90-8e356df76393",
-    "SaveGuid": "af9c9dac-4c6e-0f37-0e78-8e8d8b663f04",
-    "Position": {
-      "X": 85.96732,
-      "Y": -0.5435424,
-      "Z": 3.963328
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.7629327,
-      "Z": 0,
-      "W": 0.6464779
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mesh",
-    "Material": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mdf2"
-  },
-  {
-    "Id": "Alcohol",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
     "Guid": "129ea5a3-6531-4dea-9969-2d3eb9f97d4e",
@@ -540,6 +515,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mesh",
+    "Material": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mdf2"
+  },
+  {
+    "Id": "Alcohol",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "3230d2cc-0af9-48e0-ad90-8e356df76393",
+    "SaveGuid": "af9c9dac-4c6e-0f37-0e78-8e8d8b663f04",
+    "Position": {
+      "X": 85.96732,
+      "Y": -0.5435424,
+      "Z": 3.963328
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.7629327,
+      "Z": 0,
+      "W": 0.6464779
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
     "Mesh": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mesh",
     "Material": "Props/sm2026_Alcohol01A/sm2026_Alcohol01A.mdf2"
   },
@@ -792,31 +792,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "6adb8a5f-3fd7-41a4-9528-f6e193dc086e",
-    "SaveGuid": "7c686a8f-e2bc-0e81-2f48-e58b86e95be9",
-    "Position": {
-      "X": 21.76856,
-      "Y": -0.9818736,
-      "Z": 35.71083
-    },
-    "Rotation": {
-      "X": -0.6390853,
-      "Y": 0.6420835,
-      "Z": -0.294771,
-      "W": 0.3039881
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Weapon/wp1019_BrokenHandgun/wp1019_BrokenHandgun.mesh",
-    "Material": "Weapon/wp1019_BrokenHandgun/wp1019.mdf2"
-  },
-  {
-    "Id": "BrokenHandgun_M19",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "c947a093-81a1-4f02-93bb-8e34e315bcab",
@@ -833,6 +808,31 @@
       "W": 0.6626431
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Weapon/wp1019_BrokenHandgun/wp1019_BrokenHandgun.mesh",
+    "Material": "Weapon/wp1019_BrokenHandgun/wp1019.mdf2"
+  },
+  {
+    "Id": "BrokenHandgun_M19",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "6adb8a5f-3fd7-41a4-9528-f6e193dc086e",
+    "SaveGuid": "7c686a8f-e2bc-0e81-2f48-e58b86e95be9",
+    "Position": {
+      "X": 21.76856,
+      "Y": -0.9818736,
+      "Z": 35.71083
+    },
+    "Rotation": {
+      "X": -0.6390853,
+      "Y": 0.6420835,
+      "Z": -0.294771,
+      "W": 0.3039881
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
     "Mesh": "Weapon/wp1019_BrokenHandgun/wp1019_BrokenHandgun.mesh",
     "Material": "Weapon/wp1019_BrokenHandgun/wp1019.mdf2"
   },
@@ -1031,54 +1031,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/hard.scn.20",
-    "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
-    "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
-  },
-  {
-    "Id": "BurnerBullet",
-    "Enabled": true,
-    "StackNum": 60,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "400c0d7e-f8cd-43d0-9c3e-c1ccfa2c0704",
-    "SaveGuid": "ef165052-ab18-4ec0-9a29-2653d7b2e0f9",
-    "Position": {
-      "X": 0.7230072,
-      "Y": 0.2831573,
-      "Z": -0.03319395
-    },
-    "Rotation": {
-      "X": 0.4071015,
-      "Y": 0.6202219,
-      "Z": 0.4127019,
-      "W": 0.5284603
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20",
-    "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
-    "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
-  },
-  {
-    "Id": "BurnerBullet",
-    "Enabled": true,
-    "StackNum": 60,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "887e0b13-658a-441b-9210-726205b76601",
-    "SaveGuid": "783b5c1f-5f24-0aae-0946-d329b7ed3f23",
-    "Position": {
-      "X": 0.02983856,
-      "Y": 0.1139355,
-      "Z": 0.02617681
-    },
-    "Rotation": {
-      "X": 0.6774222,
-      "Y": 0.2981844,
-      "Z": 0.6072464,
-      "W": -0.2888548
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20",
     "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
     "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
   },
@@ -1404,6 +1356,54 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
+    "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
+    "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
+  },
+  {
+    "Id": "BurnerBullet",
+    "Enabled": true,
+    "StackNum": 60,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "400c0d7e-f8cd-43d0-9c3e-c1ccfa2c0704",
+    "SaveGuid": "ef165052-ab18-4ec0-9a29-2653d7b2e0f9",
+    "Position": {
+      "X": 0.7230072,
+      "Y": 0.2831573,
+      "Z": -0.03319395
+    },
+    "Rotation": {
+      "X": 0.4071015,
+      "Y": 0.6202219,
+      "Z": 0.4127019,
+      "W": 0.5284603
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20",
+    "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
+    "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
+  },
+  {
+    "Id": "BurnerBullet",
+    "Enabled": true,
+    "StackNum": 60,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "887e0b13-658a-441b-9210-726205b76601",
+    "SaveGuid": "783b5c1f-5f24-0aae-0946-d329b7ed3f23",
+    "Position": {
+      "X": 0.02983856,
+      "Y": 0.1139355,
+      "Z": 0.02617681
+    },
+    "Rotation": {
+      "X": 0.6774222,
+      "Y": 0.2981844,
+      "Z": 0.6072464,
+      "W": -0.2888548
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20",
     "Mesh": "Weapon/wp1001_GasCan/wp1001_GasCan.mesh",
     "Material": "Weapon/wp1001_GasCan/wp1001.mdf2"
   },
@@ -1802,31 +1802,6 @@
     "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
-    "Guid": "69c5c1aa-df07-453a-9dbc-35e65fd9da6f",
-    "SaveGuid": "5bf91d56-2709-4e59-9249-812a6ca066c3",
-    "Position": {
-      "X": 112.9339,
-      "Y": -1.975863,
-      "Z": 79.92174
-    },
-    "Rotation": {
-      "X": -1.691125E-08,
-      "Y": 0.8735746,
-      "Z": -1.691125E-08,
-      "W": -0.4866903
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mesh",
-    "Material": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mdf2"
-  },
-  {
-    "Id": "ChemicalL",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
     "Guid": "6d5af7e2-2b7c-445a-ba56-5c1910c7ce03",
     "SaveGuid": "46011571-b72b-4abf-ae28-859448ed9751",
     "Position": {
@@ -1900,6 +1875,56 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "69c5c1aa-df07-453a-9dbc-35e65fd9da6f",
+    "SaveGuid": "5bf91d56-2709-4e59-9249-812a6ca066c3",
+    "Position": {
+      "X": 112.9339,
+      "Y": -1.975863,
+      "Z": 79.92174
+    },
+    "Rotation": {
+      "X": -1.691125E-08,
+      "Y": 0.8735746,
+      "Z": -1.691125E-08,
+      "W": -0.4866903
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
+    "Mesh": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mesh",
+    "Material": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mdf2"
+  },
+  {
+    "Id": "ChemicalL",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "f46a95fc-e677-4994-ade9-26da22ceeda6",
+    "SaveGuid": "fea4ae36-9722-0a44-0551-9d4929b41354",
+    "Position": {
+      "X": -15.01846,
+      "Y": 0.8845317,
+      "Z": 25.37448
+    },
+    "Rotation": {
+      "X": 0.191833,
+      "Y": 0.7991286,
+      "Z": 0.3301653,
+      "W": -0.4643107
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mesh",
+    "Material": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mdf2"
+  },
+  {
+    "Id": "ChemicalL",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "54c7a657-2d7e-448d-b767-c04fdf4ec3bc",
@@ -1941,31 +1966,6 @@
       "W": -0.3937702
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mesh",
-    "Material": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mdf2"
-  },
-  {
-    "Id": "ChemicalL",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "f46a95fc-e677-4994-ade9-26da22ceeda6",
-    "SaveGuid": "fea4ae36-9722-0a44-0551-9d4929b41354",
-    "Position": {
-      "X": -15.01846,
-      "Y": 0.8845317,
-      "Z": 25.37448
-    },
-    "Rotation": {
-      "X": 0.191833,
-      "Y": 0.7991286,
-      "Z": 0.3301653,
-      "W": -0.4643107
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
     "Mesh": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mesh",
     "Material": "Props/sm2038_ChemicalL01A/sm2038_ChemicalL01A.mdf2"
   },
@@ -2125,31 +2125,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "b67e9473-ffa7-4ff0-9774-d62e6d1e000f",
-    "SaveGuid": "973be140-0465-49b2-b314-c8f72456989c",
-    "Position": {
-      "X": 112.8555,
-      "Y": -1.972893,
-      "Z": 79.59545
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.3826834,
-      "Z": 0,
-      "W": 0.9238796
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
-    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
-  },
-  {
-    "Id": "ChemicalM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "a1592f14-9b2d-432f-9a67-97a8418a6909",
@@ -2202,70 +2177,20 @@
     "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
-    "Guid": "00dfb1af-1faf-45a9-afd5-6adddda764c2",
-    "SaveGuid": "f13c4996-b9a9-0f5a-1e98-36f4f905e1b3",
+    "Guid": "b67e9473-ffa7-4ff0-9774-d62e6d1e000f",
+    "SaveGuid": "973be140-0465-49b2-b314-c8f72456989c",
     "Position": {
-      "X": 14.28913,
-      "Y": -1.345508,
-      "Z": 51.45601
-    },
-    "Rotation": {
-      "X": 0.6990998,
-      "Y": 0.009596803,
-      "Z": 0.04436905,
-      "W": 0.7135816
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
-    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
-  },
-  {
-    "Id": "ChemicalM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "4c91f1bd-2c63-4bc4-be9b-9fb1af32c523",
-    "SaveGuid": "bd720984-8a65-0137-0fd6-c3988b904052",
-    "Position": {
-      "X": 57.2823,
-      "Y": 25.59899,
-      "Z": 17.14835
+      "X": 112.8555,
+      "Y": -1.972893,
+      "Z": 79.59545
     },
     "Rotation": {
       "X": 0,
-      "Y": 0.1697237,
+      "Y": -0.3826834,
       "Z": 0,
-      "W": 0.9854917
+      "W": 0.9238796
     },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
-    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
-    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
-  },
-  {
-    "Id": "ChemicalM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "d3fcadea-90dd-47fd-b908-a762286d7032",
-    "SaveGuid": "221f55d3-36db-0d0e-0845-fb4b0ccff543",
-    "Position": {
-      "X": 70.9744,
-      "Y": 25.40194,
-      "Z": 23.96149
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
     "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
     "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
   },
@@ -2350,6 +2275,81 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "4c91f1bd-2c63-4bc4-be9b-9fb1af32c523",
+    "SaveGuid": "bd720984-8a65-0137-0fd6-c3988b904052",
+    "Position": {
+      "X": 57.2823,
+      "Y": 25.59899,
+      "Z": 17.14835
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.1697237,
+      "Z": 0,
+      "W": 0.9854917
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
+    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
+    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
+  },
+  {
+    "Id": "ChemicalM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "00dfb1af-1faf-45a9-afd5-6adddda764c2",
+    "SaveGuid": "f13c4996-b9a9-0f5a-1e98-36f4f905e1b3",
+    "Position": {
+      "X": 14.28913,
+      "Y": -1.345508,
+      "Z": 51.45601
+    },
+    "Rotation": {
+      "X": 0.6990998,
+      "Y": 0.009596803,
+      "Z": 0.04436905,
+      "W": 0.7135816
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
+    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
+  },
+  {
+    "Id": "ChemicalM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "d3fcadea-90dd-47fd-b908-a762286d7032",
+    "SaveGuid": "221f55d3-36db-0d0e-0845-fb4b0ccff543",
+    "Position": {
+      "X": 70.9744,
+      "Y": 25.40194,
+      "Z": 23.96149
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
+    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
+    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
+  },
+  {
+    "Id": "ChemicalM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Chapter": 3,
     "Guid": "fc898db5-7468-4db8-b8cf-ceaf08bf48c2",
     "SaveGuid": "0d6a758c-d26e-074b-0982-92862c1dcdb3",
@@ -2365,55 +2365,6 @@
       "W": 1
     },
     "Container": "natives/stm/environment/scene/chapter3/c03_oldhouse1fkitchen01.scn.20",
-    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
-    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
-  },
-  {
-    "Id": "ChemicalM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "8b233067-d1dc-44f8-a7d9-1f2319c55746",
-    "SaveGuid": "7ac0c85e-77da-0e0b-1694-430a3d67d237",
-    "Position": {
-      "X": 0.3030396,
-      "Y": 1.026386,
-      "Z": -0.001621246
-    },
-    "Rotation": {
-      "X": -0.5778525,
-      "Y": -0.4267503,
-      "Z": -0.389801,
-      "W": 0.5762169
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20",
-    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
-    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
-  },
-  {
-    "Id": "ChemicalM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "2758b0ac-cb66-463d-95b9-0f00f168073a",
-    "SaveGuid": "d6bb4895-6d60-0cce-24f4-5329d5ca824b",
-    "Position": {
-      "X": -66.3852,
-      "Y": -32.22125,
-      "Z": -168.5987
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
     "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
     "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
   },
@@ -2464,6 +2415,55 @@
       "W": 0.3642531
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
+    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
+    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
+  },
+  {
+    "Id": "ChemicalM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "8b233067-d1dc-44f8-a7d9-1f2319c55746",
+    "SaveGuid": "7ac0c85e-77da-0e0b-1694-430a3d67d237",
+    "Position": {
+      "X": 0.3030396,
+      "Y": 1.026386,
+      "Z": -0.001621246
+    },
+    "Rotation": {
+      "X": -0.5778525,
+      "Y": -0.4267503,
+      "Z": -0.389801,
+      "W": 0.5762169
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20",
+    "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
+    "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
+  },
+  {
+    "Id": "ChemicalM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "2758b0ac-cb66-463d-95b9-0f00f168073a",
+    "SaveGuid": "d6bb4895-6d60-0cce-24f4-5329d5ca824b",
+    "Position": {
+      "X": -66.3852,
+      "Y": -32.22125,
+      "Z": -168.5987
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
     "Mesh": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mesh",
     "Material": "Props/sm2037_ChemicalM01A/sm2037_ChemicalM01A.mdf2"
   },
@@ -2573,30 +2573,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "db2c61d1-8c07-419e-b5a5-2ddc10e9d406",
-    "SaveGuid": "16626cf5-c5aa-087f-3a9b-a6740b9dd14c",
-    "Position": {
-      "X": -0.07832146,
-      "Y": -0.002290666,
-      "Z": -0.1555614
-    },
-    "Rotation": {
-      "X": -0.6310001,
-      "Y": 0.35618,
-      "Z": -0.3092634,
-      "W": 0.6158985
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "6914d484-e6d5-47f4-b11c-1ef60880b3f7",
@@ -2613,6 +2589,30 @@
       "W": 0.6673761
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/hard.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "db2c61d1-8c07-419e-b5a5-2ddc10e9d406",
+    "SaveGuid": "16626cf5-c5aa-087f-3a9b-a6740b9dd14c",
+    "Position": {
+      "X": -0.07832146,
+      "Y": -0.002290666,
+      "Z": -0.1555614
+    },
+    "Rotation": {
+      "X": -0.6310001,
+      "Y": 0.35618,
+      "Z": -0.3092634,
+      "W": 0.6158985
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20",
     "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
     "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
   },
@@ -2763,6 +2763,206 @@
       "W": 0.583551
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "86810bcd-349f-46ff-a905-0931928b2c93",
+    "SaveGuid": "96dd269e-d0fd-4226-8a67-1490b423e71a",
+    "Position": {
+      "X": 38.53868,
+      "Y": -1.872507,
+      "Z": 83.11102
+    },
+    "Rotation": {
+      "X": 0.1535292,
+      "Y": -0.6563777,
+      "Z": 0.7266092,
+      "W": 0.1328009
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "b8759e89-275f-476b-9d3a-15b7b232f029",
+    "SaveGuid": "3ea5566b-818b-4de8-bcc6-face97696ea4",
+    "Position": {
+      "X": 38.32229,
+      "Y": -1.836017,
+      "Z": 71.53918
+    },
+    "Rotation": {
+      "X": -0.4036307,
+      "Y": 0.2463086,
+      "Z": 0.2826324,
+      "W": 0.8345857
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "012da678-ee94-44ed-981a-64733532db60",
+    "SaveGuid": "cc63ab5c-a739-0d0c-1724-efdb2e46de2a",
+    "Position": {
+      "X": 112.5208,
+      "Y": -2.613151,
+      "Z": 79.2584
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.5129043,
+      "Z": 0,
+      "W": 0.8584458
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "5323bbb4-73e4-48b8-8303-ebffeaf50177",
+    "SaveGuid": "0ee2e4da-46c4-4302-bede-0191c5284439",
+    "Position": {
+      "X": -34.11491,
+      "Y": -2.372612,
+      "Z": 76.64689
+    },
+    "Rotation": {
+      "X": -0.236163,
+      "Y": 0.687475,
+      "Z": 0.6573573,
+      "W": 0.1987124
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "ae1742e1-17b1-41cd-80c9-a6e9c8c32381",
+    "SaveGuid": "3b196b95-4b2b-4a0b-9c5b-d343c3e3c0d3",
+    "Position": {
+      "X": -23.35499,
+      "Y": -2.687007,
+      "Z": 96.62234
+    },
+    "Rotation": {
+      "X": 0.3672277,
+      "Y": -0.3543719,
+      "Z": 0.0004300475,
+      "W": 0.8599792
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "fda3f315-c1c9-484c-a1a2-3ac0158249f6",
+    "SaveGuid": "14021bdc-68da-4ba4-9b2f-55692916a232",
+    "Position": {
+      "X": 1.332273,
+      "Y": -4.568419,
+      "Z": 87.51324
+    },
+    "Rotation": {
+      "X": 1.963044E-08,
+      "Y": 0.7524158,
+      "Z": 2.242373E-08,
+      "W": 0.6586884
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "ba7f81be-faed-4390-bc1a-d604d2f88d14",
+    "SaveGuid": "77318c9a-b340-0a71-3324-5dacc98c885e",
+    "Position": {
+      "X": 24.57126,
+      "Y": 1.812084,
+      "Z": 70.48586
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.671574,
+      "Z": 0,
+      "W": 0.7409375
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "76ed21f7-cfa9-4af4-b584-0098dcc1a43c",
+    "SaveGuid": "bba32cd3-8604-0315-3aba-8b30c7b5a176",
+    "Position": {
+      "X": 17.32349,
+      "Y": 1.886838,
+      "Z": 81.4305
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.9561841,
+      "Z": 0,
+      "W": 0.2927659
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
     "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
     "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
   },
@@ -2943,281 +3143,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "86810bcd-349f-46ff-a905-0931928b2c93",
-    "SaveGuid": "96dd269e-d0fd-4226-8a67-1490b423e71a",
-    "Position": {
-      "X": 38.53868,
-      "Y": -1.872507,
-      "Z": 83.11102
-    },
-    "Rotation": {
-      "X": 0.1535292,
-      "Y": -0.6563777,
-      "Z": 0.7266092,
-      "W": 0.1328009
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "b8759e89-275f-476b-9d3a-15b7b232f029",
-    "SaveGuid": "3ea5566b-818b-4de8-bcc6-face97696ea4",
-    "Position": {
-      "X": 38.32229,
-      "Y": -1.836017,
-      "Z": 71.53918
-    },
-    "Rotation": {
-      "X": -0.4036307,
-      "Y": 0.2463086,
-      "Z": 0.2826324,
-      "W": 0.8345857
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "012da678-ee94-44ed-981a-64733532db60",
-    "SaveGuid": "cc63ab5c-a739-0d0c-1724-efdb2e46de2a",
-    "Position": {
-      "X": 112.5208,
-      "Y": -2.613151,
-      "Z": 79.2584
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.5129043,
-      "Z": 0,
-      "W": 0.8584458
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "3ee7a9ad-cd3e-4b66-a955-82488e34d3e5",
-    "SaveGuid": "f3a9a489-8493-0287-266b-09e09540d6af",
-    "Position": {
-      "X": 14.77813,
-      "Y": -2.074349,
-      "Z": 35.1722
-    },
-    "Rotation": {
-      "X": -0.3691493,
-      "Y": 0.4858518,
-      "Z": 0.2372705,
-      "W": 0.7558964
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "5323bbb4-73e4-48b8-8303-ebffeaf50177",
-    "SaveGuid": "0ee2e4da-46c4-4302-bede-0191c5284439",
-    "Position": {
-      "X": -34.11491,
-      "Y": -2.372612,
-      "Z": 76.64689
-    },
-    "Rotation": {
-      "X": -0.236163,
-      "Y": 0.687475,
-      "Z": 0.6573573,
-      "W": 0.1987124
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "ae1742e1-17b1-41cd-80c9-a6e9c8c32381",
-    "SaveGuid": "3b196b95-4b2b-4a0b-9c5b-d343c3e3c0d3",
-    "Position": {
-      "X": -23.35499,
-      "Y": -2.687007,
-      "Z": 96.62234
-    },
-    "Rotation": {
-      "X": 0.3672277,
-      "Y": -0.3543719,
-      "Z": 0.0004300475,
-      "W": 0.8599792
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "fda3f315-c1c9-484c-a1a2-3ac0158249f6",
-    "SaveGuid": "14021bdc-68da-4ba4-9b2f-55692916a232",
-    "Position": {
-      "X": 1.332273,
-      "Y": -4.568419,
-      "Z": 87.51324
-    },
-    "Rotation": {
-      "X": 1.963044E-08,
-      "Y": 0.7524158,
-      "Z": 2.242373E-08,
-      "W": 0.6586884
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "ba7f81be-faed-4390-bc1a-d604d2f88d14",
-    "SaveGuid": "77318c9a-b340-0a71-3324-5dacc98c885e",
-    "Position": {
-      "X": 24.57126,
-      "Y": 1.812084,
-      "Z": 70.48586
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.671574,
-      "Z": 0,
-      "W": 0.7409375
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "76ed21f7-cfa9-4af4-b584-0098dcc1a43c",
-    "SaveGuid": "bba32cd3-8604-0315-3aba-8b30c7b5a176",
-    "Position": {
-      "X": 17.32349,
-      "Y": 1.886838,
-      "Z": 81.4305
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.9561841,
-      "Z": 0,
-      "W": 0.2927659
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "14a2665a-4a5e-4e0e-8f24-41225eb47913",
-    "SaveGuid": "d9ec6b7e-03f3-07ef-001a-ca8a45c07c59",
-    "Position": {
-      "X": 34.83039,
-      "Y": 0.5285189,
-      "Z": 11.03058
-    },
-    "Rotation": {
-      "X": -0.1614754,
-      "Y": -0.7453746,
-      "Z": -0.2145365,
-      "W": 0.6101804
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "c6467d1c-afb6-4538-8a06-f32f9e38bf3c",
-    "SaveGuid": "eb8b2955-70ec-4dd9-9579-08272574774f",
-    "Position": {
-      "X": -11.61537,
-      "Y": -44.02091,
-      "Z": -206.5331
-    },
-    "Rotation": {
-      "X": -0.6305962,
-      "Y": -0.1708544,
-      "Z": -0.1449959,
-      "W": 0.7430568
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 4,
     "Guid": "c3cbd165-7e45-4fdd-ae96-221b346aa8eb",
@@ -3284,6 +3209,81 @@
       "W": 0.9492329
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "3ee7a9ad-cd3e-4b66-a955-82488e34d3e5",
+    "SaveGuid": "f3a9a489-8493-0287-266b-09e09540d6af",
+    "Position": {
+      "X": 14.77813,
+      "Y": -2.074349,
+      "Z": 35.1722
+    },
+    "Rotation": {
+      "X": -0.3691493,
+      "Y": 0.4858518,
+      "Z": 0.2372705,
+      "W": 0.7558964
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "14a2665a-4a5e-4e0e-8f24-41225eb47913",
+    "SaveGuid": "d9ec6b7e-03f3-07ef-001a-ca8a45c07c59",
+    "Position": {
+      "X": 34.83039,
+      "Y": 0.5285189,
+      "Z": 11.03058
+    },
+    "Rotation": {
+      "X": -0.1614754,
+      "Y": -0.7453746,
+      "Z": -0.2145365,
+      "W": 0.6101804
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "c6467d1c-afb6-4538-8a06-f32f9e38bf3c",
+    "SaveGuid": "eb8b2955-70ec-4dd9-9579-08272574774f",
+    "Position": {
+      "X": -11.61537,
+      "Y": -44.02091,
+      "Z": -206.5331
+    },
+    "Rotation": {
+      "X": -0.6305962,
+      "Y": -0.1708544,
+      "Z": -0.1449959,
+      "W": 0.7430568
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
     "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
     "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
   },
@@ -3367,30 +3367,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "d5c20bd7-969c-43e0-b506-bb954421eb42",
-    "SaveGuid": "188c06f3-df31-0a01-3a38-303d5f55ee08",
-    "Position": {
-      "X": 0.3432007,
-      "Y": 0.98993,
-      "Z": 0
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.4544368,
-      "Z": 0,
-      "W": -0.8907791
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Chapter": -1,
     "Guid": "979787c7-071e-4705-b7e2-557d57e855d9",
     "SaveGuid": "96ca17f5-5fa6-44cd-9bc7-e8c08b1ae61a",
@@ -3439,47 +3415,21 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "8f6def31-0cd9-4a72-ae08-f4e0e0b82f59",
-    "SaveGuid": "4223e215-4574-0393-2136-7f48fbcc2a13",
+    "Chapter": 3,
+    "Guid": "d5c20bd7-969c-43e0-b506-bb954421eb42",
+    "SaveGuid": "188c06f3-df31-0a01-3a38-303d5f55ee08",
     "Position": {
-      "X": 71.83302,
-      "Y": 22.22944,
-      "Z": 27.03127
-    },
-    "Rotation": {
-      "X": 0.3675897,
-      "Y": 0.5837365,
-      "Z": 0.6422731,
-      "W": -0.3340878
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/hard.scn.20",
-    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
-    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
-  },
-  {
-    "Id": "ChemicalS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "bfc627d3-00ce-44d7-987b-b4093d63e5ce",
-    "SaveGuid": "72882af7-4963-0d36-1745-3fa12617e084",
-    "Position": {
-      "X": -66.2134,
-      "Y": -32.21667,
-      "Z": -168.5277
+      "X": 0.3432007,
+      "Y": 0.98993,
+      "Z": 0
     },
     "Rotation": {
       "X": 0,
-      "Y": 0.3022542,
+      "Y": 0.4544368,
       "Z": 0,
-      "W": 0.9532273
+      "W": -0.8907791
     },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
+    "Container": "natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20",
     "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
     "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
   },
@@ -3530,6 +3480,56 @@
       "W": 0.01551156
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "8f6def31-0cd9-4a72-ae08-f4e0e0b82f59",
+    "SaveGuid": "4223e215-4574-0393-2136-7f48fbcc2a13",
+    "Position": {
+      "X": 71.83302,
+      "Y": 22.22944,
+      "Z": 27.03127
+    },
+    "Rotation": {
+      "X": 0.3675897,
+      "Y": 0.5837365,
+      "Z": 0.6422731,
+      "W": -0.3340878
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/hard.scn.20",
+    "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
+    "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
+  },
+  {
+    "Id": "ChemicalS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "bfc627d3-00ce-44d7-987b-b4093d63e5ce",
+    "SaveGuid": "72882af7-4963-0d36-1745-3fa12617e084",
+    "Position": {
+      "X": -66.2134,
+      "Y": -32.21667,
+      "Z": -168.5277
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.3022542,
+      "Z": 0,
+      "W": 0.9532273
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
     "Mesh": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mesh",
     "Material": "Props/sm2036_ChemicalS01A/sm2036_ChemicalS01A.mdf2"
   },
@@ -3859,30 +3859,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": 7,
-    "Guid": "ccd5a2ee-49f5-485b-97a8-42cf8282da07",
-    "SaveGuid": "390ec98e-bab3-4494-94b8-49c5d29d5eb2",
-    "Position": {
-      "X": -0.9364495,
-      "Y": 4.032249,
-      "Z": 5.197316
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/environment/scene/chapter7/c07_mainhousehall_7_4.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "2e187bee-76eb-413b-9ffc-48dd9efb57c6",
@@ -3924,6 +3900,30 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 7,
+    "Guid": "ccd5a2ee-49f5-485b-97a8-42cf8282da07",
+    "SaveGuid": "390ec98e-bab3-4494-94b8-49c5d29d5eb2",
+    "Position": {
+      "X": -0.9364495,
+      "Y": 4.032249,
+      "Z": 5.197316
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/environment/scene/chapter7/c07_mainhousehall_7_4.scn.20",
     "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
     "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
   },
@@ -4083,6 +4083,106 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "43554621-991f-4e31-9ee4-50b29fc287c7",
+    "SaveGuid": "844199b9-9751-4ab8-8c43-bc71229274df",
+    "Position": {
+      "X": -47.33466,
+      "Y": -4.158478,
+      "Z": 78.05539
+    },
+    "Rotation": {
+      "X": 5.189295E-09,
+      "Y": 0.3709307,
+      "Z": -2.072737E-09,
+      "W": 0.9286606
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "cd059dbf-3016-4cda-a1f0-c1f1d078f7dd",
+    "SaveGuid": "177017b9-cb48-4a8e-880b-d0c5a4ace24b",
+    "Position": {
+      "X": -42.44214,
+      "Y": -2.06201,
+      "Z": 108.401
+    },
+    "Rotation": {
+      "X": 5.189295E-09,
+      "Y": 0.3709307,
+      "Z": -2.072737E-09,
+      "W": 0.9286606
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "9d09251c-c311-4822-811d-86f67043171e",
+    "SaveGuid": "4cf513b7-a4a5-47ea-b6ff-57c23af53d8b",
+    "Position": {
+      "X": 79.99702,
+      "Y": 16.1573,
+      "Z": 23.75669
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "7c2a97bd-70fa-40c4-b6af-fb2551da24ea",
+    "SaveGuid": "c3b38eb5-2e76-008b-02a4-7131ccb799d8",
+    "Position": {
+      "X": 28.9729,
+      "Y": -1.949226,
+      "Z": 66.20949
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "4b6ef5a9-cfb5-43c3-bdd9-7d3071343af6",
@@ -4183,6 +4283,156 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "9b1d89bd-ac78-4e89-a838-854c6ad5a133",
+    "SaveGuid": "248490b5-f2f4-0ec6-1c33-0f58f7b81c01",
+    "Position": {
+      "X": -21.74132,
+      "Y": 0.8376397,
+      "Z": 3.421176
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "460b7e49-18be-4d04-b7a7-3dc46debc05e",
+    "SaveGuid": "f9926741-4632-0d4b-03ac-b7d0f0867d6c",
+    "Position": {
+      "X": -26.44525,
+      "Y": -5.227945,
+      "Z": 15.76489
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "22447ac1-1973-4280-9415-495631786e6e",
+    "SaveGuid": "9ddd63c9-47ff-02cf-201e-c342ac15d35c",
+    "Position": {
+      "X": -16.06826,
+      "Y": 0.180011,
+      "Z": 2.551796
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "f1d30577-352a-4fc9-bb27-9c431aebaac7",
+    "SaveGuid": "4e4a1c7f-6ba6-0f86-0f2c-1657878617f5",
+    "Position": {
+      "X": -6.461898,
+      "Y": -7.537764,
+      "Z": 22.52534
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "e710f229-b6e3-4046-86ba-79c49a3ee678",
+    "SaveGuid": "5889eb21-e86f-0009-32b1-f3d007535b4a",
+    "Position": {
+      "X": -12.86847,
+      "Y": -4.815046,
+      "Z": 9.176489
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "12b4cea7-4c89-4e6a-abdc-55b71a5d5c1c",
+    "SaveGuid": "8adc5947-bbe7-405c-b93f-79ca56e9e71a",
+    "Position": {
+      "X": 0.02857971,
+      "Y": 0.01162338,
+      "Z": -0.06706238
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
+    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
+  },
+  {
+    "Id": "Coin",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Chapter": 3,
     "Guid": "d9cf982f-b55e-4912-a713-c2d96c1c9b2b",
     "SaveGuid": "97a8e1bc-eb17-4c2c-b1cd-d3a714a1418b",
@@ -4223,106 +4473,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "43554621-991f-4e31-9ee4-50b29fc287c7",
-    "SaveGuid": "844199b9-9751-4ab8-8c43-bc71229274df",
-    "Position": {
-      "X": -47.33466,
-      "Y": -4.158478,
-      "Z": 78.05539
-    },
-    "Rotation": {
-      "X": 5.189295E-09,
-      "Y": 0.3709307,
-      "Z": -2.072737E-09,
-      "W": 0.9286606
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "cd059dbf-3016-4cda-a1f0-c1f1d078f7dd",
-    "SaveGuid": "177017b9-cb48-4a8e-880b-d0c5a4ace24b",
-    "Position": {
-      "X": -42.44214,
-      "Y": -2.06201,
-      "Z": 108.401
-    },
-    "Rotation": {
-      "X": 5.189295E-09,
-      "Y": 0.3709307,
-      "Z": -2.072737E-09,
-      "W": 0.9286606
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "9d09251c-c311-4822-811d-86f67043171e",
-    "SaveGuid": "4cf513b7-a4a5-47ea-b6ff-57c23af53d8b",
-    "Position": {
-      "X": 79.99702,
-      "Y": 16.1573,
-      "Z": 23.75669
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "7c2a97bd-70fa-40c4-b6af-fb2551da24ea",
-    "SaveGuid": "c3b38eb5-2e76-008b-02a4-7131ccb799d8",
-    "Position": {
-      "X": 28.9729,
-      "Y": -1.949226,
-      "Z": 66.20949
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
     "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
     "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
   },
@@ -4498,156 +4648,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "9b1d89bd-ac78-4e89-a838-854c6ad5a133",
-    "SaveGuid": "248490b5-f2f4-0ec6-1c33-0f58f7b81c01",
-    "Position": {
-      "X": -21.74132,
-      "Y": 0.8376397,
-      "Z": 3.421176
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "460b7e49-18be-4d04-b7a7-3dc46debc05e",
-    "SaveGuid": "f9926741-4632-0d4b-03ac-b7d0f0867d6c",
-    "Position": {
-      "X": -26.44525,
-      "Y": -5.227945,
-      "Z": 15.76489
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "22447ac1-1973-4280-9415-495631786e6e",
-    "SaveGuid": "9ddd63c9-47ff-02cf-201e-c342ac15d35c",
-    "Position": {
-      "X": -16.06826,
-      "Y": 0.180011,
-      "Z": 2.551796
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "f1d30577-352a-4fc9-bb27-9c431aebaac7",
-    "SaveGuid": "4e4a1c7f-6ba6-0f86-0f2c-1657878617f5",
-    "Position": {
-      "X": -6.461898,
-      "Y": -7.537764,
-      "Z": 22.52534
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "e710f229-b6e3-4046-86ba-79c49a3ee678",
-    "SaveGuid": "5889eb21-e86f-0009-32b1-f3d007535b4a",
-    "Position": {
-      "X": -12.86847,
-      "Y": -4.815046,
-      "Z": 9.176489
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
-    "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
-  },
-  {
-    "Id": "Coin",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "12b4cea7-4c89-4e6a-abdc-55b71a5d5c1c",
-    "SaveGuid": "8adc5947-bbe7-405c-b93f-79ca56e9e71a",
-    "Position": {
-      "X": 0.02857971,
-      "Y": 0.01162338,
-      "Z": -0.06706238
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
     "Mesh": "Props/sm2164_Coin01A/sm2164_Coin01A.mesh",
     "Material": "Props/sm2164_Coin01A/sm2164_Coin01A.mdf2"
   },
@@ -4902,6 +4902,30 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Chapter": 7,
+    "Guid": "7433e7fb-9c38-456a-8d84-9eca8de8ebf9",
+    "SaveGuid": "69ecaac3-8fb1-0741-18f4-57739fa755f7",
+    "Position": {
+      "X": 10.7299,
+      "Y": -1.368303,
+      "Z": 12.20471
+    },
+    "Rotation": {
+      "X": 0.3012459,
+      "Y": -0.3983593,
+      "Z": -0.4996425,
+      "W": 0.7077557
+    },
+    "Container": "natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace1f_7_4.scn.20",
+    "Mesh": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mesh",
+    "Material": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mdf2"
+  },
+  {
+    "Id": "CylinderKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
     "Guid": "5a2ab12f-e4c1-0e39-1774-68ef272db5e8",
@@ -5029,55 +5053,6 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
-    "Guid": "631067b6-cf80-4fcf-8728-d1c46a06d701",
-    "SaveGuid": "7ecf2a8e-dc09-0de4-1258-187d7849690f",
-    "Position": {
-      "X": 39.49235,
-      "Y": -0.8206135,
-      "Z": -7.06363
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.3998911,
-      "Z": 0,
-      "W": 0.9165627
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mesh",
-    "Material": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mdf2"
-  },
-  {
-    "Id": "CylinderKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 7,
-    "Guid": "7433e7fb-9c38-456a-8d84-9eca8de8ebf9",
-    "SaveGuid": "69ecaac3-8fb1-0741-18f4-57739fa755f7",
-    "Position": {
-      "X": 10.7299,
-      "Y": -1.368303,
-      "Z": 12.20471
-    },
-    "Rotation": {
-      "X": 0.3012459,
-      "Y": -0.3983593,
-      "Z": -0.4996425,
-      "W": 0.7077557
-    },
-    "Container": "natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace1f_7_4.scn.20",
-    "Mesh": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mesh",
-    "Material": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mdf2"
-  },
-  {
-    "Id": "CylinderKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
     "Guid": "95827142-1420-035a-16a9-5229f51b35f7",
     "SaveGuid": "1c7c0255-b3c9-403b-b9b7-715d0a65902a",
     "Position": {
@@ -5142,6 +5117,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mesh",
+    "Material": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mdf2"
+  },
+  {
+    "Id": "CylinderKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "631067b6-cf80-4fcf-8728-d1c46a06d701",
+    "SaveGuid": "7ecf2a8e-dc09-0de4-1258-187d7849690f",
+    "Position": {
+      "X": 39.49235,
+      "Y": -0.8206135,
+      "Z": -7.06363
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.3998911,
+      "Z": 0,
+      "W": 0.9165627
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
     "Mesh": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mesh",
     "Material": "Props/sm1796_KeyPick01A/sm1796_KeyPick01A.mdf2"
   },
@@ -5540,56 +5540,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "e56aa82a-2217-444b-9cf2-5ddf169a8a50",
-    "SaveGuid": "9578bdb4-270b-0272-211f-2c23d973b6cd",
-    "Position": {
-      "X": 61.92009,
-      "Y": -0.256651,
-      "Z": 10.56279
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
-    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
-  },
-  {
-    "Id": "EyeDrops",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "d87a3550-4429-407f-9eba-94dfef13583d",
-    "SaveGuid": "790d801c-8581-4408-b5e3-bb6aa3b5bf7a",
-    "Position": {
-      "X": 112.5872,
-      "Y": -2.610723,
-      "Z": 79.0275
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
-    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
-  },
-  {
-    "Id": "EyeDrops",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
     "Guid": "6929657c-2bd1-4039-8764-a729db8a2e0b",
@@ -5692,6 +5642,56 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
+    "Guid": "e56aa82a-2217-444b-9cf2-5ddf169a8a50",
+    "SaveGuid": "9578bdb4-270b-0272-211f-2c23d973b6cd",
+    "Position": {
+      "X": 61.92009,
+      "Y": -0.256651,
+      "Z": 10.56279
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
+    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
+  },
+  {
+    "Id": "EyeDrops",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "d87a3550-4429-407f-9eba-94dfef13583d",
+    "SaveGuid": "790d801c-8581-4408-b5e3-bb6aa3b5bf7a",
+    "Position": {
+      "X": 112.5872,
+      "Y": -2.610723,
+      "Z": 79.0275
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
+    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
+    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
+  },
+  {
+    "Id": "EyeDrops",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
     "Guid": "c64e80a9-d6b6-4f87-a030-37bb4a46a03f",
     "SaveGuid": "b65c9537-d3aa-09be-1ddd-464785af9ca2",
     "Position": {
@@ -5731,6 +5731,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20",
+    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
+    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
+  },
+  {
+    "Id": "EyeDrops",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "107fdca6-182e-4a72-be5b-cb0369cbff4e",
+    "SaveGuid": "606dc938-1d32-0c4b-03b6-baffa622c3d3",
+    "Position": {
+      "X": 51.19893,
+      "Y": 1.175095,
+      "Z": -40.84233
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
     "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
   },
@@ -5781,31 +5806,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship4f/hard.scn.20",
-    "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
-    "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
-  },
-  {
-    "Id": "EyeDrops",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "107fdca6-182e-4a72-be5b-cb0369cbff4e",
-    "SaveGuid": "606dc938-1d32-0c4b-03b6-baffa622c3d3",
-    "Position": {
-      "X": 51.19893,
-      "Y": 1.175095,
-      "Z": -40.84233
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mesh",
     "Material": "Props/sm2179_Psychostimulant01A/sm2179_Psychostimulant01A.mdf2"
   },
@@ -5965,6 +5965,31 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "ccdffbef-9ace-4ea0-b009-644f2bb45e5d",
+    "SaveGuid": "9129a57f-b226-0b48-0e61-d08fcca429c6",
+    "Position": {
+      "X": -19.20623,
+      "Y": 1.177835,
+      "Z": 4.372334
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.4152002,
+      "Z": 0,
+      "W": 0.9097301
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Weapon/wp1111_FlameBullet/wp1111_FlameBullet.mesh",
+    "Material": "Weapon/wp1111_FlameBullet/wp1111.mdf2"
+  },
+  {
+    "Id": "FlameBulletS",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 4,
     "Guid": "a444d9b6-c25b-497e-ba81-6466fd0b5916",
@@ -6006,31 +6031,6 @@
       "W": 0.7062784
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
-    "Mesh": "Weapon/wp1111_FlameBullet/wp1111_FlameBullet.mesh",
-    "Material": "Weapon/wp1111_FlameBullet/wp1111.mdf2"
-  },
-  {
-    "Id": "FlameBulletS",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "ccdffbef-9ace-4ea0-b009-644f2bb45e5d",
-    "SaveGuid": "9129a57f-b226-0b48-0e61-d08fcca429c6",
-    "Position": {
-      "X": -19.20623,
-      "Y": 1.177835,
-      "Z": 4.372334
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.4152002,
-      "Z": 0,
-      "W": 0.9097301
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
     "Mesh": "Weapon/wp1111_FlameBullet/wp1111_FlameBullet.mesh",
     "Material": "Weapon/wp1111_FlameBullet/wp1111.mdf2"
   },
@@ -6164,31 +6164,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "21182198-f9d3-4d81-bef7-22c90fb819c4",
-    "SaveGuid": "61176e08-30f9-034d-0241-27e96b2a3131",
-    "Position": {
-      "X": 28.49244,
-      "Y": -1.038287,
-      "Z": 34.57558
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm2025_Flower01A/sm2025_Flower01A.mesh",
-    "Material": "Props/sm2025_Flower01A/sm2025_Flower01A.mdf2"
-  },
-  {
-    "Id": "Flower",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 4,
     "Guid": "920cd6de-fb18-4107-8e08-085f730dfa1e",
@@ -6230,6 +6205,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm2025_Flower01A/sm2025_Flower01A.mesh",
+    "Material": "Props/sm2025_Flower01A/sm2025_Flower01A.mdf2"
+  },
+  {
+    "Id": "Flower",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "21182198-f9d3-4d81-bef7-22c90fb819c4",
+    "SaveGuid": "61176e08-30f9-034d-0241-27e96b2a3131",
+    "Position": {
+      "X": 28.49244,
+      "Y": -1.038287,
+      "Z": 34.57558
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
     "Mesh": "Props/sm2025_Flower01A/sm2025_Flower01A.mesh",
     "Material": "Props/sm2025_Flower01A/sm2025_Flower01A.mdf2"
   },
@@ -6505,30 +6505,6 @@
     "EasyNum": -1,
     "HardNum": -1,
     "Chapter": 4,
-    "Guid": "6916a1b0-827c-4ed6-83ca-c647fc1ce2f1",
-    "SaveGuid": "1507a891-b785-0fcc-0e76-59555a8e362f",
-    "Position": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/environment/scene/chapter4/c04_ship1fcorridor.scn.20",
-    "Mesh": "Props/sm0246_Fuse01A/sm0246_Fuse01A.mesh",
-    "Material": "Props/sm0246_Fuse01A/sm0246_Fuse01A_IDS.mdf2"
-  },
-  {
-    "Id": "FuseCh4",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 4,
     "Guid": "77468bde-b24f-0949-0741-de56355592c7",
     "SaveGuid": "0b5782ff-87b6-4853-8afd-414493c74619",
     "Position": {
@@ -6543,6 +6519,30 @@
       "W": 1
     },
     "Container": "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20",
+    "Mesh": "Props/sm0246_Fuse01A/sm0246_Fuse01A.mesh",
+    "Material": "Props/sm0246_Fuse01A/sm0246_Fuse01A_IDS.mdf2"
+  },
+  {
+    "Id": "FuseCh4",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 4,
+    "Guid": "6916a1b0-827c-4ed6-83ca-c647fc1ce2f1",
+    "SaveGuid": "1507a891-b785-0fcc-0e76-59555a8e362f",
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/environment/scene/chapter4/c04_ship1fcorridor.scn.20",
     "Mesh": "Props/sm0246_Fuse01A/sm0246_Fuse01A.mesh",
     "Material": "Props/sm0246_Fuse01A/sm0246_Fuse01A_IDS.mdf2"
   },
@@ -7381,56 +7381,6 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
-    "Guid": "5fef04d8-2438-44a6-b6ed-d804a52d1774",
-    "SaveGuid": "0887b17f-b944-04bc-2f30-4097d862b25f",
-    "Position": {
-      "X": 47.94684,
-      "Y": 4.894766,
-      "Z": 34.02028
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
-    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
-  },
-  {
-    "Id": "Gunpowder",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "4f94a4b8-2bcd-41ee-88ee-b222644905e6",
-    "SaveGuid": "c5fad727-4c6f-4e72-aba6-8b4a5b30274e",
-    "Position": {
-      "X": 110.7392,
-      "Y": -2.492949,
-      "Z": 81.31716
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
-    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
-  },
-  {
-    "Id": "Gunpowder",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
     "Guid": "fff2a34e-44cc-446b-8f0a-43147db2f21e",
     "SaveGuid": "a89a16e9-d9b0-0471-16d7-db8700fd5735",
     "Position": {
@@ -7445,56 +7395,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
-    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
-  },
-  {
-    "Id": "Gunpowder",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "64eceb44-8697-4545-9606-90834dc4d517",
-    "SaveGuid": "b5f92d94-2b56-4522-b039-2e7571a1b9f9",
-    "Position": {
-      "X": 4.106625,
-      "Y": -0.7960182,
-      "Z": 37.03559
-    },
-    "Rotation": {
-      "X": -0.07877118,
-      "Y": 0.003693638,
-      "Z": 0.08946984,
-      "W": 0.9928643
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
-    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
-  },
-  {
-    "Id": "Gunpowder",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "ff53be36-285d-431b-9db1-0dbe2d91e047",
-    "SaveGuid": "23c25b35-8b3f-4d6c-b523-2f4673a900d9",
-    "Position": {
-      "X": 25.76957,
-      "Y": 1.017283,
-      "Z": 15.79791
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
     "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
     "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
   },
@@ -7581,12 +7481,12 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
-    "Guid": "1ce1b7fe-0794-424a-bf42-27937792c293",
-    "SaveGuid": "4b890259-9ae8-0250-269f-bf000add67b8",
+    "Guid": "5fef04d8-2438-44a6-b6ed-d804a52d1774",
+    "SaveGuid": "0887b17f-b944-04bc-2f30-4097d862b25f",
     "Position": {
-      "X": 28.95596,
-      "Y": 1.154784,
-      "Z": 8.504668
+      "X": 47.94684,
+      "Y": 4.894766,
+      "Z": 34.02028
     },
     "Rotation": {
       "X": 0,
@@ -7594,7 +7494,32 @@
       "Z": 0,
       "W": 1
     },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
+    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
+  },
+  {
+    "Id": "Gunpowder",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "4f94a4b8-2bcd-41ee-88ee-b222644905e6",
+    "SaveGuid": "c5fad727-4c6f-4e72-aba6-8b4a5b30274e",
+    "Position": {
+      "X": 110.7392,
+      "Y": -2.492949,
+      "Z": 81.31716
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
     "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
     "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
   },
@@ -7695,6 +7620,81 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
+    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
+  },
+  {
+    "Id": "Gunpowder",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "64eceb44-8697-4545-9606-90834dc4d517",
+    "SaveGuid": "b5f92d94-2b56-4522-b039-2e7571a1b9f9",
+    "Position": {
+      "X": 4.106625,
+      "Y": -0.7960182,
+      "Z": 37.03559
+    },
+    "Rotation": {
+      "X": -0.07877118,
+      "Y": 0.003693638,
+      "Z": 0.08946984,
+      "W": 0.9928643
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
+    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
+  },
+  {
+    "Id": "Gunpowder",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "ff53be36-285d-431b-9db1-0dbe2d91e047",
+    "SaveGuid": "23c25b35-8b3f-4d6c-b523-2f4673a900d9",
+    "Position": {
+      "X": 25.76957,
+      "Y": 1.017283,
+      "Z": 15.79791
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
+    "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
+  },
+  {
+    "Id": "Gunpowder",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "1ce1b7fe-0794-424a-bf42-27937792c293",
+    "SaveGuid": "4b890259-9ae8-0250-269f-bf000add67b8",
+    "Position": {
+      "X": 28.95596,
+      "Y": 1.154784,
+      "Z": 8.504668
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
     "Mesh": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mesh",
     "Material": "Props/sm2183_Gunpowder01A/sm2183_Gunpowder01A.mdf2"
   },
@@ -7948,31 +7948,6 @@
     "StackNum": 10,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "b9ff97a2-0964-4038-9e28-f2ecdcd888ea",
-    "SaveGuid": "6eea154b-9fe8-48a1-b432-125625ba8f56",
-    "Position": {
-      "X": 44.68303,
-      "Y": 5.335252,
-      "Z": 27.55729
-    },
-    "Rotation": {
-      "X": 0.5025669,
-      "Y": 0.5297872,
-      "Z": 0.4979607,
-      "W": 0.467747
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "d011e131-bec1-46e6-add5-6e543227905c",
@@ -8013,6 +7988,31 @@
       "W": 0.7070315
     },
     "Container": "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "b9ff97a2-0964-4038-9e28-f2ecdcd888ea",
+    "SaveGuid": "6eea154b-9fe8-48a1-b432-125625ba8f56",
+    "Position": {
+      "X": 44.68303,
+      "Y": 5.335252,
+      "Z": 27.55729
+    },
+    "Rotation": {
+      "X": 0.5025669,
+      "Y": 0.5297872,
+      "Z": 0.4979607,
+      "W": 0.467747
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20",
     "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
     "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
   },
@@ -8088,6 +8088,156 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/normal.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 15,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "3048e44e-b24e-4c76-bcd0-2b960e19a766",
+    "SaveGuid": "353dc29a-3ed7-42b9-93c2-709bdbefc8fd",
+    "Position": {
+      "X": 38.33088,
+      "Y": 1.755766,
+      "Z": 77.77845
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.2737875,
+      "Z": 0,
+      "W": 0.9617902
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "9a21632c-11af-4539-b728-2f11a93f7706",
+    "SaveGuid": "9bb2f3d5-0925-0bff-031a-3abdd78bd254",
+    "Position": {
+      "X": 59.52089,
+      "Y": -2.209436,
+      "Z": 98.20547
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.5001959,
+      "Z": 0,
+      "W": 0.8659123
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "e4b621b7-915f-4a9a-9414-100a303df290",
+    "SaveGuid": "e525b14e-89d5-045c-2026-05a64e8957c2",
+    "Position": {
+      "X": 108.4175,
+      "Y": -2.836822,
+      "Z": 73.63445
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.4051878,
+      "Z": 0,
+      "W": 0.9142335
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 8,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "65c62a65-7d66-4c42-8142-51af63e74753",
+    "SaveGuid": "6455ba9c-65ec-0284-3570-44031d53e201",
+    "Position": {
+      "X": 61.30717,
+      "Y": 21.39339,
+      "Z": 23.70104
+    },
+    "Rotation": {
+      "X": -0.009483836,
+      "Y": 0.3488643,
+      "Z": 0.01572826,
+      "W": 0.9369933
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "f50ea764-9cab-495b-9454-229aa6d49a00",
+    "SaveGuid": "f49d379d-8421-079d-2066-3736d8603f52",
+    "Position": {
+      "X": 17.51174,
+      "Y": -1.767819,
+      "Z": 81.1284
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.2780914,
+      "Z": 0,
+      "W": 0.9605547
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "f144cf25-a0a5-4362-bf7f-fec9dc772c61",
+    "SaveGuid": "f0d75fdc-b82f-0da4-0b4d-eb65a2c38933",
+    "Position": {
+      "X": 38.33088,
+      "Y": 1.755766,
+      "Z": 77.77845
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.2737875,
+      "Z": 0,
+      "W": 0.9617902
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
     "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
     "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
   },
@@ -8291,280 +8441,6 @@
   {
     "Id": "HandgunBullet",
     "Enabled": true,
-    "StackNum": 15,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "3048e44e-b24e-4c76-bcd0-2b960e19a766",
-    "SaveGuid": "353dc29a-3ed7-42b9-93c2-709bdbefc8fd",
-    "Position": {
-      "X": 38.33088,
-      "Y": 1.755766,
-      "Z": 77.77845
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.2737875,
-      "Z": 0,
-      "W": 0.9617902
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "9a21632c-11af-4539-b728-2f11a93f7706",
-    "SaveGuid": "9bb2f3d5-0925-0bff-031a-3abdd78bd254",
-    "Position": {
-      "X": 59.52089,
-      "Y": -2.209436,
-      "Z": 98.20547
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.5001959,
-      "Z": 0,
-      "W": 0.8659123
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "e4b621b7-915f-4a9a-9414-100a303df290",
-    "SaveGuid": "e525b14e-89d5-045c-2026-05a64e8957c2",
-    "Position": {
-      "X": 108.4175,
-      "Y": -2.836822,
-      "Z": 73.63445
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.4051878,
-      "Z": 0,
-      "W": 0.9142335
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 12,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "439c332b-5e62-43a7-89a9-7ca6b2848902",
-    "SaveGuid": "d41d0bbf-0069-44e4-977c-73b11915f802",
-    "Position": {
-      "X": 89.02875,
-      "Y": 25.73017,
-      "Z": 16.99052
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.879757,
-      "Z": 0,
-      "W": 0.4754235
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 5,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 7,
-    "Guid": "3e6a9272-9495-44b5-963e-299206d95e16",
-    "SaveGuid": "3ff9028b-8c1f-0a73-220c-3c3e786dfb44",
-    "Position": {
-      "X": -4.648896,
-      "Y": 0.004823029,
-      "Z": 5.22007
-    },
-    "Rotation": {
-      "X": 0.01030881,
-      "Y": -0.7070318,
-      "Z": 0.01030881,
-      "W": 0.7070315
-    },
-    "Container": "natives/stm/environment/scene/chapter7/c07_mainhouse1fliving_7_4.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 8,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "65c62a65-7d66-4c42-8142-51af63e74753",
-    "SaveGuid": "6455ba9c-65ec-0284-3570-44031d53e201",
-    "Position": {
-      "X": 61.30717,
-      "Y": 21.39339,
-      "Z": 23.70104
-    },
-    "Rotation": {
-      "X": -0.009483836,
-      "Y": 0.3488643,
-      "Z": 0.01572826,
-      "W": 0.9369933
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "f50ea764-9cab-495b-9454-229aa6d49a00",
-    "SaveGuid": "f49d379d-8421-079d-2066-3736d8603f52",
-    "Position": {
-      "X": 17.51174,
-      "Y": -1.767819,
-      "Z": 81.1284
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.2780914,
-      "Z": 0,
-      "W": 0.9605547
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "f144cf25-a0a5-4362-bf7f-fec9dc772c61",
-    "SaveGuid": "f0d75fdc-b82f-0da4-0b4d-eb65a2c38933",
-    "Position": {
-      "X": 38.33088,
-      "Y": 1.755766,
-      "Z": 77.77845
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.2737875,
-      "Z": 0,
-      "W": 0.9617902
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 5,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "3c32df73-0938-4ebe-9e45-e850b3d78e1c",
-    "SaveGuid": "3da14f8a-11b2-0078-2a77-fdfccd632b4e",
-    "Position": {
-      "X": 8.351192,
-      "Y": 0.001127362,
-      "Z": -1.126025
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.4320285,
-      "Z": 0,
-      "W": 0.9018599
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "c26d9ebb-16e9-49f4-9e94-039e7d354485",
-    "SaveGuid": "c3fe0e42-0e63-0732-2aa6-16320381e1d7",
-    "Position": {
-      "X": 10.09474,
-      "Y": 7.976724,
-      "Z": 2.297531
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
-    "StackNum": 10,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "1115a66b-5a42-45ce-be2a-ffa581e40b2c",
-    "SaveGuid": "10863692-42c8-0b08-0a18-ea09ff50ae7e",
-    "Position": {
-      "X": 25.91805,
-      "Y": 4.589536,
-      "Z": 10.90693
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
-    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
-  },
-  {
-    "Id": "HandgunBullet",
-    "Enabled": true,
     "StackNum": 20,
     "EasyNum": -1,
     "HardNum": -1,
@@ -8740,6 +8616,130 @@
   {
     "Id": "HandgunBullet",
     "Enabled": true,
+    "StackNum": 12,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "439c332b-5e62-43a7-89a9-7ca6b2848902",
+    "SaveGuid": "d41d0bbf-0069-44e4-977c-73b11915f802",
+    "Position": {
+      "X": 89.02875,
+      "Y": 25.73017,
+      "Z": 16.99052
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.879757,
+      "Z": 0,
+      "W": 0.4754235
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 5,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 7,
+    "Guid": "3e6a9272-9495-44b5-963e-299206d95e16",
+    "SaveGuid": "3ff9028b-8c1f-0a73-220c-3c3e786dfb44",
+    "Position": {
+      "X": -4.648896,
+      "Y": 0.004823029,
+      "Z": 5.22007
+    },
+    "Rotation": {
+      "X": 0.01030881,
+      "Y": -0.7070318,
+      "Z": 0.01030881,
+      "W": 0.7070315
+    },
+    "Container": "natives/stm/environment/scene/chapter7/c07_mainhouse1fliving_7_4.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 5,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "3c32df73-0938-4ebe-9e45-e850b3d78e1c",
+    "SaveGuid": "3da14f8a-11b2-0078-2a77-fdfccd632b4e",
+    "Position": {
+      "X": 8.351192,
+      "Y": 0.001127362,
+      "Z": -1.126025
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.4320285,
+      "Z": 0,
+      "W": 0.9018599
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "c26d9ebb-16e9-49f4-9e94-039e7d354485",
+    "SaveGuid": "c3fe0e42-0e63-0732-2aa6-16320381e1d7",
+    "Position": {
+      "X": 10.09474,
+      "Y": 7.976724,
+      "Z": 2.297531
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
+    "StackNum": 10,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "1115a66b-5a42-45ce-be2a-ffa581e40b2c",
+    "SaveGuid": "10863692-42c8-0b08-0a18-ea09ff50ae7e",
+    "Position": {
+      "X": 25.91805,
+      "Y": 4.589536,
+      "Z": 10.90693
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Mesh": "Weapon/wp1011_HandgunBullet/wp1011_HandgunBullet.mesh",
+    "Material": "Weapon/wp1011_HandgunBullet/wp1011.mdf2"
+  },
+  {
+    "Id": "HandgunBullet",
+    "Enabled": true,
     "StackNum": 20,
     "EasyNum": -1,
     "HardNum": -1,
@@ -8784,31 +8784,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1013_HandgunBulletStrong/wp1013_HandgunBulletStrong.mesh",
-    "Material": "Weapon/wp1013_HandgunBulletStrong/wp1013.mdf2"
-  },
-  {
-    "Id": "HandgunBulletL",
-    "Enabled": true,
-    "StackNum": 12,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "1873c448-575a-4cf7-a7c5-393335df0aa6",
-    "SaveGuid": "d228dafd-a355-4ef0-8439-4beef8f7c41b",
-    "Position": {
-      "X": -18.1504,
-      "Y": -40.01655,
-      "Z": -183.6927
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.390573,
-      "Z": 0,
-      "W": 0.920572
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
     "Mesh": "Weapon/wp1013_HandgunBulletStrong/wp1013_HandgunBulletStrong.mesh",
     "Material": "Weapon/wp1013_HandgunBulletStrong/wp1013.mdf2"
   },
@@ -8958,6 +8933,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Weapon/wp1013_HandgunBulletStrong/wp1013_HandgunBulletStrong.mesh",
+    "Material": "Weapon/wp1013_HandgunBulletStrong/wp1013.mdf2"
+  },
+  {
+    "Id": "HandgunBulletL",
+    "Enabled": true,
+    "StackNum": 12,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "1873c448-575a-4cf7-a7c5-393335df0aa6",
+    "SaveGuid": "d228dafd-a355-4ef0-8439-4beef8f7c41b",
+    "Position": {
+      "X": -18.1504,
+      "Y": -40.01655,
+      "Z": -183.6927
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.390573,
+      "Z": 0,
+      "W": 0.920572
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
     "Mesh": "Weapon/wp1013_HandgunBulletStrong/wp1013_HandgunBulletStrong.mesh",
     "Material": "Weapon/wp1013_HandgunBulletStrong/wp1013.mdf2"
   },
@@ -9192,79 +9192,6 @@
     "EasyNum": -1,
     "HardNum": -1,
     "Chapter": 3,
-    "Guid": "c55742d9-eb59-48fb-8dab-05361bc455b6",
-    "SaveGuid": "133d85f2-02d5-4e45-8291-14b493f072ee",
-    "Position": {
-      "X": -0.2641068,
-      "Y": 0.999998,
-      "Z": -0.01074409
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "f51cc27b-07ea-42e8-908b-a0c21e3ff800",
-    "SaveGuid": "00cdaa0f-5b50-00fc-235d-1b067a946322",
-    "Position": {
-      "X": 0.1131973,
-      "Y": -0.0846293,
-      "Z": -0.06372929
-    },
-    "Rotation": {
-      "X": -0.5930407,
-      "Y": 0.02366646,
-      "Z": 0.01744279,
-      "W": 0.8046358
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "6b89bc84-b9ed-488a-bae9-68a687ae27cc",
-    "SaveGuid": "a47ab608-40ae-4c3f-ad26-58ae79f5ac7a",
-    "Position": {
-      "X": 51.27953,
-      "Y": 5.072939,
-      "Z": 30.60602
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
     "Guid": "1d378167-6612-4ef4-8cbc-55c532bc0c28",
     "SaveGuid": "70d782bb-b6c0-0a27-3d65-cb187a525bb4",
     "Position": {
@@ -9313,6 +9240,54 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "c55742d9-eb59-48fb-8dab-05361bc455b6",
+    "SaveGuid": "133d85f2-02d5-4e45-8291-14b493f072ee",
+    "Position": {
+      "X": -0.2641068,
+      "Y": 0.999998,
+      "Z": -0.01074409
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "f51cc27b-07ea-42e8-908b-a0c21e3ff800",
+    "SaveGuid": "00cdaa0f-5b50-00fc-235d-1b067a946322",
+    "Position": {
+      "X": 0.1131973,
+      "Y": -0.0846293,
+      "Z": -0.06372929
+    },
+    "Rotation": {
+      "X": -0.5930407,
+      "Y": 0.02366646,
+      "Z": 0.01744279,
+      "W": 0.8046358
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Chapter": 4,
     "Guid": "30e80d80-7fb0-461c-bbf5-3563b189ca73",
     "SaveGuid": "5d080e5c-af62-02cf-0a2c-abbef9679def",
@@ -9330,6 +9305,31 @@
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/ship1f.scn.20",
     "Mesh": "Props/sm1857_InventoryExpansionItem/sm1857_InventoryExpansionItem.mesh",
     "Material": "Props/sm1857_InventoryExpansionItem/sm1857_InventoryExpansionItem.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "6b89bc84-b9ed-488a-bae9-68a687ae27cc",
+    "SaveGuid": "a47ab608-40ae-4c3f-ad26-58ae79f5ac7a",
+    "Position": {
+      "X": 51.27953,
+      "Y": 5.072939,
+      "Z": 30.60602
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
   },
   {
     "Id": "Herb",
@@ -9612,129 +9612,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "c462a268-af3a-42ea-9370-75c7d423aa47",
-    "SaveGuid": "594e5aff-d213-429a-9c4a-9b3620109262",
-    "Position": {
-      "X": 94.37463,
-      "Y": 8.150518,
-      "Z": 9.204348
-    },
-    "Rotation": {
-      "X": 0.4469347,
-      "Y": -0.4621592,
-      "Z": 0.5374943,
-      "W": 0.5456722
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "2f2d2867-24f4-44c9-b06b-cf31722b3a2e",
-    "SaveGuid": "1df48aa5-8354-4a29-af6b-f435afacdfcb",
-    "Position": {
-      "X": 104.8547,
-      "Y": 8.63478,
-      "Z": 1.327659
-    },
-    "Rotation": {
-      "X": 0.6300537,
-      "Y": -0.1279609,
-      "Z": 0.1341662,
-      "W": 0.754094
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "a39c553e-713f-4376-87a6-36a9725fab74",
-    "SaveGuid": "564d3d4a-2d85-0162-3470-8d6d16f43056",
-    "Position": {
-      "X": 46.06307,
-      "Y": 4.662277,
-      "Z": 24.68745
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "a84605fa-5772-4bc6-92fb-f59e5880b6b6",
-    "SaveGuid": "5d976d8e-0bc8-09d2-212d-4e5a3c2b2d94",
-    "Position": {
-      "X": 56.85764,
-      "Y": -0.574173,
-      "Z": 27.19807
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "778362f0-8883-44e6-a1b4-608770987bdd",
-    "SaveGuid": "967115b4-ec32-43ac-ba67-ce45286d1dae",
-    "Position": {
-      "X": 107.0471,
-      "Y": -2.909811,
-      "Z": 74.6744
-    },
-    "Rotation": {
-      "X": 0.4736939,
-      "Y": -0.2626323,
-      "Z": 0.4125707,
-      "W": 0.7324096
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
     "Guid": "33b6c785-c4ea-4b3e-82ed-8e9d19316b25",
@@ -9851,81 +9728,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "eade4d4f-b3cc-4e2f-b2e8-b468e12e3fa5",
-    "SaveGuid": "ac02345c-459b-4ef5-b11f-b3126463c095",
-    "Position": {
-      "X": 1.924374,
-      "Y": -0.6523533,
-      "Z": 18.94116
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "16491efa-f219-4335-88f1-be58c2f2fdae",
-    "SaveGuid": "e398768e-aea3-0121-3b27-059ca659668c",
-    "Position": {
-      "X": 22.24799,
-      "Y": 0.5262469,
-      "Z": 14.43555
-    },
-    "Rotation": {
-      "X": -0.03036464,
-      "Y": 0.008391245,
-      "Z": -0.1076505,
-      "W": 0.9936896
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "bcb030ea-31be-4d71-b27e-5f3d3d12971e",
-    "SaveGuid": "4961589e-6d04-0f65-01a8-e4f959b90c3c",
-    "Position": {
-      "X": 81.93672,
-      "Y": 25.82107,
-      "Z": 23.7873
-    },
-    "Rotation": {
-      "X": -0.210629,
-      "Y": 0.07834887,
-      "Z": 0.01683745,
-      "W": 0.9742758
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
     "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
     "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
   },
@@ -10110,6 +9912,304 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "c462a268-af3a-42ea-9370-75c7d423aa47",
+    "SaveGuid": "594e5aff-d213-429a-9c4a-9b3620109262",
+    "Position": {
+      "X": 94.37463,
+      "Y": 8.150518,
+      "Z": 9.204348
+    },
+    "Rotation": {
+      "X": 0.4469347,
+      "Y": -0.4621592,
+      "Z": 0.5374943,
+      "W": 0.5456722
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "2f2d2867-24f4-44c9-b06b-cf31722b3a2e",
+    "SaveGuid": "1df48aa5-8354-4a29-af6b-f435afacdfcb",
+    "Position": {
+      "X": 104.8547,
+      "Y": 8.63478,
+      "Z": 1.327659
+    },
+    "Rotation": {
+      "X": 0.6300537,
+      "Y": -0.1279609,
+      "Z": 0.1341662,
+      "W": 0.754094
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "a39c553e-713f-4376-87a6-36a9725fab74",
+    "SaveGuid": "564d3d4a-2d85-0162-3470-8d6d16f43056",
+    "Position": {
+      "X": 46.06307,
+      "Y": 4.662277,
+      "Z": 24.68745
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "a84605fa-5772-4bc6-92fb-f59e5880b6b6",
+    "SaveGuid": "5d976d8e-0bc8-09d2-212d-4e5a3c2b2d94",
+    "Position": {
+      "X": 56.85764,
+      "Y": -0.574173,
+      "Z": 27.19807
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "778362f0-8883-44e6-a1b4-608770987bdd",
+    "SaveGuid": "967115b4-ec32-43ac-ba67-ce45286d1dae",
+    "Position": {
+      "X": 107.0471,
+      "Y": -2.909811,
+      "Z": 74.6744
+    },
+    "Rotation": {
+      "X": 0.4736939,
+      "Y": -0.2626323,
+      "Z": 0.4125707,
+      "W": 0.7324096
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "9085dc15-30a1-4a50-abb2-257a5e93df12",
+    "SaveGuid": "6554b461-6c1b-0844-1864-9ebe3a384430",
+    "Position": {
+      "X": -18.86356,
+      "Y": -40.83078,
+      "Z": -170.44
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "7e36291a-3b98-4678-a75a-cadbfaa30e66",
+    "SaveGuid": "8be7416e-6722-046c-148c-711f9e089544",
+    "Position": {
+      "X": -23.28651,
+      "Y": 0.4020418,
+      "Z": -7.760836
+    },
+    "Rotation": {
+      "X": 0.02326765,
+      "Y": 0.05401938,
+      "Z": -0.06904067,
+      "W": 0.9958785
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "a7d0ed81-5db9-4ba6-944a-8c3f8c283eae",
+    "SaveGuid": "520185f5-0103-09b2-279c-37fbe883a58c",
+    "Position": {
+      "X": -1.971614,
+      "Y": -6.576904,
+      "Z": -3.686119
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "465c8c4e-d712-4a0d-8e73-22ae4813e505",
+    "SaveGuid": "b38de43a-8ba8-0819-3da5-996a2cb87e27",
+    "Position": {
+      "X": 57.57818,
+      "Y": 30.21935,
+      "Z": 23.31315
+    },
+    "Rotation": {
+      "X": -0.6783315,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.734756
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "bcb030ea-31be-4d71-b27e-5f3d3d12971e",
+    "SaveGuid": "4961589e-6d04-0f65-01a8-e4f959b90c3c",
+    "Position": {
+      "X": 81.93672,
+      "Y": 25.82107,
+      "Z": 23.7873
+    },
+    "Rotation": {
+      "X": -0.210629,
+      "Y": 0.07834887,
+      "Z": 0.01683745,
+      "W": 0.9742758
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "eade4d4f-b3cc-4e2f-b2e8-b468e12e3fa5",
+    "SaveGuid": "ac02345c-459b-4ef5-b11f-b3126463c095",
+    "Position": {
+      "X": 1.924374,
+      "Y": -0.6523533,
+      "Z": 18.94116
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "16491efa-f219-4335-88f1-be58c2f2fdae",
+    "SaveGuid": "e398768e-aea3-0121-3b27-059ca659668c",
+    "Position": {
+      "X": 22.24799,
+      "Y": 0.5262469,
+      "Z": 14.43555
+    },
+    "Rotation": {
+      "X": -0.03036464,
+      "Y": 0.008391245,
+      "Z": -0.1076505,
+      "W": 0.9936896
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "17dcbd91-f8d6-4054-91bc-b6372b40f23f",
@@ -10236,106 +10336,6 @@
     "EasyNum": -1,
     "HardNum": -1,
     "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "9085dc15-30a1-4a50-abb2-257a5e93df12",
-    "SaveGuid": "6554b461-6c1b-0844-1864-9ebe3a384430",
-    "Position": {
-      "X": -18.86356,
-      "Y": -40.83078,
-      "Z": -170.44
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "7e36291a-3b98-4678-a75a-cadbfaa30e66",
-    "SaveGuid": "8be7416e-6722-046c-148c-711f9e089544",
-    "Position": {
-      "X": -23.28651,
-      "Y": 0.4020418,
-      "Z": -7.760836
-    },
-    "Rotation": {
-      "X": 0.02326765,
-      "Y": 0.05401938,
-      "Z": -0.06904067,
-      "W": 0.9958785
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "a7d0ed81-5db9-4ba6-944a-8c3f8c283eae",
-    "SaveGuid": "520185f5-0103-09b2-279c-37fbe883a58c",
-    "Position": {
-      "X": -1.971614,
-      "Y": -6.576904,
-      "Z": -3.686119
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "465c8c4e-d712-4a0d-8e73-22ae4813e505",
-    "SaveGuid": "b38de43a-8ba8-0819-3da5-996a2cb87e27",
-    "Position": {
-      "X": 57.57818,
-      "Y": 30.21935,
-      "Z": 23.31315
-    },
-    "Rotation": {
-      "X": -0.6783315,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.734756
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "87366ea1-db58-457f-92ac-e4d343bc8a5c",
     "SaveGuid": "72e706d5-87e2-076b-217a-5f172717117e",
@@ -10409,31 +10409,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "b5a22513-bf0b-4f1b-88bc-dce5340447b8",
-    "SaveGuid": "40734d67-e3b1-0d0f-3b6a-672150afdc9a",
-    "Position": {
-      "X": -9.461762,
-      "Y": 1.1973,
-      "Z": 2.925538
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Chapter": -1,
     "Guid": "1d9841af-505f-4a83-bf89-c1ab0aafd689",
     "SaveGuid": "25276715-4149-4f40-814b-57863e49d0a8",
@@ -10473,6 +10448,81 @@
       "W": 0.8086588
     },
     "Container": "natives/stm/leveldesign/itemset/ff050/2f/2f.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "b5a22513-bf0b-4f1b-88bc-dce5340447b8",
+    "SaveGuid": "40734d67-e3b1-0d0f-3b6a-672150afdc9a",
+    "Position": {
+      "X": -9.461762,
+      "Y": 1.1973,
+      "Z": 2.925538
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "7d0c002e-3828-4d5c-ad46-2fae31979518",
+    "SaveGuid": "5bc1e5d5-d8da-4d1f-b74a-d21f1e40d052",
+    "Position": {
+      "X": -61.09654,
+      "Y": -40.01819,
+      "Z": -158.7554
+    },
+    "Rotation": {
+      "X": 0.1396371,
+      "Y": 0.8631876,
+      "Z": 0.1280941,
+      "W": -0.467975
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20",
+    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
+    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
+  },
+  {
+    "Id": "Herb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "c0d3f40a-e586-01e8-3871-6b9014c92457",
+    "SaveGuid": "35029c7e-b93c-43fc-8ba7-d0547062bf75",
+    "Position": {
+      "X": -0.1223456,
+      "Y": 0.02623884,
+      "Z": 0.1438017
+    },
+    "Rotation": {
+      "X": -0.6416169,
+      "Y": -0.5209069,
+      "Z": 0.02152311,
+      "W": 0.5626016
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
     "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
   },
@@ -10548,56 +10598,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "7d0c002e-3828-4d5c-ad46-2fae31979518",
-    "SaveGuid": "5bc1e5d5-d8da-4d1f-b74a-d21f1e40d052",
-    "Position": {
-      "X": -61.09654,
-      "Y": -40.01819,
-      "Z": -158.7554
-    },
-    "Rotation": {
-      "X": 0.1396371,
-      "Y": 0.8631876,
-      "Z": 0.1280941,
-      "W": -0.467975
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20",
-    "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
-    "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
-  },
-  {
-    "Id": "Herb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "c0d3f40a-e586-01e8-3871-6b9014c92457",
-    "SaveGuid": "35029c7e-b93c-43fc-8ba7-d0547062bf75",
-    "Position": {
-      "X": -0.1223456,
-      "Y": 0.02623884,
-      "Z": 0.1438017
-    },
-    "Rotation": {
-      "X": -0.6416169,
-      "Y": -0.5209069,
-      "Z": 0.02152311,
-      "W": 0.5626016
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Props/sm1800_Herb00A/sm1800_Herb00A.mesh",
     "Material": "Props/sm1800_Herb00A/sm1800_Herb00A.mdf2"
   },
@@ -11089,6 +11089,56 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "e175c1de-36ef-4706-bbb0-f6eee971fd50",
+    "SaveGuid": "15711ca8-ba6c-4e0e-ba52-336903b0c7fe",
+    "Position": {
+      "X": 54.57611,
+      "Y": 22.71858,
+      "Z": 29.33122
+    },
+    "Rotation": {
+      "X": 0.5290039,
+      "Y": 0.6424207,
+      "Z": 0.391933,
+      "W": -0.3922271
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "26398e8e-1517-45a3-8c2f-6d3d9df957d1",
+    "SaveGuid": "aea336f0-53b8-4035-b9cd-ca180e0eef38",
+    "Position": {
+      "X": 54.77925,
+      "Y": 21.46171,
+      "Z": 29.37044
+    },
+    "Rotation": {
+      "X": 0.03044161,
+      "Y": 0.8658767,
+      "Z": 0.05308896,
+      "W": -0.4965003
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Chapter": -1,
     "Guid": "80ef2928-5e60-4666-a5f5-5fda12fefba7",
     "SaveGuid": "164e4061-40db-4660-bd87-9ad4a26df1ce",
@@ -11287,6 +11337,81 @@
     "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 4,
+    "Guid": "cf43d4bc-845e-4ac1-96f8-fa39cc4952e0",
+    "SaveGuid": "93e5aaf5-89b4-49ac-906e-a1c59525a002",
+    "Position": {
+      "X": 61.03446,
+      "Y": 29.49514,
+      "Z": 28.25865
+    },
+    "Rotation": {
+      "X": 0.6396107,
+      "Y": 0.3110572,
+      "Z": -0.3074337,
+      "W": 0.6321598
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "635391ce-ba1e-4148-a92c-7e1abbd995fa",
+    "SaveGuid": "668afac7-1674-4d0c-8586-41741c808839",
+    "Position": {
+      "X": 62.04004,
+      "Y": 29.43565,
+      "Z": 27.67782
+    },
+    "Rotation": {
+      "X": -0.05309789,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.9985893
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "fe606062-0e31-4edf-ad33-62d27dc78357",
+    "SaveGuid": "6865a51f-c14e-48ba-b22d-376e878a5569",
+    "Position": {
+      "X": 58.10136,
+      "Y": 29.54521,
+      "Z": 25.43779
+    },
+    "Rotation": {
+      "X": -0.6760125,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.7368902
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
     "Guid": "01f1c23d-5ff9-4306-9a52-e82db526a676",
     "SaveGuid": "fe013648-2347-4627-bb4c-70e0f5411e87",
     "Position": {
@@ -11326,56 +11451,6 @@
       "W": 0.5567346
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "e175c1de-36ef-4706-bbb0-f6eee971fd50",
-    "SaveGuid": "15711ca8-ba6c-4e0e-ba52-336903b0c7fe",
-    "Position": {
-      "X": 54.57611,
-      "Y": 22.71858,
-      "Z": 29.33122
-    },
-    "Rotation": {
-      "X": 0.5290039,
-      "Y": 0.6424207,
-      "Z": 0.391933,
-      "W": -0.3922271
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "26398e8e-1517-45a3-8c2f-6d3d9df957d1",
-    "SaveGuid": "aea336f0-53b8-4035-b9cd-ca180e0eef38",
-    "Position": {
-      "X": 54.77925,
-      "Y": 21.46171,
-      "Z": 29.37044
-    },
-    "Rotation": {
-      "X": 0.03044161,
-      "Y": 0.8658767,
-      "Z": 0.05308896,
-      "W": -0.4965003
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
     "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
     "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
   },
@@ -11485,81 +11560,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "cf43d4bc-845e-4ac1-96f8-fa39cc4952e0",
-    "SaveGuid": "93e5aaf5-89b4-49ac-906e-a1c59525a002",
-    "Position": {
-      "X": 61.03446,
-      "Y": 29.49514,
-      "Z": 28.25865
-    },
-    "Rotation": {
-      "X": 0.6396107,
-      "Y": 0.3110572,
-      "Z": -0.3074337,
-      "W": 0.6321598
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "635391ce-ba1e-4148-a92c-7e1abbd995fa",
-    "SaveGuid": "668afac7-1674-4d0c-8586-41741c808839",
-    "Position": {
-      "X": 62.04004,
-      "Y": 29.43565,
-      "Z": 27.67782
-    },
-    "Rotation": {
-      "X": -0.05309789,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.9985893
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "fe606062-0e31-4edf-ad33-62d27dc78357",
-    "SaveGuid": "6865a51f-c14e-48ba-b22d-376e878a5569",
-    "Position": {
-      "X": 58.10136,
-      "Y": 29.54521,
-      "Z": 25.43779
-    },
-    "Rotation": {
-      "X": -0.6760125,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.7368902
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Chapter": 4,
     "Guid": "296d68f6-93de-4d14-939b-4b49dbefaae2",
     "SaveGuid": "143585fc-1f54-08d4-2bb5-8c5e82aab6da",
@@ -11599,6 +11599,31 @@
       "W": 1
     },
     "Container": "natives/stm/environment/scene/chapter4/c04_ship2fcabinapast.scn.20",
+    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
+    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
+  },
+  {
+    "Id": "LiquidBomb",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "861a4400-50ca-4041-ada4-3e08e833170a",
+    "SaveGuid": "9f31cec1-367c-4dca-98b8-df61c4805900",
+    "Position": {
+      "X": -67.44537,
+      "Y": -33.19414,
+      "Z": -160.1286
+    },
+    "Rotation": {
+      "X": -0.1242535,
+      "Y": -0.5521916,
+      "Z": 0.1684889,
+      "W": 0.8070049
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20",
     "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
     "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
   },
@@ -11749,31 +11774,6 @@
       "W": 0.8990041
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship4f/normal.scn.20",
-    "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
-    "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
-  },
-  {
-    "Id": "LiquidBomb",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "861a4400-50ca-4041-ada4-3e08e833170a",
-    "SaveGuid": "9f31cec1-367c-4dca-98b8-df61c4805900",
-    "Position": {
-      "X": -67.44537,
-      "Y": -33.19414,
-      "Z": -160.1286
-    },
-    "Rotation": {
-      "X": -0.1242535,
-      "Y": -0.5521916,
-      "Z": 0.1684889,
-      "W": 0.8070049
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20",
     "Mesh": "Weapon/wp1270_Liquidbomb/wp1270_Liquidbomb.mesh",
     "Material": "Weapon/wp1270_Liquidbomb/wp1270.mdf2"
   },
@@ -11976,6 +11976,56 @@
   {
     "Id": "MachineGunBullet",
     "Enabled": true,
+    "StackNum": 40,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "d0edaf40-8bd7-4d59-a186-4f557793a4a8",
+    "SaveGuid": "008b37f5-2da3-032e-27fd-03a83ce3e16d",
+    "Position": {
+      "X": 74.37251,
+      "Y": 23.23484,
+      "Z": 25.55254
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
+    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Enabled": true,
+    "StackNum": 50,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "5f1dcf86-4716-4f16-8405-1492ef1507b0",
+    "SaveGuid": "09eb2046-2fc8-4696-b0dc-6ad6b9fa0484",
+    "Position": {
+      "X": 63.13448,
+      "Y": 21.89192,
+      "Z": 29.42779
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.4386021,
+      "Z": 0,
+      "W": 0.8986814
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
+    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Enabled": true,
     "StackNum": 60,
     "EasyNum": -1,
     "HardNum": -1,
@@ -12147,6 +12197,56 @@
   {
     "Id": "MachineGunBullet",
     "Enabled": true,
+    "StackNum": 60,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "07b6c217-d875-4f8a-89eb-38a933214c13",
+    "SaveGuid": "d7d05aa2-7e01-01fd-0f90-7454785109d6",
+    "Position": {
+      "X": 51.52719,
+      "Y": 1.178084,
+      "Z": -76.14874
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
+    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Enabled": true,
+    "StackNum": 40,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "7d20bf5a-f0c7-46a4-a9cb-3708865dd8ff",
+    "SaveGuid": "e1c3f25e-a7b3-4ccd-95f5-4851f50ddd85",
+    "Position": {
+      "X": 62.78243,
+      "Y": 30.2,
+      "Z": 19.08536
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.4386021,
+      "Z": 0,
+      "W": 0.8986814
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
+    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Enabled": true,
     "StackNum": 40,
     "EasyNum": -1,
     "HardNum": -1,
@@ -12166,56 +12266,6 @@
       "W": 0.8986814
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
-    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
-    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
-  },
-  {
-    "Id": "MachineGunBullet",
-    "Enabled": true,
-    "StackNum": 40,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "d0edaf40-8bd7-4d59-a186-4f557793a4a8",
-    "SaveGuid": "008b37f5-2da3-032e-27fd-03a83ce3e16d",
-    "Position": {
-      "X": 74.37251,
-      "Y": 23.23484,
-      "Z": 25.55254
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
-    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
-    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
-  },
-  {
-    "Id": "MachineGunBullet",
-    "Enabled": true,
-    "StackNum": 50,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "5f1dcf86-4716-4f16-8405-1492ef1507b0",
-    "SaveGuid": "09eb2046-2fc8-4696-b0dc-6ad6b9fa0484",
-    "Position": {
-      "X": 63.13448,
-      "Y": 21.89192,
-      "Z": 29.42779
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.4386021,
-      "Z": 0,
-      "W": 0.8986814
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
     "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
     "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
   },
@@ -12266,56 +12316,6 @@
       "W": 0.9285404
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
-    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
-    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
-  },
-  {
-    "Id": "MachineGunBullet",
-    "Enabled": true,
-    "StackNum": 60,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "07b6c217-d875-4f8a-89eb-38a933214c13",
-    "SaveGuid": "d7d05aa2-7e01-01fd-0f90-7454785109d6",
-    "Position": {
-      "X": 51.52719,
-      "Y": 1.178084,
-      "Z": -76.14874
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
-    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
-    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
-  },
-  {
-    "Id": "MachineGunBullet",
-    "Enabled": true,
-    "StackNum": 40,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "7d20bf5a-f0c7-46a4-a9cb-3708865dd8ff",
-    "SaveGuid": "e1c3f25e-a7b3-4ccd-95f5-4851f50ddd85",
-    "Position": {
-      "X": 62.78243,
-      "Y": 30.2,
-      "Z": 19.08536
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.4386021,
-      "Z": 0,
-      "W": 0.8986814
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
     "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
     "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
   },
@@ -12388,6 +12388,31 @@
       "W": -0.2739632
     },
     "Container": "natives/stm/leveldesign/itemset/ff050/2f/2f.scn.20",
+    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
+    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
+  },
+  {
+    "Id": "MachineGunBullet",
+    "Enabled": true,
+    "StackNum": 120,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 4,
+    "Guid": "3f08322b-b40e-471c-a9ca-30054dd78280",
+    "SaveGuid": "ef6eaa9e-127a-096b-2fb1-7cf806a7c745",
+    "Position": {
+      "X": 53.48123,
+      "Y": 0.847151,
+      "Z": -43.05384
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.9945219,
+      "Z": 0,
+      "W": -0.1045284
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
     "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
   },
@@ -12488,31 +12513,6 @@
       "W": 0.9377645
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship4f/hard.scn.20",
-    "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
-    "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
-  },
-  {
-    "Id": "MachineGunBullet",
-    "Enabled": true,
-    "StackNum": 120,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 4,
-    "Guid": "3f08322b-b40e-471c-a9ca-30054dd78280",
-    "SaveGuid": "ef6eaa9e-127a-096b-2fb1-7cf806a7c745",
-    "Position": {
-      "X": 53.48123,
-      "Y": 0.847151,
-      "Z": -43.05384
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.9945219,
-      "Z": 0,
-      "W": -0.1045284
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
     "Mesh": "Weapon/wp1161_MachineGunBullet/wp1161_MachineGunBullet.mesh",
     "Material": "Weapon/wp1161_MachineGunBullet/wp1161.mdf2"
   },
@@ -12641,31 +12641,6 @@
   {
     "Id": "MagnumBullet",
     "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "0b378de0-43e3-4817-b82b-69462705dabc",
-    "SaveGuid": "c0b5b7c5-9c00-0d58-043c-375343e56848",
-    "Position": {
-      "X": 79.30845,
-      "Y": -2.868562,
-      "Z": 83.8255
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
-    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
-  },
-  {
-    "Id": "MagnumBullet",
-    "Enabled": true,
     "StackNum": 2,
     "EasyNum": -1,
     "HardNum": -1,
@@ -12766,6 +12741,56 @@
   {
     "Id": "MagnumBullet",
     "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "0b378de0-43e3-4817-b82b-69462705dabc",
+    "SaveGuid": "c0b5b7c5-9c00-0d58-043c-375343e56848",
+    "Position": {
+      "X": 79.30845,
+      "Y": -2.868562,
+      "Z": 83.8255
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
+    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
+    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
+  },
+  {
+    "Id": "MagnumBullet",
+    "Enabled": true,
+    "StackNum": 8,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "00917726-0263-486b-ae62-99b2a4ace806",
+    "SaveGuid": "e8e0d493-ded0-4fc1-bb50-31e0b99637f9",
+    "Position": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.9999999
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
+    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
+  },
+  {
+    "Id": "MagnumBullet",
+    "Enabled": true,
     "StackNum": 2,
     "EasyNum": -1,
     "HardNum": -1,
@@ -12816,31 +12841,6 @@
   {
     "Id": "MagnumBullet",
     "Enabled": true,
-    "StackNum": 8,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "00917726-0263-486b-ae62-99b2a4ace806",
-    "SaveGuid": "e8e0d493-ded0-4fc1-bb50-31e0b99637f9",
-    "Position": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.9999999
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
-    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
-    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
-  },
-  {
-    "Id": "MagnumBullet",
-    "Enabled": true,
     "StackNum": 2,
     "EasyNum": -1,
     "HardNum": -1,
@@ -12860,31 +12860,6 @@
       "W": 0.4252719
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/cowshed/hard.scn.20",
-    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
-    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
-  },
-  {
-    "Id": "MagnumBullet",
-    "Enabled": true,
-    "StackNum": 4,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "2d1ded3b-e1b2-4c01-bb44-afc118234b42",
-    "SaveGuid": "e69fd71e-3e51-094e-0753-f1d47cc3f9b6",
-    "Position": {
-      "X": -48.40523,
-      "Y": -36.39977,
-      "Z": -176.0009
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
     "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
     "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
   },
@@ -12935,6 +12910,31 @@
       "W": -0.06583427
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
+    "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
+    "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
+  },
+  {
+    "Id": "MagnumBullet",
+    "Enabled": true,
+    "StackNum": 4,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "2d1ded3b-e1b2-4c01-bb44-afc118234b42",
+    "SaveGuid": "e69fd71e-3e51-094e-0753-f1d47cc3f9b6",
+    "Position": {
+      "X": -48.40523,
+      "Y": -36.39977,
+      "Z": -176.0009
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
     "Mesh": "Weapon/wp1141_MagnumBullet/wp1141_MagnumBullet.mesh",
     "Material": "Weapon/wp1141_MagnumBullet/wp1141.mdf2"
   },
@@ -13435,31 +13435,6 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 4,
-    "Guid": "0f823856-8412-426e-8e94-b7c7000e53d5",
-    "SaveGuid": "d429270d-6e5a-0e67-0c75-f40e2ec73a42",
-    "Position": {
-      "X": 91.14049,
-      "Y": 25.9688,
-      "Z": 20.17898
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
-    "Mesh": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mesh",
-    "Material": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mdf2"
-  },
-  {
-    "Id": "RemedyL",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
     "Guid": "80cbda4a-4200-4763-a07c-40ba35d2b471",
     "SaveGuid": "5b60c511-a848-0b6a-229d-03731b1bdde6",
     "Position": {
@@ -13474,6 +13449,31 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "Mesh": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mesh",
+    "Material": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mdf2"
+  },
+  {
+    "Id": "RemedyL",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "0f823856-8412-426e-8e94-b7c7000e53d5",
+    "SaveGuid": "d429270d-6e5a-0e67-0c75-f40e2ec73a42",
+    "Position": {
+      "X": 91.14049,
+      "Y": 25.9688,
+      "Z": 20.17898
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
     "Mesh": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mesh",
     "Material": "Props/sm1853_AntisepticSolutionStrong/sm1853_AntisepticSolutionStrong.mdf2"
   },
@@ -13607,55 +13607,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": 1,
-    "Guid": "dacc5045-1fea-4f8c-a0ab-7f6eec0bc69e",
-    "SaveGuid": "ec427255-9d1c-4f84-b7f6-8b9d20267ca0",
-    "Position": {
-      "X": 12.40632,
-      "Y": 7.300538,
-      "Z": 12.61976
-    },
-    "Rotation": {
-      "X": 1.442698E-09,
-      "Y": 0.632522,
-      "Z": 1.178164E-09,
-      "W": 0.7745424
-    },
-    "Container": "natives/stm/environment/scene/chapter1/c01_3f.scn.20",
-    "Mesh": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mesh",
-    "Material": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mdf2"
-  },
-  {
-    "Id": "RemedyM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "759239c3-9828-4bb9-b53c-708db0398472",
-    "SaveGuid": "e6e29955-c54f-479a-b109-e76e8805744b",
-    "Position": {
-      "X": 131.7982,
-      "Y": 0.4961581,
-      "Z": 82.77419
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mesh",
-    "Material": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mdf2"
-  },
-  {
-    "Id": "RemedyM",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 3,
     "Guid": "9491c5ba-7ef3-4f22-96b4-1324f1d30c2f",
@@ -13722,6 +13673,55 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mesh",
+    "Material": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mdf2"
+  },
+  {
+    "Id": "RemedyM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": 1,
+    "Guid": "dacc5045-1fea-4f8c-a0ab-7f6eec0bc69e",
+    "SaveGuid": "ec427255-9d1c-4f84-b7f6-8b9d20267ca0",
+    "Position": {
+      "X": 12.40632,
+      "Y": 7.300538,
+      "Z": 12.61976
+    },
+    "Rotation": {
+      "X": 1.442698E-09,
+      "Y": 0.632522,
+      "Z": 1.178164E-09,
+      "W": 0.7745424
+    },
+    "Container": "natives/stm/environment/scene/chapter1/c01_3f.scn.20",
+    "Mesh": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mesh",
+    "Material": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mdf2"
+  },
+  {
+    "Id": "RemedyM",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "759239c3-9828-4bb9-b53c-708db0398472",
+    "SaveGuid": "e6e29955-c54f-479a-b109-e76e8805744b",
+    "Position": {
+      "X": 131.7982,
+      "Y": 0.4961581,
+      "Z": 82.77419
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
     "Mesh": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mesh",
     "Material": "Props/sm1852_AntisepticSolutionMedium/sm1852_AntisepticSolutionMedium.mdf2"
   },
@@ -13806,6 +13806,30 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
+    "Chapter": 3,
+    "Guid": "5e6490f0-17f6-0ba5-1fdb-5d70e2ac3b2b",
+    "SaveGuid": "994f6215-cf5e-0e83-1b6c-64de36175950",
+    "Position": {
+      "X": 0.008594513,
+      "Y": 0.01968956,
+      "Z": -0.09608459
+    },
+    "Rotation": {
+      "X": 0.06915541,
+      "Y": -0.4268292,
+      "Z": -0.02109504,
+      "W": 0.9014374
+    },
+    "Container": "natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20",
+    "Mesh": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mesh",
+    "Material": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mdf2"
+  },
+  {
+    "Id": "RepairKit",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
     "Guid": "e407097d-8b1f-4b5f-bf51-adab698170c1",
@@ -13822,30 +13846,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20",
-    "Mesh": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mesh",
-    "Material": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mdf2"
-  },
-  {
-    "Id": "RepairKit",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": 3,
-    "Guid": "5e6490f0-17f6-0ba5-1fdb-5d70e2ac3b2b",
-    "SaveGuid": "994f6215-cf5e-0e83-1b6c-64de36175950",
-    "Position": {
-      "X": 0.008594513,
-      "Y": 0.01968956,
-      "Z": -0.09608459
-    },
-    "Rotation": {
-      "X": 0.06915541,
-      "Y": -0.4268292,
-      "Z": -0.02109504,
-      "W": 0.9014374
-    },
-    "Container": "natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20",
     "Mesh": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mesh",
     "Material": "Props/sm2290_RepairKit01A/sm2290_RepairKit01A.mdf2"
   },
@@ -14130,31 +14130,6 @@
     "HardNum": -1,
     "Difficulty": "Madhouse",
     "Chapter": 3,
-    "Guid": "a833f002-0c5f-4943-bc21-6df843d16b84",
-    "SaveGuid": "1920f8ce-c23a-0cdb-114c-21277410cbca",
-    "Position": {
-      "X": 34.45343,
-      "Y": 0.4922576,
-      "Z": 29.28397
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
-    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
-    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
-  },
-  {
-    "Id": "SaveTape",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
     "Guid": "c6046089-1cba-48ef-b713-11b62e72a203",
     "SaveGuid": "77176845-d2df-0d77-1a7e-5d6919b3024d",
     "Position": {
@@ -14244,6 +14219,131 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
+    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
+  },
+  {
+    "Id": "SaveTape",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "a833f002-0c5f-4943-bc21-6df843d16b84",
+    "SaveGuid": "1920f8ce-c23a-0cdb-114c-21277410cbca",
+    "Position": {
+      "X": 34.45343,
+      "Y": 0.4922576,
+      "Z": 29.28397
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
+    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
+  },
+  {
+    "Id": "SaveTape",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 4,
+    "Guid": "aa738f64-ac8c-4680-b2a9-c4f3c8d31b05",
+    "SaveGuid": "1b6087a8-62e9-0318-1fc4-882cff12bb4b",
+    "Position": {
+      "X": -23.92049,
+      "Y": -40.28496,
+      "Z": -185.2193
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
+    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
+  },
+  {
+    "Id": "SaveTape",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "c9c4db8f-44a0-47c0-a79b-15b37c7b858f",
+    "SaveGuid": "78d7d343-8ac5-0258-0af6-596c4bba25c1",
+    "Position": {
+      "X": -13.95897,
+      "Y": -4.571788,
+      "Z": 17.7081
+    },
+    "Rotation": {
+      "X": -0.1979076,
+      "Y": 0.001810196,
+      "Z": 0.08667836,
+      "W": 0.9763792
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
+    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
+  },
+  {
+    "Id": "SaveTape",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "7a7650a0-db24-438f-b9d0-5a5d5ada34d6",
+    "SaveGuid": "cb65586c-1541-0617-14bd-16826d1b9498",
+    "Position": {
+      "X": -20.44987,
+      "Y": 0.9000971,
+      "Z": 24.16701
+    },
+    "Rotation": {
+      "X": 3.136866E-09,
+      "Y": -0.5394058,
+      "Z": 2.009443E-09,
+      "W": 0.842046
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
+    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
+  },
+  {
+    "Id": "SaveTape",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "5b765647-a6fb-4d2a-b95f-45cc6c23d21e",
+    "SaveGuid": "ea655e8b-689e-08b2-1432-09135be27250",
+    "Position": {
+      "X": -20.35605,
+      "Y": 0.9031307,
+      "Z": 24.2736
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.4847859,
+      "Z": 0,
+      "W": 0.8746328
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
     "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
     "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
   },
@@ -14419,106 +14519,6 @@
       "W": 1
     },
     "Container": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
-    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
-    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
-  },
-  {
-    "Id": "SaveTape",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 4,
-    "Guid": "aa738f64-ac8c-4680-b2a9-c4f3c8d31b05",
-    "SaveGuid": "1b6087a8-62e9-0318-1fc4-882cff12bb4b",
-    "Position": {
-      "X": -23.92049,
-      "Y": -40.28496,
-      "Z": -185.2193
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
-    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
-    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
-  },
-  {
-    "Id": "SaveTape",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "c9c4db8f-44a0-47c0-a79b-15b37c7b858f",
-    "SaveGuid": "78d7d343-8ac5-0258-0af6-596c4bba25c1",
-    "Position": {
-      "X": -13.95897,
-      "Y": -4.571788,
-      "Z": 17.7081
-    },
-    "Rotation": {
-      "X": -0.1979076,
-      "Y": 0.001810196,
-      "Z": 0.08667836,
-      "W": 0.9763792
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
-    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
-  },
-  {
-    "Id": "SaveTape",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "7a7650a0-db24-438f-b9d0-5a5d5ada34d6",
-    "SaveGuid": "cb65586c-1541-0617-14bd-16826d1b9498",
-    "Position": {
-      "X": -20.44987,
-      "Y": 0.9000971,
-      "Z": 24.16701
-    },
-    "Rotation": {
-      "X": 3.136866E-09,
-      "Y": -0.5394058,
-      "Z": 2.009443E-09,
-      "W": 0.842046
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
-    "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
-    "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
-  },
-  {
-    "Id": "SaveTape",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "5b765647-a6fb-4d2a-b95f-45cc6c23d21e",
-    "SaveGuid": "ea655e8b-689e-08b2-1432-09135be27250",
-    "Position": {
-      "X": -20.35605,
-      "Y": 0.9031307,
-      "Z": 24.2736
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.4847859,
-      "Z": 0,
-      "W": 0.8746328
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
     "Mesh": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mesh",
     "Material": "Props/sm9281_CassetteTape02A/sm9281_CassetteTape02A.mdf2"
   },
@@ -15215,6 +15215,131 @@
   {
     "Id": "ShotgunBullet",
     "Enabled": true,
+    "StackNum": 6,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "5b7b6785-62b5-4d33-8af0-d99b645b52b5",
+    "SaveGuid": "00a01fa7-0f16-092e-3dd8-a7e8f5fe7cc1",
+    "Position": {
+      "X": 130.1903,
+      "Y": -3.805275,
+      "Z": 84.16066
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 1,
+      "Z": 0,
+      "W": -4.371139E-08
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 6,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "661787f3-85be-4873-b10b-2d11ac9aa8e9",
+    "SaveGuid": "3dccffd1-e81d-0c6e-0623-53623d3f869d",
+    "Position": {
+      "X": 131.8111,
+      "Y": 0.4957657,
+      "Z": 82.31233
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.7071068,
+      "Z": 0,
+      "W": 0.7071068
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 12,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "4cba0daf-0e19-4309-a78b-b542bea3c9f6",
+    "SaveGuid": "1761758d-63ba-0714-10a3-cb312f06e782",
+    "Position": {
+      "X": 106.8723,
+      "Y": -2.985516,
+      "Z": 74.70346
+    },
+    "Rotation": {
+      "X": -0.3398098,
+      "Y": 0.1945822,
+      "Z": 0.07208078,
+      "W": 0.9173175
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 4,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "b5787fd0-9b37-4e3d-adea-1a8fa82b200d",
+    "SaveGuid": "a94389d6-a586-4ee0-af37-b8d830f0f716",
+    "Position": {
+      "X": -35.87647,
+      "Y": -2.027535,
+      "Z": 82.60102
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 8,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "d704d4e0-f15c-488f-9ddc-b4d85d5ec05b",
+    "SaveGuid": "8cdfacc2-9cff-0c92-2af4-caabccfbee2f",
+    "Position": {
+      "X": 34.00303,
+      "Y": -1.865801,
+      "Z": 78.24824
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
     "StackNum": 4,
     "EasyNum": -1,
     "HardNum": -1,
@@ -15359,206 +15484,6 @@
       "W": 0.7283188
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 6,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "5b7b6785-62b5-4d33-8af0-d99b645b52b5",
-    "SaveGuid": "00a01fa7-0f16-092e-3dd8-a7e8f5fe7cc1",
-    "Position": {
-      "X": 130.1903,
-      "Y": -3.805275,
-      "Z": 84.16066
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 1,
-      "Z": 0,
-      "W": -4.371139E-08
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 6,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "661787f3-85be-4873-b10b-2d11ac9aa8e9",
-    "SaveGuid": "3dccffd1-e81d-0c6e-0623-53623d3f869d",
-    "Position": {
-      "X": 131.8111,
-      "Y": 0.4957657,
-      "Z": 82.31233
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.7071068,
-      "Z": 0,
-      "W": 0.7071068
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 12,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "4cba0daf-0e19-4309-a78b-b542bea3c9f6",
-    "SaveGuid": "1761758d-63ba-0714-10a3-cb312f06e782",
-    "Position": {
-      "X": 106.8723,
-      "Y": -2.985516,
-      "Z": 74.70346
-    },
-    "Rotation": {
-      "X": -0.3398098,
-      "Y": 0.1945822,
-      "Z": 0.07208078,
-      "W": 0.9173175
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 4,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "85b1035e-52ae-4c4a-9eb1-4a422a76dee3",
-    "SaveGuid": "de6a7b7c-3f0d-0857-2999-3431bbd3f097",
-    "Position": {
-      "X": 17.68888,
-      "Y": -2.11626,
-      "Z": 39.54804
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 4,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Normal",
-    "Chapter": 3,
-    "Guid": "b5787fd0-9b37-4e3d-adea-1a8fa82b200d",
-    "SaveGuid": "a94389d6-a586-4ee0-af37-b8d830f0f716",
-    "Position": {
-      "X": -35.87647,
-      "Y": -2.027535,
-      "Z": 82.60102
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 8,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "d704d4e0-f15c-488f-9ddc-b4d85d5ec05b",
-    "SaveGuid": "8cdfacc2-9cff-0c92-2af4-caabccfbee2f",
-    "Position": {
-      "X": 34.00303,
-      "Y": -1.865801,
-      "Z": 78.24824
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 4,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "ef07ecb3-5b97-459a-986a-533c20ecd2ee",
-    "SaveGuid": "b4dc9491-3634-0187-2f42-2d4fb149fc9a",
-    "Position": {
-      "X": 14.69616,
-      "Y": 3.988219,
-      "Z": -0.5562883
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0.8010057,
-      "Z": 0,
-      "W": 0.5986567
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
-    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
-    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
-  },
-  {
-    "Id": "ShotgunBullet",
-    "Enabled": true,
-    "StackNum": 2,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Difficulty": "Madhouse",
-    "Chapter": 3,
-    "Guid": "4e290141-9f73-4029-8a6a-a6ff9ecc416a",
-    "SaveGuid": "15f27963-f2d0-0434-3d42-d88c0f696f1e",
-    "Position": {
-      "X": 11.18107,
-      "Y": 4.871116,
-      "Z": 6.161341
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.3354697,
-      "Z": 0,
-      "W": 0.942051
-    },
-    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
     "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
     "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
   },
@@ -15758,6 +15683,81 @@
       "W": 0.6640635
     },
     "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 4,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Normal",
+    "Chapter": 3,
+    "Guid": "85b1035e-52ae-4c4a-9eb1-4a422a76dee3",
+    "SaveGuid": "de6a7b7c-3f0d-0857-2999-3431bbd3f097",
+    "Position": {
+      "X": 17.68888,
+      "Y": -2.11626,
+      "Z": 39.54804
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 4,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "ef07ecb3-5b97-459a-986a-533c20ecd2ee",
+    "SaveGuid": "b4dc9491-3634-0187-2f42-2d4fb149fc9a",
+    "Position": {
+      "X": 14.69616,
+      "Y": 3.988219,
+      "Z": -0.5562883
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0.8010057,
+      "Z": 0,
+      "W": 0.5986567
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
+    "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
+  },
+  {
+    "Id": "ShotgunBullet",
+    "Enabled": true,
+    "StackNum": 2,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Difficulty": "Madhouse",
+    "Chapter": 3,
+    "Guid": "4e290141-9f73-4029-8a6a-a6ff9ecc416a",
+    "SaveGuid": "15f27963-f2d0-0434-3d42-d88c0f696f1e",
+    "Position": {
+      "X": 11.18107,
+      "Y": 4.871116,
+      "Z": 6.161341
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.3354697,
+      "Z": 0,
+      "W": 0.942051
+    },
+    "Container": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
     "Mesh": "Weapon/wp1031_ShotgunBullet/wp1031_ShotgunBullet.mesh",
     "Material": "Weapon/wp1031_ShotgunBullet/wp1031.mdf2"
   },
@@ -15986,102 +15986,6 @@
     "StackNum": 1,
     "EasyNum": -1,
     "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "dfa15efd-e270-4778-b0ed-192963e99a1e",
-    "SaveGuid": "920d8119-4bbe-466d-924f-92834b405ea0",
-    "Position": {
-      "X": 108.8813,
-      "Y": 8.585731,
-      "Z": 4.394204
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.788945,
-      "Z": 0,
-      "W": 0.6144639
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
-    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
-  },
-  {
-    "Id": "SpareKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "9c5de4b4-5e99-4bbc-bf21-bd904789401a",
-    "SaveGuid": "fc0f66e0-6783-46a0-94d4-a2440777f24d",
-    "Position": {
-      "X": 69.26034,
-      "Y": 8.620021,
-      "Z": 9.861669
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": -0.788945,
-      "Z": 0,
-      "W": 0.6144639
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
-    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
-  },
-  {
-    "Id": "SpareKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "802213a2-7a22-4d87-9b0f-af57c1bd4a71",
-    "SaveGuid": "ff494abb-eb76-4634-952b-56387377f706",
-    "Position": {
-      "X": 69.14693,
-      "Y": 8.675664,
-      "Z": 9.839048
-    },
-    "Rotation": {
-      "X": -0.6812179,
-      "Y": 0,
-      "Z": 0,
-      "W": 0.7320807
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
-    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
-  },
-  {
-    "Id": "SpareKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
-    "Chapter": -1,
-    "Guid": "2c5c06d7-bcea-4df7-9a72-62657522dad6",
-    "SaveGuid": "385b6515-2ea8-09f8-342b-c6cbf9a5833d",
-    "Position": {
-      "X": 68.96826,
-      "Y": 8.624969,
-      "Z": 9.711059
-    },
-    "Rotation": {
-      "X": 0,
-      "Y": 0,
-      "Z": 0,
-      "W": 1
-    },
-    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
-    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
-    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
-  },
-  {
-    "Id": "SpareKey",
-    "Enabled": true,
-    "StackNum": 1,
-    "EasyNum": -1,
-    "HardNum": -1,
     "Difficulty": "Normal",
     "Chapter": 4,
     "Guid": "bf548e1d-5b96-4129-bd95-f2a9f6413c83",
@@ -16170,6 +16074,102 @@
       "W": 0.9999995
     },
     "Container": "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20",
+    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
+    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
+  },
+  {
+    "Id": "SpareKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "dfa15efd-e270-4778-b0ed-192963e99a1e",
+    "SaveGuid": "920d8119-4bbe-466d-924f-92834b405ea0",
+    "Position": {
+      "X": 108.8813,
+      "Y": 8.585731,
+      "Z": 4.394204
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.788945,
+      "Z": 0,
+      "W": 0.6144639
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
+    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
+  },
+  {
+    "Id": "SpareKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "9c5de4b4-5e99-4bbc-bf21-bd904789401a",
+    "SaveGuid": "fc0f66e0-6783-46a0-94d4-a2440777f24d",
+    "Position": {
+      "X": 69.26034,
+      "Y": 8.620021,
+      "Z": 9.861669
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": -0.788945,
+      "Z": 0,
+      "W": 0.6144639
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
+    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
+  },
+  {
+    "Id": "SpareKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "802213a2-7a22-4d87-9b0f-af57c1bd4a71",
+    "SaveGuid": "ff494abb-eb76-4634-952b-56387377f706",
+    "Position": {
+      "X": 69.14693,
+      "Y": 8.675664,
+      "Z": 9.839048
+    },
+    "Rotation": {
+      "X": -0.6812179,
+      "Y": 0,
+      "Z": 0,
+      "W": 0.7320807
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
+    "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
+  },
+  {
+    "Id": "SpareKey",
+    "Enabled": true,
+    "StackNum": 1,
+    "EasyNum": -1,
+    "HardNum": -1,
+    "Chapter": -1,
+    "Guid": "2c5c06d7-bcea-4df7-9a72-62657522dad6",
+    "SaveGuid": "385b6515-2ea8-09f8-342b-c6cbf9a5833d",
+    "Position": {
+      "X": 68.96826,
+      "Y": 8.624969,
+      "Z": 9.711059
+    },
+    "Rotation": {
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "W": 1
+    },
+    "Container": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
     "Mesh": "Props/sm2186_Solution01A/sm2186_Solution01A.mesh",
     "Material": "Props/sm2186_Solution01A/sm2186_Solution01A.mdf2"
   },
