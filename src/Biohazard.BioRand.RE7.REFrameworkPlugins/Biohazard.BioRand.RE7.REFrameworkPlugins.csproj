@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="application">
+      <HintPath>lib\REFramework.NET.application.dll</HintPath>
+    </Reference>
+    <Reference Include="AssemblyGenerator">
+      <HintPath>lib\AssemblyGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="Hexa.NET.ImGui">
+      <HintPath>lib\Hexa.NET.ImGui.dll</HintPath>
+    </Reference>
+    <Reference Include="HexaGen.Runtime">
+      <HintPath>lib\HexaGen.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis">
+      <HintPath>lib\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp">
+      <HintPath>lib\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="REFCoreDeps">
+      <HintPath>lib\REFCoreDeps.dll</HintPath>
+    </Reference>
+    <Reference Include="REFramework.NET">
+      <HintPath>lib\REFramework.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="viacore">
+      <HintPath>lib\REFramework.NET.viacore.dll</HintPath>
+    </Reference>
+    <Reference Include="_System">
+      <HintPath>lib\REFramework.NET._System.dll</HintPath>
+    </Reference>
+    <Reference Include="_System.Core">
+      <HintPath>lib\REFramework.NET._System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="_mscorlib">
+      <HintPath>lib\REFramework.NET._mscorlib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <Target Name="CopyToRandomizerOutput" AfterTargets="Build">
+    <Copy
+      SourceFiles="$(TargetPath)"
+      DestinationFolder="..\Biohazard.BioRand.RE7\bin\$(Configuration)\$(TargetFramework)\plugins\" />
+  </Target>
+</Project>

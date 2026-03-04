@@ -116,13 +116,10 @@ internal class RecipeModifier : Modifier
         logger.Pop();
 
         logger.Push($"{adjective} crafting dictionary");
-        logger.LogLine(
-            string.Join("\n",
-                dict
-                .Select(d => itemDefinitions.FromId(d.ItemDataID)?.Name)
-                .Choose()
-            )
-        );
+        foreach (var itemId in dict.Select(d => itemDefinitions.FromId(d.ItemDataID)?.Name).Choose())
+        {
+            logger.LogLine(itemId);
+        }
         logger.Pop();
     }
 

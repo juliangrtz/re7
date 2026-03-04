@@ -1,6 +1,7 @@
 ﻿using app;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.REFrameworkPlugins;
 using Enums.app;
 using Enums.app.Inventory;
 
@@ -9,7 +10,6 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class InventoryModifier : Modifier
 {
     private const string RandomizerKey = "modifier/inventory";
-    private const string InventoryLuaScriptName = "InventoryMods.lua";
     private const int AntiqueCoinsProbabilityPct = 1;
     private const int AntiqueCoinsCount = 2;
 
@@ -128,37 +128,6 @@ internal class InventoryModifier : Modifier
         }
     }
 
-    private ExtendLvDef? ToExtendLvDef(string str, Rng rng) => str switch
-    {
-        "random" => ToExtendLvDef(rng.Next(["12", "16", "20"]), rng),
-        "12" => null,
-        "16" => ExtendLvDef.Lv2,
-        "20" => ExtendLvDef.Lv3,
-        _ => throw new ArgumentException($"Invalid size '{str}' specified")
-    };
-
-    private void SetInventorySizes(
-        Rng rng,
-        string ethanInventorySize,
-        string miaInventorySize
-    )
-    {
-        var ethanExtendLv = ToExtendLvDef(ethanInventorySize, rng);
-        var miaExtendLv = ToExtendLvDef(miaInventorySize, rng);
-
-        if (ethanExtendLv == null && miaExtendLv == null)
-        {
-            return;
-        }
-
-        var variables = new Dictionary<string, string>
-        {
-            { "%INVENTORY_LV_ETHAN%", ethanExtendLv != null ? ((int)ethanExtendLv).ToString() : "nil" },
-            { "%INVENTORY_LV_MIA%", miaExtendLv != null ? ((int)miaExtendLv).ToString() : "nil" }
-        };
-        REFrameworkScriptService.RegisterParametrizedScript(InventoryLuaScriptName, variables);
-    }
-
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
@@ -170,11 +139,6 @@ internal class InventoryModifier : Modifier
         }
 
         var rng = randomizer.GetRng(RandomizerKey);
-
-        // Inventory sizes
-        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "12")!;
-        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "12")!;
-        SetInventorySizes(rng, ethanInventorySize, miaInventorySize);
 
         // Starter weapons
         var categories = Enum.GetValues<StartingWeaponCategory>();

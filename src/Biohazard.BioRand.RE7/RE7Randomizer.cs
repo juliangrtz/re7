@@ -69,8 +69,17 @@ internal class RE7Randomizer : IDisposable
         RandomizerOutput? result = null;
         Reporter.RunTask("Building mod", () =>
         {
-            var isWithREFramework = _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option));
-            var output = new RE7RandomizerOutput(input, _fileRepository.GetOutputPakFile(), _logFiles, PakVersion, isWithREFramework);
+            var isWithREFramework = _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
+                                        || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12" // TODO: This smells, improve
+                                        || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
+
+            var output = new RE7RandomizerOutput(
+                input,
+                _fileRepository.GetOutputPakFile(),
+                _logFiles,
+                PakVersion,
+                isWithREFramework
+            );
             result = new RandomizerOutput(
                 [
                     new RandomizerOutputAsset(
@@ -158,6 +167,7 @@ internal class RE7Randomizer : IDisposable
         [
             new InventoryModifier(),
             new RecipeModifier(),
+            new ItemModifier(),
         ];
     }
 

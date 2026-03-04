@@ -74,6 +74,12 @@ public sealed class ItemDefinition
     /// </summary>
     public string? DeveloperComment { get; set; }
 
+    /// <summary>
+    /// Which user file the definition's data is coming from.
+    /// Stored to be able to later re-write stuff.
+    /// </summary>
+    public string? SourceUserFile { get; set; }
+
     [JsonIgnore]
     public bool IsWeapon => CategoryType == ItemCategoryType.Weapon;
 

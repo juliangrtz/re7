@@ -1,5 +1,4 @@
 using Biohazard.BioRand.RE7.Serialization;
-using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 
@@ -15,6 +14,8 @@ public sealed class RE7RandomizerOutput
     public Dictionary<string, string> LogFiles { get; }
     public int PakVersion { get; }
     public bool IsWithREFramework { get; }
+
+    private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
 
     internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
     {
@@ -56,7 +57,9 @@ public sealed class RE7RandomizerOutput
     private OutputZipFileBuilder BuildZipFile(string logPrefix = "")
     {
         var builder = new OutputZipFileBuilder();
-        builder.AddEntry($"{logPrefix}config.json", Encoding.UTF8.GetBytes(Input.Configuration.ToJson()));
+        var configBytes = Encoding.UTF8.GetBytes(Input.Configuration.ToJson());
+        builder.AddEntry($"{logPrefix}config.json", configBytes);
+
         foreach (var logFile in LogFiles)
         {
             builder.AddEntry($"{logPrefix}{logFile.Key}", Encoding.UTF8.GetBytes(logFile.Value));
@@ -64,12 +67,16 @@ public sealed class RE7RandomizerOutput
 
         if (IsWithREFramework)
         {
-            var scripts = REFrameworkScriptService.GetREFrameworkScripts();
-            scripts.ForEach(tuple =>
-            {
-                var (path, data) = tuple;
-                builder.AddEntry(path, data);
-            });
+            var pluginPath = Path.Combine(
+                AppContext.BaseDirectory,
+                REFrameworkPluginName
+            );
+
+            builder.AddEntry(
+                $@"reframework\plugins\managed\{REFrameworkPluginName}",
+                File.ReadAllBytes(pluginPath));
+
+            builder.AddEntry(@"reframework\data\BioRand7\config.json", configBytes);
         }
 
         return builder;

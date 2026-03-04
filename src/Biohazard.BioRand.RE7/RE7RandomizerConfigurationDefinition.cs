@@ -61,7 +61,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-size-ethan",
             Label = "Ethan: Inventory size",
-            Description = "Controls the size of your starting inventory as Ethan. Requires RE Framework.",
+            Description = "Controls the size of your starting inventory as Ethan. The default is 12. Requires RE Framework.",
             Type = "dropdown",
             Options = ["random", "12", "16", "20"],
             Default = "12"
@@ -71,7 +71,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             Id = "random-starting-inventory-size-mia",
             Label = "Mia: Inventory size",
-            Description = "Controls the size of your starting inventory as Mia. Requires RE Framework.",
+            Description = "Controls the size of your starting inventory as Mia. The default is 12. Requires RE Framework.",
             Type = "dropdown",
             Options = ["random", "12", "16", "20"],
             Default = "12"
@@ -89,7 +89,7 @@ internal static class RE7RandomizerConfigurationDefinition
                     Description = (category == StartingWeaponCategory.Bladed ? "Knives and Axe" : null),
                     Label = category.GetLabel(),
                     Type = "switch",
-                    Default = true
+                    Default = category is StartingWeaponCategory.Bladed or StartingWeaponCategory.Handgun
                 });
             }
         }
@@ -166,19 +166,19 @@ internal static class RE7RandomizerConfigurationDefinition
 
         var items = from item in itemDefinitions
                     where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
-                    select (item.Id, item.Name);
+                    select (item.Id, item.Name, item.MaxStack);
 
-        foreach ((string itemId, string itemName) in items)
+        foreach ((string id, string name, int maxStack) in items)
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"inventory-stack-limit-{itemId}",
-                Label = itemName,
+                Id = $"inventory-stack-limit-{id.ToLowerInvariant()}",
+                Label = name,
                 Type = "range",
                 Min = 0,
                 Max = 999,
                 Step = 1,
-                Default = 0
+                Default = maxStack
             });
         }
 
