@@ -15,6 +15,8 @@ public sealed class RE7RandomizerOutput
     public int PakVersion { get; }
     public bool IsWithREFramework { get; }
 
+    private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
+
     internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
     {
         Input = input;
@@ -65,15 +67,16 @@ public sealed class RE7RandomizerOutput
 
         if (IsWithREFramework)
         {
-            builder.AddEntry($@"reframework\data\BioRand7\config.json", configBytes);
+            var pluginPath = Path.Combine(
+                AppContext.BaseDirectory,
+                REFrameworkPluginName
+            );
 
-            // TODO
-            //var scripts = REFrameworkScriptService.GetREFrameworkScripts();
-            //scripts.ForEach(tuple =>
-            //{
-            //    var (path, data) = tuple;
-            //    builder.AddEntry(path, data);
-            //});
+            builder.AddEntry(
+                $@"reframework\plugins\managed\{REFrameworkPluginName}",
+                File.ReadAllBytes(pluginPath));
+
+            builder.AddEntry($@"reframework\data\BioRand7\config.json", configBytes);
         }
 
         return builder;

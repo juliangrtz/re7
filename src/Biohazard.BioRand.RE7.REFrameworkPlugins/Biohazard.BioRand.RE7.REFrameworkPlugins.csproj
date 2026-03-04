@@ -54,5 +54,10 @@
       <HintPath>lib\REFramework.NET._mscorlib.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+  
+  <Target Name="CopyToRandomizerOutput" AfterTargets="Build">
+    <Copy
+      SourceFiles="$(TargetPath)"
+      DestinationFolder="..\Biohazard.BioRand.RE7\bin\$(Configuration)\$(TargetFramework)\plugins\" />
+  </Target>
 </Project>
