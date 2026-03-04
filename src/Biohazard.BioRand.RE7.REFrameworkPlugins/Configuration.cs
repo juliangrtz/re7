@@ -4,7 +4,8 @@ using static Biohazard.BioRand.RE7.REFrameworkPlugins.Logger;
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
 /// <summary>
-/// Reads the re7randomizer_config.json in the reframework/data directory.
+/// Reads config.json in the reframework/data directory.
+/// It's copied there in Biohazard.BioRand.RE7.RE7RandomizerOutput
 /// </summary>
 internal class Configuration
 {

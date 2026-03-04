@@ -95,7 +95,8 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
                         );
 
 #if DEBUG
-                        var dest = $"F:\\RE_Modding\\BioRand\\re7\\src\\Biohazard.BioRand.RE7\\_Data\\{Path.GetFileName(outputPath)}";
+                        // Update _Data files
+                        var dest = $"{AppContext.BaseDirectory.SubstringBefore(".DataGen")}\\_Data\\{Path.GetFileName(outputPath)}";
                         File.Copy(outputPath, dest, true);
 #endif
                     }

@@ -76,7 +76,7 @@ public sealed class RE7RandomizerOutput
                 $@"reframework\plugins\managed\{REFrameworkPluginName}",
                 File.ReadAllBytes(pluginPath));
 
-            builder.AddEntry($@"reframework\data\BioRand7\config.json", configBytes);
+            builder.AddEntry(@"reframework\data\BioRand7\config.json", configBytes);
         }
 
         return builder;
