@@ -1,9 +1,7 @@
 ﻿using app;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.REFrameworkPlugins;
 using Enums.app;
-using Enums.app.Inventory;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
