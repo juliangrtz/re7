@@ -166,19 +166,19 @@ internal static class RE7RandomizerConfigurationDefinition
 
         var items = from item in itemDefinitions
                     where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
-                    select (item.Id, item.Name);
+                    select (item.Id, item.Name, item.MaxStack);
 
-        foreach ((string itemId, string itemName) in items)
+        foreach ((string id, string name, int maxStack) in items)
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"inventory-stack-limit-{itemId.ToLowerInvariant()}",
-                Label = itemName,
+                Id = $"inventory-stack-limit-{id.ToLowerInvariant()}",
+                Label = name,
                 Type = "range",
                 Min = 0,
                 Max = 999,
                 Step = 1,
-                Default = 0
+                Default = maxStack
             });
         }
 
