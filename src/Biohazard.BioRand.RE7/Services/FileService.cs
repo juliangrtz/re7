@@ -2,7 +2,7 @@
 
 #pragma warning disable CS9113 // Parameter is unread.
 
-internal class FileService(RE7Randomizer chainsaw)
+internal class FileService(Randomizer chainsaw)
 #pragma warning restore CS9113 // Parameter is unread.
 {
     private int _id = 2;

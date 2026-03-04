@@ -1,4 +1,6 @@
-﻿namespace Biohazard.BioRand.RE7.Extensions;
+﻿using System.Collections.Concurrent;
+
+namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class CollectionExtensions
 {
@@ -112,5 +114,13 @@ public static class CollectionExtensions
         public IEnumerator<TValue> GetEnumerator() => items.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
+    }
+
+    public static void AddRange<T>(this ConcurrentBag<T> @this, IEnumerable<T> toAdd)
+    {
+        foreach (var element in toAdd)
+        {
+            @this.Add(element);
+        }
     }
 }

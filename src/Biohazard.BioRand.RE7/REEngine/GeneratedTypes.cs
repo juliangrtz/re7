@@ -45,7 +45,13 @@ namespace app
         public int ItemStackNum { get; set; }
         public int RoomId { get; set; }
         public bool _IsOverwriteDifficultItemNumSetting { get; set; }
-        public object _DifficultItemNumSetting { get; set; }
+        public DifficultItemNumRateData _DifficultItemNumSetting { get; set; }
+
+        public class DifficultItemNumRateData
+        {
+            public int EasyNum { get; set; }
+            public int HardNum { get; set; }
+        }
     }
 
     public class ItemDropDestruct

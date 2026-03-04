@@ -12,12 +12,12 @@ internal class FileRepository : IPatchContext, IDisposable
     public RszTypeRepository TypeRepository => RszRepository;
     public bool ExportingMod => false;
 
-    private readonly RE7Randomizer? _randomizer;
+    private readonly Randomizer? _randomizer;
     private readonly PatchedPakFile? _inputPakFile;
     private readonly string? _inputGamePath;
     private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
 
-    public RE7Randomizer? Randomizer => _randomizer;
+    public Randomizer? Randomizer => _randomizer;
     public DynamicData DynamicData { get; } = new DynamicData(download: false);
 
     public FileRepository()
@@ -30,7 +30,7 @@ internal class FileRepository : IPatchContext, IDisposable
         DynamicData = dynamicData;
     }
 
-    public FileRepository(RE7Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
+    public FileRepository(Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
     {
         _randomizer = randomizer;
         if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase))

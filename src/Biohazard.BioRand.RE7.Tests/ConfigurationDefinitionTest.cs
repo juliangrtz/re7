@@ -5,7 +5,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public class ConfigurationDefinitionTest
 {
-    private readonly IEnumerable<GroupItem> items = RE7RandomizerExecutor.ConfigurationDefinition.AllItems;
+    private readonly IEnumerable<GroupItem> items = RandomizerExecutor.ConfigurationDefinition.AllItems;
 
     [Fact]
     public void Test_Id_Uniqueness()

@@ -39,6 +39,7 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
     private static readonly IFileGenerator[] _fileGenerators =
     [
         new ItemDefinitionGenerator(),
+        new ItemPlacementGenerator(),
         new ConfigGenerator()
     ];
 
@@ -47,7 +48,9 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
         WriteIndented = true,
         Converters = { new JsonStringEnumConverter() },
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        // Sometimes weird stuff like NaN, Infinity or -Infinity gets serialized
+        //NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals
     };
 
     private static string GetCsv(dynamic data)

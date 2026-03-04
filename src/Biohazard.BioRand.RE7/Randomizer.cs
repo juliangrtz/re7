@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
 
-internal class RE7Randomizer : IDisposable
+internal class Randomizer : IDisposable
 {
     private readonly string _inputGamePath;
     private FileRepository _fileRepository = new FileRepository();
@@ -25,9 +25,9 @@ internal class RE7Randomizer : IDisposable
 
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
 
-    public static string BuildVersion => RE7RandomizerFactory.Default.GitHash;
-    public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
-    public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
+    public static string BuildVersion => RandomizerFactory.Default.GitHash;
+    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
+    public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
 
     // These options must be bools!
     private static readonly string[] _optionsThatRequireREFramework = [
@@ -36,7 +36,7 @@ internal class RE7Randomizer : IDisposable
         "recipes-replace-original"
     ];
 
-    public RE7Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
+    public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
     {
         Input = input;
         _inputGamePath = inputGamePath;
@@ -56,7 +56,7 @@ internal class RE7Randomizer : IDisposable
         _fileRepository?.Dispose();
     }
 
-    public RandomizerOutput Randomize()
+    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize()
     {
         var input = Input;
         _fileRepository = new FileRepository(this, _inputGamePath, DynamicData);
@@ -66,21 +66,21 @@ internal class RE7Randomizer : IDisposable
         AddLogFile($"process.log", log.Process.Output);
         AddLogFile($"output.log", log.Output.Output);
 
-        RandomizerOutput? result = null;
+        IntelOrca.Biohazard.BioRand.RandomizerOutput? result = null;
         Reporter.RunTask("Building mod", () =>
         {
             var isWithREFramework = _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12" // TODO: This smells, improve
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
-            var output = new RE7RandomizerOutput(
+            var output = new RandomizerOutput(
                 input,
                 _fileRepository.GetOutputPakFile(),
                 _logFiles,
                 PakVersion,
                 isWithREFramework
             );
-            result = new RandomizerOutput(
+            result = new IntelOrca.Biohazard.BioRand.RandomizerOutput(
                 [
                     new RandomizerOutputAsset(
                         "1-patch",

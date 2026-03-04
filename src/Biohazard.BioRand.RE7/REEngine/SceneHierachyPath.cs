@@ -2,7 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.REEngine;
 
-internal readonly struct SceneHierachyPath
+public readonly struct SceneHierachyPath
 {
     public ImmutableArray<string> Hierachy { get; }
 

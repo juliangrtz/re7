@@ -6,13 +6,13 @@ using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7;
 
-internal static class RE7RandomizerConfigurationDefinition
+internal static class RandomizerConfigurationDefinition
 {
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
-    public static RandomizerConfigurationDefinition Create()
+    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
-        var configDefinition = new RandomizerConfigurationDefinition();
+        var configDefinition = new IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition();
 
         #region General
 
@@ -227,7 +227,7 @@ internal static class RE7RandomizerConfigurationDefinition
 
         #endregion Debug
 
-        var defaultProfileBytes = RE7RandomizerFactory.GetDefaultProfile();
+        var defaultProfileBytes = RandomizerFactory.GetDefaultProfile();
         var defaultProfileJson = Encoding.UTF8.GetString(defaultProfileBytes);
         var defaultProfile = RandomizerConfiguration.FromJson(defaultProfileJson);
         foreach (var item in configDefinition.AllItems)
