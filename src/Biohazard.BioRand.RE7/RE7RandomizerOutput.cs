@@ -55,7 +55,9 @@ public sealed class RE7RandomizerOutput
     private OutputZipFileBuilder BuildZipFile(string logPrefix = "")
     {
         var builder = new OutputZipFileBuilder();
-        builder.AddEntry($"{logPrefix}config.json", Encoding.UTF8.GetBytes(Input.Configuration.ToJson()));
+        var configBytes = Encoding.UTF8.GetBytes(Input.Configuration.ToJson());
+        builder.AddEntry($"{logPrefix}config.json", configBytes);
+
         foreach (var logFile in LogFiles)
         {
             builder.AddEntry($"{logPrefix}{logFile.Key}", Encoding.UTF8.GetBytes(logFile.Value));
@@ -63,6 +65,8 @@ public sealed class RE7RandomizerOutput
 
         if (IsWithREFramework)
         {
+            builder.AddEntry($@"reframework\data\BioRand7\config.json", configBytes);
+
             // TODO
             //var scripts = REFrameworkScriptService.GetREFrameworkScripts();
             //scripts.ForEach(tuple =>
