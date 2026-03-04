@@ -2,20 +2,12 @@
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
-public class SerializableQuaternion
+public class SerializableQuaternion(float x, float y, float z, float w)
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
-    public float W { get; set; }
-
-    public SerializableQuaternion(float x, float y, float z, float w)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-        W = w;
-    }
+    public float X { get; set; } = x;
+    public float Y { get; set; } = y;
+    public float Z { get; set; } = z;
+    public float W { get; set; } = w;
 
     public override string ToString()
         => $"[{X}, {Y}, {Z}, {W}]";
