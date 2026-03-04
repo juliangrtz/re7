@@ -8,7 +8,7 @@ internal class ItemModifier : Modifier
     private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
-    private static Dictionary<ItemDefinition, int> GetItemsWithCustomStackSize(RE7Randomizer randomizer)
+    private static Dictionary<ItemDefinition, int> GetItemsWithCustomStackSize(Randomizer randomizer)
     {
         var result = new Dictionary<ItemDefinition, int>();
 
@@ -27,7 +27,7 @@ internal class ItemModifier : Modifier
         return result;
     }
 
-    public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
         var customStacks = GetItemsWithCustomStackSize(randomizer);
         logger.Push("Stack sizes");
@@ -48,7 +48,7 @@ internal class ItemModifier : Modifier
         logger.Pop();
     }
 
-    public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var customStacks = GetItemsWithCustomStackSize(randomizer);
 

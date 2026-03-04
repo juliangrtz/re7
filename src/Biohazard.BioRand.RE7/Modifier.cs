@@ -2,11 +2,11 @@
 
 internal abstract class Modifier
 {
-    public virtual void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
+    public virtual void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
     }
 
-    public virtual void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
+    public virtual void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
     }
 }

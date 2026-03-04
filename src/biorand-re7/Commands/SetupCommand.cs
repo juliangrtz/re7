@@ -73,7 +73,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         Action<string, byte[]> cb
     )
     {
-        var pakList = RE7RandomizerExecutor.GetDefaultPakList(isUsingRaytracingVersion);
+        var pakList = RandomizerExecutor.GetDefaultPakList(isUsingRaytracingVersion);
         var patternListRegex = patternList.Select(x => new Regex(x, RegexOptions.IgnoreCase)).ToArray();
         foreach (var path in pakList.Entries)
         {

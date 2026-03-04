@@ -7,7 +7,7 @@ namespace Biohazard.BioRand.RE7.Services;
 
 internal class ItemRandomizer
 {
-    private readonly RE7Randomizer _randomizer;
+    private readonly Randomizer _randomizer;
     private readonly HashSet<string> _placedItemIds = [];
     private readonly bool _allowBonusItems;
     private readonly bool _allowDlcItems;
@@ -20,7 +20,7 @@ internal class ItemRandomizer
         .Select(x => ItemDefinitionRepository.Default.FromId(x)!)
         .ToArray();
 
-    public ItemRandomizer(RE7Randomizer randomizer)
+    public ItemRandomizer(Randomizer randomizer)
     {
         _randomizer = randomizer;
         _allowBonusItems = randomizer.GetConfigOption<bool>("allow-bonus-items");

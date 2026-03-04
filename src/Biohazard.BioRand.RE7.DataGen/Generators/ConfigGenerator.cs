@@ -9,7 +9,7 @@ internal class ConfigGenerator : IFileGenerator
 
     public object Generate(GenerateCommand.GenerateSettings settings)
     {
-        var definition = RE7RandomizerExecutor.ConfigurationDefinition;
+        var definition = RandomizerExecutor.ConfigurationDefinition;
         var result = new Dictionary<string, object>();
         foreach (var item in definition.AllItems)
         {

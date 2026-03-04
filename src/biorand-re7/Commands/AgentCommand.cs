@@ -63,16 +63,16 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
 
     private class RandomizerAgentHandler(string gameInputPath, bool beta) : IRandomizerAgentHandler
     {
-        public string BuildVersion => RE7RandomizerExecutor.BuildVersion;
-        public RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerExecutor.ConfigurationDefinition;
-        public RandomizerConfiguration DefaultConfiguration => RE7RandomizerExecutor.DefaultConfiguration;
+        public string BuildVersion => RandomizerExecutor.BuildVersion;
+        public RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerExecutor.ConfigurationDefinition;
+        public RandomizerConfiguration DefaultConfiguration => RandomizerExecutor.DefaultConfiguration;
 
         public Task<bool> CanGenerateAsync(RandomizerAgent.QueueResponseItem queueItem)
         {
             return Task.FromResult(true);
         }
 
-        public Task<RandomizerOutput> GenerateAsync(RandomizerAgent.QueueResponseItem queueItem, RandomizerInput input)
+        public Task<IntelOrca.Biohazard.BioRand.RandomizerOutput> GenerateAsync(RandomizerAgent.QueueResponseItem queueItem, RandomizerInput input)
         {
             var config = input.Configuration;
 
@@ -95,7 +95,7 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
             config["username"] = userName;
             config["special"] = string.Join(",", specials);
 
-            var randomizer = new RE7RandomizerExecutor(gameInputPath, new EmptyReporter());
+            var randomizer = new RandomizerExecutor(gameInputPath, new EmptyReporter());
             return Task.FromResult(randomizer.Randomize(input));
         }
 

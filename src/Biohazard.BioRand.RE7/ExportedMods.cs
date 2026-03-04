@@ -59,7 +59,7 @@ public static class ExportedMods
         }
     }
 
-    private static void ApplyPatch(Type type, RE7Randomizer? randomizer, IPatchContext context)
+    private static void ApplyPatch(Type type, Randomizer? randomizer, IPatchContext context)
     {
         var ctors = type.GetConstructors();
         if (ctors.Length > 1)
@@ -70,7 +70,7 @@ public static class ExportedMods
         var ctorArguments = new object?[ctorParameters.Length];
         for (var i = 0; i < ctorArguments.Length; i++)
         {
-            if (ctorParameters[i].ParameterType == typeof(RE7Randomizer))
+            if (ctorParameters[i].ParameterType == typeof(Randomizer))
             {
                 ctorArguments[i] = randomizer;
             }
@@ -106,7 +106,7 @@ public static class ExportedMods
         return modBuilder;
     }
 
-    internal static void ApplyAll(RE7Randomizer? randomizer, IPatchContext context)
+    internal static void ApplyAll(Randomizer? randomizer, IPatchContext context)
     {
         foreach (var patchType in PatchTypes)
         {

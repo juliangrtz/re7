@@ -4,7 +4,7 @@ using IntelOrca.Biohazard.REE.Package;
 
 namespace Biohazard.BioRand.RE7;
 
-public sealed class RE7RandomizerOutput
+public sealed class RandomizerOutput
 {
     private byte[]? _zipFile;
     private byte[]? _modFile;
@@ -17,7 +17,7 @@ public sealed class RE7RandomizerOutput
 
     private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
 
-    internal RE7RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
+    internal RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
     {
         Input = input;
         PakFile = pakFile;
@@ -84,7 +84,7 @@ public sealed class RE7RandomizerOutput
 
     private byte[] GetModInfo()
     {
-        var rf = RE7RandomizerFactory.Default;
+        var rf = RandomizerFactory.Default;
 
         var name = $"BioRand - {Sanitize(Input.ProfileName)} [{Input.Seed}]";
         var description = SanitizeParagraph(

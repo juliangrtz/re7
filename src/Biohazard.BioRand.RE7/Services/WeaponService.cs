@@ -4,7 +4,7 @@ namespace Biohazard.BioRand.RE7.Services;
 
 #pragma warning disable CS9113 // Parameter is unread.
 
-internal class WeaponService(RE7Randomizer randomizer)
+internal class WeaponService(Randomizer randomizer)
 #pragma warning restore CS9113 // Parameter is unread.
 {
     private readonly List<WeaponID> _restrictedUpgrades = [];
