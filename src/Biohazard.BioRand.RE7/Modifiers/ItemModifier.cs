@@ -1,10 +1,12 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Enums.app.OptionMenu;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ItemModifier : Modifier
 {
     private readonly string itemDir = PakPath.Of("prefab/item");
+    private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
     private static Dictionary<ItemDefinition, int> GetItemsWithCustomStackSize(RE7Randomizer randomizer)
@@ -17,7 +19,7 @@ internal class ItemModifier : Modifier
                 continue;
 
             var configuredStackSize = randomizer.GetConfigOption($"inventory-stack-limit-{item.Id.ToLowerInvariant()}", 0);
-            if (configuredStackSize != 0)
+            if (configuredStackSize != 0 && configuredStackSize != item.MaxStack)
             {
                 result[item] = configuredStackSize;
             }
@@ -61,18 +63,18 @@ internal class ItemModifier : Modifier
                 it => it.Value
             );
 
-            randomizer.FileRepository.ModifyUserFile<app.ItemSettings>($"{itemDir}/{group.Key!}", root =>
+            randomizer.FileRepository.ModifyUserFile<app.ItemSettings>($"{itemDir}/{group.Key}", root =>
             {
                 foreach (var setting in root._Settings)
                 {
                     if (stackSizeByItemId.TryGetValue(setting.ItemDataID, out var newStackSize))
-                        setting.MaxStackNum = newStackSize;
+                        setting.MaxStackNum = Math.Clamp(newStackSize, 0, MaxStackSize);
                 }
 
                 return root;
             });
 
-            logger.LogLine($"Patched {group.Key!}.");
+            logger.LogLine($"Patched {group.Key}.");
         }
     }
 }

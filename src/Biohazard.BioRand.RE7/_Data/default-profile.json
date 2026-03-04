@@ -43,7 +43,7 @@
   "inventory-stack-limit-gunpowder": 0,
   "inventory-stack-limit-handgunbullet": 0,
   "inventory-stack-limit-handgunbulletl": 0,
-  "inventory-stack-limit-herb": 10,
+  "inventory-stack-limit-herb": 0,
   "inventory-stack-limit-liquidbomb": 0,
   "inventory-stack-limit-machinegunbullet": 0,
   "inventory-stack-limit-magnesium": 0,
