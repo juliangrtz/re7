@@ -1,8 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
-using Enums.via.motion.ContinueOptions;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -34,10 +32,6 @@ internal class ItemPlacementGenerator : IFileGenerator
         @"natives/stm/leveldesign/itemset"
     ];
 
-    public ItemPlacementGenerator()
-    {
-    }
-
     private List<ItemPlacement> ReadItemPlacements(ulong hash)
     {
         var result = new List<ItemPlacement>();
@@ -49,13 +43,8 @@ internal class ItemPlacementGenerator : IFileGenerator
 
             if (itemComponent != null)
             {
-                var transformComponent = gameObject.FindComponent<via.Transform>();
-                if (transformComponent == null)
-                {
-                    AnsiConsole.MarkupLine($"[red]Item {itemComponent.ItemDataID} in {path}[/] does not contain a via.Transform. WTF?");
-                    return;
-                }
-
+                var transformComponent = gameObject.FindComponent<via.Transform>()!;
+                var mesh = gameObject.FindComponent("via.render.Mesh");
                 var chapter = GetChapterFromPath(path);
 
                 result.Add(new ItemPlacement
@@ -63,9 +52,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                     Id = itemComponent.ItemDataID,
                     Enabled = itemComponent.Enabled,
                     StackNum = itemComponent.ItemStackNum,
-                    X = transformComponent.Position.X,
-                    Y = transformComponent.Position.Y,
-                    Z = transformComponent.Position.Z,
+                    Position = transformComponent.Position,
                     Rotation = transformComponent.Rotation,
                     Guid = gameObject.Guid,
                     SaveGuid = itemComponent.SaveGUID,
@@ -74,6 +61,8 @@ internal class ItemPlacementGenerator : IFileGenerator
                     Container = path,
                     Chapter = chapter,
                     Difficulty = GetDifficultyFromPath(path),
+                    Mesh = mesh?.Children[2].ToString() ?? "",
+                    Material = mesh?.Children[3].ToString() ?? "",
                 });
             }
         });

@@ -24,17 +24,14 @@ public class ItemPlacement
     public int Chapter { get; set; }
     public Guid Guid { get; set; }
     public Guid SaveGuid { get; set; }
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
+    public SerializableVector3 Position { get; set; } = Vector3.Zero;
     public SerializableQuaternion Rotation { get; set; } = Quaternion.Zero;
     public string Container { get; set; } = "";
+    public string Mesh { get; set; } = "";
+    public string Material { get; set; } = "";
 
     [JsonIgnore]
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
-
-    [JsonIgnore]
-    public Vector3 Position => new(X, Y, Z);
 
     [JsonIgnore]
     public EulerAngles Euler => new(Rotation);
