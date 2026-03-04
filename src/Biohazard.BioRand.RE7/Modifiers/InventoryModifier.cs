@@ -128,33 +128,6 @@ internal class InventoryModifier : Modifier
         }
     }
 
-    private ExtendLvDef? ToExtendLvDef(string str, Rng rng) => str switch
-    {
-        "random" => ToExtendLvDef(rng.Next(["12", "16", "20"]), rng),
-        "12" => null,
-        "16" => ExtendLvDef.Lv2,
-        "20" => ExtendLvDef.Lv3,
-        _ => throw new ArgumentException($"Invalid size '{str}' specified")
-    };
-
-    private void SetInventorySizes(
-        Rng rng,
-        string ethanInventorySize,
-        string miaInventorySize
-    )
-    {
-        var ethanExtendLv = ToExtendLvDef(ethanInventorySize, rng);
-        var miaExtendLv = ToExtendLvDef(miaInventorySize, rng);
-
-        if (ethanExtendLv == null && miaExtendLv == null)
-        {
-            return;
-        }
-
-        REFPlugin.DesiredEthanExtendLv = (int)ethanExtendLv!;
-        REFPlugin.DesiredMiaExtendLv = (int)miaExtendLv!;
-    }
-
     public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
     {
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
@@ -166,11 +139,6 @@ internal class InventoryModifier : Modifier
         }
 
         var rng = randomizer.GetRng(RandomizerKey);
-
-        // Inventory sizes
-        var ethanInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-ethan", "12")!;
-        var miaInventorySize = randomizer.GetConfigOption("random-starting-inventory-size-mia", "12")!;
-        SetInventorySizes(rng, ethanInventorySize, miaInventorySize);
 
         // Starter weapons
         var categories = Enum.GetValues<StartingWeaponCategory>();

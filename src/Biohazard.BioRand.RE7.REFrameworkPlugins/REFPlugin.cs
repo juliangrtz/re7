@@ -11,6 +11,7 @@ using static Logger;
 public class REFPlugin
 {
     private static bool IsInitialized = false;
+    private static readonly Configuration config = new();
 
     [PluginEntryPoint]
     public static void Main()
@@ -20,12 +21,17 @@ public class REFPlugin
     {
         ImGuiDrawUI.Post += OnImGuiDrawUi;
         IsInitialized = true;
+        Log("Loaded.");
+    }
+
+    [PluginExitPoint]
+    public static void OnUnload()
+    {
+        IsInitialized = false;
+        Log("Unloaded.");
     }
 
     #region Inventory
-
-    public static int DesiredEthanExtendLv { get; set; }
-    public static int DesiredMiaExtendLv { get; set; }
 
     private static string? GetPlayerName()
     {
@@ -40,18 +46,31 @@ public class REFPlugin
         return playerObj.Call("get_Name") as string;
     }
 
-    private static int? GetDesiredInventorySize()
+    private static Inventory.ExtendLvDef? ConfigInventorySizeToEnum(string str)
+        => str switch
+        {
+            "12" => Inventory.ExtendLvDef.Lv1,
+            "16" => Inventory.ExtendLvDef.Lv2,
+            "20" => Inventory.ExtendLvDef.Lv3,
+            _ => null
+        };
+
+    private static Inventory.ExtendLvDef? GetDesiredInventorySize()
     {
         var playerName = GetPlayerName();
         if (playerName == null) return null;
 
         if (playerName.StartsWith("Pl00", StringComparison.Ordinal))
         {
-            return DesiredEthanExtendLv;
+            var ethanSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-ethan"));
+            Log($"Playing as Ethan, configured inventory size: {ethanSize}");
+            return ethanSize;
         }
         else if (playerName.StartsWith("Pl2", StringComparison.Ordinal))
         {
-            return DesiredMiaExtendLv;
+            var miaSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-mia"));
+            Log($"Playing as Mia, configured inventory size: {miaSize}");
+            return miaSize;
         }
         else
         {
@@ -68,10 +87,10 @@ public class REFPlugin
         if (desiredLevel == null)
             return PreHookResult.Continue;
 
-        if ((int)inventory.ExtendLv < desiredLevel)
+        if (inventory.ExtendLv < desiredLevel)
         {
             Log("Increase Inventory._ExtendLv");
-            inventory._ExtendLv = (Inventory.ExtendLvDef)desiredLevel.Value;
+            inventory._ExtendLv = desiredLevel.Value;
         }
         return PreHookResult.Continue;
     }
@@ -117,7 +136,7 @@ public class REFPlugin
     {
         if (retval != 1)
         {
-            Log($"[PATCH] InventoryMenu.DictionaryCombine_UnlockedCombine from false to true");
+            Log("Patch InventoryMenu.DictionaryCombine_UnlockedCombine from false to true");
             retval = 1;
         }
     }
