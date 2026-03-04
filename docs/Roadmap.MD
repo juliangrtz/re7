@@ -26,7 +26,7 @@ Recipes:
   * etc.
 
 *Estimated completion: February*  
-Status: **In development**
+Status: **Completed ✅**
 
 ## 2. Item randomization
 
