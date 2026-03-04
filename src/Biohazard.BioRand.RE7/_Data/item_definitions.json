@@ -7,7 +7,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トリプルクレストキーA青銅"
+    "DeveloperComment": "トリプルクレストキーA青銅",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "3CrestKeyB",
@@ -17,7 +18,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トリプルクレストキーA白銅"
+    "DeveloperComment": "トリプルクレストキーA白銅",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "3CrestKeyBch74",
@@ -28,7 +30,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トリプルクレストキー白銅(Ch7-4用)"
+    "DeveloperComment": "トリプルクレストキー白銅(Ch7-4用)",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "3CrestKeyC",
@@ -38,7 +41,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トリプルクレストキーA赤銅"
+    "DeveloperComment": "トリプルクレストキーA赤銅",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "AcidBulletS",
@@ -49,6 +53,7 @@
     "MaxStack": 5,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "AcidBulletS"
   },
   {
@@ -59,7 +64,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "アルコール"
+    "DeveloperComment": "アルコール",
+    "SourceUserFile": "materialitemsettings.user.2"
   },
   {
     "Id": "AlcoholCh71",
@@ -70,7 +76,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "固形燃料(Ch7-1用)※捨てられない"
+    "DeveloperComment": "固形燃料(Ch7-1用)※捨てられない",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "AlloyClay",
@@ -80,7 +87,8 @@
     "IsUnlockable": false,
     "MaxStack": 10,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "低温薬液(旧合金粘土)"
+    "DeveloperComment": "低温薬液(旧合金粘土)",
+    "SourceUserFile": "materialitemsettings.user.2"
   },
   {
     "Id": "AlphaGrass",
@@ -91,6 +99,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "透視メガネ",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "AlphaGrass"
   },
   {
@@ -100,7 +109,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "勝手口のカギ(アンバサ用)"
+    "DeveloperComment": "勝手口のカギ(アンバサ用)",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Balloonbomb",
@@ -110,7 +120,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ルーカスパズル風船爆弾"
+    "DeveloperComment": "ルーカスパズル風船爆弾",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Bar",
@@ -122,6 +133,7 @@
     "WeaponId": "Bar",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Bar"
   },
   {
@@ -133,6 +145,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Battery"
   },
   {
@@ -144,7 +157,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットダウン1"
+    "DeveloperComment": "ベットダウン1",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetDown_2",
@@ -155,7 +169,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットダウン2"
+    "DeveloperComment": "ベットダウン2",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetUp_1p",
@@ -166,7 +181,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットアップ1"
+    "DeveloperComment": "ベットアップ1",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetUp_2",
@@ -177,7 +193,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットアップ2※場に置かれている間、相手の賭け数を2つ増やす。"
+    "DeveloperComment": "ベットアップ2※場に置かれている間、相手の賭け数を2つ増やす。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetUp_21",
@@ -188,7 +205,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットアップ21"
+    "DeveloperComment": "ベットアップ21",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetUp_2p",
@@ -199,7 +217,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットアップ2※SPカードを1枚引く。さらに場に置かれている間、相手の賭け数を2つ増やす。"
+    "DeveloperComment": "ベットアップ2※SPカードを1枚引く。さらに場に置かれている間、相手の賭け数を2つ増やす。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BetUp_2x",
@@ -210,7 +229,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベットアップ2オメガ"
+    "DeveloperComment": "ベットアップ2オメガ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BlackMagic",
@@ -221,7 +241,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ブラックマジック"
+    "DeveloperComment": "ブラックマジック",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "BlueBlaster",
@@ -234,6 +255,7 @@
     "WeaponId": "BlueBlaster",
     "CanStoreInItemBox": false,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2",
     "ItemId": "BlueBlaster"
   },
   {
@@ -245,6 +267,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "防御の極意",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "BookDefence01"
   },
   {
@@ -256,6 +279,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "防御の神髄",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "BookDefence02"
   },
   {
@@ -267,6 +291,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "BrokenHandgun_M19"
   },
   {
@@ -278,6 +303,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "BrokenShotgun_DB"
   },
   {
@@ -290,6 +316,7 @@
     "WeaponId": "Burner",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Burner"
   },
   {
@@ -301,6 +328,7 @@
     "MaxStack": 500,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "BurnerBullet"
   },
   {
@@ -312,6 +340,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "BurnerPartsA"
   },
   {
@@ -323,6 +352,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "BurnerPartsB"
   },
   {
@@ -333,7 +363,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "船長室の武器ロッカーのカギ"
+    "DeveloperComment": "船長室の武器ロッカーのカギ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Candle",
@@ -345,6 +376,7 @@
     "WeaponId": "Candle",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Candle"
   },
   {
@@ -356,6 +388,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Candle_Lighted"
   },
   {
@@ -367,7 +400,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ベーカー家の車のキー"
+    "DeveloperComment": "ベーカー家の車のキー",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "ChainCutter",
@@ -379,6 +413,7 @@
     "WeaponId": "ChainCutter",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "ChainCutter"
   },
   {
@@ -391,6 +426,7 @@
     "WeaponId": "ChainSaw",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "ChainSaw"
   },
   {
@@ -402,6 +438,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Chapter1Map"
   },
   {
@@ -413,6 +450,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Chapter3_2Map"
   },
   {
@@ -423,7 +461,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "chapter3-2の剥製部屋B1Fで取得するマップ"
+    "DeveloperComment": "chapter3-2の剥製部屋B1Fで取得するマップ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Chapter3_3Map",
@@ -434,6 +473,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Chapter3_3Map"
   },
   {
@@ -445,6 +485,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Chapter3_4MAP"
   },
   {
@@ -455,7 +496,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "4_1の舞台である船のマップ"
+    "DeveloperComment": "4_1の舞台である船のマップ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Chapter4_1SwampMAP",
@@ -465,7 +507,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "4_1と4_2を繋ぐ沼マップ"
+    "DeveloperComment": "4_1と4_2を繋ぐ沼マップ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Chapter4_２MAP",
@@ -475,7 +518,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "4_2の舞台である岩塩ドームのマップ"
+    "DeveloperComment": "4_2の舞台である岩塩ドームのマップ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "ChemicalL",
@@ -486,6 +530,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "薬液（強）",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "ChemicalL"
   },
   {
@@ -497,6 +542,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "薬液（中）",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "ChemicalM"
   },
   {
@@ -508,6 +554,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "薬液（小）",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "ChemicalS"
   },
   {
@@ -520,6 +567,7 @@
     "WeaponId": "CircularSaw",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "CircularSaw"
   },
   {
@@ -530,7 +578,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "ClockHand",
@@ -541,7 +590,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "時計の針(キーピック)"
+    "DeveloperComment": "時計の針(キーピック)",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "ClockHand2",
@@ -552,7 +602,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ナイフの絵から入手できる時計の針"
+    "DeveloperComment": "ナイフの絵から入手できる時計の針",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "Clothes",
@@ -563,7 +614,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "着替え"
+    "DeveloperComment": "着替え",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "Coin",
@@ -573,7 +625,8 @@
     "IsUnlockable": false,
     "MaxStack": 999,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "コイン"
+    "DeveloperComment": "コイン",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "CoinOld",
@@ -583,7 +636,8 @@
     "IsUnlockable": true,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "古いコイン(体験版引き継ぎアイテム)"
+    "DeveloperComment": "古いコイン(体験版引き継ぎアイテム)",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Conjuring",
@@ -594,7 +648,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "カンジャリング"
+    "DeveloperComment": "カンジャリング",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Crank",
@@ -604,7 +659,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クランク"
+    "DeveloperComment": "クランク",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Curse",
@@ -615,7 +671,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "カース"
+    "DeveloperComment": "カース",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "CylinderKey",
@@ -626,6 +683,7 @@
     "MaxStack": 20,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "CylinderKey"
   },
   {
@@ -637,7 +695,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デッドサイレンス"
+    "DeveloperComment": "デッドサイレンス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Depressant",
@@ -649,6 +708,7 @@
     "WeaponId": "Depressant",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Depressant"
   },
   {
@@ -660,7 +720,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デザイア"
+    "DeveloperComment": "デザイア",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Desire_p",
@@ -671,7 +732,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デザイア+"
+    "DeveloperComment": "デザイア+",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Desperation",
@@ -682,7 +744,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デスペレーション"
+    "DeveloperComment": "デスペレーション",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Destroy",
@@ -693,7 +756,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デストロイ"
+    "DeveloperComment": "デストロイ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Destroy_p",
@@ -704,7 +768,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デストロイプラス"
+    "DeveloperComment": "デストロイプラス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Destroy_pp",
@@ -715,7 +780,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "デストロイプラスプラス"
+    "DeveloperComment": "デストロイプラスプラス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "DlcKey1",
@@ -725,7 +791,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "Ch7_4解放キー(Ch7_1用)"
+    "DeveloperComment": "Ch7_4解放キー(Ch7_1用)",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "DlcKey2",
@@ -735,7 +802,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "Ch7_4解放キー(Ch7_2用)"
+    "DeveloperComment": "Ch7_4解放キー(Ch7_2用)",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "DlcKey3",
@@ -746,7 +814,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "Ch7_4解放キー(Ch7_3用)"
+    "DeveloperComment": "Ch7_4解放キー(Ch7_3用)",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Draw_2",
@@ -757,7 +826,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「2」※山札に残っている場合のみ「2」のカードを引く。"
+    "DeveloperComment": "ドロー「2」※山札に残っている場合のみ「2」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_2p",
@@ -768,7 +838,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「2」※山札に残っている場合のみ「2」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「2」※山札に残っている場合のみ「2」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_3",
@@ -779,7 +850,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「3」※山札に残っている場合のみ、「3」のカードを引く。"
+    "DeveloperComment": "ドロー「3」※山札に残っている場合のみ、「3」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_3p",
@@ -790,7 +862,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「3」※山札に残っている場合のみ「3」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「3」※山札に残っている場合のみ「3」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_4",
@@ -801,7 +874,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「4」※山札に残っている場合のみ「4」のカードを引く。"
+    "DeveloperComment": "ドロー「4」※山札に残っている場合のみ「4」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_4p",
@@ -812,7 +886,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「4」※山札に残っている場合のみ「4」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「4」※山札に残っている場合のみ「4」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_5",
@@ -823,7 +898,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「5」※山札に残っている場合のみ「5」のカードを引く。"
+    "DeveloperComment": "ドロー「5」※山札に残っている場合のみ「5」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_5p",
@@ -834,7 +910,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「5」※山札に残っている場合のみ「5」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「5」※山札に残っている場合のみ「5」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_6",
@@ -845,7 +922,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「6」※山札に残っている場合のみ「6」のカードを引く。"
+    "DeveloperComment": "ドロー「6」※山札に残っている場合のみ「6」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_6p",
@@ -856,7 +934,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「6」※山札に残っている場合のみ「6」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「6」※山札に残っている場合のみ「6」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_7",
@@ -867,7 +946,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「7」※山札に残っている場合のみ「7」のカードを引く。"
+    "DeveloperComment": "ドロー「7」※山札に残っている場合のみ「7」のカードを引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Draw_7p",
@@ -878,7 +958,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ドロー「7」※山札に残っている場合のみ「7」のカードを引く。さらにSPカードを1枚引く。"
+    "DeveloperComment": "ドロー「7」※山札に残っている場合のみ「7」のカードを引く。さらにSPカードを1枚引く。",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "DummyAxe",
@@ -888,7 +969,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "玩具の手斧"
+    "DeveloperComment": "玩具の手斧",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "DybbukMedicine",
@@ -899,6 +981,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "血清",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "DybbukMedicine"
   },
   {
@@ -910,6 +993,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "歩きやすい靴",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "EasyBoots"
   },
   {
@@ -922,6 +1006,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "イーサンマストダイ専用歩きやすい靴",
+    "SourceUserFile": "keyitemsettings_emd.user.2",
     "ItemId": "EasyBoots_IMD"
   },
   {
@@ -933,6 +1018,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "EntranceHallKey"
   },
   {
@@ -944,7 +1030,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "エスケープ"
+    "DeveloperComment": "エスケープ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "EthanCarKey",
@@ -955,6 +1042,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "イーサンの車のカギ",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "EthanCarKey"
   },
   {
@@ -966,6 +1054,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "イーサンの足",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "EthanLeg"
   },
   {
@@ -976,7 +1065,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "エレベータにはめるケーブル"
+    "DeveloperComment": "エレベータにはめるケーブル",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "EvelynRadar",
@@ -988,6 +1078,7 @@
     "WeaponId": "EvelynRadar",
     "CanStoreInItemBox": false,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "EvelynRadar"
   },
   {
@@ -998,7 +1089,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "エブリンレーダー(ミア記憶無し状態)"
+    "DeveloperComment": "エブリンレーダー(ミア記憶無し状態)",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "EvelynRadar2",
@@ -1008,7 +1100,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "エブリンレーダー(ミア過去)"
+    "DeveloperComment": "エブリンレーダー(ミア過去)",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "EvelynRadar3",
@@ -1018,7 +1111,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "エブリンレーダー(ミア現在)"
+    "DeveloperComment": "エブリンレーダー(ミア現在)",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "EvelynRadar4",
@@ -1028,7 +1122,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "エブリンレーダー(イーサン用)"
+    "DeveloperComment": "エブリンレーダー(イーサン用)",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "EvOpener",
@@ -1038,7 +1133,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "エレベータのフタを開ける物"
+    "DeveloperComment": "エレベータのフタを開ける物",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Exchange",
@@ -1049,7 +1145,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "エクスチェンジ"
+    "DeveloperComment": "エクスチェンジ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "EyeDrops",
@@ -1061,6 +1158,7 @@
     "WeaponId": "EyeDrops",
     "CanStoreInItemBox": true,
     "DeveloperComment": "目薬（仮）",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "EyeDrops"
   },
   {
@@ -1072,6 +1170,7 @@
     "MaxStack": 5,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "FlameBulletS"
   },
   {
@@ -1082,7 +1181,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "Ch3-1床下ドアのカギ"
+    "DeveloperComment": "Ch3-1床下ドアのカギ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Flower",
@@ -1092,7 +1192,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "花"
+    "DeveloperComment": "花",
+    "SourceUserFile": "materialitemsettings.user.2"
   },
   {
     "Id": "food001",
@@ -1103,7 +1204,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スパイス"
+    "DeveloperComment": "スパイス",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food002",
@@ -1114,7 +1216,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "砂糖"
+    "DeveloperComment": "砂糖",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food003",
@@ -1125,7 +1228,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "チーズ"
+    "DeveloperComment": "チーズ",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food004",
@@ -1136,7 +1240,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビール"
+    "DeveloperComment": "ビール",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food005",
@@ -1148,6 +1253,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "フルーツビール",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food005"
   },
   {
@@ -1159,7 +1265,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "安物ワイン"
+    "DeveloperComment": "安物ワイン",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food007",
@@ -1170,7 +1277,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クリュダルヴェイ"
+    "DeveloperComment": "クリュダルヴェイ",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food008",
@@ -1181,7 +1289,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "フルーツ"
+    "DeveloperComment": "フルーツ",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food009",
@@ -1192,7 +1301,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "チキン"
+    "DeveloperComment": "チキン",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food010",
@@ -1204,6 +1314,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "スパイシーチキン",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food010"
   },
   {
@@ -1215,7 +1326,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "シチュー"
+    "DeveloperComment": "シチュー",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food012",
@@ -1227,6 +1339,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "トムヤムクン",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food012"
   },
   {
@@ -1239,6 +1352,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "チーズフォンデュ",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food013"
   },
   {
@@ -1250,7 +1364,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ケーキ"
+    "DeveloperComment": "ケーキ",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food015",
@@ -1262,6 +1377,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "シュガーケーキ",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food015"
   },
   {
@@ -1274,6 +1390,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "チーズケーキ",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food016"
   },
   {
@@ -1286,6 +1403,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "フルーツケーキ",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food017"
   },
   {
@@ -1297,7 +1415,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "甘ったるい生ゴミ"
+    "DeveloperComment": "甘ったるい生ゴミ",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "food019",
@@ -1309,6 +1428,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "ベイカー・スペシャル",
+    "SourceUserFile": "birthdayfoodsetting.user.2",
     "ItemId": "food019"
   },
   {
@@ -1320,6 +1440,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "FoundFootage000"
   },
   {
@@ -1331,6 +1452,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "FoundFootage030"
   },
   {
@@ -1342,6 +1464,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "FoundFootage040"
   },
   {
@@ -1352,7 +1475,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビデオテープ「船を襲う異変」"
+    "DeveloperComment": "ビデオテープ「船を襲う異変」",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Fuse",
@@ -1363,6 +1487,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Fuse"
   },
   {
@@ -1373,7 +1498,8 @@
     "IsUnlockable": false,
     "MaxStack": 10,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ヒューズCh4用"
+    "DeveloperComment": "ヒューズCh4用",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Gift",
@@ -1384,7 +1510,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ギフト"
+    "DeveloperComment": "ギフト",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "GimmickFork",
@@ -1395,7 +1522,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "フォーク"
+    "DeveloperComment": "フォーク",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickForkCh7_4",
@@ -1406,7 +1534,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "釘抜き用フォーク(Ch7_4用)"
+    "DeveloperComment": "釘抜き用フォーク(Ch7_4用)",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "GimmickKnife",
@@ -1419,6 +1548,7 @@
     "WeaponId": "GimmickKnife",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_1.user.2",
     "ItemId": "GimmickKnife"
   },
   {
@@ -1430,7 +1560,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ゾイのライター"
+    "DeveloperComment": "ゾイのライター",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickOpener",
@@ -1441,7 +1572,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "オープナー"
+    "DeveloperComment": "オープナー",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickPictureA",
@@ -1452,7 +1584,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "絵画Ａ"
+    "DeveloperComment": "絵画Ａ",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickPictureB",
@@ -1463,7 +1596,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "絵画Ｂ"
+    "DeveloperComment": "絵画Ｂ",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickPictureC",
@@ -1474,7 +1608,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "絵画Ｃ"
+    "DeveloperComment": "絵画Ｃ",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "GimmickSpoon",
@@ -1485,7 +1620,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スプーン"
+    "DeveloperComment": "スプーン",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "Glasses",
@@ -1497,6 +1633,7 @@
     "WeaponId": "Glasses",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Glasses"
   },
   {
@@ -1507,7 +1644,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "パズル終了後の使う事の出来ない望遠鏡"
+    "DeveloperComment": "パズル終了後の使う事の出来ない望遠鏡",
+    "SourceUserFile": "resourceitemsettings.user.2"
   },
   {
     "Id": "Glasses_Washed",
@@ -1518,6 +1656,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Glasses_Washed"
   },
   {
@@ -1529,7 +1668,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ゴール17"
+    "DeveloperComment": "ゴール17",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Goal_24",
@@ -1540,7 +1680,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ゴール24"
+    "DeveloperComment": "ゴール24",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Goal_27",
@@ -1551,7 +1692,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ゴール27"
+    "DeveloperComment": "ゴール27",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "GoldenBar",
@@ -1564,6 +1706,7 @@
     "WeaponId": "GoldenBar",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2",
     "ItemId": "GoldenBar"
   },
   {
@@ -1575,7 +1718,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2"
   },
   {
     "Id": "GoodLuckCoinA_Buy",
@@ -1586,7 +1730,8 @@
     "Dlc": "DefenseCoinAndMadhouseUnlock",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "幸運のコインA(DL購入版)"
+    "DeveloperComment": "幸運のコインA(DL購入版)",
+    "SourceUserFile": "keyitemsettings_dlcitem_01.user.2"
   },
   {
     "Id": "GoodLuckCoinB_Buy",
@@ -1597,7 +1742,8 @@
     "Dlc": "AttackCoinAndMadhouseUnlock",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "幸運のコインB(DL購入版)"
+    "DeveloperComment": "幸運のコインB(DL購入版)",
+    "SourceUserFile": "keyitemsettings_dlcitem_02.user.2"
   },
   {
     "Id": "GoodLuckCoinC_Buy",
@@ -1608,7 +1754,8 @@
     "Dlc": "InstinctCoinAndMadhouseUnlock",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "幸運のコインC(DL購入版)"
+    "DeveloperComment": "幸運のコインC(DL購入版)",
+    "SourceUserFile": "keyitemsettings_dlcitem_03.user.2"
   },
   {
     "Id": "GoodLuckCoinD_Buy",
@@ -1619,7 +1766,8 @@
     "Dlc": "ReloadCoinAndMadhouseUnlock",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "幸運のコインD(DL購入版)"
+    "DeveloperComment": "幸運のコインD(DL購入版)",
+    "SourceUserFile": "keyitemsettings_dlcitem_04.user.2"
   },
   {
     "Id": "GoodLuckCoinE_Buy",
@@ -1630,7 +1778,8 @@
     "Dlc": "UniversalCoinAndMadhouseUnlock",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "幸運のコインE(DL購入版)"
+    "DeveloperComment": "幸運のコインE(DL購入版)",
+    "SourceUserFile": "keyitemsettings_dlcitem_05.user.2"
   },
   {
     "Id": "GreenHouseKey",
@@ -1641,7 +1790,8 @@
     "Dlc": "EthanMustDie",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "グリーンハウスのカギ"
+    "DeveloperComment": "グリーンハウスのカギ",
+    "SourceUserFile": "keyitemsettings_emd.user.2"
   },
   {
     "Id": "GrenadeLauncher",
@@ -1653,6 +1803,7 @@
     "WeaponId": "GrenadeLauncher",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "GrenadeLauncher"
   },
   {
@@ -1664,6 +1815,7 @@
     "MaxStack": 10,
     "CanStoreInItemBox": true,
     "DeveloperComment": "ガンパウダー",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "Gunpowder"
   },
   {
@@ -1676,6 +1828,7 @@
     "WeaponId": "HandAxe",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "HandAxe"
   },
   {
@@ -1687,6 +1840,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "HandCutOff"
   },
   {
@@ -1699,6 +1853,7 @@
     "WeaponId": "Handgun_Albert",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Handgun_Albert"
   },
   {
@@ -1711,6 +1866,7 @@
     "WeaponId": "Handgun_Albert_Reward",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Handgun_Albert_Reward"
   },
   {
@@ -1723,6 +1879,7 @@
     "WeaponId": "Handgun_G17",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Handgun_G17"
   },
   {
@@ -1735,6 +1892,7 @@
     "WeaponId": "Handgun_M19",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Handgun_M19"
   },
   {
@@ -1747,6 +1905,7 @@
     "WeaponId": "Handgun_MPM",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Handgun_MPM"
   },
   {
@@ -1758,6 +1917,7 @@
     "MaxStack": 30,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "HandgunBullet"
   },
   {
@@ -1769,6 +1929,7 @@
     "MaxStack": 20,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "HandgunBulletL"
   },
   {
@@ -1780,7 +1941,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハピネス"
+    "DeveloperComment": "ハピネス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Herb",
@@ -1791,6 +1953,7 @@
     "MaxStack": 5,
     "CanStoreInItemBox": true,
     "DeveloperComment": "ハーブ",
+    "SourceUserFile": "materialitemsettings.user.2",
     "ItemId": "Herb"
   },
   {
@@ -1804,6 +1967,7 @@
     "WeaponId": "HyperBlaster",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2",
     "ItemId": "HyperBlaster"
   },
   {
@@ -1815,7 +1979,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2"
   },
   {
     "Id": "ItemRope",
@@ -1826,7 +1991,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ロープ"
+    "DeveloperComment": "ロープ",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "Knife",
@@ -1838,6 +2004,7 @@
     "WeaponId": "Knife",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Knife"
   },
   {
@@ -1849,7 +2016,8 @@
     "MaxStack": 1,
     "WeaponId": "Lantern",
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ランタン"
+    "DeveloperComment": "ランタン",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Lantern_C",
@@ -1862,6 +2030,7 @@
     "WeaponId": "Lantern_C",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_1.user.2",
     "ItemId": "Lantern_C"
   },
   {
@@ -1873,7 +2042,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ランタンフックA"
+    "DeveloperComment": "ランタンフックA",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "LanternHookB",
@@ -1884,7 +2054,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ランタンフックB"
+    "DeveloperComment": "ランタンフックB",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "LargeFood",
@@ -1894,7 +2065,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "３スロ食べ物(仮)"
+    "DeveloperComment": "３スロ食べ物(仮)",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "Lighter_Z",
@@ -1907,6 +2079,7 @@
     "WeaponId": "Lighter_Z",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_4.user.2",
     "ItemId": "Lighter_Z"
   },
   {
@@ -1918,7 +2091,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ゾイのライター(装備不可版)"
+    "DeveloperComment": "ゾイのライター(装備不可版)",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "LiquidBomb",
@@ -1930,6 +2104,7 @@
     "WeaponId": "LiquidBomb",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "LiquidBomb"
   },
   {
@@ -1940,7 +2115,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ルーカス館用カードキー1"
+    "DeveloperComment": "ルーカス館用カードキー1",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "LucasCardKey2",
@@ -1950,7 +2126,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ルーカス館用カードキー2"
+    "DeveloperComment": "ルーカス館用カードキー2",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "MachineGun",
@@ -1962,6 +2139,7 @@
     "WeaponId": "MachineGun",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "MachineGun"
   },
   {
@@ -1973,6 +2151,7 @@
     "MaxStack": 300,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "MachineGunBullet"
   },
   {
@@ -1983,7 +2162,8 @@
     "IsUnlockable": false,
     "MaxStack": 10,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "弱酸液(旧マグネシウム)"
+    "DeveloperComment": "弱酸液(旧マグネシウム)",
+    "SourceUserFile": "materialitemsettings.user.2"
   },
   {
     "Id": "Magnum",
@@ -1995,6 +2175,7 @@
     "WeaponId": "Magnum",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Magnum"
   },
   {
@@ -2006,6 +2187,7 @@
     "MaxStack": 20,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "MagnumBullet"
   },
   {
@@ -2016,7 +2198,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ミアのメール"
+    "DeveloperComment": "ミアのメール",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Map",
@@ -2026,7 +2209,8 @@
     "IsUnlockable": false,
     "MaxStack": 20,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "現）3-1で取得するマップとして利用している旧）汎用マップ用ItemID(Chapter3用まとめID)"
+    "DeveloperComment": "現）3-1で取得するマップとして利用している旧）汎用マップ用ItemID(Chapter3用まとめID)",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "MasterKey",
@@ -2037,6 +2221,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "3-4で取る「最後の鍵」「マスターキー」",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "MasterKey"
   },
   {
@@ -2048,6 +2233,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "MiaDriversLicense"
   },
   {
@@ -2060,6 +2246,7 @@
     "WeaponId": "MiaKnife",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "MiaKnife"
   },
   {
@@ -2070,7 +2257,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "２スロ食べ物（仮）"
+    "DeveloperComment": "２スロ食べ物（仮）",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "MindShift",
@@ -2081,7 +2269,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "マインドシフト"
+    "DeveloperComment": "マインドシフト",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "MindShift_p",
@@ -2092,7 +2281,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "マインドシフト＋"
+    "DeveloperComment": "マインドシフト＋",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "MorgueKey",
@@ -2103,6 +2293,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "MorgueKey"
   },
   {
@@ -2114,7 +2305,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "オブリビオン"
+    "DeveloperComment": "オブリビオン",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Order",
@@ -2124,7 +2316,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ミアの指令書"
+    "DeveloperComment": "ミアの指令書",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "PendulumClock",
@@ -2134,7 +2327,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "振り子時計の振り子"
+    "DeveloperComment": "振り子時計の振り子",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "PerfectDraw",
@@ -2145,7 +2339,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "パーフェクトドロー"
+    "DeveloperComment": "パーフェクトドロー",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "PerfectDraw_p",
@@ -2156,7 +2351,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "パーフェクトドロープラス"
+    "DeveloperComment": "パーフェクトドロープラス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "PerfectDraw_x",
@@ -2167,7 +2363,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "パーフェクトドローオメガ"
+    "DeveloperComment": "パーフェクトドローオメガ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "PortableStove",
@@ -2178,7 +2375,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "小型コンロ"
+    "DeveloperComment": "小型コンロ",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "PortableStoveFuel",
@@ -2189,7 +2387,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "小型コンロ+固形燃料"
+    "DeveloperComment": "小型コンロ+固形燃料",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "PowerUpCoin01A",
@@ -2199,7 +2398,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードモード用攻撃力UPコイン"
+    "DeveloperComment": "ハードモード用攻撃力UPコイン",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "PowerUpCoin01B",
@@ -2209,7 +2409,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードモード用防御力UPコイン"
+    "DeveloperComment": "ハードモード用防御力UPコイン",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "ProposalBook",
@@ -2219,7 +2420,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "取材企画書"
+    "DeveloperComment": "取材企画書",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "ProposalBookFf",
@@ -2229,7 +2431,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "取材企画書(FF用)"
+    "DeveloperComment": "取材企画書(FF用)",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Quill",
@@ -2240,6 +2443,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Quill"
   },
   {
@@ -2253,6 +2457,7 @@
     "WeaponId": "RedBlaster",
     "CanStoreInItemBox": false,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_birthday.user.2",
     "ItemId": "RedBlaster"
   },
   {
@@ -2264,6 +2469,7 @@
     "MaxStack": 3,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "RemedyL"
   },
   {
@@ -2275,6 +2481,7 @@
     "MaxStack": 3,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "RemedyM"
   },
   {
@@ -2286,7 +2493,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リムーブ"
+    "DeveloperComment": "リムーブ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "RepairKit",
@@ -2296,7 +2504,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リペアキット"
+    "DeveloperComment": "リペアキット",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "Replace",
@@ -2307,7 +2516,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リプレース"
+    "DeveloperComment": "リプレース",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "ResurrectionMedium",
@@ -2319,6 +2529,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2",
     "ItemId": "ResurrectionMedium"
   },
   {
@@ -2330,7 +2541,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リターン"
+    "DeveloperComment": "リターン",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "SafeBottle",
@@ -2342,6 +2554,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "緊急回避用割れたビン",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2",
     "ItemId": "SafeBottle"
   },
   {
@@ -2352,7 +2565,8 @@
     "IsUnlockable": false,
     "MaxStack": 99,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "セーブ用テープ"
+    "DeveloperComment": "セーブ用テープ",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "ScrewFinger",
@@ -2363,6 +2577,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "ScrewFinger"
   },
   {
@@ -2373,7 +2588,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "3-5最終ムカデジャック戦のあとに取得する完成した状態の血清"
+    "DeveloperComment": "3-5最終ムカデジャック戦のあとに取得する完成した状態の血清",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "SerumMaterialA",
@@ -2384,6 +2600,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SerumMaterialA"
   },
   {
@@ -2395,6 +2612,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SerumMaterialB"
   },
   {
@@ -2405,7 +2623,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": false,
-    "DeveloperComment": "抗E型血清"
+    "DeveloperComment": "抗E型血清",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "ShadowPiece4",
@@ -2416,7 +2635,8 @@
     "Dlc": "Bedroom",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "影パズルオブジェクト"
+    "DeveloperComment": "影パズルオブジェクト",
+    "SourceUserFile": "keyitemsettings_c07_1.user.2"
   },
   {
     "Id": "ShieldAssault",
@@ -2427,7 +2647,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "シールドアサルト"
+    "DeveloperComment": "シールドアサルト",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "ShieldAssault_p",
@@ -2438,7 +2659,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "シールドアサルト+"
+    "DeveloperComment": "シールドアサルト+",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "Shotgun_DB",
@@ -2450,6 +2672,7 @@
     "WeaponId": "Shotgun_DB",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Shotgun_DB"
   },
   {
@@ -2462,6 +2685,7 @@
     "WeaponId": "Shotgun_M37",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Shotgun_M37"
   },
   {
@@ -2473,6 +2697,7 @@
     "MaxStack": 30,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "ShotgunBullet"
   },
   {
@@ -2484,6 +2709,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SilhouettePazzlePiece"
   },
   {
@@ -2494,7 +2720,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "子供部屋用影絵パズルピース"
+    "DeveloperComment": "子供部屋用影絵パズルピース",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "SilhouettePazzlePieceOldHouse",
@@ -2504,7 +2731,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "旧館用影絵パズルピース"
+    "DeveloperComment": "旧館用影絵パズルピース",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "SkinnyDoll",
@@ -2515,6 +2743,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SkinnyDoll"
   },
   {
@@ -2526,7 +2755,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インフィニティ"
+    "DeveloperComment": "インフィニティ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl001no",
@@ -2537,7 +2767,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インフィニティ"
+    "DeveloperComment": "インフィニティ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl002",
@@ -2548,7 +2779,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リジェネレート"
+    "DeveloperComment": "リジェネレート",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl002no",
@@ -2559,7 +2791,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リジェネレート"
+    "DeveloperComment": "リジェネレート",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl003",
@@ -2570,7 +2803,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クレアボヤンス"
+    "DeveloperComment": "クレアボヤンス",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl003no",
@@ -2581,7 +2815,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クレアボヤンス"
+    "DeveloperComment": "クレアボヤンス",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl004",
@@ -2592,7 +2827,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーαⅡ"
+    "DeveloperComment": "タイムリカバーαⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl004no",
@@ -2603,7 +2839,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーαⅡ"
+    "DeveloperComment": "タイムリカバーαⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl005",
@@ -2614,7 +2851,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーαⅠ]"
+    "DeveloperComment": "タイムリカバーαⅠ]",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl005no",
@@ -2625,7 +2863,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーαⅠ]"
+    "DeveloperComment": "タイムリカバーαⅠ]",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl006",
@@ -2636,7 +2875,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーβⅡ"
+    "DeveloperComment": "タイムリカバーβⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl006no",
@@ -2647,7 +2887,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーβⅡ"
+    "DeveloperComment": "タイムリカバーβⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl007",
@@ -2658,7 +2899,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーβⅠ"
+    "DeveloperComment": "タイムリカバーβⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl007no",
@@ -2669,7 +2911,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タイムリカバーβⅠ"
+    "DeveloperComment": "タイムリカバーβⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl008",
@@ -2680,7 +2923,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードボディⅡ"
+    "DeveloperComment": "ハードボディⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl008no",
@@ -2691,7 +2935,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードボディⅡ"
+    "DeveloperComment": "ハードボディⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl009",
@@ -2702,7 +2947,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードボディⅠ"
+    "DeveloperComment": "ハードボディⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl009no",
@@ -2713,7 +2959,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ハードボディⅠ"
+    "DeveloperComment": "ハードボディⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl010",
@@ -2724,7 +2971,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スピーダーⅡ"
+    "DeveloperComment": "スピーダーⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl010no",
@@ -2735,7 +2983,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スピーダーⅡ"
+    "DeveloperComment": "スピーダーⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl011",
@@ -2746,7 +2995,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スピーダーⅠ"
+    "DeveloperComment": "スピーダーⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl011no",
@@ -2757,7 +3007,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "スピーダーⅠ"
+    "DeveloperComment": "スピーダーⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl012",
@@ -2768,7 +3019,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビッグガンⅡ"
+    "DeveloperComment": "ビッグガンⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl012no",
@@ -2779,7 +3031,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビッグガンⅡ"
+    "DeveloperComment": "ビッグガンⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl013",
@@ -2790,7 +3043,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビッグガンⅠ"
+    "DeveloperComment": "ビッグガンⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl013no",
@@ -2801,7 +3055,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ビッグガンⅠ"
+    "DeveloperComment": "ビッグガンⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl014",
@@ -2812,7 +3067,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インパクトⅡ"
+    "DeveloperComment": "インパクトⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl014no",
@@ -2823,7 +3079,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インパクトⅡ"
+    "DeveloperComment": "インパクトⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl015",
@@ -2834,7 +3091,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インパクトⅠ"
+    "DeveloperComment": "インパクトⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl015no",
@@ -2845,7 +3103,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インパクトⅠ"
+    "DeveloperComment": "インパクトⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl016",
@@ -2856,7 +3115,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タフネスⅡ"
+    "DeveloperComment": "タフネスⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl016no",
@@ -2867,7 +3127,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タフネスⅡ"
+    "DeveloperComment": "タフネスⅡ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl017",
@@ -2878,7 +3139,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タフネスⅠ"
+    "DeveloperComment": "タフネスⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl017no",
@@ -2889,7 +3151,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タフネスⅠ"
+    "DeveloperComment": "タフネスⅠ",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl018",
@@ -2900,7 +3163,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ガーディアン"
+    "DeveloperComment": "ガーディアン",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl018no",
@@ -2911,7 +3175,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ガーディアン"
+    "DeveloperComment": "ガーディアン",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl019",
@@ -2922,7 +3187,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クイックロード"
+    "DeveloperComment": "クイックロード",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl019no",
@@ -2933,7 +3199,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "クイックロード"
+    "DeveloperComment": "クイックロード",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl020",
@@ -2944,7 +3211,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "マゾヒスト"
+    "DeveloperComment": "マゾヒスト",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl020no",
@@ -2955,7 +3223,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "マゾヒスト"
+    "DeveloperComment": "マゾヒスト",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl021",
@@ -2966,7 +3235,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リベンジアタック"
+    "DeveloperComment": "リベンジアタック",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl021no",
@@ -2977,7 +3247,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リベンジアタック"
+    "DeveloperComment": "リベンジアタック",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl022",
@@ -2988,7 +3259,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リベンジスピード"
+    "DeveloperComment": "リベンジスピード",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl022no",
@@ -2999,7 +3271,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "リベンジスピード"
+    "DeveloperComment": "リベンジスピード",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl023",
@@ -3010,7 +3283,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インファイター"
+    "DeveloperComment": "インファイター",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "skl023no",
@@ -3021,7 +3295,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "インファイター"
+    "DeveloperComment": "インファイター",
+    "SourceUserFile": "birthdayskillitemsetting.user.2"
   },
   {
     "Id": "SmallFood",
@@ -3031,7 +3306,8 @@
     "Dlc": "Jacks55thBirthday",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "1スロ食べ物（仮）"
+    "DeveloperComment": "1スロ食べ物（仮）",
+    "SourceUserFile": "birthdayfoodsetting.user.2"
   },
   {
     "Id": "SpareKey",
@@ -3042,6 +3318,7 @@
     "MaxStack": 10,
     "CanStoreInItemBox": true,
     "DeveloperComment": "溶解剤(旧スペアキー)",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SpareKey"
   },
   {
@@ -3053,7 +3330,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "SPチェンジ"
+    "DeveloperComment": "SPチェンジ",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "SPChange_p",
@@ -3064,7 +3342,8 @@
     "Dlc": "TwentyOne",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "SPチェンジプラス"
+    "DeveloperComment": "SPチェンジプラス",
+    "SourceUserFile": "keyitemsettings_c07_2.user.2"
   },
   {
     "Id": "SpringCoil",
@@ -3075,6 +3354,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "SpringCoil"
   },
   {
@@ -3086,7 +3366,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpBurner",
@@ -3097,7 +3378,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：バーナー"
+    "DeveloperComment": "強化：バーナー",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpCrusher",
@@ -3108,7 +3390,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：粉砕機"
+    "DeveloperComment": "強化：粉砕機",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpGrenade",
@@ -3119,7 +3402,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：グレネード"
+    "DeveloperComment": "強化：グレネード",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpHandgun",
@@ -3130,7 +3414,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：ハンドガン"
+    "DeveloperComment": "強化：ハンドガン",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpHP",
@@ -3141,7 +3426,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：体力"
+    "DeveloperComment": "強化：体力",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpMachinegun",
@@ -3152,7 +3438,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：マシンガン"
+    "DeveloperComment": "強化：マシンガン",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpMagnum",
@@ -3163,7 +3450,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：マグナム"
+    "DeveloperComment": "強化：マグナム",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpMeleeWP",
@@ -3174,7 +3462,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：近接武器"
+    "DeveloperComment": "強化：近接武器",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpMoveSpeed",
@@ -3185,7 +3474,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：移動速度"
+    "DeveloperComment": "強化：移動速度",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpReload",
@@ -3196,7 +3486,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": ""
+    "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpRemedy",
@@ -3207,7 +3498,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：回復薬の回復倍率"
+    "DeveloperComment": "強化：回復薬の回復倍率",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "StepUpShotgun",
@@ -3218,7 +3510,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "強化：ショットガン"
+    "DeveloperComment": "強化：ショットガン",
+    "SourceUserFile": "resourceitemsettings_chapter7_3.user.2"
   },
   {
     "Id": "Stimulant",
@@ -3230,6 +3523,7 @@
     "WeaponId": "Stimulant",
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "resourceitemsettings.user.2",
     "ItemId": "Stimulant"
   },
   {
@@ -3240,7 +3534,8 @@
     "IsUnlockable": false,
     "MaxStack": 5,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "硝酸粉(旧合成洗剤)"
+    "DeveloperComment": "硝酸粉(旧合成洗剤)",
+    "SourceUserFile": "materialitemsettings.user.2"
   },
   {
     "Id": "TalismanKey",
@@ -3251,6 +3546,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "TalismanKey"
   },
   {
@@ -3263,6 +3559,7 @@
     "WeaponId": "Timebomb",
     "CanStoreInItemBox": true,
     "DeveloperComment": "ルーカスパズルタイマー爆弾",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Timebomb"
   },
   {
@@ -3274,6 +3571,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "ToyShotgun"
   },
   {
@@ -3284,7 +3582,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "バリケード（表示用）"
+    "DeveloperComment": "バリケード（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Drum",
@@ -3295,7 +3594,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "可燃ドラム缶（表示用）"
+    "DeveloperComment": "可燃ドラム缶（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Mine",
@@ -3306,7 +3606,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "神経ガストラップ（表示用）"
+    "DeveloperComment": "神経ガストラップ（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Turret",
@@ -3317,7 +3618,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タレット（表示用）"
+    "DeveloperComment": "タレット（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Turret_LV1",
@@ -3328,7 +3630,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タレットLV1（表示用）"
+    "DeveloperComment": "タレットLV1（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Turret_LV2",
@@ -3339,7 +3642,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タレットLV2（表示用）"
+    "DeveloperComment": "タレットLV2（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Turret_LV3",
@@ -3350,7 +3654,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "タレットLV3（表示用）"
+    "DeveloperComment": "タレットLV3（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "Trap_Wire",
@@ -3361,7 +3666,8 @@
     "Dlc": "Nightmare",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "ワイヤートラップ（表示用）"
+    "DeveloperComment": "ワイヤートラップ（表示用）",
+    "SourceUserFile": "keyitemsettings_c07_3.user.2"
   },
   {
     "Id": "TreasureMap01",
@@ -3371,7 +3677,8 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "宝の地図01"
+    "DeveloperComment": "宝の地図01",
+    "SourceUserFile": "keyitemsettings.user.2"
   },
   {
     "Id": "TreasureMap02",
@@ -3382,6 +3689,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "宝の地図02(合体後)",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "TreasureMap02"
   },
   {
@@ -3393,6 +3701,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "宝の地図03(合体後)",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "TreasureMap03"
   },
   {
@@ -3404,7 +3713,8 @@
     "Dlc": "Daughters",
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "トロフィーにはめるスイッチ"
+    "DeveloperComment": "トロフィーにはめるスイッチ",
+    "SourceUserFile": "keyitemsettings_c07_4.user.2"
   },
   {
     "Id": "UnlimitedAmmo",
@@ -3415,6 +3725,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "無限弾薬",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "UnlimitedAmmo"
   },
   {
@@ -3426,6 +3737,7 @@
     "MaxStack": 1,
     "CanStoreInItemBox": true,
     "DeveloperComment": "",
+    "SourceUserFile": "keyitemsettings.user.2",
     "ItemId": "Valve"
   },
   {
@@ -3436,6 +3748,7 @@
     "IsUnlockable": false,
     "MaxStack": 1,
     "CanStoreInItemBox": true,
-    "DeveloperComment": "作業場のカギ"
+    "DeveloperComment": "作業場のカギ",
+    "SourceUserFile": "keyitemsettings.user.2"
   }
 ]

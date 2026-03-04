@@ -172,7 +172,7 @@ internal static class RE7RandomizerConfigurationDefinition
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"inventory-stack-limit-{itemId}",
+                Id = $"inventory-stack-limit-{itemId.ToLowerInvariant()}",
                 Label = itemName,
                 Type = "range",
                 Min = 0,

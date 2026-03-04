@@ -128,7 +128,8 @@ internal class ItemDefinitionGenerator : IFileGenerator
                     WeaponId = EnumExtensions.ParseOrNull<WeaponID>(item.ItemDataID),
                     CanStoreInItemBox = item.CanStoreItembox,
                     DeveloperComment = item._Comment.RemoveControlCharacters(),
-                    IsUnlockable = IsUnlockable(item.ItemDataID)
+                    IsUnlockable = IsUnlockable(item.ItemDataID),
+                    SourceUserFile = Path.GetFileName(path)
                 });
             }
             AnsiConsole.MarkupLine($"[green]Extracted {items.Count} item definitions from {path.Without(_itemPathPrefix)}[/].");
