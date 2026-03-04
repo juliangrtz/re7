@@ -90,11 +90,19 @@ internal class ItemPlacementGenerator : IFileGenerator
         }
         else if (path.Contains("chapter4") || path.Contains("c04"))
         {
-            return 4; // Mia
+            return 4;
         }
         else if (path.Contains("chapter7") || path.Contains("c07"))
         {
-            return 7; // DLC
+            return 7; // Banned Footage DLCs
+        }
+        else if (path.Contains("chapter8") || path.Contains("c08"))
+        {
+            return 8; // Not a Hero DLC
+        }
+        else if (path.Contains("chapter9") || path.Contains("c09"))
+        {
+            return 9; // End of Zoe DLC
         }
         else
         {
@@ -131,7 +139,7 @@ internal class ItemPlacementGenerator : IFileGenerator
             {
                 var path = _pakList.GetPath(hash);
                 return path != null
-                       && _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
+                       //&& _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
                        && path.Contains(".scn.20");
             })
             .ToList();

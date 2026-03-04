@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.REEngine;
+﻿using Biohazard.BioRand.RE7.DLC;
+using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -29,10 +30,14 @@ public class ItemPlacement
     public string Container { get; set; } = "";
     public string Mesh { get; set; } = "";
     public string Material { get; set; } = "";
+    public DlcType? Dlc => DlcTypeExtensions.FromPakFileName(Container);
 
     [JsonIgnore]
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
 
     [JsonIgnore]
     public EulerAngles Euler => new(Rotation);
+
+    [JsonIgnore]
+    public bool IsDlcItem => Chapter is not -1 and > 4;
 }
