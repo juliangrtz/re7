@@ -45,6 +45,7 @@ internal class ItemDropRepository
 
     public static ItemDropRepository Default
     {
+
         get
         {
             if (_default == null)
@@ -65,14 +66,14 @@ internal class ItemDropRepository
     public const string CategoryNone = "None";
 
     // High value drops
-    public const string Weapon = "Weapon";
-    public const string AntiqueCoin = "Antique coin";
-    public const string DlcCoin = "DLC coin";
-    public const string LockPick = "Lock Pick";
-    public const string TreasurePhoto = "Treasure Photo";
-    public const string RepairKit = "Repair Kit";
-    public const string Stabilizer = "Stabilizer";
-    public const string Steroids = "Steroids";
+    public const string Weapon = "weapon";
+    public const string AntiqueCoin = "antique-coin";
+    public const string DlcCoin = "dlc-coin";
+    public const string LockPick = "lock-pick";
+    public const string TreasurePhoto = "treasure-photo";
+    public const string RepairKit = "repair-kit";
+    public const string Stabilizer = "stabilizer";
+    public const string Steroids = "steroids";
 
     public string GetCategory(ItemID id) => id switch
     {

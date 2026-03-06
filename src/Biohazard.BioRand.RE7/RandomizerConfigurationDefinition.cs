@@ -159,7 +159,7 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = drop,
+                Label = drop.Replace("-", "").ToTitleCase(),
                 Type = "switch",
                 Default = false
             });
