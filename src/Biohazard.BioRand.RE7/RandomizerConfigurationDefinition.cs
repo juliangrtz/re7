@@ -9,6 +9,7 @@ namespace Biohazard.BioRand.RE7;
 internal static class RandomizerConfigurationDefinition
 {
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly ItemDropRepository itemDrops = ItemDropRepository.Default;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
@@ -31,6 +32,140 @@ internal static class RandomizerConfigurationDefinition
         });
 
         #endregion General
+
+        #region Items
+
+        page = configDefinition.CreatePage("Items");
+        group = page.CreateGroup("");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-items",
+            Label = "Random Items",
+            Description = "Whether to randomize the static items.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-key-items",
+            Label = "Random Key Item Locations",
+            Description = "Whether to randomize key item locations.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-bird-cage-weapons",
+            Label = "Random Bird Cage Weapons",
+            Description = "Whether to randomize the bird cage weapons. " +
+            "The required amount of antique coins is unchanged!",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-bird-cage-drugs",
+            Label = "Random Bird Cage Drugs",
+            Description = "Whether to randomize the bird cage drugs (stabilizers and steroids). " +
+            "The required amount of antique coins is unchanged!",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"item-drop-respect-difficulty",
+            Label = "Ammo drops respect the difficulty",
+            Description = "Will drop fewer items on Easy/Normal and more items on Madhouse.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"item-drop-ammo-only-available-weapons",
+            Label = "Ammo for available weapons only",
+            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"item-drop-ammo-min",
+            Label = "Min. Ammo Quantity",
+            Description = "The minimum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.1
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"item-drop-ammo-max",
+            Label = "Max. Ammo Quantity",
+            Description = "The maximum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 10,
+            Step = 0.1,
+            Default = 1
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"preserve-item-models",
+            Label = "Preserve Item Models",
+            Description = "When randomizing items, keep the original item model in the world.",
+            Type = "switch",
+            Default = false,
+            Advanced = true
+        });
+
+        group = page.CreateGroup("General Drops");
+        var drops = itemDrops.GenericDrops.OrderBy(drop => itemDefinitions.FromId(drop.ToString())!.CategoryType);
+        foreach (var drop in drops)
+        {
+            var category = itemDrops.GetCategory(drop);
+            var (bgColor, textColor) = itemDrops.GetColor(category);
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"item-drop-ratio-{drop}",
+                Label = itemDefinitions.FromId(drop.ToString())!.Name,
+                Category = new GroupItemCategory()
+                {
+                    Label = category,
+                    BackgroundColor = bgColor,
+                    TextColor = textColor,
+                },
+                Type = "range",
+                Min = 0,
+                Max = 1,
+                Step = 0.01,
+                Default = 0.5
+            });
+        }
+
+        group = page.CreateGroup("Valuable Drops");
+        group.Advanced = true;
+        foreach (var drop in itemDrops.HighValueDrops)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"item-drop-valuable-{drop}",
+                Label = drop,
+                Type = "switch",
+                Default = false
+            });
+        }
+
+        #endregion Items
 
         #region Inventory
 

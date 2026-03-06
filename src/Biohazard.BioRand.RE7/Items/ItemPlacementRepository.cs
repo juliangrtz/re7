@@ -27,7 +27,7 @@ public class ItemPlacementRepository : List<ItemPlacement>
 
     private void Initialize()
     {
-        PlacementToItemMap = this.ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id));
+        PlacementToItemMap = this.ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id)!);
         IdToItemsMap = this.GroupBy(x => x.Id).ToImmutableDictionary(g => g.Key, g => g.ToList());
         MainGamePlacements = this.Where(x => x.Dlc == null).ToImmutableList();
     }
