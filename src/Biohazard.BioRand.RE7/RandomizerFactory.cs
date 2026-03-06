@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace Biohazard.BioRand.RE7;
 
-internal class RE7RandomizerFactory
+internal class RandomizerFactory
 {
-    public static RE7RandomizerFactory Default { get; } = new RE7RandomizerFactory();
+    public static RandomizerFactory Default { get; } = new RandomizerFactory();
 
     private static Assembly CurrentAssembly => Assembly.GetExecutingAssembly();
     public Version CurrentVersion { get; } = GetCurrentVersion();
@@ -13,7 +13,7 @@ internal class RE7RandomizerFactory
     public string CurrentVersionInfo => $"BioRand for Resident Evil 7 v{CurrentVersion.Major}.{CurrentVersion.Minor}.{CurrentVersion.Build} ({GitHash})";
     public string GitHash { get; } = GetGitHash();
 
-    private RE7RandomizerFactory()
+    private RandomizerFactory()
     {
     }
 

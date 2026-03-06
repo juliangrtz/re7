@@ -3,6 +3,7 @@
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 #pragma warning disable IDE0001 // Underscore as first character in properties
 
+using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
 namespace app
@@ -45,7 +46,13 @@ namespace app
         public int ItemStackNum { get; set; }
         public int RoomId { get; set; }
         public bool _IsOverwriteDifficultItemNumSetting { get; set; }
-        public object _DifficultItemNumSetting { get; set; }
+        public DifficultItemNumRateData _DifficultItemNumSetting { get; set; }
+
+        public class DifficultItemNumRateData
+        {
+            public int EasyNum { get; set; }
+            public int HardNum { get; set; }
+        }
     }
 
     public class ItemDropDestruct
@@ -119,6 +126,95 @@ namespace app
         public System.Guid _TargetGameObject { get; set; }
         public Enums.app.Inventory.ExtendLvDef _SetExtendLv { get; set; }
         public bool isSetExtendLv { get; set; }
+    }
+
+    internal class WeaponGun
+    {
+        public bool Enabled { get; set; } = new();
+        public Enums.app.WeaponID WeaponID { get; set; }
+        public object EquipParam { get; set; }
+        public RszUserDataNode WeaponData { get; set; }
+        public bool IsInventoryWeapon { get; set; }
+        public Enums.app.CharacterDefine.Type UserType { get; set; }
+        public uint HitMaterial { get; set; }
+        public RszUserDataNode HoldAdaptiveTriggerUserData { get; set; }
+        public RszUserDataNode FireAdaptiveTriggerUserData { get; set; }
+        public RszUserDataNode ActiveAdaptiveTriggerUserData { get; set; }
+        public Enums.app.WeaponGun.BulletTypeSwitch BulletTypeForSound { get; set; }
+        public RszUserDataNode WeaponGunParameter { get; set; }
+        public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+
+        internal class BulletInfo
+        {
+            public Enums.app.ItemID BulletItemID { get; set; }
+            public int LoadNum { get; set; }
+        }
+
+        internal class BulletTypeSwitch
+        {
+            public int value__ { get; set; }
+        }
+
+        internal class StateName
+        {
+        }
+
+        internal class WeaponGunSaveData
+        {
+            public bool IsValid { get; set; }
+            public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+            public Enums.app.ItemID BulletItemID { get; set; }
+        }
+    }
+
+    internal class CH8WeaponGun : WeaponGun
+    {
+    }
+
+    internal class CH9PlayerKnuckleWeapon : WeaponGun
+    {
+    }
+
+    internal class CH9WeaponGun : WeaponGun
+    {
+    }
+
+    internal class WeaponData
+    {
+        public System.Collections.Generic.List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
+
+        internal class EquipData
+        {
+            public app.ObjectID OwnerID { get; set; }
+            public object AttachParam { get; set; }
+        }
+    }
+
+    internal class ObjectID
+    {
+        public Enums.app.Group Group { get; set; }
+        public string CategoryName { get; set; } = "";
+        public string ObjectName { get; set; } = "";
+        public string LayoutName { get; set; } = "";
+    }
+
+    internal class WeaponGunParameter
+    {
+        public int MaxLoadNum { get; set; }
+        public bool IsLoadNumInfinity { get; set; }
+        public bool IsBulletStackNumInfinity { get; set; }
+        public float Range { get; set; }
+        public float AttenuationStart { get; set; }
+        public float AttenuationEnd { get; set; }
+        public float MinAttenuationDamageRate { get; set; }
+        public float Radius { get; set; }
+        public int DiffusionNum { get; set; }
+        public float DiffusionRadius { get; set; }
+        public float AimDiffusionRadius { get; set; }
+        public float RecoilBurstInterval { get; set; }
+        public int RecoilBurstCount { get; set; }
+        public float RecoilYAngle { get; set; }
+        public float RecoilXAngle { get; set; }
     }
 }
 

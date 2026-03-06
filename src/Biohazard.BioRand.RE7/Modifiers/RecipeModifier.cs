@@ -123,14 +123,14 @@ internal class RecipeModifier : Modifier
         logger.Pop();
     }
 
-    public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
         originalRecipes = randomizer.FileRepository.DeserializeUserFile<ItemCombineData>(ItemCombineDataPath)._Datas;
         originalDictCombineData = randomizer.FileRepository.DeserializeUserFile<DictionaryCombineData>(DictionaryCombineDataPath)._Datas;
         LogRecipeState(logger, originalRecipes, originalDictCombineData, beforeModifications: true);
     }
 
-    public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var addNewRecipes = randomizer.GetConfigOption<bool>("recipes-add-new");
         var replaceOriginalRecipes = randomizer.GetConfigOption<bool>("recipes-replace-original");
@@ -188,7 +188,7 @@ internal class RecipeModifier : Modifier
         LogRecipeState(logger, addedRecipes, newDict, beforeModifications: false);
     }
 
-    private static List<DictionaryCombineData.Data> RebuildDictionary(RE7Randomizer randomizer, List<Recipe> newRecipes)
+    private static List<DictionaryCombineData.Data> RebuildDictionary(Randomizer randomizer, List<Recipe> newRecipes)
     {
         var result = new List<DictionaryCombineData.Data>();
         randomizer.FileRepository.ModifyUserFile<DictionaryCombineData>(
@@ -256,7 +256,7 @@ internal class RecipeModifier : Modifier
         IsTrophyTarget = false,
     };
 
-    private static void AddRecipes(RE7Randomizer randomizer, List<Recipe> recipes, bool clear)
+    private static void AddRecipes(Randomizer randomizer, List<Recipe> recipes, bool clear)
     {
         randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root =>
         {
@@ -272,7 +272,7 @@ internal class RecipeModifier : Modifier
         });
     }
 
-    private List<Recipe> ReplaceOriginalRecipes(RE7Randomizer randomizer, Rng rng, List<Recipe> pool)
+    private List<Recipe> ReplaceOriginalRecipes(Randomizer randomizer, Rng rng, List<Recipe> pool)
     {
         var replacements = new List<Recipe>();
         randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root =>

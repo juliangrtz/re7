@@ -1,9 +1,7 @@
 ﻿using app;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.REFrameworkPlugins;
 using Enums.app;
-using Enums.app.Inventory;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -23,7 +21,7 @@ internal class InventoryModifier : Modifier
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 
-    private List<StartingInventoryItem> GetInventory(RE7Randomizer randomizer, MainCampaignCharacter character)
+    private List<StartingInventoryItem> GetInventory(Randomizer randomizer, MainCampaignCharacter character)
         => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(_paths[character])._AddItems;
 
     private static void LogVanillaInventory(RandomizerLogger logger, MainCampaignCharacter character, List<StartingInventoryItem> items)
@@ -36,7 +34,7 @@ internal class InventoryModifier : Modifier
         logger.Pop();
     }
 
-    public override void LogState(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
         foreach (var character in Enum.GetValues<MainCampaignCharacter>())
         {
@@ -76,7 +74,7 @@ internal class InventoryModifier : Modifier
     }
 
     private void RandomizeStartingInventory(
-        RE7Randomizer randomizer,
+        Randomizer randomizer,
         RandomizerLogger logger,
         Rng rng,
         MainCampaignCharacter character,
@@ -128,7 +126,7 @@ internal class InventoryModifier : Modifier
         }
     }
 
-    public override void Apply(RE7Randomizer randomizer, RandomizerLogger logger)
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
         var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");

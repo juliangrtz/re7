@@ -3,7 +3,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Extensions;
 
-internal static class RszExtensions
+public static class RszExtensions
 {
     public static RszObjectNode? FindComponent(this IRszSceneNode sceneNode, Guid gameObjectGuid, string componentName)
     {

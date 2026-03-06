@@ -26,9 +26,9 @@ Recipes:
   * etc.
 
 *Estimated completion: February*  
-Status: **In development**
+Status: **Completed ✅**
 
-## 2. Item randomization
+## 2. Item and weapon randomization
 
 * Options can pretty much be copied from RE4R except for money and treasures
 * Need to be especially aware of early game softlocks!
@@ -41,10 +41,7 @@ Status: **In development**
   * Testing required
   * Appears to often fail for weapons
 * Not all item IDs can just be replaced with others, certain items won't spawn
-* Inventory
-  * Random starting inventory
-  * Backpack randomization
-  * Stack Limits (-> RE4R)
+* Be able to randomize weapon stats
 
 *Estimated completion: March*  
 Status: **In development**

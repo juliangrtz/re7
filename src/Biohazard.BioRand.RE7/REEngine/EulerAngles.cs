@@ -8,7 +8,7 @@ namespace Biohazard.BioRand.RE7.REEngine;
 /// <param name="yaw"></param>
 /// <param name="pitch"></param>
 /// <param name="roll"></param>
-internal struct EulerAngles(float yaw, float pitch, float roll)
+public struct EulerAngles(float yaw, float pitch, float roll)
 {
     public float Yaw = yaw;
     public float Pitch = pitch;

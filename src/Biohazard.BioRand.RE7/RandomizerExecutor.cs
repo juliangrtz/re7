@@ -6,13 +6,13 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
 
-public class RE7RandomizerExecutor(string inputGamePath, IProgressReporter reporter)
+public class RandomizerExecutor(string inputGamePath, IProgressReporter reporter)
 {
-    public static string BuildVersion => RE7RandomizerFactory.Default.GitHash;
-    public static RandomizerConfigurationDefinition ConfigurationDefinition => RE7RandomizerConfigurationDefinition.Create();
-    public static RandomizerConfiguration DefaultConfiguration => RE7RandomizerConfigurationDefinition.Create().GetDefault();
+    public static string BuildVersion => RandomizerFactory.Default.GitHash;
+    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
+    public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
 
-    public RandomizerOutput Randomize(RandomizerInput input)
+    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize(RandomizerInput input)
     {
         // We swap to invariant culture so , is decimal point
         var backupCulture = Thread.CurrentThread.CurrentCulture;
@@ -21,7 +21,7 @@ public class RE7RandomizerExecutor(string inputGamePath, IProgressReporter repor
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
         try
         {
-            using var randomizer = new RE7Randomizer(input, inputGamePath, reporter);
+            using var randomizer = new Randomizer(input, inputGamePath, reporter);
             return randomizer.Randomize();
         }
         finally

@@ -5,7 +5,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public class ConfigurationDefinitionTest
 {
-    private readonly IEnumerable<GroupItem> items = RE7RandomizerExecutor.ConfigurationDefinition.AllItems;
+    private readonly IEnumerable<GroupItem> items = RandomizerExecutor.ConfigurationDefinition.AllItems;
 
     [Fact]
     public void Test_Id_Uniqueness()
@@ -31,7 +31,7 @@ public class ConfigurationDefinitionTest
             var id = item.Id!;
             if (id.EndsWith("-min") || id.EndsWith("-max"))
             {
-                Assert.Equal("range", item.Type);
+                Assert.Matches("range|percent", item.Type);
             }
             // else if(id...
         }

@@ -56,7 +56,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             reporter.RunTask("Killing re7.exe", KillRe7);
         }
 
-        var randomizer = new RE7RandomizerExecutor(settings.InputPath ?? "", reporter);
+        var randomizer = new RandomizerExecutor(settings.InputPath ?? "", reporter);
         RandomizerInput input;
         if (settings.Url is string url)
         {
@@ -76,7 +76,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             else
             {
                 AnsiConsole.MarkupLine("[yellow]No configuration path provided. Using the default configuration.[/]");
-                input.Configuration = RE7RandomizerExecutor.DefaultConfiguration;
+                input.Configuration = RandomizerExecutor.DefaultConfiguration;
             }
         }
 

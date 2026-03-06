@@ -41,7 +41,7 @@ public static class RandomizerTest
         */
     }
 
-    private static readonly RE7RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
+    private static readonly RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
     private const int DefaultTestingSeed = 0x42424242;
 
     public static (ZipArchive, PakFile) Run(string configJson, int seed = DefaultTestingSeed)
