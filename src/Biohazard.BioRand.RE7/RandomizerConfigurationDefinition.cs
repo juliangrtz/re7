@@ -113,7 +113,7 @@ internal static class RandomizerConfigurationDefinition
             Description = "The maximum percentage of an ammo stack to drop.",
             Type = "percent",
             Min = 0.1,
-            Max = 10,
+            Max = 1,
             Step = 0.1,
             Default = 1
         });
@@ -136,7 +136,7 @@ internal static class RandomizerConfigurationDefinition
             var (bgColor, textColor) = itemDrops.GetColor(category);
             group.Items.Add(new GroupItem()
             {
-                Id = $"item-drop-ratio-{drop}",
+                Id = $"item-drop-ratio-{drop.ToString().ToLowerInvariant()}",
                 Label = itemDefinitions.FromId(drop.ToString())!.Name,
                 Category = new GroupItemCategory()
                 {
@@ -159,7 +159,7 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = drop.Replace("-", "").ToTitleCase(),
+                Label = drop.Replace("-", " ").ToTitleCase(),
                 Type = "switch",
                 Default = false
             });
