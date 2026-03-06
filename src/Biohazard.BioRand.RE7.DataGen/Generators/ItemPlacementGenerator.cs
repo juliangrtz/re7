@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.DLC;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
@@ -6,6 +7,7 @@ using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using Spectre.Console;
 using System.Collections.Concurrent;
+using System.ComponentModel;
 using System.Text;
 using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
@@ -27,11 +29,6 @@ internal class ItemPlacementGenerator : IFileGenerator
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    private readonly List<string> _itemPathPrefixes = [
-        @"natives/stm/environment/scene",
-        @"natives/stm/leveldesign/itemset"
-    ];
-
     private List<ItemPlacement> ReadItemPlacements(ulong hash)
     {
         var result = new List<ItemPlacement>();
@@ -45,7 +42,8 @@ internal class ItemPlacementGenerator : IFileGenerator
             {
                 var transformComponent = gameObject.FindComponent<via.Transform>()!;
                 var mesh = gameObject.FindComponent("via.render.Mesh");
-                var chapter = GetChapterFromPath(path);
+                var dlc = DlcTypeExtensions.FromPakFileName(path);
+                var chapter = dlc == null ? GetChapterFromPath(path) : DlcTypeExtensions.ToChapter(dlc.Value);
 
                 result.Add(new ItemPlacement
                 {
@@ -63,6 +61,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                     Difficulty = GetDifficultyFromPath(path),
                     Mesh = mesh?.Children[2].ToString() ?? "",
                     Material = mesh?.Children[3].ToString() ?? "",
+                    Dlc = dlc
                 });
             }
         });
@@ -80,15 +79,12 @@ internal class ItemPlacementGenerator : IFileGenerator
         {
             return 1;
         }
-        else if (path.Contains("chapter2") || path.Contains("c02"))
-        {
-            return 2;
-        }
+        // Chapter 2 does not exist...
         else if (path.Contains("chapter3") || path.Contains("c03"))
         {
             return 3;
         }
-        else if (path.Contains("chapter4") || path.Contains("c04"))
+        else if (path.Contains("chapter4") || path.Contains("c04") || path.Contains("ff050"))
         {
             return 4;
         }

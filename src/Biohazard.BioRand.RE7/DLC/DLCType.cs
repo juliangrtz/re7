@@ -72,4 +72,14 @@ public static class DlcTypeExtensions
 
         return null;
     }
+
+    public static int ToChapter(DlcType dlcType)
+        => dlcType switch
+        {
+            DlcType.Bedroom or DlcType.TwentyOne or DlcType.Nightmare
+                or DlcType.Daughters or DlcType.Jacks55thBirthday or DlcType.EthanMustDie => 7,
+            DlcType.NotAHero => 8,
+            DlcType.EndOfZoe => 9,
+            _ => -1
+        };
 }

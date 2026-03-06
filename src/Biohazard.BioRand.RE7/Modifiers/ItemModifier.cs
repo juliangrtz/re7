@@ -7,6 +7,7 @@ internal class ItemModifier : Modifier
     private readonly string itemDir = PakPath.Of("prefab/item");
     private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly ItemPlacementRepository itemPlacements = ItemPlacementRepository.Default;
 
     private static Dictionary<ItemDefinition, int> GetItemsWithCustomStackSize(Randomizer randomizer)
     {
