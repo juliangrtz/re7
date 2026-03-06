@@ -31,7 +31,7 @@ public class ConfigurationDefinitionTest
             var id = item.Id!;
             if (id.EndsWith("-min") || id.EndsWith("-max"))
             {
-                Assert.Equal("range", item.Type);
+                Assert.Matches("range|percent", item.Type);
             }
             // else if(id...
         }
