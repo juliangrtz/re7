@@ -30,14 +30,11 @@ public class ItemPlacement
     public string Container { get; set; } = "";
     public string Mesh { get; set; } = "";
     public string Material { get; set; } = "";
-    public DlcType? Dlc => DlcTypeExtensions.FromPakFileName(Container);
+    public DlcType? Dlc { get; set; }
 
     [JsonIgnore]
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
 
     [JsonIgnore]
     public EulerAngles Euler => new(Rotation);
-
-    [JsonIgnore]
-    public bool IsDlcItem => Chapter is not -1 and > 4;
 }
