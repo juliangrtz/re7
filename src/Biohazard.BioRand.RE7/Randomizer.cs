@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;

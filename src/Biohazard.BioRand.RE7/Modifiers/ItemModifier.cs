@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.REEngine;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 

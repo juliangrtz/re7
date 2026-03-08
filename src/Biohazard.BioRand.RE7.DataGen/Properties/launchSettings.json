@@ -18,7 +18,7 @@
     },
     "Generate item placements": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json items"
+      "commandLineArgs": "generate -c -v -f json -f csv items"
     }
   }
 }

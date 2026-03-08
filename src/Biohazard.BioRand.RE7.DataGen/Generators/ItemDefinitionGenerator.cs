@@ -100,7 +100,7 @@ internal class ItemDefinitionGenerator : IFileGenerator
         Parallel.ForEach(_pakFile.FileHashes, hash =>
         {
             var path = _pakList.GetPath(hash);
-            if (path == null || !path.StartsWith(_itemPathPrefix) || !path.Contains(".user.2"))
+            if (path == null || !path.StartsWith(_itemPathPrefix) || !path.Contains(".user"))
                 return;
 
             var itemSettings = ReadItemSettings(hash);
