@@ -27,6 +27,7 @@ public class ItemPlacement
     public Guid SaveGuid { get; set; }
     public SerializableVector3 Position { get; set; } = Vector3.Zero;
     public SerializableQuaternion Rotation { get; set; } = Quaternion.Zero;
+    public string GameObjectName { get; set; } = "";
     public string Container { get; set; } = "";
     public string Mesh { get; set; } = "";
     public string Material { get; set; } = "";

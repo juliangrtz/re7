@@ -10,7 +10,7 @@ public class ItemPlacementRepository : List<ItemPlacement>
     public ImmutableDictionary<string, List<ItemPlacement>> IdToItemsMap { get; private set; } = [];
     public ImmutableList<ItemPlacement> MainGamePlacements { get; private set; } = [];
 
-    private const string ItemPlacementFileName = "items.json";
+    private const string ItemPlacementFileName = "item_placements.json";
 
     public static ItemPlacementRepository Default
     {
