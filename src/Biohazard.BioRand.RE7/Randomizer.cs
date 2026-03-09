@@ -169,6 +169,7 @@ internal class Randomizer : IDisposable
             new InventoryModifier(),
             new RecipeModifier(),
             new ItemModifier(),
+            new BirdCageModifier(),
         ];
     }
 
