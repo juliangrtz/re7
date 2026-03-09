@@ -35,7 +35,7 @@ public static class PatchContextExtensions
         var data = context.GetFile(path);
         return data == null
             ? throw new Exception("Unable to read data file.")
-            : new ScnFile(20, data);
+            : new ScnFile(Constants.SceneFileVersion, data);
     }
 
     public static void ModifyScnFile(this IPatchContext context, string path, Func<RszScene, RszScene> callback)

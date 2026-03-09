@@ -5,27 +5,6 @@ namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class RszExtensions
 {
-    public static RszObjectNode? FindComponent(this IRszSceneNode sceneNode, Guid gameObjectGuid, string componentName)
-    {
-        var gameObject = sceneNode.FindGameObject(gameObjectGuid);
-        return gameObject?.FindComponent(componentName);
-    }
-
-    public static T? FindComponent<T>(this RszGameObject gameObject)
-    {
-        var objectNode = gameObject.FindComponent(typeof(T).FullName!);
-        if (objectNode == null)
-            return default;
-        return RszSerializer.Deserialize<T>(objectNode);
-    }
-
-    public static RszGameObject AddOrUpdateComponent<T>(this RszGameObject gameObject, T component)
-    {
-        var typeRepository = gameObject.Settings.Type.Repository;
-        var componentNode = typeRepository.Serialize(component);
-        return gameObject.AddOrUpdateComponent(componentNode);
-    }
-
 #if false
     public static Dictionary<string, object> ToDictionary(this RszInstance instance)
     {
