@@ -58,20 +58,18 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"random-bird-cage-weapons",
-            Label = "Random Bird Cage Weapons",
-            Description = "Whether to randomize the bird cage weapons. " +
-            "The required amount of antique coins is unchanged!",
+            Id = $"random-bird-cage-magnum",
+            Label = "Random Bird Cage 44 MAG",
+            Description = "Whether to randomize the 44 MAG in bird cages. Appropriate replacements are guaranteed.",
             Type = "switch",
             Default = false
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"random-bird-cage-drugs",
-            Label = "Random Bird Cage Drugs",
-            Description = "Whether to randomize the bird cage drugs (stabilizers and steroids). " +
-            "The required amount of antique coins is unchanged!",
+            Id = $"random-bird-cage-drugs-coins",
+            Label = "Random Bird Cage Drugs/Coins",
+            Description = "Whether to randomize drugs (stabilizers and steroids) and coins in bird cages. Appropriate replacements are guaranteed.",
             Type = "switch",
             Default = false
         });

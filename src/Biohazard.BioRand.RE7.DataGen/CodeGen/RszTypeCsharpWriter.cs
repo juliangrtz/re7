@@ -9,6 +9,8 @@ namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 /// </summary>
 public class RszTypeCsharpWriter
 {
+    private const string Modifier = "public";
+
     public bool GenerateEnums { get; set; }
     public bool UseEnumTypes { get; set; }
     public string? EnumNamespace { get; set; }
@@ -34,7 +36,7 @@ public class RszTypeCsharpWriter
 
         public void BeginEnumBlock(string name)
         {
-            AppendLine("internal enum " + name);
+            AppendLine($"{Modifier} enum " + name);
             AppendLine("{");
             Indent();
         }
@@ -42,7 +44,7 @@ public class RszTypeCsharpWriter
         public void BeginClassBlock(string name, string? parentName)
         {
             string text = ((parentName == null) ? "" : (" : " + parentName));
-            AppendLine("internal class " + name + text);
+            AppendLine($"{Modifier} class " + name + text);
             AppendLine("{");
             Indent();
         }
