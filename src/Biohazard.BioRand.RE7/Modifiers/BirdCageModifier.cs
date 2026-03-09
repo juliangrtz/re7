@@ -137,7 +137,6 @@ internal class BirdCage
             container = container.AddOrUpdateChild(newGimmick);
             container = container.AddOrUpdateChild(newItemHolder);
             scene = scene.UpdateGameObject(container);
-            // TODO Fix object graph, it's currently broken
             return scene;
         });
     }
