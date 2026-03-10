@@ -166,10 +166,11 @@ internal class Randomizer : IDisposable
     {
         return
         [
-            new InventoryModifier(),
+            new StartingInventoryModifier(),
             new RecipeModifier(),
-            new ItemModifier(),
+            new ItemStackModifier(),
             new BirdCageModifier(),
+            new KeyItemLocationModifier(),
         ];
     }
 

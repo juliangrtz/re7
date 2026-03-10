@@ -6,7 +6,7 @@ using Enums.app;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class InventoryModifier : Modifier
+internal class StartingInventoryModifier : Modifier
 {
     private const string RandomizerKey = "modifier/inventory";
     private const int AntiqueCoinsProbabilityPct = 1;
