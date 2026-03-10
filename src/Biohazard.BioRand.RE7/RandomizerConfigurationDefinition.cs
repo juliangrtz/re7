@@ -294,7 +294,6 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Stack Limits");
-        group.Warning = "Zero means that the original stack limits stay.";
         group.Advanced = true;
 
         var items = from item in itemDefinitions
