@@ -8,7 +8,6 @@ internal class ItemStackModifier : Modifier
     private readonly string itemDir = PakPath.Of("prefab/item");
     private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly ItemPlacementRepository itemPlacements = ItemPlacementRepository.Default;
 
     private static Dictionary<ItemDefinition, int> GetItemsWithCustomStackSize(Randomizer randomizer)
     {
@@ -19,8 +18,8 @@ internal class ItemStackModifier : Modifier
             if (!item.IsStackable || item.IsDlcItem)
                 continue;
 
-            var configuredStackSize = randomizer.GetConfigOption($"inventory-stack-limit-{item.Id.ToLowerInvariant()}", 0);
-            if (configuredStackSize > 0 && configuredStackSize != item.MaxStack)
+            var configuredStackSize = randomizer.GetConfigOption($"inventory-stack-limit-{item.Id.ToLowerInvariant()}", item.MaxStack);
+            if (configuredStackSize != item.MaxStack)
             {
                 result[item] = configuredStackSize;
             }
