@@ -41,4 +41,8 @@ public class ItemPlacementRepository : List<ItemPlacement>
 
         return item;
     }
+
+    public ItemPlacement FromGuid(Guid guid) => this.Single(x => x.Guid == guid);
+
+    public ItemPlacement FromGuid(string guid) => this.Single(x => x.Guid == new Guid(guid));
 }

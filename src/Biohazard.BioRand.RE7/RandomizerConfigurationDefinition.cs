@@ -42,14 +42,14 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "random-items",
             Label = "Random Items",
-            Description = "Whether to randomize the static items.",
+            Description = "Whether to randomize most of the static items. Excludes certain items such as the model shotguns.",
             Type = "switch",
             Default = true
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = "random-key-items",
+            Id = "random-key-item-locations",
             Label = "Random Key Item Locations",
             Description = "Whether to randomize key item locations.",
             Type = "switch",
