@@ -1,7 +1,7 @@
 {
   "game-version": "dx12_rt",
   "random-items": true,
-  "random-key-items": false,
+  "random-key-item-locations": true,
   "random-bird-cage-magnum": true,
   "random-bird-cage-drugs-coins": true,
   "item-drop-respect-difficulty": true,
