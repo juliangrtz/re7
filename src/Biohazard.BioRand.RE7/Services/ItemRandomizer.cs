@@ -12,7 +12,6 @@ internal class ItemRandomizer
     private readonly bool _allowBonusItems;
     private readonly bool _allowDlcItems;
     private readonly Dictionary<RandomItemSettings, EndlessBag<string>> _generalDrops = new();
-    private readonly HashSet<string> _throwAway = [];
 
     public string[] PlacedItemIds => _placedItemIds.ToArray();
 
@@ -71,19 +70,13 @@ internal class ItemRandomizer
 
     private bool IsItemSupported(ItemDefinition itemDefinition)
     {
-        if (_throwAway.Contains(itemDefinition.Id))
+        if (itemDefinition.IsStoryProgressionItem)
             return false;
         if (itemDefinition.IsUnlockable)
             return _allowBonusItems;
         if (itemDefinition.Dlc != null)
             return _allowDlcItems;
 
-#if !ENABLE_BETA_FEATURES
-        if (itemDefinition.Id == ItemIds.Flamethrower)
-        {
-            return false;
-        }
-#endif
         return true;
     }
 
