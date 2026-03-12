@@ -2,6 +2,7 @@ using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using IntelOrca.Biohazard.BioRand;
+using System.Diagnostics;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7;
@@ -336,6 +337,15 @@ internal static class RandomizerConfigurationDefinition
             Id = "debug-force-reframework",
             Label = "Force RE Framework installation",
             Description = "Always forces the installation of RE Framework, regardless of the configuration.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "debug-download-reframework-nightly",
+            Label = "Download RE Framework Nightly",
+            Description = "Installs RE Framework nightly from praydog's GitHub repository.",
             Type = "switch",
             Default = false
         });
