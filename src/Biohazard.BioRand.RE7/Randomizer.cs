@@ -171,6 +171,7 @@ internal class Randomizer : IDisposable
             new ItemStackModifier(),
             new BirdCageModifier(),
             new KeyItemLocationModifier(),
+            new DropItemModifier()
         ];
     }
 

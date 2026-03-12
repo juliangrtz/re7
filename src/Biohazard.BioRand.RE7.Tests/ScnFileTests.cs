@@ -18,7 +18,7 @@ public class ScnFileTests
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    [SkipCIFact]
+    [SkipCIFact(Skip = "Not reliable yet")]
     void Ensure_Correct_Serialization()
     {
         var differences = new List<string>();

@@ -56,6 +56,6 @@ public static class StringExtensions
     public static string RemoveControlCharacters(this string message)
         => new([.. message.Where(c => !char.IsControl(c))]);
 
-    public static string Without(this string str, string needle)
-        => str.Replace(needle, "");
+    public static string Without(this string str, string toBeRemoved)
+        => str.Replace(toBeRemoved, "");
 }

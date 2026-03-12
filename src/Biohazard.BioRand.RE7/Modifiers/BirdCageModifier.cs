@@ -80,7 +80,7 @@ internal class BirdCageModifier : Modifier
 
         foreach (var file in _birdCageScnFiles)
         {
-            var path = PakPath.ScnFile(file);
+            var path = PakPath.SceneFile(file);
             var content = randomizer.FileRepository.GetFile(path);
             var scnFile = new ScnFile(Constants.SceneFileVersion, content).ReadScene(randomizer.FileRepository.TypeRepository);
 

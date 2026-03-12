@@ -142,7 +142,7 @@ namespace app
         public RszUserDataNode ActiveAdaptiveTriggerUserData { get; set; }
         public Enums.app.WeaponGun.BulletTypeSwitch BulletTypeForSound { get; set; }
         public RszUserDataNode WeaponGunParameter { get; set; }
-        public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+        public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
 
         public class BulletInfo
         {
@@ -162,7 +162,7 @@ namespace app
         public class WeaponGunSaveData
         {
             public bool IsValid { get; set; }
-            public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+            public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
             public Enums.app.ItemID BulletItemID { get; set; }
         }
     }
@@ -181,7 +181,7 @@ namespace app
 
     public class WeaponData
     {
-        public System.Collections.Generic.List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
+        public List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
 
         public class EquipData
         {
@@ -246,6 +246,22 @@ namespace app
             public int value__ { get; set; }
         }
     }
+
+    public class ReliefItemTable
+    {
+        public string _Comment { get; set; } = "";
+        public List<ReliefItemTableData> DataList { get; set; } = [];
+        public class ReliefItemTableData
+        {
+            public string ItemID { get; set; } = "";
+            public uint EasyDropRate { get; set; }
+            public uint NormalDropRate { get; set; }
+            public uint HardDropRate { get; set; }
+            public uint ReliefNum { get; set; }
+            public uint NormalDropNum { get; set; }
+            public uint ReliefDropNum { get; set; }
+        }
+    }
 }
 
 namespace via
@@ -257,6 +273,7 @@ namespace via
         public Vector3 Scale { get; set; }
         public string ParentJoint { get; set; } = "";
         public bool SameJointsContraint { get; set; }
+        public bool AbsoluteScaling { get; set; }
         public bool JointSegmentScale { get; set; }
         public bool JointFastLockScene { get; set; }
     }
