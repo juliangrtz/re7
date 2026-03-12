@@ -73,11 +73,11 @@ public sealed class RandomizerOutput
             //);
 
             builder.AddEntry(
-                $@"reframework\plugins\managed\{REFrameworkPluginName}",
+                $"reframework/plugins/managed/{REFrameworkPluginName}",
                 EmbeddedData.GetFile(REFrameworkPluginName)
             );
 
-            builder.AddEntry(@"reframework\data\BioRand7\config.json", configBytes);
+            builder.AddEntry("reframework/data/BioRand7/config.json", configBytes);
         }
 
         return builder;
