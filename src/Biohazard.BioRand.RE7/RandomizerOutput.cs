@@ -67,14 +67,15 @@ public sealed class RandomizerOutput
 
         if (IsWithREFramework)
         {
-            var pluginPath = Path.Combine(
-                AppContext.BaseDirectory,
-                REFrameworkPluginName
-            );
+            //var pluginPath = Path.Combine(
+            //    AppContext.BaseDirectory,
+            //    REFrameworkPluginName
+            //);
 
             builder.AddEntry(
                 $@"reframework\plugins\managed\{REFrameworkPluginName}",
-                File.ReadAllBytes(pluginPath));
+                EmbeddedData.GetFile(REFrameworkPluginName)
+            );
 
             builder.AddEntry(@"reframework\data\BioRand7\config.json", configBytes);
         }
