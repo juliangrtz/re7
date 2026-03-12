@@ -37,7 +37,6 @@ internal class ItemDropRepository
         AntiqueCoin,
         DlcCoin,
         LockPick,
-        TreasurePhoto,
         RepairKit,
         Stabilizer,
         Steroids
@@ -76,10 +75,19 @@ internal class ItemDropRepository
     public const string AntiqueCoin = "antique-coin";
     public const string DlcCoin = "dlc-coin";
     public const string LockPick = "lock-pick";
-    public const string TreasurePhoto = "treasure-photo";
     public const string RepairKit = "repair-kit";
     public const string Stabilizer = "stabilizer";
     public const string Steroids = "steroids";
+
+    public string ToItemID(string highValueDrop) => highValueDrop switch
+    {
+        AntiqueCoin => "Coin",
+        LockPick => ItemID.CylinderKey.ToString(),
+        RepairKit => "RepairKit",
+        Stabilizer => "Depressant",
+        Steroids => "Stimulant",
+        _ => ItemID.NoName.ToString()
+    };
 
     public string GetCategory(ItemID id) => id switch
     {
