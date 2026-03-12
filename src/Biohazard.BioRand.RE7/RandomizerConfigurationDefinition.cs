@@ -157,7 +157,7 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = drop.Replace("-", " ").ToTitleCase(),
+                Label = ItemDropRepository.GetHighValueDropLabel(drop),
                 Type = "switch",
                 Default = false
             });

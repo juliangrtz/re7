@@ -43,6 +43,12 @@ internal class ItemDropRepository
         Steroids
     ];
 
+    public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
+    {
+        DlcCoin => "DLC Coin",
+        _ => highValueDrop.Replace("-", " ").ToTitleCase()
+    };
+
     public static ItemDropRepository Default
     {
 
