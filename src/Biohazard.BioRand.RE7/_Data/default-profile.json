@@ -96,6 +96,7 @@
   "inventory-stack-limit-syntheticdetergent": 5,
   "debug-download-data": false,
   "debug-force-reframework": false,
+  "debug-download-reframework-nightly": false,
   "enable-special": true,
   "debug-unique-enemy-hp": false
 }
