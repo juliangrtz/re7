@@ -68,20 +68,21 @@ internal class DropItemModifier : Modifier
     };
 
     // (id, min%, max%)
+    // TODO: Look into this, weapons don't spawn :(
     private readonly Dictionary<WeaponID, (uint, uint)> _valuableWeaponDrops = new() {
-        { WeaponID.Bar, (5, 10) },
-        { WeaponID.MachineGun, (3, 5) },
-        { WeaponID.Burner, (3, 5) },
-        { WeaponID.ChainSaw, (1, 3) },
-        { WeaponID.GrenadeLauncher, (2, 4) },
-        { WeaponID.HandAxe, (10, 15) },
-        { WeaponID.Handgun_G17, (5, 10) },
-        { WeaponID.Handgun_M19, (5, 10) },
-        { WeaponID.Handgun_MPM, (5, 10) },
+        //{ WeaponID.Bar, (5, 10) },
+        //{ WeaponID.MachineGun, (3, 5) },
+        //{ WeaponID.Burner, (3, 5) },
+        //{ WeaponID.ChainSaw, (1, 3) },
+        //{ WeaponID.GrenadeLauncher, (2, 4) },
+        //{ WeaponID.HandAxe, (10, 15) },
+        //{ WeaponID.Handgun_G17, (5, 10) },
+        //{ WeaponID.Handgun_M19, (5, 10) },
+        //{ WeaponID.Handgun_MPM, (5, 10) },
         { WeaponID.LiquidBomb, (3, 5) }, // Remote Bomb
-        { WeaponID.Magnum, (1, 2) },
-        { WeaponID.Shotgun_DB, (5, 7) },
-        { WeaponID.Shotgun_M37, (5, 7) },
+        //{ WeaponID.Magnum, (1, 2) },
+        //{ WeaponID.Shotgun_DB, (5, 7) },
+        //{ WeaponID.Shotgun_M37, (5, 7) },
     };
 
     // (id, min%, max%)
@@ -98,8 +99,6 @@ internal class DropItemModifier : Modifier
     private const double NormalAmmoDropAmountFactor = 1f;
     private const double MadhouseAmmoDropAmountFactor = 0.75f;
     private const uint ValuableDropNum = 1u;
-    private const uint DlcCoinDropProbability = 2u;
-
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
