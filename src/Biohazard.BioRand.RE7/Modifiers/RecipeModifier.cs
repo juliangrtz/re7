@@ -1,5 +1,6 @@
 using app;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.REEngine;
 using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -15,8 +16,8 @@ internal class RecipeModifier : Modifier
 
     private const string RandomizerKey = "modifier/recipes";
 
-    private static readonly string DictionaryCombineDataPath = PakPath.Of("prefab/item/dictionarycombinedata.user.2");
-    private static readonly string ItemCombineDataPath = PakPath.Of("prefab/item/itemcombinedata.user.2");
+    private static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+    private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
     private List<Recipe> originalRecipes = new();
@@ -110,7 +111,7 @@ internal class RecipeModifier : Modifier
 
         foreach (var recipe in recipes)
         {
-            logger.LogLine(itemDefinitions.FormatRecipe(recipe));
+            logger.LogLine(recipe.Format());
         }
 
         logger.Pop();

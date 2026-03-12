@@ -109,7 +109,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                 pakFile.WriteToFile(outputPath);
             });
-#if DEBUG
+#if DEBUG && EXTRACT_NATIVES
             reporter.RunTask($"Extracting files", () =>
             {
                 ExtractNatives(zipFile, Path.GetDirectoryName(outputPath)!);

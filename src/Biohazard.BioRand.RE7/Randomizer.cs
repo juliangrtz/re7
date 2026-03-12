@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
@@ -165,9 +166,12 @@ internal class Randomizer : IDisposable
     {
         return
         [
-            new InventoryModifier(),
+            new StartingInventoryModifier(),
             new RecipeModifier(),
-            new ItemModifier(),
+            new ItemStackModifier(),
+            new BirdCageModifier(),
+            //new KeyItemLocationModifier(),
+            new DropItemModifier()
         ];
     }
 

@@ -7,7 +7,6 @@ using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using Spectre.Console;
 using System.Collections.Concurrent;
-using System.ComponentModel;
 using System.Text;
 using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
@@ -18,7 +17,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 /// </summary>
 internal class ItemPlacementGenerator : IFileGenerator
 {
-    public string Id => "items";
+    public string Id => "item_placements";
 
     private readonly RszTypeRepository _rszRepository =
         RszRepositorySerializer.Default.FromJsonGz(EmbeddedData.GetFile("rszre7rt.json.gz"));
@@ -33,7 +32,7 @@ internal class ItemPlacementGenerator : IFileGenerator
     {
         var result = new List<ItemPlacement>();
         var path = _pakList.GetPath(hash)!;
-        var scene = new ScnFile(20, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
+        var scene = new ScnFile(Constants.SceneFileVersion, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
         scene.VisitGameObjects(gameObject =>
         {
             var itemComponent = gameObject.FindComponent<app.Item>();
@@ -57,6 +56,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                     EasyNum = itemComponent._DifficultItemNumSetting.EasyNum,
                     HardNum = itemComponent._DifficultItemNumSetting.HardNum,
                     Container = path,
+                    GameObjectName = gameObject.Name,
                     Chapter = chapter,
                     Difficulty = GetDifficultyFromPath(path),
                     Mesh = mesh?.Children[2].ToString() ?? "",
@@ -136,7 +136,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                 var path = _pakList.GetPath(hash);
                 return path != null
                        //&& _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
-                       && path.Contains(".scn.20");
+                       && path.Contains($".scn.{Constants.SceneFileVersion}");
             })
             .ToList();
 

@@ -91,6 +91,64 @@ public sealed class ItemDefinition
 
     public ItemID? ItemId => EnumExtensions.ParseOrNull<ItemID>(Id);
 
+    /// <summary>
+    /// Items required to progress the story.
+    /// Particular attention is required with these!
+    /// </summary>
+    private readonly List<string> _storyProgressionItems = [
+        "3CrestKeyA",
+        "3CrestKeyB",
+        "3CrestKeyC",
+        "Balloonbomb",
+        "Battery",
+        "ChainCutter",
+        "Crank",
+        "DybbukMedicine",
+        "EntranceHallKey",
+        "EthanLeg",
+        "EvCable",
+        "EvelynRadar",
+        "EvelynRadar1",
+        "EvelynRadar2",
+        "EvelynRadar3",
+        "EvelynRadar4",
+        "EvOpener",
+        "FloorDoorKey",
+        "FoundFootage000",
+        "FoundFootage030",
+        "FoundFootage040",
+        "FoundFootage050",
+        "Fuse",
+        "FuseCh4",
+        "HandCutOff",
+        "Lantern",
+        "LucasCardKey",
+        "LucasCardKey2",
+        "MasterKey",
+        "MorgueKey",
+        "Order",
+        "PendulumClock",
+        "Quill",
+        "ScrewFinger",
+        "SerumComplete",
+        "SerumMaterialA",
+        "SerumMaterialB",
+        "SerumTypeE",
+        "SilhouettePazzlePiece",
+        "SilhouettePazzlePieceChildroom",
+        "SilhouettePazzlePieceOldHouse",
+        "SkinnyDoll",
+        "SpareKey",
+        "SpringCoil",
+        "TalismanKey",
+        "Timebomb",
+        "Valve",
+        "WorkroomKey",
+    ];
+
+    [JsonIgnore]
+    public bool IsStoryProgressionItem => _storyProgressionItems.Contains(Id);
+
     public override string ToString() => Name ?? Id;
 
     public string ToDetailedString()

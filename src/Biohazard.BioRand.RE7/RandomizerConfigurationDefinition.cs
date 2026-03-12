@@ -42,14 +42,14 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "random-items",
             Label = "Random Items",
-            Description = "Whether to randomize the static items.",
+            Description = "Whether to randomize most of the static items. Excludes certain items such as the model shotguns.",
             Type = "switch",
             Default = true
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = "random-key-items",
+            Id = "random-key-item-locations",
             Label = "Random Key Item Locations",
             Description = "Whether to randomize key item locations.",
             Type = "switch",
@@ -58,20 +58,18 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"random-bird-cage-weapons",
-            Label = "Random Bird Cage Weapons",
-            Description = "Whether to randomize the bird cage weapons. " +
-            "The required amount of antique coins is unchanged!",
+            Id = $"random-bird-cage-magnum",
+            Label = "Random Bird Cage 44 MAG",
+            Description = "Whether to randomize the 44 MAG in bird cages. Appropriate replacements are guaranteed.",
             Type = "switch",
             Default = false
         });
 
         group.Items.Add(new GroupItem()
         {
-            Id = $"random-bird-cage-drugs",
-            Label = "Random Bird Cage Drugs",
-            Description = "Whether to randomize the bird cage drugs (stabilizers and steroids). " +
-            "The required amount of antique coins is unchanged!",
+            Id = $"random-bird-cage-drugs-coins",
+            Label = "Random Bird Cage Drugs/Coins",
+            Description = "Whether to randomize drugs (stabilizers and steroids) and coins in bird cages. Appropriate replacements are guaranteed.",
             Type = "switch",
             Default = false
         });
@@ -159,7 +157,7 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = drop.Replace("-", " ").ToTitleCase(),
+                Label = ItemDropRepository.GetHighValueDropLabel(drop),
                 Type = "switch",
                 Default = false
             });
@@ -296,7 +294,6 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Stack Limits");
-        group.Warning = "Zero means that the original stack limits stay.";
         group.Advanced = true;
 
         var items = from item in itemDefinitions

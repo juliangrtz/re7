@@ -128,7 +128,7 @@ namespace app
         public bool isSetExtendLv { get; set; }
     }
 
-    internal class WeaponGun
+    public class WeaponGun
     {
         public bool Enabled { get; set; } = new();
         public Enums.app.WeaponID WeaponID { get; set; }
@@ -142,55 +142,55 @@ namespace app
         public RszUserDataNode ActiveAdaptiveTriggerUserData { get; set; }
         public Enums.app.WeaponGun.BulletTypeSwitch BulletTypeForSound { get; set; }
         public RszUserDataNode WeaponGunParameter { get; set; }
-        public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+        public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
 
-        internal class BulletInfo
+        public class BulletInfo
         {
             public Enums.app.ItemID BulletItemID { get; set; }
             public int LoadNum { get; set; }
         }
 
-        internal class BulletTypeSwitch
+        public class BulletTypeSwitch
         {
             public int value__ { get; set; }
         }
 
-        internal class StateName
+        public class StateName
         {
         }
 
-        internal class WeaponGunSaveData
+        public class WeaponGunSaveData
         {
             public bool IsValid { get; set; }
-            public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+            public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
             public Enums.app.ItemID BulletItemID { get; set; }
         }
     }
 
-    internal class CH8WeaponGun : WeaponGun
+    public class CH8WeaponGun : WeaponGun
     {
     }
 
-    internal class CH9PlayerKnuckleWeapon : WeaponGun
+    public class CH9PlayerKnuckleWeapon : WeaponGun
     {
     }
 
-    internal class CH9WeaponGun : WeaponGun
+    public class CH9WeaponGun : WeaponGun
     {
     }
 
-    internal class WeaponData
+    public class WeaponData
     {
-        public System.Collections.Generic.List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
+        public List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
 
-        internal class EquipData
+        public class EquipData
         {
             public app.ObjectID OwnerID { get; set; }
             public object AttachParam { get; set; }
         }
     }
 
-    internal class ObjectID
+    public class ObjectID
     {
         public Enums.app.Group Group { get; set; }
         public string CategoryName { get; set; } = "";
@@ -198,7 +198,7 @@ namespace app
         public string LayoutName { get; set; } = "";
     }
 
-    internal class WeaponGunParameter
+    public class WeaponGunParameter
     {
         public int MaxLoadNum { get; set; }
         public bool IsLoadNumInfinity { get; set; }
@@ -216,6 +216,52 @@ namespace app
         public float RecoilYAngle { get; set; }
         public float RecoilXAngle { get; set; }
     }
+
+    public class CoinCounter
+    {
+        public bool Enabled { get; set; }
+        public int CoinMax { get; set; }
+        public int NowCoin { get; set; }
+        public int DispNum { get; set; }
+        public Guid GameObj { get; set; }
+        public int SaveNumber { get; set; }
+    }
+
+    public class ItemSelectReaction
+    {
+        public bool Enabled { get; set; }
+        public List<ReactionSetting> ReactionSettings { get; set; } = [];
+        public string FailedStateName { get; set; } = "";
+        public string CancelStateName { get; set; } = "";
+        public Guid FsmObj { get; set; }
+        public bool IsAllItemSuccess { get; set; }
+        public class ReactionSetting
+        {
+            public string ItemID { get; set; } = "";
+            public string StateName { get; set; } = "";
+            public Enums.app.ItemSelectReaction.Result Result { get; set; }
+        }
+        public class Result
+        {
+            public int value__ { get; set; }
+        }
+    }
+
+    public class ReliefItemTable
+    {
+        public string _Comment { get; set; } = "";
+        public List<ReliefItemTableData> DataList { get; set; } = [];
+        public class ReliefItemTableData
+        {
+            public string ItemID { get; set; } = "";
+            public uint EasyDropRate { get; set; }
+            public uint NormalDropRate { get; set; }
+            public uint HardDropRate { get; set; }
+            public uint ReliefNum { get; set; }
+            public uint NormalDropNum { get; set; }
+            public uint ReliefDropNum { get; set; }
+        }
+    }
 }
 
 namespace via
@@ -227,6 +273,7 @@ namespace via
         public Vector3 Scale { get; set; }
         public string ParentJoint { get; set; } = "";
         public bool SameJointsContraint { get; set; }
+        public bool AbsoluteScaling { get; set; }
         public bool JointSegmentScale { get; set; }
         public bool JointFastLockScene { get; set; }
     }
