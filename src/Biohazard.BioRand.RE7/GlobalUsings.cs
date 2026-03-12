@@ -11,3 +11,5 @@ global using System.Text;
 // Syntactic sugar for RSZ types
 global using Recipe = app.ItemCombineData.Data;
 global using StartingInventoryItem = app.AddItemListData.Data;
+global using ItemDropTable = app.ReliefItemTable;
+global using ItemDropDistribution = app.ReliefItemTable.ReliefItemTableData;

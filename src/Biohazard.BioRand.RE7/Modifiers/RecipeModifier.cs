@@ -16,8 +16,8 @@ internal class RecipeModifier : Modifier
 
     private const string RandomizerKey = "modifier/recipes";
 
-    private static readonly string DictionaryCombineDataPath = PakPath.UsrFile("prefab/item/dictionarycombinedata.user");
-    private static readonly string ItemCombineDataPath = PakPath.UsrFile("prefab/item/itemcombinedata.user");
+    private static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+    private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
     private List<Recipe> originalRecipes = new();
@@ -111,7 +111,7 @@ internal class RecipeModifier : Modifier
 
         foreach (var recipe in recipes)
         {
-            logger.LogLine(itemDefinitions.FormatRecipe(recipe));
+            logger.LogLine(recipe.Format());
         }
 
         logger.Pop();

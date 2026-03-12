@@ -7,7 +7,7 @@ internal sealed class RandomizerLoggerIO
     public RandomizerLogger Output { get; } = new();
 }
 
-internal sealed class RandomizerLogger
+public sealed class RandomizerLogger
 {
     private readonly StringBuilder _sb = new StringBuilder();
     private readonly string _hr = new string('-', 80);

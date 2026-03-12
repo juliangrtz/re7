@@ -12,10 +12,10 @@ public static class PakPath
     public static string Of(this string path)
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}";
 
-    public static string UsrFile(this string path)
+    public static string UserFile(this string path)
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{Constants.UserFileVersion}";
 
-    public static string ScnFile(this string path)
+    public static string SceneFile(this string path)
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{Constants.SceneFileVersion}";
 
     public static string FromAbsolutePath(this string absolutePath)

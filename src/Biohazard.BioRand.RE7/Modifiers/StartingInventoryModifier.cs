@@ -14,10 +14,10 @@ internal class StartingInventoryModifier : Modifier
 
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new()
     {
-        { MainCampaignCharacter.Ethan, PakPath.UsrFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user") },
-        { MainCampaignCharacter.ClancyVHS, PakPath.UsrFile("leveldesign/fsm/ff000/other/startinventory_ff000.user") }, // "Derelict House Footage" (Guest House)
-        { MainCampaignCharacter.Mia, PakPath.UsrFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user") },
-        { MainCampaignCharacter.MiaVHS,  PakPath.UsrFile("leveldesign/fsm/ff050/other/ff050_startinventory.user") }, // Old Videotape (Ship)
+        { MainCampaignCharacter.Ethan, PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user") },
+        { MainCampaignCharacter.ClancyVHS, PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user") }, // "Derelict House Footage" (Guest House)
+        { MainCampaignCharacter.Mia, PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user") },
+        { MainCampaignCharacter.MiaVHS,  PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user") }, // Old Videotape (Ship)
     };
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
