@@ -158,9 +158,9 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = ItemDropRepository.GetHighValueDropLabel(drop),
+                Label = itemDrops.GetHighValueDropLabel(drop),
                 Type = "switch",
-                Default = false
+                Default = itemDrops.GetEnabledValuableDrops().Contains(drop)
             });
         }
 
@@ -335,8 +335,8 @@ internal static class RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = "debug-force-reframework",
-            Label = "Force RE Framework installation",
-            Description = "Always forces the installation of RE Framework, regardless of the configuration.",
+            Label = "Force RE Framework artifacts",
+            Description = "Always forces the installation of RE Framework artifacts, regardless of the configuration.",
             Type = "switch",
             Default = false
         });
