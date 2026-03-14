@@ -262,6 +262,14 @@ namespace app
             public uint ReliefDropNum { get; set; }
         }
     }
+
+    public class ChapterJumpData
+    {
+        public bool Enabled { get; set; } = new();
+        public string JumpPositionName { get; set; } = "";
+        public Enums.app.GameManager.ChapterNo JumpChapter { get; set; }
+        public bool IsGetPlayerPos { get; set; }
+    }
 }
 
 namespace via

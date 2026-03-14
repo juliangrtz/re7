@@ -54,7 +54,7 @@ internal class KeyItemLocationModifier : Modifier
             var newLocation = rng.Next(keyItemGroup);
             var placement = itemPlacements.FromGuid(id);
 
-            randomizer.FileRepository.ModifyScnFile(placement.Container, scene =>
+            randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
                 var obj = scene.FindGameObject(id)!;
                 var transform = obj.FindComponent<via.Transform>()!;

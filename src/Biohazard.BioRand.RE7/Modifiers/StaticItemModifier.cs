@@ -74,7 +74,7 @@ internal class StaticItemModifier : Modifier
                 continue;
             }
 
-            randomizer.FileRepository.ModifyScnFile(placement.Container, scene =>
+            randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
                 var gameObject = scene.FindGameObject(placement.Guid)!;
                 var itemComponent = gameObject.FindComponent<app.Item>()!;
