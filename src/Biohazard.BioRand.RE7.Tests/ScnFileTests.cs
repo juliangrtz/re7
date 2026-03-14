@@ -28,7 +28,7 @@ public class ScnFileTests
 
         Assert.True(hash != 0, $"File not found in pak list: {_singleFileTest}");
 
-        var input = new ScnFile(Constants.SceneFileVersion, _pakFile.GetEntryData(hash));
+        var input = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash));
         var inputBuilder = input.ToBuilder(_repo);
         var output = inputBuilder.Build();
 
@@ -92,14 +92,14 @@ OUTPUT:
         var scnFileHashes = _pakFile.FileHashes.Where(hash =>
         {
             var path = _pakList.GetPath(hash);
-            return path != null && path.EndsWith($".scn.{Constants.SceneFileVersion}");
+            return path != null && path.EndsWith($".scn.{Constants.SceneFileVersionRT}");
         }).ToList();
 
         foreach (var hash in scnFileHashes)
         {
             var path = _pakList.GetPath(hash)!;
 
-            var input = new ScnFile(Constants.SceneFileVersion, _pakFile.GetEntryData(hash));
+            var input = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash));
             var inputBuilder = input.ToBuilder(_repo);
             var output = inputBuilder.Build();
 

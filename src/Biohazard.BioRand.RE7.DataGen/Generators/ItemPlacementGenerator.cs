@@ -32,7 +32,7 @@ internal class ItemPlacementGenerator : IFileGenerator
     {
         var result = new List<ItemPlacement>();
         var path = _pakList.GetPath(hash)!;
-        var scene = new ScnFile(Constants.SceneFileVersion, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
+        var scene = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
         scene.VisitGameObjects(gameObject =>
         {
             var itemComponent = gameObject.FindComponent<app.Item>();
@@ -136,7 +136,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                 var path = _pakList.GetPath(hash);
                 return path != null
                        //&& _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
-                       && path.Contains($".scn.{Constants.SceneFileVersion}");
+                       && path.Contains($".scn.{Constants.SceneFileVersionRT}");
             })
             .ToList();
 
