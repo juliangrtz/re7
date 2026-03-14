@@ -18,8 +18,74 @@ public class ScnFileTests
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    [SkipCIFact(Skip = "Not reliable yet")]
-    void Ensure_Correct_Serialization()
+    private const string _singleFileTest = "natives/stm/environment/scene/chapter4/c04_cottage.scn.20";
+
+    [Fact]
+    void Single_File_Test()
+    {
+        var hash = _pakFile.FileHashes.FirstOrDefault(h =>
+            _pakList.GetPath(h) == _singleFileTest);
+
+        Assert.True(hash != 0, $"File not found in pak list: {_singleFileTest}");
+
+        var input = new ScnFile(Constants.SceneFileVersion, _pakFile.GetEntryData(hash));
+        var inputBuilder = input.ToBuilder(_repo);
+        var output = inputBuilder.Build();
+
+        // TODO: Replace reflection once everything is public
+        static object GetRsz(object scn)
+        {
+            var type = scn.GetType();
+            var prop = type.GetProperty("Rsz", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
+            return prop.GetValue(scn)!;
+        }
+
+        var inputRsz = GetRsz(input);
+        var outputRsz = GetRsz(output);
+
+        var readInstanceListMethod = inputRsz.GetType().GetMethod(
+            "ReadInstanceList",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
+        )!;
+
+        var inputInstances = readInstanceListMethod.Invoke(inputRsz, [_repo])!;
+        var outputInstances = readInstanceListMethod.Invoke(outputRsz, [_repo])!;
+
+        var inputList = ((IEnumerable<RszInstance>)inputInstances).Cast<object>().ToList();
+        var outputList = ((IEnumerable<RszInstance>)outputInstances).Cast<object>().ToList();
+
+        //Assert.Equal(inputList.Count, outputList.Count);
+
+        for (int i = 0; i < inputList.Count; i++)
+        {
+            var a = inputList[i]?.ToString() ?? "<null>";
+            var b = outputList[i]?.ToString() ?? "<null>";
+
+            if (a != b)
+            {
+                var firstDiff = FindFirstDifference(a, b);
+
+                Assert.True(false, $"""
+================================================================================
+SCN FILE : {_singleFileTest}
+INSTANCE : {i}
+TYPE     : {inputList[i]?.GetType().Name}
+
+FIRST DIFF INDEX : {firstDiff}
+
+INPUT :
+{a}
+
+OUTPUT:
+{b}
+================================================================================
+""");
+            }
+        }
+    }
+
+    [Fact(Skip = "Not reliable yet")]
+    void All_Scene()
     {
         var differences = new List<string>();
 
