@@ -105,7 +105,7 @@ internal class BirdCageModifier : Modifier
             var (beforeItemCount, beforeItemId, beforeCoinCounter) = birdCage.BeforeRandomizationState;
             var beforeName = _items.FromId(beforeItemId)!.Name;
             var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
-            logger.LogLine($"Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +
+            logger.LogLine($"[{birdCage.PakPath}] Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +
                 $"{birdCage.Item.ItemStackNum}x {afterName} that costs {birdCage.CoinCounter.CoinMax} antique coins");
         }
     }

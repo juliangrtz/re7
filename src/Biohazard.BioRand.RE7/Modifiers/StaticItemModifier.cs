@@ -17,6 +17,7 @@ internal class StaticItemModifier : Modifier
 
     // (itemID, amount)
     // TODO
+    // Keep in mind that random weapons need a different app.WeaponGun component!
     private (string, int) GetRandomItem(ItemDefinition item, Randomizer randomizer, Rng rng)
     {
         switch (item.CategoryType)
