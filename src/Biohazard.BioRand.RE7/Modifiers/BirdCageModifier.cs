@@ -61,13 +61,13 @@ internal class BirdCageModifier : Modifier
         return (itemId, rng.Next(min, max), Coins);
     }
 
-    private void RandomizeBirdCageContent(Rng rng, BirdCage birdCage, bool isMagnum)
+    private void RandomizeBirdCageContent(Rng rng, BirdCage birdCage, bool isMagnum, bool isOnRaytracingVersion)
     {
         (ItemID Id, int Quantity, int Coins) = GetReplacement(isMagnum, rng);
         birdCage.Item.ItemDataID = Id.ToString();
         birdCage.Item.ItemStackNum = Quantity;
         birdCage.CoinCounter.CoinMax = Coins;
-        birdCage.Serialize();
+        birdCage.Serialize(isOnRaytracingVersion);
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -82,7 +82,8 @@ internal class BirdCageModifier : Modifier
         {
             var path = PakPath.SceneFile(file);
             var content = randomizer.FileRepository.GetFile(path);
-            var scnFile = new ScnFile(Constants.SceneFileVersion, content).ReadScene(randomizer.FileRepository.TypeRepository);
+            var scnFile = new ScnFile(randomizer.IsOnRaytracingVersion ? Constants.SceneFileVersionRT : Constants.SceneFileVersionNonRT, content)
+                            .ReadScene(randomizer.FileRepository.TypeRepository);
 
             scnFile.VisitGameObjects(gameObject =>
             {
@@ -94,7 +95,7 @@ internal class BirdCageModifier : Modifier
                     var isMagnum = gameObject.Name.EndsWith("Magnum");
                     if (isMagnum && randomizeMagnum || randomizeDrugsAndPowerCoins)
                     {
-                        RandomizeBirdCageContent(rng, birdCage, isMagnum);
+                        RandomizeBirdCageContent(rng, birdCage, isMagnum, randomizer.IsOnRaytracingVersion);
                     }
                 }
             });
@@ -146,9 +147,9 @@ internal class BirdCage
         BeforeRandomizationState = (Item.ItemStackNum, Item.ItemDataID, CoinCounter.CoinMax);
     }
 
-    public void Serialize()
+    public void Serialize(bool isOnRaytracingVersion)
     {
-        Randomizer.FileRepository.ModifyScnFile(PakPath, scene =>
+        Randomizer.FileRepository.ModifyScnFile(PakPath, isOnRaytracingVersion, scene =>
         {
             var container = scene.FindGameObject(go => go.Guid == ContainerGuid)!;
 

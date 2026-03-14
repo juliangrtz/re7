@@ -173,6 +173,7 @@ internal class Randomizer : IDisposable
             //new KeyItemLocationModifier(),
             new DropItemModifier(),
             new StaticItemModifier(),
+            new ChapterJumpDataModifier(),
         ];
     }
 

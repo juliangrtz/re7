@@ -16,7 +16,7 @@ public static class PakPath
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{Constants.UserFileVersion}";
 
     public static string SceneFile(this string path)
-        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{Constants.SceneFileVersion}";
+        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? Constants.SceneFileVersionRT : Constants.SceneFileVersionNonRT)}";
 
     public static string FromAbsolutePath(this string absolutePath)
         => Of(absolutePath.Without(absolutePath.SubstringBefore(PrefixRT)));

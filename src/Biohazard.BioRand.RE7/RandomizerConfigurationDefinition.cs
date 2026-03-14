@@ -32,6 +32,33 @@ internal static class RandomizerConfigurationDefinition
             Default = "dx12_rt"
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "skip-guest-house",
+            Label = "Skip Guest House Chapter",
+            Description = "Whether to skip the guest house chapter and start from the main Baker house.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "shuffle-chapters",
+            Label = "Shuffle Chapters",
+            Description = "Whether to shuffle chapter transitions.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "shuffle-chapters-with-ff",
+            Label = "Include Found Footage Chapters When Shuffling",
+            Description = "Whether to include the Found Footage VHS levels when shuffling chapters.",
+            Type = "switch",
+            Default = false
+        });
+
         #endregion General
 
         #region Items
