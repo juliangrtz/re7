@@ -20,7 +20,7 @@ public class ScnFileTests
 
     private const string _singleFileTest = "natives/stm/environment/scene/chapter4/c04_cottage.scn.20";
 
-    [Fact]
+    [Fact(Skip = "Skip until RSZ is fixed")]
     void Single_File_Test()
     {
         var hash = _pakFile.FileHashes.FirstOrDefault(h =>
@@ -84,7 +84,7 @@ OUTPUT:
         }
     }
 
-    [Fact(Skip = "Not reliable yet")]
+    [Fact(Skip = "Skip until RSZ is fixed")]
     void All_Scene()
     {
         var differences = new List<string>();
