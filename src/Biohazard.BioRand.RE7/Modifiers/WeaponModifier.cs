@@ -30,10 +30,9 @@ internal class WeaponModifier : Modifier
     {
         foreach (var (weaponId, path) in WeaponPrefabs)
         {
-            var pakPath = PakPath.UserFile(path);
-            var data = randomizer.FileRepository.DeserializeUserFile<WeaponGunParameter>(pakPath);
+            var data = randomizer.FileRepository.DeserializeUserFile<WeaponGunParameter>(path);
             var name = _itemDefinitions.FromId(weaponId.ToString())!.Name;
-            logger.LogLine($"[{pakPath}] {name}: {data.Format()}");
+            logger.LogLine($"[{path}] {name}: {data.Format()}");
         }
     }
 
