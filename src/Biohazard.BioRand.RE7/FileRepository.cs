@@ -45,8 +45,8 @@ internal class FileRepository : IPatchContext, IDisposable
 
         if (RszRepository == null)
         {
-            var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json.gz");
-            RszRepository = RszRepositorySerializer.Default.FromJsonGz(rszJson);
+            var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json");
+            RszRepository = RszRepositorySerializer.Default.FromJson(rszJson);
         }
     }
 
