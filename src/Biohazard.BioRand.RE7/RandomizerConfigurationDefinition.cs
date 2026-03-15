@@ -349,7 +349,7 @@ internal static class RandomizerConfigurationDefinition
 
         foreach(var (id, _) in WeaponModifier.WeaponPrefabs)
         {
-            var sanitizedId = id.ToString().ToLowerInvariant();
+            var sanitizedId = id.ToString().ToLowerInvariant().Replace("_", "-");
             var name = _itemDefinitions.FromId(id.ToString())!.Name;
             group.Items.Add(new GroupItem()
             {
