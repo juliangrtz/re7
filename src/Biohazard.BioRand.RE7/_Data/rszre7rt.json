@@ -22095,7 +22095,7 @@
 				"array": false,
 				"name": "AttributeResource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.navigation.AIMapAttributeResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -22165,7 +22165,7 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "EdgeCreate(?)",
+				"name": "EdgeCreate",
 				"native": true,
 				"original_type": "via.navigation.AIMapEffector.EdgeCreateType",
 				"size": 4,
@@ -22174,7 +22174,7 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "Draw(?)",
+				"name": "UseFlipConstraint",
 				"native": true,
 				"original_type": "",
 				"size": 1,
@@ -116470,7 +116470,7 @@
 				"array": false,
 				"name": "Resource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.fsm.FsmResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -116486,7 +116486,7 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "ReservedSetCurentState",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
@@ -116495,7 +116495,7 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "Enabled",
+				"name": "PuppetMode",
 				"native": true,
 				"original_type": "",
 				"size": 1,
@@ -116596,7 +116596,7 @@
 				"array": false,
 				"name": "UserVariables",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.userdata.UserVariablesResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -116605,7 +116605,7 @@
 				"array": false,
 				"name": "MotionBankAsset",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.MotionBankResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -170062,7 +170062,7 @@
 				"array": false,
 				"name": "Resource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.fsm.FsmResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -170078,7 +170078,7 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "ReservedSetCurentState",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
@@ -170087,7 +170087,7 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "Enabled",
+				"name": "PuppetMode",
 				"native": true,
 				"original_type": "",
 				"size": 1,
@@ -235156,36 +235156,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -295677,36 +295677,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -316201,36 +316201,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -333258,36 +333258,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -367359,20 +367359,20 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "Enabled",
+				"name": "v0",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Bool"
+				"type": "Data"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "Trees",
+				"name": "v1",
 				"native": true,
-				"original_type": "via.behaviortree.BehaviorTree.CoreHandle",
+				"original_type": "",
 				"size": 4,
-				"type": "Object"
+				"type": "Data"
 			},
 			{
 				"align": 4,
@@ -367386,56 +367386,56 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "ExecLine",
+				"name": "v3",
 				"native": true,
-				"original_type": "via.behaviortree.ExecLine",
+				"original_type": "",
 				"size": 4,
-				"type": "S32"
+				"type": "Data"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "ExecGroup",
+				"name": "v4",
 				"native": true,
-				"original_type": "via.behaviortree.ExecGroup",
+				"original_type": "",
 				"size": 4,
-				"type": "S32"
+				"type": "Data"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "PuppetMode",
+				"name": "v5",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Bool"
+				"type": "Data"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "PuppetKeepActivation",
+				"name": "v6",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Bool"
+				"type": "Data"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "ToolPuppetMode(?)",
+				"name": "v7",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Bool"
+				"type": "Data"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "DevelopOwnerGameObject",
+				"name": "v8",
 				"native": true,
-				"original_type": "via.GameObject",
+				"original_type": "",
 				"size": 4,
-				"type": "U32"
+				"type": "Data"
 			},
 			{
 				"align": 1,
@@ -367458,16 +367458,7 @@
 			{
 				"align": 4,
 				"array": true,
-				"name": "v11_Trees",
-				"native": true,
-				"original_type": "via.behaviortree.BehaviorTree.CoreHandle",
-				"size": 4,
-				"type": "Object"
-			},
-			{
-				"align": 4,
-				"array": true,
-				"name": "v12_Layer",
+				"name": "v11_Layer",
 				"native": true,
 				"original_type": "via.motion.MotionFsm2Layer",
 				"size": 4,
@@ -367496,7 +367487,7 @@
 				"array": false,
 				"name": "UserVariables",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.userdata.UserVariablesResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -367505,7 +367496,7 @@
 				"array": false,
 				"name": "MotionBankAsset",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.MotionBankResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -367514,7 +367505,7 @@
 				"array": false,
 				"name": "MotionUserVariables",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.userdata.UserVariablesResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -505104,36 +505095,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -510598,7 +510589,7 @@
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "via.resource_handle",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -553281,36 +553272,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -612604,108 +612595,108 @@
 				"array": false,
 				"name": "Resource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.fsm.FsmResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 8,
 				"array": false,
-				"name": "v1",
+				"name": "InstanceGuid",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.Guid",
 				"size": 16,
-				"type": "Data"
+				"type": "Guid"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v2",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v3",
+				"name": "PuppetMode",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "v4",
+				"name": "SceneData",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.fsm.SceneFsmData",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v5",
+				"name": "ExecGroup",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.fsm.ExecGroup",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v6",
+				"name": "UseExecuteOnScene",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v7",
+				"name": "ExecuteOnScene",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v8",
+				"name": "EnabledLogTrace",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v9",
+				"name": "OnDebug",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v10",
+				"name": "MuteResourceDialog",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v11",
+				"name": "DebugID",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
@@ -646907,36 +646898,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			}
@@ -725747,7 +725738,7 @@
 				"array": false,
 				"name": "Resource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.CollisionMeshResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -796966,36 +796957,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -837595,36 +837586,36 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "DeveloperDraw",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "DevelopDrawFillMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.FillMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
 				"name": "DependencyResources",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -859894,16 +859885,16 @@
 			{
 				"align": 4,
 				"array": true,
-				"name": "v15",
+				"name": "Layer",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.TreeLayer",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "ActiveMotionBank",
+				"name": "MotionBank",
 				"native": true,
 				"original_type": "via.motion.MotionBank",
 				"size": 4,
@@ -859912,11 +859903,11 @@
 			{
 				"align": 4,
 				"array": true,
-				"name": "v17",
+				"name": "DynamicMotionBank",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.DynamicMotionBank",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 1,
