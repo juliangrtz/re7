@@ -20,7 +20,7 @@ internal class ItemPlacementGenerator : IFileGenerator
     public string Id => "item_placements";
 
     private readonly RszTypeRepository _rszRepository =
-        RszRepositorySerializer.Default.FromJsonGz(EmbeddedData.GetFile("rszre7rt.json.gz"));
+        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
 
     private readonly PakFile _pakFile =
         new(EmbeddedData.GetFile("biorand-re7.pak"));
