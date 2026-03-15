@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Items;
+﻿using app;
+using Biohazard.BioRand.RE7.Items;
 using Enums.app.GameManager;
 
 namespace Biohazard.BioRand.RE7.Extensions;
@@ -73,4 +74,11 @@ public static class Re7TypeExtensions
         ChapterNo.Chapter9 => "End of Zoe DLC",
         _ => "Unused chapter"
     };
+
+    public static string Format(this WeaponGunParameter @params)
+        => $"{@params.MaxLoadNum} max. bullets, " +
+            $"{(@params.IsLoadNumInfinity ? "infinite bullets, " : "")}" +
+            $"{(@params.IsBulletStackNumInfinity ? "infinite stack" : "")}" +
+            $"{@params.Range} range, " +
+            $"{@params.Radius} radius";
 }

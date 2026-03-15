@@ -174,6 +174,7 @@ internal class Randomizer : IDisposable
             new DropItemModifier(),
             new StaticItemModifier(),
             new ChapterJumpDataModifier(),
+            new WeaponModifier(),
         ];
     }
 

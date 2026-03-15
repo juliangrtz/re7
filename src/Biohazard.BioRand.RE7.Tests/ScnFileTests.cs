@@ -20,7 +20,10 @@ public class ScnFileTests
 
     private const string _singleFileTest = "natives/stm/environment/scene/chapter4/c04_cottage.scn.20";
 
-    [Fact(Skip = "Skip until RSZ is fixed")]
+    // TODO: via.motion.TreeLayer
+    // TODO: via.motion.Motion
+
+    [Fact]
     void Single_File_Test()
     {
         var hash = _pakFile.FileHashes.FirstOrDefault(h =>
