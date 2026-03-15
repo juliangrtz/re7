@@ -30,17 +30,17 @@ public static class PatchContextExtensions
         context.SetFile(path, value.Data);
     }
 
-    public static ScnFile GetScnFile(this IPatchContext context, string path)
+    public static ScnFile GetScnFile(this IPatchContext context, string path, bool isRt)
     {
         var data = context.GetFile(path);
         return data == null
             ? throw new Exception("Unable to read data file.")
-            : new ScnFile(Constants.SceneFileVersion, data);
+            : new ScnFile(isRt ? Constants.SceneFileVersionRT : Constants.SceneFileVersionNonRT, data);
     }
 
-    public static void ModifyScnFile(this IPatchContext context, string path, Func<RszScene, RszScene> callback)
+    public static void ModifyScnFile(this IPatchContext context, string path, bool isRt, Func<RszScene, RszScene> callback)
     {
-        var scnFile = context.GetScnFile(path).ToBuilder(context.TypeRepository);
+        var scnFile = context.GetScnFile(path, isRt).ToBuilder(context.TypeRepository);
         scnFile.Scene = callback(scnFile.Scene);
         context.SetScnFile(path, scnFile.AddMissingResources().Build());
     }

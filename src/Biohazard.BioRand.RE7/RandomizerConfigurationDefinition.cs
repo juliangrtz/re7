@@ -8,8 +8,8 @@ namespace Biohazard.BioRand.RE7;
 
 internal static class RandomizerConfigurationDefinition
 {
-    private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly ItemDropRepository itemDrops = ItemDropRepository.Default;
+    private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly ItemDropRepository _itemDrops = ItemDropRepository.Default;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
@@ -29,6 +29,33 @@ internal static class RandomizerConfigurationDefinition
             Type = "dropdown",
             Options = ["dx12_rt", "dx11_non-rt"],
             Default = "dx12_rt"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "skip-guest-house",
+            Label = "Skip Guest House Chapter",
+            Description = "Whether to skip the guest house chapter and start from the main Baker house.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "shuffle-chapters",
+            Label = "Shuffle Chapters",
+            Description = "Whether to shuffle chapter transitions.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "shuffle-chapters-with-ff",
+            Label = "Include Found Footage Chapters When Shuffling",
+            Description = "Whether to include the Found Footage VHS levels when shuffling chapters.",
+            Type = "switch",
+            Default = false
         });
 
         #endregion General
@@ -127,15 +154,15 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("General Drops");
-        var drops = itemDrops.GenericDrops.OrderBy(drop => itemDefinitions.FromId(drop.ToString())!.CategoryType);
+        var drops = _itemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
         foreach (var drop in drops)
         {
-            var category = itemDrops.GetCategory(drop);
-            var (bgColor, textColor) = itemDrops.GetColor(category);
+            var category = _itemDrops.GetCategory(drop);
+            var (bgColor, textColor) = _itemDrops.GetColor(category);
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-ratio-{drop.ToString().ToLowerInvariant()}",
-                Label = itemDefinitions.FromId(drop.ToString())!.Name,
+                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
                 Category = new GroupItemCategory()
                 {
                     Label = category,
@@ -152,14 +179,14 @@ internal static class RandomizerConfigurationDefinition
 
         group = page.CreateGroup("Valuable Drops");
         group.Advanced = true;
-        foreach (var drop in itemDrops.HighValueDrops)
+        foreach (var drop in _itemDrops.HighValueDrops)
         {
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = ItemDropRepository.GetHighValueDropLabel(drop),
+                Label = _itemDrops.GetHighValueDropLabel(drop),
                 Type = "switch",
-                Default = false
+                Default = _itemDrops.GetEnabledValuableDrops().Contains(drop)
             });
         }
 
@@ -296,7 +323,7 @@ internal static class RandomizerConfigurationDefinition
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 
-        var items = from item in itemDefinitions
+        var items = from item in _itemDefinitions
                     where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
                     select (item.Id, item.Name, item.MaxStack);
 
@@ -316,6 +343,39 @@ internal static class RandomizerConfigurationDefinition
 
         #endregion Inventory
 
+        #region Weapons
+        page = configDefinition.CreatePage("Weapons");
+        group = page.CreateGroup("");
+
+        foreach(var (id, _) in WeaponModifier.WeaponPrefabs)
+        {
+            var sanitizedId = id.ToString().ToLowerInvariant();
+            var name = _itemDefinitions.FromId(id.ToString())!.Name;
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-ammo-capacity-min-{sanitizedId}",
+                Label = $"Min. Ammo Capacity Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 0.8
+            });
+
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-ammo-capacity-max-{sanitizedId}",
+                Label = $"Max. Ammo Capacity Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 1.2
+            });
+        }
+
+        #endregion
+
         #region Debug
 
         page = configDefinition.CreatePage("Debug");
@@ -334,8 +394,17 @@ internal static class RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = "debug-force-reframework",
-            Label = "Force RE Framework installation",
-            Description = "Always forces the installation of RE Framework, regardless of the configuration.",
+            Label = "Force RE Framework artifacts",
+            Description = "Always forces the installation of RE Framework artifacts, regardless of the configuration.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "debug-download-reframework-nightly",
+            Label = "Download RE Framework Nightly",
+            Description = "Installs RE Framework nightly from praydog's GitHub repository.",
             Type = "switch",
             Default = false
         });

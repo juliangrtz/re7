@@ -1,6 +1,7 @@
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
+using System.Net.Http;
 
 namespace Biohazard.BioRand.RE7;
 
@@ -16,6 +17,7 @@ public sealed class RandomizerOutput
     public bool IsWithREFramework { get; }
 
     private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
+    private const string REFrameworkNightlyUrl = "https://github.com/praydog/REFramework-nightly/releases/latest/download/RE7.zip";
 
     internal RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework)
     {
@@ -78,6 +80,25 @@ public sealed class RandomizerOutput
             );
 
             builder.AddEntry("reframework/data/BioRand7/config.json", configBytes);
+        }
+
+        if (Input.Configuration.GetValueOrDefault<bool>("debug-download-reframework-nightly"))
+        {
+            using var http = new HttpClient();
+
+            var zipBytes = http.GetByteArrayAsync(REFrameworkNightlyUrl)
+                .GetAwaiter()
+                .GetResult();
+
+            using var ms = new MemoryStream(zipBytes);
+            using var zip = new ZipArchive(ms, ZipArchiveMode.Read);
+
+            var entry = zip.GetEntry("dinput8.dll")!;
+
+            using var entryStream = entry.Open();
+            using var entryMs = new MemoryStream();
+            entryStream.CopyTo(entryMs);
+            builder.AddEntry("dinput8.dll", entryMs.ToArray());
         }
 
         return builder;

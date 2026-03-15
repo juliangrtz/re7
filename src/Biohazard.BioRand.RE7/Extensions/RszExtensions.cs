@@ -98,4 +98,11 @@ public static class RszExtensions
                 : node.WithChildren(node.Children.Add(child));
         }
     }
+
+    public static List<RszGameObject> GetGameObjects(this RszScene scene)
+    {
+        var result = new List<RszGameObject>();
+        scene.VisitGameObjects(go => result.Add(go));
+        return result;
+    }
 }
