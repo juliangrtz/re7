@@ -136,7 +136,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                 var path = _pakList.GetPath(hash);
                 return path != null
                        //&& _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
-                       && path.Contains($".scn.{Constants.SceneFileVersionRT}");
+                       && path.EndsWith($".scn.{Constants.SceneFileVersionRT}");
             })
             .ToList();
 

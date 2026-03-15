@@ -19,6 +19,10 @@
     "Generate item placements": {
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json -f csv items"
+    },
+    "Generate SCN via type list": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json scn-via-type-list"
     }
   }
 }
