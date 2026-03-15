@@ -347,6 +347,16 @@ internal static class RandomizerConfigurationDefinition
         page = configDefinition.CreatePage("Weapons");
         group = page.CreateGroup("");
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-ammo-capacity",
+            Label = "Randomize Ammo Capacity",
+            Description = "Whether to randomize the ammo capacities. Will ensure that the minimum capacity is one. " +
+                            "A new game must be created for this to work.",
+            Type = "switch",
+            Default = false
+        });
+
         foreach(var (id, _) in WeaponModifier.WeaponPrefabs)
         {
             var sanitizedId = id.ToString().ToLowerInvariant().Replace("_", "-");
