@@ -50,7 +50,7 @@ internal class WeaponModifier : Modifier
                 var max = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-max-{sanitizedId}");
                 var factor = Math.Max(1, Math.Round(rng.NextDouble(min, max), 1));
 
-                randomizer.FileRepository.ModifyUserFile<WeaponGunParameter>(PakPath.UserFile(path), root =>
+                randomizer.FileRepository.ModifyUserFile<WeaponGunParameter>(path, root =>
                 {
                     var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
 
