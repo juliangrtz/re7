@@ -4,175 +4,166 @@ using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
 public class ScnFileTests
 {
     private readonly RszTypeRepository _repo =
-    RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
+        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
 
     private readonly PakFile _pakFile =
         new(EmbeddedData.GetFile("biorand-re7.pak"));
 
     private readonly PakList _pakList =
-        new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
+        new(Encoding.UTF8.GetString(Gzip.DecompressData(
+            EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    private const string _singleFileTest = "natives/stm/environment/scene/chapter4/c04_cottage.scn.20";
+    private const string _singleFileTest =
+        "natives/stm/environment/scene/chapter4/c04_cottage.scn.20";
 
-    // TODO: via.motion.TreeLayer
-    // TODO: via.motion.Motion
+    record InstanceDifference(
+        string SceneFile,
+        int InstanceIndex,
+        string? Type,
+        int FirstDiffIndex,
+        string Input,
+        string Output
+    );
 
-    [Fact(Skip = "Skip until RSZ is fixed")]
-    void Single_File_Test()
+    record InstanceCountMismatch(
+        string SceneFile,
+        int InputCount,
+        int OutputCount
+    );
+
+    [Fact]
+    void Test_Single_Scene_File()
     {
         var hash = _pakFile.FileHashes.FirstOrDefault(h =>
             _pakList.GetPath(h) == _singleFileTest);
 
         Assert.True(hash != 0, $"File not found in pak list: {_singleFileTest}");
 
-        var input = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash));
-        var inputBuilder = input.ToBuilder(_repo);
-        var output = inputBuilder.Build();
+        var differences = TestSceneFile(hash, _singleFileTest);
 
-        // TODO: Replace reflection once everything is public
-        static object GetRsz(object scn)
-        {
-            var type = scn.GetType();
-            var prop = type.GetProperty("Rsz", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
-            return prop.GetValue(scn)!;
-        }
-
-        var inputRsz = GetRsz(input);
-        var outputRsz = GetRsz(output);
-
-        var readInstanceListMethod = inputRsz.GetType().GetMethod(
-            "ReadInstanceList",
-            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
-        )!;
-
-        var inputInstances = readInstanceListMethod.Invoke(inputRsz, [_repo])!;
-        var outputInstances = readInstanceListMethod.Invoke(outputRsz, [_repo])!;
-
-        var inputList = ((IEnumerable<RszInstance>)inputInstances).Cast<object>().ToList();
-        var outputList = ((IEnumerable<RszInstance>)outputInstances).Cast<object>().ToList();
-
-        //Assert.Equal(inputList.Count, outputList.Count);
-
-        for (int i = 0; i < inputList.Count; i++)
-        {
-            var a = inputList[i]?.ToString() ?? "<null>";
-            var b = outputList[i]?.ToString() ?? "<null>";
-
-            if (a != b)
-            {
-                var firstDiff = FindFirstDifference(a, b);
-
-                Assert.True(false, $"""
-================================================================================
-SCN FILE : {_singleFileTest}
-INSTANCE : {i}
-TYPE     : {inputList[i]?.GetType().Name}
-
-FIRST DIFF INDEX : {firstDiff}
-
-INPUT :
-{a}
-
-OUTPUT:
-{b}
-================================================================================
-""");
-            }
-        }
+        if (differences.Count > 0)
+            Assert.True(false, ToJson(differences));
     }
 
     [Fact(Skip = "Skip until RSZ is fixed")]
-    void All_Scene()
+    void Test_Relevant_Scene_Files()
     {
-        var differences = new List<string>();
-
+        var differences = new List<object>();
+        var allowedDirectories = new string[] {
+            //"natives/stm/ch8", "natives/stm/ch9", 
+            "natives/stm/environment", "natives/stm/leveldesign", "natives/stm/scenes"
+        };
         var scnFileHashes = _pakFile.FileHashes.Where(hash =>
         {
             var path = _pakList.GetPath(hash);
-            return path != null && path.EndsWith($".scn.{Constants.SceneFileVersionRT}");
+
+            return path != null
+                    && allowedDirectories.Any(dir => path.StartsWith(dir))
+                    && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}")
+                    && !path.Contains("levelfsm");
         }).ToList();
 
         foreach (var hash in scnFileHashes)
         {
             var path = _pakList.GetPath(hash)!;
-
-            var input = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash));
-            var inputBuilder = input.ToBuilder(_repo);
-            var output = inputBuilder.Build();
-
-            // TODO: Replace reflection once everything is public
-            static object GetRsz(object scn)
-            {
-                var type = scn.GetType();
-                var prop = type.GetProperty("Rsz", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
-                return prop.GetValue(scn)!;
-            }
-
-            var inputRsz = GetRsz(input);
-            var outputRsz = GetRsz(output);
-
-            var readInstanceListMethod = inputRsz.GetType().GetMethod(
-                "ReadInstanceList",
-                BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance
-            )!;
-
-            var inputInstances = readInstanceListMethod.Invoke(inputRsz, [_repo])!;
-            var outputInstances = readInstanceListMethod.Invoke(outputRsz, [_repo])!;
-
-            var inputList = ((IEnumerable<RszInstance>)inputInstances).Cast<object>().ToList();
-            var outputList = ((IEnumerable<RszInstance>)outputInstances).Cast<object>().ToList();
-            if (inputList.Count != outputList.Count)
-            {
-                differences.Add(
-                    $"================================================================================\n" +
-                    $"INSTANCE COUNT MISMATCH: {path}: {inputList.Count} vs. {outputList.Count}\n" +
-                    $"================================================================================"
-                );
-                continue;
-            }
-
-            for (int i = 0; i < inputList.Count; i++)
-            {
-                var a = inputList[i]?.ToString() ?? "<null>";
-                var b = outputList[i]?.ToString() ?? "<null>";
-
-                if (a != b)
-                {
-                    var firstDiff = FindFirstDifference(a, b);
-
-                    differences.Add($"""
-================================================================================
-SCN FILE : {path}
-INSTANCE : {i}
-TYPE     : {inputList[i]?.GetType().Name}
-
-FIRST DIFF INDEX : {firstDiff}
-
-INPUT :
-{a}
-
-OUTPUT:
-{b}
-================================================================================
-""");
-                }
-            }
+            differences.AddRange(TestSceneFile(hash, path));
         }
 
         if (differences.Count > 0)
-        {
-            var report = string.Join(Environment.NewLine, differences);
-            Assert.True(false, report);
-        }
+            Assert.True(false, ToJson(differences));
     }
 
-    static int FindFirstDifference(string a, string b)
+    [Fact(Skip = "Skip until RSZ is fixed")]
+    void Test_All_Scene_Files()
+    {
+        var differences = new List<object>();
+
+        var scnFileHashes = _pakFile.FileHashes.Where(hash =>
+        {
+            var path = _pakList.GetPath(hash);
+            return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}");
+        });
+
+        foreach (var hash in scnFileHashes)
+        {
+            var path = _pakList.GetPath(hash)!;
+            differences.AddRange(TestSceneFile(hash, path));
+        }
+
+        if (differences.Count > 0)
+            Assert.True(false, ToJson(differences));
+    }
+
+    private List<object> TestSceneFile(ulong hash, string path)
+    {
+        var differences = new List<object>();
+
+        var input = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(hash));
+        var output = input.ToBuilder(_repo).Build();
+
+        var inputInstances = ReadInstances(GetRsz(input));
+        var outputInstances = ReadInstances(GetRsz(output));
+
+        if (inputInstances.Count != outputInstances.Count)
+        {
+            differences.Add(new InstanceCountMismatch(
+                path,
+                inputInstances.Count,
+                outputInstances.Count
+            ));
+
+            return differences;
+        }
+
+        for (int i = 0; i < inputInstances.Count; i++)
+        {
+            var a = inputInstances[i]?.ToString() ?? "<null>";
+            var b = outputInstances[i]?.ToString() ?? "<null>";
+
+            if (a != b)
+            {
+                differences.Add(new InstanceDifference(
+                    path,
+                    i,
+                    inputInstances[i]?.GetType().Name,
+                    FindFirstDifference(a, b),
+                    a,
+                    b
+                ));
+            }
+        }
+
+        return differences;
+    }
+
+    private static object GetRsz(object scn)
+    {
+        var prop = scn.GetType().GetProperty(
+            "Rsz",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
+
+        return prop.GetValue(scn)!;
+    }
+
+    private List<object> ReadInstances(object rsz)
+    {
+        var method = rsz.GetType().GetMethod(
+            "ReadInstanceList",
+            BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
+
+        var instances = method.Invoke(rsz, [_repo])!;
+
+        return ((IEnumerable<RszInstance>)instances).Cast<object>().ToList();
+    }
+
+    private static int FindFirstDifference(string a, string b)
     {
         var len = Math.Min(a.Length, b.Length);
 
@@ -181,5 +172,13 @@ OUTPUT:
                 return i;
 
         return len;
+    }
+
+    private static string ToJson(object obj)
+    {
+        return JsonSerializer.Serialize(obj, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
     }
 }

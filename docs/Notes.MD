@@ -31,6 +31,24 @@ The .pak files are found in the `dlc` directory.
 | re_dlc_stm_530598   | Reload Coin             |                                              | https://store.steampowered.com/app/530598/Reload_Coin__Madhouse_Mode_Unlock/   |
 | re_dlc_stm_530599   | Universal Coin          |                                              | https://store.steampowered.com/app/530599/Universal_Coin__Madhouse_Mode_Unlock/|
 
+## Internal DLC IDs
+
+`
+(chapter|c)0?7_1 => Bedroom
+((chapter|c)0?7_2)|cardgame|survival => 21
+(chapter|c)0?7_3 => Nightmare
+(chapter|c)0?7_4 => Daughters
+(chapter|c|ch)0?8 => NotAHero
+(chapter|c|ch)0?9 => EndOfZoe
+birthday => Jacks55thBirthday
+/(e|i)md => EthanMustDie
+(dlcitem|coin)_01 => DefenseCoinAndMadhouseUnlock
+(dlcitem|coin)_02 => AttackCoinAndMadhouseUnlock
+(dlcitem|coin)_03 => InstinctCoinAndMadhouseUnlock
+(dlcitem|coin)_04 => ReloadCoinAndMadhouseUnlock
+(dlcitem|coin)_05 => UniversalCoinAndMadhouseUnlock
+`
+
 ## Recipes
 
 - `prefab/item/dictionarycombinedata.user.2`
