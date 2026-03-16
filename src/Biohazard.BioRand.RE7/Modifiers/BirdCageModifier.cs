@@ -82,7 +82,7 @@ internal class BirdCageModifier : Modifier
         {
             var path = PakPath.SceneFile(file);
             var content = randomizer.FileRepository.GetFile(path);
-            var scnFile = new ScnFile(randomizer.IsOnRaytracingVersion ? Constants.SceneFileVersionRT : Constants.SceneFileVersionNonRT, content)
+            var scnFile = new ScnFile(randomizer.IsOnRaytracingVersion ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, content)
                             .ReadScene(randomizer.FileRepository.TypeRepository);
 
             scnFile.VisitGameObjects(gameObject =>

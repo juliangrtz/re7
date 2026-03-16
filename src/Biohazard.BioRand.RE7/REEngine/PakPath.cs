@@ -13,10 +13,13 @@ public static class PakPath
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}";
 
     public static string UserFile(this string path)
-        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{Constants.UserFileVersion}";
+        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{FileVersions.UserFileVersion}";
 
     public static string SceneFile(this string path)
-        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? Constants.SceneFileVersionRT : Constants.SceneFileVersionNonRT)}";
+        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT)}";
+
+    public static string MessageFile(this string path)
+        => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? FileVersions.MsgFileVersionRT : FileVersions.MsgFileVersionNonRT)}";
 
     public static string FromAbsolutePath(this string absolutePath)
         => Of(absolutePath.Without(absolutePath.SubstringBefore(PrefixRT)));
