@@ -2220,11 +2220,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "Threshold",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
@@ -4865,110 +4865,110 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v24",
+				"name": "InputType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.InputListType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v25",
+				"name": "MouseSelectType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.MouseSelectType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v26",
+				"name": "Loop",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v27",
+				"name": "ItemCount",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v28",
+				"name": "ItemMax",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v29",
+				"name": "ItemOffset",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v30",
+				"name": "CursorType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.CursorType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v31",
+				"name": "CursorIndex",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v32",
+				"name": "ScrollEase",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.curve.EaseType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v33",
+				"name": "ScrollTime",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v34",
+				"name": "CursorRangeBegin",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v35",
+				"name": "CursorRangeEnd",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			}
 		],
 		"name": "via.gui.ScrollList",
@@ -6118,11 +6118,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "ServiceLabel",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			}
 		],
 		"name": "via.network.SessionPs5Psn",
@@ -7287,344 +7287,344 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "LightingTarget",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LightingTarget",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v1",
+				"name": "RTLightingTarget",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LightingTarget",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v2",
+				"name": "DebugMode",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v3",
+				"name": "DisableLightProbes",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v4",
+				"name": "ForwardLightingtLevel",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LightImportantLevel",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v5",
+				"name": "ShadowResolution",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.ShadowResolution",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v6",
+				"name": "ShadowFilter",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.ShadowFilter",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v7",
+				"name": "ShadowPrecision",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.ShadowPrecision",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v8",
+				"name": "EffectiveRangeScale",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "ShadowVarianceScale",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v10",
+				"name": "AOEfficiencyBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v11",
+				"name": "MaxDynamicShadowUpdate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v12",
+				"name": "OutdoorLightProbeSize",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v13",
+				"name": "LightCullingResolution",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LightCullingResolution",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v14",
+				"name": "BlueNoiseSpp",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.BlueNoiseSpp",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v15",
+				"name": "EnableVFXDepthOcclusion",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v16",
+				"name": "UseTranslucentShadowMaps",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v17",
+				"name": "GlobalDistanceFieldEnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v18",
+				"name": "GlobalDistanceFieldVoxelSize",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v19",
+				"name": "GlobalDistanceFieldMaxDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v20",
+				"name": "GlobalDistanceFieldResolution",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.GlobalSDFResolution",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v21",
+				"name": "GlobalDistanceFieldClipmapNum",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.GlobalSDFClipmapNum",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "GSSSparseShadowTree",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.SparseShadowTreeHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v23",
+				"name": "GSSDirection",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v24",
+				"name": "GSSBoundary",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.OBB",
 				"size": 80,
-				"type": "Data"
+				"type": "OBB"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v25",
+				"name": "GSSShadowDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v26",
+				"name": "GSSResolution",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.GlobalSparseShadowResolution",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v27",
+				"name": "GSSShadowBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v28",
+				"name": "GSSShadowVariance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v29",
+				"name": "GSSUseCascadeShadow",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v30",
+				"name": "GSSBakeDirection",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v31",
+				"name": "GSSBakeBoundary",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.OBB",
 				"size": 80,
-				"type": "Data"
+				"type": "OBB"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v32",
+				"name": "GSSBakeShadowDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v33",
+				"name": "GSSBakeResolution",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.SparseShadowTreeResolution",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v34",
+				"name": "GSSBakeShadowDepthBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v35",
+				"name": "GSSBakeShadowSlopeBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v36",
+				"name": "GSSDebugDrawMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.GlobalSparseShadowDebugDrawMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v37",
+				"name": "RayTracingWithSSREnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			}
 		],
 		"name": "via.render.LightRenderer",
@@ -9880,36 +9880,36 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "ValueF4",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.Float4",
 				"size": 16,
-				"type": "Data"
+				"type": "Float4"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "ValueT",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.TextureResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v4",
+				"name": "ValueF",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "ValueB",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.ByteBufferResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			}
@@ -10172,18 +10172,18 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "StartPoint",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.pointgraph.PointData",
 				"size": 4,
 				"type": "Data"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v1",
+				"name": "EndPoint",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.pointgraph.PointData",
 				"size": 4,
 				"type": "Data"
 			}
@@ -16628,65 +16628,65 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v1",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v3",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v4",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v5",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v6",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			}
 		],
 		"name": "via.motion.MotionInfo",
@@ -20626,47 +20626,47 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v4",
+				"name": "BlendRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "Resource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkHand2ResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v6",
+				"name": "UseSelfColGroupID",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v7",
+				"name": "SelfColGroupID",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v8",
+				"name": "UseSameFilter",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			}
 		],
 		"name": "via.motion.IkHand2",
@@ -20686,36 +20686,36 @@
 				"array": false,
 				"name": "NfpResource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.nnfc.nfp.NfpResourceHandle",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "Detection(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v2",
+				"name": "AnyDevice(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v3",
+				"name": "PrimaryPadId(?)",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.hid.NpadId",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			}
 		],
 		"name": "via.nnfc.nfp.NfpDevice",
@@ -22866,90 +22866,90 @@
 			{
 				"align": 16,
 				"array": false,
-				"name": "v6",
+				"name": "Position",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v7",
+				"name": "Rotation",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v8",
+				"name": "Scale",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec2",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec2"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "RegionSize",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.Size",
 				"size": 8,
-				"type": "Data"
+				"type": "Size"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v10",
+				"name": "ControlPoint",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.ControlPoint",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v11",
+				"name": "BlendType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.BlendType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v12",
+				"name": "LinearAlphaBlend",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v13",
+				"name": "Color",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.Color",
 				"size": 4,
-				"type": "Data"
+				"type": "Color"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v14",
+				"name": "SamplerType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.gui.SamplerType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "UVSequence",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.uvsequence.UVSequenceResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			}
@@ -23031,11 +23031,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v4",
+				"name": "BlendRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
@@ -23076,11 +23076,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "BackToeExJointNum",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
@@ -23121,11 +23121,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v14",
+				"name": "ForeToeExJointNum",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
@@ -23148,108 +23148,108 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v17",
+				"name": "BackLegDirection",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.AxisDirection",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v18",
+				"name": "BackLegDirectionFlip",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v19",
+				"name": "BackLegAxis",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.AxisDirection",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v20",
+				"name": "BackLegAxisFlip",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v21",
+				"name": "ForeLegDirection",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.AxisDirection",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v22",
+				"name": "ForeLegDirectionFlip",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v23",
+				"name": "ForeLegAxis",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.AxisDirection",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v24",
+				"name": "ForeLegAxisFlip",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v25",
+				"name": "DivideUpdate",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v26",
+				"name": "PreUpdateTiming",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.ExpressionUpdate",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v27",
+				"name": "UseIkSpine",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "GroundFilter",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.CollisionFilterResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -23258,378 +23258,378 @@
 				"array": false,
 				"name": "GroundDetailFilter",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.physics.CollisionFilterResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v30",
+				"name": "EnabledGroundAdjust",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v31",
+				"name": "EnabledToeAdjust",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v32",
+				"name": "RayCastMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkDog.RayCastMode",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v33",
+				"name": "GroundContactUpDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v34",
+				"name": "GroundContactDownDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v35",
+				"name": "GroundContactRotationAdjustDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v36",
+				"name": "WallLimitAngle",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v37",
+				"name": "RayCastSkipOption",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkDog.RayCastSkipOption",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v38",
+				"name": "RayCastInterval",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v39",
+				"name": "RayCastSkipByDistance",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v40",
+				"name": "RayCastSkipDistance",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v41",
+				"name": "RayCastSkipDetail",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v42",
+				"name": "FootRollLimit",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v43",
+				"name": "BackHealHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v44",
+				"name": "BackToeHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v45",
+				"name": "ForeHealHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v46",
+				"name": "ForeToeHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v47",
+				"name": "LimitTrans",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v48",
+				"name": "CogLimitAngle",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v49",
+				"name": "PullRegist",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v50",
+				"name": "PushRegist",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v51",
+				"name": "BackDistanceLimitRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v52",
+				"name": "ForeDistanceLimitRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v53",
+				"name": "AdjustCogDamping",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v54",
+				"name": "AdjustFootDamping",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v55",
+				"name": "CenterRXAdjustRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v56",
+				"name": "CenterRZAdjustRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v57",
+				"name": "AdjustFootBottomRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v58",
+				"name": "EnableGroundFit",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v59",
+				"name": "BackCenterOffset",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.vec3",
 				"size": 16,
-				"type": "Data"
+				"type": "Vec3"
 			},
 			{
 				"align": 16,
 				"array": false,
-				"name": "v60",
+				"name": "BackCenterOffsetRot(?)",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.Quaternion",
 				"size": 16,
-				"type": "Data"
+				"type": "Quaternion"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v61",
+				"name": "FootLockMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkDog.FootLockMode",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v62",
+				"name": "FootLockFrame",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v63",
+				"name": "FootSkipFrame",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v64",
+				"name": "AdjustShoulder",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v65",
+				"name": "ShoulderMaxRot",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v66",
+				"name": "ShoulderMinRot",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v67",
+				"name": "ShoulderMaxHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v68",
+				"name": "ShoulderMinHeight",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v69",
+				"name": "EnabledShoulderLimit",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v70",
+				"name": "ShoulderLimitAngle",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			}
 		],
 		"name": "via.motion.IkDog",
@@ -24023,20 +24023,20 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "IsOutdoor",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "Volume",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			}
 		],
 		"name": "via.wwise.WwiseSpaceDeterminationFeatureParam",
@@ -42415,126 +42415,126 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v7",
+				"name": "ControlType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkTrain.ControlType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v8",
+				"name": "Active",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "ResetPoseMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkTrain.ResetPoseMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v10",
+				"name": "TargetReachLength",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v11",
+				"name": "DistanceAwayLimit",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v12",
+				"name": "ResetPoseFrame",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v13",
+				"name": "ResetRootFrame",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v14",
+				"name": "Speed",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v15",
+				"name": "RollPerFrameLimit",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v16",
+				"name": "HeadMeanderingRate",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v17",
+				"name": "HeadDirFrameLimit",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v18",
+				"name": "TrainRotateType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkTrain.TrainRotate",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "v19",
+				"name": "ManageJoint",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkTrain.ManageJoint",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "IkTrainResource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.motion.IkTrainResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			}
@@ -532519,11 +532519,11 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "RawBytes"
 			}
 		],
 		"name": "via.pointgraph.PointData",
@@ -641300,27 +641300,27 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "RenderOutputID",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.RenderOutputID",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "Enabled",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "Mesh",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.MeshResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -641329,23 +641329,23 @@
 				"array": false,
 				"name": "Material",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.MeshMaterialResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v4",
+				"name": "StaticMesh",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v5",
+				"name": "SmallObjectCullingFactor",
 				"native": true,
 				"original_type": "",
 				"size": 4,
@@ -641354,7 +641354,7 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v6",
+				"name": "BVHRebuildFactor",
 				"native": true,
 				"original_type": "",
 				"size": 4,
@@ -641363,169 +641363,178 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v7",
+				"name": "BVHDebug",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v8",
+				"name": "DrawDefault",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v9",
+				"name": "FrustumCulling",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v10",
+				"name": "OcclusionCulling",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v11",
+				"name": "Occluder",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v12",
+				"name": "OccluderByLod",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v13",
+				"name": "DrawLaterOccluder",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v14",
+				"name": "DrawVoxelize",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v15",
+				"name": "DrawnEnvmap",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v16",
+				"name": "DrawDepthBlocker",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v17",
+				"name": "DrawDepthOcclusion",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v18",
+				"name": "DrawRaytracing",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v19",
+				"name": "IgnoreDepth",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v20",
+				"name": "IgnoreDepthTransparentCorrection",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v21",
+				"name": "ViewSpaceScaling",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v22",
+				"name": "MaskIgnoreDepthMesh",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v23",
+				"name": "BeautyMaskFlag",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v24",
+				"name": "ReceiveSSSSSFlag",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v25",
+				"name": "StreamingPriority",
+				"native": true,
+				"original_type": "",
+				"size": 4,
+				"type": "U32"
+			},
+			{
+				"align": 4,
+				"array": false,
+				"name": "DrawPriorityBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
@@ -641534,34 +641543,25 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v26",
+				"name": "TransparentBias",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
-			},
-			{
-				"align": 4,
-				"array": false,
-				"name": "v27",
-				"native": true,
-				"original_type": "",
-				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v28",
+				"name": "StencilValue",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "S8"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "v29",
+				"name": "Materials",
 				"native": true,
 				"original_type": "via.render.MaterialParam",
 				"size": 4,
@@ -641570,263 +641570,263 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v30",
+				"name": "UseStencilValuePriority",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v31",
+				"name": "IgnoreDepthStencilValueWrite",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v32",
+				"name": "DecalReciveMode",
 				"native": true,
-				"original_type": "",
-				"size": 4,
-				"type": "Data"
-			},
-			{
-				"align": 1,
-				"array": false,
-				"name": "v33",
-				"native": true,
-				"original_type": "",
-				"size": 1,
-				"type": "Data"
-			},
-			{
-				"align": 4,
-				"array": false,
-				"name": "v34",
-				"native": true,
-				"original_type": "",
+				"original_type": "via.render.DecalReciveMode",
 				"size": 4,
 				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v35",
+				"name": "DrawPostDecal",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v36",
+				"name": "MeshDecalPriority",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v37",
+				"name": "DrawShadowCast",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
+			},
+			{
+				"align": 4,
+				"array": false,
+				"name": "ShadowCastMode",
+				"native": true,
+				"original_type": "via.render.ShadowCastMode",
+				"size": 4,
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v38",
+				"name": "RealMeshShadow",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
+			},
+			{
+				"align": 1,
+				"array": false,
+				"name": "DrawFarCascadeShadowCast",
+				"native": true,
+				"original_type": "",
+				"size": 1,
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v39",
+				"name": "LodMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LodMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v40",
+				"name": "LodLevel",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 8,
 				"array": false,
-				"name": "v41",
+				"name": "LodFollowTarget",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.GameObjectRef",
 				"size": 16,
-				"type": "Data"
+				"type": "GameObjectRef"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v42",
+				"name": "EnableLodEffectiveRange",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v43",
+				"name": "LodEffectiveRange",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.RangeI",
 				"size": 8,
-				"type": "Data"
+				"type": "RangeI"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v44",
+				"name": "ShadowLodMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.LodMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v45",
+				"name": "ShadowLodLevel",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v46",
+				"name": "EnableShadowLodEffectiveRange",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v47",
+				"name": "ShadowLodEffectiveRange",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.RangeI",
 				"size": 8,
-				"type": "Data"
+				"type": "RangeI"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v48",
+				"name": "ShaderLod",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.ShaderLod",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": true,
-				"name": "v49",
+				"name": "PartsEnable",
 				"native": true,
-				"original_type": "",
+				"original_type": "System.Boolean",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v50",
+				"name": "PartsCaching",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v51",
+				"name": "NormalRecalculationEnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v52",
+				"name": "NREdgeExcluded",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v53",
+				"name": "UseBlendShapeRealTimeLod",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v54",
+				"name": "UseBlendShapeNormal",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": true,
-				"name": "v55",
+				"name": "BlendShapeChannelWeights",
 				"native": true,
-				"original_type": "",
+				"original_type": "System.Single",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v56",
+				"name": "DrawAABB",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v57",
+				"name": "DrawOccluder",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v58",
+				"name": "DebugDisableShadowModelShadow(?)",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			}
 		],
 		"name": "via.render.Mesh",
@@ -690691,18 +690691,18 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "Context",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.movie.MovieContext",
 				"size": 4,
-				"type": "Data"
+				"type": "Object"
 			},
 			{
 				"align": 4,
 				"array": false,
 				"name": "ResourceHandle",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.movie.MovieResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			},
@@ -690711,7 +690711,7 @@
 				"array": false,
 				"name": "MovieTextureResource",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.render.RenderTargetTextureResourceHolder",
 				"size": 4,
 				"type": "Resource"
 			}
@@ -725900,29 +725900,29 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "RawBytes"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v1",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "RawBytes"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "RawBytes"
 			}
 		],
 		"name": "via.render.layer.CubemapCapture",
@@ -726057,101 +726057,101 @@
 			{
 				"align": 4,
 				"array": false,
-				"name": "v0",
+				"name": "EnterButton",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.hid.GamePadButton",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "ForceFeedbackEnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v2",
+				"name": "RepeatStartTime",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v3",
+				"name": "RepeatTime",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v4",
+				"name": "EmuButtonThreshold",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "F32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v5",
+				"name": "EmuButtonThresholdType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.hid.GamePadEmuButtonThresholdType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v6",
+				"name": "ApplyTriggerButtonInHorizontalMode",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v7",
+				"name": "SupportedNpadStyleBits",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v8",
+				"name": "SupportedNpadIdBits",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v9",
+				"name": "NpadJoyHoldType",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.hid.NpadJoyHoldType",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v10",
+				"name": "NpadHandheldActivationMode",
 				"native": true,
-				"original_type": "",
+				"original_type": "via.hid.NpadHandheldActivationMode",
 				"size": 4,
-				"type": "Data"
+				"type": "S32"
 			}
 		],
 		"name": "via.hid.GamePad",
@@ -728231,110 +728231,110 @@
 			{
 				"align": 1,
 				"array": false,
-				"name": "v0",
+				"name": "ScreenSpaceReflectionEnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v1",
+				"name": "ScreenSpaceSubSurfaceScatteringEnable",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v2",
+				"name": "LightingPathDebugAlbedo",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v3",
+				"name": "LightingPathDebugDiffuse",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v4",
+				"name": "LightingPathDebugSpecular",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v5",
+				"name": "LightingPathDebugDirectLight",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v6",
+				"name": "LightingPathDebugProbe",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v7",
+				"name": "LightingPathDebugIBL",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v8",
+				"name": "LightingPathDebugSSAO",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v9",
+				"name": "LightingPathDebugLocalCubeMap",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 1,
 				"array": false,
-				"name": "v10",
+				"name": "LightingPathDebugSSR",
 				"native": true,
 				"original_type": "",
 				"size": 1,
-				"type": "Data"
+				"type": "Bool"
 			},
 			{
 				"align": 4,
 				"array": false,
-				"name": "v11",
+				"name": "DebugLightNum(?)",
 				"native": true,
 				"original_type": "",
 				"size": 4,
-				"type": "Data"
+				"type": "U32"
 			}
 		],
 		"name": "via.render.layer.DeferredLighting",

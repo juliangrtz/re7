@@ -47,6 +47,6 @@ internal class ScnViaTypeListGenerator : IFileGenerator
             });
         });
 
-        return result.Items;
+        return result.Items.Order();
     }
 }
