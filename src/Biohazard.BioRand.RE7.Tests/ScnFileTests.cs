@@ -66,7 +66,7 @@ public class ScnFileTests
 
             return path != null
                     && allowedDirectories.Any(dir => path.StartsWith(dir))
-                    && path.EndsWith($".scn.{Constants.SceneFileVersionRT}")
+                    && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}")
                     && !path.Contains("levelfsm");
         }).ToList();
 
@@ -88,7 +88,7 @@ public class ScnFileTests
         var scnFileHashes = _pakFile.FileHashes.Where(hash =>
         {
             var path = _pakList.GetPath(hash);
-            return path != null && path.EndsWith($".scn.{Constants.SceneFileVersionRT}");
+            return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}");
         });
 
         foreach (var hash in scnFileHashes)
@@ -105,7 +105,7 @@ public class ScnFileTests
     {
         var differences = new List<object>();
 
-        var input = new ScnFile(Constants.SceneFileVersionRT, _pakFile.GetEntryData(hash));
+        var input = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(hash));
         var output = input.ToBuilder(_repo).Build();
 
         var inputInstances = ReadInstances(GetRsz(input));
