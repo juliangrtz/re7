@@ -1,0 +1,12 @@
+scenes/chapter/chapter3/enemy_c03_3.scn.20
+scenes/chapter/chapter3/chapter3_2/hard.scn.20
+scenes/chapter/chapter3/chapter3_2/moldeads.scn.20
+scenes/chapter/chapter3/chapter3_4/moldeads.scn.20
+scenes/chapter/chapter3/chapter3_5/moldeads.scn.20
+scenes/chapter/chapter4/chapter4_1/moldeads.scn.20
+scenes/chapter/ff050/enemy_ff050.scn.20
+scenes/enemy/em5510.scn.20
+scenes/enemy/em5511.scn.20
+scenes/enemy/em5512.scn.20
+scenes/chapter/chapter3/chapter3_3/moldeads.scn.20
+scenes/chapter/chapter4/chapter4_2/moldeads.scn.20

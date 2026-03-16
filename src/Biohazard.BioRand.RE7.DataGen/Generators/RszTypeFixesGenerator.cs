@@ -4,7 +4,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
 internal class RszTypeFixesGenerator : IFileGenerator
 {
-    public string Id => "fixed-rsz";
+    public string Id => "rsz-fix";
 
     public object Generate(GenerateCommand.GenerateSettings settings)
     {
