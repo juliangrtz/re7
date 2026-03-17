@@ -323,7 +323,7 @@ internal static class RandomizerConfigurationDefinition
         group.Advanced = true;
 
         var items = from item in _itemDefinitions.Items
-                    where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
+                    where item.IsStackable && !item.IsDlcItem // TODO: Remove second condition when DLCs are supported.
                     select (item.Id, item.Name, item.MaxStack);
 
         foreach ((string id, string name, int maxStack) in items)
