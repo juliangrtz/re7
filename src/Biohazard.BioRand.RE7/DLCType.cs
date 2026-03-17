@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Biohazard.BioRand.RE7.DLC;
+namespace Biohazard.BioRand.RE7;
 
 public enum DlcType
 {

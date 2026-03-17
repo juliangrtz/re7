@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DLC;
-using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
