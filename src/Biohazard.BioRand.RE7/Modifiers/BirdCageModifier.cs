@@ -1,5 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Text.RegularExpressions;
@@ -61,13 +62,13 @@ internal class BirdCageModifier : Modifier
         return (itemId, rng.Next(min, max), Coins);
     }
 
-    private void RandomizeBirdCageContent(Rng rng, BirdCage birdCage, bool isMagnum, bool isOnRaytracingVersion)
+    private void RandomizeBirdCageContent(Rng rng, BirdCage birdCage, bool isMagnum, Randomizer randomizer)
     {
         (ItemID Id, int Quantity, int Coins) = GetReplacement(isMagnum, rng);
         birdCage.Item.ItemDataID = Id.ToString();
         birdCage.Item.ItemStackNum = Quantity;
         birdCage.CoinCounter.CoinMax = Coins;
-        birdCage.Serialize(isOnRaytracingVersion);
+        birdCage.Serialize(randomizer);
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -95,7 +96,7 @@ internal class BirdCageModifier : Modifier
                     var isMagnum = gameObject.Name.EndsWith("Magnum");
                     if (isMagnum && randomizeMagnum || randomizeDrugsAndPowerCoins)
                     {
-                        RandomizeBirdCageContent(rng, birdCage, isMagnum, randomizer.IsOnRaytracingVersion);
+                        RandomizeBirdCageContent(rng, birdCage, isMagnum, randomizer);
                     }
                 }
             });
@@ -114,8 +115,6 @@ internal class BirdCageModifier : Modifier
 
 internal class BirdCage
 {
-    private static readonly ItemPlacementRepository Items = ItemPlacementRepository.Default;
-
     public Randomizer Randomizer { get; }
     public string PakPath { get; }
     public bool PreserveItemModels { get; }
@@ -147,9 +146,9 @@ internal class BirdCage
         BeforeRandomizationState = (Item.ItemStackNum, Item.ItemDataID, CoinCounter.CoinMax);
     }
 
-    public void Serialize(bool isOnRaytracingVersion)
+    public void Serialize(Randomizer randomizer)
     {
-        Randomizer.FileRepository.ModifyScnFile(PakPath, isOnRaytracingVersion, scene =>
+        Randomizer.FileRepository.ModifyScnFile(PakPath, randomizer.IsOnRaytracingVersion, scene =>
         {
             var container = scene.FindGameObject(go => go.Guid == ContainerGuid)!;
 
@@ -169,7 +168,7 @@ internal class BirdCage
             if (!PreserveItemModels)
             {
                 var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-                var newItem = Items.FromId(Item.ItemDataID).First();
+                var newItem = randomizer.GetService<ItemService>().FromId(Item.ItemDataID).First();
 
                 mesh = mesh
                     .Set("Mesh", new RszResourceNode(newItem.Mesh))

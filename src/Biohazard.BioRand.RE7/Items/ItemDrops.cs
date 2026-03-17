@@ -3,11 +3,9 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Items;
 
-internal class ItemDropRepository
+internal class ItemDrops
 {
-    private static ItemDropRepository? _default;
-
-    public ImmutableList<ItemID> GenericDrops { get; private set; } = [
+    public static ImmutableList<ItemID> GenericDrops { get; private set; } = [
         ItemID.EasyBoots,
         ItemID.AlphaGrass,
         ItemID.LiquidBomb,
@@ -32,7 +30,7 @@ internal class ItemDropRepository
         ItemID.EthanLeg, // ʘ‿ʘ
     ];
 
-    public ImmutableList<string> HighValueDrops { get; private set; } = [
+    public static ImmutableList<string> HighValueDrops { get; private set; } = [
         Weapon,
         AntiqueCoin,
         DlcCoin,
@@ -42,29 +40,15 @@ internal class ItemDropRepository
         Steroids
     ];
 
-    public string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
+    public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
     {
         DlcCoin => "DLC Coin",
         _ => highValueDrop.Replace("-", " ").ToTitleCase()
     };
 
-    public List<string> GetEnabledValuableDrops() => [
+    public static List<string> GetEnabledValuableDrops() => [
         RepairKit, LockPick
     ];
-
-
-    public static ItemDropRepository Default
-    {
-
-        get
-        {
-            if (_default == null)
-            {
-                _default ??= new ItemDropRepository();
-            }
-            return _default;
-        }
-    }
 
     // Categories
     public const string CategoryAmmo = "Ammo";
@@ -84,7 +68,7 @@ internal class ItemDropRepository
     public const string Stabilizer = "stabilizer";
     public const string Steroids = "steroids";
 
-    public string ToItemID(string highValueDrop) => highValueDrop switch
+    public static string ToItemID(string highValueDrop) => highValueDrop switch
     {
         AntiqueCoin => "Coin",
         LockPick => ItemID.CylinderKey.ToString(),
@@ -94,7 +78,7 @@ internal class ItemDropRepository
         _ => ItemID.NoName.ToString()
     };
 
-    public string GetCategory(ItemID id) => id switch
+    public static string GetCategory(ItemID id) => id switch
     {
         ItemID.NoName => CategoryNone,
         ItemID.LiquidBomb => CategoryExplosive,
@@ -124,7 +108,7 @@ internal class ItemDropRepository
         _ => CategoryOther
     };
 
-    public (string BackgroundColor, string TextColor) GetColor(string category)
+    public static (string BackgroundColor, string TextColor) GetColor(string category)
     {
         return category switch
         {

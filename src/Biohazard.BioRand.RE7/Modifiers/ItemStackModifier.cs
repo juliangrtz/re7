@@ -13,7 +13,7 @@ internal class ItemStackModifier : Modifier
     {
         var result = new Dictionary<ItemDefinition, int>();
 
-        foreach (var item in itemDefinitions)
+        foreach (var item in itemDefinitions.Items)
         {
             if (!item.IsStackable || item.IsDlcItem)
                 continue;
@@ -32,7 +32,7 @@ internal class ItemStackModifier : Modifier
     {
         var customStacks = GetItemsWithCustomStackSize(randomizer);
         logger.Push("Stack sizes");
-        foreach (var item in itemDefinitions)
+        foreach (var item in itemDefinitions.Items)
         {
             if (!item.IsStackable || item.IsDlcItem)
                 continue;

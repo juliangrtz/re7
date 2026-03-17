@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -6,7 +7,6 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class StaticItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
-    private readonly static ItemPlacementRepository _itemPlacements = ItemPlacementRepository.Default;
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
     private readonly static List<string> _itemExclusions = [
@@ -57,10 +57,10 @@ internal class StaticItemModifier : Modifier
     {
         return;
         var rng = randomizer.GetRng(RandomizerKey);
-
+        var itemService = randomizer.GetService<ItemService>();
         // TODO: Filter bird cage items
         // TODO: Add option for tapes
-        var randomizableItems = _itemPlacements.PlacementToItemMap
+        var randomizableItems = itemService.PlacementToItemMap
                                     .Where(x => x.Value != null)
                                     .Where(x => !x.Value.IsStoryProgressionItem)
                                     .Where(x => !x.Value.IsDlcItem)

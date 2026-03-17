@@ -1,5 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -9,22 +10,23 @@ internal class KeyItemLocationModifier : Modifier
 {
     private const string RandomizerKey = "modifier/key-item-locations";
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly ItemPlacementRepository itemPlacements = ItemPlacementRepository.Default;
     private readonly List<NewKeyItemLocation> newLocations = Csv.Deserialize<NewKeyItemLocation>(EmbeddedData.GetFile("key_items.csv")).ToList();
     private readonly List<ItemDefinition> keyItems =
         itemDefinitions
+        .Items
         .Where(x => x.IsStoryProgressionItem && !x.IsDlcItem)
         .ToList();
 
-    private string GetNameFromGuid(Guid guid)
-          => itemDefinitions.FromId(itemPlacements.FromGuid(guid).Id)!.Name!;
+    private string GetNameFromGuid(ItemService itemService, Guid guid)
+          => itemDefinitions.FromId(itemService.FromGuid(guid).Id)!.Name!;
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
+        var itemService = randomizer.GetService<ItemService>();
         logger.Push("Original key item locations");
         foreach (var item in keyItems)
         {
-            var placements = itemPlacements.FromId(item.Id);
+            var placements = itemService.FromId(item.Id);
             foreach (var placement in placements)
             {
                 logger.LogLine($"{item.Name}: X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
@@ -35,7 +37,7 @@ internal class KeyItemLocationModifier : Modifier
         logger.Push("New key item location candidates");
         foreach (var location in newLocations)
         {
-            logger.LogLine($"{GetNameFromGuid(location.Id)}: X={location.X}, Y={location.Y}, Z={location.Z}");
+            logger.LogLine($"{GetNameFromGuid(itemService, location.Id)}: X={location.X}, Y={location.Y}, Z={location.Z}");
         }
 
         logger.Pop();
@@ -47,12 +49,13 @@ internal class KeyItemLocationModifier : Modifier
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
+        var itemService = randomizer.GetService<ItemService>();
 
         foreach (var keyItemGroup in newLocations.GroupBy(l => l.Id))
         {
             var id = keyItemGroup.Key;
             var newLocation = rng.Next(keyItemGroup);
-            var placement = itemPlacements.FromGuid(id);
+            var placement = itemService.FromGuid(id);
 
             randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
@@ -64,7 +67,7 @@ internal class KeyItemLocationModifier : Modifier
                 return scene;
             });
 
-            logger.LogLine($"Chose new location for {GetNameFromGuid(id)}: X={newLocation.X}, Y={newLocation.Y}, Z={newLocation.Z}");
+            logger.LogLine($"Chose new location for {GetNameFromGuid(itemService, id)}: X={newLocation.X}, Y={newLocation.Y}, Z={newLocation.Z}");
         }
     }
 

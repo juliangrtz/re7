@@ -10,7 +10,6 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class DropItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/item-drops";
-    private static readonly ItemDropRepository _itemDrops = ItemDropRepository.Default;
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
     private readonly List<(GameFlowKindEnum, string)> _dropTableFiles = new() {
@@ -60,11 +59,11 @@ internal class DropItemModifier : Modifier
 
     private readonly Dictionary<string, uint> _highValueProbabilities = new()
     {
-        {ItemDropRepository.AntiqueCoin, 10u },
-        {ItemDropRepository.LockPick, 15u },
-        {ItemDropRepository.RepairKit, 15u },
-        {ItemDropRepository.Stabilizer, 5u },
-        {ItemDropRepository.Steroids, 5u }
+        {ItemDrops.AntiqueCoin, 10u },
+        {ItemDrops.LockPick, 15u },
+        {ItemDrops.RepairKit, 15u },
+        {ItemDrops.Stabilizer, 5u },
+        {ItemDrops.Steroids, 5u }
     };
 
     // (id, min%, max%)
@@ -154,7 +153,7 @@ internal class DropItemModifier : Modifier
         var max = randomizer.GetConfigOption("item-drop-ammo-max", 1.0);
         var rng = randomizer.GetRng(RandomizerKey);
 
-        foreach (var id in _itemDrops.GenericDrops)
+        foreach (var id in ItemDrops.GenericDrops)
         {
             var idStr = id.ToString();
             var item = _itemDefinitions.FromId(idStr)!;
@@ -186,14 +185,14 @@ internal class DropItemModifier : Modifier
             });
         }
 
-        foreach (var type in _itemDrops.HighValueDrops)
+        foreach (var type in ItemDrops.HighValueDrops)
         {
             if (randomizer.GetConfigOption<bool>($"item-drop-valuable-{type}"))
             {
                 string id = ItemID.NoName.ToString();
                 uint chance = 0u;
 
-                if (type == ItemDropRepository.Weapon)
+                if (type == ItemDrops.Weapon)
                 {
                     foreach (var (weaponId, (minWeaponPct, maxWeaponPct)) in _valuableWeaponDrops)
                     {
@@ -212,7 +211,7 @@ internal class DropItemModifier : Modifier
 
                     continue;
                 }
-                else if (type == ItemDropRepository.DlcCoin)
+                else if (type == ItemDrops.DlcCoin)
                 {
                     foreach (var (coinId, (coinPctMin, coinPctMax)) in _dlcCoinDrops)
                     {
@@ -231,7 +230,7 @@ internal class DropItemModifier : Modifier
                 }
                 else
                 {
-                    id = _itemDrops.ToItemID(type);
+                    id = ItemDrops.ToItemID(type);
                     chance = _highValueProbabilities[type];
                 }
 
