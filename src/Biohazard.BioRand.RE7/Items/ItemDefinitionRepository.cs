@@ -5,9 +5,10 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Items;
 
-public class ItemDefinitionRepository : List<ItemDefinition>
+public class ItemDefinitionRepository
 {
     private static ItemDefinitionRepository? _default;
+    public List<ItemDefinition> Items { get; private set; } = [];
     public ImmutableArray<ItemCategoryType> Kinds { get; private set; }
     public ImmutableDictionary<ItemCategoryType, ImmutableArray<ItemDefinition>> KindToItemMap { get; private set; } = [];
     public ImmutableDictionary<string, ItemDefinition> IdToItemMap { get; private set; } = [];
@@ -21,7 +22,10 @@ public class ItemDefinitionRepository : List<ItemDefinition>
         {
             if (_default == null)
             {
-                _default ??= EmbeddedData.GetFile(ItemDefinitionFileName).DeserializeJson<ItemDefinitionRepository>();
+                _default = new ItemDefinitionRepository
+                {
+                    Items = EmbeddedData.GetFile(ItemDefinitionFileName).DeserializeJson<List<ItemDefinition>>()
+                };
                 _default.Initialize();
             }
             return _default;
@@ -30,7 +34,7 @@ public class ItemDefinitionRepository : List<ItemDefinition>
 
     private void Initialize()
     {
-        var relevantItems = this
+        var relevantItems = Items
             .Where(x => !string.IsNullOrEmpty(x.Name))
             .ToArray();
 
@@ -43,9 +47,9 @@ public class ItemDefinitionRepository : List<ItemDefinition>
             .GroupBy(x => x.CategoryType)
             .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
 
-        IdToItemMap = this.ToImmutableDictionary(x => x.Id);
+        IdToItemMap = Items.ToImmutableDictionary(x => x.Id);
 
-        WeaponIdToItemMap = this
+        WeaponIdToItemMap = Items
             .Where(x => x.WeaponId != null)
             .ToImmutableDictionary(x => x.WeaponId!.Value);
     }
@@ -68,7 +72,7 @@ public class ItemDefinitionRepository : List<ItemDefinition>
 
     public string GetIdByName(string name)
     {
-        return this.First(item => item.Name == name).Id;
+        return Items.First(item => item.Name == name).Id;
     }
 
     public ItemDefinition? FromWeaponId(WeaponID id)

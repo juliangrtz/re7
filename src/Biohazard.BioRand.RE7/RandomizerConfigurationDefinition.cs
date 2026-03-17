@@ -9,7 +9,6 @@ namespace Biohazard.BioRand.RE7;
 internal static class RandomizerConfigurationDefinition
 {
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly ItemDropRepository _itemDrops = ItemDropRepository.Default;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
@@ -154,11 +153,11 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("General Drops");
-        var drops = _itemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
+        var drops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
         foreach (var drop in drops)
         {
-            var category = _itemDrops.GetCategory(drop);
-            var (bgColor, textColor) = _itemDrops.GetColor(category);
+            var category = ItemDrops.GetCategory(drop);
+            var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-ratio-{drop.ToString().ToLowerInvariant()}",
@@ -179,14 +178,14 @@ internal static class RandomizerConfigurationDefinition
 
         group = page.CreateGroup("Valuable Drops");
         group.Advanced = true;
-        foreach (var drop in _itemDrops.HighValueDrops)
+        foreach (var drop in ItemDrops.HighValueDrops)
         {
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = _itemDrops.GetHighValueDropLabel(drop),
+                Label = ItemDrops.GetHighValueDropLabel(drop),
                 Type = "switch",
-                Default = _itemDrops.GetEnabledValuableDrops().Contains(drop)
+                Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
             });
         }
 
@@ -323,7 +322,7 @@ internal static class RandomizerConfigurationDefinition
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 
-        var items = from item in _itemDefinitions
+        var items = from item in _itemDefinitions.Items
                     where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
                     select (item.Id, item.Name, item.MaxStack);
 

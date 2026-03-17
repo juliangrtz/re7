@@ -33,6 +33,7 @@ internal class BiorandTitlePatch(IPatchContext context) : IPatch
             message.SetString(NewGameTextGuid, LanguageId.German, "NEUES BIORAND7 SPIEL");
             message.SetString(NewGameTextGuid, LanguageId.Spanish, "NUEVA BIORAND7 PARTIDA");
             message.SetString(NewGameTextGuid, LanguageId.PortugueseBr, "NOVO BIORAND7 JOGO");
+            // In French the text would become too long :(
         });
     }
 }

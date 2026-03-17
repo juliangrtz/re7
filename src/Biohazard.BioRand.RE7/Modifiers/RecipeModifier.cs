@@ -316,6 +316,7 @@ internal class RecipeModifier : Modifier
     {
         var pool = new List<Recipe>();
         var validItems = itemDefinitions
+            .Items
             .Where(i => !typeBlacklist.Contains(i.CategoryType))
             .Where(i => !i.IsDlcItem) // We don't support DLC items yet.
             .Where(i => i.Name is not "Acid Powder" and not "Chilled Chem Fluid" and not "Weak Acid")
@@ -350,6 +351,7 @@ internal class RecipeModifier : Modifier
         var pool = new List<Recipe>();
 
         var validItems = itemDefinitions
+            .Items
             .Where(i => !typeBlacklist.Contains(i.CategoryType))
             .Where(i => !i.IsDlcItem)
             .ToList();
@@ -374,6 +376,7 @@ internal class RecipeModifier : Modifier
         var recipes = new List<Recipe>();
 
         var validIngredients = itemDefinitions
+            .Items
             .Where(i => !typeBlacklist.Contains(i.CategoryType))
             .Where(i => !i.IsDlcItem)
             .ToList();
