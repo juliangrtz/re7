@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DLC;
-using Enums.app;
+﻿using Enums.app;
 using Enums.app.Item;
 using System.Text.Json.Serialization;
 

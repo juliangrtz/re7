@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DLC;
-using Biohazard.BioRand.RE7.REEngine;
+﻿using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;

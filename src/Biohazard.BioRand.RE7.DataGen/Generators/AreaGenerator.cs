@@ -1,6 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Area;
-using Biohazard.BioRand.RE7.DataGen.Commands;
-using Biohazard.BioRand.RE7.DLC;
+﻿using Biohazard.BioRand.RE7.DataGen.Commands;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Package;

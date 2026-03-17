@@ -1,7 +1,6 @@
-﻿using Biohazard.BioRand.RE7.DLC;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Biohazard.BioRand.RE7.Area;
+namespace Biohazard.BioRand.RE7;
 
 public class AreaDefinition
 {
