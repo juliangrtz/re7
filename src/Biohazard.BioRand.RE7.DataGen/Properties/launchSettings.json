@@ -23,6 +23,10 @@
     "Generate SCN via type list": {
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json scn-via-type-list"
+    },
+    "Generate areas": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json -f csv areas"
     }
   }
 }

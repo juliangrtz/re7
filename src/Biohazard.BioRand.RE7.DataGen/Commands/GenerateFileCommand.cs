@@ -40,8 +40,9 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
     [
         new ItemDefinitionGenerator(),
         new ItemPlacementGenerator(),
+        new AreaGenerator(),
         new ConfigGenerator(),
-        new ScnViaTypeListGenerator()
+        new ScnViaTypeListGenerator(),
     ];
 
     private readonly JsonSerializerOptions _serializationOptions = new()

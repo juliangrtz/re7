@@ -10,13 +10,14 @@ public class ItemDefinitionRepositoryTests
     [Fact]
     public void Repository_Should_Not_Be_Empty()
     {
-        Assert.NotEmpty(repository);
+        Assert.NotEmpty(repository.Items);
     }
 
     [Fact]
     public void All_Items_Must_Have_Id()
     {
         var invalid = repository
+            .Items
             .Where(i => string.IsNullOrWhiteSpace(i.Id))
             .ToList();
 
@@ -28,6 +29,7 @@ public class ItemDefinitionRepositoryTests
     public void Ids_Must_Be_Unique()
     {
         var duplicates = repository
+            .Items
             .GroupBy(i => i.Id)
             .Where(g => g.Count() > 1)
             .Select(g => g.Key)
@@ -41,6 +43,7 @@ public class ItemDefinitionRepositoryTests
     public void WeaponIds_Must_Be_Unique()
     {
         var duplicates = repository
+            .Items
             .Where(i => i.WeaponId != null)
             .GroupBy(i => i.WeaponId)
             .Where(g => g.Count() > 1)
@@ -55,6 +58,7 @@ public class ItemDefinitionRepositoryTests
     public void Unlockables_Must_Not_Be_Stackable()
     {
         var invalid = repository
+            .Items
             .Where(i => i.IsUnlockable && i.MaxStack > 1)
             .Select(i => i.Id)
             .ToList();
@@ -67,6 +71,7 @@ public class ItemDefinitionRepositoryTests
     public void Weapons_Must_Have_MaxStack_Of_One()
     {
         var invalid = repository
+            .Items
             .Where(i => i.CategoryType == ItemCategoryType.Weapon && i.MaxStack != 1)
             .Select(i => i.Id)
             .ToList();
@@ -79,6 +84,7 @@ public class ItemDefinitionRepositoryTests
     public void Named_Items_Should_Not_Have_Empty_Names()
     {
         var invalid = repository
+            .Items
             .Where(i => i.Name != null && string.IsNullOrWhiteSpace(i.Name))
             .Select(i => i.Id)
             .ToList();

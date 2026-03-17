@@ -1,6 +1,6 @@
 ﻿using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
-namespace Biohazard.BioRand.RE7.DataGen.Generators;
+namespace Biohazard.BioRand.RE7.DataGen;
 
 internal interface IFileGenerator
 {
