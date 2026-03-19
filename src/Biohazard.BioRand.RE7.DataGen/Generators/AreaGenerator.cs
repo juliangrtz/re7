@@ -2,7 +2,6 @@
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Package;
-using IntelOrca.Biohazard.REE.Rsz;
 using Spectre.Console;
 using System.Collections.Concurrent;
 using System.Text;
