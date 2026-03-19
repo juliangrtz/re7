@@ -21,6 +21,9 @@ public static class PakPath
     public static string MessageFile(this string path)
         => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? FileVersions.MsgFileVersionRT : FileVersions.MsgFileVersionNonRT)}";
 
+    public static string RcolFile(this string path)
+    => $"{(IsOnRT ? PrefixRT : PrefixNonRT)}{path}.{(IsOnRT ? FileVersions.RcolFileVersionRT : FileVersions.RcolFileVersionNonRT)}";
+
     public static string FromAbsolutePath(this string absolutePath)
         => Of(absolutePath.Without(absolutePath.SubstringBefore(PrefixRT)));
 }
