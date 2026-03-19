@@ -100,7 +100,8 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         @"natives/.*\.pfb\.\d+",
         @"natives/.*\.scn\.\d+",
         @"natives/.*\.user\.\d+",
-        @"natives/.*\.uvar\.\d+"
+        @"natives/.*\.uvar\.\d+",
+        @"natives/.*\.rcol\.\d+"
     ];
 
     private static readonly ImmutableArray<string> MiniPatterns = [
