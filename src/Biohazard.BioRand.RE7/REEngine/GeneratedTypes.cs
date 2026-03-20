@@ -272,6 +272,38 @@ namespace app
     }
 }
 
+namespace app.Collision
+{
+    public class AttackUserData
+    {
+        public string Name { get; set; } = "";
+        public object ParentUserData { get; set; } = new();
+        public Enums.app.Collision.ContactBaseUserData.PriorityLevel Priority { get; set; }
+        public int Damage { get; set; }
+        public int Stun { get; set; }
+        public float VrGain { get; set; }
+        public bool IsWithAttack { get; set; }
+        public float Timer { get; set; }
+        public uint Attribute0 { get; set; }
+        public uint Attribute1 { get; set; }
+        public uint Attribute2 { get; set; }
+        public uint Attribute3 { get; set; }
+        public uint Attribute4 { get; set; }
+        public int User0 { get; set; }
+        public int User1 { get; set; }
+        public int User2 { get; set; }
+        public int User3 { get; set; }
+        public int UniqueID { get; set; }
+        public int ShellID { get; set; }
+        public System.Numerics.Vector3 ExtHitWallFrom { get; set; }
+        public System.Numerics.Vector3 ExtHitWallTo { get; set; }
+        public class Attribute
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
 namespace via
 {
     public class Transform
