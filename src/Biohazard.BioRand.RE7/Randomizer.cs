@@ -24,8 +24,6 @@ internal class Randomizer : IDisposable
     public FileRepository FileRepository => _fileRepository;
     public DynamicData DynamicData { get; }
 
-    public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
-
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
     public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
@@ -232,6 +230,12 @@ internal class Randomizer : IDisposable
         }
         return (T)service;
     }
+
+    public TemplateService TemplateService => GetService<TemplateService>();
+    public AreaService AreaService => GetService<AreaService>();
+    public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
+    public ItemService ItemService => GetService<ItemService>();
+    public WeaponService WeaponService => GetService<WeaponService>();
 
     public void AddLogFile(string name, string content)
     {
