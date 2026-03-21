@@ -119,7 +119,7 @@
   "weapon-ammo-capacity-max-handgun-g17": 1.2,
   "weapon-ammo-capacity-min-burner": 0.8,
   "weapon-ammo-capacity-max-burner": 1.2,
-  "debug-download-data": false,
+  "debug-download-data": true,
   "debug-force-reframework": false,
   "debug-download-reframework-nightly": false,
   "enable-special": true,

@@ -3,7 +3,6 @@ using Biohazard.BioRand.RE7.Serialization;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Numerics;
-using System.Text.Json.Serialization;
 
 namespace Biohazard.BioRand.RE7.Items;
 
@@ -17,7 +16,6 @@ public class ItemPlacement
     public int EasyNum { get; set; } = -1;
     public int HardNum { get; set; } = -1;
 
-    //public MainCampaignCharacter Character { get; set; }
     public Difficulty? Difficulty { get; set; }
 
     public int Chapter { get; set; }
@@ -35,10 +33,6 @@ public class ItemPlacement
     public DlcType? Dlc { get; set; }
     public bool IsExtra { get; set; }
 
-    [JsonIgnore]
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
-
-    [JsonIgnore]
     public EulerAngles Euler => new(Rotation);
-
 }

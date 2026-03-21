@@ -33,6 +33,12 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings>
             {
                 var fileBytes = dynamicData.GetData(dataName)!;
 
+                if (fileBytes.Length == 0)
+                {
+                    AnsiConsole.MarkupLineInterpolated($"[yellow]Skipped empty file {destinationPath} (0 bytes)[/]");
+                    continue;
+                }
+
                 await File.WriteAllBytesAsync(destinationPath, fileBytes);
                 AnsiConsole.MarkupLineInterpolated($"[green]Downloaded and overwrote: {destinationPath} ({fileBytes.Length} bytes)[/]");
             }
