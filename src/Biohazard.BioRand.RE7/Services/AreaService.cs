@@ -4,18 +4,25 @@ using System.Threading.Tasks;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class AreaService(Randomizer randomizer)
+internal class AreaService
 {
     private readonly Dictionary<Guid, Area> _guidToArea = [];
 
     public ImmutableArray<Area> Areas { get; private set; } = [];
+    public Randomizer Randomizer { get; }
+
+    public AreaService(Randomizer randomizer)
+    {
+        Randomizer = randomizer;
+        LoadAreas();
+    }
 
     public void LoadAreas()
     {
         var areaRepo = AreaDefinitionRepository.Default;
-        Areas = areaRepo.All
+        Areas = areaRepo.All // TODO: Don't do this every time!
             .AsParallel()
-            .Select(d => new Area(randomizer, d))
+            .Select(d => new Area(Randomizer, d))
             .OrderBy(x => x.Path)
             .ToImmutableArray();
 
@@ -45,7 +52,7 @@ internal class AreaService(Randomizer randomizer)
         _guidToArea[guid] = area;
     }
 
-    public Area FindBestArea(AreaKind kind, int stage, int? chapter = null)
+    public Area FindBestArea(AreaKind kind, int? chapter = null)
     {
         if (chapter != null)
         {

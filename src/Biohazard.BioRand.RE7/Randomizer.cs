@@ -139,6 +139,8 @@ internal class Randomizer : IDisposable
             logger.Process.LogHr();
         });
 
+        Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
+
         // Output
         IterateModifiers((n, m) =>
         {
@@ -164,15 +166,23 @@ internal class Randomizer : IDisposable
     {
         return
         [
+            // Inventory
             new StartingInventoryModifier(),
             new RecipeModifier(),
             new ItemStackModifier(),
+
+            // Items
             new BirdCageModifier(),
             new KeyItemLocationModifier(),
             new DropItemModifier(),
             new StaticItemModifier(),
-            new ChapterJumpDataModifier(),
+            new ItemBoxModifier(),
+
+            // Weapons
             new WeaponModifier(),
+
+            // Misc.
+            new ChapterJumpDataModifier()
         ];
     }
 
