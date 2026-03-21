@@ -6,16 +6,11 @@ namespace Biohazard.BioRand.RE7.Serialization;
 
 public sealed class DynamicData(bool download)
 {
-    private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YAOHcvyQ6Tp2n6io9iEcJjpjZoQXuUC0NGwGFKKafQ4/export?format=csv&gid={0}";
+    private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YNdX9LWrhh6KDKd8Mx7JpTCMq8XY8u6BfX20YYNx9jk/export?format=csv&gid={0}";
 
     private static readonly ImmutableDictionary<DynamicDataName, (string, int)> g_map = new Dictionary<DynamicDataName, (string, int)>
     {
-        [DynamicDataName.Recipe] = ("recipe.csv", 327970340),
-        [DynamicDataName.WeaponBase] = ("wpbase.csv", 882011316),
-        [DynamicDataName.WeaponRng] = ("wpstats.csv", 345409638),
-        [DynamicDataName.Enemies] = ("enemies.csv", 2122364676),
-        [DynamicDataName.Items] = ("items.csv", 827998375),
-        [DynamicDataName.Messages] = ("messages.csv", 257348148),
+        [DynamicDataName.ItemPlacements] = ("items.csv", 1561602125),
     }.ToImmutableDictionary();
 
     private readonly Dictionary<DynamicDataName, byte[]> _map = [];
@@ -62,10 +57,5 @@ public sealed class DynamicData(bool download)
 
 public enum DynamicDataName
 {
-    Recipe,
-    WeaponBase,
-    WeaponRng,
-    Enemies,
-    Items,
-    Messages,
+    ItemPlacements,
 }

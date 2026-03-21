@@ -34,9 +34,15 @@ internal class ItemBoxModifier : Modifier
 
         foreach (var itemPlacement in itemService.ItemPlacements)
         {
-            var isKeyItem = _itemDefinitionRepository.FromId(itemPlacement.Id)!.IsStoryProgressionItem;
+            var definition = _itemDefinitionRepository.FromId(itemPlacement.Id);
+
+            if(definition == null)
+            {
+                continue;
+            }
+           
             if (!itemPlacement.IsExtra ||
-                isKeyItem ||
+                definition.IsStoryProgressionItem||
                 itemPlacement.Dlc != null ||
                 !itemPlacement.Enabled ||
                 itemPlacement.Chapter is <= 0 or >= 7)

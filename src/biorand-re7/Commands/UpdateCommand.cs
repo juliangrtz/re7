@@ -13,14 +13,14 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings>
 
     public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token)
     {
-        var solutionDir = FindSolutionDirectory();
-        if (solutionDir == null)
+        var rootDir = FindRootDirectory();
+        if (rootDir == null)
         {
-            AnsiConsole.MarkupLine("[red]Project directory not found.[/]");
+            AnsiConsole.MarkupLine("[red]Project root directory not found.[/]");
             return 1;
         }
 
-        var dataDir = Path.Combine(solutionDir, "src", "BioHazard.BioRand.RE7", "_Data");
+        var dataDir = Path.Combine(rootDir, "BioHazard.BioRand.RE7", "_Data");
 
         var dynamicData = new DynamicData(download: true);
         foreach (var dataName in Enum.GetValues<DynamicDataName>())
@@ -45,12 +45,12 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings>
         return 0;
     }
 
-    private static string? FindSolutionDirectory()
+    private static string? FindRootDirectory()
     {
         var dir = Directory.GetCurrentDirectory();
         while (dir != null)
         {
-            if (File.Exists(Path.Combine(dir, "biorand-re7.sln")))
+            if (dir.EndsWith("src"))
             {
                 return dir;
             }

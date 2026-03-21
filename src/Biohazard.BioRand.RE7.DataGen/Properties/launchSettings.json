@@ -14,7 +14,7 @@
     },
     "Generate item definitions": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json item_definitions"
+      "commandLineArgs": "generate -c -v -f json -f csv item_definitions"
     },
     "Generate item placements": {
       "commandName": "Project",
@@ -22,7 +22,7 @@
     },
     "Generate SCN via type list": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json scn-via-type-list"
+      "commandLineArgs": "generate -c -v -f json -f csv scn-via-type-list"
     },
     "Generate areas": {
       "commandName": "Project",

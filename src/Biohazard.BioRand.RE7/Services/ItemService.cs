@@ -11,12 +11,11 @@ internal class ItemService
     public ImmutableDictionary<string, List<ItemPlacement>> IdToItemsMap { get; private set; } = [];
     public ImmutableList<ItemPlacement> MainGamePlacements { get; private set; } = [];
 
-    private const string ItemPlacementFileName = "item_placements.json";
-
     public ItemService(Randomizer randomizer)
     {
-        ItemPlacements = EmbeddedData.GetFile(ItemPlacementFileName)
-            .DeserializeJson<List<ItemPlacement>>()
+        var csv = randomizer.DynamicData.GetData(DynamicDataName.ItemPlacements) ?? throw new Exception("Unable to get item data");
+        ItemPlacements = Csv.Deserialize<ItemPlacement>(csv)
+            .Where(x => x.Enabled)
             .ToImmutableList();
 
         PlacementToItemMap = ItemPlacements.ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id)!);
