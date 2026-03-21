@@ -10,7 +10,6 @@ namespace Biohazard.BioRand.RE7.Items;
 [DebuggerDisplay("{GuidOrAuto}")]
 public class ItemPlacement
 {
-    [Key]
     public required string Id { get; set; }
 
     public bool Enabled { get; set; }
@@ -22,7 +21,10 @@ public class ItemPlacement
     public Difficulty? Difficulty { get; set; }
 
     public int Chapter { get; set; }
+
+    [Key]
     public Guid Guid { get; set; }
+
     public Guid SaveGuid { get; set; }
     public SerializableVector3 Position { get; set; } = Vector3.Zero;
     public SerializableQuaternion Rotation { get; set; } = Quaternion.Zero;
