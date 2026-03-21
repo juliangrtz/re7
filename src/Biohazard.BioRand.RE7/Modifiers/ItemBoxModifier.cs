@@ -25,6 +25,7 @@ internal class ItemBoxModifier : Modifier
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
+        return;
         var templateService = randomizer.TemplateService;
         var itemService = randomizer.ItemService;
         var areaService = randomizer.AreaService;
@@ -56,7 +57,7 @@ internal class ItemBoxModifier : Modifier
                 continue;
             }
 
-            var transform = new Transform()
+            var transform = new REEngine.Transform()
             {
                 Position = itemPlacement.Position,
                 Rotation = itemPlacement.Rotation,
