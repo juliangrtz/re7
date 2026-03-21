@@ -10,6 +10,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 internal class ScnViaTypeListGenerator : IFileGenerator
 {
     public string Id => "scn-via-type-list";
+    public bool CopyToDataDirectory => false;
 
     private readonly RszTypeRepository _rszRepository =
     RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));

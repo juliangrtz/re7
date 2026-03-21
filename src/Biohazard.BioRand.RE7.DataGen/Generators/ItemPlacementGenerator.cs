@@ -17,6 +17,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 internal class ItemPlacementGenerator : IFileGenerator
 {
     public string Id => "item_placements";
+    public bool CopyToDataDirectory => true;
 
     private readonly RszTypeRepository _rszRepository =
         RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));

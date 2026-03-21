@@ -12,6 +12,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 internal class AreaGenerator : IFileGenerator
 {
     public string Id => "areas";
+    public bool CopyToDataDirectory => true;
 
     private readonly PakFile _pakFile =
         new(EmbeddedData.GetFile("biorand-re7.pak"));
