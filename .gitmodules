@@ -1,0 +1,4 @@
+[submodule "src/reeutils"]
+	path = src/reeutils
+	url = https://github.com/biorand/reeutils
+	branch = rcol
