@@ -6,6 +6,7 @@ internal class ConfigGenerator : IFileGenerator
 {
     public string Id => "config";
     public string FileName => "default-profile";
+    public bool CopyToDataDirectory => true;
 
     public object Generate(GenerateCommand.GenerateSettings settings)
     {

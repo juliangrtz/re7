@@ -10,6 +10,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 internal sealed class FileListGenerator : IFileGenerator
 {
     public string Id => "file-list";
+    public bool CopyToDataDirectory => false;
 
     private readonly PakFile _pakFile = new(EmbeddedData.GetFile("biorand-re7.pak"));
     private readonly PakList _pakList = new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
