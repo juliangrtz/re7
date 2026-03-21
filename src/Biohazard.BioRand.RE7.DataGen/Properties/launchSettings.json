@@ -27,6 +27,10 @@
     "Generate areas": {
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json -f csv areas"
+    },
+    "Generate file list": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json file-list"
     }
   }
 }
