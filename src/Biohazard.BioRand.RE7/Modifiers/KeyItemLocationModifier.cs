@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -61,18 +60,5 @@ internal class KeyItemLocationModifier : Modifier
 
             logger.LogLine($"Chose new location for {GetNameFromGuid(itemService, id)}: X={newPlacement.Position.X}, Y={newPlacement.Position.Y}, Z={newPlacement.Position.Z}");
         }
-    }
-
-    public class NewKeyItemLocation
-    {
-        public Guid Id { get; set; }
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-        public float RotX { get; set; }
-        public float RotY { get; set; }
-        public float RotZ { get; set; }
-        public float RotW { get; set; }
-        public string? Comment { get; set; }
     }
 }

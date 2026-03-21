@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DataGen.CodeGen;
-using Spectre.Console;
+﻿using Spectre.Console;
 using Spectre.Console.Cli;
 using static Biohazard.BioRand.RE7.DataGen.Commands.FixRszFileCommand;
 

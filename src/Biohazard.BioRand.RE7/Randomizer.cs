@@ -40,13 +40,14 @@ internal class Randomizer : IDisposable
         Input = input;
         _inputGamePath = inputGamePath;
         Reporter = reporter;
-        DynamicData = new DynamicData(
-#if ENABLE_BETA_FEATURES
-            Input.Configuration.GetValueOrDefault<bool>("debug-download-data")
-#else
-            false
-#endif
-        );
+
+        var download = Input.Configuration.GetValueOrDefault<bool>("debug-download-data");
+        if(download)
+        {
+            Console.WriteLine("Downloading latest spreadsheet data from Google Sheets...");
+        }
+
+        DynamicData = new DynamicData(download);
         PakPath.IsOnRT = IsOnRaytracingVersion;
     }
 
