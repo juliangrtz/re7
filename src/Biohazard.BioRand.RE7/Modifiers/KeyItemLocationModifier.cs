@@ -9,7 +9,6 @@ internal class KeyItemLocationModifier : Modifier
 {
     private const string RandomizerKey = "modifier/key-item-locations";
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
-    private readonly List<NewKeyItemLocation> newLocations = Csv.Deserialize<NewKeyItemLocation>(EmbeddedData.GetFile("key_items.csv")).ToList();
     private readonly List<ItemDefinition> keyItems =
         itemDefinitions
         .Items
@@ -32,14 +31,6 @@ internal class KeyItemLocationModifier : Modifier
             }
         }
         logger.Pop();
-
-        logger.Push("New key item location candidates");
-        foreach (var location in newLocations)
-        {
-            logger.LogLine($"{GetNameFromGuid(itemService, location.Id)}: X={location.X}, Y={location.Y}, Z={location.Z}");
-        }
-
-        logger.Pop();
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -49,24 +40,26 @@ internal class KeyItemLocationModifier : Modifier
 
         var rng = randomizer.GetRng(RandomizerKey);
         var itemService = randomizer.GetService<ItemService>();
+        var newPlacements = itemService.ItemPlacements
+            .Where(i => i.IsExtra && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
 
-        foreach (var keyItemGroup in newLocations.GroupBy(l => l.Id))
+        foreach (var keyItemGroup in newPlacements.GroupBy(l => l.Guid))
         {
             var id = keyItemGroup.Key;
-            var newLocation = rng.Next(keyItemGroup);
+            var newPlacement = rng.Next(keyItemGroup);
             var placement = itemService.FromGuid(id);
 
             randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
                 var obj = scene.FindGameObject(id)!;
                 var transform = obj.FindComponent<via.Transform>()!;
-                transform.Position = new(newLocation.X, newLocation.Y, newLocation.Z);
+                transform.Position = new(newPlacement.Position.X, newPlacement.Position.Y, newPlacement.Position.Z);
                 obj = obj.AddOrUpdateComponent(transform);
                 scene = scene.UpdateGameObject(obj);
                 return scene;
             });
 
-            logger.LogLine($"Chose new location for {GetNameFromGuid(itemService, id)}: X={newLocation.X}, Y={newLocation.Y}, Z={newLocation.Z}");
+            logger.LogLine($"Chose new location for {GetNameFromGuid(itemService, id)}: X={newPlacement.Position.X}, Y={newPlacement.Position.Y}, Z={newPlacement.Position.Z}");
         }
     }
 
