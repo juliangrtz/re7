@@ -4,13 +4,11 @@ public static class EnumExtensions
 {
     public static TEnum? ParseOrNull<TEnum>(string value) where TEnum : struct, Enum
     {
-        try
+        if (Enum.TryParse<TEnum>(value, ignoreCase: true, out var result))
         {
-            return Enum.Parse<TEnum>(value);
+            return result;
         }
-        catch
-        {
-            return null;
-        }
+
+        return null;
     }
 }
