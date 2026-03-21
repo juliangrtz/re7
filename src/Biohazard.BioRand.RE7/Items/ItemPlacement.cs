@@ -31,10 +31,12 @@ public class ItemPlacement
     public string Mesh { get; set; } = "";
     public string Material { get; set; } = "";
     public DlcType? Dlc { get; set; }
+    public bool IsExtra { get; set; }
 
     [JsonIgnore]
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
 
     [JsonIgnore]
     public EulerAngles Euler => new(Rotation);
+
 }
