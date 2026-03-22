@@ -120,7 +120,7 @@ internal class ItemDefinitionGenerator : IFileGenerator
                 result.Add(new ItemDefinition
                 {
                     Id = item.ItemDataID,
-                    Name = FindMessageByGuid(item.NameMsg)?.RemoveControlCharacters(),
+                    Name = FindMessageByGuid(item.NameMsg)?.RemoveControlCharacters().Replace("\"", ""),
                     CategoryType = item.Category,
                     Size = item.SlotSize,
                     MaxStack = item.MaxStackNum,

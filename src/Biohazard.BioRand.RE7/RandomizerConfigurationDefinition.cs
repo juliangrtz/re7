@@ -259,25 +259,8 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "recipes-add-new",
             Label = "Add new recipes",
-            Description = "Whether to add new, random recipes.",
-            Type = "switch",
-            Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "recipes-replace-original",
-            Label = "Replace original recipes",
-            Description = "Whether to replace the original recipes.",
-            Type = "switch",
-            Default = false
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "recipes-allow-stabilizers-and-steroids",
-            Label = "Allow stabilizers and steroids",
-            Description = "Whether to allow stabilizers and steroids in the item pool.",
+            Description = "Whether to add new, random recipes. " +
+            "The original recipes still exist even though they are not shown in the crafting menu!",
             Type = "switch",
             Default = true
         });
@@ -287,14 +270,57 @@ internal static class RandomizerConfigurationDefinition
             Id = "recipes-randomization-mode",
             Label = "Recipe generation mode",
             Description = "Controls how ingredients and results are selected.\n" +
-            "Easy: You'll get useful recipes only. Recipes are chosen within a well-defined pool.\n" +
+            "Easy: You'll get useful recipes only.\n" +
             "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.).\n" +
-            "Chaos: Anything could craft anything.\n" +
-            "Crazy: Deliberately nonsensical recipes." +
-            "No crafting: You cannot craft anything. For hardcore players only.\n",
+            "Hard: You require more resources for less items. \n" +
+            "Crazy: Mostly deliberate, nonsensical recipes." +
+            "No crafting: You cannot craft anything. For hardcore players only!\n",
             Type = "dropdown",
             Options = ["Easy", "Balanced", "Chaos", "Crazy", "No crafting"],
             Default = "Balanced"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-allow-stabilizers-and-steroids",
+            Label = "Allow stabilizers and steroids as results",
+            Description = "Whether to allow stabilizers and steroids as results.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-random-item-quantities",
+            Label = "Randomize item quantities",
+            Description = "Whether to randomize the input and output quantities.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-count-min",
+            Label = "Min. item quantity factor",
+            Description = "Only relevant if you randomize item quantities. " +
+            "It is ensured that always at least one item is required.",
+            Type = "range",
+            Min = 0.5,
+            Max = 3,
+            Step = 0.1,
+            Default = 1
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-count-max",
+            Label = "Max. item quantity factor",
+            Description = "Only relevant if you randomize item quantities.",
+            Type = "range",
+            Min = 1,
+            Max = 3,
+            Step = 0.1,
+            Default = 2
         });
 
         group.Items.Add(new GroupItem()
@@ -305,6 +331,7 @@ internal static class RandomizerConfigurationDefinition
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
+            Step = 1,
             Default = 4
         });
 
@@ -316,6 +343,7 @@ internal static class RandomizerConfigurationDefinition
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
+            Step = 1,
             Default = 12
         });
 
