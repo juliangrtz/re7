@@ -47,6 +47,18 @@ public class ItemDefinitionRepository
             .GroupBy(x => x.CategoryType)
             .ToImmutableDictionary(x => x.Key, x => x.ToImmutableArray());
 
+        NameToItemMap = relevantItems
+            .Where(x => !x.IsDlcItem)
+            .Where(x => !string.IsNullOrEmpty(x.Name))
+            .Where(x => !new string[] { 
+                "CircularSawNo", "Candle_Lighted", "EvelynRadar", 
+                "EvelynRadar2", "EvelynRadar3", "Glasses_End",
+                "ProposalBookFf", "SerumComplete", "SilhouettePazzlePieceChildroom"
+            }.Contains(x.Id))
+            .Where(x => x.Name != "Treasure Photo")
+            .Where(x => x.CategoryType != ItemCategoryType.Map)
+            .ToImmutableDictionary(x => x.Name!);
+
         IdToItemMap = Items.ToImmutableDictionary(x => x.Id);
 
         WeaponIdToItemMap = Items
@@ -63,6 +75,11 @@ public class ItemDefinitionRepository
     public ItemDefinition? FromName(string name)
     {
         return IdToItemMap[GetIdByName(name)];
+    }
+
+    public string NameToId(string name)
+    {
+        return NameToItemMap.TryGetValue(name, out var item) ? item.Id : throw new Exception("Invalid name!");
     }
 
     public string GetName(string id)
