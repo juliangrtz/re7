@@ -23,6 +23,8 @@ internal sealed class FileListGenerator : IFileGenerator
         { "prefab", (".user.2", ".pfb.16") },
         { "scene", (".scn.20", ".scn.18") },
         { "message", (".msg.17", ".msg.12") },
+        { "motlist", (".motlist.524", ".motlist.60") },
+        { "motbank", (".motbank.3", ".motbank.1") },
     };
 
     public object Generate(GenerateCommand.GenerateSettings settings)

@@ -101,7 +101,9 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         @"natives/.*\.scn\.\d+",
         @"natives/.*\.user\.\d+",
         @"natives/.*\.uvar\.\d+",
-        @"natives/.*\.rcol\.\d+"
+        @"natives/.*\.rcol\.\d+",
+        @"natives/stm/animation/weapon/.*\.motlist\.\d+", // only weapons, otherwise the PAK file size explodes
+        @"natives/stm/animation/weapon/.*\.motbank\.\d+"
     ];
 
     private static readonly ImmutableArray<string> MiniPatterns = [
