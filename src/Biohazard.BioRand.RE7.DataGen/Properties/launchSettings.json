@@ -31,6 +31,14 @@
     "Generate file list": {
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json file-list"
+    },
+    "Generate weapon definitions": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json weapon_definitions"
+    },
+    "Generate everything": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json item_definitions item_placements areas weapon_definitions"
     }
   }
 }

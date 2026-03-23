@@ -123,4 +123,10 @@ public static class CollectionExtensions
             @this.Add(element);
         }
     }
+
+    public static List<T>? EmptyToNull<T>(this List<T> source) 
+        => source.All(p => p == null) ? null : source;
+
+    public static string? EmptyToNullStr(this string source)
+        => string.IsNullOrEmpty(source) ? null : source;
 }

@@ -54,7 +54,7 @@ public static class PatchContextExtensions
     {
         var data = context.GetFile(path);
         return data == null
-            ? throw new Exception("Unable to read data file.")
+            ? throw new Exception($"Unable to read data file '{path}'.")
             : new UserFile(data);
     }
 

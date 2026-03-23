@@ -1,14 +1,18 @@
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7;
 
+// TODO: Add extension methods like
+// public static void AddDropdown(this Group group, GroupItem item) { ... }
 internal static class RandomizerConfigurationDefinition
 {
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
@@ -374,20 +378,24 @@ internal static class RandomizerConfigurationDefinition
         page = configDefinition.CreatePage("Weapons");
         group = page.CreateGroup("");
 
+
+
+
+
         group.Items.Add(new GroupItem()
         {
             Id = "weapon-mod-ammo-capacity",
             Label = "Randomize Ammo Capacity",
             Description = "Whether to randomize the ammo capacities. Will ensure that the minimum capacity is one. " +
-                            "A new game must be created for this to work.",
+                            "A new game must be created for this to work!",
             Type = "switch",
             Default = false
         });
 
-        foreach(var (id, _) in WeaponModifier.WeaponPrefabs)
+        foreach(var definition in _weaponDefinitions.Guns)
         {
-            var sanitizedId = id.ToString().ToLowerInvariant().Replace("_", "-");
-            var name = _itemDefinitions.FromId(id.ToString())!.Name;
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
             group.Items.Add(new GroupItem()
             {
                 Id = $"weapon-ammo-capacity-min-{sanitizedId}",
@@ -477,7 +485,4 @@ internal static class RandomizerConfigurationDefinition
         }
         return configDefinition;
     }
-
-    // TODO: Add extension methods like
-    // public static void AddDropdown(this Group group, GroupItem item) { ... }
 }

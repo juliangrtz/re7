@@ -1,6 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
-using Enums.app;
+using Biohazard.BioRand.RE7.Weapons;
 using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Services;
@@ -30,12 +30,11 @@ internal class ItemRandomizer
     {
         bool restrictedCheck(ItemDefinition item)
         {
-            if (item.WeaponId is not WeaponID weaponId)
+            if (item.WeaponId == null)
                 return false;
 
-            return _randomizer
-                .GetService<WeaponService>()
-                .IsRestricted(weaponId);
+            return WeaponDefinitionRepository.Default
+                .IsRestricted(item.WeaponId.Value);
         }
 
         return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, allowReoccurance, restrictedCheck);

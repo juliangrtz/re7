@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
