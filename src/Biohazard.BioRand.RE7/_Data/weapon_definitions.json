@@ -443,7 +443,7 @@
     "MaxLoadNum": 0,
     "IsLoadNumInfinity": false,
     "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
+    "UserType": "Enemy",
     "Mesh": "Weapon/wp0020_knife/wp0020_knife.mesh",
     "Material": "Weapon/wp0020_knife/wp0020.mdf2",
     "RcolPaths": [
@@ -476,43 +476,11 @@
     "MaxLoadNum": 0,
     "IsLoadNumInfinity": false,
     "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
+    "UserType": "Enemy",
     "Mesh": "Weapon/wp1090_WoodChip01A/wp1090_WoodChip01A.mesh",
     "Material": "Weapon/wp1090_WoodChip01A/wp1090_WoodChip01A.mdf2",
     "RcolPaths": [
       "natives/stm/collision/collider/weapon/wp1090/wp1090_woodchip.rcol.20"
-    ]
-  },
-  {
-    "WeaponId": "ChainCutter",
-    "Id": "wp1100",
-    "IsGun": false,
-    "Damage": {},
-    "IsInventoryWeapon": false,
-    "MaxLoadNum": 0,
-    "IsLoadNumInfinity": false,
-    "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
-    "Mesh": "Weapon/wp1100_chaincutter/wp1100_chaincutter.mesh",
-    "Material": "Weapon/wp1100_chaincutter/wp1100.mdf2",
-    "RcolPaths": [
-      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
-    ]
-  },
-  {
-    "WeaponId": "ScrewDriver",
-    "Id": "",
-    "IsGun": false,
-    "Damage": {},
-    "IsInventoryWeapon": false,
-    "MaxLoadNum": 0,
-    "IsLoadNumInfinity": false,
-    "IsBulletStackNumInfinity": false,
-    "UserType": "Enemy",
-    "Mesh": "Props/sm7007_Driver/sm7007_Driver.mesh",
-    "Material": "Props/sm7007_Driver/sm7007.mdf2",
-    "RcolPaths": [
-      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
     ]
   },
   {
@@ -549,7 +517,7 @@
     "MaxLoadNum": 0,
     "IsLoadNumInfinity": false,
     "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
+    "UserType": "Enemy",
     "Mesh": "Weapon/wp2040_Shovel/wp2040_Shovel.mesh",
     "Material": "Weapon/wp2040_Shovel/wp2040.mdf2",
     "RcolPaths": [
@@ -656,22 +624,6 @@
     ]
   },
   {
-    "WeaponId": "GlassPiece",
-    "Id": "wp2130",
-    "IsGun": false,
-    "Damage": {},
-    "IsInventoryWeapon": true,
-    "MaxLoadNum": 0,
-    "IsLoadNumInfinity": false,
-    "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
-    "Mesh": "Weapon/wp2130_Glass/wp2130_Glass.mesh",
-    "Material": "Weapon/wp2130_Glass/wp2130.mdf2",
-    "RcolPaths": [
-      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
-    ]
-  },
-  {
     "WeaponId": "FireAxe",
     "Id": "wp2150",
     "IsGun": false,
@@ -697,7 +649,7 @@
     "MaxLoadNum": 0,
     "IsLoadNumInfinity": false,
     "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
+    "UserType": "Enemy",
     "Mesh": "Weapon/wp2150_FireAxe/wp2150_FireAxe.mesh",
     "Material": "Weapon/wp2150_FireAxe/wp2150.mdf2",
     "RcolPaths": [
@@ -816,7 +768,7 @@
     "MaxLoadNum": 0,
     "IsLoadNumInfinity": false,
     "IsBulletStackNumInfinity": false,
-    "UserType": "Player",
+    "UserType": "Enemy",
     "Mesh": "Weapon/wp2150_FireAxe/wp2150_BrokenFireAxe.mesh",
     "Material": "Weapon/wp2150_FireAxe/wp2150_BrokenFireAxe.mdf2",
     "RcolPaths": [

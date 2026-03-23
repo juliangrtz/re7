@@ -1,12 +1,15 @@
 ﻿using Enums.app;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
 public sealed class WeaponDefinition
 {
+    [Key]
     public required WeaponID WeaponId { get; set; }
+
     public string Id { get; set; } = "";
-    public string? Name { get; set; } = "";
+    public string? Name { get; set; } = null;
     public bool IsGun { get; set; }
     public Dictionary<string, WeaponDamageStats> Damage { get; set; } = new();
     public bool IsInventoryWeapon { get; set; }
