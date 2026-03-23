@@ -128,45 +128,6 @@ namespace app
         public bool isSetExtendLv { get; set; }
     }
 
-    public class WeaponGun
-    {
-        public bool Enabled { get; set; } = new();
-        public Enums.app.WeaponID WeaponID { get; set; }
-        public object EquipParam { get; set; }
-        public RszUserDataNode WeaponData { get; set; }
-        public bool IsInventoryWeapon { get; set; }
-        public Enums.app.CharacterDefine.Type UserType { get; set; }
-        public uint HitMaterial { get; set; }
-        public RszUserDataNode HoldAdaptiveTriggerUserData { get; set; }
-        public RszUserDataNode FireAdaptiveTriggerUserData { get; set; }
-        public RszUserDataNode ActiveAdaptiveTriggerUserData { get; set; }
-        public Enums.app.WeaponGun.BulletTypeSwitch BulletTypeForSound { get; set; }
-        public RszUserDataNode WeaponGunParameter { get; set; }
-        public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
-
-        public class BulletInfo
-        {
-            public Enums.app.ItemID BulletItemID { get; set; }
-            public int LoadNum { get; set; }
-        }
-
-        public class BulletTypeSwitch
-        {
-            public int value__ { get; set; }
-        }
-
-        public class StateName
-        {
-        }
-
-        public class WeaponGunSaveData
-        {
-            public bool IsValid { get; set; }
-            public List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
-            public Enums.app.ItemID BulletItemID { get; set; }
-        }
-    }
-
     public class CH8WeaponGun : WeaponGun
     {
     }
@@ -177,17 +138,6 @@ namespace app
 
     public class CH9WeaponGun : WeaponGun
     {
-    }
-
-    public class WeaponData
-    {
-        public List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
-
-        public class EquipData
-        {
-            public app.ObjectID OwnerID { get; set; }
-            public object AttachParam { get; set; }
-        }
     }
 
     public class ObjectID
@@ -270,6 +220,133 @@ namespace app
         public Enums.app.GameManager.ChapterNo JumpChapter { get; set; }
         public bool IsGetPlayerPos { get; set; }
     }
+
+    public class Weapon
+    {
+        public bool Enabled { get; set; } = new();
+        public Enums.app.WeaponID WeaponID { get; set; }
+        public app.Weapon.AttachParam EquipParam { get; set; }
+        public RszUserDataNode WeaponData { get; set; }
+        public bool IsInventoryWeapon { get; set; }
+        public Enums.app.CharacterDefine.Type UserType { get; set; }
+        public uint HitMaterial { get; set; }
+        public RszUserDataNode HoldAdaptiveTriggerUserData { get; set; }
+        public RszUserDataNode FireAdaptiveTriggerUserData { get; set; }
+        public RszUserDataNode ActiveAdaptiveTriggerUserData { get; set; }
+        public class AttachParam
+        {
+            public string JointName { get; set; } = "";
+            public System.Numerics.Vector3 Position { get; set; }
+            public System.Numerics.Vector3 Angle { get; set; }
+        }
+        public class Hash
+        {
+            public class MotionFsm
+            {
+            }
+        }
+        public class MotionID
+        {
+            public int value__ { get; set; }
+        }
+        public class MotionVariable
+        {
+        }
+        public class StateName
+        {
+        }
+    }
+    public class CH8WeaponThrowable : Weapon
+    {
+        public float LifeSec { get; set; }
+        public float LifeSecLimit { get; set; }
+        public float _throwSpeedRate { get; set; }
+        public float _underThrowSpeedRate { get; set; }
+        public System.Numerics.Quaternion ShootRayCorrect { get; set; }
+        public System.Numerics.Quaternion UnderShootRayCorrect { get; set; }
+        public System.Collections.Generic.List<uint> specificDispPartsIndexList { get; set; } = [];
+        public Enums.app.CH8ShellManager.GrenadeType GrenadeType { get; set; }
+    }
+    public class CH9WeaponMelee : Weapon
+    {
+        public int AutoEquipPriority { get; set; }
+    }
+    public class CH9WeaponThrowable : Weapon
+    {
+        public Enums.app.CH9WeaponThrowable.eUseType UseType { get; set; }
+        public class eUseType
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class HandLight : Weapon
+    {
+    }
+    public class HandLightNpc : Weapon
+    {
+        public bool DefaultLightEnable { get; set; }
+        public class Define
+        {
+            public class Effect
+            {
+            }
+        }
+    }
+    public class WeaponChainSaw : Weapon
+    {
+        public via.Prefab TimeLineContainerPrefab { get; set; }
+        public class LampState
+        {
+            public int value__ { get; set; }
+        }
+        public class MotionVariable
+        {
+        }
+        public class TimelineIndex
+        {
+        }
+    }
+    public class WeaponGun : Weapon
+    {
+        public Enums.app.WeaponGun.BulletTypeSwitch BulletTypeForSound { get; set; }
+        public RszUserDataNode WeaponGunParameter { get; set; }
+        public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+        public class BulletInfo
+        {
+            public Enums.app.ItemID BulletItemID { get; set; }
+            public int LoadNum { get; set; }
+        }
+        public class BulletTypeSwitch
+        {
+            public int value__ { get; set; }
+        }
+        public class StateName
+        {
+        }
+        public class WeaponGunSaveData
+        {
+            public bool IsValid { get; set; }
+            public System.Collections.Generic.List<app.WeaponGun.BulletInfo> BulletInfoList { get; set; } = [];
+            public Enums.app.ItemID BulletItemID { get; set; }
+        }
+    }
+    public class WeaponItem : Weapon
+    {
+        public System.Guid UseSuccessFlagID { get; set; }
+        public bool IsStackNumInfinity { get; set; }
+        public class StateName
+        {
+        }
+    }
+    public class WeaponData
+    {
+        public System.Collections.Generic.List<app.WeaponData.EquipData> EquipDatas { get; set; } = [];
+        public class EquipData
+        {
+            public app.ObjectID OwnerID { get; set; }
+            public app.Weapon.AttachParam AttachParam { get; set; }
+        }
+    }
 }
 
 namespace app.Collision
@@ -348,5 +425,17 @@ namespace via
             public ReadOnlyMemory<byte> v10 { get; set; }
             public ReadOnlyMemory<byte> v11 { get; set; }
         }
+    }
+}
+
+namespace hikako
+{
+    public class AdaptiveTriggerUserData
+    {
+        public string Description { get; set; } = "";
+        public float Power { get; set; }
+        public float Frequency { get; set; }
+        public float StartPos { get; set; }
+        public float EndPos { get; set; }
     }
 }
