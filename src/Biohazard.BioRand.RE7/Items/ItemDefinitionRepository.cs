@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Items;
 
-public class ItemDefinitionRepository
+public sealed class ItemDefinitionRepository
 {
     private static ItemDefinitionRepository? _default;
     public List<ItemDefinition> Items { get; private set; } = [];

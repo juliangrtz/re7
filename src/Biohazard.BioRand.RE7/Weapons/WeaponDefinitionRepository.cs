@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-internal class WeaponDefinitionRepository
+public sealed class WeaponDefinitionRepository
 {
     private static WeaponDefinitionRepository? _default;
     public ImmutableList<WeaponDefinition> WeaponDefinitions { get; private set; } = [];
