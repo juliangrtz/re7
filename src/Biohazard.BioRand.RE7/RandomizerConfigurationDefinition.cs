@@ -376,7 +376,7 @@ internal static class RandomizerConfigurationDefinition
 
         #region Weapons
         page = configDefinition.CreatePage("Weapons");
-        group = page.CreateGroup("Weapon Stats");
+        group = page.CreateGroup("Damage");
 
         group.Items.Add(new GroupItem()
         {
@@ -436,6 +436,8 @@ internal static class RandomizerConfigurationDefinition
                 Default = 1.2
             });
         }
+
+        group = page.CreateGroup("Ammo Capacities");
 
         group.Items.Add(new GroupItem()
         {
