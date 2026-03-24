@@ -376,23 +376,89 @@ internal static class RandomizerConfigurationDefinition
 
         #region Weapons
         page = configDefinition.CreatePage("Weapons");
+        group = page.CreateGroup("Weapon Stats");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage",
+            Label = "Randomize Damage",
+            Description = "Whether to randomize weapon damage values.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage-include-stun",
+            Label = "Include Stun",
+            Description = "Whether to apply the randomization to stun as well.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage-include-player-damage",
+            Label = "Include Player Damage",
+            Description = "Whether to apply the randomization to player damage values too, e.g. for the Remote Bomb.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("");
 
+        var weapons = _weaponDefinitions.PlayerWeapons
+            .Where(wp => !wp.WeaponId.ToString().Contains("blaster", StringComparison.InvariantCultureIgnoreCase))
+            .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
+        foreach (var definition in weapons)
+        {
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-damage-min-{sanitizedId}",
+                Label = $"Min. Damage Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 0.8
+            });
 
-
-
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-damage-max-{sanitizedId}",
+                Label = $"Max. Damage Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 1.2
+            });
+        }
 
         group.Items.Add(new GroupItem()
         {
             Id = "weapon-mod-ammo-capacity",
             Label = "Randomize Ammo Capacity",
-            Description = "Whether to randomize the ammo capacities. Will ensure that the minimum capacity is one. " +
-                            "A new game must be created for this to work!",
+            Description = "Whether to randomize the ammo capacities. A new game must be created for this to work!",
             Type = "switch",
             Default = false
         });
 
-        foreach(var definition in _weaponDefinitions.Guns)
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-ammo-capacity-prevent-zero",
+            Label = "Ensure a minimum capacity of 1",
+            Description = "Whether to ensure that the minimum capacity is one.",
+            Type = "switch",
+            Default = true
+        });
+
+        var guns = _weaponDefinitions.Guns
+            .Where(gun => gun.UserType == Enums.app.CharacterDefine.Type.Player)
+            .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
+        foreach (var definition in guns)
         {
             var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
             var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;

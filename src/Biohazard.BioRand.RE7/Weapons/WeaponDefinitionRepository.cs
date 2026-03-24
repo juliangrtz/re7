@@ -63,4 +63,10 @@ public sealed class WeaponDefinitionRepository
             .Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Player)
             .Where(wp => ItemDefinitionRepository.Default.FromWeaponId(wp.WeaponId) != null)
             .ToList();
+
+    public List<WeaponDefinition> PlayerWeapons
+        => WeaponDefinitions.Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Player).ToList();
+
+    public List<WeaponDefinition> EnemyWeapons
+    => WeaponDefinitions.Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Enemy).ToList();
 }
