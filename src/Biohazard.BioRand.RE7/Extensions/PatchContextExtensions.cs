@@ -54,7 +54,7 @@ public static class PatchContextExtensions
     {
         var data = context.GetFile(path);
         return data == null
-            ? throw new Exception("Unable to read data file.")
+            ? throw new Exception($"Unable to read data file '{path}'.")
             : new UserFile(data);
     }
 
@@ -107,6 +107,24 @@ public static class PatchContextExtensions
         var builder = msgFile.ToBuilder();
         callback(builder);
         context.SetMsgFile(path, builder.Build());
+    }
+
+    public static RcolFile GetRcolFile(this IPatchContext context, string path, bool isRt)
+    {
+        return new RcolFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, context.GetFile(path));
+    }
+
+    public static void SetRcolFile(this IPatchContext context, string path, RcolFile rcol)
+    {
+        context.SetFile(path, rcol.Data.ToArray());
+    }
+
+    public static void ModifyRcolFile(this IPatchContext context, string path, bool isRt, Action<RcolFile.Builder> callback)
+    {
+        var rcolFile = context.GetRcolFile(path, isRt);
+        var builder = rcolFile.ToBuilder(context.TypeRepository);
+        callback(builder);
+        context.SetRcolFile(path, builder.Build());
     }
 
     public static void ApplyOverlay(this IPatchContext context, byte[] zipData)

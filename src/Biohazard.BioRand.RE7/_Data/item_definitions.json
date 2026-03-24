@@ -1433,7 +1433,7 @@
   },
   {
     "Id": "FoundFootage000",
-    "Name": "\"Derelict House Footage\"",
+    "Name": "Derelict House Footage",
     "CategoryType": "KeyItem",
     "Size": "Slot1",
     "IsUnlockable": false,
@@ -1445,7 +1445,7 @@
   },
   {
     "Id": "FoundFootage030",
-    "Name": "\"Mia\"",
+    "Name": "Mia",
     "CategoryType": "KeyItem",
     "Size": "Slot1",
     "IsUnlockable": false,
@@ -1457,7 +1457,7 @@
   },
   {
     "Id": "FoundFootage040",
-    "Name": "\"Happy Birthday\"",
+    "Name": "Happy Birthday",
     "CategoryType": "KeyItem",
     "Size": "Slot1",
     "IsUnlockable": false,

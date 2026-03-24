@@ -1,6 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
-using Enums.app;
+using Biohazard.BioRand.RE7.Weapons;
 using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Services;
@@ -26,19 +26,15 @@ internal class ItemRandomizer
         _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
     }
 
-    public ItemDefinition? GetRandomWeapon(Rng rng, bool allowReoccurance = true, bool excludeLegendary = false)
+    public ItemDefinition? GetRandomWeapon(Rng rng, bool allowReoccurance = true)
     {
         bool restrictedCheck(ItemDefinition item)
         {
-            if (!excludeLegendary)
-                return true;
-
-            if (item.WeaponId is not WeaponID weaponId)
+            if (item.WeaponId == null)
                 return false;
 
-            return _randomizer
-                .GetService<WeaponService>()
-                .IsRestricted(weaponId);
+            return WeaponDefinitionRepository.Default
+                .IsRestricted(item.WeaponId.Value);
         }
 
         return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, allowReoccurance, restrictedCheck);
@@ -118,8 +114,6 @@ public class RandomItemSettings
 {
     public double MinAmmoQuantity { get; set; }
     public double MaxAmmoQuantity { get; set; }
-    public int MinMoneyQuantity { get; set; }
-    public int MaxMoneyQuantity { get; set; }
     public Func<string, double>? ItemRatioKeyFunc { get; set; }
     public Func<string, bool>? ValidateDropKind { get; set; }
 

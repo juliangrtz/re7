@@ -1,15 +1,18 @@
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7;
 
+// TODO: Add extension methods like
+// public static void AddDropdown(this Group group, GroupItem item) { ... }
 internal static class RandomizerConfigurationDefinition
 {
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly ItemDropRepository _itemDrops = ItemDropRepository.Default;
+    private static readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
@@ -154,11 +157,11 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("General Drops");
-        var drops = _itemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
+        var drops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
         foreach (var drop in drops)
         {
-            var category = _itemDrops.GetCategory(drop);
-            var (bgColor, textColor) = _itemDrops.GetColor(category);
+            var category = ItemDrops.GetCategory(drop);
+            var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-ratio-{drop.ToString().ToLowerInvariant()}",
@@ -179,14 +182,14 @@ internal static class RandomizerConfigurationDefinition
 
         group = page.CreateGroup("Valuable Drops");
         group.Advanced = true;
-        foreach (var drop in _itemDrops.HighValueDrops)
+        foreach (var drop in ItemDrops.HighValueDrops)
         {
             group.Items.Add(new GroupItem()
             {
                 Id = $"item-drop-valuable-{drop}",
-                Label = _itemDrops.GetHighValueDropLabel(drop),
+                Label = ItemDrops.GetHighValueDropLabel(drop),
                 Type = "switch",
-                Default = _itemDrops.GetEnabledValuableDrops().Contains(drop)
+                Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
             });
         }
 
@@ -260,25 +263,8 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "recipes-add-new",
             Label = "Add new recipes",
-            Description = "Whether to add new, random recipes.",
-            Type = "switch",
-            Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "recipes-replace-original",
-            Label = "Replace original recipes",
-            Description = "Whether to replace the original recipes.",
-            Type = "switch",
-            Default = false
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "recipes-allow-stabilizers-and-steroids",
-            Label = "Allow stabilizers and steroids",
-            Description = "Whether to allow stabilizers and steroids in the item pool.",
+            Description = "Whether to add new, random recipes. " +
+            "The original recipes still exist even though they are not shown in the crafting menu!",
             Type = "switch",
             Default = true
         });
@@ -288,14 +274,57 @@ internal static class RandomizerConfigurationDefinition
             Id = "recipes-randomization-mode",
             Label = "Recipe generation mode",
             Description = "Controls how ingredients and results are selected.\n" +
-            "Easy: You'll get useful recipes only. Recipes are chosen within a well-defined pool.\n" +
+            "Easy: You'll get useful recipes only.\n" +
             "Balanced: All recipes respect item categories (ammo -> ammo, healing -> healing, etc.).\n" +
-            "Chaos: Anything could craft anything.\n" +
-            "Crazy: Deliberately nonsensical recipes." +
-            "No crafting: You cannot craft anything. For hardcore players only.\n",
+            "Hard: You require more resources for less items. \n" +
+            "Crazy: Mostly deliberate, nonsensical recipes." +
+            "No crafting: You cannot craft anything. For hardcore players only!\n",
             Type = "dropdown",
             Options = ["Easy", "Balanced", "Chaos", "Crazy", "No crafting"],
             Default = "Balanced"
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-allow-stabilizers-and-steroids",
+            Label = "Allow stabilizers and steroids as results",
+            Description = "Whether to allow stabilizers and steroids as results.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-random-item-quantities",
+            Label = "Randomize item quantities",
+            Description = "Whether to randomize the input and output quantities.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-count-min",
+            Label = "Min. item quantity factor",
+            Description = "Only relevant if you randomize item quantities. " +
+            "It is ensured that always at least one item is required.",
+            Type = "range",
+            Min = 0.5,
+            Max = 3,
+            Step = 0.1,
+            Default = 1
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"recipes-count-max",
+            Label = "Max. item quantity factor",
+            Description = "Only relevant if you randomize item quantities.",
+            Type = "range",
+            Min = 1,
+            Max = 3,
+            Step = 0.1,
+            Default = 2
         });
 
         group.Items.Add(new GroupItem()
@@ -306,6 +335,7 @@ internal static class RandomizerConfigurationDefinition
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
+            Step = 1,
             Default = 4
         });
 
@@ -317,14 +347,15 @@ internal static class RandomizerConfigurationDefinition
             Type = "range",
             Min = 1,
             Max = RecipeModifier.MaxRecipeCount,
+            Step = 1,
             Default = 12
         });
 
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 
-        var items = from item in _itemDefinitions
-                    where item.IsStackable && !item.IsDlcItem // In the future the non-DLC restriction will be neutralized.
+        var items = from item in _itemDefinitions.Items
+                    where item.IsStackable && !item.IsDlcItem // TODO: Remove second condition when DLCs are supported.
                     select (item.Id, item.Name, item.MaxStack);
 
         foreach ((string id, string name, int maxStack) in items)
@@ -345,22 +376,92 @@ internal static class RandomizerConfigurationDefinition
 
         #region Weapons
         page = configDefinition.CreatePage("Weapons");
+        group = page.CreateGroup("Weapon Stats");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage",
+            Label = "Randomize Damage",
+            Description = "Whether to randomize weapon damage values.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage-include-stun",
+            Label = "Include Stun",
+            Description = "Whether to apply the randomization to stun as well.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-damage-include-player-damage",
+            Label = "Include Player Damage",
+            Description = "Whether to apply the randomization to player damage values too, e.g. for the Remote Bomb.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("");
+
+        var weapons = _weaponDefinitions.PlayerWeapons
+            .Where(wp => !wp.WeaponId.ToString().Contains("blaster", StringComparison.InvariantCultureIgnoreCase))
+            .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
+        foreach (var definition in weapons)
+        {
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-damage-min-{sanitizedId}",
+                Label = $"Min. Damage Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 0.8
+            });
+
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-damage-max-{sanitizedId}",
+                Label = $"Max. Damage Multiplier {name}",
+                Type = "range",
+                Min = 0,
+                Max = 2,
+                Step = 0.1,
+                Default = 1.2
+            });
+        }
 
         group.Items.Add(new GroupItem()
         {
             Id = "weapon-mod-ammo-capacity",
             Label = "Randomize Ammo Capacity",
-            Description = "Whether to randomize the ammo capacities. Will ensure that the minimum capacity is one. " +
-                            "A new game must be created for this to work.",
+            Description = "Whether to randomize the ammo capacities. A new game must be created for this to work!",
             Type = "switch",
             Default = false
         });
 
-        foreach(var (id, _) in WeaponModifier.WeaponPrefabs)
+        group.Items.Add(new GroupItem()
         {
-            var sanitizedId = id.ToString().ToLowerInvariant().Replace("_", "-");
-            var name = _itemDefinitions.FromId(id.ToString())!.Name;
+            Id = "weapon-mod-ammo-capacity-prevent-zero",
+            Label = "Ensure a minimum capacity of 1",
+            Description = "Whether to ensure that the minimum capacity is one.",
+            Type = "switch",
+            Default = true
+        });
+
+        var guns = _weaponDefinitions.Guns
+            .Where(gun => gun.UserType == Enums.app.CharacterDefine.Type.Player)
+            .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
+        foreach (var definition in guns)
+        {
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
             group.Items.Add(new GroupItem()
             {
                 Id = $"weapon-ammo-capacity-min-{sanitizedId}",
@@ -450,7 +551,4 @@ internal static class RandomizerConfigurationDefinition
         }
         return configDefinition;
     }
-
-    // TODO: Add extension methods like
-    // public static void AddDropdown(this Group group, GroupItem item) { ... }
 }

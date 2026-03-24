@@ -24,8 +24,6 @@ internal class Randomizer : IDisposable
     public FileRepository FileRepository => _fileRepository;
     public DynamicData DynamicData { get; }
 
-    public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
-
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
     public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
@@ -42,13 +40,14 @@ internal class Randomizer : IDisposable
         Input = input;
         _inputGamePath = inputGamePath;
         Reporter = reporter;
-        DynamicData = new DynamicData(
-#if ENABLE_BETA_FEATURES
-            Input.Configuration.GetValueOrDefault<bool>("debug-download-data")
-#else
-            false
-#endif
-        );
+
+        var download = Input.Configuration.GetValueOrDefault<bool>("debug-download-data");
+        if(download)
+        {
+            Console.WriteLine("Downloading latest spreadsheet data from Google Sheets...");
+        }
+
+        DynamicData = new DynamicData(download);
         PakPath.IsOnRT = IsOnRaytracingVersion;
     }
 
@@ -141,6 +140,8 @@ internal class Randomizer : IDisposable
             logger.Process.LogHr();
         });
 
+        Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
+
         // Output
         IterateModifiers((n, m) =>
         {
@@ -166,15 +167,23 @@ internal class Randomizer : IDisposable
     {
         return
         [
+            // Inventory
             new StartingInventoryModifier(),
             new RecipeModifier(),
             new ItemStackModifier(),
+
+            // Items
             new BirdCageModifier(),
-            //new KeyItemLocationModifier(),
+            new KeyItemLocationModifier(),
             new DropItemModifier(),
             new StaticItemModifier(),
-            new ChapterJumpDataModifier(),
+            new ItemBoxModifier(),
+
+            // Weapons
             new WeaponModifier(),
+
+            // Misc.
+            new ChapterJumpDataModifier()
         ];
     }
 
@@ -232,6 +241,11 @@ internal class Randomizer : IDisposable
         }
         return (T)service;
     }
+
+    public TemplateService TemplateService => GetService<TemplateService>();
+    public AreaService AreaService => GetService<AreaService>();
+    public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
+    public ItemService ItemService => GetService<ItemService>();
 
     public void AddLogFile(string name, string content)
     {

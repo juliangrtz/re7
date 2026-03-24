@@ -1,73 +1,177 @@
 ﻿using app;
-using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
-using Enums.app;
+using Biohazard.BioRand.RE7.Weapons;
+using IntelOrca.Biohazard.REE.Rsz;
+using System.Runtime.CompilerServices;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class WeaponModifier : Modifier
 {
     private const string RandomizerKey = "modifier/weapons";
-
-    // DLC weapons such as the blasters in Jack's 55th Birthday are excluded for now.
-    public static readonly List<(WeaponID, string)> WeaponPrefabs = [
-        (WeaponID.MachineGun, PakPath.UserFile("prefab/weapon/wp1160_machinegun/wp1160_machinegun_parameter.user")),
-        (WeaponID.Handgun_Albert, PakPath.UserFile("prefab/weapon/wp1340_chrishandgun/wp1340_chrishandgun_parameter.user")),
-        (WeaponID.Magnum, PakPath.UserFile("prefab/weapon/wp1140_magnum/wp1140_magnum_parameter.user")),
-        (WeaponID.Shotgun_M37, PakPath.UserFile("prefab/weapon/wp1230_pumpshotgun/wp1230_pumpshotgun_parameter.user")),
-        (WeaponID.GrenadeLauncher, PakPath.UserFile("prefab/weapon/wp1110_portablecannon/wp1110_portablecannon_parameter.user")),
-        (WeaponID.Handgun_M19, PakPath.UserFile("prefab/weapon/wp1010_handgun/wp1010_handgun_parameter.user")),
-        (WeaponID.Handgun_MPM, PakPath.UserFile("prefab/weapon/wp1240_miahandgun/wp1240_miahandgun_parameter.user")),
-        (WeaponID.Handgun_Albert_Reward, PakPath.UserFile("prefab/weapon/wp1340_chrishandgun/wp1340_chrishandgun_reward_parameter.user")),
-        (WeaponID.Shotgun_DB, PakPath.UserFile("prefab/weapon/wp1030_shotgun/wp1030_shotgun_parameter.user")),
-        (WeaponID.Handgun_G17, PakPath.UserFile("prefab/weapon/wp1210_handgun/wp1210_handgun_parameter.user")),
-        (WeaponID.Burner, PakPath.UserFile("prefab/weapon/wp1000_gasburner/wp1000_gasburner_parameter.user"))
-    ];
-
-    private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
-        foreach (var (weaponId, path) in WeaponPrefabs)
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
         {
-            var data = randomizer.FileRepository.DeserializeUserFile<WeaponGunParameter>(path);
-            var name = _itemDefinitions.FromId(weaponId.ToString())!.Name;
-            logger.LogLine($"[{path}] {name}: {data.Format()}");
+            if (string.IsNullOrEmpty(definition.UserParamsPath))
+            {
+                continue;
+            }
+
+            var data = randomizer.FileRepository.DeserializeUserFile<WeaponGunParameter>(definition.UserParamsPath);
+            var name = definition.Name ?? definition.WeaponId.ToString();
+            logger.LogLine($"[{definition.UserParamsPath}] {name}: {data.Format()}");
         }
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
-        if (randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity"))
+        var rng = randomizer.GetRng(RandomizerKey);
+        if (randomizer.GetConfigOption<bool>("weapon-mod-damage"))
         {
-            var rng = randomizer.GetRng(RandomizerKey);
-
-            foreach (var (weaponId, path) in WeaponPrefabs)
-            {
-                var name = _itemDefinitions.FromId(weaponId.ToString())!.Name;
-                var sanitizedId = weaponId.ToString().ToLowerInvariant().Replace("_", "-");
-                var min = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-min-{sanitizedId}");
-                var max = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-max-{sanitizedId}");
-                var factor = Math.Max(1, Math.Round(rng.NextDouble(min, max), 1));
-
-                randomizer.FileRepository.ModifyUserFile<WeaponGunParameter>(path, root =>
-                {
-                    var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
-
-                    if (root.MaxLoadNum == newLoadNum)
-                    {
-                        logger.LogLine($"Ammo capacity of {name} remains ({root.MaxLoadNum})");
-                    }
-                    else
-                    {
-                        logger.LogLine($"Changing ammo capacity of {name} from {root.MaxLoadNum} to {newLoadNum}");
-                    }
-                    root.MaxLoadNum = newLoadNum;
-                    return root;
-                });
-            }
+            logger.LogLine("Decided to randomize weapon damage");
+            RandomizeWeaponDamage(randomizer, logger, rng);
         }
 
-        // TODO: Reverse engineer .motlist file format
+        if (randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity"))
+        {
+            logger.LogLine("Decided to randomize weapon ammo capacities");
+            RandomizeAmmoCapacities(randomizer, logger, rng);
+        }
+    }
+
+    private void ModifyDamageInRcol(
+        string rcolPath,
+        WeaponDefinition weapon,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        double factor,
+        bool randomizeStun,
+        bool randomizePlayerDmg
+    )
+    {
+        int ScaleDamage(int value) => Math.Max(0, (int)Math.Round(value * factor));
+
+        logger.Push(weapon.Name ?? weapon.WeaponId.ToString());
+        randomizer.FileRepository.ModifyRcolFile(rcolPath, randomizer.IsOnRaytracingVersion, rcol =>
+        {
+            foreach (var requestSet in rcol.RequestSets)
+            {
+                if (requestSet.UserData == null)
+                {
+                    logger.LogLine($"Skipping request set {requestSet.Name} in {rcolPath}, it has no user data?!");
+                    continue;
+                }
+
+                var isDefaultBulletRcol = rcolPath.Contains("defaultbullet.rcol");
+                if (isDefaultBulletRcol && !string.Equals(requestSet.Name, weapon.WeaponId.ToString(), StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var isPlayerRequestSet = requestSet.Name.Contains("player", StringComparison.OrdinalIgnoreCase);
+                if (isPlayerRequestSet && !randomizePlayerDmg)
+                {
+                    continue;
+                }
+
+                if (requestSet.UserData.Type.Name != "app.Collision.AttackUserData")
+                {
+                    continue;
+                }
+
+                var attackUserData = RszSerializer.Deserialize<app.Collision.AttackUserData>(requestSet.UserData)!;
+                var prevDmg = attackUserData.Damage;
+                var prevStun = attackUserData.Stun;
+
+                attackUserData.Damage = ScaleDamage(attackUserData.Damage);
+                if (randomizeStun)
+                {
+                    attackUserData.Stun = ScaleDamage(attackUserData.Stun);
+                }
+
+                if (prevDmg == attackUserData.Damage)
+                {
+                    logger.LogLine($"Damage of RequestSet {requestSet.Name} remains ({prevDmg})");
+                }
+                else
+                {
+                    logger.LogLine($"Damage of RequestSet {requestSet.Name} changes from {prevDmg} to {attackUserData.Damage}");
+                }
+
+                if (prevStun == attackUserData.Stun)
+                {
+                    logger.LogLine($"Stun of RequestSet {requestSet.Name} remains ({prevStun})");
+                }
+                else
+                {
+                    logger.LogLine($"Stun of RequestSet {requestSet.Name} changes from {prevStun} to {attackUserData.Stun}");
+                }
+
+                requestSet.UserData = (RszObjectNode)RszSerializer.Serialize(requestSet.UserData.Type, attackUserData);
+            }
+        });
+        logger.Pop();
+    }
+
+    private void RandomizeWeaponDamage(Randomizer randomizer, RandomizerLogger logger, Rng rng)
+    {
+        var randomizeStun = randomizer.GetConfigOption<bool>("weapon-mod-damage-include-stun");
+        var randomizePlayerDmg = randomizer.GetConfigOption<bool>("weapon-mod-damage-include-player-damage");
+
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
+        {
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var min = randomizer.GetConfigOption($"weapon-damage-min-{sanitizedId}", -1d);
+            var max = randomizer.GetConfigOption($"weapon-damage-max-{sanitizedId}", -1d);
+            if ((min == -1d && max == -1d) || (min == 1.0d && max == 1.0d))
+            {
+                continue;
+            }
+
+            var factor = Math.Round(rng.NextDouble(min, max), 1);
+            foreach (var rcolPath in definition.RcolPaths)
+            {
+                ModifyDamageInRcol(rcolPath, definition, randomizer, logger, factor, randomizeStun, randomizePlayerDmg);
+            }
+        }
+    }
+
+    private void RandomizeAmmoCapacities(Randomizer randomizer, RandomizerLogger logger, Rng rng)
+    {
+        var ensureAtLeastOneBullet = randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity-prevent-zero");
+        var minCap = ensureAtLeastOneBullet ? 1 : 0;
+
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
+        {
+            if (definition.UserParamsPath == null)
+            {
+                continue;
+            }
+
+            var name = definition.Name;
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var min = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-min-{sanitizedId}");
+            var max = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-max-{sanitizedId}");
+            var factor = Math.Max(minCap, Math.Round(rng.NextDouble(min, max), 1));
+
+            randomizer.FileRepository.ModifyUserFile<WeaponGunParameter>(definition.UserParamsPath, root =>
+            {
+                var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
+
+                if (root.MaxLoadNum == newLoadNum)
+                {
+                    logger.LogLine($"Ammo capacity of {name} remains ({root.MaxLoadNum})");
+                }
+                else
+                {
+                    logger.LogLine($"Changing ammo capacity of {name} from {root.MaxLoadNum} to {newLoadNum}");
+                }
+                root.MaxLoadNum = newLoadNum;
+                return root;
+            });
+        }
     }
 }

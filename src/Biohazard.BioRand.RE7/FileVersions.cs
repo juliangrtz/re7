@@ -10,4 +10,13 @@ public class FileVersions
 
     public const int MsgFileVersionRT = 17;
     public const int MsgFileVersionNonRT = 13;
+
+    public const int RcolFileVersionRT = 20;
+    public const int RcolFileVersionNonRT = 2;
+
+    public const int PfbFileVersionRT = 17;
+    public const int PfbFileVersionNonRT = 8;
+
+    public const int MotlistFileVersionRT = 524;
+    public const int MotlistFileVersionNonRT = -1;
 }

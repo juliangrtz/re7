@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.DLC;
-using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
@@ -20,6 +19,7 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 internal class ItemDefinitionGenerator : IFileGenerator
 {
     public string Id => "item_definitions";
+    public bool CopyToDataDirectory => true;
 
     private readonly RszTypeRepository _rszRepository =
         RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
@@ -120,7 +120,7 @@ internal class ItemDefinitionGenerator : IFileGenerator
                 result.Add(new ItemDefinition
                 {
                     Id = item.ItemDataID,
-                    Name = FindMessageByGuid(item.NameMsg)?.RemoveControlCharacters(),
+                    Name = FindMessageByGuid(item.NameMsg)?.RemoveControlCharacters().Replace("\"", ""),
                     CategoryType = item.Category,
                     Size = item.SlotSize,
                     MaxStack = item.MaxStackNum,

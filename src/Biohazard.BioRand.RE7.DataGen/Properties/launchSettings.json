@@ -14,15 +14,31 @@
     },
     "Generate item definitions": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json item_definitions"
+      "commandLineArgs": "generate -c -v -f json -f csv item_definitions"
     },
     "Generate item placements": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json -f csv items"
+      "commandLineArgs": "generate -c -v -f json -f csv item_placements"
     },
     "Generate SCN via type list": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json scn-via-type-list"
+      "commandLineArgs": "generate -c -v -f json -f csv scn-via-type-list"
+    },
+    "Generate areas": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json -f csv areas"
+    },
+    "Generate file list": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json file-list"
+    },
+    "Generate weapon definitions": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json weapon_definitions"
+    },
+    "Generate everything": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f json item_definitions item_placements areas weapon_definitions"
     }
   }
 }

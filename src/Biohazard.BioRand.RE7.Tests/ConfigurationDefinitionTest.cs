@@ -52,7 +52,7 @@ public class ConfigurationDefinitionTest
             {
                 Assert.NotNull(item.Min);
                 Assert.NotNull(item.Max);
-                Assert.InRange(item.Step.Value, item.Min!.Value, item.Max!.Value);
+                Assert.InRange(item.Step.Value, 0.01, item.Max!.Value);
             }
         }
     }

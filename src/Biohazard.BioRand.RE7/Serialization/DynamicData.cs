@@ -4,18 +4,28 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
+public enum DynamicDataName
+{
+    ItemPlacements,
+    Recipes,
+    Enemies,
+    EnemyLimits,
+    Events,
+    Messages
+}
+
 public sealed class DynamicData(bool download)
 {
-    private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YAOHcvyQ6Tp2n6io9iEcJjpjZoQXuUC0NGwGFKKafQ4/export?format=csv&gid={0}";
+    private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YNdX9LWrhh6KDKd8Mx7JpTCMq8XY8u6BfX20YYNx9jk/export?format=csv&gid={0}";
 
     private static readonly ImmutableDictionary<DynamicDataName, (string, int)> g_map = new Dictionary<DynamicDataName, (string, int)>
     {
-        [DynamicDataName.Recipe] = ("recipe.csv", 327970340),
-        [DynamicDataName.WeaponBase] = ("wpbase.csv", 882011316),
-        [DynamicDataName.WeaponRng] = ("wpstats.csv", 345409638),
-        [DynamicDataName.Enemies] = ("enemies.csv", 2122364676),
-        [DynamicDataName.Items] = ("items.csv", 827998375),
-        [DynamicDataName.Messages] = ("messages.csv", 257348148),
+        [DynamicDataName.ItemPlacements] = ("item_placements.csv", 1561602125),
+        [DynamicDataName.Recipes] = ("recipes.csv", 358865420),
+        [DynamicDataName.Enemies] = ("enemies.csv", 2063646676),
+        [DynamicDataName.EnemyLimits] = ("enemy_limits.csv", 1254028764),
+        [DynamicDataName.Events] = ("events.csv", 1728585114),
+        [DynamicDataName.Messages] = ("messages.csv", 1050646915),
     }.ToImmutableDictionary();
 
     private readonly Dictionary<DynamicDataName, byte[]> _map = [];
@@ -58,14 +68,4 @@ public sealed class DynamicData(bool download)
         using var httpClient = new HttpClient();
         return httpClient.GetByteArrayAsync(url).Result;
     }
-}
-
-public enum DynamicDataName
-{
-    Recipe,
-    WeaponBase,
-    WeaponRng,
-    Enemies,
-    Items,
-    Messages,
 }

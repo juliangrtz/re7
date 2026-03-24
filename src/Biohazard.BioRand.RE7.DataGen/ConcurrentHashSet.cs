@@ -2,10 +2,6 @@
 // Posted by Jämes, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-03-15, License - CC BY-SA 4.0
 
-using System;
-using System.Collections.Generic;
-using System.Threading;
-
 namespace Biohazard.BioRand.RE7.DataGen;
 
 public class ConcurrentHashSet<T> : IDisposable

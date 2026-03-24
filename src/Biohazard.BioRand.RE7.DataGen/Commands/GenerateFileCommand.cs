@@ -1,10 +1,10 @@
-﻿using Biohazard.BioRand.RE7.DataGen.Generators;
-using Biohazard.BioRand.RE7.Extensions;
+﻿using Biohazard.BioRand.RE7.Extensions;
 using CsvHelper;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Globalization;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
@@ -36,14 +36,6 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
         }
     }
 
-    private static readonly IFileGenerator[] _fileGenerators =
-    [
-        new ItemDefinitionGenerator(),
-        new ItemPlacementGenerator(),
-        new ConfigGenerator(),
-        new ScnViaTypeListGenerator()
-    ];
-
     private readonly JsonSerializerOptions _serializationOptions = new()
     {
         WriteIndented = true,
@@ -65,8 +57,15 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
     public override int Execute(CommandContext context, GenerateSettings settings, CancellationToken token)
     {
         var idSet = new HashSet<string>(settings.Generators, StringComparer.OrdinalIgnoreCase);
-
-        var selected = _fileGenerators
+        var fileGenerators = Assembly
+                                .GetExecutingAssembly()
+                                .GetTypes()
+                                .Where(t => typeof(IFileGenerator).IsAssignableFrom(t)
+                                            && !t.IsInterface
+                                            && !t.IsAbstract)
+                                .Select(t => (IFileGenerator)Activator.CreateInstance(t)!)
+                                .ToList();
+        var selected = fileGenerators
             .Where(gen => idSet.Contains(gen.Id))
             .ToArray();
 
@@ -98,11 +97,11 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
                             $"[green]Generator '{generator.Id}' (format {format.ToString().ToTitleCase()}) finished: [bold]{Path.GetFullPath(outputPath)}[/][/] "
                         );
 
-#if DEBUG
-                        // Update _Data files
-                        var dest = $"{AppContext.BaseDirectory.SubstringBefore(".DataGen")}\\_Data\\{Path.GetFileName(outputPath)}";
-                        File.Copy(outputPath, dest, true);
-#endif
+                        if (generator.CopyToDataDirectory)
+                        {
+                            var dest = $"{AppContext.BaseDirectory.SubstringBefore(".DataGen")}\\_Data\\{Path.GetFileName(outputPath)}";
+                            File.Copy(outputPath, dest, true);
+                        }
                     }
                     else
                     {

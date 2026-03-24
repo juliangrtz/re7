@@ -1,0 +1,832 @@
+[
+  {
+    "WeaponId": "HandAxe",
+    "Id": "wp0040",
+    "Name": "Axe",
+    "IsGun": false,
+    "Damage": {
+      "wp0040_axe.rcol/AttackSmall": {
+        "Damage": 100,
+        "Stun": 100
+      },
+      "wp0040_axe.rcol/AttackLarge": {
+        "Damage": 150,
+        "Stun": 150
+      },
+      "wp0040_axe.rcol/Chapter1Battle2Attack": {
+        "Damage": 50,
+        "Stun": 0
+      },
+      "wp0040_axe.rcol/Chapter1Battle2Finish": {
+        "Damage": 2000,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Player",
+    "Mesh": "Weapon/wp0040_axe/wp0040_axe.mesh",
+    "Material": "Weapon/wp0040_axe/wp0040.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp0040/wp0040_axe.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "Knife",
+    "Id": "wp1190",
+    "Name": "Knife",
+    "IsGun": false,
+    "Damage": {
+      "wp1190_knife.rcol/AttackSmall": {
+        "Damage": 50,
+        "Stun": 50
+      },
+      "wp1190_knife.rcol/AttackLarge": {
+        "Damage": 80,
+        "Stun": 80
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1190_Knife/wp1190_Knife.mesh",
+    "Material": "Weapon/wp1190_Knife/wp1190.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp1190/wp1190_knife.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1190_knife/item/wp1190_knife_item.pfb.17"
+  },
+  {
+    "WeaponId": "Bar",
+    "Id": "wp1320",
+    "Name": "Crowbar",
+    "IsGun": false,
+    "Damage": {
+      "wp1320_bar.rcol/AttackSmall": {
+        "Damage": 100,
+        "Stun": 100
+      },
+      "wp1320_bar.rcol/AttackLarge": {
+        "Damage": 150,
+        "Stun": 150
+      },
+      "wp1320_bar.rcol/Chapter1Battle2Attack": {
+        "Damage": 50,
+        "Stun": 0
+      },
+      "wp1320_bar.rcol/Chapter1Battle2Finish": {
+        "Damage": 2000,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1320_Bar/wp1320_Bar.mesh",
+    "Material": "Weapon/wp1320_Bar/wp1320 .mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp1320/wp1320_bar.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1370_goldenbar/item/wp1370_goldenbar_item.pfb.17"
+  },
+  {
+    "WeaponId": "Handgun_M19",
+    "Id": "wp1010",
+    "Name": "M19 Handgun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Handgun_M19": {
+        "Damage": 120,
+        "Stun": 120
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 7,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet",
+      "HandgunBulletL"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1010_Handgun/wp1010_Handgun.mesh",
+    "Material": "Weapon/wp1010_Handgun/wp1010.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1010_handgun/wp1010_handgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Handgun_G17",
+    "Id": "wp1210",
+    "Name": "G17 Handgun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Handgun_G17": {
+        "Damage": 100,
+        "Stun": 100
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 10,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet",
+      "HandgunBulletL"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1210_Handgun/wp1210_Handgun.mesh",
+    "Material": "Weapon/wp1210_Handgun/wp1210.mdf2",
+    "AdaptiveTriggerUserDataPaths": [
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1210_Hold.user",
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1210_Fire.user"
+    ],
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1210_handgun/wp1210_handgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Handgun_MPM",
+    "Id": "wp1240",
+    "Name": "MPM Handgun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Handgun_MPM": {
+        "Damage": 100,
+        "Stun": 100
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 9,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet",
+      "HandgunBulletL"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1240_MiaHandgun/wp1240_MiaHandgun.mesh",
+    "Material": "Weapon/wp1240_MiaHandgun/wp1240.mdf2",
+    "AdaptiveTriggerUserDataPaths": [
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1240_Hold.user",
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1240_Fire.user"
+    ],
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1240_miahandgun/wp1240_miahandgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Handgun_Albert",
+    "Id": "wp1340",
+    "Name": "Albert-01",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Handgun_Albert": {
+        "Damage": 100,
+        "Stun": 100
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 9,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1340_ChrisHandgun/wp1340_ChrisHandgun.mesh",
+    "Material": "Weapon/wp1340_ChrisHandgun/wp1340_ChrisHandgun.mdf2",
+    "AdaptiveTriggerUserDataPaths": [
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1340_Hold.user",
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1340_Fire.user"
+    ],
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1340_chrishandgun/wp1340_chrishandgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Shotgun_M37",
+    "Id": "wp1230",
+    "Name": "M37 Shotgun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Shotgun_M37": {
+        "Damage": 90,
+        "Stun": 90
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 4,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "ShotgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1230_PumpShotgun/wp1230_PumpShotgun.mesh",
+    "Material": "Weapon/wp1230_PumpShotgun/wp1230.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1230_pumpshotgun/wp1230_pumpshotgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Shotgun_DB",
+    "Id": "wp1030",
+    "Name": "M21 Shotgun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Shotgun_DB": {
+        "Damage": 100,
+        "Stun": 100
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 2,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "ShotgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1030_shotgun/wp1030_shotgun.mesh",
+    "Material": "Weapon/wp1030_shotgun/wp1030.mdf2",
+    "AdaptiveTriggerUserDataPaths": [
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1030_Hold.user",
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1030_Fire.user"
+    ],
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1030_shotgun/wp1030_shotgun_parameter.user.2"
+  },
+  {
+    "WeaponId": "MachineGun",
+    "Id": "wp1160",
+    "Name": "P19 Machine Gun",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/MachineGun": {
+        "Damage": 50,
+        "Stun": 40
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 64,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "MachineGunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1160_MachineGun/wp1160_MachineGun.mesh",
+    "Material": "Weapon/wp1160_MachineGun/wp1160.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1160_machinegun/item/wp1160_machinegun_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1160_machinegun/wp1160_machinegun_parameter.user.2"
+  },
+  {
+    "WeaponId": "Magnum",
+    "Id": "wp1140",
+    "Name": "44 MAG",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Magnum": {
+        "Damage": 1200,
+        "Stun": 1200
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 7,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "MagnumBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1140_Magnum/wp1140_Magnum.mesh",
+    "Material": "Weapon/wp1140_Magnum/wp1140.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1141_magnumbullet/item/wp1141_magnumbullet_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1140_magnum/wp1140_magnum_parameter.user.2"
+  },
+  {
+    "WeaponId": "GrenadeLauncher",
+    "Id": "wp1110",
+    "Name": "Grenade Launcher",
+    "IsGun": true,
+    "Damage": {
+      "acidbullets.rcol/AttackToWeapon": {
+        "Damage": 0,
+        "Stun": 100
+      },
+      "acidbullets.rcol/Impact": {
+        "Damage": 500,
+        "Stun": 300
+      },
+      "acidbullets.rcol/ExplosionToEnemy": {
+        "Damage": 300,
+        "Stun": 300
+      },
+      "acidbullets.rcol/ExplosionToPlayer": {
+        "Damage": 100,
+        "Stun": 100
+      },
+      "flamebullets.rcol/AttackToWeapon": {
+        "Damage": 0,
+        "Stun": 100
+      },
+      "flamebullets.rcol/Impact": {
+        "Damage": 300,
+        "Stun": 300
+      },
+      "flamebullets.rcol/ExplosionToEnemy": {
+        "Damage": 400,
+        "Stun": 300
+      },
+      "flamebullets.rcol/ExplosionToPlayer": {
+        "Damage": 100,
+        "Stun": 100
+      },
+      "flamebullets.rcol/Residual": {
+        "Damage": 100,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 1,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "FlameBulletS",
+      "AcidBulletS"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1110_PortableCannon/wp1110_PortableCannon.mesh",
+    "Material": "Weapon/wp1110_PortableCannon/wp1110.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/acidbullets.rcol.20",
+      "natives/stm/collision/collider/weapon/flamebullets.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1110_portablecannon/wp1110_portablecannon_parameter.user.2"
+  },
+  {
+    "WeaponId": "Burner",
+    "Id": "wp1000",
+    "Name": "Burner",
+    "IsGun": true,
+    "Damage": {
+      "wp1000_gasburner.rcol/Attack": {
+        "Damage": 1,
+        "Stun": 1
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 150,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 5,
+    "BulletItemIDs": [
+      "BurnerBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1000_GasBurner/wp1000_GasBurner.mesh",
+    "Material": "Weapon/wp1000_GasBurner/wp1000.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp1000/wp1000_gasburner.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1000_gasburner/item/wp1000_gasburner_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1000_gasburner/wp1000_gasburner_parameter.user.2"
+  },
+  {
+    "WeaponId": "KitchenKnife",
+    "Id": "wp0020",
+    "IsGun": false,
+    "Damage": {
+      "wp0020.rcol/StabHand": {
+        "Damage": 150,
+        "Stun": 0
+      },
+      "wp0020.rcol/KnifeRush": {
+        "Damage": 50,
+        "Stun": 0
+      },
+      "wp0020.rcol/KnifeCatch": {
+        "Damage": 300,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp0020_knife/wp0020_knife.mesh",
+    "Material": "Weapon/wp0020_knife/wp0020.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp0020/wp0020.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "WoodChip",
+    "Id": "wp1090",
+    "IsGun": false,
+    "Damage": {
+      "wp1090_woodchip.rcol/Battle2KnifeRush": {
+        "Damage": 50,
+        "Stun": 0
+      },
+      "wp1090_woodchip.rcol/EMAttack_Small": {
+        "Damage": 50,
+        "Stun": 0
+      },
+      "wp1090_woodchip.rcol/EMAttack_Large": {
+        "Damage": 150,
+        "Stun": 0
+      },
+      "wp1090_woodchip.rcol/Battle2KnifeRushFinish": {
+        "Damage": 50,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp1090_WoodChip01A/wp1090_WoodChip01A.mesh",
+    "Material": "Weapon/wp1090_WoodChip01A/wp1090_WoodChip01A.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp1090/wp1090_woodchip.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "Shovel",
+    "Id": "wp2040",
+    "IsGun": false,
+    "Damage": {
+      "wp2040.rcol/EM_Small_Strike": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2040.rcol/EM_Small_Slash": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2040.rcol/EM_Large_Strike": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2040.rcol/EM_Large_Slash": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2040.rcol/EM_Dummy_Strike": {
+        "Damage": 1,
+        "Stun": 0
+      },
+      "wp2040.rcol/Knockable": {
+        "Damage": 200,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp2040_Shovel/wp2040_Shovel.mesh",
+    "Material": "Weapon/wp2040_Shovel/wp2040.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp2040/wp2040.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "Roller",
+    "Id": "wp2090",
+    "IsGun": false,
+    "Damage": {
+      "wp2090.rcol/EM_Small_Strike": {
+        "Damage": 200,
+        "Stun": 400
+      },
+      "wp2090.rcol/EM_Small_Slash": {
+        "Damage": 200,
+        "Stun": 400
+      },
+      "wp2090.rcol/EM_Large_Strike": {
+        "Damage": 300,
+        "Stun": 400
+      },
+      "wp2090.rcol/EM_Large_Slash": {
+        "Damage": 300,
+        "Stun": 400
+      }
+    },
+    "IsInventoryWeapon": false,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp2090_Roller/wp2090_Roller.mesh",
+    "Material": "Weapon/wp2090_Roller/wp2090.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp2090/wp2090.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "Scissors",
+    "Id": "wp2100",
+    "IsGun": false,
+    "Damage": {
+      "wp2100_light.rcol/AttackS": {
+        "Damage": 200,
+        "Stun": 500
+      },
+      "wp2100_light.rcol/AttackNoDeath": {
+        "Damage": 200,
+        "Stun": 500
+      },
+      "wp2100_light.rcol/AttackLegCut": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2100_light.rcol/AttackL": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2100_light.rcol/AttackChainsawLeft": {
+        "Damage": 100,
+        "Stun": 500
+      },
+      "wp2100_light.rcol/AttackChainsawRight": {
+        "Damage": 100,
+        "Stun": 500
+      },
+      "wp2101.rcol/AttackS": {
+        "Damage": 200,
+        "Stun": 500
+      },
+      "wp2101.rcol/AttackNoDeath": {
+        "Damage": 200,
+        "Stun": 500
+      },
+      "wp2101.rcol/AttackLegCut": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2101.rcol/AttackL": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2101.rcol/AttackChainsawLeft": {
+        "Damage": 100,
+        "Stun": 500
+      },
+      "wp2101.rcol/AttackChainsawRight": {
+        "Damage": 100,
+        "Stun": 500
+      }
+    },
+    "IsInventoryWeapon": false,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp2100_Scissors/wp2100_Scissors.mesh",
+    "Material": "Weapon/wp2100_Scissors/wp2100.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp2100/wp2100_light.rcol.20",
+      "natives/stm/collision/collider/weapon/wp2100/wp2101.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "FireAxe",
+    "Id": "wp2150",
+    "IsGun": false,
+    "Damage": {
+      "wp2150.rcol/EM_Small_Strike": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Small_Slash": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Large_Strike": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Large_Slash": {
+        "Damage": 300,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp2150_FireAxe/wp2150_FireAxe.mesh",
+    "Material": "Weapon/wp2150_FireAxe/wp2150.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp2150/wp2150.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "MiaKnife",
+    "Id": "wp1360",
+    "Name": "Survival Knife",
+    "IsGun": false,
+    "Damage": {
+      "wp1360_miaknife.rcol/AttackSmall": {
+        "Damage": 50,
+        "Stun": 50
+      },
+      "wp1360_miaknife.rcol/AttackLarge": {
+        "Damage": 80,
+        "Stun": 80
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1360_MiaKnife/wp1360_MiaKnife.mesh",
+    "Material": "Weapon/wp1360_MiaKnife/wp1360.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp1360/wp1360_miaknife.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1360_miaknife/item/wp1360_miaknife_item.pfb.17"
+  },
+  {
+    "WeaponId": "HyperBlaster",
+    "Id": "wp1380",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/HyperBlaster": {
+        "Damage": 100,
+        "Stun": 250
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 50,
+    "IsLoadNumInfinity": true,
+    "IsBulletStackNumInfinity": true,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1380_HyperBlaster/wp1380_HyperBlaster.mesh",
+    "Material": "Weapon/wp1380_HyperBlaster/wp1380.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1380_hyperblaster/item/wp1380_hyperblaster_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1380_hyperblaster/wp1380_hyperblaster_parameter.user.2"
+  },
+  {
+    "WeaponId": "Handgun_Albert_Reward",
+    "Id": "wp1340",
+    "Name": "Albert-01R",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/Handgun_Albert_Reward": {
+        "Damage": 200,
+        "Stun": 200
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 3,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet",
+      "HandgunBulletL"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1340_ChrisHandgun/wp1340_ChrisHandgun.mesh",
+    "Material": "Weapon/wp1340_ChrisHandgun/wp1340_ChrisHandgun.mdf2",
+    "AdaptiveTriggerUserDataPaths": [
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1140_Hold.user",
+      "Hikako/UserData/AdaptiveTrigger/AdaptiveTriggerUserData_wp1010_Fire.user"
+    ],
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1340_chrishandgun/wp1340_chrishandgun_reward_parameter.user.2"
+  },
+  {
+    "WeaponId": "FireAxeBreakable",
+    "Id": "wp2150",
+    "IsGun": false,
+    "Damage": {
+      "wp2150.rcol/EM_Small_Strike": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Small_Slash": {
+        "Damage": 200,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Large_Strike": {
+        "Damage": 300,
+        "Stun": 0
+      },
+      "wp2150.rcol/EM_Large_Slash": {
+        "Damage": 300,
+        "Stun": 0
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Enemy",
+    "Mesh": "Weapon/wp2150_FireAxe/wp2150_BrokenFireAxe.mesh",
+    "Material": "Weapon/wp2150_FireAxe/wp2150_BrokenFireAxe.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp2150/wp2150.rcol.20"
+    ]
+  },
+  {
+    "WeaponId": "BlueBlaster",
+    "Id": "wp1381",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/BlueBlaster": {
+        "Damage": 1000,
+        "Stun": 1000
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 50,
+    "IsLoadNumInfinity": true,
+    "IsBulletStackNumInfinity": true,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1381_BlueBlaster/wp1381_BlueBlaster.mesh",
+    "Material": "Weapon/wp1381_BlueBlaster/wp1381.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1381_blueblaster/item/wp1381_blueblaster_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1381_blueblaster/wp1381_blueblaster_parameter.user.2"
+  },
+  {
+    "WeaponId": "RedBlaster",
+    "Id": "wp1382",
+    "IsGun": true,
+    "Damage": {
+      "defaultbullet.rcol/RedBlaster": {
+        "Damage": 300,
+        "Stun": 300
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 50,
+    "IsLoadNumInfinity": true,
+    "IsBulletStackNumInfinity": true,
+    "Range": 100,
+    "BulletItemIDs": [
+      "HandgunBullet"
+    ],
+    "UserType": "Player",
+    "Mesh": "Weapon/wp1382_RedBlaster/wp1382_RedBlaster.mesh",
+    "Material": "Weapon/wp1382_RedBlaster/wp1382.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/defaultbullet.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp1382_redblaster/item/wp1382_redblaster_item.pfb.17",
+    "UserParamsPath": "natives/stm/prefab/weapon/wp1382_redblaster/wp1382_redblaster_parameter.user.2"
+  }
+]
