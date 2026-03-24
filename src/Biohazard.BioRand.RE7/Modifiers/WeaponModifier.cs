@@ -52,7 +52,7 @@ internal class WeaponModifier : Modifier
         bool randomizePlayerDmg
     )
     {
-        int ScaleDamage(int value) => (int)Math.Round(value * factor);
+        int ScaleDamage(int value) => Math.Max(0, (int)Math.Round(value * factor));
 
         logger.Push(weapon.Name ?? weapon.WeaponId.ToString());
         randomizer.FileRepository.ModifyRcolFile(rcolPath, randomizer.IsOnRaytracingVersion, rcol =>
@@ -103,11 +103,11 @@ internal class WeaponModifier : Modifier
 
                 if (prevStun == attackUserData.Stun)
                 {
-                    logger.LogLine($"Stun of RequestSet {requestSet.Name} remains ({prevDmg})");
+                    logger.LogLine($"Stun of RequestSet {requestSet.Name} remains ({prevStun})");
                 }
                 else
                 {
-                    logger.LogLine($"Stun of RequestSet {requestSet.Name} changes from {prevDmg} to {attackUserData.Damage}");
+                    logger.LogLine($"Stun of RequestSet {requestSet.Name} changes from {prevStun} to {attackUserData.Stun}");
                 }
 
                 requestSet.UserData = (RszObjectNode)RszSerializer.Serialize(requestSet.UserData.Type, attackUserData);
