@@ -4,6 +4,9 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
+/// <summary>
+/// TODO: Completely refactor this and use <see cref="BioRand.RE7.Services.ItemRandomizer"/> instead of hard-coded items
+/// </summary>
 internal class StaticItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
@@ -57,7 +60,7 @@ internal class StaticItemModifier : Modifier
     {
         return;
         var rng = randomizer.GetRng(RandomizerKey);
-        var itemService = randomizer.GetService<ItemService>();
+        var itemService = randomizer.GetService<ItemPlacementService>();
         // TODO: Filter bird cage items
         // TODO: Add option for tapes
         var randomizableItems = itemService.PlacementToItemMap

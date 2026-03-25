@@ -26,7 +26,7 @@ internal class ItemBoxModifier : Modifier
     {
         return;
         var templateService = randomizer.TemplateService;
-        var itemService = randomizer.ItemService;
+        var itemService = randomizer.ItemPlacementService;
         var areaService = randomizer.AreaService;
         var rng = randomizer.GetRng(RandomizerKey);
         var itemBoxGameObjectName = rng.Next(0, 1) % 2 == 0 ? LongItemBoxGameObjectName : OblongItemBoxGameObjectName;
