@@ -28,7 +28,7 @@ internal class Area
                         .Set("Name", "BioRand")
                         .Set("Update", true)
                         .Set("Draw", true)
-                        .Set("Startup", true), []);
+                        .Set("Standby", true), []);
                 Scene = Scene.Add(biorandFolder);
             }
             return biorandFolder;

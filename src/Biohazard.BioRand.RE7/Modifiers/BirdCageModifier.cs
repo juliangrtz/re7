@@ -1,11 +1,14 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
-using Biohazard.BioRand.RE7.Services;
+using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
+
+using ReplacementData = (ItemID Id, int Quantity, int Coins, ImmutableArray<string> ValidItemIDs);
 
 internal class BirdCageModifier : Modifier
 {
@@ -24,55 +27,67 @@ internal class BirdCageModifier : Modifier
 
     private readonly Regex _birdCageRegex = new Regex("^sm.*CoinBox((?!Interact).)*$", RegexOptions.Compiled);
     private readonly static ItemDefinitionRepository _items = ItemDefinitionRepository.Default;
+    internal static readonly string[] _defaultInsertItems = ["Coin", "CoinOld"];
 
-    // TODO: Extract these to a CSV?
-
-    // (id, min #, max #, coin #)
-    private readonly List<(ItemID, int, int, int)> _magnumReplacements = [
-        (ItemID.HandgunBulletL, 20, 30, 3),
-        (ItemID.ShotgunBullet, 12, 18, 4),
-        (ItemID.Gunpowder, 6, 10, 3),
-        (ItemID.ChemicalS, 3, 5, 3),
-        (ItemID.LiquidBomb, 2, 4, 5),
-        (ItemID.FlameBulletS, 3, 6, 5),
-        (ItemID.AcidBulletS, 3, 6, 5),
-        (ItemID.MachineGunBullet, 40, 60, 5),
-        (ItemID.Stimulant, 1, 1, 6),
-        (ItemID.Depressant, 1, 1, 6),
-    ];
-
-    // (id, min #, max #, coin #)
-    private readonly List<(ItemID, int, int, int)> _drugAndCoinReplacements = [
-        (ItemID.Herb, 3, 6, 2),
-        (ItemID.RemedyM, 2, 4, 2),
-        (ItemID.RemedyL, 1, 3, 3),
-        (ItemID.Gunpowder, 3, 6, 2),
-        (ItemID.ChemicalS, 2, 4, 2),
-        (ItemID.MiaKnife, 1, 1, 3),
-        (ItemID.ShotgunBullet, 8, 12, 3),
-        (ItemID.HandgunBullet, 15, 25, 2),
-        (ItemID.HandgunBulletL, 10, 15, 2),
-        (ItemID.MachineGun, 1, 1, 7),
-        (ItemID.MagnumBullet, 4, 6, 7),
-    ];
-
-    private (ItemID Id, int Quantity, int Coins) GetReplacement(bool isMagnum, Rng rng)
+    private enum ReplacementCategory
     {
-        var (itemId, min, max, Coins) = rng.Next(isMagnum ? _magnumReplacements : _drugAndCoinReplacements);
-        return (itemId, rng.Next(min, max), Coins);
+        Magnum,
+        Drug,
     }
 
-    private void RandomizeBirdCageContent(Rng rng, BirdCage birdCage, bool isMagnum, Randomizer randomizer)
+    private record BirdCageReplacement
     {
-        (ItemID Id, int Quantity, int Coins) = GetReplacement(isMagnum, rng);
-        birdCage.Item.ItemDataID = Id.ToString();
-        birdCage.Item.ItemStackNum = Quantity;
-        birdCage.CoinCounter.CoinMax = Coins;
+        public ReplacementCategory Category { get; init; }
+        public ItemID ItemId { get; init; }
+        public int Min { get; init; }
+        public int Max { get; init; }
+        public int Coins { get; init; }
+        public ImmutableArray<string> InputItemIds { get; init; }
+
+        public BirdCageReplacement() { }
+    }
+
+    private ReplacementData GetReplacement(ImmutableList<BirdCageReplacement> replacements, ReplacementCategory category, Rng rng)
+    {
+        var filtered = replacements.Where(r => r.Category == category).ToList();
+        var replacement = rng.Next(filtered);
+        return (replacement.ItemId, rng.Next(replacement.Min, replacement.Max), replacement.Coins, replacement.InputItemIds);
+    }
+
+    private void RandomizeBirdCageContent(ImmutableList<BirdCageReplacement> replacements, Rng rng, BirdCage birdCage, ReplacementCategory category, Randomizer randomizer)
+    {
+        var replacementData = GetReplacement(replacements, category, rng);
+        birdCage.Item.ItemDataID = replacementData.Id.ToString();
+        birdCage.Item.ItemStackNum = replacementData.Quantity;
+        birdCage.CoinCounter.CoinMax = replacementData.Coins;
+
+        // TODO Test this properly
+        if (!replacementData.ValidItemIDs.SequenceEqual(_defaultInsertItems))
+        {
+            birdCage.ItemSelectReaction.ReactionSettings.Clear();
+
+            foreach (var id in replacementData.ValidItemIDs)
+            {
+                birdCage.ItemSelectReaction.ReactionSettings.Add(new app.ItemSelectReaction.ReactionSetting()
+                {
+                    ItemID = id,
+                    StateName = "InsertCoin",
+                    Result = Enums.app.ItemSelectReaction.Result.Success,
+                });
+            }
+
+            birdCage.ItemSelectReaction.Enabled = true;
+        }
+
         birdCage.Serialize(randomizer);
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
+        var csv = randomizer.DynamicData.GetData(DynamicDataName.BirdCages) ?? throw new Exception("Unable to get bird cage data");
+        var replacements = Csv.Deserialize<BirdCageReplacement>(csv)
+            .ToImmutableList();
+
         var randomizeMagnum = randomizer.GetConfigOption<bool>("random-bird-cage-magnum");
         var randomizeDrugsAndPowerCoins = randomizer.GetConfigOption<bool>("random-bird-cage-drugs-coins");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
@@ -96,13 +111,14 @@ internal class BirdCageModifier : Modifier
                     var isMagnum = gameObject.Name.EndsWith("Magnum");
                     if (isMagnum && randomizeMagnum || randomizeDrugsAndPowerCoins)
                     {
-                        RandomizeBirdCageContent(rng, birdCage, isMagnum, randomizer);
+                        var category = isMagnum ? ReplacementCategory.Magnum : ReplacementCategory.Drug;
+                        RandomizeBirdCageContent(replacements, rng, birdCage, category, randomizer);
                     }
                 }
             });
         }
 
-        foreach(var birdCage in birdCages)
+        foreach (var birdCage in birdCages)
         {
             var (beforeItemCount, beforeItemId, beforeCoinCounter) = birdCage.BeforeRandomizationState;
             var beforeName = _items.FromId(beforeItemId)!.Name;
@@ -168,14 +184,13 @@ internal class BirdCage
             if (!PreserveItemModels)
             {
                 var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-                var newItem = randomizer.GetService<ItemService>().FromId(Item.ItemDataID).First();
+                var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID).First();
 
                 mesh = mesh
                     .Set("Mesh", new RszResourceNode(newItem.Mesh))
                     .Set("Material", new RszResourceNode(newItem.Material));
 
                 newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
-                // TODO: Improve rotation for certain replacements, e.g. shotgun shells
             }
 
             container = container.AddOrUpdateChild(newGimmick);

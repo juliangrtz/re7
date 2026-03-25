@@ -7,6 +7,9 @@ using IntelOrca.Biohazard.BioRand;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
+/// <summary>
+/// TODO: Completely refactor this and use <see cref="BioRand.RE7.Services.ItemRandomizer"/> instead of hard-coded items
+/// </summary>
 internal class DropItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/item-drops";
