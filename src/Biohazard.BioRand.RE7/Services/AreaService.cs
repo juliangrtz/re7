@@ -20,7 +20,7 @@ internal class AreaService
     public void LoadAreas()
     {
         var areaRepo = AreaDefinitionRepository.Default;
-        Areas = areaRepo.All // TODO: Don't do this every time!
+        Areas = areaRepo.All
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
             .OrderBy(x => x.Path)

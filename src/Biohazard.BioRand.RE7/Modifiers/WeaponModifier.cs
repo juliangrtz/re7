@@ -1,8 +1,6 @@
 ﻿using app;
-using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.REE.Rsz;
-using System.Runtime.CompilerServices;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
