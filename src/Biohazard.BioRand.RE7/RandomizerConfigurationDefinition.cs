@@ -72,7 +72,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "random-items",
             Label = "Random Items",
-            Description = "Whether to randomize most of the static items. Excludes certain items such as the model shotguns.",
+            Description = "Whether to randomize most of the static items. Excludes certain items such as key items or the model shotguns.",
             Type = "switch",
             Default = true
         });
@@ -108,7 +108,8 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"item-drop-respect-difficulty",
             Label = "Ammo drops respect the difficulty",
-            Description = "Will drop fewer items on Easy/Normal and more items on Madhouse.",
+            Description = "Will drop more items on Easy/Normal and fewer items on Madhouse. " +
+            "If you disable this all difficulties will share the same ammo quantities.",
             Type = "switch",
             Default = true
         });
@@ -117,9 +118,10 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"item-drop-ammo-only-available-weapons",
             Label = "Ammo for available weapons only",
-            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
+            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop. " +
+            "Currently only works for item crates.",
             Type = "switch",
-            Default = true
+            Default = false
         });
 
         group.Items.Add(new GroupItem()

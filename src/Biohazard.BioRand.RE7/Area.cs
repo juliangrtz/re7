@@ -40,6 +40,39 @@ internal class Area
         }
     }
 
+    public IEnumerable<RszGameObject> Items
+    {
+        get
+        {
+            var result = new List<RszGameObject>();
+            Scene.VisitGameObjects(gameObject =>
+            {
+                var dropItem = gameObject.FindComponent<app.Item>();
+                if (dropItem != null)
+                {
+                    result.Add(gameObject);
+                }
+            });
+            return result;
+        }
+    }
+
+    public IEnumerable<RszGameObject> Weapons
+    {
+        get
+        {
+            var result = new List<RszGameObject>();
+            Scene.VisitGameObjects(gameObject =>
+            {
+                if (gameObject.FindComponent<app.Weapon>() != null || gameObject.FindComponent<app.WeaponGun>() != null)
+                {
+                    result.Add(gameObject);
+                }
+            });
+            return result;
+        }
+    }
+
     public Area(Randomizer randomizer, AreaDefinition definition)
     {
         Randomizer = randomizer;
@@ -58,23 +91,6 @@ internal class Area
     public void Save()
     {
         // TODO
-    }
-
-    public IEnumerable<RszGameObject> Items
-    {
-        get
-        {
-            var result = new List<RszGameObject>();
-            Scene.VisitGameObjects(gameObject =>
-            {
-                var itemComponent = gameObject.FindComponent("app.Item");
-                if (itemComponent != null)
-                {
-                    result.Add(gameObject);
-                }
-            });
-            return result;
-        }
     }
 
     public override string ToString() => FileName;
