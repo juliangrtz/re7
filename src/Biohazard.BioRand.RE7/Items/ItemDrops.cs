@@ -27,7 +27,6 @@ internal class ItemDrops
         ItemID.ChemicalL,
         ItemID.ChemicalS,
         ItemID.Gunpowder,
-        ItemID.EthanLeg, // ʘ‿ʘ
     ];
 
     public static ImmutableList<string> HighValueDrops { get; private set; } = [

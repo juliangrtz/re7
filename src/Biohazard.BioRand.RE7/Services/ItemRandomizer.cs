@@ -141,7 +141,7 @@ internal class ItemRandomizer(Randomizer randomizer)
         var id = bag.Next();
         for (var i = 0; i < 1000; i++)
         {
-            if (settings.ValidateDropKind?.Invoke(id) != false)
+            if (settings.ValidateFunc?.Invoke(id) != false)
             {
                 break;
             }
@@ -173,7 +173,7 @@ internal class ItemRandomizer(Randomizer randomizer)
             }
 
             if (ratios.Count == 0)
-                return new EndlessBag<ItemID>(rng, []);
+                return new EndlessBag<ItemID>(rng, [ItemID.EthanLeg]);
 
             var smallestRatio = ratios.Min(x => x.Value);
             foreach (var k in ratios.Keys)
@@ -235,7 +235,7 @@ public class RandomItemSettings
     public double MinAmmoQuantity { get; set; }
     public double MaxAmmoQuantity { get; set; }
     public Func<ItemID, double>? ItemRatioKeyFunc { get; set; }
-    public Func<ItemID, bool>? ValidateDropKind { get; set; }
+    public Func<ItemID, bool>? ValidateFunc { get; set; }
 
     public double GetItemRatio(ItemID id)
     {

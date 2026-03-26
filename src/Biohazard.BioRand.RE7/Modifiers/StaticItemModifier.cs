@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Services;
+﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -7,14 +8,18 @@ internal class StaticItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
 
+    private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng(RandomizerKey);
         var itemRandomizer = randomizer.ItemRandomizer;
         var itemPlacementService = randomizer.ItemPlacementService;
-        var randomizableItems = itemPlacementService.PlacementToItemMap
-                            .Where(x => x.Value != null)
-                            .Where(x => itemRandomizer.IsItemAllowed(x.Value))
+        var areaService = randomizer.AreaService;
+        var randomizableItems = areaService.Areas
+                            .Where(area => area.Definition.Dlc == null)
+                            .Where(area => area.Items.Any()) // TODO Handle weapons
+                            .SelectMany(area => area.Items)
                             .ToList();
         var randomItemSettings = new RandomItemSettings()
         {
@@ -23,10 +28,17 @@ internal class StaticItemModifier : Modifier
             ItemRatioKeyFunc = (id) => randomizer.GetConfigOption<double>($"item-drop-ratio-{id.ToString().ToLowerInvariant()}")
         };
 
-        foreach (var (placement, definition) in randomizableItems)
+        foreach (var item in randomizableItems)
         {
             // TODO Handle extra placements
-            if (placement.IsExtra || placement == null || definition == null)
+            var placement = itemPlacementService.FromGuid(item.Guid);
+            var definition = _itemDefinitions.FromId(placement.Id);
+
+            if (placement == null || 
+                placement.IsExtra || 
+                definition == null || 
+                !placement.Enabled ||
+                !itemRandomizer.IsItemAllowed(definition))
             {
                 continue;
             }
@@ -52,7 +64,7 @@ internal class StaticItemModifier : Modifier
 
                     if (mesh != null)
                     {
-                        var newItem = randomizer.ItemPlacementService.FromId(definition.Id).First();
+                        var newItem = randomizer.ItemPlacementService.FromId(drop.Id).First();
                         mesh = mesh
                             .Set("Mesh", new RszResourceNode(newItem.Mesh))
                             .Set("Material", new RszResourceNode(newItem.Material));
