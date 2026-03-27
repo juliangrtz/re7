@@ -61,6 +61,26 @@ internal static class RandomizerConfigurationDefinition
             Default = false
         });
 
+        group = page.CreateGroup("");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"allow-bonus-items",
+            Label = "Allow Bonus Weapons",
+            Description = "Let BioRand include the unlockable weapons (Albert-01R, Infinite Ammo, Essence/Secrets of Defence etc.) in the pool.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"allow-dlc-items",
+            Label = "Allow DLC Weapons",
+            Description = "Let BioRand include the DLC weapons (Thor's Hammer, AMG-Dual, Blasters etc.) in the pool.",
+            Type = "switch",
+            Default = false
+        });
+
         #endregion General
 
         #region Items
@@ -532,14 +552,14 @@ internal static class RandomizerConfigurationDefinition
             Type = "switch",
             Default = true
         });
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"debug-unique-enemy-hp",
-            Label = "Unique Enemy HP",
-            Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
-            Type = "switch",
-            Default = false
-        });
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = $"debug-unique-enemy-hp",
+        //    Label = "Unique Enemy HP",
+        //    Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
+        //    Type = "switch",
+        //    Default = false
+        //});
 
         #endregion Debug
 

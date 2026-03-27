@@ -12,6 +12,9 @@ internal class StaticItemModifier : Modifier
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
+        if (!randomizer.GetConfigOption<bool>("random-items"))
+            return;
+
         var rng = randomizer.GetRng(RandomizerKey);
         var itemRandomizer = randomizer.ItemRandomizer;
         var itemPlacementService = randomizer.ItemPlacementService;

@@ -68,7 +68,7 @@ internal class ItemRandomizer(Randomizer randomizer)
     public (uint, uint, uint) DetermineDropAmount(ItemID id, double min, double max, Rng rng)
     {
         var item = _itemDefinitions.FromId(id.ToString())!;
-        var respectDifficulty = _randomizer.GetConfigOption<bool>("respect-difficulty-for-ammo");
+        var respectDifficulty = _randomizer.GetConfigOption<bool>("item-drop-respect-difficulty");
 
         if (item.CategoryType == ItemCategoryType.Shell)
         {
