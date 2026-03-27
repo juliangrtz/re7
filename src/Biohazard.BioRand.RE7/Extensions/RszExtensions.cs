@@ -104,4 +104,40 @@ public static class RszExtensions
         scene.VisitGameObjects(go => result.Add(go));
         return result;
     }
+
+    public static T ReplaceGameObject<T>(
+        this T node,
+        Guid targetGuid,
+        RszGameObject replacement,
+        bool keepChildren = true)
+    where T : IRszSceneNode
+    {
+        if (node.Children.IsDefaultOrEmpty)
+            return node;
+
+        var children = node.Children.ToBuilder();
+
+        for (var i = 0; i < children.Count; i++)
+        {
+            if (children[i] is RszGameObject oldGameObject && oldGameObject.Guid == targetGuid)
+            {
+                var newGameObject = replacement;
+
+                if (keepChildren)
+                {
+                    newGameObject = newGameObject.WithChildren(oldGameObject.Children);
+                }
+
+                newGameObject = newGameObject.WithGuid(oldGameObject.Guid);
+
+                children[i] = newGameObject;
+            }
+            else
+            {
+                children[i] = children[i].ReplaceGameObject(targetGuid, replacement, keepChildren);
+            }
+        }
+
+        return (T)node.WithChildren(children.ToImmutable());
+    }
 }
