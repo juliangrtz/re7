@@ -8,6 +8,7 @@ internal class TemplateService
     private const string TemplateSceneFileName = "template.scn";
     private readonly ScnFile _templateScnFile;
     private readonly RszScene _scene;
+    private readonly Dictionary<string, RszGameObject> _itemTemplates = new();
 
     public TemplateService(Randomizer randomizer)
     {
@@ -27,12 +28,25 @@ internal class TemplateService
         }
 
         _scene = _templateScnFile.ReadScene(randomizer.FileRepository.TypeRepository);
+        _scene.VisitGameObjects(go =>
+        {
+            if(go.Name.StartsWith("ItemTemplate"))
+            {
+                _itemTemplates.Add(go.Name.SubstringAfter("_"), go);
+            }
+        });
     }
-
 
     public RszGameObject GetObject(string name)
         => _scene.FindGameObject(name) ?? throw new Exception($"Object with name {name} not found in template scene!");
 
     public RszGameObject GetObject(Guid guid)
-    => _scene.FindGameObject(guid) ?? throw new Exception($"Object with GUID {guid} not found in template scene!");
+        => _scene.FindGameObject(guid) ?? throw new Exception($"Object with GUID {guid} not found in template scene!");
+
+    // TODO: DLC item support
+    public RszGameObject GetItemTemplate(string id)
+    {
+        _itemTemplates.TryGetValue(id, out RszGameObject? result);
+        return result ?? throw new Exception($"Item template {id} not found in template scene!");
+    }
 }

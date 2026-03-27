@@ -14,12 +14,12 @@ internal class KeyItemLocationModifier : Modifier
         .Where(x => x.IsStoryProgressionItem && !x.IsDlcItem)
         .ToList();
 
-    private string GetNameFromGuid(ItemService itemService, Guid guid)
+    private string GetNameFromGuid(ItemPlacementService itemService, Guid guid)
           => itemDefinitions.FromId(itemService.FromGuid(guid).Id)!.Name!;
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
-        var itemService = randomizer.GetService<ItemService>();
+        var itemService = randomizer.GetService<ItemPlacementService>();
         logger.Push("Original key item locations");
         foreach (var item in keyItems)
         {
@@ -38,7 +38,7 @@ internal class KeyItemLocationModifier : Modifier
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
-        var itemService = randomizer.GetService<ItemService>();
+        var itemService = randomizer.GetService<ItemPlacementService>();
         var newPlacements = itemService.ItemPlacements
             .Where(i => i.IsExtra && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
 

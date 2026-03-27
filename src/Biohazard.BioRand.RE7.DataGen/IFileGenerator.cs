@@ -16,5 +16,6 @@ internal interface IFileGenerator
 internal enum OutputFormat
 {
     Csv,
-    Json
+    Json,
+    Binary
 }

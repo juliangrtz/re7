@@ -1,0 +1,22 @@
+Category,ItemId,MinAmount,MaxAmount,Coins,InputItemIds
+Magnum,HandgunBulletL,20,30,3,Coin CoinOld
+Magnum,ShotgunBullet,12,18,4,Coin CoinOld
+Magnum,Gunpowder,6,10,3,Coin CoinOld
+Magnum,ChemicalS,3,5,3,Coin CoinOld
+Magnum,LiquidBomb,2,4,5,Coin CoinOld
+Magnum,FlameBulletS,3,6,5,Coin CoinOld
+Magnum,AcidBulletS,3,6,5,Coin CoinOld
+Magnum,MachineGunBullet,40,60,5,Coin CoinOld
+Magnum,Stimulant,1,1,6,Coin CoinOld
+Magnum,Depressant,1,1,6,Coin CoinOld
+Drug,Herb,3,6,2,Coin CoinOld
+Drug,RemedyM,2,4,2,Coin CoinOld
+Drug,RemedyL,1,3,3,Coin CoinOld
+Drug,Gunpowder,3,6,2,Coin CoinOld
+Drug,ChemicalS,2,4,2,Coin CoinOld
+Drug,MiaKnife,1,1,3,Coin CoinOld
+Drug,ShotgunBullet,8,12,3,Coin CoinOld
+Drug,HandgunBullet,15,25,2,Coin CoinOld
+Drug,HandgunBulletL,10,15,2,Coin CoinOld
+Drug,MachineGun,1,1,7,Coin CoinOld
+Drug,MagnumBullet,4,6,7,Coin CoinOld

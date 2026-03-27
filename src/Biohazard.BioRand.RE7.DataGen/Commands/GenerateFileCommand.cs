@@ -82,11 +82,13 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
                 var result = generator.Generate(settings);
                 foreach (var format in settings.Formats)
                 {
-                    var outputFileName = $"{generator.FileName ?? generator.Id}.{format.ToString().ToLowerInvariant()}";
-                    var output = format switch
+                    var outputFileName = $"{generator.FileName ?? generator.Id}" +
+                        $"{(format == OutputFormat.Binary ? "" : $".{format.ToString().ToLowerInvariant()}")}";
+                    object output = format switch
                     {
                         OutputFormat.Json => JsonSerializer.Serialize(result, _serializationOptions),
                         OutputFormat.Csv => GetCsv(result),
+                        OutputFormat.Binary => result,
                         _ => throw new ArgumentException("Unknown output format!"),
                     };
 

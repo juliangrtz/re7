@@ -7,8 +7,8 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class ItemBoxModifier : Modifier
 {
     private const string RandomizerKey = "modifier/item-boxes";
-    private const string LongItemBoxGameObjectName = "BioRand_ItemBox_VLong";
-    private const string OblongItemBoxGameObjectName = "BioRand_ItemBox_Oblong";
+    private const string LongItemBoxGameObjectName = "ItemBox_VLong";
+    private const string OblongItemBoxGameObjectName = "ItemBox_Oblong";
     private readonly static ItemDefinitionRepository _itemDefinitionRepository = ItemDefinitionRepository.Default;
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
@@ -26,7 +26,7 @@ internal class ItemBoxModifier : Modifier
     {
         return;
         var templateService = randomizer.TemplateService;
-        var itemService = randomizer.ItemService;
+        var itemService = randomizer.ItemPlacementService;
         var areaService = randomizer.AreaService;
         var rng = randomizer.GetRng(RandomizerKey);
         var itemBoxGameObjectName = rng.Next(0, 1) % 2 == 0 ? LongItemBoxGameObjectName : OblongItemBoxGameObjectName;

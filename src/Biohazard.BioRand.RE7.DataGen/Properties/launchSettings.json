@@ -36,9 +36,9 @@
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json weapon_definitions"
     },
-    "Generate everything": {
+    "Generate item templates": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f json item_definitions item_placements areas weapon_definitions"
+      "commandLineArgs": "generate -c -v -f binary item_templates"
     }
   }
 }

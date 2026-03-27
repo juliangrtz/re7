@@ -28,12 +28,15 @@ internal class Randomizer : IDisposable
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
     public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
 
-    // These options must be bools!
     private static readonly string[] _optionsThatRequireREFramework = [
         "debug-force-reframework",
         "recipes-add-new",
-        "recipes-replace-original"
     ];
+
+    private bool IsREFrameworkRequired() 
+        => _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
+                                        || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
+                                        || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
     public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
     {
@@ -42,7 +45,7 @@ internal class Randomizer : IDisposable
         Reporter = reporter;
 
         var download = Input.Configuration.GetValueOrDefault<bool>("debug-download-data");
-        if(download)
+        if (download)
         {
             Console.WriteLine("Downloading latest spreadsheet data from Google Sheets...");
         }
@@ -69,16 +72,12 @@ internal class Randomizer : IDisposable
         IntelOrca.Biohazard.BioRand.RandomizerOutput? result = null;
         Reporter.RunTask("Building mod", () =>
         {
-            var isWithREFramework = _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
-                                        || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12" // TODO: This smells, improve
-                                        || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
-
             var output = new RandomizerOutput(
                 input,
                 _fileRepository.GetOutputPakFile(),
                 _logFiles,
                 PakVersion,
-                isWithREFramework
+                IsREFrameworkRequired()
             );
             result = new IntelOrca.Biohazard.BioRand.RandomizerOutput(
                 [
@@ -245,7 +244,7 @@ internal class Randomizer : IDisposable
     public TemplateService TemplateService => GetService<TemplateService>();
     public AreaService AreaService => GetService<AreaService>();
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
-    public ItemService ItemService => GetService<ItemService>();
+    public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
 
     public void AddLogFile(string name, string content)
     {

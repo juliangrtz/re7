@@ -12,6 +12,19 @@ internal class FileWriter
 
     private const string OutputDirectory = "GeneratedFiles";
 
+    public static string WriteOutput(string path, object content)
+    {
+        if (content is string v)
+        {
+            return WriteOutput(path, v);
+        }
+        else if (content is byte[] b)
+        {
+            return WriteOutput(path, b);
+        }
+        else throw new Exception("Unsupported content type");
+    }
+
     public static string WriteOutput(string path, string content)
     {
         var finalPath = $"{OutputDirectory}\\{path}";

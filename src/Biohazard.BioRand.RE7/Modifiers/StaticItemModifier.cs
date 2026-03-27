@@ -7,108 +7,81 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class StaticItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
+
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-
-    private readonly static List<string> _itemExclusions = [
-        "Handgun_Albert_Reward", // Albert 01-R
-        "Coin", // Antique Coin --> TODO Add config option
-        "RepairKit", // Repair Kit
-    ];
-
-    // (itemID, amount)
-    // TODO
-    // Keep in mind that random weapons need a different app.WeaponGun component!
-    private (string, int) GetRandomItem(ItemDefinition item, Randomizer randomizer, Rng rng)
-    {
-        switch (item.CategoryType)
-        {
-            case Enums.app.Item.ItemCategoryType.OtherItem:
-                break;
-            case Enums.app.Item.ItemCategoryType.Weapon:
-                break;
-            case Enums.app.Item.ItemCategoryType.Shell:
-                break;
-            case Enums.app.Item.ItemCategoryType.Drug:
-                break;
-            case Enums.app.Item.ItemCategoryType.KeyItem:
-                break;
-            case Enums.app.Item.ItemCategoryType.File:
-                break;
-            case Enums.app.Item.ItemCategoryType.Map:
-                break;
-            case Enums.app.Item.ItemCategoryType.Material:
-                break;
-            case Enums.app.Item.ItemCategoryType.StackWeapon:
-                break;
-            case Enums.app.Item.ItemCategoryType.UsableKeyItem:
-                break;
-            case Enums.app.Item.ItemCategoryType.DiscardableKeyItem:
-                break;
-            case Enums.app.Item.ItemCategoryType.SupplyBox:
-                break;
-            case Enums.app.Item.ItemCategoryType.Max:
-                break;
-        }
-
-        return ("", 0);
-    }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
-        return;
-        var rng = randomizer.GetRng(RandomizerKey);
-        var itemService = randomizer.GetService<ItemService>();
-        // TODO: Filter bird cage items
-        // TODO: Add option for tapes
-        var randomizableItems = itemService.PlacementToItemMap
-                                    .Where(x => x.Value != null)
-                                    .Where(x => !x.Value.IsStoryProgressionItem)
-                                    .Where(x => !x.Value.IsDlcItem)
-                                    .Where(x => !_itemExclusions.Contains(x.Key.Id))
-                                    .ToList();
+        if (!randomizer.GetConfigOption<bool>("random-items"))
+            return;
 
-        foreach (var (placement, definition) in randomizableItems)
+        var rng = randomizer.GetRng(RandomizerKey);
+        var itemRandomizer = randomizer.ItemRandomizer;
+        var itemPlacementService = randomizer.ItemPlacementService;
+        var areaService = randomizer.AreaService;
+        var templateService = randomizer.TemplateService;
+        var randomizableItems = areaService.Areas
+                            .Where(area => area.Definition.Dlc == null)
+                            .Where(area => area.Items.Any()) // TODO Handle weapons
+                            .SelectMany(area => area.Items)
+                            .ToList();
+        var randomItemSettings = new RandomItemSettings()
         {
-            if(placement == null || definition == null)
+            MinAmmoQuantity = randomizer.GetConfigOption("item-drop-ammo-min", 0.1),
+            MaxAmmoQuantity = randomizer.GetConfigOption("item-drop-ammo-max", 1.0),
+            ItemRatioKeyFunc = (id) => randomizer.GetConfigOption<double>($"item-drop-ratio-{id.ToString().ToLowerInvariant()}")
+        };
+
+        foreach (var item in randomizableItems)
+        {
+            // TODO Handle extra placements
+            var placement = itemPlacementService.FromGuid(item.Guid);
+            var definition = _itemDefinitions.FromId(placement.Id);
+
+            if (placement == null ||
+                placement.IsExtra ||
+                definition == null ||
+                !placement.Enabled ||
+                !itemRandomizer.IsItemAllowed(definition))
             {
                 continue;
             }
 
             randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
-                var gameObject = scene.FindGameObject(placement.Guid)!;
-                var itemComponent = gameObject.FindComponent<app.Item>()!;
-                if(!itemComponent.Enabled)
+                var originalGameObject = scene.FindGameObject(placement.Guid)!;
+                var originalTransform = originalGameObject.FindComponent<via.Transform>();
+                var itemComponent = originalGameObject.FindComponent<app.Item>()!;
+                var drop = itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
+                logger.LogLine($"[{placement.Container}] Replacing {itemComponent.ItemStackNum}x {itemComponent.ItemDataID} at {placement.Position} with " +
+                    $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {drop.Id}...");
+
+                itemComponent.ItemDataID = drop.Id;
+                itemComponent.ItemStackNum = drop.CountNormal;
+                itemComponent._IsOverwriteDifficultItemNumSetting = true;
+                itemComponent._DifficultItemNumSetting.EasyNum = drop.CountEasy;
+                itemComponent._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
+                originalGameObject = originalGameObject.AddOrUpdateComponent(itemComponent);
+
+                var newGameObject = templateService.GetItemTemplate(drop.Id);
+                newGameObject = newGameObject.WithGuid(originalGameObject.Guid);
+                newGameObject = newGameObject.AddOrUpdateComponent(originalTransform);
+                newGameObject = newGameObject.AddOrUpdateComponent(itemComponent);
+
+                if (randomizer.GetConfigOption<bool>("preserve-item-models"))
                 {
-                    logger.LogLine($"[!] Enabling disabled item {definition.Name} in scene {placement.Container} (GUID: {placement.Guid})");
-                    itemComponent.Enabled = true;
+                    var mesh = originalGameObject.FindComponent("via.render.Mesh");
+                    if (mesh != null)
+                    {
+                        newGameObject = newGameObject.AddOrUpdateComponent(mesh);
+                    }
                 }
 
-                var (id, stack) = GetRandomItem(definition, randomizer, rng);
-                itemComponent.ItemDataID = id;
-                itemComponent.ItemStackNum = stack;
-                
-                // TODO: Handle itemComponent._DifficultItemNumSetting
+                scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject);
 
-                gameObject = gameObject.AddOrUpdateComponent(itemComponent);
-                scene = scene.UpdateGameObject(gameObject);
                 return scene;
             });
         }
-
-        ;
-
-        // Debugging test: Change Axe to ChainSaw
-        //var axe = _itemPlacements.Single(item => item.Id == "HandAxe");
-        //randomizer.FileRepository.ModifyScnFile(axe.Container, scene =>
-        //{
-        //    var gameObject = scene.FindGameObject(axe.Guid)!;
-        //    var itemComponent = gameObject.FindComponent<app.Item>()!;
-        //    itemComponent.ItemDataID = "HandAxe";
-        //    gameObject = gameObject.AddOrUpdateComponent(itemComponent);
-        //    scene = scene.UpdateGameObject(gameObject);
-        //    return scene;
-        //});
 
 
     }
