@@ -3,6 +3,8 @@
   "skip-guest-house": false,
   "shuffle-chapters": false,
   "shuffle-chapters-with-ff": false,
+  "allow-bonus-items": false,
+  "allow-dlc-items": false,
   "random-items": true,
   "random-key-item-locations": true,
   "random-bird-cage-magnum": true,
@@ -28,7 +30,6 @@
   "item-drop-ratio-herb": 0.1,
   "item-drop-ratio-easyboots": 0,
   "item-drop-ratio-alphagrass": 0.01,
-  "item-drop-ratio-ethanleg": 0.01,
   "item-drop-ratio-chemicalm": 0.1,
   "item-drop-ratio-chemicall": 0.2,
   "item-drop-ratio-chemicals": 0.2,
@@ -164,6 +165,5 @@
   "debug-download-data": true,
   "debug-force-reframework": false,
   "debug-download-reframework-nightly": false,
-  "enable-special": true,
-  "debug-unique-enemy-hp": false
+  "enable-special": true
 }
