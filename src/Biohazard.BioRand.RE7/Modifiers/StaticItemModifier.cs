@@ -16,6 +16,7 @@ internal class StaticItemModifier : Modifier
         var itemRandomizer = randomizer.ItemRandomizer;
         var itemPlacementService = randomizer.ItemPlacementService;
         var areaService = randomizer.AreaService;
+        var templateService = randomizer.TemplateService;
         var randomizableItems = areaService.Areas
                             .Where(area => area.Definition.Dlc == null)
                             .Where(area => area.Items.Any()) // TODO Handle weapons
@@ -34,9 +35,9 @@ internal class StaticItemModifier : Modifier
             var placement = itemPlacementService.FromGuid(item.Guid);
             var definition = _itemDefinitions.FromId(placement.Id);
 
-            if (placement == null || 
-                placement.IsExtra || 
-                definition == null || 
+            if (placement == null ||
+                placement.IsExtra ||
+                definition == null ||
                 !placement.Enabled ||
                 !itemRandomizer.IsItemAllowed(definition))
             {
@@ -45,36 +46,40 @@ internal class StaticItemModifier : Modifier
 
             randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
             {
-                var gameObject = scene.FindGameObject(placement.Guid)!;
-                var itemComponent = gameObject.FindComponent<app.Item>()!;
+                var originalGameObject = scene.FindGameObject(placement.Guid)!;
+                var originalTransform = originalGameObject.FindComponent<via.Transform>();
+                var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                 var drop = itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
-                logger.LogLine($"Replacing {itemComponent.ItemStackNum}x {itemComponent.ItemDataID} at {placement.Position} with " +
-                    $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {drop.Id}");
+                logger.LogLine($"[{placement.Container}] Replacing {itemComponent.ItemStackNum}x {itemComponent.ItemDataID} at {placement.Position} with " +
+                    $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {drop.Id}...");
 
                 itemComponent.ItemDataID = drop.Id;
                 itemComponent.ItemStackNum = drop.CountNormal;
+                itemComponent._IsOverwriteDifficultItemNumSetting = true;
                 itemComponent._DifficultItemNumSetting.EasyNum = drop.CountEasy;
                 itemComponent._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
-                gameObject = gameObject.AddOrUpdateComponent(itemComponent);
+                originalGameObject = originalGameObject.AddOrUpdateComponent(itemComponent);
 
-                var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
-                if (!preserveItemModels)
+                var newGameObject = templateService.GetItemTemplate(drop.Id);
+                newGameObject = newGameObject.WithGuid(originalGameObject.Guid);
+                newGameObject = newGameObject.AddOrUpdateComponent(originalTransform);
+                newGameObject = newGameObject.AddOrUpdateComponent(itemComponent);
+
+                if (randomizer.GetConfigOption<bool>("preserve-item-models"))
                 {
-                    var mesh = gameObject.FindComponent("via.render.Mesh");
-
+                    var mesh = originalGameObject.FindComponent("via.render.Mesh");
                     if (mesh != null)
                     {
-                        var newItem = randomizer.ItemPlacementService.FromId(drop.Id).First();
-                        mesh = mesh
-                            .Set("Mesh", new RszResourceNode(newItem.Mesh))
-                            .Set("Material", new RszResourceNode(newItem.Material));
-                        gameObject = gameObject.AddOrUpdateComponent(mesh);
+                        newGameObject = newGameObject.AddOrUpdateComponent(mesh);
                     }
                 }
 
-                scene = scene.UpdateGameObject(gameObject);
+                scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject);
+
                 return scene;
             });
         }
+
+
     }
 }
