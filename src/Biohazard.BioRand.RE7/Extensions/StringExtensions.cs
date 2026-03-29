@@ -58,4 +58,23 @@ public static class StringExtensions
 
     public static string Without(this string str, string toBeRemoved)
         => str.Replace(toBeRemoved, "");
+
+    public static string Truncate(this string value, int length, bool ellipsis = true)
+    {
+        if (!string.IsNullOrEmpty(value))
+        {
+            value = value.Trim();
+            if (value.Length > length)
+            {
+                if (ellipsis)
+                {
+                    return value.Substring(0, length) + "...";
+                }
+
+                return value.Substring(0, length);
+            }
+        }
+
+        return value ?? string.Empty;
+    }
 }

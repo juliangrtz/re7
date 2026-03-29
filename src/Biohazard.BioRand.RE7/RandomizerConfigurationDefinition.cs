@@ -56,9 +56,27 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "shuffle-chapters-with-ff",
             Label = "Include Found Footage Chapters When Shuffling",
-            Description = "Whether to include the Found Footage VHS levels when shuffling chapters.",
+            Description = "Whether to include the Found Footage VHS sections when shuffling chapters.",
             Type = "switch",
             Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "randomized-messages",
+            Label = "Randomize Text",
+            Description = "Randomize various text in the game to a meme.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "main-menu-biorand-touch",
+            Label = "Add BioRand touch to main menu",
+            Description = "Whether to add a BioRand touch to the main menu such as a modified logo and \"New Game\" text.",
+            Type = "switch",
+            Default = true
         });
 
         group = page.CreateGroup("");

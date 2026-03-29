@@ -33,7 +33,7 @@ internal class Randomizer : IDisposable
         "recipes-add-new",
     ];
 
-    private bool IsREFrameworkRequired() 
+    private bool IsREFrameworkRequired()
         => _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
@@ -185,7 +185,8 @@ internal class Randomizer : IDisposable
             new WeaponModifier(),
 
             // Misc.
-            new ChapterJumpDataModifier()
+            new ChapterJumpDataModifier(),
+            new MessageModifier(),
         ];
     }
 
