@@ -47,6 +47,6 @@ public class ItemPlacement
     public EulerAngles Euler => new(Rotation);
 
     // Tags
-    public static string WoodenCrateTag = "wooden_crate";
-    public static string RandomItemTag = "random";
+    public const string WoodenCrateTag = "wooden_crate";
+    public const string RandomItemTag = "random";
 }

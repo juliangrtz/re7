@@ -3,6 +3,8 @@
   "skip-guest-house": false,
   "shuffle-chapters": false,
   "shuffle-chapters-with-ff": false,
+  "randomized-messages": true,
+  "main-menu-biorand-touch": true,
   "allow-bonus-items": false,
   "allow-dlc-items": false,
   "random-items": true,

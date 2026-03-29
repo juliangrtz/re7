@@ -9,6 +9,9 @@ internal class BiorandTitlePatch(IPatchContext context) : IPatch
 
     public void Apply()
     {
+        if (!context.GetConfigOption<bool>("main-menu-biorand-touch"))
+            return;
+
         context.ApplyOverlay(context.GetSupplementFile("biorand_title.zip")!);
 
         var languagesWithEnglishText = new List<LanguageId>() {
