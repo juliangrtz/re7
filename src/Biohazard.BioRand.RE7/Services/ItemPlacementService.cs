@@ -9,6 +9,7 @@ internal class ItemPlacementService
     public ImmutableList<ItemPlacement> ItemPlacements { get; private set; }
     public ImmutableDictionary<ItemPlacement, ItemDefinition> PlacementToItemMap { get; private set; } = [];
     public ImmutableDictionary<string, List<ItemPlacement>> IdToItemsMap { get; private set; } = [];
+    public ImmutableDictionary<Guid, List<ItemPlacement>> GuidToItemsMap { get; private set; } = [];
     public ImmutableList<ItemPlacement> MainGamePlacements { get; private set; } = [];
 
     public ItemPlacementService(Randomizer randomizer)
@@ -17,6 +18,7 @@ internal class ItemPlacementService
         ItemPlacements = Csv.Deserialize<ItemPlacement>(csv).ToImmutableList();
         PlacementToItemMap = ItemPlacements.ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id)!);
         IdToItemsMap = ItemPlacements.GroupBy(x => x.Id).ToImmutableDictionary(g => g.Key, g => g.ToList());
+        GuidToItemsMap = ItemPlacements.GroupBy(x => x.Guid).ToImmutableDictionary(g => g.Key, g => g.ToList());
         MainGamePlacements = ItemPlacements.Where(x => x.Dlc == null).ToImmutableList();
     }
 
@@ -30,7 +32,9 @@ internal class ItemPlacementService
         return item;
     }
 
-    public ItemPlacement FromGuid(Guid guid) => ItemPlacements.First(x => x.Guid == guid);
+    public bool HasItem(Guid guid) => GuidToItemsMap.ContainsKey(guid);
 
-    public ItemPlacement FromGuid(string guid) => ItemPlacements.First(x => x.Guid == new Guid(guid));
+    public List<ItemPlacement> FromGuid(Guid guid) => GuidToItemsMap[guid];
+
+    public List<ItemPlacement> FromGuid(string guid) => GuidToItemsMap[new Guid(guid)];
 }

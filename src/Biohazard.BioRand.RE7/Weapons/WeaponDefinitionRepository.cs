@@ -40,11 +40,17 @@ public sealed class WeaponDefinitionRepository
         => IdToWeaponMap[Enum.Parse<WeaponID>(id)];
 
     public WeaponDefinition FromWeaponId(WeaponID id)
-    => IdToWeaponMap[id];
+        => IdToWeaponMap[id];
 
     public void Restrict(WeaponID wp)
     {
         _restrictedWeapons.Add(wp);
+    }
+
+    public List<ItemID> GetAmmoTypes(WeaponID wp)
+    {
+        IdToWeaponMap.TryGetValue(wp, out WeaponDefinition? wpDefinition);
+        return wpDefinition?.BulletItemIDs ?? new();
     }
 
     public bool IsRestricted(WeaponID wp) =>

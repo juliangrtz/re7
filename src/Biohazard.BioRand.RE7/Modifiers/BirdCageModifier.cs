@@ -19,10 +19,26 @@ internal class BirdCageModifier : Modifier
         "leveldesign/itemset/chapter3/mainhouse_hall/hard.scn", // Madhouse
         "environment/scene/chapter4/c04_cottage.scn",
         "leveldesign/itemset/chapter4/shipoutside/hard.scn", // Madhouse
-        // DLCs
+        // TODO: DLCs
         //@"environment\scene\chapter7\c07_gimmickobject_reset_7_1.scn.20",
         //@"environment\scene\chapter7\c07_mainhouse2fstoreroom_7_1.scn.20",
         //@"ch8\environment\scene\chapter8\c08_mine01.scn.20",
+    ];
+
+    // To avoid randomizing bird cage contents several times this global lookup is needed.
+    // TODO: Use Order attribute instead
+    public static readonly List<Guid> Guids = [
+        new Guid("87007bf8-48b7-052c-1065-2fcb385ee0a4"),
+        new Guid("7bd613f5-b8fb-01bc-0cac-80f3c19b60cc"),
+        new Guid("7ee83c9f-e776-0e37-0030-ef6c7b7928a0"),
+        new Guid("4fcc3365-45cb-0da5-3cd2-544fd3319b14"),
+        new Guid("f244e480-71ce-0179-3f29-f5aef5d572b7"),
+        new Guid("473357f4-4397-03f0-3666-e22b9480bcd7"),
+        new Guid("59cba3ca-5e50-48e8-b1ed-c3801bb964d3"),
+        new Guid("eb642b44-ea23-42c5-9308-eb8791401d0f"),
+        new Guid("eba4e638-5fb3-47ac-a561-5a8a87163ce4"),
+        new Guid("73297c81-9232-086a-2322-7f32bcbb0e68"),
+        new Guid("79dc7b86-d066-058b-3037-204aa7216c9b"),
     ];
 
     private readonly Regex _birdCageRegex = new Regex("^sm.*CoinBox((?!Interact).)*$", RegexOptions.Compiled);
@@ -39,8 +55,8 @@ internal class BirdCageModifier : Modifier
     {
         public ReplacementCategory Category { get; init; }
         public ItemID ItemId { get; init; }
-        public int Min { get; init; }
-        public int Max { get; init; }
+        public int MinAmount { get; init; }
+        public int MaxAmount { get; init; }
         public int Coins { get; init; }
         public ImmutableArray<string> InputItemIds { get; init; }
 
@@ -51,22 +67,21 @@ internal class BirdCageModifier : Modifier
     {
         var filtered = replacements.Where(r => r.Category == category).ToList();
         var replacement = rng.Next(filtered);
-        return (replacement.ItemId, rng.Next(replacement.Min, replacement.Max), replacement.Coins, replacement.InputItemIds);
+        return (replacement.ItemId, rng.Next(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
     }
 
     private void RandomizeBirdCageContent(ImmutableList<BirdCageReplacement> replacements, Rng rng, BirdCage birdCage, ReplacementCategory category, Randomizer randomizer)
     {
-        var replacementData = GetReplacement(replacements, category, rng);
-        birdCage.Item.ItemDataID = replacementData.Id.ToString();
-        birdCage.Item.ItemStackNum = replacementData.Quantity;
-        birdCage.CoinCounter.CoinMax = replacementData.Coins;
+        var (Id, Quantity, Coins, ValidItemIDs) = GetReplacement(replacements, category, rng);
+        birdCage.Item.ItemDataID = Id.ToString();
+        birdCage.Item.ItemStackNum = Quantity;
+        birdCage.CoinCounter.CoinMax = Coins;
 
-        // TODO Test this properly
-        if (!replacementData.ValidItemIDs.SequenceEqual(_defaultInsertItems))
+        if (!ValidItemIDs.SequenceEqual(_defaultInsertItems))
         {
             birdCage.ItemSelectReaction.ReactionSettings.Clear();
 
-            foreach (var id in replacementData.ValidItemIDs)
+            foreach (var id in ValidItemIDs)
             {
                 birdCage.ItemSelectReaction.ReactionSettings.Add(new app.ItemSelectReaction.ReactionSetting()
                 {
@@ -85,7 +100,7 @@ internal class BirdCageModifier : Modifier
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var csv = randomizer.DynamicData.GetData(DynamicDataName.BirdCages) ?? throw new Exception("Unable to get bird cage data");
-        var replacements = Csv.Deserialize<BirdCageReplacement>(csv)
+        var replacements = Serialization.Csv.Deserialize<BirdCageReplacement>(csv)
             .ToImmutableList();
 
         var randomizeMagnum = randomizer.GetConfigOption<bool>("random-bird-cage-magnum");
@@ -96,6 +111,7 @@ internal class BirdCageModifier : Modifier
 
         foreach (var file in _birdCageScnFiles)
         {
+            logger.Push(file);
             var path = PakPath.SceneFile(file);
             var content = randomizer.FileRepository.GetFile(path);
             var scnFile = new ScnFile(randomizer.IsOnRaytracingVersion ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, content)
@@ -108,23 +124,24 @@ internal class BirdCageModifier : Modifier
                     var birdCage = new BirdCage(randomizer, path, gameObject, preserveItemModels);
                     birdCages.Add(birdCage);
 
-                    var isMagnum = gameObject.Name.EndsWith("Magnum");
-                    if (isMagnum && randomizeMagnum || randomizeDrugsAndPowerCoins)
+                    var isMagnum = birdCage.Item.ItemDataID == ItemID.Magnum.ToString();
+                    if ((isMagnum && randomizeMagnum) || (!isMagnum && randomizeDrugsAndPowerCoins))
                     {
                         var category = isMagnum ? ReplacementCategory.Magnum : ReplacementCategory.Drug;
+                        var (beforeItemCount, beforeItemId, beforeCoinCounter) =
+                            (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
+                        var beforeName = _items.FromId(beforeItemId)!.Name;
+
                         RandomizeBirdCageContent(replacements, rng, birdCage, category, randomizer);
+                        var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
+
+                        logger.LogLine($"Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +
+                            $"{birdCage.Item.ItemStackNum}x {afterName} that costs {birdCage.CoinCounter.CoinMax} antique coins");
                     }
                 }
             });
-        }
 
-        foreach (var birdCage in birdCages)
-        {
-            var (beforeItemCount, beforeItemId, beforeCoinCounter) = birdCage.BeforeRandomizationState;
-            var beforeName = _items.FromId(beforeItemId)!.Name;
-            var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
-            logger.LogLine($"[{birdCage.PakPath}] Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +
-                $"{birdCage.Item.ItemStackNum}x {afterName} that costs {birdCage.CoinCounter.CoinMax} antique coins");
+            logger.Pop();
         }
     }
 }
@@ -140,8 +157,6 @@ internal class BirdCage
     public app.ItemSelectReaction ItemSelectReaction { get; }
     public app.CoinCounter CoinCounter { get; }
 
-    public (int, string, int) BeforeRandomizationState { get; }
-
     public BirdCage(Randomizer randomizer, string path, RszGameObject container, bool preserveItemModels)
     {
         Randomizer = randomizer;
@@ -149,17 +164,13 @@ internal class BirdCage
         PreserveItemModels = preserveItemModels;
         ContainerGuid = container.Guid;
 
-        var gimmick = container.Children
-            .First(child => child.Name.EndsWith("_Gimmick"));
-
+        var gimmick = container.Children.First(child => child.Name.EndsWith("_Gimmick"));
         ItemSelectReaction = gimmick.FindComponent<app.ItemSelectReaction>()!;
         CoinCounter = gimmick.FindComponent<app.CoinCounter>()!;
 
         Item = container.Children
-            .First(child => child.FindComponent<app.Item>() != null)
+            .Single(child => child.FindComponent<app.Item>() != null)
             .FindComponent<app.Item>()!;
-
-        BeforeRandomizationState = (Item.ItemStackNum, Item.ItemDataID, CoinCounter.CoinMax);
     }
 
     public void Serialize(Randomizer randomizer)
@@ -178,6 +189,7 @@ internal class BirdCage
                 .AddOrUpdateComponent(ItemSelectReaction)
                 .AddOrUpdateComponent(CoinCounter);
 
+            Item.SaveGUID = Guid.NewGuid(); // IMPORTANT!
             var newItemHolder = itemHolder
                 .AddOrUpdateComponent(Item);
 
@@ -192,6 +204,14 @@ internal class BirdCage
 
                 newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
             }
+
+            //var fsmItemGet = container.Children.FirstOrDefault(c => c.Name == "Fsm_ItemGet", null);
+            //if (fsmItemGet != null)
+            //{
+            //    var fsm = fsmItemGet.FindComponent("via.fsm.Fsm")!;
+            //    fsm = fsm.Set("Enabled", false);
+            //    container = container.AddOrUpdateComponent(fsm);
+            //}
 
             container = container.AddOrUpdateChild(newGimmick);
             container = container.AddOrUpdateChild(newItemHolder);

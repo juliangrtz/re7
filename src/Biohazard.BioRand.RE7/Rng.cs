@@ -45,6 +45,9 @@ public sealed class Rng
         return Next(0, 100) < percent;
     }
 
+    public bool CoinToss()
+        => NextProbability(50);
+
     public int Next(int min, int max)
     {
         if (max <= min)
