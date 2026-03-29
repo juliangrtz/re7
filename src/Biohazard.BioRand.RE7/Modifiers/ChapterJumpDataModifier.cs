@@ -5,6 +5,10 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
+/// <summary>
+/// TODO: Optimise this.
+/// I don't like the shuffling algorithm as it currently is.
+/// </summary>
 internal class ChapterJumpDataModifier : Modifier
 {
     private const string RandomizerKey = "modifier/chapter-jump-data";

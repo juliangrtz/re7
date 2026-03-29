@@ -35,8 +35,6 @@ internal class ItemDrops
         DlcCoin,
         LockPick,
         RepairKit,
-        Stabilizer,
-        Steroids
     ];
 
     public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
@@ -64,16 +62,12 @@ internal class ItemDrops
     public const string DlcCoin = "dlc-coin";
     public const string LockPick = "lock-pick";
     public const string RepairKit = "repair-kit";
-    public const string Stabilizer = "stabilizer";
-    public const string Steroids = "steroids";
 
     public static string ToItemID(string highValueDrop) => highValueDrop switch
     {
         AntiqueCoin => "Coin",
         LockPick => ItemID.CylinderKey.ToString(),
         RepairKit => "RepairKit",
-        Stabilizer => "Depressant",
-        Steroids => "Stimulant",
         _ => ItemID.NoName.ToString()
     };
 

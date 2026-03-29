@@ -2,6 +2,7 @@
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Weapons;
 using Enums.app;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -21,6 +22,7 @@ internal class StartingInventoryModifier : Modifier
     };
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly WeaponDefinitionRepository weaponDefinitions = WeaponDefinitionRepository.Default;
 
     private List<StartingInventoryItem> GetInventory(Randomizer randomizer, MainCampaignCharacter character)
         => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(_paths[character])._AddItems;
@@ -43,6 +45,7 @@ internal class StartingInventoryModifier : Modifier
         }
     }
 
+    // Returns a random gun and bladed weapon
     private (ItemID?, ItemID?) PickRandomWeaponPair(Rng rng, List<StartingWeaponCategory> weapons)
     {
         if (weapons.Count == 0)
@@ -74,6 +77,26 @@ internal class StartingInventoryModifier : Modifier
         return (primaryWeapon, secondaryWeapon);
     }
 
+    // (min, max)
+    private (int, int) DetermineAppropriateStartingAmmoCount(WeaponID wp) => wp switch
+    {
+        WeaponID.Handgun => (10, 20),
+        WeaponID.Handgun_M19 => (10, 20),
+        WeaponID.Handgun_G17 => (10, 20),
+        WeaponID.Handgun_MPM => (10, 20),
+        WeaponID.Handgun_Albert => (10, 15),
+        WeaponID.Handgun_Albert_Reward => (5, 8),
+        WeaponID.ShotGun => (5, 10),
+        WeaponID.Shotgun_M37 => (5, 10),
+        WeaponID.Shotgun_M37S => (5, 10),
+        WeaponID.Shotgun_DB => (5, 10),
+        WeaponID.MachineGun => (30, 50),
+        WeaponID.Magnum => (1, 5),
+        WeaponID.GrenadeLauncher => (1, 1),
+        WeaponID.Burner => (75, 150),
+        _ => (0, 0)
+    };
+
     private void RandomizeStartingInventory(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -82,55 +105,67 @@ internal class StartingInventoryModifier : Modifier
         List<StartingWeaponCategory> weapons
     )
     {
-        if (character == MainCampaignCharacter.ClancyVHS)
+        var giveAmmo = randomizer.GetConfigOption<bool>("random-starting-inventory-give-ammo");
+        var (primary, secondary) = PickRandomWeaponPair(rng, weapons);
+        var path = _paths[character];
+        logger.Push($"{character} @ {path}");
+        randomizer.FileRepository.ModifyUserFile<AddItemListData>(path, root =>
         {
-            // There are no options for Clancy's starting inventory as the section is pretty much an interactive cutscene.
-            // For the memes we are "randomizing" his inventory anyways ;)
-            randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
+            if (primary != null)
             {
-                root._AddItems.Add(new() { ItemDataID = ItemID.Handgun_Albert.ToString(), Num = 1 });
-                root._AddItems.Add(new() { ItemDataID = "UnlimitedAmmo", Num = 1 });
-                return root;
-            });
+                logger.LogLine($"Primary weapon: {primary}");
+                var id = primary.Value.ToString();
+                root._AddItems.Add(
+                    new StartingInventoryItem() { ItemDataID = id, Num = 1 }
+                );
 
-            return;
-        }
-        else if (character == MainCampaignCharacter.Ethan || character.ToString().StartsWith("Mia", StringComparison.InvariantCultureIgnoreCase))
-        {
-            var (primary, secondary) = PickRandomWeaponPair(rng, weapons);
-            randomizer.FileRepository.ModifyUserFile<AddItemListData>(_paths[character], root =>
+                if (giveAmmo && Enum.TryParse(id, out WeaponID wpId))
+                {
+                    foreach (var ammoType in weaponDefinitions.GetAmmoTypes(wpId))
+                    {
+                        if (/*rng.CoinToss() &&*/ ammoType == EnhancedAmmoLookup.Get(wpId)?.StrongAmmo)
+                            continue;
+
+                        (int min, int max) = DetermineAppropriateStartingAmmoCount(wpId);
+                        var ammoCount = rng.Next(min, max);
+                        if (ammoCount == 0)
+                        {
+                            logger.LogLine("Avoiding extra ammo (unsupported weapon type).");
+                            continue;
+                        }
+
+                        logger.LogLine($"Extra ammo: {ammoCount}x {ammoType}");
+                        root._AddItems.Add(
+                            new StartingInventoryItem() { ItemDataID = ammoType.ToString(), Num = ammoCount }
+                        );
+                    }
+                }
+            }
+
+            if (secondary != null)
             {
-                if (primary != null)
-                {
-                    root._AddItems.Add(
-                        new StartingInventoryItem() { ItemDataID = primary.Value.ToString(), Num = 1 }
-                    );
-                }
+                logger.LogLine($"Secondary weapon: {secondary}");
+                root._AddItems.Add(
+                    new StartingInventoryItem() { ItemDataID = secondary.Value.ToString()!, Num = 1 }
+                );
+            }
 
-                if (secondary != null)
-                {
-                    root._AddItems.Add(
-                        new StartingInventoryItem() { ItemDataID = secondary.Value.ToString()!, Num = 1 }
-                    );
-                }
+            if (rng.NextProbability(AntiqueCoinsProbabilityPct))
+            {
+                logger.LogLine($"Nice! {AntiqueCoinsCount}x extra antique coin(s)!");
+                root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
+            }
 
-                if (rng.NextProbability(AntiqueCoinsProbabilityPct))
-                {
-                    root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
-                }
-                return root;
-            });
-        }
-        else
-        {
-            logger.LogLine($"Unknown character '{character}'!");
-        }
+            return root;
+        });
+        logger.Pop();
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
         var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
+        var randomizeVhs = randomizer.GetConfigOption<bool>("random-starting-inventory-vhs");
 
         if (!randomizeEthansInventory && !randomizeMiasInventory)
         {
@@ -143,22 +178,34 @@ internal class StartingInventoryModifier : Modifier
         var categories = Enum.GetValues<StartingWeaponCategory>();
         foreach (var character in Enum.GetValues<MainCampaignCharacter>())
         {
-            if (character == MainCampaignCharacter.Ethan && !randomizeEthansInventory)
+            if (!randomizeVhs && character is MainCampaignCharacter.ClancyVHS or MainCampaignCharacter.MiaVHS)
                 continue;
 
-            if ((character == MainCampaignCharacter.Mia || character == MainCampaignCharacter.MiaVHS) && !randomizeMiasInventory)
+            if (!randomizeEthansInventory && character is MainCampaignCharacter.Ethan)
+                continue;
+
+            if (!randomizeMiasInventory && character is MainCampaignCharacter.Mia or MainCampaignCharacter.MiaVHS)
                 continue;
 
             var configuredCategories = new List<StartingWeaponCategory>();
-            foreach (var category in categories)
+            if (character is MainCampaignCharacter.ClancyVHS) // Allow all weapons for Clancy, it doesn't really matter
             {
-                if (randomizer.GetConfigOption<bool>(
-                    $"inventory-weapon-{category.ToString().ToLowerInvariant()}-{character.ToString().ToLowerInvariant()}")
-                )
+                configuredCategories = Enum.GetValues<StartingWeaponCategory>().ToList();
+            }
+            else
+            {
+                foreach (var category in categories)
                 {
-                    configuredCategories.Add(category);
+                    var characterStr = character is MainCampaignCharacter.MiaVHS ? "mia" : character.ToString().ToLowerInvariant();
+                    if (randomizer.GetConfigOption<bool>(
+                        $"inventory-weapon-{category.ToString().ToLowerInvariant()}-{characterStr}")
+                    )
+                    {
+                        configuredCategories.Add(category);
+                    }
                 }
             }
+
 
             RandomizeStartingInventory(randomizer, logger, rng, character, configuredCategories);
         }

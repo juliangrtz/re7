@@ -121,6 +121,9 @@ internal class Randomizer : IDisposable
         // Patches
         Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
 
+        // Load Areas
+        Reporter.RunTask("Loading scenes", () => AreaService.LoadAreas());
+
         // Input
         IterateModifiers((n, m) =>
         {
@@ -139,6 +142,7 @@ internal class Randomizer : IDisposable
             logger.Process.LogHr();
         });
 
+        // Rewrite Areas
         Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
 
         // Output
@@ -176,7 +180,6 @@ internal class Randomizer : IDisposable
             new KeyItemLocationModifier(),
             new DropItemModifier(),
             new StaticItemModifier(),
-            new ItemBoxModifier(),
 
             // Weapons
             new WeaponModifier(),

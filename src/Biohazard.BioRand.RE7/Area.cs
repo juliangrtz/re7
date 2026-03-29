@@ -47,8 +47,7 @@ internal class Area
             var result = new List<RszGameObject>();
             Scene.VisitGameObjects(gameObject =>
             {
-                var dropItem = gameObject.FindComponent<app.Item>();
-                if (dropItem != null)
+                if (Randomizer.ItemPlacementService.HasItem(gameObject.Guid))
                 {
                     result.Add(gameObject);
                 }

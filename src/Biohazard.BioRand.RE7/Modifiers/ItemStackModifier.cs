@@ -53,6 +53,11 @@ internal class ItemStackModifier : Modifier
     {
         var customStacks = GetItemsWithCustomStackSize(randomizer);
 
+        if (customStacks.Count == 0)
+        {
+            logger.LogLine("All item stacks are equal to the vanilla values.");
+        }
+
         foreach (var group in customStacks
             .Where(it => it.Key != null)
             .GroupBy(it => it.Key.SourceUserFile)
