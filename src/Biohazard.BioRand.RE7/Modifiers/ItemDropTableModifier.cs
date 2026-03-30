@@ -7,7 +7,7 @@ using IntelOrca.Biohazard.BioRand;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class DropItemModifier : Modifier
+internal class ItemDropTableModifier : Modifier
 {
     private const string RandomizerKey = "modifier/item-drops";
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;

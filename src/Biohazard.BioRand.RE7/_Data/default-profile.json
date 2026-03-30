@@ -14,7 +14,7 @@
   "item-drop-respect-difficulty": true,
   "item-drop-ammo-only-available-weapons": true,
   "item-drop-ammo-min": 0.1,
-  "item-drop-ammo-max": 1,
+  "item-drop-ammo-max": 0.4,
   "preserve-item-models": false,
   "additional-items": true,
   "additional-items-prefer-healing": false,

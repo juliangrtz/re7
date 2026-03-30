@@ -181,9 +181,9 @@ internal static class RandomizerConfigurationDefinition
             Description = "The maximum percentage of an ammo stack to drop.",
             Type = "percent",
             Min = 0.1,
-            Max = 1,
+            Max = 10,
             Step = 0.1,
-            Default = 1
+            Default = 0.4
         });
 
         group.Items.Add(new GroupItem()

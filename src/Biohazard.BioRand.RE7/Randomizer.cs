@@ -176,10 +176,9 @@ internal class Randomizer : IDisposable
             new ItemStackModifier(),
 
             // Items
+            new ItemModifier(),
             new BirdCageModifier(),
-            new KeyItemLocationModifier(),
-            new DropItemModifier(),
-            new StaticItemModifier(),
+            new ItemDropTableModifier(),
 
             // Weapons
             new WeaponModifier(),
