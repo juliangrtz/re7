@@ -16,8 +16,8 @@ internal class ItemPlacementService
     {
         var csv = randomizer.DynamicData.GetData(DynamicDataName.ItemPlacements) ?? throw new Exception("Unable to get item data");
         ItemPlacements = Csv.Deserialize<ItemPlacement>(csv).ToImmutableList();
-        PlacementToItemMap = ItemPlacements.ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id)!);
-        IdToItemsMap = ItemPlacements.GroupBy(x => x.Id).ToImmutableDictionary(g => g.Key, g => g.ToList());
+        PlacementToItemMap = ItemPlacements.Where(x => !string.IsNullOrWhiteSpace(x.Id)).ToImmutableDictionary(x => x, x => ItemDefinitionRepository.Default.FromId(x.Id)!);
+        IdToItemsMap = ItemPlacements.Where(x => !string.IsNullOrWhiteSpace(x.Id)).GroupBy(x => x.Id).ToImmutableDictionary(g => g.Key, g => g.ToList());
         GuidToItemsMap = ItemPlacements.GroupBy(x => x.Guid).ToImmutableDictionary(g => g.Key, g => g.ToList());
         MainGamePlacements = ItemPlacements.Where(x => x.Dlc == null).ToImmutableList();
     }
