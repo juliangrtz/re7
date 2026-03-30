@@ -220,10 +220,10 @@ public class RszTypeCsharpWriter
             return types;
         }
 
-        if (type.Name.StartsWith("via."))
-        {
-            return types;
-        }
+        //if (type.Name.StartsWith("via."))
+        //{
+        //    return types;
+        //}
 
         if (type.IsEnum && !GenerateEnums)
         {
