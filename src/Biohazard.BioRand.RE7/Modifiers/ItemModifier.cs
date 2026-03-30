@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class StaticItemModifier : Modifier
+internal class ItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
     private const string ItemBoxGameObjectName = "ItemBox_VLong";
