@@ -37,7 +37,7 @@ internal class KeyItemLocationModifier : Modifier
         var rng = randomizer.GetRng(RandomizerKey);
         var itemService = randomizer.GetService<ItemPlacementService>();
         var newPlacements = itemService.ItemPlacements
-            .Where(i => i.IsExtra && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
+            .Where(i => i.IsExtra && !string.IsNullOrWhiteSpace(i.Id) && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
 
         foreach (var keyItemGroup in newPlacements.GroupBy(l => l.Guid))
         {
