@@ -59,7 +59,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                     SaveGuid = itemComponent.SaveGUID,
                     EasyNum = itemComponent._DifficultItemNumSetting.EasyNum,
                     HardNum = itemComponent._DifficultItemNumSetting.HardNum,
-                    Container = path,
+                    SceneFile = path,
                     GameObjectName = gameObject.Name,
                     Chapter = chapter,
                     Difficulty = GetDifficultyFromPath(path),

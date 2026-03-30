@@ -1,0 +1,68 @@
+MsgFileName,TextName,OriginalText,Replacement
+ui_menu_mes.msg,Menu_Pause_Restart_Desc,Restart from the last saved data.,Hi ${user.name}!
+,,,AAAARGHHHHHH!!! - Ethan Winters
+,,,AAAARGHHHHHH!!! - ${user.name}
+,,,"Morir es vivir... Morir es vivir... Morir es vivir...
+Wait, wrong game!"
+,,,"It's okay ${user.name}, get up and try again!"
+,,,Thank you for playing BioRand 7!
+,,,Orcas are the largest member of the dolphin family.
+,,,"A male orca can be nearly ten metres in length and weight 10,000kg."
+,,,Orcas are highly intelligent and able to coordinate hunting tactics.
+,,,Female orcas are thought to live to 80 years of age or more.
+,,,The dorsal fin of a male orca is up to two metres tall.
+,,,"Orcas are still hunted in some countries, such as Greenland."
+,,,"A wild orca pod can cover over 160 kilometres a day, foraging and socialising."
+,,,WHY'RE YA DYIN'?
+,,,Git gud!
+ui_menu_mes.msg,Menu_Pause_QuitDesc,End the game.,Quitting already?
+,,,Try harder!
+,,,"Come on, show some resilience!"
+,,,"Come on, show those Moldeds who's boss!"
+,,,Jack is not proud of you.
+,,,Tried steroids?
+,,,Tried stabilizers?
+,,,Tried increasing the ammo rate?
+ui_menu_mes.msg,Menu_Skip,Skip movie?,Skip boring cutscene?
+,,,Continue movie?
+,,,Of course you'll select Yes!
+,,,Did you know there's a mod to skip cutscenes?
+ui_menu_mes.msg,Menu_Saving,Saving…,Writing bits and bytes...
+,,,Hang in there!
+,,,"SA-VING, SA-VING, SA-VING!"
+,,,Stealing your disk space...
+,,,"01010011 01100001 01110110 01101001 01101110 
+01100111 00101110 00101110 00101110 00001010"
+,,,Utilizing advanced Capcom crypto...
+ch00_scenario_mes.msg,c00_em2050_0100,"<TIME 5.35, 6.22><TIME 7.07, 11.05><TIME 11.17, 15.05><TIME 19.00, 22.27><TIME 23.16, 25.24><TIME 27.05, 29><TIME 31.03, 32.11><TIME 32.19, 34.25><TIME 34.26, 37.1><TIME 38.15, 40><TIME 54.02, 55.09><TIME 58, 59><TIME 59.28, 62.05><TIME 64.15, 67.23><TIME 71, 73>Hey baby!<PAGE>
+I just wanted to send a quick ""hello"" and ""I love you.""<PAGE>
+Oh! Good news!
+I'm gonna be coming home soon! Yay!<PAGE>
+I cannot wait to be done with this babysitting job—<PAGE>
+And come home to my loving husband.<PAGE>
+I miss you.<PAGE>
+I gotta get back to work.<PAGE>
+I love you, Ethan. I miss you so much.<PAGE>
+I'm sending tons of kisses.<PAGE>
+Bye baby!<PAGE>
+Ethan...<PAGE>
+You were right.<PAGE>
+I did lie to you. I shouldn't have, but—<PAGE>
+All I can say is that if you get this...<PAGE>
+Stay away.
+","<TIME 5.35, 6.22><TIME 7.07, 11.05><TIME 11.17, 15.05><TIME 19.00, 22.27><TIME 23.16, 25.24><TIME 27.05, 29><TIME 31.03, 32.11><TIME 32.19, 34.25><TIME 34.26, 37.1><TIME 38.15, 40><TIME 54.02, 55.09><TIME 58, 59><TIME 59.28, 62.05><TIME 64.15, 67.23><TIME 71, 73>Hey ${user.name}!<PAGE>
+★ Welcome to <COLOR FF0000>B</COLOR>ioRand <COLOR FF0000>VII</COLOR>! ★<PAGE>
+Nothing is where you expect it to be.<PAGE>
+Items, enemies...—<PAGE>
+All scrambled.<PAGE>
+You'll need to adapt.<PAGE>
+Stay sharp.<PAGE>
+Good luck out there.<PAGE>
+And remember—<PAGE>
+You're not in control anymore.<PAGE>
+See you on the other side.<PAGE>
+...<PAGE>
+One more thing—<PAGE>
+If something feels off...<PAGE>
+It probably is.<PAGE>
+This randomizer is still in development! Please report bugs."

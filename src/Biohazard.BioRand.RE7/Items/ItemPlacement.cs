@@ -10,9 +10,10 @@ namespace Biohazard.BioRand.RE7.Items;
 public class ItemPlacement
 {
     public bool IsExtra { get; set; }
-    public ImmutableArray<string> Tags { get; set; }
+    public string? Comment { get; set; } = "";
+    public ImmutableArray<string> Tags { get; set; } = [];
     public required string Id { get; set; }
-
+ 
     public bool Enabled { get; set; }
     public int StackNum { get; set; }
     public int EasyNum { get; set; } = -1;
@@ -35,7 +36,7 @@ public class ItemPlacement
 
     public Guid SaveGuid { get; set; }
     public string GameObjectName { get; set; } = "";
-    public string Container { get; set; } = "";
+    public string SceneFile { get; set; } = "";
     public string Mesh { get; set; } = "";
     public string Material { get; set; } = "";
     public DlcType? Dlc { get; set; }
@@ -44,4 +45,10 @@ public class ItemPlacement
     public SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
     public SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
     public EulerAngles Euler => new(Rotation);
+
+    // Tags
+    public const string WoodenCrateTag = "crate";
+    public const string NotFakeCrateTag = "not_fake";
+    public const string FakeCrateTag = "fake";
+    public const string RandomItemTag = "random";
 }

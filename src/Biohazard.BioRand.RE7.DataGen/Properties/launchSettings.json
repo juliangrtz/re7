@@ -6,7 +6,7 @@
     },
     "Generate C# class for RSZ": {
       "commandName": "Project",
-      "commandLineArgs": "rsz-to-cs via.Prefab"
+      "commandLineArgs": "rsz-to-cs via.fsm.Fsm"
     },
     "Generate config": {
       "commandName": "Project",

@@ -52,6 +52,7 @@ internal class ItemRandomizer(Randomizer randomizer)
         {GameFlowKindEnum.C04_3_Main, [ItemID.MachineGunBullet]},
     };
 
+    private const int ItemStackCeiling = 150;
     private const double EasyAmmoDropAmountFactor = 1.5f;
     private const double NormalAmmoDropAmountFactor = 1f;
     private const double MadhouseAmmoDropAmountFactor = 0.75f;
@@ -72,8 +73,9 @@ internal class ItemRandomizer(Randomizer randomizer)
 
         if (item.CategoryType == ItemCategoryType.Shell)
         {
-            var minAmount = Math.Max(1, (int)Math.Round(min * item.MaxStack));
-            var maxAmount = Math.Min(item.MaxStack, (int)Math.Round(max * item.MaxStack));
+            var stack = Math.Min(item.MaxStack, ItemStackCeiling); // Avoid overly generous drops
+            var minAmount = Math.Max(1, (int)Math.Round(min * stack));
+            var maxAmount = Math.Min(stack, (int)Math.Round(max * stack));
             var result = (uint)rng.Next(minAmount, maxAmount + 1);
             return respectDifficulty ? ApplyDifficultyToDropAmount(result) : (result, result, result);
         }

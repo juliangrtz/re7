@@ -56,9 +56,27 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "shuffle-chapters-with-ff",
             Label = "Include Found Footage Chapters When Shuffling",
-            Description = "Whether to include the Found Footage VHS levels when shuffling chapters.",
+            Description = "Whether to include the Found Footage VHS sections when shuffling chapters.",
             Type = "switch",
             Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "randomized-messages",
+            Label = "Randomize Text",
+            Description = "Randomize various text in the game to a meme.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "main-menu-biorand-touch",
+            Label = "Add BioRand touch to main menu",
+            Description = "Whether to add a BioRand touch to the main menu such as a modified logo and \"New Game\" text.",
+            Type = "switch",
+            Default = true
         });
 
         group = page.CreateGroup("");
@@ -101,7 +119,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "random-key-item-locations",
             Label = "Random Key Item Locations",
-            Description = "Whether to randomize key item locations.",
+            Description = "Whether to randomize some of the key item locations.",
             Type = "switch",
             Default = false
         });
@@ -139,7 +157,7 @@ internal static class RandomizerConfigurationDefinition
             Id = $"item-drop-ammo-only-available-weapons",
             Label = "Ammo for available weapons only",
             Description = "Only drop ammo for weapons that are available before or in the chapter with the drop. " +
-            "Currently only works for item crates.",
+            "Currently only works for item crates. Ammo replacements for static items will be completely random.",
             Type = "switch",
             Default = false
         });
@@ -175,7 +193,44 @@ internal static class RandomizerConfigurationDefinition
             Description = "When randomizing items, keep the original item model in the world.",
             Type = "switch",
             Default = false,
-            Advanced = true
+        });
+
+        group = page.CreateGroup("Additional Items");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-items",
+            Label = "Additional items",
+            Description = "Toggles additional items that will spawn in preselected locations.",
+            Type = "switch",
+            Default = true,
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-items-prefer-healing",
+            Label = "Prefer additional healing items and drugs",
+            Description = "Will drop more healing items such as herbs, first aid meds and steroids.",
+            Type = "switch",
+            Default = false,
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates",
+            Label = "Additional wooden crates",
+            Description = "Toggles additional wooden item crates that will drop random items.",
+            Type = "switch",
+            Default = true,
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates-fakes",
+            Label = "Allow explosive fake crates",
+            Description = "Will also spawn explosive fake crates similar to the ones in Ethan Must Die and End of Zoe. " +
+            "However, you won't recognize these by the ticking sound or the model!",
+            Type = "switch",
+            Default = true,
         });
 
         group = page.CreateGroup("General Drops");
@@ -244,6 +299,24 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
+            Id = "random-starting-inventory-give-ammo",
+            Label = "Provide ammo for primary weapon",
+            Description = "Whether to provide a random amount of ammo for your primary weapon.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-vhs",
+            Label = "Randomize VHS sections as well",
+            Description = "Whether to randomize Clancy's and Mia's VHS sections too.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
             Id = "random-starting-inventory-size-ethan",
             Label = "Ethan: Inventory size",
             Description = "Controls the size of your starting inventory as Ethan. The default is 12. Requires RE Framework.",
@@ -280,7 +353,7 @@ internal static class RandomizerConfigurationDefinition
         }
 
         group = page.CreateGroup("Recipes");
-        group.Warning = "This feature requires RE Framework.";
+        group.Warning = "This feature requires RE Framework to increase the crafting menu slots from 8 to 20.";
         group.Items.Add(new GroupItem()
         {
             Id = "recipes-add-new",

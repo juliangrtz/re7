@@ -14,9 +14,6 @@ internal class KeyItemLocationModifier : Modifier
         .Where(x => x.IsStoryProgressionItem && !x.IsDlcItem)
         .ToList();
 
-    private string GetNameFromGuid(ItemPlacementService itemService, Guid guid)
-          => itemDefinitions.FromId(itemService.FromGuid(guid).Id)!.Name!;
-
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
         var itemService = randomizer.GetService<ItemPlacementService>();
@@ -40,25 +37,29 @@ internal class KeyItemLocationModifier : Modifier
         var rng = randomizer.GetRng(RandomizerKey);
         var itemService = randomizer.GetService<ItemPlacementService>();
         var newPlacements = itemService.ItemPlacements
-            .Where(i => i.IsExtra && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
+            .Where(i => i.IsExtra && !string.IsNullOrWhiteSpace(i.Id) && itemService.PlacementToItemMap[i].IsStoryProgressionItem);
 
         foreach (var keyItemGroup in newPlacements.GroupBy(l => l.Guid))
         {
             var id = keyItemGroup.Key;
             var newPlacement = rng.Next(keyItemGroup);
-            var placement = itemService.FromGuid(id);
+            var placements = itemService.FromGuid(id);
 
-            randomizer.FileRepository.ModifyScnFile(placement.Container, randomizer.IsOnRaytracingVersion, scene =>
+            foreach (var placement in placements)
             {
-                var obj = scene.FindGameObject(id)!;
-                var transform = obj.FindComponent<via.Transform>()!;
-                transform.Position = new(newPlacement.Position.X, newPlacement.Position.Y, newPlacement.Position.Z);
-                obj = obj.AddOrUpdateComponent(transform);
-                scene = scene.UpdateGameObject(obj);
-                return scene;
-            });
+                randomizer.FileRepository.ModifyScnFile(placement.SceneFile, randomizer.IsOnRaytracingVersion, scene =>
+                {
+                    var obj = scene.FindGameObject(id)!;
+                    var transform = obj.FindComponent<via.Transform>()!;
+                    transform.Position = new(newPlacement.Position.X, newPlacement.Position.Y, newPlacement.Position.Z);
+                    obj = obj.AddOrUpdateComponent(transform);
+                    scene = scene.UpdateGameObject(obj);
+                    return scene;
+                });
 
-            logger.LogLine($"Chose new location for {GetNameFromGuid(itemService, id)}: X={newPlacement.Position.X}, Y={newPlacement.Position.Y}, Z={newPlacement.Position.Z}");
+                logger.LogLine($"Chose new location for {itemDefinitions.FromId(placement.Id)!.Name}: X={newPlacement.Position.X}, Y={newPlacement.Position.Y}, Z={newPlacement.Position.Z}");
+            }
+
         }
     }
 }

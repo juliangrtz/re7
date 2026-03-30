@@ -109,10 +109,21 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                 pakFile.WriteToFile(outputPath);
             });
-#if DEBUG && EXTRACT_NATIVES
+#if DEBUG
             reporter.RunTask($"Extracting files", () =>
             {
-                ExtractNatives(zipFile, Path.GetDirectoryName(outputPath)!);
+                var nativesDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                    ".biorand",
+                    "extract"
+                    );
+
+                if (Directory.Exists(nativesDir))
+                {
+                    Directory.Delete(nativesDir, true);
+                }
+
+                ExtractNatives(zipFile, Path.GetDirectoryName(nativesDir)!);
             });
 #endif
         }
