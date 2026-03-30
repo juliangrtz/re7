@@ -9,8 +9,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class StaticItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
-    private const string LongItemBoxGameObjectName = "ItemBox_VLong";
-    private const string OblongItemBoxGameObjectName = "ItemBox_Oblong";
+    private const string ItemBoxGameObjectName = "ItemBox_VLong";
     private const string FakeItemBoxGameObjectName = "ItemBox_Fake";
 
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
@@ -25,32 +24,51 @@ internal class StaticItemModifier : Modifier
         return new Vector3(chosen, chosen, chosen);
     }
 
-    // TODO: Currently not working. The additional item crates are indestructible.
-    public RszScene AddExtraCrate(RszScene scene, RszGameObject parentGameObject, Randomizer randomizer, Rng rng, ItemPlacement placement)
+    private RszScene AddExtraCrate(RszScene scene, RszGameObject parentGameObject, Randomizer randomizer, Rng rng, ItemPlacement placement)
     {
         var allowFakeCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates-fakes");
         RszGameObject template;
 
-        if (allowFakeCrates && rng.NextProbability(FakeCrateProbability))
+        var newGuid = rng.NextGuid();
+        if ((allowFakeCrates && placement.Tags.Contains(ItemPlacement.FakeCrateTag)) ||
+            (!placement.Tags.Contains(ItemPlacement.NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(FakeCrateProbability)))
         {
-            template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName);
+            template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName).Clone();
+            var fsm = template.FindComponent<via.fsm.Fsm>()!;
+            foreach (var action in fsm.SceneData[0].v1_Actions)
+            {
+                if (action is app.fsm.PartsEnable partsEnable && partsEnable.GameObjSet.GameObj == template.Guid)
+                {
+                    partsEnable.GameObjSet.GameObj = newGuid;
+                }
+                else if (action is app.fsm.CollidersEnable collidersEnable && collidersEnable.GameObjSet.GameObj == template.Guid)
+                {
+                    collidersEnable.GameObjSet.GameObj = newGuid;
+                }
+            }
+
+            template = template.AddOrUpdateComponent(fsm);
+
+            var oilcan = template.FindComponent<app.Oilcan>()!;
+            oilcan.FsmObject = newGuid;
+            oilcan.DisableLucasMessage = true;
+            template = template.AddOrUpdateComponent(oilcan);
         }
         else
         {
-            var itemBoxGameObjectName = rng.CoinToss() ? LongItemBoxGameObjectName : OblongItemBoxGameObjectName;
-            template = randomizer.TemplateService.GetObject(itemBoxGameObjectName);
-
+            template = randomizer.TemplateService.GetObject(ItemBoxGameObjectName).Clone();
             var itemDropDestruct = template.FindComponent<app.ItemDropDestruct>()!;
             itemDropDestruct.Enabled = true;
-            itemDropDestruct.SaveGUID = Guid.NewGuid();
+            itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : Guid.NewGuid();
             template = template.AddOrUpdateComponent(itemDropDestruct);
         }
 
-        template = template.WithGuid(placement.GuidOrAuto);
+        template = template.WithGuid(placement.Guid != Guid.Empty ? placement.Guid : newGuid);
+        //template = template.WithName("sm9133_BreakableVLongBox01A_RigidBodyDestruction");
 
         var transform = template.FindComponent<via.Transform>()!;
         transform.Position = placement.Position;
-        transform.Rotation = placement.Rotation;
+        transform.Rotation = new Quaternion(0, 0, 0, 1);
         transform.Scale = RandomizeScale(rng);
         template = template.AddOrUpdateComponent(transform);
 
@@ -58,7 +76,7 @@ internal class StaticItemModifier : Modifier
         return scene.UpdateGameObject(parentGameObject);
     }
 
-    public RszScene AddExtraItem(
+    private RszScene AddExtraItem(
         RszScene scene,
         RszGameObject parentGameObject,
         Randomizer randomizer,
@@ -97,7 +115,7 @@ internal class StaticItemModifier : Modifier
             item._DifficultItemNumSetting.EasyNum = placement.EasyNum;
             item._DifficultItemNumSetting.HardNum = placement.HardNum;
         }
-        item.SaveGUID = placement.SaveGuid;
+        item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : Guid.NewGuid();
         item.RoomId = 0;
         item.Enabled = true;
         template = template.AddOrUpdateComponent(item);
@@ -123,6 +141,7 @@ internal class StaticItemModifier : Modifier
         {
             RszGameObject parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
                 ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
+
             if (allowExtraCrates && placement.Tags.Contains(ItemPlacement.WoodenCrateTag))
             {
                 scene = AddExtraCrate(scene, parentGameObject, randomizer, rng, placement);
@@ -130,6 +149,7 @@ internal class StaticItemModifier : Modifier
             }
             else if (allowExtraItems)
             {
+
                 var isRandom = placement.Tags.Contains("random");
                 scene = AddExtraItem(scene, parentGameObject, randomizer, placement, rng, isRandom, randomItemSettings);
                 logger.LogLine($"[{(isRandom ? "RANDOM " : "")}EXTRA] {placement.StackNum}x {placement.Id} at {placement.Position} in {placement.SceneFile}");
