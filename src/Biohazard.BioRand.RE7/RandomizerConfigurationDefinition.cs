@@ -126,6 +126,25 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
+            Id = "replace-madhouse-tapes",
+            Label = "Replace Madhouse Cassette Tapes",
+            Description = "Whether to also randomize the cassette tapes on the Madhouse difficulty.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "replace-weapons",
+            Label = "Replace Weapons",
+            Description = "Whether to also randomize the weapons such as the G17 handgun in the garage. " +
+            "WARNING: Enabling this means that you may never get certain weapons!",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
             Id = $"random-bird-cage-magnum",
             Label = "Random Bird Cage 44 MAG",
             Description = "Whether to randomize the 44 MAG in bird cages. Appropriate replacements are guaranteed.",
