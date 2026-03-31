@@ -131,9 +131,6 @@ internal class ItemModifier : Modifier
 
     private void HandleExtraItem(Randomizer randomizer, RandomizerLogger logger, Rng rng, ItemPlacement placement, RandomItemSettings randomItemSettings)
     {
-        if (!placement.Enabled)
-            return;
-
         var allowExtraItems = randomizer.GetConfigOption<bool>("additional-items");
         var allowExtraCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates");
 
@@ -178,7 +175,7 @@ internal class ItemModifier : Modifier
 
         // Extra items
         itemPlacementService.ItemPlacements
-            .Where(placement => placement.IsExtra)
+            .Where(placement => placement.Enabled && placement.IsExtra)
             .ToList()
             .ForEach(placement => HandleExtraItem(randomizer, logger, rng, placement, randomItemSettings));
 

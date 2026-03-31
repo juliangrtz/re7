@@ -142,6 +142,9 @@ internal class Randomizer : IDisposable
             logger.Process.LogHr();
         });
 
+        // Save Flags
+        FlagService.Save(logger.Process);
+
         // Rewrite Areas
         Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
 
@@ -179,6 +182,7 @@ internal class Randomizer : IDisposable
             new ItemModifier(),
             new BirdCageModifier(),
             new ItemDropTableModifier(),
+            new KeyItemLocationModifier(),
 
             // Weapons
             new WeaponModifier(),
@@ -248,7 +252,7 @@ internal class Randomizer : IDisposable
     public AreaService AreaService => GetService<AreaService>();
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
     public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
-
+    public FlagService FlagService => GetService<FlagService>();
     public void AddLogFile(string name, string content)
     {
         _logFiles[name] = content;
