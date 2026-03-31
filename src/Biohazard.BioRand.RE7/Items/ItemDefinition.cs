@@ -80,7 +80,7 @@ public sealed class ItemDefinition
     public string? SourceUserFile { get; set; }
 
     [JsonIgnore]
-    public bool IsWeapon => CategoryType == ItemCategoryType.Weapon;
+    public bool IsWeapon => Id is "ToyShotgun" or "DummyAxe" || CategoryType is ItemCategoryType.Weapon or ItemCategoryType.StackWeapon;
 
     [JsonIgnore]
     public bool IsStackable => MaxStack > 1;
@@ -153,6 +153,7 @@ public sealed class ItemDefinition
         "Timebomb",
         "Valve",
         "WorkroomKey",
+        "Knife"
     ];
 
     [JsonIgnore]

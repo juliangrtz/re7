@@ -81,7 +81,7 @@ internal class ItemModifier : Modifier
         template = template.AddOrUpdateComponent(transform);
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
-        logger.LogLine($"[EXTRA] ${(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
+        logger.LogLine($"[EXTRA] {(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
         logger.LogLine($"GUID: {newGuid}");
 
         return scene.UpdateGameObject(parentGameObject);
@@ -231,6 +231,20 @@ internal class ItemModifier : Modifier
 
             foreach (var (definition, placement) in randomizableItems)
             {
+                if (!randomizer.GetConfigOption<bool>("replace-madhouse-tapes") && definition.Id == "SaveTape")
+                {
+                    logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {placement.SceneFile}");
+                    logger.LogLine($"GUID: {placement.Guid}");
+                    continue;
+                }
+
+                if (!randomizer.GetConfigOption<bool>("replace-weapons") && definition.IsWeapon)
+                {
+                    logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {placement.SceneFile}");
+                    logger.LogLine($"GUID: {placement.Guid}");
+                    continue;
+                }
+
                 randomizer.FileRepository.ModifyScnFile(placement.SceneFile, randomizer.IsOnRaytracingVersion, scene =>
                 {
                     var originalGameObject = scene.FindGameObject(placement.Guid)!;
