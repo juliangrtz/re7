@@ -446,6 +446,15 @@ internal static class RandomizerConfigurationDefinition
             Default = 12
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-unlock-from-start",
+            Label = "Unlock combine menu from the start",
+            Description = "Whether to unlock the ability to combine items from the start.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 

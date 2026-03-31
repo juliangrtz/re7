@@ -24,15 +24,23 @@ internal class ItemModifier : Modifier
         return new Vector3(chosen, chosen, chosen);
     }
 
-    private RszScene AddExtraCrate(RszScene scene, RszGameObject parentGameObject, Randomizer randomizer, Rng rng, ItemPlacement placement)
+    private RszScene AddExtraCrate(
+        RszScene scene,
+        RszGameObject parentGameObject,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        ItemPlacement placement,
+        Rng rng)
     {
         var allowFakeCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates-fakes");
         RszGameObject template;
-
+        var isFake = false;
         var newGuid = rng.NextGuid();
+
         if ((allowFakeCrates && placement.Tags.Contains(ItemPlacement.FakeCrateTag)) ||
             (!placement.Tags.Contains(ItemPlacement.NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(FakeCrateProbability)))
         {
+            isFake = true;
             template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName).Clone();
             var fsm = template.FindComponent<via.fsm.Fsm>()!;
             foreach (var action in fsm.SceneData[0].v1_Actions)
@@ -73,6 +81,9 @@ internal class ItemModifier : Modifier
         template = template.AddOrUpdateComponent(transform);
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
+        logger.LogLine($"[EXTRA] ${(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
+        logger.LogLine($"GUID: {newGuid}");
+
         return scene.UpdateGameObject(parentGameObject);
     }
 
@@ -132,6 +143,10 @@ internal class ItemModifier : Modifier
             logger.LogLine($"[EXTRA] [{placement.EasyNum}, {placement.StackNum}, {placement.HardNum}]x {name} at {placement.Position} in {placement.SceneFile}");
         }
 
+        var newGuid = rng.NextGuid();
+        template.Guid = newGuid;
+        logger.LogLine($"GUID: {newGuid}");
+
         item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : Guid.NewGuid();
         item.RoomId = 0;
         item.Enabled = true;
@@ -158,8 +173,7 @@ internal class ItemModifier : Modifier
 
             if (allowExtraCrates && placement.Tags.Contains(ItemPlacement.WoodenCrateTag))
             {
-                scene = AddExtraCrate(scene, parentGameObject, randomizer, rng, placement);
-                logger.LogLine($"[EXTRA] Wooden crate at {placement.Position} in {placement.SceneFile}");
+                scene = AddExtraCrate(scene, parentGameObject, randomizer, logger, placement, rng);
             }
             else if (allowExtraItems)
             {

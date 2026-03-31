@@ -80,6 +80,7 @@
   "recipes-count-max": 2,
   "recipes-new-min": 4,
   "recipes-new-max": 12,
+  "recipes-unlock-from-start": true,
   "inventory-stack-limit-acidbullets": 5,
   "inventory-stack-limit-alcohol": 5,
   "inventory-stack-limit-alloyclay": 10,
