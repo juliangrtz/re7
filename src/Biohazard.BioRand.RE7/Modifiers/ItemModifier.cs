@@ -80,17 +80,19 @@ internal class ItemModifier : Modifier
         RszScene scene,
         RszGameObject parentGameObject,
         Randomizer randomizer,
+        RandomizerLogger logger,
         ItemPlacement placement,
         Rng rng,
         bool isRandom,
         RandomItemSettings randomItemSettings)
     {
-        var template = randomizer.TemplateService.GetItemTemplate(placement.Id);
-        var item = template.FindComponent<app.Item>()!;
+        RszGameObject template;
+        Item drop;
+        app.Item item;
+
         if (isRandom)
         {
             var preferHealing = randomizer.GetConfigOption<bool>("additional-items-prefer-healing");
-            Item drop;
 
             if (preferHealing && rng.NextProbability(PreferredHealingDropProbability))
             {
@@ -101,20 +103,35 @@ internal class ItemModifier : Modifier
             {
                 drop = randomizer.ItemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
             }
+
+            template = randomizer.TemplateService.GetItemTemplate(drop.Id);
+            item = template.FindComponent<app.Item>()!;
+
             item.ItemDataID = drop.Id;
             item.ItemStackNum = drop.CountNormal;
             item._IsOverwriteDifficultItemNumSetting = true;
             item._DifficultItemNumSetting.EasyNum = drop.CountEasy;
             item._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
+
+            var name = _itemDefinitions.FromId(drop.Id)!.Name;
+            logger.LogLine($"[RANDOM EXTRA] [{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {name} " +
+                $"at {placement.Position} in {placement.SceneFile}");
         }
         else
         {
+            template = randomizer.TemplateService.GetItemTemplate(placement.Id);
+            item = template.FindComponent<app.Item>()!;
+
             item.ItemDataID = placement.Id;
             item.ItemStackNum = placement.StackNum;
             item._IsOverwriteDifficultItemNumSetting = true;
             item._DifficultItemNumSetting.EasyNum = placement.EasyNum;
             item._DifficultItemNumSetting.HardNum = placement.HardNum;
+
+            var name = _itemDefinitions.FromId(placement.Id)!.Name;
+            logger.LogLine($"[EXTRA] [{placement.EasyNum}, {placement.StackNum}, {placement.HardNum}]x {name} at {placement.Position} in {placement.SceneFile}");
         }
+
         item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : Guid.NewGuid();
         item.RoomId = 0;
         item.Enabled = true;
@@ -146,10 +163,8 @@ internal class ItemModifier : Modifier
             }
             else if (allowExtraItems)
             {
-
                 var isRandom = placement.Tags.Contains("random");
-                scene = AddExtraItem(scene, parentGameObject, randomizer, placement, rng, isRandom, randomItemSettings);
-                logger.LogLine($"[{(isRandom ? "RANDOM " : "")}EXTRA] {placement.StackNum}x {placement.Id} at {placement.Position} in {placement.SceneFile}");
+                scene = AddExtraItem(scene, parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings);
             }
 
             return scene;
@@ -208,9 +223,15 @@ internal class ItemModifier : Modifier
                     var originalTransform = originalGameObject.FindComponent<via.Transform>();
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
-                    logger.LogLine($"Replacing {itemComponent.ItemStackNum}x {itemComponent.ItemDataID} at {placement.Position} with " +
-                        $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {drop.Id}...");
 
+                    var replaceeName = _itemDefinitions.FromId(itemComponent.ItemDataID)!.Name;
+                    var replacerName = _itemDefinitions.FromId(drop.Id)!.Name;
+                    var quantity = itemComponent._IsOverwriteDifficultItemNumSetting
+                        ? $"[{itemComponent._DifficultItemNumSetting.EasyNum}, {itemComponent.ItemStackNum}, {itemComponent._DifficultItemNumSetting.HardNum}]"
+                        : itemComponent.ItemStackNum.ToString();
+                    logger.LogLine($"Replacing {quantity}x {replaceeName} at {placement.Position} with " +
+                        $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}...");
+                    logger.LogLine($"GUID: {originalGameObject.Guid}");
                     itemComponent.SaveGUID = Guid.NewGuid(); // IMPORTANT!
                     itemComponent.ItemDataID = drop.Id;
                     itemComponent.ItemStackNum = drop.CountNormal;

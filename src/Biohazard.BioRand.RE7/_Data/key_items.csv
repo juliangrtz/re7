@@ -1,3 +1,5 @@
 Enabled,OriginalScnFile,NewScnFile,Id,NewX,NewY,NewZ,Comment
-FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,16.46,-6.581,23.8,Alternative Bolt Cutter Location 1
-FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,13.443,-6.102,23.605,Alternative Bolt Cutter Location 2
+FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,16.46,-6.581,23.8,"Alternative Bolt Cutter Location 1
+Disabled due to softlock"
+FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,13.443,-6.102,23.605,"Alternative Bolt Cutter Location 2
+Disabled due to softlock"
