@@ -123,7 +123,7 @@ internal class StartingInventoryModifier : Modifier
                 {
                     foreach (var ammoType in weaponDefinitions.GetAmmoTypes(wpId))
                     {
-                        if (/*rng.CoinToss() &&*/ ammoType == EnhancedAmmoLookup.Get(wpId)?.StrongAmmo)
+                        if (/*rng.CoinToss() &&*/ ammoType == AmmoTypes.Get(wpId)?.StrongAmmo)
                             continue;
 
                         (int min, int max) = DetermineAppropriateStartingAmmoCount(wpId);

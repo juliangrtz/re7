@@ -1,6 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
-using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Numerics;
@@ -19,17 +18,15 @@ internal class KeyItemLocationModifier : Modifier
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
-        var itemService = randomizer.GetService<ItemPlacementService>();
-        logger.Push("Original key item locations");
         foreach (var item in keyItems)
         {
-            var placements = itemService.FromId(item.Id);
-            foreach (var placement in placements)
+            var placements = randomizer.ItemPlacementService.FromId(item.Id);
+            foreach (var placement in placements.Where(x => x.Enabled && !x.IsExtra))
             {
-                logger.LogLine($"{item.Name}: X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
+                logger.LogLine($"{item.Name} in {placement.SceneFile}, X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
+                logger.LogLine($"GUID: {placement.Guid}");
             }
         }
-        logger.Pop();
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
