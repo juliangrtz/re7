@@ -2,7 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-public static class EnhancedAmmoLookup
+public static class AmmoTypes
 {
     public record Lookup(
         ItemID? NormalAmmo,

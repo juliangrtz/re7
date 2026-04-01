@@ -263,6 +263,8 @@ internal class ItemModifier : Modifier
                     logger.LogLine($"Replacing {quantity}x {replaceeName} at {placement.Position} with " +
                         $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}...");
                     logger.LogLine($"GUID: {originalGameObject.Guid}");
+                    logger.LogLine($"Scene: {placement.SceneFile}");
+
                     itemComponent.SaveGUID = Guid.NewGuid(); // IMPORTANT!
                     itemComponent.ItemDataID = drop.Id;
                     itemComponent.ItemStackNum = drop.CountNormal;
