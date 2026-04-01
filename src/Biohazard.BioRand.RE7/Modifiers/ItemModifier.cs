@@ -14,8 +14,7 @@ internal class ItemModifier : Modifier
 
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
-    private const int PreferredHealingDropProbability = 20;
-    private const int FakeCrateProbability = 10;
+    private const int PreferredHealingDropProbability = 50; // TODO Config?
 
     private Vector3 RandomizeScale(Rng rng)
     {
@@ -36,9 +35,12 @@ internal class ItemModifier : Modifier
         RszGameObject template;
         var isFake = false;
         var newGuid = rng.NextGuid();
+        var minFakePct = randomizer.GetConfigOption<double>("additional-wooden-crates-fakes-pct-min");
+        var maxFakePct = randomizer.GetConfigOption<double>("additional-wooden-crates-fakes-pct-max");
+        var fakePct = (int)rng.NextDouble(minFakePct, maxFakePct);
 
         if ((allowFakeCrates && placement.Tags.Contains(ItemPlacement.FakeCrateTag)) ||
-            (!placement.Tags.Contains(ItemPlacement.NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(FakeCrateProbability)))
+            (!placement.Tags.Contains(ItemPlacement.NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakePct)))
         {
             isFake = true;
             template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName).Clone();
@@ -218,6 +220,7 @@ internal class ItemModifier : Modifier
                 {
                     var (definition, placement) = tuple;
                     return definition != null
+                        && !placement.IsExtra
                         && placement.Enabled
                         && itemRandomizer.IsItemAllowed(definition)
                         && !BirdCageModifier.Guids.Contains(placement.Guid);

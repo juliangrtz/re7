@@ -252,6 +252,30 @@ internal static class RandomizerConfigurationDefinition
             Default = true,
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates-fakes-pct-min",
+            Label = "Min. Fake Crate Probability",
+            Description = "The minimum probability in percent of a new crate to become a fake explosive crate.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.3
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates-fakes-pct-max",
+            Label = "Max. Fake Crate Probability",
+            Description = "The maximum probability in percent of a new crate to become a fake explosive crate.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.5
+        });
+
         group = page.CreateGroup("General Drops");
         var drops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
         foreach (var drop in drops)
