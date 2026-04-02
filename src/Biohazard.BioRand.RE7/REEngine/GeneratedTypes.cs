@@ -667,3 +667,11 @@ namespace via.fsm
     {
     }
 }
+
+namespace app
+{
+    public class PlayerReloadSpeedRateTable
+    {
+        public System.Collections.Generic.List<float> ReloadSpeedRateList { get; set; } = [];
+    }
+}

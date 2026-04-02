@@ -1040,6 +1040,47 @@ internal static class RandomizerConfigurationDefinition
             });
         }
 
+        group = page.CreateGroup("Reload Speed");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-reload-speed",
+            Label = "Randomize Reload Speed",
+            Description = "Whether to randomize the reload speed of guns.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-reload-speed-include-stabilizers",
+            Label = "Include Stabilizer ",
+            Description = "Whether to also randomize the reload speed when using stabilizers.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"weapon-reload-speed-min",
+            Label = $"Min. Reload Speed Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 2,
+            Step = 0.1,
+            Default = 0.25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"weapon-reload-speed-max",
+            Label = $"Max. Reload Speed Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 2,
+            Step = 0.1,
+            Default = 1.75
+        });
+
         #endregion
 
         #region Debug

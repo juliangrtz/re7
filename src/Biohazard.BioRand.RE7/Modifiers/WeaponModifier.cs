@@ -1,4 +1,4 @@
-﻿using app;
+﻿using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -18,7 +18,7 @@ internal class WeaponModifier : Modifier
                 continue;
             }
 
-            var data = randomizer.FileRepository.DeserializeUserFile<WeaponGunParameter>(definition.UserParamsPath);
+            var data = randomizer.FileRepository.DeserializeUserFile<app.WeaponGunParameter>(definition.UserParamsPath);
             var name = definition.Name ?? definition.WeaponId.ToString();
             logger.LogLine($"[{definition.UserParamsPath}] {name}: {data.Format()}");
         }
@@ -29,14 +29,17 @@ internal class WeaponModifier : Modifier
         var rng = randomizer.GetRng(RandomizerKey);
         if (randomizer.GetConfigOption<bool>("weapon-mod-damage"))
         {
-            logger.LogLine("Decided to randomize weapon damage");
             RandomizeWeaponDamage(randomizer, logger, rng);
         }
 
         if (randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity"))
         {
-            logger.LogLine("Decided to randomize weapon ammo capacities");
             RandomizeAmmoCapacities(randomizer, logger, rng);
+        }
+
+        if (randomizer.GetConfigOption<bool>("weapon-mod-reload-speed"))
+        {
+            RandomizeReloadSpeedRate(randomizer, logger, rng);
         }
     }
 
@@ -155,7 +158,7 @@ internal class WeaponModifier : Modifier
             var max = randomizer.GetConfigOption<double>($"weapon-ammo-capacity-max-{sanitizedId}");
             var factor = Math.Max(minCap, Math.Round(rng.NextDouble(min, max), 1));
 
-            randomizer.FileRepository.ModifyUserFile<WeaponGunParameter>(definition.UserParamsPath, root =>
+            randomizer.FileRepository.ModifyUserFile<app.WeaponGunParameter>(definition.UserParamsPath, root =>
             {
                 var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
 
@@ -171,5 +174,27 @@ internal class WeaponModifier : Modifier
                 return root;
             });
         }
+    }
+
+    private void RandomizeReloadSpeedRate(Randomizer randomizer, RandomizerLogger logger, Rng rng)
+    {
+        var reloadSpeedRateTablePath = PakPath.UserFile("prefab/character/pl0000/pl0000reloadspeedratetable.user");
+        var includeStabilizers = randomizer.GetConfigOption<bool>("weapon-mod-reload-speed-include-stabilizers");
+        var min = randomizer.GetConfigOption<double>("weapon-reload-speed-min");
+        var max = randomizer.GetConfigOption<double>("weapon-reload-speed-max");
+        var factor = rng.NextDouble(min, max);
+
+        randomizer.FileRepository.ModifyUserFile<app.PlayerReloadSpeedRateTable>(reloadSpeedRateTablePath, root =>
+        {
+            var upper = includeStabilizers ? root.ReloadSpeedRateList.Count : 1;
+            for (int i = 0; i < upper; i++)
+            {
+                var @new = Math.Max(0.1f, Math.Round(root.ReloadSpeedRateList[i] * factor, 2));
+                logger.LogLine($"[{i} stabilizers] Changing reload speed rate from {root.ReloadSpeedRateList[i]} to {@new}");
+                root.ReloadSpeedRateList[i] = (float)@new;
+            }
+
+            return root;
+        });
     }
 }
