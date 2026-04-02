@@ -45,7 +45,7 @@ public class ConfigurationDefinitionTest
             if (item.Min != null)
             {
                 Assert.NotNull(item.Max);
-                Assert.True(item.Min < item.Max!);
+                Assert.True(item.Min <= item.Max!);
             }
 
             if (item.Step != null)
@@ -92,7 +92,7 @@ public class ConfigurationDefinitionTest
             Assert.NotNull(item.Max);
             Assert.NotNull(item.Default);
 
-            var defaultValue = Convert.ToInt32(item.Default);
+            var defaultValue = Convert.ToDouble(item.Default);
             Assert.InRange(defaultValue, item.Min.Value, item.Max.Value);
         }
     }

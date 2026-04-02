@@ -163,4 +163,28 @@ Files where inventory size is changed:
 
 ## Enemies
 
-Initial Jack (Em3000) encounter: natives\stm\leveldesign\fsm\chapter1\amaro.scn.20
+### IDs
+
+- em2000: Mia
+- em2300: Mia with denim jacket - flashback?
+- em3000: Jack
+- em3100: Marguerite
+- em3600: Marguerite Fight Boss
+- em4000: Molded
+- em4100: 4-Legged Molded
+- em4200: Fat Molded
+- em5400: Insects
+- em5500: Darker Insects
+- em55[10..40]: Insects
+- em6400: end of zoe jack / swampman
+- em8000: Jack Saw Fight
+- em8100: Jack Eyes Boss
+- em8900: Evie Final Form
+
+### General notes
+
+- Initial Jack (Em3000) encounter: natives\stm\leveldesign\fsm\chapter1\amaro.scn.20
+
+## Misc
+
+- Eye drop params (max time and range): natives/stm/prefab/system/systemparameterdata.user
