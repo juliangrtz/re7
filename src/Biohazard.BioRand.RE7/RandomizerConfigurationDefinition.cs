@@ -1067,7 +1067,7 @@ internal static class RandomizerConfigurationDefinition
             Min = 0.1,
             Max = 2,
             Step = 0.1,
-            Default = 0.25
+            Default = 0.3
         });
 
         group.Items.Add(new GroupItem()
@@ -1078,7 +1078,7 @@ internal static class RandomizerConfigurationDefinition
             Min = 0.1,
             Max = 2,
             Step = 0.1,
-            Default = 1.75
+            Default = 1.8
         });
 
         #endregion
