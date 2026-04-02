@@ -23,7 +23,14 @@ public class ConfigurationIdUsageTest
         "weapon-damage-min-",
         "weapon-damage-max-",
         "weapon-ammo-capacity-min-",
-        "weapon-ammo-capacity-max-"
+        "weapon-ammo-capacity-max-",
+        "enemy-ratio-",
+        "enemy-drop-ratio-",
+        "enemy-drop-valuable-",
+        "enemy-health-min-",
+        "enemy-health-max-",
+        "boss-health-min-",
+        "boss-health-max-",
     ];
 
     [Fact]

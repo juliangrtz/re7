@@ -42,6 +42,7 @@ internal class KeyItemLocationModifier : Modifier
             .ToImmutableList();
 
         // Delete all original key item locations
+        // TODO: Copy original Guids to new key items
         foreach (var keyItem in keyItems)
         {
             randomizer.FileRepository.ModifyScnFile(keyItem.OriginalScnFile, randomizer.IsOnRaytracingVersion, scene =>

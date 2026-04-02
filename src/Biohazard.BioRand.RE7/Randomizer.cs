@@ -173,6 +173,11 @@ internal class Randomizer : IDisposable
     {
         return
         [
+            // Enemies
+            new EnemyModifier(),
+            new EnemyMultiplierModifier(),
+            new EnemyPlaceModifier(),
+
             // Inventory
             new StartingInventoryModifier(),
             new RecipeModifier(),

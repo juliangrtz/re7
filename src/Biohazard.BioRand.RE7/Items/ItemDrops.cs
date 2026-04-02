@@ -48,6 +48,7 @@ internal class ItemDrops
     ];
 
     // Categories
+    public const string None = "None";
     public const string CategoryAmmo = "Ammo";
     public const string CategoryHealth = "Health";
     public const string CategoryExplosive = "Explosive";
