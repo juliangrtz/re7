@@ -463,7 +463,7 @@ internal static class RandomizerConfigurationDefinition
             {
                 Id = $"enemy-health-min-{enemy.Id.ToString().ToLowerInvariant()}",
                 Label = $"Min. {enemy.Name} HP Multiplier",
-                Type = "scale",
+                Type = "range",
                 Min = 0.1,
                 Max = 5.00,
                 Step = 0.05,
@@ -474,7 +474,7 @@ internal static class RandomizerConfigurationDefinition
             {
                 Id = $"enemy-health-max-{enemy.Id.ToString().ToLowerInvariant()}",
                 Label = $"Max. {enemy.Name} HP Multiplier",
-                Type = "scale",
+                Type = "range",
                 Min = 0.1,
                 Max = 5.00,
                 Step = 0.05,
@@ -490,7 +490,7 @@ internal static class RandomizerConfigurationDefinition
             {
                 Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
                 Label = $"Min. {boss.Name} HP Multiplier",
-                Type = "scale",
+                Type = "range",
                 Min = 0.1,
                 Max = 3.00,
                 Step = 0.05,
@@ -501,7 +501,7 @@ internal static class RandomizerConfigurationDefinition
             {
                 Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
                 Label = $"Max. {boss.Name} HP Multiplier",
-                Type = "scale",
+                Type = "range",
                 Min = 0.1,
                 Max = 3.00,
                 Step = 0.05,
