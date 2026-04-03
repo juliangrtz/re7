@@ -1632,3 +1632,34 @@ namespace app
         }
     }
 }
+
+namespace app
+{
+    public class Em8900Directive
+    {
+        public app.Em8900Directive.WallParam wallParam { get; set; }
+        public class WallParam
+        {
+            public float WaitTime { get; set; }
+            public float BaseMoveMotionSpeed { get; set; }
+            public float DecreaseMotionSpeedPerTentacle { get; set; }
+            public float MoveDistanceScale { get; set; }
+            public float FaceDamageHitStopTime { get; set; }
+            public bool NoAttackPhase { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class Em8940Directive
+    {
+        public app.Em8940Directive.HangUpParam hangUpParam { get; set; }
+        public class HangUpParam
+        {
+            public float StartDropPlayerDamage { get; set; }
+            public float HangUpLoopTime { get; set; }
+            public int HangUpEndDamageCount { get; set; }
+        }
+    }
+}

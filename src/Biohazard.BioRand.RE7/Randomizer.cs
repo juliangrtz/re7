@@ -174,7 +174,7 @@ internal class Randomizer : IDisposable
         return
         [
             // Enemies
-            new EnemyStatsModifier(),
+            new EnemyDirectiveModifier(),
             new EnemyModifier(),
             new EnemyMultiplierModifier(),
             new EnemyPlaceModifier(),

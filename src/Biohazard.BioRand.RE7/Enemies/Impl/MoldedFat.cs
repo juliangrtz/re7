@@ -55,3 +55,14 @@ internal class MoldedFatBoss : IEnemyDefinition
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4200/parameter/resist/chp3_4_boss/em4200resistparameterholder.user");
 }
+
+internal class MoldedFatDirectiveModifier : IDirectiveModifier
+{
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId == EnemyID.Em4200;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        // TODO
+    }
+}

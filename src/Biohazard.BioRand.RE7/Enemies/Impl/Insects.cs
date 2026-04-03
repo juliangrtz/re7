@@ -13,6 +13,7 @@ internal class InsectHive : InsectBase
     // Also has variants Em5511 and Em5512, but they only differ in their appearance.
 }
 
+// ?
 //internal class InsectSwarm : InsectBase
 //{
 //    public InsectSwarm() : base("InsectSwarm", EnemyID.Em5540, "Insect Swarm", 999999) { }
@@ -44,3 +45,19 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
         => PakPath.UserFile($"prefab/character/{SanitizedId}/{SanitizedId}resistparameterholder.user");
 }
 
+internal class InsectsDirectiveModifier : IDirectiveModifier
+{
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId is EnemyID.Em5400 or EnemyID.Em5510;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        var rng = randomizer.GetRng($"enemy/{enemy.EnemyId.ToString().ToLowerInvariant()}");
+
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
+        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+
+        // TODO
+    }
+}

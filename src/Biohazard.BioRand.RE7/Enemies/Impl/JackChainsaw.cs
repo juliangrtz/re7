@@ -28,3 +28,14 @@ internal class JackChainsaw : IEnemyDefinition
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameterholder.user");
 }
+
+internal class JackChainsawDirectiveModifier : IDirectiveModifier
+{
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId == EnemyID.Em8000;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        // TODO
+    }
+}
