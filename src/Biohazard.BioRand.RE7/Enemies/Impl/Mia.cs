@@ -2,7 +2,17 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal abstract class MiaBase(string id, string name, bool isBoss, int health) : IEnemy
+internal class MiaChainsaw : MiaBase
+{
+    public MiaChainsaw() : base("MiaChainsaw", "Mia (Chainsaw)", true, 2300) { }
+}
+
+internal class MiaKnife : MiaBase
+{
+    public MiaKnife() : base("MiaKnife", "Mia (Knife)", false, 700) { }
+}
+
+internal abstract class MiaBase(string id, string name, bool isBoss, int health) : IEnemyDefinition
 {
     public string Id => id;
     public EnemyID EnemyId => EnemyID.Em2000;
@@ -16,101 +26,81 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em2000/parameter/resist/em2000resistparameterholder.user");
-
-    public abstract void ApplyConfigStats(Randomizer randomizer, RandomizerLogger logger);
 }
 
-internal class MiaChainsaw : MiaBase
+internal class MiaStatsModifier : IEnemyStatsModifier
 {
-    public MiaChainsaw() : base("MiaChainsaw", "Mia (Chainsaw)", true, 2300)
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId == EnemyID.Em2000;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
+        var rng = randomizer.GetRng("enemy/em2000");
+        logger.Push(enemy.Name);
+
+        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
+        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+
+        float newHealth = enemy.IsBoss
+            ? RollMiaChainsawHealth(randomizer, rng)
+            : RollMiaKnifeHealth(randomizer, rng);
+
+        var holder = randomizer.FileRepository
+            .DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
+
+        foreach (var directive in holder.holder.Units)
+        {
+            var rank = directive.Rank;
+            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+
+            logger.LogLine($"[Rank {rank}] Modifying directive {userFilePath}");
+
+            randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
+                userFilePath,
+                d => ModifyDirective(enemy, d, logger, newHealth, newSpeed)
+            );
+        }
+
+        logger.Pop();
+    }
+
+    private float RollMiaChainsawHealth(Randomizer r, Rng rng)
+    {
+        var min = r.GetConfigOption<int>("boss-health-min-miachainsaw");
+        var max = r.GetConfigOption<int>("boss-health-max-miachainsaw");
+        return (float)rng.NextDouble(min, max);
+    }
+
+    private float RollMiaKnifeHealth(Randomizer r, Rng rng)
+    {
+        var min = r.GetConfigOption<int>("enemy-health-min-miaknife");
+        var max = r.GetConfigOption<int>("enemy-health-max-miaknife");
+        return (float)rng.NextDouble(min, max);
     }
 
     private app.Em2000BattleDirective ModifyDirective(
-    app.Em2000BattleDirective directive,
-    RandomizerLogger logger,
-    float newHealth,
-    float newSpeed)
+        IEnemyDefinition enemy,
+        app.Em2000BattleDirective directive,
+        RandomizerLogger logger,
+        float health,
+        float speed)
     {
-        var logStr = "";
+        if (enemy.IsBoss)
+        {
+            logger.LogLine($"Health: {directive.chapter1Battle4.Health} => {health}");
+            directive.chapter1Battle4.Health = health;
 
-        logStr += $"Health: {directive.chapter1Battle4.Health} => {newHealth}";
-        directive.chapter1Battle4.Health = (float)newHealth;
+            directive.chapter1Battle4.WalkSpeedRateThird *= speed;
+            directive.chapter1Battle4.WalkSpeedRateForRank *= speed;
+            directive.chapter1Battle4.EvasiveWalkRate *= speed;
+        }
+        else
+        {
+            logger.LogLine($"Health: {directive.chapter1Battle2.Health} => {health}");
+            directive.chapter1Battle2.Health = health;
+        }
 
-        logStr += $", speed: {directive.chapter1Battle4.WalkSpeedRateForRank} => {newSpeed}";
-        directive.chapter1Battle4.WalkSpeedRateThird *= newSpeed;
-        directive.chapter1Battle4.WalkSpeedRateForRank *= newSpeed;
-        directive.chapter1Battle4.EvasiveWalkRate *= newSpeed;
-
-        logger.LogLine(logStr);
         return directive;
-    }
-
-    public override void ApplyConfigStats(Randomizer randomizer, RandomizerLogger logger)
-    {
-        var rng = randomizer.GetRng("enemy/em2000");
-        logger.Push("Mia (Chainsaw)");
-
-        // Speed
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
-
-        // Health
-        var minHealth = randomizer.GetConfigOption<int>("boss-health-min-em2000");
-        var maxHealth = randomizer.GetConfigOption<int>("boss-health-max-em2000");
-        var newHealth = (float)rng.NextDouble(minHealth, maxHealth);
-
-        foreach (var directive in randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(DirectivesHolderPath).holder.Units)
-        {
-            var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
-            logger.LogLine($"[Rank {rank}] Modifying directive {userFilePath}");
-            randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(userFilePath, root =>
-            {
-                return ModifyDirective(root, logger, newHealth, newSpeed);
-            });
-        }
-        logger.Pop();
-    }
-}
-
-internal class MiaKnife : MiaBase
-{
-    public MiaKnife() : base("MiaKnife", "Mia (Knife)", false, 700)
-    {
-    }
-
-    public override void ApplyConfigStats(Randomizer randomizer, RandomizerLogger logger)
-    {
-        var rng = randomizer.GetRng("enemy/em2000");
-        logger.Push("Mia (Knife)");
-
-        // Speed
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
-
-        // Health
-        var minHealth = randomizer.GetConfigOption<int>("enemy-health-min-miaknife");
-        var maxHealth = randomizer.GetConfigOption<int>("enemy-health-max-miaknife");
-        var newHealth = (float)rng.NextDouble(minHealth, maxHealth);
-
-        foreach (var directive in randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(DirectivesHolderPath).holder.Units)
-        {
-            var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
-            logger.LogLine($"[Rank {rank}] Modifying directive {userFilePath}");
-            randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(userFilePath, directive =>
-            {
-                logger.LogLine($"Health: {directive.chapter1Battle2.Health} => {newHealth}");
-                directive.chapter1Battle2.Health = (float)newHealth;
-
-                // TODO: FirstFlowWalkTime, SecondFlowWalkTime, WalkTimeDeclineByDamage ?
-
-                return directive;
-            });
-        }
-        logger.Pop();
     }
 }
