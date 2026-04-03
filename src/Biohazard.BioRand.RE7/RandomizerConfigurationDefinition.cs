@@ -484,7 +484,7 @@ internal static class RandomizerConfigurationDefinition
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"boss-health-min-{boss.EnemyId.ToString().ToLowerInvariant()}",
+                Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
                 Label = $"Min. {boss.Name} HP",
                 Type = "scale",
                 Min = 0,
@@ -495,7 +495,7 @@ internal static class RandomizerConfigurationDefinition
 
             group.Items.Add(new GroupItem()
             {
-                Id = $"boss-health-max-{boss.EnemyId.ToString().ToLowerInvariant()}",
+                Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
                 Label = $"Max. {boss.Name} HP",
                 Type = "scale",
                 Min = 0,

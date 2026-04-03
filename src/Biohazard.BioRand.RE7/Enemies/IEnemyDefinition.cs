@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-internal interface IEnemy
+internal interface IEnemyDefinition
 {
     [Key]
     public string Id { get; }
@@ -24,6 +24,4 @@ internal interface IEnemy
 
     public RszGameObject GetPrefab(TemplateService templateService)
         => templateService.GetObject($"EnemyTemplate_{Id}");
-
-    public void ApplyConfigStats(Randomizer randomizer, RandomizerLogger logger);
 }

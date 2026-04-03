@@ -6,9 +6,9 @@ internal class EnemyDefinitions
 {
     private static EnemyDefinitions? _instance;
 
-    public List<IEnemy> All { get; private set; } = [];
-    public List<IEnemy> Bosses { get; private set; } = [];
-    public List<IEnemy> NonBosses { get; private set; } = [];
+    public List<IEnemyDefinition> All { get; private set; } = [];
+    public List<IEnemyDefinition> Bosses { get; private set; } = [];
+    public List<IEnemyDefinition> NonBosses { get; private set; } = [];
 
     public static EnemyDefinitions Instance
     {
@@ -28,15 +28,15 @@ internal class EnemyDefinitions
         All = Assembly
                         .GetExecutingAssembly()
                         .GetTypes()
-                        .Where(t => typeof(IEnemy).IsAssignableFrom(t)
+                        .Where(t => typeof(IEnemyDefinition).IsAssignableFrom(t)
                                     && !t.IsInterface
                                     && !t.IsAbstract)
-                        .Select(t => (IEnemy)Activator.CreateInstance(t)!)
+                        .Select(t => (IEnemyDefinition)Activator.CreateInstance(t)!)
                         .ToList();
         Bosses = All.Where(em => em.IsBoss).ToList();
         NonBosses = All.Where(em => !em.IsBoss).ToList();
     }
 
-    public IEnemy GetById(EnemyID id)
+    public IEnemyDefinition GetById(EnemyID id)
         => All.SingleOrDefault(em => em?.EnemyId == id, null) ?? throw new Exception($"Invalid enemy ID '{id}'");
 }
