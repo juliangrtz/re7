@@ -197,4 +197,7 @@ internal class WeaponModifier : Modifier
             return root;
         });
     }
+
+    // TODO: Acid/Fire Bullets
+    // Example file: em8100slipparameter.user.2
 }

@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
@@ -455,26 +456,29 @@ internal static class RandomizerConfigurationDefinition
         group.Warning = "Random enemy health must be enabled for these values to take affect.";
         foreach (var enemy in nonBosses)
         {
+            if (enemy is MargeStalker or MoldedBlade or EvelineGrandmother)
+                continue;
+
             group.Items.Add(new GroupItem()
             {
                 Id = $"enemy-health-min-{enemy.Id.ToString().ToLowerInvariant()}",
-                Label = $"Min. {enemy.Name} HP",
+                Label = $"Min. {enemy.Name} HP Multiplier",
                 Type = "scale",
-                Min = 0,
-                Max = 100000,
-                Step = 1,
-                Default = (int)(enemy.Health * 0.75)
+                Min = 0.1,
+                Max = 5.00,
+                Step = 0.05,
+                Default = 0.75
             });
 
             group.Items.Add(new GroupItem()
             {
                 Id = $"enemy-health-max-{enemy.Id.ToString().ToLowerInvariant()}",
-                Label = $"Max. {enemy.Name} HP",
+                Label = $"Max. {enemy.Name} HP Multiplier",
                 Type = "scale",
-                Min = 0,
-                Max = 100000,
-                Step = 1,
-                Default = (int)(enemy.Health * 1.25)
+                Min = 0.1,
+                Max = 5.00,
+                Step = 0.05,
+                Default = 1.25
             });
         }
 
@@ -485,23 +489,23 @@ internal static class RandomizerConfigurationDefinition
             group.Items.Add(new GroupItem()
             {
                 Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
-                Label = $"Min. {boss.Name} HP",
+                Label = $"Min. {boss.Name} HP Multiplier",
                 Type = "scale",
-                Min = 0,
-                Max = 1_000_000,
-                Step = 1_000,
-                Default = (int)(boss.Health * 0.5)
+                Min = 0.1,
+                Max = 3.00,
+                Step = 0.05,
+                Default = 0.75
             });
 
             group.Items.Add(new GroupItem()
             {
                 Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
-                Label = $"Max. {boss.Name} HP",
+                Label = $"Max. {boss.Name} HP Multiplier",
                 Type = "scale",
-                Min = 0,
-                Max = 1_000_000,
-                Step = 1_000,
-                Default = (int)(boss.Health * 1.5)
+                Min = 0.1,
+                Max = 3.00,
+                Step = 0.05,
+                Default = 1.25
             });
         }
 

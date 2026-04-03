@@ -17,11 +17,17 @@ internal interface IEnemyDefinition
 
     public bool IsBoss { get; }
 
-    public int Health { get; }
+    public int BaseHealth { get; }
 
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
     public RszGameObject GetPrefab(TemplateService templateService)
         => templateService.GetObject($"EnemyTemplate_{Id}");
+
+    public float GetHealthMultiplier(Randomizer randomizer, Rng rng)
+        => (float)rng.NextDouble(
+            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),
+            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-max-{Id.ToLowerInvariant()}")
+       );
 }
