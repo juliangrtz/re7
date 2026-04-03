@@ -16,7 +16,7 @@
   "enemy-scale-min": 0.25,
   "enemy-scale-max": 2,
   "enemy-speed-probability": 0,
-  "enemy-speed-min": 0.25,
+  "enemy-speed-min": 0.5,
   "enemy-speed-max": 2,
   "balanced-enemies": false,
   "enemy-speed-exclude-four-legged-moldeds": false,

@@ -50,24 +50,11 @@ internal class MoldedBlade : IEnemyDefinition
         => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000bladeresistparameterholder.user");
 }
 
-internal class MoldedStatsModifier : IEnemyStatsModifier
+// TODO Molded common params
+internal class MoldedDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em4000;
-
-    class Em4000HealthModifier(float health) : ITemplateModifier
-    {
-        public string GameObjectName => "EnemyTemplate_Em4000";
-        private readonly float _health = health;
-
-        public RszGameObject Apply(RszGameObject gameObject)
-        {
-            var dmgController = gameObject.FindComponent<app.Em4000DamageController>()!;
-            dmgController.HealthInfo.Health = _health;
-            dmgController.HealthInfo.MaxHealth = _health;
-            return gameObject;
-        }
-    }
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
@@ -80,21 +67,9 @@ internal class MoldedStatsModifier : IEnemyStatsModifier
         var newHealth = (float)rng.NextDouble(min, max);
         logger.LogLine($"Health: {enemy.BaseHealth} => {newHealth}");
 
-        var path = PakPath.SceneFile("scenes/enemy/em4000.scn");
-        randomizer.FileRepository.ModifyScnFile(path, randomizer.IsOnRaytracingVersion, root =>
-        {
-            var em4000 = root.FindGameObject("Em4000")!;
-            var dmgController = em4000.FindComponent<app.Em4000DamageController>()!;
-            dmgController.HealthInfo.Health = newHealth;
-            dmgController.HealthInfo.MaxHealth = newHealth;
-            return root;
-        });
-
-        randomizer.TemplateService.InjectModifier(new Em4000HealthModifier(newHealth));
-
         // Speed
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);

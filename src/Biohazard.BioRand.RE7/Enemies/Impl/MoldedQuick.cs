@@ -24,3 +24,14 @@ internal class MoldedQuick : IEnemyDefinition
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4100/parameter/resist/em4100resistparameterholder.user");
 }
+
+internal class MoldedQuickDirectiveModifier : IDirectiveModifier
+{
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId == EnemyID.Em4100;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        // TODO
+    }
+}

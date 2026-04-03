@@ -29,7 +29,7 @@ internal class JackStalker : IEnemyDefinition
         => PakPath.UserFile("prefab/character/em2000/parameter/resist/em3000resistparameter.user6");
 }
 
-internal class JackStalkerStatsModifier : IEnemyStatsModifier
+internal class JackStalkerDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em3000;
@@ -37,18 +37,14 @@ internal class JackStalkerStatsModifier : IEnemyStatsModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em3000");
-        logger.Push($"{enemy.EnemyId} – {enemy.Name}");
 
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
+        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
 
-        var min = randomizer.GetConfigOption<int>("enemy-health-min-jackstalker");
-        var max = randomizer.GetConfigOption<int>("enemy-health-max-jackstalker");
-        var newHealth = (float)rng.NextDouble(min, max);
+        var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
 
-        var holder = randomizer.FileRepository
-            .DeserializeUserFile<app.Em3000DirectivesHolder>(enemy.DirectivesHolderPath);
+        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3000DirectivesHolder>(enemy.DirectivesHolderPath);
 
         foreach (var directive in holder.holder.Units)
         {
@@ -59,31 +55,29 @@ internal class JackStalkerStatsModifier : IEnemyStatsModifier
 
             randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(d, logger, newHealth, newSpeed)
+                d => ModifyDirective(d, logger, healthMultiplier, speedMultiplier)
             );
         }
-
-        logger.Pop();
     }
 
     private app.Em3000BattleDirective ModifyDirective(
         app.Em3000BattleDirective directive,
         RandomizerLogger logger,
-        float health,
-        float speed)
+        float healthMultiplier,
+        float speedMultiplier)
     {
         // TODO Scale?
         // directive.common.ModelScale
 
         // Health
-        logger.LogLine($"Health: {directive.chapter3Battle1Final.Health} => {health}");
-        directive.chapter3Battle1Final.Health = health;
+        logger.LogLine($"Health: {directive.chapter3Battle1Final.Health} => {directive.chapter3Battle1Final.Health * healthMultiplier}");
+        directive.chapter3Battle1Final.Health *= healthMultiplier;
 
         // Speed
-        logger.LogLine($"Speed: {speed}x normal speed");
-        directive.common.MotionSpeedForBack *= speed;
-        directive.common.MotionSpeedForStepIn *= speed;
-        directive.common.MotionSpeedForWalk *= speed;
+        logger.LogLine($"Speed: {speedMultiplier}x normal speed");
+        directive.common.MotionSpeedForBack *= speedMultiplier;
+        directive.common.MotionSpeedForStepIn *= speedMultiplier;
+        directive.common.MotionSpeedForWalk *= speedMultiplier;
 
         // Misc.
         directive.chapter3Battle1.MansionAIForceDiscoveryTime = 0.5f; // ;)

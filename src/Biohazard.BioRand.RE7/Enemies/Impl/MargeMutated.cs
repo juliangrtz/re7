@@ -34,51 +34,18 @@ internal class MargeMutated : IEnemyDefinition
         => templateService.GetObject($"EnemyTemplate_{Id}");
 }
 
-internal class MargeMutatedStatsModifier : IEnemyStatsModifier
+internal class MargeMutatedDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em3600;
 
-    class Em3600HealthModifier(float health) : ITemplateModifier
-    {
-        public string GameObjectName => "EnemyTemplate_Em3600";
-        private readonly float _health = health;
-
-        public RszGameObject Apply(RszGameObject gameObject)
-        {
-            var dmgController = gameObject.FindComponent<app.Em3600DamageController>()!;
-            dmgController.HealthInfo.Health = _health;
-            dmgController.HealthInfo.MaxHealth = _health;
-            return gameObject;
-        }
-    }
-
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em3600");
-        logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
-
-        // Health (vanilla prefab + rando prefab)
-        var min = randomizer.GetConfigOption<int>("enemy-health-min-margemutated");
-        var max = randomizer.GetConfigOption<int>("enemy-health-max-margemutated");
-        var newHealth = (float)rng.NextDouble(min, max);
-        logger.LogLine($"Health: {enemy.BaseHealth} => {newHealth}");
-
-        var path = PakPath.SceneFile("scenes/chapter/chapter3/enemy_em3600.scn");
-        randomizer.FileRepository.ModifyScnFile(path, randomizer.IsOnRaytracingVersion, root =>
-        {
-            var em3600 = root.FindGameObject("Em3600")!;
-            var dmgController = em3600.FindComponent<app.Em3600DamageController>()!;
-            dmgController.HealthInfo.Health = newHealth;
-            dmgController.HealthInfo.MaxHealth = newHealth;
-            return root;
-        });
-
-        randomizer.TemplateService.InjectModifier(new Em3600HealthModifier(newHealth));
 
         // Speed
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3600DirectivesHolder>(enemy.DirectivesHolderPath);
@@ -94,8 +61,6 @@ internal class MargeMutatedStatsModifier : IEnemyStatsModifier
                 d => ModifyDirective(d, logger, newSpeed)
             );
         }
-
-        logger.Pop();
     }
 
     private app.Em3600Directive ModifyDirective(

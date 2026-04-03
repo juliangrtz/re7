@@ -31,7 +31,7 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
         => PakPath.UserFile("prefab/character/em2000/parameter/resist/em2000resistparameterholder.user");
 }
 
-internal class MiaStatsModifier : IEnemyStatsModifier
+internal class MiaDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em2000;
@@ -39,16 +39,14 @@ internal class MiaStatsModifier : IEnemyStatsModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em2000");
-        logger.Push($"{enemy.EnemyId} – {enemy.Name}");
 
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
+        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
 
-        var newHealthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
+        var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
 
-        var holder = randomizer.FileRepository
-            .DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
+        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
 
         foreach (var directive in holder.holder.Units)
         {
@@ -59,11 +57,9 @@ internal class MiaStatsModifier : IEnemyStatsModifier
 
             randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(enemy, d, logger, newHealthMultiplier, newSpeed)
+                d => ModifyDirective(enemy, d, logger, healthMultiplier, speedMultiplier)
             );
         }
-
-        logger.Pop();
     }
 
     private app.Em2000BattleDirective ModifyDirective(
@@ -71,22 +67,22 @@ internal class MiaStatsModifier : IEnemyStatsModifier
         app.Em2000BattleDirective directive,
         RandomizerLogger logger,
         float healthMultiplier,
-        float speed)
+        float speedMultiplier)
     {
         if (enemy.IsBoss)
         {
             logger.LogLine($"Health: {directive.chapter1Battle4.Health} => {healthMultiplier}");
-            directive.chapter1Battle4.Health = healthMultiplier;
+            directive.chapter1Battle4.Health *= healthMultiplier;
 
-            logger.LogLine($"Speed: {speed}x normal speed");
-            directive.chapter1Battle4.WalkSpeedRateThird *= speed;
-            directive.chapter1Battle4.WalkSpeedRateForRank *= speed;
-            directive.chapter1Battle4.EvasiveWalkRate *= speed;
+            logger.LogLine($"Speed: {speedMultiplier}x normal speed");
+            directive.chapter1Battle4.WalkSpeedRateThird *= speedMultiplier;
+            directive.chapter1Battle4.WalkSpeedRateForRank *= speedMultiplier;
+            directive.chapter1Battle4.EvasiveWalkRate *= speedMultiplier;
         }
         else
         {
             logger.LogLine($"Health: {directive.chapter1Battle2.Health} => {healthMultiplier}");
-            directive.chapter1Battle2.Health = healthMultiplier;
+            directive.chapter1Battle2.Health *= healthMultiplier;
         }
 
         return directive;

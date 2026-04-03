@@ -26,7 +26,7 @@ internal class MargeStalker : IEnemyDefinition
         => PakPath.UserFile("prefab/character/em3100/em3100resistparameterholder.user");
 }
 
-internal class MargeStalkerStatsModifier : IEnemyStatsModifier
+internal class MargeStalkerDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em3100;
@@ -34,10 +34,9 @@ internal class MargeStalkerStatsModifier : IEnemyStatsModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em3100");
-        logger.Push($"{enemy.EnemyId} – {enemy.Name}");
 
-        var minSpeed = randomizer.GetConfigOption<int>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<int>("enemy-speed-max");
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);
@@ -53,8 +52,6 @@ internal class MargeStalkerStatsModifier : IEnemyStatsModifier
                 d => ModifyDirective(d, logger, newSpeed)
             );
         }
-
-        logger.Pop();
     }
 
     private app.Em3100Directive ModifyDirective(
@@ -62,8 +59,6 @@ internal class MargeStalkerStatsModifier : IEnemyStatsModifier
         RandomizerLogger logger,
         float speed)
     {
-        // Stalker Marge has infinite HP, she cannot be killed.
-
         // Speed
         logger.LogLine($"Walking speed: {directive.FretWalkSpeed} => {directive.FretWalkSpeed * speed}");
         directive.FretWalkSpeed *= speed;

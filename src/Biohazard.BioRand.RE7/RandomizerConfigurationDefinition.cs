@@ -280,10 +280,10 @@ internal static class RandomizerConfigurationDefinition
             Label = "Min. Enemy Speed",
             Description = "The minimum speed multiplier of enemies.",
             Type = "range",
-            Min = 0.25,
-            Max = 5.00,
+            Min = 0.5,
+            Max = 2.00,
             Step = 0.05,
-            Default = 0.25
+            Default = 0.75
         });
 
         group.Items.Add(new GroupItem()
@@ -292,10 +292,10 @@ internal static class RandomizerConfigurationDefinition
             Label = "Max. Enemy Speed",
             Description = "The maximum speed multiplier of enemies.",
             Type = "range",
-            Min = 0.25,
-            Max = 5.00,
+            Min = 0.5,
+            Max = 2.00,
             Step = 0.05,
-            Default = 2
+            Default = 1.25
         });
 
         group = page.CreateGroup("Constraints");

@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Services;
+﻿using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,6 +22,9 @@ internal interface IEnemyDefinition
 
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
+
+    public string OriginalPrefabPath =>
+        PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
 
     public RszGameObject GetPrefab(TemplateService templateService)
         => templateService.GetObject($"EnemyTemplate_{Id}");

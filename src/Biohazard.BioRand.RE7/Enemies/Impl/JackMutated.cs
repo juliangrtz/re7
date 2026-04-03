@@ -27,3 +27,14 @@ internal class JackMutated : IEnemyDefinition
     public string ResistParamsHolderPath
          => PakPath.UserFile("prefab/character/em8100/parameter/resist/em8100resistparameterholder.user");
 }
+
+internal class JackMutatedDirectiveModifier : IDirectiveModifier
+{
+    public bool Supports(IEnemyDefinition enemy)
+        => enemy.EnemyId == EnemyID.Em8100;
+
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        // TODO
+    }
+}
