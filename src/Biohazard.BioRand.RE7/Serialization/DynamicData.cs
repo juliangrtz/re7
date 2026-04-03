@@ -13,6 +13,7 @@ public enum DynamicDataName
     Events,
     Messages,
     BirdCages,
+    KeyItems
 }
 
 public sealed class DynamicData(bool download)
@@ -28,6 +29,7 @@ public sealed class DynamicData(bool download)
         [DynamicDataName.Events] = ("events.csv", 1728585114),
         [DynamicDataName.Messages] = ("messages.csv", 1050646915),
         [DynamicDataName.BirdCages] = ("bird_cages.csv", 1920824337),
+        [DynamicDataName.KeyItems] = ("key_items.csv", 91603961),
     }.ToImmutableDictionary();
 
     private readonly Dictionary<DynamicDataName, byte[]> _map = [];

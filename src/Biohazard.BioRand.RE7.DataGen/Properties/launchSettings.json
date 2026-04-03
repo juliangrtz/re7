@@ -36,9 +36,9 @@
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f json weapon_definitions"
     },
-    "Generate item templates": {
+    "Generate GO templates": {
       "commandName": "Project",
-      "commandLineArgs": "generate -c -v -f binary item_templates"
+      "commandLineArgs": "generate -c -v -f binary templates"
     }
   }
 }

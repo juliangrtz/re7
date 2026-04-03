@@ -1,3 +1,5 @@
+using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
@@ -101,6 +103,414 @@ internal static class RandomizerConfigurationDefinition
 
         #endregion General
 
+        #region Enemies
+
+        var allEnemies = EnemyDefinitions.Instance.All.OrderBy(boss => boss.Name);
+        var bosses = EnemyDefinitions.Instance.Bosses.OrderBy(boss => boss.Name);
+        var nonBosses = EnemyDefinitions.Instance.NonBosses.OrderBy(nonBoss => nonBoss.Name);
+
+        page = configDefinition.CreatePage("Enemies");
+        group = page.CreateGroup("");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-enemies",
+            Label = "Random Enemies",
+            Description = "Let BioRand randomize all the enemies in the game.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"extra-enemy-amount",
+            Label = "Extra Enemies",
+            Description = "The percentage of extra enemy spawns to add (includes peaceful areas and boss arenas).",
+            Type = "percent",
+            Min = 0,
+            Max = 1,
+            Step = 0.01,
+            Default = 0.25
+        });
+
+        group = page.CreateGroup("");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-multiplier",
+            Label = "Enemy Multiplier",
+            Description = "Duplicate enemies by this amount. Warning: high values could cause stability issues.",
+            Type = "range",
+            Min = 0.25,
+            Max = 5,
+            Step = 0.05,
+            Default = 1
+        });
+
+        var enemyCount = allEnemies.Count();
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-variety",
+            Label = "Enemy Variety",
+            Description = "Controls how many different enemy types you can have in a single area.",
+            Type = "range",
+            Min = 1,
+            Max = enemyCount,
+            Step = 1,
+            Default = enemyCount,
+            Advanced = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-pack-max-size",
+            Label = "Enemy Max. Pack Size",
+            Description = "Controls the maximum size of an enemy pack. " +
+                "Enemy packs give you groups of similar enemies rather than every individual enemy being a different type.",
+            Type = "range",
+            Min = 1,
+            Max = 10,
+            Step = 1,
+            Default = 6,
+            Advanced = true
+        });
+
+        // TODO
+        //group = page.CreateGroup("Waves");
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = "enemy-waves-probability",
+        //    Label = "Enemy Wave Probability",
+        //    Description = "The percentage of enemy spawns that will have waves.",
+        //    Type = "percent",
+        //    Min = 0,
+        //    Max = 1,
+        //    Step = 0.01,
+        //    Default = 1
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = "enemy-waves-distance",
+        //    Label = "Enemy Wave Distance",
+        //    Description = "The minimum distance the player needs to be for a spawn point to spawn a new enemy.",
+        //    Type = "range",
+        //    Min = 1,
+        //    Max = 100,
+        //    Step = 1,
+        //    Default = 5
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = "enemy-waves-min",
+        //    Label = "Min. Enemy Waves",
+        //    Description = "The minimum number of waves per enemy. A value of 2 will mean a new enemy is spawned for each enemy killed.",
+        //    Type = "range",
+        //    Min = 2,
+        //    Max = 25,
+        //    Step = 1,
+        //    Default = 1
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = "enemy-waves-max",
+        //    Label = "Max. Enemy Waves",
+        //    Description = "The maximum number of waves per enemy. A value of 4 will mean some enemies will get another 3 extra enemies which spawn in, one after another, when the last one is killed.",
+        //    Type = "range",
+        //    Min = 2,
+        //    Max = 25,
+        //    Step = 1,
+        //    Default = 1
+        //});
+
+        group = page.CreateGroup("Size");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-scale-probability",
+            Label = "Unusual scale probability",
+            Description = "The percentage of enemies that are an unusual size.",
+            Type = "percent",
+            Min = 0.0,
+            Max = 1,
+            Step = 0.01,
+            Default = 0.0
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-scale-min",
+            Label = "Min. Enemy Scale",
+            Description = "The minimum scale multiplier of enemies.",
+            Type = "range",
+            Min = 0.25,
+            Max = 4.00,
+            Step = 0.05,
+            Default = 0.25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-scale-max",
+            Label = "Max. Enemy Scale",
+            Description = "The maximum scale multiplier of enemies.",
+            Type = "range",
+            Min = 0.25,
+            Max = 4.00,
+            Step = 0.05,
+            Default = 2
+        });
+
+        group = page.CreateGroup("Speed");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-speed-probability",
+            Label = "Unusual speed probability",
+            Description = "The percentage of enemies that move at an unusual speed.",
+            Type = "percent",
+            Min = 0.0,
+            Max = 1,
+            Step = 0.01,
+            Default = 0.0
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-speed-min",
+            Label = "Min. Enemy Speed",
+            Description = "The minimum speed multiplier of enemies.",
+            Type = "range",
+            Min = 0.5,
+            Max = 2.00,
+            Step = 0.05,
+            Default = 0.75
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-speed-max",
+            Label = "Max. Enemy Speed",
+            Description = "The maximum speed multiplier of enemies.",
+            Type = "range",
+            Min = 0.5,
+            Max = 2.00,
+            Step = 0.05,
+            Default = 1.25
+        });
+
+        group = page.CreateGroup("Constraints");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"balanced-enemies",
+            Label = "Balanced Enemies",
+            Description = "Restrict certain enemies to a set of types that produce a more fair and consistent randomizer. " +
+            "Good for permadeath runs but may reduce chaos.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "enemy-speed-exclude-four-legged-moldeds",
+            Label = "Restrict 4-Legged Molded Speed",
+            Description = "Whether to exclude the four-legged Quick Moldeds from modified speeds. " +
+            "Good for permadeath runs but may reduce chaos.",
+            Type = "switch",
+            Default = false
+        });
+
+        //group = page.CreateGroup("Specific");
+        // TODO
+
+        group = page.CreateGroup("Classes");
+        foreach (var enemy in allEnemies)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-ratio-{enemy.Id.ToLowerInvariant()}",
+                Label = enemy.Name,
+                Category = new GroupItemCategory(enemy.Category.ToConfigCategory()),
+                Type = "range",
+                Min = 0,
+                Max = 1,
+                Step = 0.01,
+                Default = 0.5
+            });
+        }
+
+        group = page.CreateGroup("Drops");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-enemy-drops",
+            Label = "Random enemy drops",
+            Description = "Let Biorand randomize the enemy drops.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-only-available-weapons",
+            Label = "Ammo for available weapons only",
+            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-min",
+            Label = "Min. Ammo Quantity",
+            Description = "The minimum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.1
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-max",
+            Label = "Max. Ammo Quantity",
+            Description = "The maximum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 1
+        });
+
+        group = page.CreateGroup("");
+
+        var genericItemDrops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
+        foreach (var drop in genericItemDrops)
+        {
+            var category = ItemDrops.GetCategory(drop);
+            var (bgColor, textColor) = ItemDrops.GetColor(category);
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
+                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
+                Category = new GroupItemCategory()
+                {
+                    Label = category,
+                    BackgroundColor = bgColor,
+                    TextColor = textColor,
+                },
+                Type = "range",
+                Min = 0,
+                Max = 1,
+                Step = 0.01,
+                Default = 0.5
+            });
+        }
+
+        group = page.CreateGroup("Valuable Drops");
+        group.Advanced = true;
+        foreach (var drop in ItemDrops.HighValueDrops)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-drop-valuable-{drop}",
+                Label = ItemDrops.GetHighValueDropLabel(drop),
+                Type = "switch",
+                Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
+            });
+        }
+
+        #endregion
+
+        #region Enemy health
+
+        page = configDefinition.CreatePage("Health");
+        group = page.CreateGroup("");
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"boss-random-health",
+            Label = "Random Boss Health",
+            Description = "Let BioRand randomize the boss health using the min/max values.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-random-health",
+            Label = "Random Enemy Health",
+            Description = "Let BioRand randomize the enemy health using the min/max values.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-health-progressive-difficulty",
+            Label = "Progressive Difficulty",
+            Type = "switch",
+            Default = false
+        });
+
+        group = page.CreateGroup("Enemies");
+        group.Warning = "Random enemy health must be enabled for these values to take affect.";
+        foreach (var enemy in nonBosses)
+        {
+            if (enemy is MargeStalker or MoldedBlade or EvelineGrandmother)
+                continue;
+
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-health-min-{enemy.Id.ToString().ToLowerInvariant()}",
+                Label = $"Min. {enemy.Name} HP Multiplier",
+                Type = "scale",
+                Min = 0.1,
+                Max = 5.00,
+                Step = 0.05,
+                Default = 0.75
+            });
+
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-health-max-{enemy.Id.ToString().ToLowerInvariant()}",
+                Label = $"Max. {enemy.Name} HP Multiplier",
+                Type = "scale",
+                Min = 0.1,
+                Max = 5.00,
+                Step = 0.05,
+                Default = 1.25
+            });
+        }
+
+        group = page.CreateGroup($"Bosses");
+        group.Warning = "Random boss health must be enabled for these values to take affect.";
+        foreach (var boss in bosses)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
+                Label = $"Min. {boss.Name} HP Multiplier",
+                Type = "scale",
+                Min = 0.1,
+                Max = 3.00,
+                Step = 0.05,
+                Default = 0.75
+            });
+
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
+                Label = $"Max. {boss.Name} HP Multiplier",
+                Type = "scale",
+                Min = 0.1,
+                Max = 3.00,
+                Step = 0.05,
+                Default = 1.25
+            });
+        }
+
+        #endregion
+
         #region Items
 
         page = configDefinition.CreatePage("Items");
@@ -120,6 +530,25 @@ internal static class RandomizerConfigurationDefinition
             Id = "random-key-item-locations",
             Label = "Random Key Item Locations",
             Description = "Whether to randomize some of the key item locations.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "replace-madhouse-tapes",
+            Label = "Replace Madhouse Cassette Tapes",
+            Description = "Whether to also randomize the cassette tapes on the Madhouse difficulty.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "replace-weapons",
+            Label = "Replace Weapons",
+            Description = "Whether to also randomize the weapons such as the G17 handgun in the garage. " +
+            "WARNING: Enabling this means that you may never get certain weapons!",
             Type = "switch",
             Default = false
         });
@@ -181,9 +610,9 @@ internal static class RandomizerConfigurationDefinition
             Description = "The maximum percentage of an ammo stack to drop.",
             Type = "percent",
             Min = 0.1,
-            Max = 1,
+            Max = 10,
             Step = 0.1,
-            Default = 1
+            Default = 0.4
         });
 
         group.Items.Add(new GroupItem()
@@ -233,9 +662,32 @@ internal static class RandomizerConfigurationDefinition
             Default = true,
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates-fakes-pct-min",
+            Label = "Min. Fake Crate Probability",
+            Description = "The minimum probability in percent of a new crate to become a fake explosive crate.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.3
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"additional-wooden-crates-fakes-pct-max",
+            Label = "Max. Fake Crate Probability",
+            Description = "The maximum probability in percent of a new crate to become a fake explosive crate.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.5
+        });
+
         group = page.CreateGroup("General Drops");
-        var drops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
-        foreach (var drop in drops)
+        foreach (var drop in genericItemDrops)
         {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);
@@ -446,6 +898,15 @@ internal static class RandomizerConfigurationDefinition
             Default = 12
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "recipes-unlock-from-start",
+            Label = "Unlock combine menu from the start",
+            Description = "Whether to unlock the ability to combine items from the start.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 
@@ -582,6 +1043,47 @@ internal static class RandomizerConfigurationDefinition
             });
         }
 
+        group = page.CreateGroup("Reload Speed");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-reload-speed",
+            Label = "Randomize Reload Speed",
+            Description = "Whether to randomize the reload speed of guns.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "weapon-mod-reload-speed-include-stabilizers",
+            Label = "Include Stabilizer ",
+            Description = "Whether to also randomize the reload speed when using stabilizers.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"weapon-reload-speed-min",
+            Label = $"Min. Reload Speed Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 2,
+            Step = 0.1,
+            Default = 0.3
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"weapon-reload-speed-max",
+            Label = $"Max. Reload Speed Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 2,
+            Step = 0.1,
+            Default = 1.8
+        });
+
         #endregion
 
         #region Debug
@@ -625,14 +1127,14 @@ internal static class RandomizerConfigurationDefinition
             Type = "switch",
             Default = true
         });
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = $"debug-unique-enemy-hp",
-        //    Label = "Unique Enemy HP",
-        //    Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
-        //    Type = "switch",
-        //    Default = false
-        //});
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"debug-unique-enemy-hp",
+            Label = "Unique Enemy HP",
+            Description = "Gives every single enemy a unique HP value. Used to identify enemies within the game files.",
+            Type = "switch",
+            Default = false
+        });
 
         #endregion Debug
 

@@ -37,14 +37,10 @@ Status: **Completed ✅**
   * Knife from Deputy
   * etc.
 * Particular focus on key items!
-* Box drops sometimes don't work
-  * Testing required
-  * Appears to often fail for weapons
-* Not all item IDs can just be replaced with others, certain items won't spawn
 * Be able to randomize weapon stats
 
 *Estimated completion: March*  
-Status: **In development**
+Status: **Completed ✅**
 
 ==================== BETA TESTING PHASE 1 ====================
 

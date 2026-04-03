@@ -30,18 +30,15 @@ internal class TemplateService
         _scene = _templateScnFile.ReadScene(randomizer.FileRepository.TypeRepository);
         _scene.VisitGameObjects(go =>
         {
-            if(go.Name.StartsWith("ItemTemplate"))
+            if (go.Name.StartsWith("ItemTemplate"))
             {
                 _itemTemplates.Add(go.Name.SubstringAfter("_"), go);
             }
         });
     }
 
-    public RszGameObject GetObject(string name)
+    public RszGameObject GetObject(string name) 
         => _scene.FindGameObject(name) ?? throw new Exception($"Object with name {name} not found in template scene!");
-
-    public RszGameObject GetObject(Guid guid)
-        => _scene.FindGameObject(guid) ?? throw new Exception($"Object with GUID {guid} not found in template scene!");
 
     // TODO: DLC item support
     public RszGameObject GetItemTemplate(string id)

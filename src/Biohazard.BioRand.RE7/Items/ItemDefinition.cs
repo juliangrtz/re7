@@ -19,6 +19,13 @@ public sealed class ItemDefinition
     public required string Id { get; set; }
 
     /// <summary>
+    /// Tags further specifying the item.
+    /// <para></para>
+    /// Example: story
+    /// </summary>
+    public string Tags { get; set; } = "";
+
+    /// <summary>
     /// More readable name than the <see cref="Id"/> used in RE7's UI.
     /// <para></para>
     /// Example: Derelict House Footage
@@ -80,7 +87,7 @@ public sealed class ItemDefinition
     public string? SourceUserFile { get; set; }
 
     [JsonIgnore]
-    public bool IsWeapon => CategoryType == ItemCategoryType.Weapon;
+    public bool IsWeapon => Id is "ToyShotgun" or "DummyAxe" || CategoryType is ItemCategoryType.Weapon or ItemCategoryType.StackWeapon;
 
     [JsonIgnore]
     public bool IsStackable => MaxStack > 1;
@@ -90,73 +97,8 @@ public sealed class ItemDefinition
 
     public ItemID? ItemId => EnumExtensions.ParseOrNull<ItemID>(Id);
 
-    /// <summary>
-    /// Items required to progress the story.
-    /// Particular attention is required with these!
-    /// </summary>
-    private readonly List<string> _storyProgressionItems = [
-        "3CrestKeyA",
-        "3CrestKeyB",
-        "3CrestKeyC",
-        "Balloonbomb",
-        "Battery",
-        "CabinKey",
-        "Candle",
-        "Candle_Lighted",
-        "ChainCutter",
-        "ChainSaw",
-        "Crank",
-        "DybbukMedicine",
-        "EntranceHallKey",
-        "EthanCarKey",
-        "EthanLeg",
-        "EvCable",
-        "EvelynRadar",
-        "EvelynRadar1",
-        "EvelynRadar2",
-        "EvelynRadar3",
-        "EvelynRadar4",
-        "EvOpener",
-        "FloorDoorKey",
-        "FoundFootage000",
-        "FoundFootage030",
-        "FoundFootage040",
-        "FoundFootage050",
-        "Fuse",
-        "FuseCh4",
-        "Glasses",
-        "Glasses_End",
-        "Glasses_Washed",
-        "HandAxe",
-        "HandCutOff",
-        "Handgun_Albert",
-        "Lantern",
-        "LucasCardKey",
-        "LucasCardKey2",
-        "MasterKey",
-        "MorgueKey",
-        "Order",
-        "PendulumClock",
-        "Quill",
-        "ScrewFinger",
-        "SerumComplete",
-        "SerumMaterialA",
-        "SerumMaterialB",
-        "SerumTypeE",
-        "SilhouettePazzlePiece",
-        "SilhouettePazzlePieceChildroom",
-        "SilhouettePazzlePieceOldHouse",
-        "SkinnyDoll",
-        "SpareKey",
-        "SpringCoil",
-        "TalismanKey",
-        "Timebomb",
-        "Valve",
-        "WorkroomKey",
-    ];
-
     [JsonIgnore]
-    public bool IsStoryProgressionItem => _storyProgressionItems.Contains(Id);
+    public bool IsStoryProgressionItem => Tags.Contains(StoryProgressionTag);
 
     public override string ToString() => Name ?? Id;
 
@@ -184,4 +126,7 @@ public sealed class ItemDefinition
         sb.AppendLine("=======================");
         return sb.ToString();
     }
+
+    // Tags
+    public const string StoryProgressionTag = "story";
 }

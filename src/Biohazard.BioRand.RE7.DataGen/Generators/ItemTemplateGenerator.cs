@@ -11,13 +11,13 @@ namespace Biohazard.BioRand.RE7.DataGen.Generators;
 /// <summary>
 /// TODO non-RT
 /// </summary>
-internal class ItemTemplateGenerator : IFileGenerator
+internal class GameObjectTemplateGenerator : IFileGenerator
 {
-    public string Id => "item_templates";
+    public string Id => "templates";
 
     public bool CopyToDataDirectory => false;
 
-    public string FileName => "item_templates.scn.20";
+    public string FileName => "template.scn.20";
 
     private readonly RszTypeRepository _rszRepository =
         RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
@@ -33,10 +33,20 @@ internal class ItemTemplateGenerator : IFileGenerator
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
-    private byte[] GetItemTemplateScene(GenerateSettings settings)
+    public RszFolder CreateFolder(string name, string tag = "") =>
+        new RszFolder(_rszRepository
+                .Create("via.Folder")
+                    .Set("Name", name)
+                    .Set("Tag", tag)
+                    .Set("Update", true)
+                    .Set("Draw", true)
+                    .Set("Standby", true), []
+        );
+
+    private ScnFile BuildScene()
     {
         var areas = JsonSerializer.Deserialize<List<AreaDefinition>>(EmbeddedData.GetFile("areas.json"), _serializationOptions)!;
-        var templates = new Dictionary<string, RszGameObject>(); // item id -> GameObject
+        var itemTemplates = new Dictionary<string, RszGameObject>(); // item id -> GameObject
 
         foreach (var area in areas)
         {
@@ -50,27 +60,42 @@ internal class ItemTemplateGenerator : IFileGenerator
 
                 if (item != null)
                 {
-                    templates.TryAdd(item.ItemDataID, gameObject);
+                    itemTemplates.TryAdd(item.ItemDataID, gameObject);
                 }
             });
         }
 
         var resultSceneBuilder = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(areas[0].Path)).ToBuilder(_rszRepository);
         resultSceneBuilder.Scene = resultSceneBuilder.Scene.WithChildren([]);
-        foreach (var (id, go) in templates.OrderBy(t => t.Key))
+
+        // Items
+        var itemTemplatesFolder = CreateFolder("ItemTemplates");
+        foreach (var (id, go) in itemTemplates.OrderBy(t => t.Key))
         {
-            var newName = $"ItemTemplate_{id}"; // TODO: Somehow save original GO name as well
-            resultSceneBuilder.Scene = resultSceneBuilder.Scene.Add(go.WithName(newName));
+            var enrichedGo = go
+                .WithSettings(go.Settings
+                    .Set("Name", $"ItemTemplate_{id}")
+                    .Set("Tag", go.Name)
+                    .Set("Update", true)
+                    .Set("Draw", true)
+                );
+            itemTemplatesFolder = itemTemplatesFolder.Add(enrichedGo);
         }
+        resultSceneBuilder.Scene = resultSceneBuilder.Scene.Add(itemTemplatesFolder);
 
         var built = resultSceneBuilder.AddMissingResources().Build();
-        return built.Data.ToArray();
+        return built;
     }
 
     public object Generate(GenerateSettings settings)
     {
-        var scene = GetItemTemplateScene(settings);
-        AnsiConsole.MarkupLine($"[green]Generated item template scene.[/]");
-        return scene;
+        var scene = BuildScene();
+        var goCount = 0;
+        scene.ReadScene(_rszRepository).VisitGameObjects(go =>
+        {
+            goCount++;
+        });
+        AnsiConsole.MarkupLine($"[green]Generated GameObject template scene with {goCount} objects.[/]");
+        return scene.Data.ToArray();
     }
 }
