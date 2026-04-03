@@ -38,5 +38,5 @@ internal class EnemyDefinitions
     }
 
     public IEnemy GetById(EnemyID id)
-        => All.SingleOrDefault(em => em?.Id == id, null) ?? throw new Exception($"Invalid enemy ID '{id}'");
+        => All.SingleOrDefault(em => em?.EnemyId == id, null) ?? throw new Exception($"Invalid enemy ID '{id}'");
 }

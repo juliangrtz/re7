@@ -3,7 +3,6 @@ using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Weapons;
-using Enums.app;
 using IntelOrca.Biohazard.BioRand;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
@@ -327,9 +326,9 @@ internal static class RandomizerConfigurationDefinition
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"enemy-ratio-{enemy.Id.ToString().ToLowerInvariant()}",
+                Id = $"enemy-ratio-{enemy.Id.ToLowerInvariant()}",
                 Label = enemy.Name,
-                Category = new GroupItemCategory(enemy.ConfigCategory),
+                Category = new GroupItemCategory(enemy.Category.ToConfigCategory()),
                 Type = "range",
                 Min = 0,
                 Max = 1,
@@ -485,7 +484,7 @@ internal static class RandomizerConfigurationDefinition
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
+                Id = $"boss-health-min-{boss.EnemyId.ToString().ToLowerInvariant()}",
                 Label = $"Min. {boss.Name} HP",
                 Type = "scale",
                 Min = 0,
@@ -496,7 +495,7 @@ internal static class RandomizerConfigurationDefinition
 
             group.Items.Add(new GroupItem()
             {
-                Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
+                Id = $"boss-health-max-{boss.EnemyId.ToString().ToLowerInvariant()}",
                 Label = $"Max. {boss.Name} HP",
                 Type = "scale",
                 Min = 0,

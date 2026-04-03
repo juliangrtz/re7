@@ -674,4 +674,119 @@ namespace app
     {
         public System.Collections.Generic.List<float> ReloadSpeedRateList { get; set; } = [];
     }
+
+    public class PlayerMaxHealthTable
+    {
+        public System.Collections.Generic.List<float> MaxHealthList { get; set; } = [];
+    }
+}
+
+namespace app
+{
+    public class Em2000DirectivesHolder
+    {
+        public string Alias { get; set; } = "";
+        public app.EnemyDirectivesHolder holder { get; set; }
+    }
+    public class EnemyDirectivesHolder
+    {
+        public RszUserDataNode defaultDirective { get; set; }
+        public System.Collections.Generic.List<app.EnemyDirectiveUnit> Units { get; set; } = [];
+    }
+    public class EnemyDirective
+    {
+    }
+
+    public class EnemyDirectiveUnit
+    {
+        public int Rank { get; set; }
+        public RszUserDataNode Directive { get; set; }
+    }
+}
+
+namespace app
+{
+    public class Em2000BattleDirective
+    {
+        public app.Em2000BattleDirective.Common common { get; set; }
+        public app.Em2000BattleDirective.Chapter1Battle1 chapter1Battle1 { get; set; }
+        public app.Em2000BattleDirective.Chapter1Battle2 chapter1Battle2 { get; set; }
+        public app.Em2000BattleDirective.Chapter1Battle4 chapter1Battle4 { get; set; }
+        public app.Em2000BattleDirective.Chapter4Battle chapter4Battle { get; set; }
+        public app.Em2000BattleDirective.TimeLineStateNo timeLineStateNo { get; set; }
+        public class Chapter1Battle1
+        {
+            public float Health { get; set; }
+            public float CrawlStartInRange { get; set; }
+            public float CrawlGrappleInRange { get; set; }
+            public float CrawlMinFOV { get; set; }
+            public float CrawlMinFOVRange { get; set; }
+            public float CrawlEndResetFOVInterpolateTime { get; set; }
+            public float RunGrappleInRange { get; set; }
+            public float KnifeCatchLoopTime { get; set; }
+        }
+        public class Chapter1Battle2
+        {
+            public float Health { get; set; }
+            public float WalkKnifeAttackRange { get; set; }
+            public float RunKnifeAttackRange { get; set; }
+            public float WalkKnifeRushRange { get; set; }
+            public float RunKnifeRushRange { get; set; }
+            public float ThrowRange { get; set; }
+            public int ToSecondFlowAttackCounter { get; set; }
+            public float FirstFlowWalkTime { get; set; }
+            public float SecondFlowWalkTime { get; set; }
+            public float WalkTimeDeclineByDamage { get; set; }
+            public float CounterAttackRange { get; set; }
+            public float MessageInterval { get; set; }
+        }
+        public class Chapter1Battle4
+        {
+            public float Health { get; set; }
+            public float WalkSpeedRateThird { get; set; }
+            public float FirstFlowEndTime { get; set; }
+            public float FirstFlowEndHP { get; set; }
+            public float SecondFlowEndTime { get; set; }
+            public float SecondFlowEndHP { get; set; }
+            public float AfterStrikeHandicapTimeMin { get; set; }
+            public float AfterStrikeHandicapTimeMax { get; set; }
+            public float NearestRange { get; set; }
+            public float MountRange { get; set; }
+            public float MountInRangeTime { get; set; }
+            public float MountGrappleSleepTime { get; set; }
+            public float ShortSlashRange { get; set; }
+            public float SlashRange { get; set; }
+            public float StabShortRange { get; set; }
+            public float StabMiddleRange { get; set; }
+            public float StabLongRange { get; set; }
+            public float StabAttackSleepTime { get; set; }
+            public float RunSlashRange { get; set; }
+            public float RunStartRange { get; set; }
+            public float RunStartTime { get; set; }
+            public float StepAttackMiddleRange { get; set; }
+            public float StepAttackLongRange { get; set; }
+            public float StepAttackInRangeTime { get; set; }
+            public float StepAttackSleepTime { get; set; }
+            public float MountLoopTime { get; set; }
+            public float WallBreakEvaluationTime { get; set; }
+            public float MessageInterval { get; set; }
+            public float HandicapTime { get; set; }
+            public float EvasiveWalkRate { get; set; }
+            public float WalkSpeedRateForRank { get; set; }
+        }
+        public class Chapter4Battle
+        {
+            public float MessageInterval { get; set; }
+        }
+        public class Common
+        {
+            public float MotionCancelThreshold { get; set; }
+        }
+        public class TimeLineStateNo
+        {
+            public int Chapter1Battle1CrawlStart { get; set; }
+            public int Chapter1Battle1MountStart { get; set; }
+            public int Chapter1Battle1FinishEventStart { get; set; }
+        }
+    }
 }

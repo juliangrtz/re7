@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Services;
-using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,10 +7,11 @@ namespace Biohazard.BioRand.RE7.Enemies;
 internal interface IEnemy
 {
     [Key]
-    public EnemyID Id { get; }
+    public string Id { get; }
+
+    public EnemyID EnemyId { get; }
 
     public EnemyCategory Category { get; }
-    public ConfigCategory ConfigCategory { get; }
 
     public string Name { get; }
 
@@ -19,8 +19,11 @@ internal interface IEnemy
 
     public int Health { get; }
 
+    public string DirectivesHolderPath { get; }
+    public string ResistParamsHolderPath { get; }
+
     public RszGameObject GetPrefab(TemplateService templateService)
         => templateService.GetObject($"EnemyTemplate_{Id}");
 
-    public void ApplyConfigStats(Randomizer randomizer);
+    public void ApplyConfigStats(Randomizer randomizer, RandomizerLogger logger);
 }

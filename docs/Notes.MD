@@ -185,6 +185,10 @@ Files where inventory size is changed:
 
 - Initial Jack (Em3000) encounter: natives\stm\leveldesign\fsm\chapter1\amaro.scn.20
 
+## Player Stats
+
+- HP: natives/stm/prefab/character/pl0000/pl0000maxhealthtable.user.2
+
 ## Misc
 
 - Eye drop params (max time and range): natives/stm/prefab/system/systemparameterdata.user
