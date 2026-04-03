@@ -177,6 +177,7 @@ internal class Randomizer : IDisposable
             new EnemyModifier(),
             new EnemyMultiplierModifier(),
             new EnemyPlaceModifier(),
+            new EnemyStatsModifier(),
 
             // Inventory
             new StartingInventoryModifier(),

@@ -1,6 +1,5 @@
 ﻿using Enums.app;
 using Enums.app.Item;
-using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
 namespace Biohazard.BioRand.RE7.Items;
