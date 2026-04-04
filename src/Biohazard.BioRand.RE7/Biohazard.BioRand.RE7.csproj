@@ -18,7 +18,4 @@
     <ProjectReference Include="..\Biohazard.BioRand.RE7.REFrameworkPlugins\Biohazard.BioRand.RE7.REFrameworkPlugins.csproj" />
     <ProjectReference Include="..\reeutils\src\IntelOrca.Biohazard.REE\IntelOrca.Biohazard.REE.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
 </Project>
