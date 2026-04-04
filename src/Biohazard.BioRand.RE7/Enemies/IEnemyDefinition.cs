@@ -29,6 +29,9 @@ internal interface IEnemyDefinition
     public RszGameObject GetPrefab(TemplateService templateService)
         => templateService.GetObject($"EnemyTemplate_{Id}");
 
+    public bool IsMolded =>
+        Category == EnemyCategory.Molded;
+
     public float GetHealthMultiplier(Randomizer randomizer, Rng rng)
         => (float)rng.NextDouble(
             randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),

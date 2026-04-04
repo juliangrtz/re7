@@ -24,6 +24,7 @@ internal static class RandomizerConfigurationDefinition
 
         var page = configDefinition.CreatePage("General");
         var group = page.CreateGroup("");
+        group.Warning = "BioRand 7 currently only fully supports the DX12 raytracing version of the game.";
         group.Items.Add(new GroupItem()
         {
             Id = "game-version",
@@ -234,7 +235,7 @@ internal static class RandomizerConfigurationDefinition
             Min = 0.0,
             Max = 1,
             Step = 0.01,
-            Default = 0.0
+            Default = 0.05
         });
 
         group.Items.Add(new GroupItem()
