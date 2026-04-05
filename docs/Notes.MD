@@ -4,16 +4,16 @@ I've gathered this information while working on the randomizer.
 
 ## Important directories (main game -> re_chunk_000.pak)
 
-- (key) item locations: re_chunk_000\natives\stm\leveldesign\itemset
+- (key) item locations: re_chunk_000/natives/stm/leveldesign/itemset
 
-- prefabs: re_chunk_000\natives\stm\prefab\item
+- prefabs: re_chunk_000/natives/stm/prefab/item
 
 - item combine data
-  - re_chunk_000\natives\stm\prefab\item\dictionarycombinedata.user.2
-  - re_chunk_000\natives\stm\prefab\item\itemcombinedata.user.2
+  - re_chunk_000/natives/stm/prefab/item/dictionarycombinedata.user.2
+  - re_chunk_000/natives/stm/prefab/item/itemcombinedata.user.2
 
 - key item prefabs
-  - re_chunk_000\natives\stm\prefab\item\keyitemsettings.user.2
+  - re_chunk_000/natives/stm/prefab/item/keyitemsettings.user.2
 
 ## DLC PAK file table
 
@@ -128,13 +128,13 @@ Ideas for new recipes:
 
 ## Inventory
 
-Ethan starting inventory: natives\stm\leveldesign\fsm\chapter1\other -> tested successfully with chainsaw
+Ethan starting inventory: natives/stm/leveldesign/fsm/chapter1/other -> tested successfully with chainsaw
 
-Mia starting inventory (VHS): natives\stm\leveldesign\fsm\chapter4\chapter4_1\other\4-1startinventory.user.2
+Mia starting inventory (VHS): natives/stm/leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user.2
 
-Mia starting inventory (w/ machine gun): natives\stm\leveldesign\fsm\ff050\other\ff050_startinventory.user.2
+Mia starting inventory (w/ machine gun): natives/stm/leveldesign/fsm/ff050/other/ff050_startinventory.user.2
 
-Clancy VHS starting inventory natives\stm\leveldesign\fsm\ff000\other\startinventory_ff000.user.2
+Clancy VHS starting inventory natives/stm/leveldesign/fsm/ff000/other/startinventory_ff000.user.2
 
 ---------
 
@@ -185,7 +185,8 @@ Files where inventory size is changed:
 
 ### General notes
 
-- Initial Jack (Em3000) encounter: natives\stm\leveldesign\fsm\chapter1\amaro.scn.20
+- Initial Jack (Em3000) encounter: natives/stm/leveldesign/fsm/chapter1/amaro.scn.20
+- Molded Group outside of Swamp Hut: natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20
 
 ## Player Stats
 
