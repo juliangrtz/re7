@@ -6,16 +6,15 @@ using System.Diagnostics;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-[DebuggerDisplay("{EnemyID}")]
+[DebuggerDisplay("{Guid}")]
 public class EnemyPlacement
 {
     public required EnemyID EnemyID { get; set; }
     public string Name { get; set; } = "";
-    public ImmutableArray<string> Tags { get; set; } = [];
+    public string Tags { get; set; } = "";
     public string? Comment { get; set; } = "";
 
     public bool Enabled { get; set; }
-    public Difficulty? Difficulty { get; set; }
     public DlcType? Dlc { get; set; }
     public bool IsSpawnInfo { get; set; }
     public int Chapter { get; set; }
@@ -29,14 +28,10 @@ public class EnemyPlacement
     public float RotW { get; set; }
 
     public Guid Guid { get; set; }
-    //public Guid EnemyGameObjectGuid { get; set; }
 
     public string SceneFile { get; set; } = "";
 
-    // Special Molded properties
-    public MoldedBodyPartMask? MoldedBodyPartMask { get; set; }
-
-    public SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
-    public SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
-    public EulerAngles Euler => new(Rotation);
+    internal SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
+    internal SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
+    internal EulerAngles Euler => new(Rotation);
 }
