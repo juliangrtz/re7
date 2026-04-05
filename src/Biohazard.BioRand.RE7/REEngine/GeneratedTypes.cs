@@ -1840,3 +1840,82 @@ namespace app
         public float BonusRateByDead { get; set; }
     }
 }
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm4000
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em4000ThinkState ThinkSet { get; set; }
+        public bool IsForceTargetingToPlayer { get; set; }
+        public bool IsStartingLostLeftLeg { get; set; }
+        public bool IsStartingLostRightLeg { get; set; }
+        public bool IsStartingLostLeftArm { get; set; }
+        public bool IsStartingLostRightArm { get; set; }
+        public string WayPointName { get; set; } = "";
+        public bool IsUseBlade { get; set; }
+        public bool IsWakeupByDamage { get; set; }
+        public app.EnemySpawnInfoOptionEm4000.DestinationParameter DestinationParam { get; set; }
+        public float NavigationUnderSearchLength { get; set; }
+        public float NavigationPathfindInterruptDist { get; set; }
+        public Enums.via.navigation.Navigation.TraceLineOptimizeTiming NavigationLineOptimizeTiming { get; set; }
+        public float AutoSuspendHeightByFalling { get; set; }
+        public float ResumeAnimationSpeedRate { get; set; }
+        public float SuspendAnimationSpeedRate { get; set; }
+        public float AppearAnimationSpeedRate { get; set; }
+        public Enums.app.MoldedActionController.ExtraHatUnit.Type HatType { get; set; }
+        public class DestinationParameter
+        {
+            public System.Collections.Generic.List<System.Guid> Targets { get; set; } = [];
+            public bool IsInvinsible { get; set; }
+            public Enums.app.Em4000ActionController.DestinationType ArrivedAtTarget { get; set; }
+        }
+        public class OptionSaveDataClassEm4000
+        {
+            public app.EnemySpawnInfo.BackupParameter.MoldedCommon moldedCommon { get; set; }
+        }
+    }
+}
+namespace app.fsm
+{
+    public class Em4000ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em4000.ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em4000.ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em4000
+{
+    public class ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em4000.ThinkStateSet.Type ThinkState { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class ThinkAppearSet
+    {
+        public Enums.app.Em4000.ThinkAppearSet.Type AppearType { get; set; }
+        public class MimicryType
+        {
+            public int value__ { get; set; }
+        }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+

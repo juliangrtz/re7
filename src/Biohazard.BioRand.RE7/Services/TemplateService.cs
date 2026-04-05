@@ -40,6 +40,9 @@ internal class TemplateService
     public RszGameObject GetObject(string name) 
         => _scene.FindGameObject(name) ?? throw new Exception($"Object with name {name} not found in template scene!");
 
+    public RszGameObject GetEnemyTemplate(string enemyID)
+        => GetObject($"EnemyTemplate_{enemyID}");
+
     // TODO: DLC item support
     public RszGameObject GetItemTemplate(string id)
     {
