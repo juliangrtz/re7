@@ -180,8 +180,15 @@ Files where inventory size is changed:
 - em55[10..40]: Insects
 - em6400: end of zoe jack
 - em8000: Jack Saw Fight
+- em8001: Jack with Shears (Nightmare DLC)
 - em8100: Jack Eyes Boss
 - em8900: Evie Final Form
+
+### IMPORTANT WHEN RANDOMIZING
+
+- in the FSM, the UIDs are **not** arbitrary. they are actually state IDs hard-coded in .fsm.16 files!
+- therefore, only assign valid UIDs in biorand
+- wandering enemies must be edited by removing the MapName in via.navigation.NavigationSurface
 
 ### General notes
 
