@@ -145,9 +145,6 @@ internal class Randomizer : IDisposable
         // Save Flags
         FlagService.Save(logger.Process);
 
-        // Rewrite Areas
-        Reporter.RunTask("Rebuilding scenes", () => AreaService.Save(logger.Process));
-
         // Output
         IterateModifiers((n, m) =>
         {

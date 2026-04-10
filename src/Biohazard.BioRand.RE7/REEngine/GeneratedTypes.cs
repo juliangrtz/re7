@@ -1817,6 +1817,9 @@ namespace app
             public float TimeLimit { get; set; }
             public bool IsTreatAsCompletionInTimeLimit { get; set; }
         }
+
+        public override string ToString()
+            => UnitAlias;
     }
     public class CH8EnemySpawnInfo : EnemySpawnInfo
     {
@@ -1919,3 +1922,18 @@ namespace app.Em4000
     }
 }
 
+namespace app
+{
+    public class EnemyGenerator
+    {
+        public bool Enabled { get; set; } = new();
+        public string Alias { get; set; } = "";
+        public class Operation
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class CH8EnemyGenerator : EnemyGenerator
+    {
+    }
+}
