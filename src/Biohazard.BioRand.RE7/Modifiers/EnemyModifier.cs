@@ -37,5 +37,23 @@ internal class EnemyModifier : Modifier
 
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
+
+        var areaService = randomizer.AreaService;
+        foreach (var area in areaService.Areas)
+        {
+            if (!area.EnemyGenerators.IsEmpty)
+                ProcessArea(area);
+        }
+
+        static void ProcessArea(Area area)
+        {
+            foreach(var enemyGenerator in area.EnemyGenerators)
+            {
+                foreach(var esi in enemyGenerator.EnemySpawnInfos)
+                {
+                    // TODO
+                }
+            }
+        }
     }
 }

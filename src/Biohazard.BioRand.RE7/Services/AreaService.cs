@@ -62,9 +62,4 @@ internal class AreaService(Randomizer randomizer)
                 .First();
         }
     }
-
-    public void Save(RandomizerLogger process)
-    {
-        Parallel.ForEach(Areas, area => area.Save());
-    }
 }

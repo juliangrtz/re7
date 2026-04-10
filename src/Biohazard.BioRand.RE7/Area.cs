@@ -1,4 +1,7 @@
-﻿using IntelOrca.Biohazard.REE.Rsz;
+﻿using Biohazard.BioRand.RE7.Enemies;
+using IntelOrca.Biohazard.BioRand;
+using IntelOrca.Biohazard.REE.Rsz;
+using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7;
 
@@ -40,37 +43,11 @@ internal class Area
         }
     }
 
-    public IEnumerable<RszGameObject> Items
-    {
-        get
-        {
-            var result = new List<RszGameObject>();
-            Scene.VisitGameObjects(gameObject =>
-            {
-                if (Randomizer.ItemPlacementService.HasItem(gameObject.Guid))
-                {
-                    result.Add(gameObject);
-                }
-            });
-            return result;
-        }
-    }
+    public ImmutableArray<EnemyGeneratorWrapper> EnemyGenerators { get; set; }
 
-    public IEnumerable<RszGameObject> Weapons
-    {
-        get
-        {
-            var result = new List<RszGameObject>();
-            Scene.VisitGameObjects(gameObject =>
-            {
-                if (gameObject.FindComponent<app.Weapon>() != null || gameObject.FindComponent<app.WeaponGun>() != null)
-                {
-                    result.Add(gameObject);
-                }
-            });
-            return result;
-        }
-    }
+    public ImmutableArray<RszGameObject> Items { get; set; }
+
+    public ImmutableArray<RszGameObject> Weapons { get; set; }
 
     public Area(Randomizer randomizer, AreaDefinition definition)
     {
@@ -84,12 +61,43 @@ internal class Area
 
     private void Scan()
     {
-        // TODO
-    }
+        var enemyGenerators = ImmutableArray.CreateBuilder<EnemyGeneratorWrapper>();
+        var weapons = ImmutableArray.CreateBuilder<RszGameObject>();
+        var items = ImmutableArray.CreateBuilder<RszGameObject>();
+        ScanInner(Scene);
+        EnemyGenerators = enemyGenerators.ToImmutable();
+        Weapons = weapons.ToImmutable();
+        Items = items.ToImmutable();
 
-    public void Save()
-    {
-        // TODO
+        void ScanInner(IRszSceneNode node)
+        {
+            if (node is RszGameObject gameObject)
+            {
+                var enemyGeneratorComponent = gameObject.FindComponent<app.EnemyGenerator>();
+                if (enemyGeneratorComponent != null && enemyGeneratorComponent.Enabled)
+                {
+                    enemyGenerators.Add(new EnemyGeneratorWrapper(this, gameObject, enemyGeneratorComponent));
+                    return;
+                }
+
+                if (Randomizer.ItemPlacementService.HasItem(gameObject.Guid))
+                {
+                    items.Add(gameObject);
+                    return;
+                }
+
+                if (gameObject.FindComponent<app.Weapon>() != null || gameObject.FindComponent<app.WeaponGun>() != null)
+                {
+                    weapons.Add(gameObject);
+                    return;
+                }
+            }
+
+            foreach (var child in node.Children)
+            {
+                ScanInner(child);
+            }
+        }
     }
 
     public override string ToString() => FileName;
