@@ -39,6 +39,10 @@
     "Generate GO templates": {
       "commandName": "Project",
       "commandLineArgs": "generate -c -v -f binary templates"
+    },
+    "Generate enemy placements": {
+      "commandName": "Project",
+      "commandLineArgs": "generate -c -v -f csv enemies"
     }
   }
 }

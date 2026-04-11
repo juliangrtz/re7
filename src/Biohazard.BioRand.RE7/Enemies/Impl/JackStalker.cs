@@ -27,6 +27,11 @@ internal class JackStalker : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em2000/parameter/resist/em3000resistparameter.user6");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em3000.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class JackStalkerDirectiveModifier : IDirectiveModifier

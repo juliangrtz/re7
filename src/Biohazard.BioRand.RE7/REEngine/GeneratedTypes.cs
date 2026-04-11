@@ -1663,3 +1663,277 @@ namespace app
         }
     }
 }
+
+namespace app
+{
+    public class EnemySpawnInfo
+    {
+        public bool Enabled { get; set; } = new();
+        public string UnitAlias { get; set; } = "";
+        public string Comment { get; set; } = "";
+        public bool IsForceSpawn { get; set; }
+        public bool CanSpawnAndSetupForForceSpawn { get; set; }
+        public bool IsPermitDelayGenerate { get; set; }
+        public bool IsInvalidateCollisionAtStart { get; set; }
+        public bool IsPlayerTargetingAtStart { get; set; }
+        public bool IsWaitRequestCommandAction { get; set; }
+        public bool IsCheckGroundForSpawn { get; set; }
+        public Enums.app.EnemySpawnInfo.CollisionFilterType OverrideCollisionFilter { get; set; }
+        public Enums.app.AI.AttackPermitGroup AttackPermitGroupID { get; set; }
+        public app.EnemySpawnInfo.AutoSpawnParameter autoSpawnParameter { get; set; }
+        public bool IsElapsedDelayGenerateTiming { get; set; }
+        public System.Collections.Generic.List<app.EnemySpawnInfo.RespawnConditionUnit> RespawnConditions { get; set; } = [];
+        public app.EnemySpawnInfo.AIMapParameter MapParameter { get; set; }
+        public app.EnemySpawnInfo.TimelimitCondition TimeLimitCondition { get; set; }
+        public app.EnemySpawnInfo.HealthOverwriteParameter HealthParameter { get; set; }
+        public app.EnemySpawnInfo.ResumeParameter resumeParameter { get; set; }
+        public app.EnemySpawnInfo.SuspendParameter suspendParameter { get; set; }
+        public app.EnemySpawnInfo.RankOption rankOption { get; set; }
+        public app.EnemySpawnInfo.SpecifiedRankParameter specifiedRankParameter { get; set; }
+        public RszUserDataNode enemyExtraParameter { get; set; }
+        public app.EnemySpawnInfo.BackupParameter BackupParam { get; set; }
+        public System.Guid MyGUID { get; set; }
+        public class AIMapParameter
+        {
+            public bool IsUseCheck { get; set; }
+            public string MapName { get; set; } = "";
+            public string VolumeSpaceMapName { get; set; } = "";
+        }
+        public class AutoSpawnParameter
+        {
+            public bool IsAutoSpawnedAtLoad { get; set; }
+            public float AutoSpawnedXZRange { get; set; }
+            public float AutoSpawnedYRange { get; set; }
+        }
+        public class BackupParameter
+        {
+            public app.EnemySpawnInfo.BackupParameter.MoldedCommon moldedCommon { get; set; }
+            public class MoldedCommon
+            {
+                public bool IsLostLeftArm { get; set; }
+                public bool IsLostRightArm { get; set; }
+                public bool IsLostLeftLeg { get; set; }
+                public bool IsLostRightLeg { get; set; }
+            }
+        }
+        public class CollisionFilterType
+        {
+            public int value__ { get; set; }
+        }
+        public class HealthOverwriteParameter
+        {
+            public float Health { get; set; }
+        }
+        public class InCameraCondition
+        {
+            public bool IsUseCheck { get; set; }
+            public System.Numerics.Vector2 CheckRangeRate { get; set; }
+            public float Distance { get; set; }
+        }
+        public class RankOption
+        {
+            public bool isIgnoreAttackFailed { get; set; }
+        }
+        public class RespawnCondition
+        {
+            public bool IsUse { get; set; }
+            public float IntervalTime { get; set; }
+            public int LimitOfRespawn { get; set; }
+        }
+        public class RespawnConditionUnit
+        {
+            public int Rank { get; set; }
+            public app.EnemySpawnInfo.RespawnCondition respawnCondition { get; set; }
+        }
+        public class ResumeParameter
+        {
+            public Enums.app.EnemySpawnInfo.ResumeParameter.Type ChoiseAppearPointType { get; set; }
+            public bool IsResumeWithSpawn { get; set; }
+            public System.Collections.Generic.List<System.Guid> ResumePoints { get; set; } = [];
+            public app.EnemySpawnInfo.InCameraCondition inCameraCondition { get; set; }
+            public bool WithChildren { get; set; }
+            public float ReappearanceInvalidTime { get; set; }
+            public class Type
+            {
+                public int value__ { get; set; }
+            }
+        }
+        public class SaveDataClass
+        {
+            public string Name { get; set; } = "";
+            public System.Guid SaveGUID { get; set; }
+            public string FolderName { get; set; } = "";
+            public bool IsUpdate { get; set; }
+            public bool IsDraw { get; set; }
+            public float Health { get; set; }
+            public float MaxHealth { get; set; }
+            public System.Numerics.Vector3 Position { get; set; }
+            public System.Numerics.Quaternion Rotation { get; set; }
+            public bool RequestSetColliderEnable { get; set; }
+            public bool CollidersEnable { get; set; }
+            public System.Collections.Generic.List<bool> CollidersEnableList { get; set; } = [];
+            public Enums.app.AI.CommonThinkState CommonnThinkState { get; set; }
+            public string ThinkState { get; set; } = "";
+            public bool HasBackup { get; set; }
+            public bool IsCompleted { get; set; }
+            public bool IsAppeared { get; set; }
+            public bool IsSpawned { get; set; }
+            public Enums.app.EnemySpawnInfo.SuspendType SuspendType { get; set; }
+            public float IntervalTimer { get; set; }
+            public float ReappearanceInvalidTimer { get; set; }
+            public float ElapsedRequestWaitTimer { get; set; }
+            public int CountOfRespawned { get; set; }
+            public bool IsSelfSuspendedEvenOnce { get; set; }
+            public object optionSaveData { get; set; }
+        }
+        public class SaveStampDataClass
+        {
+            public Enums.app.EnemyID SaveEnemyID { get; set; }
+            public object StampData { get; set; }
+        }
+        public class SpecifiedRankParameter
+        {
+            public string SpecifiedDirectivesName { get; set; } = "";
+            public string SpecifiedResistParameterName { get; set; } = "";
+            public string SpecifiedSlipParameterName { get; set; } = "";
+        }
+        public class SuspendParameter
+        {
+            public bool IsOnTheSpot { get; set; }
+            public System.Collections.Generic.List<System.Guid> SuspendPoints { get; set; } = [];
+            public app.EnemySpawnInfo.InCameraCondition inCameraCondition { get; set; }
+            public bool IsForgetBackup { get; set; }
+            public bool isUseSelfSuspend { get; set; }
+            public float selfSuspendTime { get; set; }
+            public float selfSuspendReserveTimeEvenOnce { get; set; }
+            public float selfSuspendReserveTime { get; set; }
+        }
+        public class SuspendType
+        {
+            public int value__ { get; set; }
+        }
+        public class TimelimitCondition
+        {
+            public float TimeLimit { get; set; }
+            public bool IsTreatAsCompletionInTimeLimit { get; set; }
+        }
+
+        public override string ToString()
+            => UnitAlias;
+    }
+    public class CH8EnemySpawnInfo : EnemySpawnInfo
+    {
+        public app.CH8EnemySpawnInfo.SpawnNeedArea spawnNeedArea { get; set; }
+        public class SpawnNeedArea
+        {
+            public float baseAng { get; set; }
+            public float angle { get; set; }
+            public float radius { get; set; }
+            public float absolutelyRadius { get; set; }
+            public bool isDiray { get; set; }
+        }
+    }
+    public class CH9EnemySpawnInfo : EnemySpawnInfo
+    {
+        public Enums.app.CH9EverywhereManager.MissionNo KillAllEnemyMissionNo { get; set; }
+    }
+    public class EnemyExtraParameter
+    {
+        public float BonusRateByDamage { get; set; }
+        public float BonusRateByDead { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm4000
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em4000ThinkState ThinkSet { get; set; }
+        public bool IsForceTargetingToPlayer { get; set; }
+        public bool IsStartingLostLeftLeg { get; set; }
+        public bool IsStartingLostRightLeg { get; set; }
+        public bool IsStartingLostLeftArm { get; set; }
+        public bool IsStartingLostRightArm { get; set; }
+        public string WayPointName { get; set; } = "";
+        public bool IsUseBlade { get; set; }
+        public bool IsWakeupByDamage { get; set; }
+        public app.EnemySpawnInfoOptionEm4000.DestinationParameter DestinationParam { get; set; }
+        public float NavigationUnderSearchLength { get; set; }
+        public float NavigationPathfindInterruptDist { get; set; }
+        public Enums.via.navigation.Navigation.TraceLineOptimizeTiming NavigationLineOptimizeTiming { get; set; }
+        public float AutoSuspendHeightByFalling { get; set; }
+        public float ResumeAnimationSpeedRate { get; set; }
+        public float SuspendAnimationSpeedRate { get; set; }
+        public float AppearAnimationSpeedRate { get; set; }
+        public Enums.app.MoldedActionController.ExtraHatUnit.Type HatType { get; set; }
+        public class DestinationParameter
+        {
+            public System.Collections.Generic.List<System.Guid> Targets { get; set; } = [];
+            public bool IsInvinsible { get; set; }
+            public Enums.app.Em4000ActionController.DestinationType ArrivedAtTarget { get; set; }
+        }
+        public class OptionSaveDataClassEm4000
+        {
+            public app.EnemySpawnInfo.BackupParameter.MoldedCommon moldedCommon { get; set; }
+        }
+    }
+}
+namespace app.fsm
+{
+    public class Em4000ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em4000.ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em4000.ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em4000
+{
+    public class ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em4000.ThinkStateSet.Type ThinkState { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class ThinkAppearSet
+    {
+        public Enums.app.Em4000.ThinkAppearSet.Type AppearType { get; set; }
+        public class MimicryType
+        {
+            public int value__ { get; set; }
+        }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class EnemyGenerator
+    {
+        public bool Enabled { get; set; } = new();
+        public string Alias { get; set; } = "";
+        public class Operation
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class CH8EnemyGenerator : EnemyGenerator
+    {
+    }
+}

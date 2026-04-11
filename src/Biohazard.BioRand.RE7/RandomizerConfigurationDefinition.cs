@@ -24,6 +24,7 @@ internal static class RandomizerConfigurationDefinition
 
         var page = configDefinition.CreatePage("General");
         var group = page.CreateGroup("");
+        group.Warning = "BioRand 7 currently only fully supports the DX12 raytracing version of the game.";
         group.Items.Add(new GroupItem()
         {
             Id = "game-version",
@@ -234,7 +235,7 @@ internal static class RandomizerConfigurationDefinition
             Min = 0.0,
             Max = 1,
             Step = 0.01,
-            Default = 0.0
+            Default = 0.05
         });
 
         group.Items.Add(new GroupItem()
@@ -306,7 +307,7 @@ internal static class RandomizerConfigurationDefinition
             Description = "Restrict certain enemies to a set of types that produce a more fair and consistent randomizer. " +
             "Good for permadeath runs but may reduce chaos.",
             Type = "switch",
-            Default = false
+            Default = true
         });
 
         group.Items.Add(new GroupItem()
@@ -338,86 +339,87 @@ internal static class RandomizerConfigurationDefinition
             });
         }
 
-        group = page.CreateGroup("Drops");
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"random-enemy-drops",
-            Label = "Random enemy drops",
-            Description = "Let Biorand randomize the enemy drops.",
-            Type = "switch",
-            Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"enemy-drop-ammo-only-available-weapons",
-            Label = "Ammo for available weapons only",
-            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
-            Type = "switch",
-            Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"enemy-drop-ammo-min",
-            Label = "Min. Ammo Quantity",
-            Description = "The minimum percentage of an ammo stack to drop.",
-            Type = "percent",
-            Min = 0.1,
-            Max = 1,
-            Step = 0.1,
-            Default = 0.1
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"enemy-drop-ammo-max",
-            Label = "Max. Ammo Quantity",
-            Description = "The maximum percentage of an ammo stack to drop.",
-            Type = "percent",
-            Min = 0.1,
-            Max = 1,
-            Step = 0.1,
-            Default = 1
-        });
-
-        group = page.CreateGroup("");
-
         var genericItemDrops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
-        foreach (var drop in genericItemDrops)
-        {
-            var category = ItemDrops.GetCategory(drop);
-            var (bgColor, textColor) = ItemDrops.GetColor(category);
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
-                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
-                Category = new GroupItemCategory()
-                {
-                    Label = category,
-                    BackgroundColor = bgColor,
-                    TextColor = textColor,
-                },
-                Type = "range",
-                Min = 0,
-                Max = 1,
-                Step = 0.01,
-                Default = 0.5
-            });
-        }
 
-        group = page.CreateGroup("Valuable Drops");
-        group.Advanced = true;
-        foreach (var drop in ItemDrops.HighValueDrops)
-        {
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"enemy-drop-valuable-{drop}",
-                Label = ItemDrops.GetHighValueDropLabel(drop),
-                Type = "switch",
-                Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
-            });
-        }
+        //group = page.CreateGroup("Drops");
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = $"random-enemy-drops",
+        //    Label = "Random enemy drops",
+        //    Description = "Let Biorand randomize the enemy drops.",
+        //    Type = "switch",
+        //    Default = true
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = $"enemy-drop-ammo-only-available-weapons",
+        //    Label = "Ammo for available weapons only",
+        //    Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
+        //    Type = "switch",
+        //    Default = true
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = $"enemy-drop-ammo-min",
+        //    Label = "Min. Ammo Quantity",
+        //    Description = "The minimum percentage of an ammo stack to drop.",
+        //    Type = "percent",
+        //    Min = 0.1,
+        //    Max = 1,
+        //    Step = 0.1,
+        //    Default = 0.1
+        //});
+
+        //group.Items.Add(new GroupItem()
+        //{
+        //    Id = $"enemy-drop-ammo-max",
+        //    Label = "Max. Ammo Quantity",
+        //    Description = "The maximum percentage of an ammo stack to drop.",
+        //    Type = "percent",
+        //    Min = 0.1,
+        //    Max = 1,
+        //    Step = 0.1,
+        //    Default = 1
+        //});
+
+        //group = page.CreateGroup("");
+
+        //foreach (var drop in genericItemDrops)
+        //{
+        //    var category = ItemDrops.GetCategory(drop);
+        //    var (bgColor, textColor) = ItemDrops.GetColor(category);
+        //    group.Items.Add(new GroupItem()
+        //    {
+        //        Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
+        //        Label = _itemDefinitions.FromId(drop.ToString())!.Name,
+        //        Category = new GroupItemCategory()
+        //        {
+        //            Label = category,
+        //            BackgroundColor = bgColor,
+        //            TextColor = textColor,
+        //        },
+        //        Type = "range",
+        //        Min = 0,
+        //        Max = 1,
+        //        Step = 0.01,
+        //        Default = 0.5
+        //    });
+        //}
+
+        //group = page.CreateGroup("Valuable Drops");
+        //group.Advanced = true;
+        //foreach (var drop in ItemDrops.HighValueDrops)
+        //{
+        //    group.Items.Add(new GroupItem()
+        //    {
+        //        Id = $"enemy-drop-valuable-{drop}",
+        //        Label = ItemDrops.GetHighValueDropLabel(drop),
+        //        Type = "switch",
+        //        Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
+        //    });
+        //}
 
         #endregion
 

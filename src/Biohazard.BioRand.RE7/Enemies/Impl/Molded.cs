@@ -1,6 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
-using Biohazard.BioRand.RE7.Services;
-using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
@@ -25,6 +23,11 @@ internal class Molded : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em4000.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class MoldedBlade : IEnemyDefinition
@@ -48,6 +51,11 @@ internal class MoldedBlade : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000bladeresistparameterholder.user");
+
+    public string OriginalPrefabPath
+    => PakPath.SceneFile($"scenes/enemy/em4000.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 // TODO Molded common params

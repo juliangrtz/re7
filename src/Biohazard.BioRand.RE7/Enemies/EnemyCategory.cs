@@ -2,7 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-internal enum EnemyCategory
+public enum EnemyCategory
 {
     Mia,
     Molded,

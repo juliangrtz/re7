@@ -1,8 +1,9 @@
-﻿using System.Reflection;
+﻿using Biohazard.BioRand.RE7.Enemies.Impl;
+using System.Reflection;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-internal class EnemyDefinitions
+public sealed class EnemyDefinitions
 {
     private static EnemyDefinitions? _instance;
 
@@ -25,18 +26,28 @@ internal class EnemyDefinitions
 
     private void Initialize()
     {
-        All = Assembly
-                        .GetExecutingAssembly()
-                        .GetTypes()
-                        .Where(t => typeof(IEnemyDefinition).IsAssignableFrom(t)
-                                    && !t.IsInterface
-                                    && !t.IsAbstract)
-                        .Select(t => (IEnemyDefinition)Activator.CreateInstance(t)!)
-                        .ToList();
+        All = [
+            //new EvelineFinalBoss(),
+            new EvelineGrandmother(),
+            new FlyingBug(),
+            new InsectHive(),
+            new InsectSwarm(),
+            new JackShears(),
+            //new JackMutated(),
+            new JackStalker(),
+            new MargeMutated(),
+            //new MargeStalker(),
+            new MiaChainsaw(),
+            //new MiaKnife(),
+            new Impl.Molded(),
+            new MoldedBlade(),
+            new MoldedQuick(),
+            new MoldedFat(),
+        ];
         Bosses = All.Where(em => em.IsBoss).ToList();
         NonBosses = All.Where(em => !em.IsBoss).ToList();
     }
 
-    public IEnemyDefinition GetById(EnemyID id)
-        => All.SingleOrDefault(em => em?.EnemyId == id, null) ?? throw new Exception($"Invalid enemy ID '{id}'");
+    public IEnemyDefinition? GetById(EnemyID id)
+        => All.FirstOrDefault(em => em?.EnemyId == id, null);
 }

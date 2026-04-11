@@ -1,11 +1,9 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
-using Biohazard.BioRand.RE7.Services;
-using IntelOrca.Biohazard.REE.Rsz;
 using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-internal interface IEnemyDefinition
+public interface IEnemyDefinition
 {
     [Key]
     public string Id { get; }
@@ -23,13 +21,14 @@ internal interface IEnemyDefinition
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
-    public string OriginalPrefabPath =>
-        PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
+    public string OriginalPrefabPath { get; }
 
-    public RszGameObject GetPrefab(TemplateService templateService)
-        => templateService.GetObject($"EnemyTemplate_{Id}");
+    public bool UsesEnemyGenerator { get; }
 
-    public float GetHealthMultiplier(Randomizer randomizer, Rng rng)
+    public bool IsMolded =>
+        Category == EnemyCategory.Molded;
+
+    internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
         => (float)rng.NextDouble(
             randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),
             randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-max-{Id.ToLowerInvariant()}")

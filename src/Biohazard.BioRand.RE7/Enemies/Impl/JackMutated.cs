@@ -26,6 +26,11 @@ internal class JackMutated : IEnemyDefinition
 
     public string ResistParamsHolderPath
          => PakPath.UserFile("prefab/character/em8100/parameter/resist/em8100resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em8100.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class JackMutatedDirectiveModifier : IDirectiveModifier

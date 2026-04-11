@@ -9,7 +9,13 @@ internal class FlyingBug : InsectBase
 
 internal class InsectHive : InsectBase
 {
-    public InsectHive() : base("InsectHive", EnemyID.Em5510, "Insect Hive", 2800) { }
+    public InsectHive() : base("InsectHive", EnemyID.Em5510, "Insect Hive", 2400) { }
+    // Also has variants Em5511 and Em5512, but they only differ in their appearance.
+}
+
+internal class InsectSwarm : InsectBase
+{
+    public InsectSwarm() : base("InsectSwarm", EnemyID.Em5520, "Insect Swarm", 800) { }
     // Also has variants Em5511 and Em5512, but they only differ in their appearance.
 }
 
@@ -43,6 +49,11 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
 
     public string ResistParamsHolderPath
         => PakPath.UserFile($"prefab/character/{SanitizedId}/{SanitizedId}resistparameterholder.user");
+
+    public string OriginalPrefabPath 
+        => PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class InsectsDirectiveModifier : IDirectiveModifier

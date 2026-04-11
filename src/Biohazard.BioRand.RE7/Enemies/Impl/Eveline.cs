@@ -21,6 +21,11 @@ internal class EvelineGrandmother : IEnemyDefinition
     public string DirectivesHolderPath => throw new NotSupportedException("Elder Eveline does not have directives!");
 
     public string ResistParamsHolderPath => throw new NotSupportedException("Elder Eveline does not have resist params!");
+
+    public string OriginalPrefabPath 
+        => PakPath.SceneFile($"scenes/enemy/em3300.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class EvelineFinalBoss : IEnemyDefinition
@@ -47,6 +52,11 @@ internal class EvelineFinalBoss : IEnemyDefinition
     public string DirectivesHolderPath => throw new NotSupportedException("Em8900 has multiple phases with multiple directives!");
 
     public string ResistParamsHolderPath => throw new NotSupportedException("Em8900 has multiple phases with multiple resist params!");
+
+    public string OriginalPrefabPath 
+        => PakPath.SceneFile($"scenes/enemy/em8900.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier
