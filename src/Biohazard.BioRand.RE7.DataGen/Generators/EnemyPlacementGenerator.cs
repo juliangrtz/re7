@@ -77,7 +77,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         if (enemyId == null)
             return;
 
-        var definition = EnemyDefinitions.Instance.GetById(enemyId.Value);
+        var definition = EnemyDefinitions.Instance.FromId(enemyId.Value);
         if (definition == null)
             return;
 
@@ -102,7 +102,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         if (enemyId == null)
             return;
 
-        var definition = EnemyDefinitions.Instance.GetById(enemyId.Value);
+        var definition = EnemyDefinitions.Instance.FromId(enemyId.Value);
         if (definition == null)
             return;
 

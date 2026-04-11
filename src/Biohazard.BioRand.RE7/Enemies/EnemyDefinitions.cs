@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Enemies.Impl;
-using System.Reflection;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
@@ -48,6 +47,9 @@ public sealed class EnemyDefinitions
         NonBosses = All.Where(em => !em.IsBoss).ToList();
     }
 
-    public IEnemyDefinition? GetById(EnemyID id)
+    public IEnemyDefinition? FromId(EnemyID id)
         => All.FirstOrDefault(em => em?.EnemyId == id, null);
+
+    public IEnemyDefinition? FromId(string id)
+    => All.FirstOrDefault(em => em?.EnemyId.ToString() == id, null);
 }
