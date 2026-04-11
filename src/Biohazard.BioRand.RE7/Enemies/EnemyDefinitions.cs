@@ -27,22 +27,22 @@ public sealed class EnemyDefinitions
     private void Initialize()
     {
         All = [
-            new EvelineFinalBoss(),
+            //new EvelineFinalBoss(),
             new EvelineGrandmother(),
             new FlyingBug(),
             new InsectHive(),
-            new JackChainsaw(),
-            new JackMutated(),
+            new InsectSwarm(),
+            new JackShears(),
+            //new JackMutated(),
             new JackStalker(),
             new MargeMutated(),
-            new MargeStalker(),
+            //new MargeStalker(),
             new MiaChainsaw(),
-            new MiaKnife(),
+            //new MiaKnife(),
             new Impl.Molded(),
             new MoldedBlade(),
             new MoldedQuick(),
             new MoldedFat(),
-            new MoldedFatBoss(),
         ];
         Bosses = All.Where(em => em.IsBoss).ToList();
         NonBosses = All.Where(em => !em.IsBoss).ToList();

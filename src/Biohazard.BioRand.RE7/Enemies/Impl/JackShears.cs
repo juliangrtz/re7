@@ -2,15 +2,15 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class JackChainsaw : IEnemyDefinition
+internal class JackShears : IEnemyDefinition
 {
-    public string Id => "JackChainsaw";
+    public string Id => "JackShears";
 
     public EnemyID EnemyId => EnemyID.Em8000;
 
     public EnemyCategory Category => EnemyCategory.Jack;
 
-    public string Name => "Jack Baker (Chainsaw)";
+    public string Name => "Jack Baker (Scissor Chainsaw)";
 
     public bool IsBoss => true;
 

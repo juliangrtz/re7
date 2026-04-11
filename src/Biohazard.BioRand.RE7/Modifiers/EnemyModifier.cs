@@ -9,6 +9,9 @@ internal class EnemyModifier : Modifier
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
+        if (!randomizer.GetConfigOption<bool>("random-enemies"))
+            return;
+
         var enemyVariety = randomizer.GetConfigOption<int>("enemy-variety");
         var maxPackSize = randomizer.GetConfigOption<int>("enemy-pack-max-size");
 
@@ -34,9 +37,6 @@ internal class EnemyModifier : Modifier
         var ammoOnlyAvailableWeapons = randomizer.GetConfigOption("enemy-drop-ammo-only-available-weapons", true);
         var minAmmoQuantity = randomizer.GetConfigOption("enemy-drop-ammo-min", 0.1);
         var maxAmmoQuantity = randomizer.GetConfigOption("enemy-drop-ammo-max", 1.0);
-
-        if (!randomizer.GetConfigOption<bool>("random-enemies"))
-            return;
 
         var areaService = randomizer.AreaService;
         foreach (var area in areaService.Areas)
