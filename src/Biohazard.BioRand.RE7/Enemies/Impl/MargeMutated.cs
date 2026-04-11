@@ -30,8 +30,10 @@ internal class MargeMutated : IEnemyDefinition
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em3600/em3600resistparameterholder.user");
 
-    public RszGameObject GetPrefab(TemplateService templateService)
-        => templateService.GetObject($"EnemyTemplate_{Id}");
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/chapter/chapter3/enemy_em3600.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class MargeMutatedDirectiveModifier : IDirectiveModifier

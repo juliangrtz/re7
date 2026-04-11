@@ -23,6 +23,11 @@ internal class MoldedQuick : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4100/parameter/resist/em4100resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em4100.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class MoldedQuickDirectiveModifier : IDirectiveModifier

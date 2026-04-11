@@ -43,6 +43,11 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
 
     public string ResistParamsHolderPath
         => PakPath.UserFile($"prefab/character/{SanitizedId}/{SanitizedId}resistparameterholder.user");
+
+    public string OriginalPrefabPath 
+        => PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class InsectsDirectiveModifier : IDirectiveModifier
