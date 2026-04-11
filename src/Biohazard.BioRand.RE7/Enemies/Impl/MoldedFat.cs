@@ -27,6 +27,11 @@ internal class MoldedFat : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em4200.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class MoldedFatBoss : IEnemyDefinition
@@ -54,6 +59,11 @@ internal class MoldedFatBoss : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em4200/parameter/resist/chp3_4_boss/em4200resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em4200.scn");
+
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class MoldedFatDirectiveModifier : IDirectiveModifier

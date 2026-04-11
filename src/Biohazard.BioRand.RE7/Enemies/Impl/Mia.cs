@@ -29,6 +29,11 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em2000/parameter/resist/em2000resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em2000.scn"); // also there is scenes/enemy/em2000chapter4.scn
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class MiaDirectiveModifier : IDirectiveModifier

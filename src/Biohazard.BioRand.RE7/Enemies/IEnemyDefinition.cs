@@ -21,8 +21,9 @@ public interface IEnemyDefinition
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
-    public string OriginalPrefabPath =>
-        PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
+    public string OriginalPrefabPath { get; }
+
+    public bool UsesEnemyGenerator { get; }
 
     public bool IsMolded =>
         Category == EnemyCategory.Molded;

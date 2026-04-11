@@ -27,6 +27,11 @@ internal class JackChainsaw : IEnemyDefinition
 
     public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/chapter/chapter3/enemy_em8000.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class JackChainsawDirectiveModifier : IDirectiveModifier

@@ -24,6 +24,11 @@ internal class MargeStalker : IEnemyDefinition
 
     public string ResistParamsHolderPath 
         => PakPath.UserFile("prefab/character/em3100/em3100resistparameterholder.user");
+
+    public string OriginalPrefabPath
+        => PakPath.SceneFile($"scenes/enemy/em3100.scn");
+
+    public bool UsesEnemyGenerator => false;
 }
 
 internal class MargeStalkerDirectiveModifier : IDirectiveModifier
