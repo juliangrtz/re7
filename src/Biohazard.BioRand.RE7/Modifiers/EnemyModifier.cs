@@ -33,11 +33,6 @@ internal class EnemyModifier : Modifier
 
         var isBalanced = randomizer.GetConfigOption<bool>("balanced-enemies");
 
-        var randomizeEnemyDrops = randomizer.GetConfigOption<bool>("random-enemy-drops");
-        var ammoOnlyAvailableWeapons = randomizer.GetConfigOption("enemy-drop-ammo-only-available-weapons", true);
-        var minAmmoQuantity = randomizer.GetConfigOption("enemy-drop-ammo-min", 0.1);
-        var maxAmmoQuantity = randomizer.GetConfigOption("enemy-drop-ammo-max", 1.0);
-
         var areaService = randomizer.AreaService;
         foreach (var area in areaService.Areas)
         {
