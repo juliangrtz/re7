@@ -31,7 +31,7 @@ internal class JackShears : IEnemyDefinition
     public string OriginalPrefabPath
         => PakPath.SceneFile($"scenes/chapter/chapter3/enemy_em8000.scn");
 
-    public bool UsesEnemyGenerator => false;
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class JackChainsawDirectiveModifier : IDirectiveModifier

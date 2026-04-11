@@ -1937,3 +1937,27 @@ namespace app
     {
     }
 }
+
+namespace app
+{
+    public class EnemyPool
+    {
+        public bool Enabled { get; set; } = new();
+        public System.Collections.Generic.List<System.Guid> ExternalInstancePoolRefs { get; set; } = [];
+        public class AssociateUnit
+        {
+            public RszGameObject poolObject { get; set; }
+            public RszGameObject instanceObject { get; set; }
+        }
+        public class Unit
+        {
+            public string Alias { get; set; } = "";
+            public via.Prefab EnemyPrefab { get; set; }
+            public System.Numerics.Vector3 EnemyPosition { get; set; }
+            public System.Numerics.Quaternion EnemyRotation { get; set; }
+        }
+    }
+    public class CH8EnemyPool : EnemyPool
+    {
+    }
+}
