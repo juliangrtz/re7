@@ -33,7 +33,7 @@ internal class MargeMutated : IEnemyDefinition
     public string OriginalPrefabPath
         => PakPath.SceneFile($"scenes/enemy/chapter/chapter3/enemy_em3600.scn");
 
-    public bool UsesEnemyGenerator => false;
+    public bool UsesEnemyGenerator => true;
 }
 
 internal class MargeMutatedDirectiveModifier : IDirectiveModifier
