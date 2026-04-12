@@ -6,7 +6,7 @@ internal class JackShears : IEnemyDefinition
 {
     public string Id => "JackShears";
 
-    public EnemyID EnemyId => EnemyID.Em8000;
+    public EnemyID EnemyId => EnemyID.Em8001;
 
     public EnemyCategory Category => EnemyCategory.Jack;
 
@@ -34,10 +34,10 @@ internal class JackShears : IEnemyDefinition
     public bool UsesEnemyGenerator => true;
 }
 
-internal class JackChainsawDirectiveModifier : IDirectiveModifier
+internal class JackShearsDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
-        => enemy.EnemyId == EnemyID.Em8000;
+        => enemy.EnemyId == EnemyID.Em8001;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
