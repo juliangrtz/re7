@@ -1961,3 +1961,12 @@ namespace app
     {
     }
 }
+
+namespace app
+{
+    public class EnemySave
+    {
+        public bool Enabled { get; set; } = new();
+        public System.Guid SaveGUID { get; set; }
+    }
+}

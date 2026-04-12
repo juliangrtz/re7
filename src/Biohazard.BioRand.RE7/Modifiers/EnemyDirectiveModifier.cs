@@ -9,7 +9,7 @@ internal class EnemyDirectiveModifier : Modifier
     [
         new EvelineFinalBossDirectiveModifier(),
         new InsectsDirectiveModifier(),
-        new JackChainsawDirectiveModifier(),
+        new JackShearsDirectiveModifier(),
         new JackMutatedDirectiveModifier(),
         new JackStalkerDirectiveModifier(),
         new MargeMutatedDirectiveModifier(),
