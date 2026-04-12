@@ -67,6 +67,29 @@ internal class EnemyModifier : Modifier
         );
     }
 
+    private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
+
+    private RszGameObject GetOrCreateTemplate(
+        Randomizer randomizer,
+        string enemyId,
+        Guid newGuid,
+        via.Transform transform)
+    {
+        if (!_generatorTemplateCache.TryGetValue(enemyId, out var baseTemplate))
+        {
+            baseTemplate = randomizer.TemplateService
+                .GetEnemyTemplate(enemyId)
+                .WithName(enemyId);
+
+            _generatorTemplateCache[enemyId] = baseTemplate;
+        }
+
+        return baseTemplate
+            .WithGuid(newGuid)
+            .WithName(enemyId)
+            .AddOrUpdateComponent(transform);
+    }
+
     private void PerformReplacement(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -75,7 +98,6 @@ internal class EnemyModifier : Modifier
         Guid spawnInfoGuid,
         IEnemyDefinition newEnemy)
     {
-        // TODO Log Guids
         randomizer.FileRepository.ModifyScnFile(path, randomizer.IsOnRaytracingVersion, scene =>
         {
             var rng = randomizer.GetRng("modifier/enemy-guids");
@@ -83,42 +105,49 @@ internal class EnemyModifier : Modifier
             var enemyId = newEnemy.EnemyId.ToString();
             var spawnInfoGameObject = scene.FindGameObject(spawnInfoGuid)!;
             var transform = spawnInfoGameObject.FindComponent<via.Transform>()!;
-            var newGuid = rng.NextGuid();
-            var template = randomizer.TemplateService.GetEnemyTemplate(enemyId);
-            template = template.WithName(enemyId);
-            template = template.WithGuid(newGuid);
-            template = template.AddOrUpdateComponent(transform);
 
-            // TODO Health
+            var newGuid = Guid.NewGuid();
+
+            logger.LogLine($"GUID: {spawnInfoGuid} -> {newGuid}");
+
+            var template = GetOrCreateTemplate(randomizer, enemyId, newGuid, transform);
 
             if (newEnemy.UsesEnemyGenerator)
             {
                 var spawnInfo = spawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
 
-                //RszGameObject? go;
-                //while ((go = scene.FindGameObject(spawnInfo.UnitAlias)) != null)
-                //{
-                //    scene = scene.RemoveGameObject(go.Guid);
-                //}
+                var newSpawnInfo = randomizer.TemplateService
+                    .GetEnemySpawnInfo(enemyId)
+                    .WithGuid(spawnInfoGameObject.Guid);
 
-                var newSpawnInfo = randomizer.TemplateService.GetEnemySpawnInfo(enemyId);
-                newSpawnInfo = newSpawnInfo.WithGuid(spawnInfoGameObject.Guid);
                 spawnInfo.UnitAlias = enemyId;
-                scene = scene.ReplaceGameObject(spawnInfoGameObject.Guid, newSpawnInfo, keepChildren: false);
+
+                scene = scene.ReplaceGameObject(
+                    spawnInfoGameObject.Guid,
+                    newSpawnInfo,
+                    keepChildren: false);
 
                 var generator = scene.FindGameObject(enemyGenerator.GameObject.Guid)!;
-                var pool = generator.Children.Single(c => c.FindComponent<app.EnemyPool>() != null);
-                pool.Children = pool.Children.Add(template);
-                scene = scene.UpdateGameObject(pool);
+
+                var poolObject = generator.Children
+                    .Select(child => new { Child = child, Pool = child.FindComponent<app.EnemyPool>() })
+                    .Where(x => x.Pool != null)
+                    .Select(x => x.Child)
+                    .Single();
+
+                var poolComponent = poolObject.FindComponent<app.EnemyPool>()!;
+
+                poolComponent.ExternalInstancePoolRefs.Clear();
+                poolObject = poolObject.AddOrUpdateComponent(poolComponent);
+                poolObject.Children = poolObject.Children.Add(template);
+
+                scene = scene.UpdateGameObject(poolObject);
             }
             else
             {
-                //scene = scene.RemoveGameObject(spawnInfoGuid);
-                spawnInfoGameObject = spawnInfoGameObject.WithGuid(Guid.Empty);
-                scene = scene.UpdateGameObject(spawnInfoGameObject);
-
+                scene = scene.RemoveGameObject(spawnInfoGameObject.Guid);
                 template = template.WithName($"{template.Name}_Static");
-                scene = scene.Add(template); // TODO Use BioRand folder instead
+                scene = scene.Add(template);
             }
 
             return scene;
