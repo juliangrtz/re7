@@ -9,7 +9,7 @@ internal class EnemyGeneratorWrapper
     public RszGameObject GameObject { get; private set; }
     public app.EnemyGenerator Generator { get; private set; }
     public ImmutableArray<RszGameObject> EnemyGameObjects { get; private set; }
-    public ImmutableArray<app.EnemySpawnInfo> EnemySpawnInfos { get; private set; }
+    public ImmutableArray<RszGameObject> EnemySpawnInfos { get; private set; }
 
     public EnemyGeneratorWrapper(Area area, RszGameObject gameObject, app.EnemyGenerator enemyGeneratorComponent)
     {
@@ -28,7 +28,7 @@ internal class EnemyGeneratorWrapper
     private void ScanEnemies()
     {
         var enemies = ImmutableArray.CreateBuilder<RszGameObject>();
-        var enemySpawnInfos = ImmutableArray.CreateBuilder<app.EnemySpawnInfo>();
+        var enemySpawnInfos = ImmutableArray.CreateBuilder<RszGameObject>();
 
         GameObject.VisitGameObjects(go =>
         {
@@ -42,7 +42,7 @@ internal class EnemyGeneratorWrapper
             var spawnInfo = go.FindComponent<app.EnemySpawnInfo>();
             if (spawnInfo != null)
             {
-                enemySpawnInfos.Add(spawnInfo);
+                enemySpawnInfos.Add(go);
             }
         });
 

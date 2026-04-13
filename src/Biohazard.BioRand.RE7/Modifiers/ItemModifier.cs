@@ -206,7 +206,7 @@ internal class ItemModifier : Modifier
 
         // Extra items
         itemPlacementService.ItemPlacements
-            .Where(placement => placement.Enabled && placement.IsExtra)
+            .Where(placement => placement.Enabled && placement.IsExtra && !string.IsNullOrEmpty(placement.SceneFile))
             .ToList()
             .ForEach(placement => HandleExtraItem(randomizer, logger, rng, placement, randomItemSettings));
 

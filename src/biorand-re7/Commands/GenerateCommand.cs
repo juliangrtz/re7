@@ -5,6 +5,7 @@ using Spectre.Console;
 using Spectre.Console.Cli;
 using System.Collections.Immutable;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO.Compression;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -273,15 +274,20 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
     {
         public void RunTask(string text, Action cb)
         {
+            long timeInMs = 0;
             AnsiConsole
                 .Status()
                 .Spinner(Spinner.Known.Dots2)
                 .SpinnerStyle(Style.Parse("teal"))
                 .Start(text, ctx =>
                 {
+                    var sw = new Stopwatch();
+                    sw.Start();
                     cb();
+                    sw.Stop();
+                    timeInMs = sw.ElapsedMilliseconds;
                 });
-            AnsiConsole.MarkupLine($"[lime]:check_box_with_check:  {text}[/]");
+            AnsiConsole.MarkupLine($"[lime]:check_box_with_check:  {text} ({timeInMs} ms)[/]");
         }
     }
 

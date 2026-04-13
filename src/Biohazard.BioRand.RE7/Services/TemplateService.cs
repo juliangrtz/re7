@@ -43,6 +43,9 @@ internal class TemplateService
     public RszGameObject GetEnemyTemplate(string enemyID)
         => GetObject($"EnemyTemplate_{enemyID}");
 
+    public RszGameObject GetEnemySpawnInfo(string enemyID)
+        => GetObject($"EnemySpawnInfo_{enemyID}");
+
     // TODO: DLC item support
     public RszGameObject GetItemTemplate(string id)
     {
