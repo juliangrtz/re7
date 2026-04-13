@@ -147,7 +147,7 @@ internal class WeaponModifier : Modifier
 
         foreach (var definition in _weaponDefinitions.WeaponDefinitions)
         {
-            if (definition.UserParamsPath == null)
+            if (definition.UserParamsPath == null || !definition.IsGun)
             {
                 continue;
             }
