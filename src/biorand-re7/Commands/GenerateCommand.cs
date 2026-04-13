@@ -82,75 +82,82 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         }
 
         AnsiConsole.MarkupLine($"Generating seed {input.Seed}...");
-        var output = randomizer.Randomize(input);
 
-        foreach (var asset in output.Assets)
+        try
         {
-            asset.Data.WriteToFile(asset.FileName);
-        }
-
-        // Find pak file
-        var pakFile = GetPakFile(output.Assets.First(x => x.Key == "1-patch").Data);
-        var zipFile = output.Assets.First(x => x.Key == "2-fluffy").Data;
-
-        reporter.RunTask($"Extracting log files", () =>
-        {
-            ExtractLogFiles(zipFile, Environment.CurrentDirectory);
-        });
-
-        var outputPath = settings.OutputPath!;
-        if (outputPath.EndsWith(".pak"))
-        {
-            reporter.RunTask($"Writing {outputPath}", () =>
+            var output = randomizer.Randomize(input);
+            foreach (var asset in output.Assets)
             {
-#if DEBUG
-                if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
-                    return;
-#endif
-                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-                pakFile.WriteToFile(outputPath);
+                asset.Data.WriteToFile(asset.FileName);
+            }
+
+            // Find pak file
+            var pakFile = GetPakFile(output.Assets.First(x => x.Key == "1-patch").Data);
+            var zipFile = output.Assets.First(x => x.Key == "2-fluffy").Data;
+
+            reporter.RunTask($"Extracting log files", () =>
+            {
+                ExtractLogFiles(zipFile, Environment.CurrentDirectory);
             });
-#if DEBUG
-            reporter.RunTask($"Extracting files", () =>
-            {
-                var nativesDir = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                    ".biorand",
-                    "extract"
-                    );
 
-                if (Directory.Exists(nativesDir))
+            var outputPath = settings.OutputPath!;
+            if (outputPath.EndsWith(".pak"))
+            {
+                reporter.RunTask($"Writing {outputPath}", () =>
                 {
-                    Directory.Delete(nativesDir, true);
-                }
-
-                ExtractNatives(zipFile, Path.GetDirectoryName(nativesDir)!);
-            });
+#if DEBUG
+                    if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
+                        return;
 #endif
-        }
-        else if (outputPath.EndsWith(".zip"))
-        {
-            reporter.RunTask($"Writing {outputPath}", () =>
-            {
-                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-                zipFile.WriteToFile(outputPath);
-            });
-        }
-        else
-        {
-            reporter.RunTask($"Writing {outputPath}", () =>
-            {
-                using var zip = new ZipArchive(new MemoryStream(zipFile));
-                foreach (var entry in zip.Entries)
+                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                    pakFile.WriteToFile(outputPath);
+                });
+#if DEBUG
+                reporter.RunTask($"Extracting files", () =>
                 {
-                    if (!entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase))
-                        continue;
+                    var nativesDir = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                        ".biorand",
+                        "extract"
+                        );
 
-                    var destinationPath = Path.Combine(outputPath, entry.FullName);
-                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-                    entry.ExtractToFile(destinationPath, overwrite: true);
-                }
-            });
+                    if (Directory.Exists(nativesDir))
+                    {
+                        Directory.Delete(nativesDir, true);
+                    }
+
+                    ExtractNatives(zipFile, Path.GetDirectoryName(nativesDir)!);
+                });
+#endif
+            }
+            else if (outputPath.EndsWith(".zip"))
+            {
+                reporter.RunTask($"Writing {outputPath}", () =>
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                    zipFile.WriteToFile(outputPath);
+                });
+            }
+            else
+            {
+                reporter.RunTask($"Writing {outputPath}", () =>
+                {
+                    using var zip = new ZipArchive(new MemoryStream(zipFile));
+                    foreach (var entry in zip.Entries)
+                    {
+                        if (!entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        var destinationPath = Path.Combine(outputPath, entry.FullName);
+                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+                        entry.ExtractToFile(destinationPath, overwrite: true);
+                    }
+                });
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new RandomizerUserException("Randomization failed: " + ex);
         }
         return 0;
     }
