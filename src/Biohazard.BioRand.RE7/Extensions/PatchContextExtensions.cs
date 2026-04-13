@@ -1,5 +1,7 @@
-﻿using IntelOrca.Biohazard.REE.Messages;
+﻿using IntelOrca.Biohazard.BioRand;
+using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Diagnostics;
 
 namespace Biohazard.BioRand.RE7.Extensions;
 
@@ -33,8 +35,10 @@ public static class PatchContextExtensions
     public static ScnFile GetScnFile(this IPatchContext context, string path, bool isRt)
     {
         var data = context.GetFile(path);
+        var stackTrace = new StackTrace();
+        // Get calling method name
         return data == null
-            ? throw new Exception("Unable to read data file.")
+            ? throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}")
             : new ScnFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, data);
     }
 
