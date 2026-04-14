@@ -220,6 +220,7 @@ internal class ItemModifier : Modifier
                 {
                     var (definition, placement) = tuple;
                     return definition != null
+                        && placement.Dlc == null
                         && !placement.IsExtra
                         && placement.Enabled
                         && itemRandomizer.IsItemAllowed(definition)
