@@ -15,10 +15,10 @@ public static class AmmoTypes
             => new Lookup(ItemID.HandgunBullet, ItemID.HandgunBulletL),
         WeaponID.ShotGun or WeaponID.Shotgun_M37 or WeaponID.Shotgun_M37S or WeaponID.Shotgun_DB
             => new Lookup(ItemID.ShotgunBullet, ItemID.ShotgunBullet),
-        WeaponID.MachineGun => new Lookup(ItemID.MachineGunBullet, ItemID.MachineGunBullet),
-        WeaponID.Magnum => new Lookup(ItemID.MagnumBullet, ItemID.MagnumBullet),
+        WeaponID.MachineGun => new Lookup(ItemID.MachineGunBullet, ItemID.NoName),
+        WeaponID.Magnum => new Lookup(ItemID.MagnumBullet, ItemID.NoName),
         WeaponID.GrenadeLauncher => new Lookup(ItemID.NoName, ItemID.NoName),
-        WeaponID.Burner => new Lookup(ItemID.BurnerBullet, ItemID.BurnerBullet),
+        WeaponID.Burner => new Lookup(ItemID.BurnerBullet, ItemID.NoName),
         _ => null
     };
 }
