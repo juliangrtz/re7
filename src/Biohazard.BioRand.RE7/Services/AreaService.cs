@@ -16,6 +16,7 @@ internal class AreaService(Randomizer randomizer)
         var areaRepo = AreaDefinitionRepository.Default;
         Areas = areaRepo.All
             .Where(a => a.Dlc == null)
+            .Where(a => !a.Path.Contains("copyasset"))
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
             .OrderBy(x => x.Path)
