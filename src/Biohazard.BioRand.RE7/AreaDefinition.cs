@@ -10,10 +10,6 @@ public class AreaDefinition
     public Difficulty? OnlyDifficulty { get; set; }
     public DlcType? Dlc { get; set; }
     public AreaKind Kind { get; set; }
-
-    [JsonIgnore]
-    public bool IsCopy
-        => Path.Contains("/copyasset/") || Path.Contains("/copyscene/");
 }
 
 public enum AreaKind
