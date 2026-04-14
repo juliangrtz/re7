@@ -2,6 +2,7 @@
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
+using Enums.via.motion.ContinueOptions;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
@@ -40,6 +41,8 @@ internal class BirdCageModifier : Modifier
         new Guid("73297c81-9232-086a-2322-7f32bcbb0e68"),
         new Guid("79dc7b86-d066-058b-3037-204aa7216c9b"),
     ];
+
+    private static Guid MadhouseScorpionKeyBirdCageGuid = new Guid("c5f2b3fd-0732-468a-b8d6-017a8f1f20f2");
 
     private readonly Regex _birdCageRegex = new Regex("^sm.*CoinBox((?!Interact).)*$", RegexOptions.Compiled);
     private readonly static ItemDefinitionRepository _items = ItemDefinitionRepository.Default;
@@ -121,6 +124,9 @@ internal class BirdCageModifier : Modifier
             {
                 if (_birdCageRegex.IsMatch(gameObject.Name))
                 {
+                    if (gameObject.Guid == MadhouseScorpionKeyBirdCageGuid)
+                        return; // Don't randomize scorpion key on Madhouse
+
                     var birdCage = new BirdCage(randomizer, path, gameObject, preserveItemModels);
                     birdCages.Add(birdCage);
 
