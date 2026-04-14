@@ -2945,18 +2945,8 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom1/c03_leftarea1fpuzzleroom1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_gh2fsaferoom02/c03_gh2fsaferoom02.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_anywhere/vfx_c01_anywhere.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -2986,11 +2976,6 @@
     "Path": "natives/stm/scenes/items/resources_chapter7_1/gimmickopener.scn.20",
     "Dlc": "Bedroom",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_bathroom01/c01_bathroom01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/c08_storage05_itemset.scn.20",
@@ -3044,11 +3029,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor03/c01_corridor03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/8/vfx_c03_taxidermyroom.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -3072,11 +3052,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightarea1foffice/c03_rightarea1foffice.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbath/0/c03_mainhouse2fbath_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3121,11 +3096,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/vfx_c03_taxidermyroom1f.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/1/0/1/0/vfx_c03_oldhousecave02.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -3133,11 +3103,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_gh1flowerroom01/0/c03_gh1flowerroom01_light.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cullingcollisioncowshed/c03_cullingcollisioncowshed.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3215,34 +3180,14 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom06/c03_cowroom06.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_mineterminal01/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2fhallway/c03_leftarea2fhallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/c03_mainhousoutsideterrace2f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_4_cullingcollision.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids02/c03_mainhouse2fkids02.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3261,16 +3206,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_gardenarea1_low01/c03_gardenarea1_low01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_cowshed/1/vfx_c03_cowroom01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse2fhallway2/0/c03_mainhouse2fhallway2_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -3281,18 +3216,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1i/c01_b1i.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_steamboat3f.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fbackstage/c03_leftarea1fbackstage.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3344,11 +3269,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom01/c03_cowroom01_light/c03_cowroom01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/levelfsm_c08.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -3376,11 +3296,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cullingcollisionlucasarea/c03_cullingcollisionlucasarea.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage01/c08_labopassage01_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -3406,11 +3321,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1foffice/0/c03_rightarea1foffice_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/birthday/stage2/stage2_seta.scn.20",
     "Dlc": "Jacks55thBirthday",
     "Kind": "General"
@@ -3418,11 +3328,6 @@
   {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/tutorial_c08.scn.20",
     "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1i/c01_b1i_light/c01_b1i_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3449,18 +3354,8 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f2/c03_mainhousoutsideterrace2f2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_moldswampground03.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/occ_c03/occ_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3478,11 +3373,6 @@
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/fusech8.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/vfx_c03_lucasarea.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/casual.scn.20",
@@ -3527,29 +3417,14 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbath/c03_mainhouse2fbath.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/levelfsm_c07_3_normalmode.scn.20",
     "Dlc": "Nightmare",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway3/c03_rightareab1fhallway3.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/c08_storage04_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom2/c03_leftarea2froom2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_storage01.scn.20",
@@ -3613,39 +3488,9 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/2/vfx_c03_rightareab1ffreezer.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/vfx_c03_taxidermyroomb1f.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01_mapzone/c01_living01_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1d/c01_b1d.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/1/vfx_c03_mainhouse2f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningroom01/c08_miningroom01_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_loadcollision/c01_loadcollision.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_oldhouseoutside.scn.20",
@@ -3655,11 +3500,6 @@
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fhole01.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/0/vfx_c03_rightarea1fparlor.scn.20",
-    "Dlc": "NotAHero",
     "Kind": "General"
   },
   {
@@ -3693,16 +3533,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/0/0/1/lightasset_mainhousoutsideterrace2f_inside.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbedroom/0/c03_mainhouse2fbedroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "EndOfZoe",
@@ -3716,11 +3546,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/npc/npc_common.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fparlor/0/c03_rightarea1fparlor_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3745,38 +3570,13 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/1/c03_mainhouse1fhallway_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarageoutside/c03_mainhouse1fgarageoutside.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/items/resource/ch9_wp003.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02_mapzone/c01_corridor02_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/1/ibl_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/itemset_resident.scn.20",
     "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2ftvroom/c03_leftarea2ftvroom_light/c03_leftarea2ftvroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3788,11 +3588,6 @@
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_collapsehut.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgaragehallway/0/c03_mainhouse1fgaragehallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -3815,11 +3610,6 @@
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/c08_traincollapse01_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids/c03_mainhouse2fkids.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/env/env_c09.scn.20",
@@ -3992,11 +3782,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/c03_mainhouse1fhallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage03/casual.scn.20",
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
@@ -4010,11 +3795,6 @@
   {
     "Path": "natives/stm/scenes/imd/aimap_imd/gardenarea.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/1/probe_gardenarea1.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4036,11 +3816,6 @@
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/c09_2_soft_camparea.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/3/eventlight_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_miningpassage06.scn.20",
@@ -4073,11 +3848,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2fhallway/c03_leftarea2fhallway_light/c03_leftarea2fhallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/items/resource/ch9_wp005.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
@@ -4100,11 +3870,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/light_c01/occ_c01/occ_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_camparea.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -4112,11 +3877,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fhallway_7_1.scn.20",
     "Dlc": "Bedroom",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmorgue/0/c03_rightareab1fmorgue_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4157,11 +3917,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1g/c01_b1g_light/c01_b1g_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse2fstoreroom/0/c03_mainhouse2fstoreroom_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -4179,11 +3934,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_gardenarea1/1/c03_gardenarea1_mapzone.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstudy/c03_rightarea1fstudy.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4224,11 +3974,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway2/0/c03_rightareab1fhallway2_light.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fmonitorroom/c03_rightarea1fmonitorroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4389,11 +4134,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fpantry/c03_mainhouse1fpantry.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/birthday/stage3/stage3_common.scn.20",
     "Dlc": "Jacks55thBirthday",
     "Kind": "General"
@@ -4411,11 +4151,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fwash_7_4.scn.20",
     "Dlc": "Daughters",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/light_c01/zone_c01/zone_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4469,11 +4204,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom03/c03_cowroom03_light/c03_cowroom03_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_mainhousehall.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -4481,11 +4211,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/c09_4_levelprop.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom1/0/c03_rightareab1fstorageroom1_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4548,11 +4273,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1ftraproom/c03_leftarea1ftraproom_light/c03_leftarea1ftraproom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/c08_loadcollision.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -4566,11 +4286,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/light_c03/4/0/5/probe_mainhousehall.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/vfx_c03_mainhousearea.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4589,20 +4304,10 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway2/c03_rightarea1fhallway2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/c08_enemyfsmforhard.scn.20",
     "OnlyDifficulty": "Madhouse",
     "Dlc": "NotAHero",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f_light/c01_b1f_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/hard.scn.20",
@@ -4638,11 +4343,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway/0/c03_mainhouse2fhallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace2f3.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -4655,11 +4355,6 @@
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_cemetery.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/0/c03_cullingcollisionboathouse.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4689,18 +4384,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom2/c03_leftarea1fpuzzleroomballoon/c03_leftarea1fpuzzleroomballoon.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_shieldmachine_center.scn.20",
     "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/1/c03_mainhousehall_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4709,28 +4394,13 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1e/c01_b1e_light/c01_b1e_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_cave03.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2ftvroom/c03_leftarea2ftvroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/soft_imd.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/1/0/vfx_c03_mainhouse2fbath.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -4745,11 +4415,6 @@
   },
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_labopassage04.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/4/vfx_c03_rightareab1fpowerroom.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
   },
@@ -4791,11 +4456,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1ftraproom/c03_leftarea1ftraproom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse1fwash/0/c03_mainhouse1fwash_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -4809,11 +4469,6 @@
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage04/c08_labopassage04_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1b/c01_b1b_light/c01_b1b_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage01/normal.scn.20",
@@ -4852,21 +4507,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/light_c01/probe_c01/probe_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhousehall.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom2/c03_leftarea2froom2_light/c03_leftarea2froom2_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/light_c03/4/1/0/probe_mainhouse2fhallway.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -4897,11 +4537,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/0/0/vfx_c03_gardenarea1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
@@ -4922,16 +4557,6 @@
     "Path": "natives/stm/ch9/scenes/items/resource/numaitem000.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway/c03_mainhouse2fhallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/birthday/stage.scn.20",
@@ -4959,16 +4584,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/6/c03_cullingcollisioncowshed.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightarea1fopeninghallway/c03_rightarea1fopeninghallway.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -4978,11 +4593,6 @@
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/ui_c03/map_stage2_setb.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/c09_1_levelprop.scn.20",
@@ -5047,19 +4657,9 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/vfx_c03_mainhouse1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/aimap_c09_3.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom05/c03_cowroom05_light/c03_cowroom05_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fgarage_7_4.scn.20",
@@ -5252,11 +4852,6 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom05/c03_cowroom05.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_cavepassage04.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -5265,11 +4860,6 @@
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/aimap_c09_2.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsidesub01/c03_mainhousoutsidesub01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_2/chapter7_2.scn.20",
@@ -5334,11 +4924,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f3/c03_mainhousoutsideterrace2f3.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter7/c07_rightareab1fmoldedcreationroom_7_3.scn.20",
     "Dlc": "Nightmare",
     "Kind": "General"
@@ -5354,11 +4939,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousestair01/c03_mainhousestair01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage04/casual.scn.20",
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
@@ -5370,11 +4950,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmoldedcreationroom/0/c03_rightareab1fmoldedcreationroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_2/em9803.scn.20",
     "Dlc": "TwentyOne",
     "Kind": "General"
@@ -5382,11 +4957,6 @@
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_train01.scn.20",
     "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids02/0/c03_mainhouse2fkids02_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -5421,11 +4991,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fstoreroom/c03_mainhouse2fstoreroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave5.scn.20",
     "Dlc": "Nightmare",
     "Kind": "General"
@@ -5438,11 +5003,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhousestair01_7_1.scn.20",
     "Dlc": "Bedroom",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowshedoutside01/c03_cowshedoutside01.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -5482,16 +5042,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom01/c03_cowroom01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway2/c03_mainhouse2fhallway2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_swamphut02.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -5517,11 +5067,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway2/0/c03_mainhouse2fhallway2_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/hard.scn.20",
     "OnlyDifficulty": "Madhouse",
     "Dlc": "NotAHero",
@@ -5531,16 +5076,6 @@
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage02/c08_labopassage02_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway1/0/c03_rightarea1fhallway1_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fstoreroom/0/c03_mainhouse2fstoreroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightarea1fparlor/0/c03_rightarea1fparlor_light.scn.20",
@@ -5584,11 +5119,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1j/c01_b1j.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/chapter9.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -5610,11 +5140,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/0/vfx_c03_mainhouse1fpantry.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/easy.scn.20",
     "OnlyDifficulty": "Easy",
     "Dlc": "EndOfZoe",
@@ -5623,11 +5148,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/env/env_c09_4.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/light_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -5724,11 +5244,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fopeninghallway/0/c03_rightarea1fopeninghallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1fmoldedcreationroom/0/c03_rightareab1fmoldedcreationroom_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -5752,11 +5267,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisionmainhouse2.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f_mapzone/c01_b1f_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -5796,16 +5306,6 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fliving/c03_mainhouse1fliving.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway1/c03_rightarea1fhallway1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "EndOfZoe",
@@ -5814,11 +5314,6 @@
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_campareatree01.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom1/c03_leftarea1fpuzzleroom1_light/c03_leftarea1fpuzzleroom1_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -5846,11 +5341,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/1/1/probe_rightareab1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/hard.scn.20",
@@ -5947,11 +5437,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/1/c03_cullingcollisiongareden.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/items/itemresources_chapter8.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -5959,16 +5444,6 @@
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_waterwaytree03.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom2/c03_rightareab1fstorageroom2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmorgue/c03_rightareab1fmorgue.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6006,11 +5481,6 @@
     "OnlyDifficulty": "Madhouse",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fkitchen01.scn.20",
@@ -6060,11 +5530,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmoldedcreationroom/c03_rightareab1fmoldedcreationroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_labo03.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -6085,11 +5550,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fhallway/c03_leftarea1fhallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/c07_3_soft.scn.20",
     "Dlc": "Nightmare",
     "Kind": "General"
@@ -6100,20 +5560,10 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1b/c01_b1b.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/5/c03_cullingcollisiontaxidermyroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/main400generator.scn.20",
@@ -6125,16 +5575,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_1f/vfx_c01_1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/ui_c03/map_stage3_setb.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/c09_3_soft_moldswamp.scn.20",
@@ -6151,11 +5591,6 @@
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_other1/vfx_c01_other1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01tree02.scn.20",
@@ -6178,21 +5613,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_kitchen01/c01_kitchen01_light/c01_kitchen01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fmonitorroom/0/c03_rightarea1fmonitorroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/ibl_c03/ibl_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/chrishandgun.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -6203,23 +5623,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/ui_c03/map_stage2_seta.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstorageroom/0/c03_rightarea1fstorageroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/4/0/0/vfx_c03_mainhouse1fpantry.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/vfx_c03_rightareab1fmoldedcreationroom/vfx_c03_rightareab1fmoldedcreationroom.scn.20",
-    "Dlc": "NotAHero",
     "Kind": "General"
   },
   {
@@ -6249,11 +5654,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarage/0/c03_mainhouse1fgarage_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_storagepassage01.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -6274,18 +5674,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway3/0/c03_rightareab1fhallway3_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter7/c07_leftarea1fpuzzleroom2_7_2.scn.20",
     "Dlc": "TwentyOne",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_2f/c01_2f.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6299,24 +5689,9 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstoreroom/c03_rightareab1fstoreroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_bathroom01/c01_bathroom01_light/c01_bathroom01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm_survivalmode.scn.20",
     "Dlc": "TwentyOne",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowhallway01/c03_cowhallway01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/imd/copyscene/sound_c03/3/snd_load_progression_chapter3_3.scn.20",
@@ -6377,11 +5752,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway1/0/c03_rightareab1fhallway1_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/files/c09_fileresource.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -6408,17 +5778,7 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway4/0/c03_rightareab1fhallway4_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/birthday/stage2/stage2_setb.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/probe.scn.20",
     "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
@@ -6439,11 +5799,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway4/c03_rightareab1fhallway4.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/ff000/c01_outside08.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -6460,11 +5815,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstudy/0/c03_rightarea1fstudy_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/light_c08.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -6472,16 +5822,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/cullingcollision/c09_1/c09_1_cullingcollision.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1h/c01_b1h_light/c01_b1h_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fliving/0/c03_mainhouse1fliving_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6498,11 +5838,6 @@
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave01/c08_cave01_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fplay/c03_mainhouse2fplay.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/5/0/0/vfx_c03_gardenarea1.scn.20",
@@ -6543,11 +5878,6 @@
   {
     "Path": "natives/stm/scenes/imd/aimap_imd/lucasarea.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fpowerroom/c03_rightareab1fpowerroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6599,11 +5929,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/cullingcollision/c09_2/c09_2_cullingcollision.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -6616,11 +5941,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace1f/0/c03_mainhousoutsideterrace1f_light.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom1/c03_leftarea2froom1_light/c03_leftarea2froom1_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6642,21 +5962,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/sound_c03/5/snd_load_progression_chapter3_5.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor03/c01_corridor03_light/c01_corridor03_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/2/c03_cullingcollisiongh.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/c03_cullingcollision.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -6698,11 +6003,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutside/c03_mainhousoutside.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter7/c07_rightarea1fhallway2_7_3.scn.20",
     "Dlc": "Nightmare",
     "Kind": "General"
@@ -6730,11 +6030,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fgrandma/0/c03_mainhouse2fgrandma_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse1fldk/0/c03_mainhouse1fldk_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -6743,11 +6038,6 @@
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/albertshotgunbullet.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage05/normal.scn.20",
@@ -6772,11 +6062,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowhallway01/c03_cowhallway01_light/c03_cowhallway01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_campareaground.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -6786,16 +6071,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/0/vfx_c03_other.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1e/c01_b1e.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse2fplay/0/c03_mainhouse2fplay_light.scn.20",
@@ -6828,16 +6103,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1c/c01_b1c.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom2/0/c03_rightareab1fstorageroom2_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/enemy/em8100.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Enemy"
@@ -6864,11 +6129,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01_light/c03_cowshed01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisiongareden.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -6878,11 +6138,6 @@
     "OnlyDifficulty": "Madhouse",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01_mapzone/c03_cowshed01_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/normal.scn.20",
@@ -6923,21 +6178,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom02/c03_cowroom02_light/c03_cowroom02_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/0/occ_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway2/0/c03_rightareab1fhallway2_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_4/levelfsm_c07_4.scn.20",
     "Dlc": "Daughters",
     "Kind": "General"
@@ -6960,11 +6200,6 @@
   },
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_mine01.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/3/vfx_c03_rightareab1fstorageroom2.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
   },
@@ -6995,11 +6230,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstorageroom/c03_rightarea1fstorageroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/items/resource/numaitem013.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
@@ -7021,11 +6251,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway2/0/c03_rightarea1fhallway2_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/c09_3_enemyset_climbhut.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
@@ -7041,11 +6266,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhouse1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/hard.scn.20",
@@ -7096,18 +6316,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/light_c01/ibl_c01/ibl_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_swamphut01.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01_light/c01_living01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -7142,11 +6352,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom1/c03_leftarea2froom1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_caveev01.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -7172,11 +6377,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbedroom/c03_mainhouse2fbedroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter1/c01_outside09.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -7192,28 +6392,8 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_shadow01/c01_shadow01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/light_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_3f/c01_3f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/2/0/vfx_c03_greenhouse1f.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1foffice/c03_rightarea1foffice.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -7249,16 +6429,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01_mapzone/c01_corridor01_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom03/c03_cowroom03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
@@ -7279,25 +6449,10 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_kitchen01/c01_kitchen01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/normal.scn.20",
     "OnlyDifficulty": "Normal",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/vfx_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_cowshed/vfx_c03_cowshed.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/c09_3_soft_church.scn.20",
@@ -7310,24 +6465,9 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/ui_c01/map_stage1_setb.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1ffreezer/c03_rightareab1ffreezer.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/chapter/chapter8/enemy_c08.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/0/c03_mainhousehall_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_bakerroad02.scn.20",
@@ -7350,11 +6490,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/items/resource/numaitem002.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
@@ -7369,11 +6504,6 @@
     "OnlyDifficulty": "Easy",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway2/c03_rightareab1fhallway2.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/items/resources_chapter7_1/clockhand.scn.20",
@@ -7491,11 +6621,6 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fopeninghallway/c03_rightarea1fopeninghallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/6/vfx_c03_cowshed.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -7505,11 +6630,6 @@
     "OnlyDifficulty": "Madhouse",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/vfx_c03_maingardenarea.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/scenes/openingmovie.scn.20",
@@ -7534,11 +6654,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_gardenarea1_low02_7_4.scn.20",
     "Dlc": "Daughters",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom2/c03_leftarea1fpuzzleroom2.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -7585,11 +6700,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_rightareab1ffreezer_7_3.scn.20",
     "Dlc": "Nightmare",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1a/c01_b1a_light/c01_b1a_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -7687,11 +6797,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1c/c01_b1c_light/c01_b1c_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse1fgarageoutside/c03_mainhouse1fgarageoutside.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -7728,18 +6833,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway1/c03_rightareab1fhallway1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhousoutside_7_4.scn.20",
     "Dlc": "Daughters",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_cullingcollision/c01_cullingcollision.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -7786,11 +6881,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/ui_c01/map_stage1_seta.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fgarageoutside_7_4.scn.20",
     "Dlc": "Daughters",
     "Kind": "General"
@@ -7826,16 +6916,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fwash/0/c03_mainhouse1fwash_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom06/c03_cowroom06_light/c03_cowroom06_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/c08_miningcollapse01_itemset.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -7862,11 +6942,6 @@
     "OnlyDifficulty": "Madhouse",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/probe.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/normal.scn.20",
@@ -8006,11 +7081,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/c03_mainhousehall.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_2/c07_2_player.scn.20",
     "Dlc": "TwentyOne",
     "Kind": "General"
@@ -8023,11 +7093,6 @@
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace2f_7_4.scn.20",
     "Dlc": "Daughters",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02_light/c01_corridor02_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -8056,11 +7121,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_other/vfx_c03_other.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/hard.scn.20",
     "OnlyDifficulty": "Madhouse",
     "Dlc": "NotAHero",
@@ -8081,16 +7141,6 @@
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/c09_2_soft_steamboat.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fldk/c03_mainhouse1fldk.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/1/vfx_c03_leftarea2froom1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/items/itemresources_chapter7_4.scn.20",
@@ -8175,11 +7225,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/vfx_c03_taxidermyroom.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/8/0/3/vfx_c03_rightareab1fstorageroom2.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -8192,11 +7237,6 @@
   {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_steamboat.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/light_c01/light_c01.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -8219,11 +7259,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgaragehallway/c03_mainhouse1fgaragehallway.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/normal.scn.20",
@@ -8256,11 +7291,6 @@
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fldk/0/c03_mainhouse1fldk_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_gardenarea1_7_4.scn.20",
@@ -8304,11 +7334,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/0/c03_mainhouse1fhallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/thermatebomb.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -8324,16 +7349,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fmonitorroom/c03_leftarea1fmonitorroom.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fgrandma/c03_mainhouse2fgrandma.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave3.scn.20",
     "Dlc": "Nightmare",
     "Kind": "General"
@@ -8341,11 +7356,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1ffreezer/c03_rightareab1ffreezer.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/1/vfx_c03_rightarea1fmonitorroom.scn.20",
-    "Dlc": "NotAHero",
     "Kind": "General"
   },
   {
@@ -8377,11 +7387,6 @@
   },
   {
     "Path": "natives/stm/scenes/birthday/player/player02.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace1f/0/c03_mainhousoutsideterrace1f_light.scn.20",
     "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
@@ -8419,11 +7424,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fpowerroom/0/c03_rightareab1fpowerroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/hard.scn.20",
     "OnlyDifficulty": "Madhouse",
     "Dlc": "EndOfZoe",
@@ -8432,11 +7432,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_mainhouse2fplay/c03_mainhouse2fplay.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1g/c01_b1g.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -8466,16 +7461,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_storeroom01/c01_storeroom01.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_b1/vfx_c01_b1.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/umbrellafile01.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
@@ -8501,11 +7486,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstoreroom/0/c03_rightareab1fstoreroom_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_gardenarea1sub01/c03_gardenarea1sub01.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -8520,11 +7500,6 @@
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/1/vfx_c03_mainhouse1fldk.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/scenes/player.scn.20",
@@ -8580,11 +7555,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fparlor/c03_rightarea1fparlor.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_1/chapter7_1.scn.20",
     "Dlc": "Bedroom",
     "Kind": "General"
@@ -8616,33 +7586,13 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fpantry/0/c03_mainhouse1fpantry_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_miningpassage01.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/2/zone_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_2/em9805.scn.20",
     "Dlc": "TwentyOne",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1j/c01_b1j_light/c01_b1j_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/4/c03_cullingcollisionoldhouse.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -8666,11 +7616,6 @@
     "OnlyDifficulty": "Normal",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_loadcollision/c03_loadcollision.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/scenes/dlc/dlc_chapter9.scn.20",
@@ -8771,16 +7716,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1ffreezer/0/c03_rightareab1ffreezer_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace1f/c03_mainhousoutsideterrace1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/casual.scn.20",
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
@@ -8797,25 +7732,10 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fhallway/c03_leftarea1fhallway_light/c03_leftarea1fhallway_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/0/vfx_c03_rightareab1fhallway4.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/casual.scn.20",
     "OnlyDifficulty": "Easy",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1a/c01_b1a.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/c09_4_soft_bakerroad.scn.20",
@@ -8864,11 +7784,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarage/c03_mainhouse1fgarage.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace1f.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -8887,11 +7802,6 @@
     "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/c09_2_soft_campareaground.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_2f/c01_2f_light/c01_2f_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/hard.scn.20",
@@ -8915,28 +7825,13 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_rightarea1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/vfx_c03/5/0/1/vfx_c03_trailerhouse.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1d/c01_b1d_light/c01_b1d_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/env/env_c09_2.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/7/c03_cullingcollisionlucasarea.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -8977,24 +7872,9 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousestair01/0/c03_mainhousestair01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_3f/c01_3f_mapzone/c01_3f_mapzone.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/scenes/items/resources_chapter8/minemasterkey.scn.20",
     "Dlc": "NotAHero",
     "Kind": "Item"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01_light/c01_corridor01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/ch9/scenes/chapter/loadingcollision/c09_3/c09_moldswamp.scn.20",
@@ -9033,11 +7913,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom02/c03_cowroom02.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01tree01.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -9070,11 +7945,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhouse2f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1fstoreroom/0/c03_rightareab1fstoreroom_light.scn.20",
     "Dlc": "EthanMustDie",
     "Kind": "General"
@@ -9085,18 +7955,8 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fplay/0/c03_mainhouse2fplay_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1fmorgue/c03_rightareab1fmorgue.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_gardenarea1_low02/c03_gardenarea1_low02.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -9105,33 +7965,8 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fwash/c03_mainhouse1fwash.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/0/vfx_c03_garden.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/environment/scene/chapter9/c09_campareatree02.scn.20",
     "Dlc": "EndOfZoe",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/ui_c03/map_stage3_seta.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/eventlight_c03/eventlight_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_loadcollision/c03_loadcollision.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -9167,11 +8002,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_gh1froom01/0/c03_gh1froom01_light.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_storeroom01/c01_storeroom01_light/c01_storeroom01_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -9217,11 +8047,6 @@
     "Kind": "General"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/1/vfx_c03_rightareab1fstorageroom1.scn.20",
-    "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/chapter/c09_title.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "General"
@@ -9232,18 +8057,8 @@
     "Kind": "Enemy"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/0/vfx_c03_leftarea1f.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/scenes/imd/copyscene/sound_c03/0/snd_load_zone_chapter3.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom1/c03_rightareab1fstorageroom1.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -9329,11 +8144,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/3/c03_cullingcollisionmainhouse.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_cavepassage03.scn.20",
     "Dlc": "NotAHero",
     "Kind": "General"
@@ -9341,16 +8151,6 @@
   {
     "Path": "natives/stm/ch8/environment/scene/chapter8/c08_labopassage01.scn.20",
     "Dlc": "NotAHero",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids/0/c03_mainhouse2fkids_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/0/c03_mainhousoutsideterrace2f_light.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
@@ -9362,11 +8162,6 @@
     "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm.scn.20",
     "Dlc": "Nightmare",
     "Kind": "Enemy"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage2/copyasset/light_c03/zone_c03/zone_c03.scn.20",
-    "Dlc": "Jacks55thBirthday",
-    "Kind": "General"
   },
   {
     "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fldk_7_4.scn.20",
@@ -9423,11 +8218,6 @@
   {
     "Path": "natives/stm/scenes/imd/copyscene/c03_rightareab1fstoreroom/c03_rightareab1fstoreroom.scn.20",
     "Dlc": "EthanMustDie",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1h/c01_b1h.scn.20",
-    "Dlc": "Jacks55thBirthday",
     "Kind": "General"
   },
   {
