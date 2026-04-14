@@ -2940,30 +2940,6 @@
     "Kind": "Item"
   },
   {
-    "Path": "natives/stm/scenes/chapter/chapter7/chapter7intromovie.scn.20",
-    "Chapter": 7,
-    "Description": "",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/dlc/dlc_chapter7.scn.20",
-    "Chapter": 7,
-    "Description": "",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/chapter/chapter7/chapter7object.scn.20",
-    "Chapter": 7,
-    "Description": "",
-    "Kind": "General"
-  },
-  {
-    "Path": "natives/stm/scenes/chapter/chapter7/chapter7resident.scn.20",
-    "Chapter": 7,
-    "Description": "",
-    "Kind": "General"
-  },
-  {
     "Path": "natives/stm/ch9/scenes/items/resource/numaitem009.scn.20",
     "Dlc": "EndOfZoe",
     "Kind": "Item"
