@@ -74,20 +74,21 @@ internal class RecipeModifier : Modifier
         var csv = randomizer.DynamicData.GetData(DynamicDataName.Recipes) ?? throw new Exception("Unable to get recipe data");
         var recipes = Csv.Deserialize<RecipeModel>(csv).ToImmutableList();
 
-        var isDataValid = recipes.All(r =>
+        recipes.ForEach(r =>
         {
-            return r.Count1 > 0
-            && r.Count2 > 0
-            && r.OutputCount > 0
+            if(!(r.Count1_Min > 0
+            && r.Count1_Max > 0
+            && r.Count2_Min > 0
+            && r.Count2_Max > 0
+            && r.OutputCount_Min > 0
+            && r.OutputCount_Max > 0
             && _itemDefinitions.NameToId(r.Item1) != null
             && _itemDefinitions.NameToId(r.Item2) != null
-            && _itemDefinitions.NameToId(r.OutputItem) != null;
+            && _itemDefinitions.NameToId(r.OutputItem) != null))
+            {
+                throw new IntelOrca.Biohazard.BioRand.RandomizerUserException("Bad CSV recipe! Please check your spoiler log and report this. Recipe: " + r);
+            }
         });
-
-        if (!isDataValid)
-        {
-            throw new IntelOrca.Biohazard.BioRand.RandomizerUserException("Bad CSV recipe data! Please check your spoiler log and report this.");
-        }
 
         // Apply config
         var recipePool = (mode switch
@@ -105,7 +106,10 @@ internal class RecipeModifier : Modifier
         }
 
         // Some items are always added, no matter the mode.
-        var alwaysAdded = recipes.Where(r => r.Pool == RecipePool.AlwaysEnabled).Select(CreateRecipe).ToList();
+        var alwaysAdded = recipes
+            .Where(r => r.Pool == RecipePool.AlwaysEnabled)
+            .Select(r => CreateRecipe(r, rng))
+            .ToList();
         AddRecipes(randomizer, alwaysAdded, clear: false);
 
         var addedRecipes = new List<Recipe>();
@@ -116,7 +120,7 @@ internal class RecipeModifier : Modifier
         var toBeAdded = recipePool
             .OrderBy(_ => rng.Next())
             .Take(amount)
-            .Select(CreateRecipe);
+            .Select(r => CreateRecipe(r, rng));
 
         if (randomizer.GetConfigOption<bool>("recipes-random-item-quantities"))
         {
@@ -172,17 +176,17 @@ internal class RecipeModifier : Modifier
         return result;
     }
 
-    private static Recipe CreateRecipe(RecipeModel model)
+    private static Recipe CreateRecipe(RecipeModel model, Rng rng)
         => new Recipe()
         {
             _Comment = model.Comment,
             DataID = model.OutputItem,
             SrcItemID1 = _itemDefinitions.NameToId(model.Item1),
-            SrcItemNum1 = model.Count1,
+            SrcItemNum1 = rng.Next(model.Count1_Min, model.Count1_Max),
             SrcItemID2 = _itemDefinitions.NameToId(model.Item2),
-            SrcItemNum2 = model.Count2,
+            SrcItemNum2 = rng.Next(model.Count2_Min, model.Count2_Max),
             ResultItemID = _itemDefinitions.NameToId(model.OutputItem),
-            ResultItemNum = model.OutputCount,
+            ResultItemNum = rng.Next(model.OutputCount_Min, model.OutputCount_Max),
             EnableFlag = Guid.Empty,
             IsTutorialTarget = false,
             IsTrophyTarget = false,
@@ -216,15 +220,18 @@ internal class RecipeModifier : Modifier
     internal sealed class RecipeModel
     {
         public RecipePool Pool { get; init; }
-        public int Count1 { get; init; }
+        public int Count1_Min { get; init; }
+        public int Count1_Max { get; init; }
         public string Item1 { get; init; } = "";
-        public int Count2 { get; init; }
+        public int Count2_Min { get; init; }
+        public int Count2_Max { get; init; }
         public string Item2 { get; init; } = "";
-        public int OutputCount { get; init; }
+        public int OutputCount_Min { get; init; }
+        public int OutputCount_Max { get; init; }
         public string OutputItem { get; init; } = "";
         public string Comment { get; init; } = "";
 
         public override string ToString()
-            => $"{Count1}x {Item1} + {Count2}x {Item2} -> {OutputCount}x {OutputItem} ({Pool})";
+            => $"[{Count1_Min}-{Count1_Max}]x {Item1} + [{Count2_Min}-{Count2_Max}]x {Item2} -> [{OutputCount_Min}-{OutputCount_Max}]x {OutputItem} ({Pool})";
     }
 }
