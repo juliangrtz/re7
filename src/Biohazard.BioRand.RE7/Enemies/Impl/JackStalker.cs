@@ -80,8 +80,8 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
 
         // Speed
         logger.LogLine($"Speed: {speedMultiplier}x normal speed");
-        directive.common.MotionSpeedForBack *= speedMultiplier;
-        directive.common.MotionSpeedForStepIn *= speedMultiplier;
+        //directive.common.MotionSpeedForBack *= speedMultiplier;
+        //directive.common.MotionSpeedForStepIn *= speedMultiplier;
         directive.common.MotionSpeedForWalk *= speedMultiplier;
 
         // Misc.
