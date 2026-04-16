@@ -14,7 +14,7 @@ internal class ItemRandomizer(Randomizer randomizer)
     private readonly HashSet<string> _placedItemIds = [];
     private readonly bool _allowUnlockables = randomizer.GetConfigOption<bool>("allow-bonus-items");
     private readonly bool _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
-    private readonly Dictionary<RandomItemSettings, EndlessBag<ItemID>> _generalDrops = new();
+    private readonly Dictionary<RandomItemSettings, EndlessBag<string>> _generalDrops = new();
 
     public string[] PlacedItemIds => _placedItemIds.ToArray();
 
@@ -22,34 +22,34 @@ internal class ItemRandomizer(Randomizer randomizer)
         .Select(x => ItemDefinitionRepository.Default.FromId(x)!)
         .ToArray();
 
-    public readonly Dictionary<GameFlowKindEnum, List<ItemID>> ChapterAmmoMap = new()
+    public readonly Dictionary<GameFlowKindEnum, List<string>> ChapterAmmoMap = new()
     {
         {GameFlowKindEnum.C03_1_Main, [
-            ItemID.HandgunBullet, ItemID.HandgunBulletL
+            "HandgunBullet", "HandgunBulletL"
         ]},
         {GameFlowKindEnum.C03_2_Main, [
-            ItemID.HandgunBullet, ItemID.HandgunBulletL, ItemID.ShotgunBullet
+            "HandgunBullet", "HandgunBulletL", "ShotgunBullet"
         ]},
         {GameFlowKindEnum.C03_3_Main, [
-            ItemID.HandgunBullet, ItemID.HandgunBulletL, ItemID.ShotgunBullet,
-            ItemID.MagnumBullet,
-            ItemID.AcidBulletS, ItemID.FlameBulletS
+            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+            "MagnumBullet",
+            "AcidBulletS", "FlameBulletS"
         ]},
         {GameFlowKindEnum.C03_4_Main, [
-            ItemID.HandgunBullet, ItemID.HandgunBulletL, ItemID.ShotgunBullet,
-            ItemID.MagnumBullet,
-            ItemID.AcidBulletS, ItemID.FlameBulletS,
-            ItemID.BurnerBullet
+            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+            "MagnumBullet",
+            "AcidBulletS", "FlameBulletS",
+            "BurnerBullet"
         ]},
         {GameFlowKindEnum.C03_5_Main, [
-            ItemID.HandgunBullet, ItemID.HandgunBulletL, ItemID.ShotgunBullet,
-            ItemID.MagnumBullet,
-            ItemID.AcidBulletS, ItemID.FlameBulletS,
-            ItemID.BurnerBullet
+            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+            "MagnumBullet",
+            "AcidBulletS", "FlameBulletS",
+            "BurnerBullet"
         ]},
-        {GameFlowKindEnum.C04_1_Main, [ItemID.MachineGunBullet]},
-        {GameFlowKindEnum.C04_2_Main, [ItemID.MachineGunBullet]},
-        {GameFlowKindEnum.C04_3_Main, [ItemID.MachineGunBullet]},
+        {GameFlowKindEnum.C04_1_Main, ["MachineGunBullet"]},
+        {GameFlowKindEnum.C04_2_Main, ["MachineGunBullet"]},
+        {GameFlowKindEnum.C04_3_Main, ["MachineGunBullet"]},
     };
 
     private const int ItemStackCeiling = 150;
@@ -66,7 +66,7 @@ internal class ItemRandomizer(Randomizer randomizer)
         );
 
     // (easy #, normal #, madhouse #)
-    public (uint, uint, uint) DetermineDropAmount(ItemID id, double min, double max, Rng rng)
+    public (uint, uint, uint) DetermineDropAmount(string id, double min, double max, Rng rng)
     {
         var item = _itemDefinitions.FromId(id.ToString())!;
         var respectDifficulty = _randomizer.GetConfigOption<bool>("item-drop-respect-difficulty");
@@ -160,11 +160,11 @@ internal class ItemRandomizer(Randomizer randomizer)
         };
     }
 
-    public EndlessBag<ItemID> CreateGeneralItemPool(RandomItemSettings settings, Rng rng)
+    public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng)
     {
         if (!_generalDrops.TryGetValue(settings, out var result))
         {
-            var ratios = new Dictionary<ItemID, double>();
+            var ratios = new Dictionary<string, double>();
             foreach (var dropKind in ItemDrops.GenericDrops)
             {
                 var ratio = settings.GetItemRatio(dropKind);
@@ -175,7 +175,7 @@ internal class ItemRandomizer(Randomizer randomizer)
             }
 
             if (ratios.Count == 0)
-                return new EndlessBag<ItemID>(rng, [ItemID.EthanLeg]);
+                return new EndlessBag<string>(rng, ["EthanLeg"]);
 
             var smallestRatio = ratios.Min(x => x.Value);
             foreach (var k in ratios.Keys)
@@ -183,7 +183,7 @@ internal class ItemRandomizer(Randomizer randomizer)
                 ratios[k] = ratios[k] / smallestRatio;
             }
 
-            var pool = new List<ItemID>();
+            var pool = new List<string>();
             foreach (var kvp in ratios)
             {
                 for (var i = 0; i < kvp.Value; i++)
@@ -191,7 +191,7 @@ internal class ItemRandomizer(Randomizer randomizer)
                     pool.Add(kvp.Key);
                 }
             }
-            result = new EndlessBag<ItemID>(rng, pool);
+            result = new EndlessBag<string>(rng, pool);
             _generalDrops[settings] = result;
         }
 
@@ -236,10 +236,10 @@ public class RandomItemSettings
 {
     public double MinAmmoQuantity { get; set; }
     public double MaxAmmoQuantity { get; set; }
-    public Func<ItemID, double>? ItemRatioKeyFunc { get; set; }
-    public Func<ItemID, bool>? ValidateFunc { get; set; }
+    public Func<string, double>? ItemRatioKeyFunc { get; set; }
+    public Func<string, bool>? ValidateFunc { get; set; }
 
-    public double GetItemRatio(ItemID id)
+    public double GetItemRatio(string id)
     {
         return ItemRatioKeyFunc?.Invoke(id) ?? 0;
     }

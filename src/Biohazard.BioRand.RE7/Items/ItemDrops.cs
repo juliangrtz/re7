@@ -5,33 +5,33 @@ namespace Biohazard.BioRand.RE7.Items;
 
 internal class ItemDrops
 {
-    public static ImmutableList<ItemID> GenericDrops { get; private set; } = [
-        ItemID.EasyBoots,
-        ItemID.AlphaGrass,
-        ItemID.LiquidBomb,
-        ItemID.HandgunBullet,
-        ItemID.HandgunBulletL,
-        ItemID.ShotgunBullet,
-        ItemID.MachineGunBullet,
-        ItemID.MagnumBullet,
-        ItemID.BurnerBullet,
-        ItemID.FlameBulletS,
-        ItemID.AcidBulletS,
-        ItemID.RemedyM,
-        ItemID.RemedyL,
-        ItemID.EyeDrops,
-        ItemID.Stimulant,
-        ItemID.Depressant,
-        ItemID.Herb,
-        ItemID.ChemicalM,
-        ItemID.ChemicalL,
-        ItemID.ChemicalS,
-        ItemID.Gunpowder,
+    public static ImmutableList<string> GenericDrops { get; private set; } = [
+        "EasyBoots",
+        "AlphaGrass",
+        "LiquidBomb",
+        "HandgunBullet",
+        "HandgunBulletL",
+        "ShotgunBullet",
+        "MachineGunBullet",
+        "MagnumBullet",
+        "BurnerBullet",
+        "FlameBulletS",
+        "AcidBulletS",
+        "RemedyM",
+        "RemedyL",
+        "EyeDrops",
+        "Stimulant",
+        "Depressant",
+        "Herb",
+        "ChemicalM",
+        "ChemicalL",
+        "ChemicalS",
+        "Gunpowder",
+        "Coin"
     ];
 
     public static ImmutableList<string> HighValueDrops { get; private set; } = [
         Weapon,
-        AntiqueCoin,
         DlcCoin,
         LockPick,
         RepairKit,
@@ -59,46 +59,45 @@ internal class ItemDrops
 
     // High value drops
     public const string Weapon = "weapon";
-    public const string AntiqueCoin = "antique-coin";
     public const string DlcCoin = "dlc-coin";
     public const string LockPick = "lock-pick";
     public const string RepairKit = "repair-kit";
 
     public static string ToItemID(string highValueDrop) => highValueDrop switch
     {
-        AntiqueCoin => "Coin",
         LockPick => ItemID.CylinderKey.ToString(),
         RepairKit => "RepairKit",
         _ => ItemID.NoName.ToString()
     };
 
-    public static string GetCategory(ItemID id) => id switch
+    public static string GetCategory(string id) => id switch
     {
-        ItemID.NoName => CategoryNone,
-        ItemID.LiquidBomb => CategoryExplosive,
-        ItemID.HandgunBullet => CategoryAmmo,
-        ItemID.HandgunBulletL => CategoryAmmo,
-        ItemID.ShotgunBullet => CategoryAmmo,
-        ItemID.MachineGunBullet => CategoryAmmo,
-        ItemID.MagnumBullet => CategoryAmmo,
-        ItemID.BurnerBullet => CategoryAmmo,
-        ItemID.FlameBulletS => CategoryAmmo,
-        ItemID.AcidBulletS => CategoryAmmo,
-        ItemID.RemedyM => CategoryHealth,
-        ItemID.RemedyL => CategoryHealth,
-        ItemID.EyeDrops => CategoryHealth,
-        ItemID.Stimulant => CategoryHealth,
-        ItemID.Depressant => CategoryHealth,
-        ItemID.Herb => CategoryHealth,
-        ItemID.ChemicalM => CategoryMaterial,
-        ItemID.ChemicalL => CategoryMaterial,
-        ItemID.ChemicalS => CategoryMaterial,
-        ItemID.Gunpowder => CategoryMaterial,
-        ItemID.GoodLuckCoinA => CategoryCoin,
-        ItemID.GoodLuckCoinB => CategoryCoin,
-        ItemID.GoodLuckCoinC => CategoryCoin,
-        ItemID.GoodLuckCoinD => CategoryCoin,
-        ItemID.GoodLuckCoinE => CategoryCoin,
+        "NoName" => CategoryNone,
+        "LiquidBomb" => CategoryExplosive,
+        "HandgunBullet" => CategoryAmmo,
+        "HandgunBulletL" => CategoryAmmo,
+        "ShotgunBullet" => CategoryAmmo,
+        "MachineGunBullet" => CategoryAmmo,
+        "MagnumBullet" => CategoryAmmo,
+        "BurnerBullet" => CategoryAmmo,
+        "FlameBulletS" => CategoryAmmo,
+        "AcidBulletS" => CategoryAmmo,
+        "RemedyM" => CategoryHealth,
+        "RemedyL" => CategoryHealth,
+        "EyeDrops" => CategoryHealth,
+        "Stimulant" => CategoryHealth,
+        "Depressant" => CategoryHealth,
+        "Herb" => CategoryHealth,
+        "ChemicalM" => CategoryMaterial,
+        "ChemicalL" => CategoryMaterial,
+        "ChemicalS" => CategoryMaterial,
+        "Gunpowder" => CategoryMaterial,
+        "GoodLuckCoinA" => CategoryCoin,
+        "GoodLuckCoinB" => CategoryCoin,
+        "GoodLuckCoinC" => CategoryCoin,
+        "GoodLuckCoinD" => CategoryCoin,
+        "GoodLuckCoinE" => CategoryCoin,
+        "Coin" => CategoryCoin,
         _ => CategoryOther
     };
 
