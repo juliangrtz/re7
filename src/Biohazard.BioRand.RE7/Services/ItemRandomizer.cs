@@ -85,18 +85,27 @@ internal class ItemRandomizer(Randomizer randomizer)
         }
     }
 
-    public ItemDefinition? GetRandomWeapon(Rng rng, bool allowReoccurance = true)
+    public ItemDefinition? GetRandomGun(Rng rng, bool allowReoccurance = true)
     {
-        static bool restrictedCheck(ItemDefinition item)
+        static bool Check(ItemDefinition item)
         {
             if (item.WeaponId == null)
                 return false;
 
-            return WeaponDefinitionRepository.Default
-                .IsRestricted(item.WeaponId.Value);
+            if (WeaponDefinitionRepository.Default.IsRestricted(item.WeaponId.Value))
+                return false;
+
+            var definition = WeaponDefinitionRepository.Default.FromWeaponId(item.WeaponId.Value.ToString());
+            if (definition.UserType != Enums.app.CharacterDefine.Type.Player)
+                return false;
+
+            if (!definition.IsGun)
+                return false;
+
+            return true;
         }
 
-        return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, allowReoccurance, restrictedCheck);
+        return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, allowReoccurance, Check);
     }
 
     public ItemDefinition? GetRandomItemDefinition(Rng rng, ItemCategoryType kind, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
@@ -202,7 +211,7 @@ internal class ItemRandomizer(Randomizer randomizer)
     {
         ItemDefinition? itemDefinition = kind switch
         {
-            ItemCategoryType.Weapon => GetRandomWeapon(rng, allowReoccurance),
+            ItemCategoryType.Weapon => GetRandomGun(rng, allowReoccurance),
             _ => GetRandomItemDefinition(rng, kind, allowReoccurance),
         };
         if (itemDefinition != null)

@@ -1970,3 +1970,553 @@ namespace app
         public System.Guid SaveGUID { get; set; }
     }
 }
+
+namespace app
+{
+    public class InteractDrawer
+    {
+        public bool Enabled { get; set; } = new();
+        public bool ErrorRayCheck { get; set; }
+        public System.Guid SaveGUID { get; set; }
+        public bool IsEnable { get; set; }
+        public Enums.app.InteractObjectBase.Lv InteractLevel { get; set; }
+        public bool IsDirectInventryIn { get; set; }
+        public bool IsAfterInventryIn { get; set; }
+        public bool IsCheckAngle { get; set; }
+        public float CheckRange { get; set; }
+        public bool IsRayCheck { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName FsmObjContainer { get; set; }
+        public System.Guid FsmObj { get; set; }
+        public bool WaitFsmExecuteOff { get; set; }
+        public float CameraInRateX { get; set; }
+        public float CameraInRateY { get; set; }
+        public float CameraInDistMax { get; set; }
+        public bool IsFootCheckCameraIn { get; set; }
+        public float CameraInPriority { get; set; }
+        public app.InteractObjectBase.FarIconDispParam FarIconDisp { get; set; }
+        public bool IsGetItemCountEnabled { get; set; }
+        public string SetFsmBoolFlag { get; set; } = "";
+        public System.Guid SetFsmBoolFlagId { get; set; }
+        public bool SetFsmBoolFlagValue { get; set; }
+        public string SetFsmIntFlag { get; set; } = "";
+        public System.Guid SetFsmIntFlagId { get; set; }
+        public int AddFsmIntFlagValue { get; set; }
+        public bool IsDispTargetKeyHelp { get; set; }
+        public app.KeyHelpPlayable.SettingData TargetKeyHelpSetting { get; set; }
+        public app.InteractObjectBase.NarrativeSoundData NarrativeSound { get; set; }
+        public app.InteractObjectBase.InventoryInCheckParam InventoryInCheck { get; set; }
+        public app.InteractObjectBase.EnemyCheckParam EnemyCheck { get; set; }
+        public app.KeyHelpPlayable.SettingData KeyHelpSettingOpen { get; set; }
+        public app.KeyHelpPlayable.SettingData KeyHelpSettingClose { get; set; }
+        public bool IsNoClose { get; set; }
+        public string SetItemID { get; set; } = "";
+        public int ChangeStackNum { get; set; }
+        public bool UseDrawerPos { get; set; }
+        public bool IsDirectGameObjectSet { get; set; }
+        public System.Guid DirectSetGameObject { get; set; }
+        public bool IsNotMovePosition { get; set; }
+        public bool IsHardNoItem { get; set; }
+    }
+    public class CH9InteractDrawer : InteractDrawer
+    {
+    }
+}
+
+namespace app
+{
+    public class InteractObjectBase
+    {
+        public bool Enabled { get; set; } = new();
+        public bool ErrorRayCheck { get; set; }
+        public System.Guid SaveGUID { get; set; }
+        public bool IsEnable { get; set; }
+        public Enums.app.InteractObjectBase.Lv InteractLevel { get; set; }
+        public bool IsDirectInventryIn { get; set; }
+        public bool IsAfterInventryIn { get; set; }
+        public bool IsCheckAngle { get; set; }
+        public float CheckRange { get; set; }
+        public bool IsRayCheck { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName FsmObjContainer { get; set; }
+        public System.Guid FsmObj { get; set; }
+        public bool WaitFsmExecuteOff { get; set; }
+        public float CameraInRateX { get; set; }
+        public float CameraInRateY { get; set; }
+        public float CameraInDistMax { get; set; }
+        public bool IsFootCheckCameraIn { get; set; }
+        public float CameraInPriority { get; set; }
+        public app.InteractObjectBase.FarIconDispParam FarIconDisp { get; set; }
+        public bool IsGetItemCountEnabled { get; set; }
+        public string SetFsmBoolFlag { get; set; } = "";
+        public System.Guid SetFsmBoolFlagId { get; set; }
+        public bool SetFsmBoolFlagValue { get; set; }
+        public string SetFsmIntFlag { get; set; } = "";
+        public System.Guid SetFsmIntFlagId { get; set; }
+        public int AddFsmIntFlagValue { get; set; }
+        public bool IsDispTargetKeyHelp { get; set; }
+        public app.KeyHelpPlayable.SettingData TargetKeyHelpSetting { get; set; }
+        public app.InteractObjectBase.NarrativeSoundData NarrativeSound { get; set; }
+        public app.InteractObjectBase.InventoryInCheckParam InventoryInCheck { get; set; }
+        public app.InteractObjectBase.EnemyCheckParam EnemyCheck { get; set; }
+        public class Category
+        {
+            public int value__ { get; set; }
+        }
+        public class EnemyCheckParam
+        {
+            public bool IsEnemyTriggerInCheck { get; set; }
+            public System.Guid EnemyCheckMessage { get; set; }
+            public bool IsCheckNotDiscovery { get; set; }
+        }
+        public class FarIconDispParam
+        {
+            public bool IsEnable { get; set; }
+            public float AddCameraInDist { get; set; }
+            public bool ForceDisp { get; set; }
+            public bool IsRayCheckEFF { get; set; }
+            public bool IsRayCheckSCR { get; set; }
+        }
+        public class InteractSaveDataClass
+        {
+            public System.Guid SaveGUID { get; set; }
+            public string FolderName { get; set; } = "";
+            public bool IsUpdate { get; set; }
+            public bool IsDraw { get; set; }
+            public bool IsEnable { get; set; }
+            public System.Collections.Generic.List<bool> OtherFlags { get; set; } = [];
+            public string OtherString0 { get; set; } = "";
+            public int OtherInt { get; set; }
+        }
+        public class InventoryInCheckParam
+        {
+            public System.Guid ItemGameObj { get; set; }
+            public bool DispQuestionIcon { get; set; }
+        }
+        public class Lv
+        {
+            public int value__ { get; set; }
+        }
+        public class NarrativeSoundData
+        {
+            public System.Guid NarrativeID { get; set; }
+            public Enums.app.InteractObjectBase.NarrativeSoundType Type { get; set; }
+            public string TriggerId { get; set; } = "";
+        }
+        public class NarrativeSoundType
+        {
+            public int value__ { get; set; }
+        }
+        public class SePlayParam
+        {
+            public string TriggerId { get; set; } = "";
+            public System.Guid WwiseContainerObj { get; set; }
+        }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class CH8InteractSavePoint : InteractObjectBase
+    {
+        public class HardSaveState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class CH9InteractSave : InteractObjectBase
+    {
+    }
+    public class CH9InteractWeapon : InteractObjectBase
+    {
+        public bool IsGetEventEnabled { get; set; }
+        public bool IsForceEquip { get; set; }
+        public bool UsePickupSE { get; set; }
+    }
+    public class InteractAutoFinger : InteractObjectBase
+    {
+        public float LookTimerMax { get; set; }
+        public bool _IsDeactivateAtInteractEnd { get; set; }
+        public float _LookTimer { get; set; }
+        public System.Numerics.Vector3 FingerSuccessMargin { get; set; }
+        public System.Guid TargetObj { get; set; }
+    }
+    public class InteractAutoGUI : InteractObjectBase
+    {
+        public System.Guid _MessageID { get; set; }
+    }
+    public class InteractAutoSendFsm : InteractObjectBase
+    {
+        public float LookTimerMax { get; set; }
+        public bool _IsDeactivateAtInteractEnd { get; set; }
+        public float _LookTimer { get; set; }
+    }
+    public class InteractCardanGrille : InteractObjectBase
+    {
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public System.Numerics.Vector3 CameraPosInit { get; set; }
+        public System.Numerics.Vector3 CameraAngleInit { get; set; }
+        public System.Numerics.Vector3 VrCameraPosInit { get; set; }
+        public System.Numerics.Vector3 CardPosOffsetStart { get; set; }
+        public System.Numerics.Vector3 CardPosOffsetEnd { get; set; }
+        public System.Guid CardItemObj { get; set; }
+        public System.Guid CardMessageID { get; set; }
+        public class CardanState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractClockPuzzle : InteractObjectBase
+    {
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public System.Numerics.Vector3 CameraPosInit { get; set; }
+        public System.Numerics.Vector3 CameraAngleInit { get; set; }
+        public System.Numerics.Vector3 VrCameraPosInit { get; set; }
+        public System.Collections.Generic.List<uint> SuccessNumber { get; set; } = [];
+        public System.Collections.Generic.List<int> DebugNow { get; set; } = [];
+        public class ClockParam
+        {
+            public string JointName { get; set; } = "";
+            public int RotNum { get; set; }
+            public int RotMin { get; set; }
+            public int RotMax { get; set; }
+            public float RotRad { get; set; }
+            public float AddRad { get; set; }
+            public bool IsMove { get; set; }
+        }
+        public class ClockState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractCraftBench : InteractObjectBase
+    {
+    }
+    public class InteractDetailSearch : InteractObjectBase
+    {
+        public System.Numerics.Vector3 PositionOffset { get; set; }
+        public System.Numerics.Vector3 VrPositionOffset { get; set; }
+        public bool EnableInitRotation { get; set; }
+        public System.Numerics.Vector3 InitRotation { get; set; }
+        public System.Guid ItemNameMessageID { get; set; }
+        public bool IsItemNameMessageOnly { get; set; }
+        public System.Guid MessageID { get; set; }
+        public System.Guid FileMessageID { get; set; }
+        public System.Collections.Generic.List<app.InteractDetailSearch.SearchEventParam> _SearchEvent { get; set; } = [];
+        public bool IsItemGet { get; set; }
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public float ViewScale { get; set; }
+        public bool NeedIgnoreDepthAndViewScaling { get; set; }
+        public class SearchEventParam
+        {
+            public bool IsEnable { get; set; }
+            public Enums.app.InteractDetailSearch.SearchEventRotAxis RotAxis { get; set; }
+            public Enums.app.InteractDetailSearch.SearchEventRotAxisSign RotAxisSign { get; set; }
+            public float MarginRotation { get; set; }
+            public bool SEPlay { get; set; }
+            public System.Guid MessageID { get; set; }
+            public System.Guid FileMessageID { get; set; }
+            public app.ObjectManager.SelectableContainerObjectName FsmObjContainer { get; set; }
+            public System.Guid FsmObj { get; set; }
+            public System.Guid InteractObj { get; set; }
+            public Enums.app.InteractDetailSearch.SearchEventSubInteractType SubInteractType { get; set; }
+        }
+        public class SearchEventRotAxis
+        {
+            public int value__ { get; set; }
+        }
+        public class SearchEventRotAxisSign
+        {
+            public int value__ { get; set; }
+        }
+        public class SearchEventSubInteractType
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractDoor : InteractObjectBase
+    {
+        public bool NoSendMsgItemCheckOK { get; set; }
+        public app.InteractDoor.ExtraParam ExtraCommand { get; set; }
+        public bool IsLockedDoorShakable { get; set; }
+        public class ExtraParam
+        {
+            public bool IsSetMaxOpenAngle { get; set; }
+            public float MaxOpenAngle { get; set; }
+        }
+    }
+    public class InteractLongPressSendFSM : InteractObjectBase
+    {
+        public bool _IsDeactivateAtInteractEnd { get; set; }
+        public float _SuccessTime { get; set; }
+        public app.ItemCheckParam _ItemCheck { get; set; }
+        public System.Guid _ItemCheckFailedFSMObj { get; set; }
+        public class ProcStep
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractNumberLock : InteractObjectBase
+    {
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public System.Numerics.Vector3 CameraPosInit { get; set; }
+        public System.Numerics.Vector3 VrCameraPosInit { get; set; }
+        public System.Numerics.Vector3 CameraAngleInit { get; set; }
+        public string InputNum { get; set; } = "";
+        public string AnswerNum { get; set; } = "";
+        public System.Collections.Generic.List<app.InteractNumberLock.AnswerPaternParam> AnswerPatern { get; set; } = [];
+        public class AnswerPaternParam
+        {
+            public string AnswerNum { get; set; } = "";
+            public System.Guid ErrorAnswerFlagId { get; set; }
+        }
+        public class NumberLockModeParam
+        {
+            public int value__ { get; set; }
+        }
+        public class NumberLockParam
+        {
+            public System.Numerics.Vector3 OffsetPos { get; set; }
+            public string InputString { get; set; } = "";
+            public int MoveU { get; set; }
+            public int MoveD { get; set; }
+            public int MoveL { get; set; }
+            public int MoveR { get; set; }
+        }
+        public class NumberLockState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractOpenIMD : InteractObjectBase
+    {
+        public string DropItemTableName { get; set; } = "";
+        public string SubDropTableName { get; set; } = "";
+        public app.ItemBoxSetPointIMD.DropItemInteractParam DropItemInteract { get; set; }
+        public System.Numerics.Vector3 SetItemOffsetPos { get; set; }
+        public System.Numerics.Vector3 SetItemOffsetAngle { get; set; }
+        public float DropItemInteractSleepTime { get; set; }
+    }
+    public class InteractOpenMenuBase : InteractObjectBase
+    {
+    }
+    public class InteractPadlock : InteractObjectBase
+    {
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public System.Numerics.Vector3 CameraPosInit { get; set; }
+        public System.Numerics.Vector3 VrCameraPosInit { get; set; }
+        public System.Numerics.Vector3 CameraAngleInit { get; set; }
+        public Enums.app.InteractPadlock.PadlockNumType PadlockNum { get; set; }
+        public System.Collections.Generic.List<uint> SuccessNumber { get; set; } = [];
+        public class PadlockNumType
+        {
+            public int value__ { get; set; }
+        }
+        public class PadlockParam
+        {
+            public string JointName { get; set; } = "";
+            public int RotNum { get; set; }
+        }
+        public class PadlockState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractPushMove : InteractObjectBase
+    {
+        public System.Numerics.Vector3 PositionOffset { get; set; }
+        public float MoveSpeed { get; set; }
+        public System.Guid PlayerSetPosObj { get; set; }
+        public Enums.app.InteractPushMove.PushMoveTypeEnum PushMoveType { get; set; }
+        public app.InteractObjectBase.SePlayParam Wwise_MoveSe { get; set; }
+        public app.InteractObjectBase.SePlayParam Wwise_StopSe { get; set; }
+        public class PushMoveTypeEnum
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractRotateArt : InteractObjectBase
+    {
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public uint SuccessNum { get; set; }
+        public System.Guid ArtObject { get; set; }
+        public class ArtParam
+        {
+            public int RotNum { get; set; }
+            public int RotMin { get; set; }
+            public int RotMax { get; set; }
+            public float RotRad { get; set; }
+            public float AddRad { get; set; }
+            public bool IsMove { get; set; }
+        }
+        public class ArtState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractSendFsm : InteractObjectBase
+    {
+        public app.InteractSendFsm.ExtraParam ExtraCommand { get; set; }
+        public bool _IsDeactivateAtInteractEnd { get; set; }
+        public class ExtraParam
+        {
+            public System.Guid InteractEventGameObj { get; set; }
+            public string InteractEventName { get; set; } = "";
+            public bool InteractEventWaitEnd { get; set; }
+            public bool IsMenuSaveExec { get; set; }
+        }
+        public class HardSaveState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractShadowPuzzle : InteractObjectBase
+    {
+        public System.Numerics.Vector3 PositionOffset { get; set; }
+        public bool EnableInitRotation { get; set; }
+        public System.Numerics.Vector3 InitRotation { get; set; }
+        public System.Guid ItemNameMessageID { get; set; }
+        public app.DrawMessageParam ItemNameMessageSetting { get; set; }
+        public System.Guid MessageID { get; set; }
+        public app.DrawMessageParam MessageSetting { get; set; }
+        public app.InteractObjectBase.SePlayParam WwiseInteractSe { get; set; }
+        public class PuzzleState
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class InteractSwitch : InteractObjectBase
+    {
+        public app.KeyHelpPlayable.SettingData KeyHelpSettingOn { get; set; }
+        public app.KeyHelpPlayable.SettingData KeyHelpSettingOff { get; set; }
+        public bool NowSwitchOn { get; set; }
+        public System.Guid SwitchOnFsmObj { get; set; }
+        public System.Guid SwitchOffFsmObj { get; set; }
+    }
+    public class InteractWeapon : InteractObjectBase
+    {
+        public bool IsGetEventEnabled { get; set; }
+        public bool IsForceEquip { get; set; }
+        public bool UsePickupSE { get; set; }
+    }
+}
+namespace app.Em8000
+{
+    public class Em8000CorpsebagInteract : app.InteractObjectBase
+    {
+        public bool IsActiveStatic { get; set; }
+        public app.Chain.ImpulseForceParameter InpulseForceParameter { get; set; }
+        public System.Numerics.Vector3 Offset { get; set; }
+        public float EventStartInteraptTime { get; set; }
+        public float EventStartPosOffetZ { get; set; }
+        public float InteractEnableDist { get; set; }
+    }
+}
+namespace app.Nightmare
+{
+    public class NightmareTrapUnitInteract : app.InteractObjectBase
+    {
+    }
+}
+
+
+namespace app
+{
+    public class KeyHelpPlayable
+    {
+        public bool Enabled { get; set; } = new();
+        public bool IsOpenWhenStart { get; set; }
+        public string PanelElementPath { get; set; } = "";
+        public bool IsHideWhen3DVrMode { get; set; }
+        public class DispTypeDef
+        {
+            public int value__ { get; set; }
+        }
+        public class HelperItemInfo
+        {
+        }
+        public class SettingData
+        {
+            public System.Guid MessageID { get; set; }
+            public Enums.app.KeyHelpPlayable.DispTypeDef DispType { get; set; }
+            public Enums.app.TutorialGUI.VRAdjustMode TutorialVRAdjustMode { get; set; }
+            public bool isImportantTutorial { get; set; }
+        }
+    }
+    public class CH8KeyHelpPlayable : KeyHelpPlayable
+    {
+    }
+}
+
+namespace app
+{
+    public class ItemCheckParam
+    {
+        public bool CheckEnable { get; set; }
+        public string ItemID { get; set; } = "";
+        public int Num { get; set; }
+        public Enums.app.ItemCheckParam.CompareType NumCompareType { get; set; }
+        public class CompareType
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class ItemBoxSetPointIMD
+    {
+        public bool Enabled { get; set; } = new();
+        public int LotteryGroupID { get; set; }
+        public app.ItemBoxSetPointIMD.SetEnableItemBoxs SetItemBoxsInfo { get; set; }
+        public app.ItemBoxSetPointIMD.DropItemInteractParam DropItemInteract { get; set; }
+        public class DropItemInteractParam
+        {
+            public bool IsOverWriteParam { get; set; }
+            public bool IsCheckAngle { get; set; }
+            public float CheckRange { get; set; }
+        }
+        public class SetEnableItemBoxs
+        {
+            public bool IsBombBox { get; set; }
+            public bool IsNormalBox { get; set; }
+            public bool IsRareBox { get; set; }
+            public bool IsSuperRareBox { get; set; }
+            public bool IsLegendaryBox { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class DrawMessageParam
+    {
+        public bool _IsOverwriteDispString { get; set; }
+        public string _DispString { get; set; } = "";
+        public bool _IsOverwriteSoundID { get; set; }
+        public uint _SoundTrgID { get; set; }
+        public bool _IsOverwritePos { get; set; }
+        public System.Numerics.Vector2 _Pos { get; set; }
+        public bool _IsOverwriteScale { get; set; }
+        public float _Scale { get; set; }
+        public bool _IsOverwriteSize { get; set; }
+        public int _Size { get; set; }
+        public bool _IsOverwriteFontColor { get; set; }
+        public object _FontColor { get; set; } // TODO
+        public string _SpeakerName { get; set; } = "";
+        public System.Guid _SpeakerGameObject { get; set; }
+        public object _SpeakerComponent { get; set; } // TODO
+        public bool _IsDispUntilSoundEnd { get; set; }
+        public float _DispTime { get; set; }
+        public bool _IsEnableTimeTagEnd { get; set; }
+    }
+}
+
+namespace app.Chain
+{
+    public class ImpulseForceParameter
+    {
+        public uint MyGroupID { get; set; }
+        public float MyForceScale { get; set; }
+        public float MyAttenuationRatio { get; set; }
+    }
+}

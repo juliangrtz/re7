@@ -23,6 +23,13 @@ internal class ItemModifier : Modifier
         return new Vector3(chosen, chosen, chosen);
     }
 
+    private RszScene AddExtraChest(
+        RszScene scene,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        ItemPlacement placement)
+    => randomizer.ChestService.PlaceWeaponChest(logger, scene, placement);
+
     private RszScene AddExtraCrate(
         RszScene scene,
         RszGameObject parentGameObject,
@@ -176,6 +183,10 @@ internal class ItemModifier : Modifier
             if (allowExtraCrates && placement.Tags.Contains(ItemPlacement.WoodenCrateTag))
             {
                 scene = AddExtraCrate(scene, parentGameObject, randomizer, logger, placement, rng);
+            }
+            else if (placement.Tags.Contains(ItemPlacement.WeaponChestTag))
+            {
+                scene = AddExtraChest(scene, randomizer, logger, placement);
             }
             else if (allowExtraItems)
             {

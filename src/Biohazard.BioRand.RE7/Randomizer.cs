@@ -256,6 +256,8 @@ internal class Randomizer : IDisposable
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
     public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
     public FlagService FlagService => GetService<FlagService>();
+    public ChestService ChestService => GetService<ChestService>();
+
     public void AddLogFile(string name, string content)
     {
         _logFiles[name] = content;
