@@ -10,7 +10,9 @@ public sealed class WeaponDefinitionRepository
     private static WeaponDefinitionRepository? _default;
     public ImmutableList<WeaponDefinition> WeaponDefinitions { get; private set; } = [];
     public ImmutableDictionary<WeaponID, WeaponDefinition> IdToWeaponMap { get; private set; } = [];
-    private readonly List<WeaponID> _restrictedWeapons = [];
+    private readonly List<WeaponID> _restrictedWeapons = [
+        
+    ];
 
     private const string WeaponDefinitionFileName = "weapon_definitions.json";
 
