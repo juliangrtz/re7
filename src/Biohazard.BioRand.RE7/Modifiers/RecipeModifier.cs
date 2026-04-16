@@ -86,7 +86,7 @@ internal class RecipeModifier : Modifier
             && _itemDefinitions.NameToId(r.Item2) != null
             && _itemDefinitions.NameToId(r.OutputItem) != null))
             {
-                throw new IntelOrca.Biohazard.BioRand.RandomizerUserException("Bad CSV recipe! Please check your spoiler log and report this. Recipe: " + r);
+                logger.LogLine("Bad CSV recipe! Please report this. Recipe: " + r);
             }
         });
 

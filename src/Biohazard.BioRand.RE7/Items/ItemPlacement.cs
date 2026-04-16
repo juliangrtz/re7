@@ -50,5 +50,6 @@ public class ItemPlacement
     public const string WoodenCrateTag = "crate";
     public const string NotFakeCrateTag = "not_fake";
     public const string FakeCrateTag = "fake";
+    public const string WeaponChestTag = "weapon_chest";
     public const string RandomItemTag = "random";
 }
