@@ -1,7 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Enemies.Molded;
-using Biohazard.BioRand.RE7.REEngine;
+﻿using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
-using System.Collections.Immutable;
 using System.Diagnostics;
 
 namespace Biohazard.BioRand.RE7.Enemies;

@@ -2,7 +2,6 @@
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
-using Enums.via.motion.ContinueOptions;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;

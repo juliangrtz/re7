@@ -164,7 +164,7 @@ internal class StartingInventoryModifier : Modifier
                 root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
             }
 
-            if (!randomizer.User.Equals("captainezekiel", StringComparison.InvariantCultureIgnoreCase)) // TODO Introduce tag
+            if (randomizer.User.Equals("captainezekiel", StringComparison.InvariantCultureIgnoreCase)) // TODO Introduce tag
             {
                 root._AddItems.Clear();
                 var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)

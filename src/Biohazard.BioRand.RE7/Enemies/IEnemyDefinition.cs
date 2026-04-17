@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7.REEngine;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
