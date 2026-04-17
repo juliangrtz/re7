@@ -45,7 +45,7 @@ internal class KeyItemLocationModifier : Modifier
         // TODO: Copy original Guids to new key items
         foreach (var keyItem in keyItems)
         {
-            randomizer.FileRepository.ModifyScnFile(keyItem.OriginalScnFile, randomizer.IsOnRaytracingVersion, scene =>
+            randomizer.FileRepository.ModifyScnFile(keyItem.OriginalScnFile, scene =>
             {
                 var placements = itemService.FromId(keyItem.Id);
                 foreach (var placement in placements)
@@ -61,7 +61,7 @@ internal class KeyItemLocationModifier : Modifier
         foreach (var group in groups)
         {
             var newLocation = rng.Next(group);
-            randomizer.FileRepository.ModifyScnFile(newLocation.NewScnFile, randomizer.IsOnRaytracingVersion, scene =>
+            randomizer.FileRepository.ModifyScnFile(newLocation.NewScnFile, scene =>
             {
                 RszGameObject parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
                     ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");

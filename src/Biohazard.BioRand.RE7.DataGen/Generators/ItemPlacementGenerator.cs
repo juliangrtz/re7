@@ -10,9 +10,6 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-/// <summary>
-/// TODO: non-RT
-/// </summary>
 internal class ItemPlacementGenerator : IFileGenerator
 {
     public string Id => "item_placements";
@@ -31,7 +28,7 @@ internal class ItemPlacementGenerator : IFileGenerator
     {
         var result = new List<ItemPlacement>();
         var path = _pakList.GetPath(hash)!;
-        var scene = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
+        var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
         scene.VisitGameObjects(gameObject =>
         {
             var itemComponent = gameObject.FindComponent<app.Item>();
@@ -140,7 +137,7 @@ internal class ItemPlacementGenerator : IFileGenerator
                 var path = _pakList.GetPath(hash);
                 return path != null
                        //&& _itemPathPrefixes.Any(prefix => path.StartsWith(prefix))
-                       && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}");
+                       && path.EndsWith($".scn.{FileVersions.SceneFileVersion}");
             })
             .ToList();
 

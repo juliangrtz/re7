@@ -53,7 +53,7 @@ internal class Area
         Randomizer = randomizer;
         Definition = definition;
         ScnFile = randomizer.FileRepository
-            .GetScnFile(definition.Path, randomizer.IsOnRaytracingVersion)
+            .GetScnFile(definition.Path)
             .ToBuilder(randomizer.FileRepository.TypeRepository);
         Scan();
     }

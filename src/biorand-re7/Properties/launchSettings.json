@@ -30,19 +30,19 @@
     },
     "setup": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
+      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
     },
     "setup-pak": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full --raytracing"
+      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
     },
     "setup-dlcs": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-dlc-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full --raytracing"
+      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-dlc-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full"
     },
     "setup-pak-dlcs": {
       "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7-dlcs.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full --raytracing"
+      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7-dlcs.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full"
     }
   }
 }

@@ -32,19 +32,19 @@ public static class PatchContextExtensions
         context.SetFile(path, value.Data);
     }
 
-    public static ScnFile GetScnFile(this IPatchContext context, string path, bool isRt)
+    public static ScnFile GetScnFile(this IPatchContext context, string path)
     {
         var data = context.GetFile(path);
         var stackTrace = new StackTrace();
         // Get calling method name
         return data == null
             ? throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}")
-            : new ScnFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, data);
+            : new ScnFile(FileVersions.SceneFileVersion, data);
     }
 
-    public static void ModifyScnFile(this IPatchContext context, string path, bool isRt, Func<RszScene, RszScene> callback)
+    public static void ModifyScnFile(this IPatchContext context, string path, Func<RszScene, RszScene> callback)
     {
-        var scnFile = context.GetScnFile(path, isRt).ToBuilder(context.TypeRepository);
+        var scnFile = context.GetScnFile(path).ToBuilder(context.TypeRepository);
         scnFile.Scene = callback(scnFile.Scene);
         context.SetScnFile(path, scnFile.AddMissingResources().Build());
     }
@@ -113,9 +113,9 @@ public static class PatchContextExtensions
         context.SetMsgFile(path, builder.Build());
     }
 
-    public static RcolFile GetRcolFile(this IPatchContext context, string path, bool isRt)
+    public static RcolFile GetRcolFile(this IPatchContext context, string path)
     {
-        return new RcolFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, context.GetFile(path));
+        return new RcolFile(FileVersions.RcolFileVersion, context.GetFile(path));
     }
 
     public static void SetRcolFile(this IPatchContext context, string path, RcolFile rcol)
@@ -123,9 +123,9 @@ public static class PatchContextExtensions
         context.SetFile(path, rcol.Data.ToArray());
     }
 
-    public static void ModifyRcolFile(this IPatchContext context, string path, bool isRt, Action<RcolFile.Builder> callback)
+    public static void ModifyRcolFile(this IPatchContext context, string path, Action<RcolFile.Builder> callback)
     {
-        var rcolFile = context.GetRcolFile(path, isRt);
+        var rcolFile = context.GetRcolFile(path);
         var builder = rcolFile.ToBuilder(context.TypeRepository);
         callback(builder);
         context.SetRcolFile(path, builder.Build());

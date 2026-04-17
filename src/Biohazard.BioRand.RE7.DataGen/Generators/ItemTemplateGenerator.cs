@@ -8,9 +8,6 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-/// <summary>
-/// TODO non-RT
-/// </summary>
 internal class GameObjectTemplateGenerator : IFileGenerator
 {
     public string Id => "templates";
@@ -50,7 +47,7 @@ internal class GameObjectTemplateGenerator : IFileGenerator
 
         foreach (var area in areas)
         {
-            var scene = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(area.Path)).ReadScene(_rszRepository);
+            var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(area.Path)).ReadScene(_rszRepository);
 
             scene.VisitGameObjects(gameObject =>
             {
@@ -65,7 +62,7 @@ internal class GameObjectTemplateGenerator : IFileGenerator
             });
         }
 
-        var resultSceneBuilder = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(areas[0].Path)).ToBuilder(_rszRepository);
+        var resultSceneBuilder = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(areas[0].Path)).ToBuilder(_rszRepository);
         resultSceneBuilder.Scene = resultSceneBuilder.Scene.WithChildren([]);
 
         // Items

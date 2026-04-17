@@ -27,7 +27,7 @@ internal class ChapterJumpDataModifier : Modifier
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
-        var transitions = randomizer.FileRepository.GetScnFile(_path, randomizer.IsOnRaytracingVersion).ReadScene(randomizer.FileRepository.TypeRepository);
+        var transitions = randomizer.FileRepository.GetScnFile(_path).ReadScene(randomizer.FileRepository.TypeRepository);
         transitions.GetGameObjects().ForEach(go =>
         {
             ChapterJumpData? chapterJumpData;
@@ -41,7 +41,7 @@ internal class ChapterJumpDataModifier : Modifier
 
     private void SkipGuestHouse(Randomizer randomizer, RandomizerLogger logger)
     {
-        randomizer.FileRepository.ModifyScnFile(_path, randomizer.IsOnRaytracingVersion, scene =>
+        randomizer.FileRepository.ModifyScnFile(_path, scene =>
         {
             var go = scene.FindGameObject(ChapterJumpData_c01)!;
             var jumpData = go.FindComponent<ChapterJumpData>()!;
@@ -88,7 +88,7 @@ internal class ChapterJumpDataModifier : Modifier
         } while (!valid);
 
         int index = 0;
-        randomizer.FileRepository.ModifyScnFile(_path, randomizer.IsOnRaytracingVersion, scene =>
+        randomizer.FileRepository.ModifyScnFile(_path, scene =>
         {
             foreach (var go in scene.GetGameObjects())
             {

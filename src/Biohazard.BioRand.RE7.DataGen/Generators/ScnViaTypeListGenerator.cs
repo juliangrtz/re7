@@ -29,14 +29,14 @@ internal class ScnViaTypeListGenerator : IFileGenerator
             .Where(hash =>
             {
                 var path = _pakList.GetPath(hash);
-                return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}");
+                return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersion}");
             })
             .ToList();
 
         Parallel.ForEach(relevantHashes, hash =>
         {
             var path = _pakList.GetPath(hash)!;
-            var scene = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
+            var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(hash)).ReadScene(_rszRepository);
 
             scene.VisitComponents(component =>
             {
