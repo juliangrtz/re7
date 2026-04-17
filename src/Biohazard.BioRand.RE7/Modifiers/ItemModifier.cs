@@ -190,8 +190,17 @@ internal class ItemModifier : Modifier
             }
             else if (allowExtraItems)
             {
-                var isRandom = placement.Tags.Contains("random");
-                scene = AddExtraItem(scene, parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings);
+                var isRandom = placement.Tags.Contains(ItemPlacement.RandomItemTag);
+                var hasFixedItem = !string.IsNullOrWhiteSpace(placement.Id);
+
+                if (isRandom || hasFixedItem)
+                {
+                    scene = AddExtraItem(scene, parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings);
+                }
+                else
+                {
+                    logger.LogLine($"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
+                }
             }
 
             return scene;

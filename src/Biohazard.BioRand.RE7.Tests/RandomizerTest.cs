@@ -1,9 +1,11 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Services;
 using BioHazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Package;
+using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.IO.Compression;
 
@@ -134,6 +136,10 @@ public sealed class RandomizerRunResult : IDisposable
     }
 
     public ImmutableDictionary<string, byte[]> ChangedFiles { get; }
+    internal Randomizer Randomizer => _randomizer;
+    internal ItemRandomizer ItemRandomizer => _randomizer.ItemRandomizer;
+    internal ItemPlacementService ItemPlacementService => _randomizer.ItemPlacementService;
+    internal AreaService AreaService => _randomizer.AreaService;
 
     public byte[] ReadBeforeBytes(string path)
         => _beforeRepository.GetFile(path) ?? throw new InvalidOperationException($"Missing baseline file '{path}'.");
@@ -148,6 +154,12 @@ public sealed class RandomizerRunResult : IDisposable
     public MsgFile ReadBeforeMsgFile(string path) => _beforeRepository.GetMsgFile(path);
 
     public MsgFile ReadAfterMsgFile(string path) => _randomizer.FileRepository.GetMsgFile(path);
+
+    public RszScene ReadBeforeScene(string path)
+        => _beforeRepository.GetScnFile(path).ReadScene(_beforeRepository.TypeRepository);
+
+    public RszScene ReadAfterScene(string path)
+        => _randomizer.FileRepository.GetScnFile(path).ReadScene(_randomizer.FileRepository.TypeRepository);
 
     public bool WasFileModified(string path) => ChangedFiles.ContainsKey(path);
 
