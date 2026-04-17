@@ -62,12 +62,43 @@ internal class ChapterJumpDataModifier : Modifier
                 (!skipGuestHouse || x.Chapter != ChapterNo.Chapter1))
             .Select(x => x.Chapter)
             .ToList();
-
-        var shuffled = new List<ChapterNo>(candidates);
         var rng = randomizer.GetRng(RandomizerKey);
+        randomizer.FileRepository.ModifyScnFile(_path, scene =>
+        {
+            var targetJumps = scene.GetGameObjects()
+                .Select(go => (GameObject: go, Jump: go.FindComponent<ChapterJumpData>()))
+                .Where(x => x.Jump != null && candidates.Contains(x.Jump.JumpChapter))
+                .Select(x => (x.GameObject, Jump: x.Jump!))
+                .ToList();
 
-        bool valid;
-        do
+            var originalChapters = targetJumps
+                .Select(x => x.Jump.JumpChapter)
+                .ToList();
+            var shuffledChapters = CreateDerangement(originalChapters, rng);
+
+            for (var i = 0; i < targetJumps.Count; i++)
+            {
+                var (gameObject, jump) = targetJumps[i];
+                var original = jump.JumpChapter;
+                var next = shuffledChapters[i];
+
+                jump.JumpChapter = next;
+                logger.LogLine($"Chapter transition: {original.ToReadableString()} -> {next.ToReadableString()}");
+                var updated = gameObject.AddOrUpdateComponent(jump);
+                scene = scene.UpdateGameObject(updated);
+            }
+
+            return scene;
+        });
+    }
+
+    private static List<ChapterNo> CreateDerangement(List<ChapterNo> original, Rng rng)
+    {
+        if (original.Count < 2)
+            return new List<ChapterNo>(original);
+
+        var shuffled = new List<ChapterNo>(original);
+        for (var attempt = 0; attempt < 1024; attempt++)
         {
             for (int i = shuffled.Count - 1; i > 0; i--)
             {
@@ -75,46 +106,11 @@ internal class ChapterJumpDataModifier : Modifier
                 (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
             }
 
-            valid = true;
-            for (int i = 0; i < shuffled.Count; i++)
-            {
-                if (shuffled[i] == candidates[i])
-                {
-                    valid = false;
-                    break;
-                }
-            }
+            if (original.Zip(shuffled).All(pair => pair.First != pair.Second))
+                return shuffled;
+        }
 
-        } while (!valid);
-
-        int index = 0;
-        randomizer.FileRepository.ModifyScnFile(_path, scene =>
-        {
-            foreach (var go in scene.GetGameObjects())
-            {
-                var jump = go.FindComponent<ChapterJumpData>();
-                if (jump == null)
-                    continue;
-
-                if (!candidates.Contains(jump.JumpChapter))
-                    continue;
-
-                if (index >= shuffled.Count)
-                    break;
-
-                var original = jump.JumpChapter;
-                var next = shuffled[index++];
-
-                jump.JumpChapter = next;
-
-                logger.LogLine($"Chapter transition: {original.ToReadableString()} -> {next.ToReadableString()}");
-
-                var updated = go.AddOrUpdateComponent(jump);
-                scene = scene.UpdateGameObject(updated);
-            }
-
-            return scene;
-        });
+        return shuffled;
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)

@@ -65,7 +65,16 @@ internal class KeyItemLocationModifier : Modifier
             {
                 RszGameObject parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
                     ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
-                var template = randomizer.TemplateService.GetItemTemplate(newLocation.Id);
+                var template = randomizer.TemplateService.GetItemTemplate(newLocation.Id).Clone();
+                template = template.WithGuid(Guid.NewGuid());
+
+                var item = template.FindComponent<app.Item>();
+                if (item != null)
+                {
+                    item.ItemDataID = newLocation.Id;
+                    item.SaveGUID = Guid.NewGuid();
+                    template = template.AddOrUpdateComponent(item);
+                }
 
                 var transform = template.FindComponent<via.Transform>()!;
                 transform.Position = new Vector3(newLocation.NewX, newLocation.NewY, newLocation.NewZ);
