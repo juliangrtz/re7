@@ -175,7 +175,7 @@ internal class ItemModifier : Modifier
         var allowExtraItems = randomizer.GetConfigOption<bool>("additional-items");
         var allowExtraCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates");
 
-        randomizer.FileRepository.ModifyScnFile(placement.SceneFile, randomizer.IsOnRaytracingVersion, scene =>
+        randomizer.FileRepository.ModifyScnFile(placement.SceneFile, scene =>
         {
             RszGameObject parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
                 ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
@@ -261,7 +261,7 @@ internal class ItemModifier : Modifier
                     continue;
                 }
 
-                randomizer.FileRepository.ModifyScnFile(placement.SceneFile, randomizer.IsOnRaytracingVersion, scene =>
+                randomizer.FileRepository.ModifyScnFile(placement.SceneFile, scene =>
                 {
                     var originalGameObject = scene.FindGameObject(placement.Guid)!;
                     var originalTransform = originalGameObject.FindComponent<via.Transform>();

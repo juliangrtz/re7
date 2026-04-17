@@ -13,9 +13,6 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-/// <summary>
-/// TODO: non-RT
-/// </summary>
 internal class ItemDefinitionGenerator : IFileGenerator
 {
     public string Id => "item_definitions";

@@ -56,7 +56,7 @@ internal class WeaponModifier : Modifier
         int ScaleDamage(int value) => Math.Max(0, (int)Math.Round(value * factor));
 
         logger.Push(weapon.Name ?? weapon.WeaponId.ToString());
-        randomizer.FileRepository.ModifyRcolFile(rcolPath, randomizer.IsOnRaytracingVersion, rcol =>
+        randomizer.FileRepository.ModifyRcolFile(rcolPath, rcol =>
         {
             foreach (var requestSet in rcol.RequestSets)
             {

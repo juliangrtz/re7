@@ -116,7 +116,7 @@ internal class AreaGenerator : IFileGenerator
             .Where(hash =>
             {
                 var path = _pakList.GetPath(hash);
-                return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersionRT}");
+                return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersion}");
             })
             .ToList();
 

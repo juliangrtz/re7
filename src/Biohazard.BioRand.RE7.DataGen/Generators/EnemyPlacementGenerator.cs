@@ -46,7 +46,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         if (IsExcluded(path))
             return [];
 
-        var scene = new ScnFile(FileVersions.SceneFileVersionRT, _pakFile.GetEntryData(hash))
+        var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(hash))
             .ReadScene(_rszRepository);
 
         var results = new List<EnemyPlacement>();
@@ -201,7 +201,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         var results = new ConcurrentBag<EnemyPlacement>();
 
         var hashes = _pakFile.FileHashes
-            .Where(h => _pakList.GetPath(h)?.EndsWith($".scn.{FileVersions.SceneFileVersionRT}") == true)
+            .Where(h => _pakList.GetPath(h)?.EndsWith($".scn.{FileVersions.SceneFileVersion}") == true)
             .ToList();
 
         Parallel.ForEach(hashes, hash =>

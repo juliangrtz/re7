@@ -249,7 +249,7 @@ internal class EnemyModifier : Modifier
                 replacements.Add((spawnInfo.Guid, replacement));
             }
 
-            randomizer.FileRepository.ModifyScnFile(area.Path, randomizer.IsOnRaytracingVersion, scene =>
+            randomizer.FileRepository.ModifyScnFile(area.Path, scene =>
             {
                 return ProcessGeneratorScene(scene, randomizer, logger, enemyGenerator, replacements);
             });

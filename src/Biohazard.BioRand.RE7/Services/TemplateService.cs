@@ -12,20 +12,10 @@ internal class TemplateService
 
     public TemplateService(Randomizer randomizer)
     {
-        if (randomizer.IsOnRaytracingVersion)
-        {
-            _templateScnFile = new(
-                FileVersions.SceneFileVersionRT,
-                EmbeddedData.GetFile($"{TemplateSceneFileName}.{FileVersions.SceneFileVersionRT}")
-            );
-        }
-        else
-        {
-            _templateScnFile = new(
-                FileVersions.SceneFileVersionNonRT,
-                EmbeddedData.GetFile($"{TemplateSceneFileName}.{FileVersions.SceneFileVersionNonRT}")
-            );
-        }
+        _templateScnFile = new(
+            FileVersions.SceneFileVersion,
+            EmbeddedData.GetFile($"{TemplateSceneFileName}.{FileVersions.SceneFileVersion}")
+        );
 
         _scene = _templateScnFile.ReadScene(randomizer.FileRepository.TypeRepository);
         _scene.VisitGameObjects(go =>

@@ -19,9 +19,6 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
 
         [CommandOption("--full")]
         public bool Full { get; init; }
-
-        [CommandOption("-r|--raytracing")]
-        public bool IsForRaytracingVersion { get; init; }
     }
 
     public override ValidationResult Validate(CommandContext context, Settings settings)
@@ -47,7 +44,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         if (outputPath.EndsWith(".pak", StringComparison.OrdinalIgnoreCase))
         {
             var newPak = new PakFileBuilder();
-            HarvestFiles(pak, patternList, settings.IsForRaytracingVersion, (path, data) =>
+            HarvestFiles(pak, patternList, (path, data) =>
             {
                 newPak.AddEntry(path, data);
             });
@@ -55,7 +52,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         }
         else
         {
-            HarvestFiles(pak, patternList, settings.IsForRaytracingVersion, (path, data) =>
+            HarvestFiles(pak, patternList, (path, data) =>
             {
                 var targetPath = Path.Combine(outputPath, path);
                 var targetDir = Path.GetDirectoryName(targetPath)!;
@@ -69,11 +66,10 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
     private static void HarvestFiles(
         IPakFile pak,
         ImmutableArray<string> patternList,
-        bool isUsingRaytracingVersion,
         Action<string, byte[]> cb
     )
     {
-        var pakList = RandomizerExecutor.GetDefaultPakList(isUsingRaytracingVersion);
+        var pakList = RandomizerExecutor.GetDefaultPakList();
         var patternListRegex = patternList.Select(x => new Regex(x, RegexOptions.IgnoreCase)).ToArray();
         foreach (var path in pakList.Entries)
         {
