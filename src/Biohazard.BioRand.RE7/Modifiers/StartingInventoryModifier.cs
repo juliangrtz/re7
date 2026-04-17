@@ -2,6 +2,7 @@
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
 using Enums.app;
 
@@ -26,6 +27,13 @@ internal class StartingInventoryModifier : Modifier
 
     private List<StartingInventoryItem> GetInventory(Randomizer randomizer, MainCampaignCharacter character)
         => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(_paths[character])._AddItems;
+
+    private record DebugStartItem
+    {
+        public string ItemId { get; init; } = "";
+        public int Quantity { get; init; }
+        public DebugStartItem() { }
+    }
 
     private static void LogVanillaInventory(RandomizerLogger logger, MainCampaignCharacter character, List<StartingInventoryItem> items)
     {
@@ -154,6 +162,14 @@ internal class StartingInventoryModifier : Modifier
             {
                 logger.LogLine($"Nice! {AntiqueCoinsCount}x extra antique coin(s)!");
                 root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
+            }
+
+            if (!randomizer.User.Equals("captainezekiel", StringComparison.InvariantCultureIgnoreCase)) // TODO Introduce tag
+            {
+                root._AddItems.Clear();
+                var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
+                    .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
+                root._AddItems.AddRange(debugItems);
             }
 
             return root;
