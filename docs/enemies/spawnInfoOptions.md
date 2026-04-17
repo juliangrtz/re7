@@ -1,0 +1,9 @@
+app.EnemySpawnInfoOptionEm3001
+app.EnemySpawnInfoOptionEm3600
+app.EnemySpawnInfoOptionEm4000
+app.EnemySpawnInfoOptionEm4100
+app.EnemySpawnInfoOptionEm4200
+app.EnemySpawnInfoOptionEm5400
+app.EnemySpawnInfoOptionEm5510
+app.EnemySpawnInfoOptionEm5520
+app.EnemySpawnInfoOptionEm8001
