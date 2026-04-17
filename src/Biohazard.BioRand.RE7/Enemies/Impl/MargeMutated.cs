@@ -1,6 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
-using Biohazard.BioRand.RE7.Services;
-using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
