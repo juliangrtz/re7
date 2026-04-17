@@ -2,6 +2,7 @@ using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7;
 
@@ -83,6 +84,15 @@ internal class FileRepository : IPatchContext, IDisposable
     public void SetFile(string path, byte[] data)
     {
         _outputFiles[path] = data;
+    }
+
+    internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot()
+    {
+        return _outputFiles.ToImmutableDictionary(
+            x => x.Key,
+            x => x.Value.ToArray(),
+            StringComparer.OrdinalIgnoreCase
+        );
     }
 
     public void WriteOutputPakFile(string path)
