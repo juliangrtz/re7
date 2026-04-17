@@ -102,7 +102,10 @@ public static class RandomizerTest
         );
     }
 
-    public static RandomizerRunResult RunState(Action<RandomizerConfiguration>? configure = null, int seed = DefaultTestingSeed)
+    internal static RandomizerRunResult RunState(
+        Action<RandomizerConfiguration>? configure = null,
+        int seed = DefaultTestingSeed,
+        Action<Randomizer>? prepareRandomizer = null)
     {
         var configuration = CreateFeatureTestConfiguration(configure);
         var input = new RandomizerInput()
@@ -116,6 +119,7 @@ public static class RandomizerTest
         };
 
         var randomizer = new Randomizer(input, PAKPath, new EmptyReporter());
+        prepareRandomizer?.Invoke(randomizer);
         var beforeRepository = new FileRepository(randomizer, PAKPath, randomizer.DynamicData);
         randomizer.Randomize();
 

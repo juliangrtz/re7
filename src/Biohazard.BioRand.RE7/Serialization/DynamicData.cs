@@ -69,6 +69,14 @@ public sealed class DynamicData(bool download)
         }
     }
 
+    internal void SetData(DynamicDataName name, byte[] data)
+    {
+        lock (_sync)
+        {
+            _map[name] = data;
+        }
+    }
+
     private static byte[] Download(string url)
     {
         using var httpClient = new HttpClient();
