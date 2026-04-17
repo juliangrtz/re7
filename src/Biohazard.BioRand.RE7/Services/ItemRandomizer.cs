@@ -1,7 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
-using Enums.app;
 using Enums.app.GameFlowFsmManager;
 using Enums.app.Item;
 

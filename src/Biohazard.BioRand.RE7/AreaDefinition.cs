@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Biohazard.BioRand.RE7;
+﻿namespace Biohazard.BioRand.RE7;
 
 public class AreaDefinition
 {

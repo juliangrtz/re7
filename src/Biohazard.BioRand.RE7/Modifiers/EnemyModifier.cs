@@ -1,7 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Enemies;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
-using System.Reflection.Emit;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
