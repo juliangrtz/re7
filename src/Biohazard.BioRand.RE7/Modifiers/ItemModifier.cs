@@ -2,6 +2,7 @@
 using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -234,6 +235,7 @@ internal class ItemModifier : Modifier
                         && placement.Dlc == null
                         && !placement.IsExtra
                         && placement.Enabled
+                        && !placement.Tags.Contains(ItemPlacement.ExcludeTag)
                         && itemRandomizer.IsItemAllowed(definition)
                         && !BirdCageModifier.Guids.Contains(placement.Guid);
                 })
