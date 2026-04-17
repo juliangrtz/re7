@@ -52,4 +52,5 @@ public class ItemPlacement
     public const string FakeCrateTag = "fake";
     public const string WeaponChestTag = "weapon_chest";
     public const string RandomItemTag = "random";
+    public const string ExcludeTag = "exclude";
 }
