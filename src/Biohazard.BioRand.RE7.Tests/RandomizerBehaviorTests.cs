@@ -2,7 +2,6 @@ using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Weapons;
-using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Messages;
 
 namespace Biohazard.BioRand.RE7.Tests;

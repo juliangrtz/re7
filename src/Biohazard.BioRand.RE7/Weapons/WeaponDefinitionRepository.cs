@@ -12,7 +12,8 @@ public sealed class WeaponDefinitionRepository
     public ImmutableList<WeaponDefinition> WeaponDefinitions { get; private set; } = [];
     public ImmutableDictionary<WeaponID, WeaponDefinition> IdToWeaponMap { get; private set; } = [];
     private readonly List<WeaponID> _restrictedWeapons = [
-        
+        WeaponID.GimmickKnife, WeaponID.GoldenBar, WeaponID.Lantern_C,
+        WeaponID.Lighter_Z
     ];
 
     private const string WeaponDefinitionFileName = "weapon_definitions.json";

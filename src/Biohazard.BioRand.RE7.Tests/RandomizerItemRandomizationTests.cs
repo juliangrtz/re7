@@ -1,7 +1,6 @@
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.REEngine;
-using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app.Item;
 using IntelOrca.Biohazard.BioRand;

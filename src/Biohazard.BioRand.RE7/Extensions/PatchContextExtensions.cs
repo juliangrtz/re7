@@ -35,11 +35,13 @@ public static class PatchContextExtensions
     public static ScnFile GetScnFile(this IPatchContext context, string path)
     {
         var data = context.GetFile(path);
+        if (data != null)
+        {
+            return new ScnFile(FileVersions.SceneFileVersion, data);
+        }
+
         var stackTrace = new StackTrace();
-        // Get calling method name
-        return data == null
-            ? throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}")
-            : new ScnFile(FileVersions.SceneFileVersion, data);
+        throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}");
     }
 
     public static void ModifyScnFile(this IPatchContext context, string path, Func<RszScene, RszScene> callback)
@@ -92,7 +94,13 @@ public static class PatchContextExtensions
 
     public static void ModifyUserFile<T>(this IPatchContext context, string path, Func<T, T> callback)
     {
-        SerializeUserFile(context, path, callback(DeserializeUserFile<T>(context, path)));
+        var userFile = context.GetUserFile(path);
+        var builder = userFile.ToBuilder(context.TypeRepository);
+        var targetType = builder.Objects[0].Type;
+        var value = RszSerializer.Deserialize<T>(builder.Objects[0])!;
+        var updatedValue = callback(value);
+        builder.Objects = [(RszObjectNode)RszSerializer.Serialize(targetType, updatedValue!)];
+        context.SetUserFile(path, builder.Build());
     }
 
     public static MsgFile GetMsgFile(this IPatchContext context, string path)
@@ -115,7 +123,11 @@ public static class PatchContextExtensions
 
     public static RcolFile GetRcolFile(this IPatchContext context, string path)
     {
-        return new RcolFile(FileVersions.RcolFileVersion, context.GetFile(path));
+        var data = context.GetFile(path);
+        if (data == null || data.Length < 4)
+            throw new RandomizerUserException($"Unable to read RCOL file '{path}'.");
+
+        return new RcolFile(FileVersions.RcolFileVersion, data);
     }
 
     public static void SetRcolFile(this IPatchContext context, string path, RcolFile rcol)
