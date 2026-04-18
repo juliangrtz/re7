@@ -81,6 +81,7 @@ internal class EnemyModifier : Modifier
         {
             baseTemplate = randomizer.TemplateService
                 .GetEnemyTemplate(enemyId)
+                .Clone()
                 .WithName(enemyId);
 
             _generatorTemplateCache[enemyId] = baseTemplate;
@@ -141,6 +142,7 @@ internal class EnemyModifier : Modifier
                 // Replace SpawnInfo
                 var newSpawnInfo = randomizer.TemplateService
                     .GetEnemySpawnInfo(enemyId)
+                    .Clone()
                     .WithGuid(spawnGuid)
                     .AddOrUpdateComponent(transform);
 
