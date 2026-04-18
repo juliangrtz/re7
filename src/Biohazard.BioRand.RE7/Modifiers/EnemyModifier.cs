@@ -227,6 +227,7 @@ internal class EnemyModifier : Modifier
     {
         logger.Push(area.Path);
 
+        var generatorChanges = new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
         foreach (var enemyGenerator in area.EnemyGenerators)
         {
             var spawnInfos = enemyGenerator.EnemySpawnInfos;
@@ -249,12 +250,24 @@ internal class EnemyModifier : Modifier
                 replacements.Add((spawnInfo.Guid, replacement));
             }
 
-            randomizer.FileRepository.ModifyScnFile(area.Path, scene =>
+            if (replacements.Count > 0)
             {
-                return ProcessGeneratorScene(scene, randomizer, logger, enemyGenerator, replacements);
-            });
+                generatorChanges.Add((enemyGenerator, replacements));
+            }
 
             logger.Pop();
+        }
+
+        if (generatorChanges.Count > 0)
+        {
+            randomizer.FileRepository.ModifyScnFile(area.Path, scene =>
+            {
+                foreach (var (generator, replacements) in generatorChanges)
+                {
+                    scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements);
+                }
+                return scene;
+            });
         }
 
         logger.Pop();

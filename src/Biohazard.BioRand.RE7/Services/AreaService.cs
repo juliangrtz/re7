@@ -1,4 +1,4 @@
-﻿using IntelOrca.Biohazard.REE.Rsz;
+using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Services;
@@ -15,7 +15,6 @@ internal class AreaService(Randomizer randomizer)
         var areaRepo = AreaDefinitionRepository.Default;
         Areas = areaRepo.All
             .Where(a => a.Dlc == null)
-            .Where(a => !a.Path.Contains("copyasset"))
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
             .OrderBy(x => x.Path)

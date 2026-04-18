@@ -66,8 +66,20 @@ public sealed class Rng
 
     public T Next<T>(IEnumerable<T> values)
     {
-        var i = _random.Next(0, values.Count());
-        return values.ElementAt(i);
+        switch (values)
+        {
+            case IList<T> list when list.Count > 0:
+                return list[_random.Next(0, list.Count)];
+            case IReadOnlyList<T> list when list.Count > 0:
+                return list[_random.Next(0, list.Count)];
+            case ICollection<T> collection when collection.Count > 0:
+                return values.ElementAt(_random.Next(0, collection.Count));
+            default:
+                var array = values.ToArray();
+                if (array.Length == 0)
+                    throw new InvalidOperationException("Sequence contains no elements.");
+                return array[_random.Next(0, array.Length)];
+        }
     }
 
     public T NextOf8020<T>(params T[] values)

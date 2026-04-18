@@ -72,7 +72,7 @@ internal class BirdCageModifier : Modifier
         return (replacement.ItemId, rng.Next(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
     }
 
-    private void RandomizeBirdCageContent(ImmutableList<BirdCageReplacement> replacements, Rng rng, BirdCage birdCage, ReplacementCategory category, Randomizer randomizer)
+    private void RandomizeBirdCageContent(ImmutableList<BirdCageReplacement> replacements, Rng rng, BirdCage birdCage, ReplacementCategory category)
     {
         var (Id, Quantity, Coins, ValidItemIDs) = GetReplacement(replacements, category, rng);
         birdCage.Item.ItemDataID = Id.ToString();
@@ -95,8 +95,6 @@ internal class BirdCageModifier : Modifier
 
             birdCage.ItemSelectReaction.Enabled = true;
         }
-
-        birdCage.Serialize(randomizer);
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -109,8 +107,6 @@ internal class BirdCageModifier : Modifier
         var randomizeDrugsAndPowerCoins = randomizer.GetConfigOption<bool>("random-bird-cage-drugs-coins");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         var rng = randomizer.GetRng(RandomizerKey);
-        var birdCages = new List<BirdCage>();
-
         foreach (var file in _birdCageScnFiles)
         {
             logger.Push(file);
@@ -118,6 +114,7 @@ internal class BirdCageModifier : Modifier
             var content = randomizer.FileRepository.GetFile(path);
             var scnFile = new ScnFile(FileVersions.SceneFileVersion, content)
                             .ReadScene(randomizer.FileRepository.TypeRepository);
+            var changedBirdCages = new List<BirdCage>();
 
             scnFile.VisitGameObjects(gameObject =>
             {
@@ -127,7 +124,6 @@ internal class BirdCageModifier : Modifier
                         return; // Don't randomize scorpion key on Madhouse
 
                     var birdCage = new BirdCage(randomizer, path, gameObject, preserveItemModels);
-                    birdCages.Add(birdCage);
 
                     var isMagnum = birdCage.Item.ItemDataID == ItemID.Magnum.ToString();
                     if ((isMagnum && randomizeMagnum) || (!isMagnum && randomizeDrugsAndPowerCoins))
@@ -137,7 +133,8 @@ internal class BirdCageModifier : Modifier
                             (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
                         var beforeName = _items.FromId(beforeItemId)!.Name;
 
-                        RandomizeBirdCageContent(replacements, rng, birdCage, category, randomizer);
+                        RandomizeBirdCageContent(replacements, rng, birdCage, category);
+                        changedBirdCages.Add(birdCage);
                         var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
 
                         logger.LogLine($"Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +
@@ -145,6 +142,18 @@ internal class BirdCageModifier : Modifier
                     }
                 }
             });
+
+            if (changedBirdCages.Count > 0)
+            {
+                randomizer.FileRepository.ModifyScnFile(path, scene =>
+                {
+                    foreach (var birdCage in changedBirdCages)
+                    {
+                        scene = birdCage.ApplyToScene(scene, randomizer);
+                    }
+                    return scene;
+                });
+            }
 
             logger.Pop();
         }
@@ -178,50 +187,46 @@ internal class BirdCage
             .FindComponent<app.Item>()!;
     }
 
-    public void Serialize(Randomizer randomizer)
+    public RszScene ApplyToScene(RszScene scene, Randomizer randomizer)
     {
-        Randomizer.FileRepository.ModifyScnFile(PakPath, scene =>
+        var container = scene.FindGameObject(go => go.Guid == ContainerGuid)!;
+
+        var gimmick = container.Children
+            .First(child => child.Name.EndsWith("_Gimmick"));
+
+        var itemHolder = container.Children
+            .First(child => child.FindComponent<app.Item>() != null);
+
+        var newGimmick = gimmick
+            .AddOrUpdateComponent(ItemSelectReaction)
+            .AddOrUpdateComponent(CoinCounter);
+
+        Item.SaveGUID = Guid.NewGuid(); // IMPORTANT!
+        var newItemHolder = itemHolder
+            .AddOrUpdateComponent(Item);
+
+        if (!PreserveItemModels)
         {
-            var container = scene.FindGameObject(go => go.Guid == ContainerGuid)!;
+            var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
+            var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID).First();
 
-            var gimmick = container.Children
-                .First(child => child.Name.EndsWith("_Gimmick"));
+            mesh = mesh
+                .Set("Mesh", new RszResourceNode(newItem.Mesh))
+                .Set("Material", new RszResourceNode(newItem.Material));
 
-            var itemHolder = container.Children
-                .First(child => child.FindComponent<app.Item>() != null);
+            newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
+        }
 
-            var newGimmick = gimmick
-                .AddOrUpdateComponent(ItemSelectReaction)
-                .AddOrUpdateComponent(CoinCounter);
+        //var fsmItemGet = container.Children.FirstOrDefault(c => c.Name == "Fsm_ItemGet", null);
+        //if (fsmItemGet != null)
+        //{
+        //    var fsm = fsmItemGet.FindComponent("via.fsm.Fsm")!;
+        //    fsm = fsm.Set("Enabled", false);
+        //    container = container.AddOrUpdateComponent(fsm);
+        //}
 
-            Item.SaveGUID = Guid.NewGuid(); // IMPORTANT!
-            var newItemHolder = itemHolder
-                .AddOrUpdateComponent(Item);
-
-            if (!PreserveItemModels)
-            {
-                var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-                var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID).First();
-
-                mesh = mesh
-                    .Set("Mesh", new RszResourceNode(newItem.Mesh))
-                    .Set("Material", new RszResourceNode(newItem.Material));
-
-                newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
-            }
-
-            //var fsmItemGet = container.Children.FirstOrDefault(c => c.Name == "Fsm_ItemGet", null);
-            //if (fsmItemGet != null)
-            //{
-            //    var fsm = fsmItemGet.FindComponent("via.fsm.Fsm")!;
-            //    fsm = fsm.Set("Enabled", false);
-            //    container = container.AddOrUpdateComponent(fsm);
-            //}
-
-            container = container.AddOrUpdateChild(newGimmick);
-            container = container.AddOrUpdateChild(newItemHolder);
-            scene = scene.UpdateGameObject(container);
-            return scene;
-        });
+        container = container.AddOrUpdateChild(newGimmick);
+        container = container.AddOrUpdateChild(newItemHolder);
+        return scene.UpdateGameObject(container);
     }
 }

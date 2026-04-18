@@ -834,9 +834,13 @@
     "Id": "wp0060",
     "IsGun": false,
     "Damage": {
-      "defaultbullet.rcol/RedBlaster": {
-        "Damage": 300,
-        "Stun": 300
+      "wp0060_chainsaw.rcol/AttackSmall": {
+        "Damage": 500,
+        "Stun": 100
+      },
+      "wp0060_chainsaw.rcol/AttackLarge": {
+        "Damage": 140,
+        "Stun": 20
       }
     },
     "IsInventoryWeapon": true,
@@ -851,5 +855,31 @@
       "natives/stm/collision/collider/weapon/wp0060/wp0060_chainsaw.rcol.20"
     ],
     "PrefabPath": "natives/stm/prefab/weapon/wp0060_chainsaw/item/wp0060_chainsaw_item.pfb"
+  },
+  {
+    "WeaponId": "CircularSaw",
+    "Id": "wp0070",
+    "IsGun": false,
+    "Damage": {
+      "wp0070_circularsaw.rcol/AttackSmall": {
+        "Damage": 300,
+        "Stun": 300
+      },
+      "wp0070_circularsaw.rcol/AttackLarge": {
+        "Damage": 200,
+        "Stun": 200
+      }
+    },
+    "IsInventoryWeapon": true,
+    "MaxLoadNum": 0,
+    "IsLoadNumInfinity": false,
+    "IsBulletStackNumInfinity": false,
+    "UserType": "Player",
+    "Mesh": "Weapon/wp0070/wp0070.mesh",
+    "Material": "Weapon/wp0070/wp0070.mdf2",
+    "RcolPaths": [
+      "natives/stm/collision/collider/weapon/wp0070/wp0070_circularsaw.rcol.20"
+    ],
+    "PrefabPath": "natives/stm/prefab/weapon/wp0070_circularsaw/item/wp0070_circularsaw_item.pfb"
   }
 ]
