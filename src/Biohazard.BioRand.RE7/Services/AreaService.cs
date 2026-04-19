@@ -13,7 +13,7 @@ internal class AreaService(Randomizer randomizer)
     public void LoadAreas()
     {
         var areaRepo = AreaDefinitionRepository.Default;
-        Areas = areaRepo.All
+        Areas = areaRepo.All // TODO Optimise performance. Must be 480 scenes.
             .Where(a => a.Dlc == null)
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
