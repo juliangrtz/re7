@@ -2520,3 +2520,386 @@ namespace app.Chain
         public float MyAttenuationRatio { get; set; }
     }
 }
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm3001
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em3001ThinkState ThinkSet { get; set; }
+    }
+}
+namespace app.fsm
+{
+    public class Em3001ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em3001.Em3001ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em3001.Em3001ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em3001
+{
+    public class Em3001ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em3001.ThinkState ThinkState { get; set; }
+    }
+    public class Em3001ThinkAppearSet
+    {
+        public Enums.app.Em3001Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm3600
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em3600ThinkState ThinkSet { get; set; }
+    }
+}
+namespace app.fsm
+{
+    public class Em3600ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em3600.Em3600ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em3600.Em3600ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em3600
+{
+    public class Em3600ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em3600.ThinkState ThinkState { get; set; }
+    }
+    public class Em3600ThinkAppearSet
+    {
+        public Enums.app.Em3600Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm4100
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em4100ThinkState ThinkSet { get; set; }
+        public bool IsForceTargetingToPlayer { get; set; }
+        public string WayPointName { get; set; } = "";
+        public Enums.app.Em4100ActionController.MoveType MovingType { get; set; }
+        public bool isWanderable { get; set; }
+        public float NavigationUnderSearchLength { get; set; }
+        public float NavigationPathfindInterruptDist { get; set; }
+        public Enums.via.navigation.Navigation.TraceLineOptimizeTiming NavigationLineOptimizeTiming { get; set; }
+        public float AutoSuspendHeightByFalling { get; set; }
+        public float ResumeAnimationSpeedRate { get; set; }
+        public float SuspendAnimationSpeedRate { get; set; }
+        public float AppearAnimationSpeedRate { get; set; }
+        public Enums.app.MoldedActionController.ExtraHatUnit.Type HatType { get; set; }
+        public class OptionSaveDataClassEm4100
+        {
+            public app.EnemySpawnInfo.BackupParameter.MoldedCommon moldedCommon { get; set; }
+        }
+    }
+}
+namespace app.fsm
+{
+    public class Em4100ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em4100.ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em4100.ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em4100
+{
+    public class ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em4100.ThinkStateSet.Type ThinkState { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class ThinkAppearSet
+    {
+        public Enums.app.Em4100.ThinkAppearSet.Type AppearType { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm4200
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em4200ThinkState ThinkSet { get; set; }
+        public bool IsForceTargetingToPlayer { get; set; }
+        public string WayPointName { get; set; } = "";
+        public bool IsStartingLostLeftLeg { get; set; }
+        public bool IsStartingLostRightLeg { get; set; }
+        public bool IsStartingLostLeftArm { get; set; }
+        public bool IsStartingLostRightArm { get; set; }
+        public float CharacterScaleRate { get; set; }
+        public float NavigationUnderSearchLength { get; set; }
+        public float NavigationPathfindInterruptDist { get; set; }
+        public Enums.via.navigation.Navigation.TraceLineOptimizeTiming NavigationLineOptimizeTiming { get; set; }
+        public float AutoSuspendHeightByFalling { get; set; }
+        public float ResumeAnimationSpeedRate { get; set; }
+        public float SuspendAnimationSpeedRate { get; set; }
+        public float AppearAnimationSpeedRate { get; set; }
+        public Enums.app.MoldedActionController.ExtraHatUnit.Type HatType { get; set; }
+        public class OptionSaveDataClassEm4200
+        {
+            public app.EnemySpawnInfo.BackupParameter.MoldedCommon moldedCommon { get; set; }
+        }
+    }
+}
+namespace app.fsm
+{
+    public class Em4200ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em4200.ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em4200.ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em4200
+{
+    public class ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em4200.ThinkStateSet.Type ThinkState { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+    public class ThinkAppearSet
+    {
+        public Enums.app.Em4200.ThinkAppearSet.Type AppearType { get; set; }
+        public class Type
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm5400
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em5400ThinkState ThinkSet { get; set; }
+        public bool IsUseMother { get; set; }
+        public Enums.app.Em3100SpawnManager.UseType UseType { get; set; }
+        public bool IsNavigationTraceDistSet { get; set; }
+        public float NavigationTraceDist { get; set; }
+    }
+}
+namespace app.fsm
+{
+    public class Em5400ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em5400.Em5400ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em5400.Em5400ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em5400
+{
+    public class Em5400ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em5400.ThinkState ThinkState { get; set; }
+    }
+    public class Em5400ThinkAppearSet
+    {
+        public Enums.app.Em5400Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm5510
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em5510ThinkState ThinkSet { get; set; }
+        public bool IsEm5520Override { get; set; }
+        public string Em5520OverrideDirectiveHolderAlias { get; set; } = "";
+        public bool IsEm5400Override { get; set; }
+        public string Em5400OverrideDirectiveHolderAlias { get; set; } = "";
+        public bool IsOverrideStateSet { get; set; }
+        public app.Em5510.Em5510ThinkStateSet OverrideThinkStateSet { get; set; }
+        public class Em5510OptionSaveData
+        {
+            public Enums.app.Em5510Think.BreakState BreakState { get; set; }
+            public bool IsOverrideStateSet { get; set; }
+            public app.Em5510.Em5510ThinkStateSet OverrideStateSet { get; set; }
+        }
+    }
+}
+namespace app.fsm
+{
+    public class Em5510ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em5510.Em5510ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em5510.Em5510ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em5510
+{
+    public class Em5510ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em5510.ThinkState ThinkState { get; set; }
+    }
+    public class Em5510ThinkAppearSet
+    {
+        public Enums.app.Em5510Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm5520
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em5520ThinkState ThinkSet { get; set; }
+        public bool IsUseMother { get; set; }
+        public Enums.app.Em3100SpawnManager.UseType UseType { get; set; }
+        public bool IsNavigationTraceDistSet { get; set; }
+        public float NavigationTraceDist { get; set; }
+    }
+}
+namespace app.fsm
+{
+    public class Em5520ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em5520.Em5520ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em5520.Em5520ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em5520
+{
+    public class Em5520ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em5520.ThinkState ThinkState { get; set; }
+    }
+    public class Em5520ThinkAppearSet
+    {
+        public Enums.app.Em5520Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemySpawnInfoOptionEm8001
+    {
+        public bool Enabled { get; set; } = new();
+        public app.fsm.Em8001ThinkState ThinkSet { get; set; }
+    }
+}
+namespace app.fsm
+{
+    public class Em8001ThinkState
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public bool UseOwnerObj { get; set; }
+        public System.Guid GameObj { get; set; }
+        public app.Em8001.Em8001ThinkStateSet StateSet { get; set; }
+        public bool IsAppear { get; set; }
+        public app.Em8001.Em8001ThinkAppearSet AppearSet { get; set; }
+        public bool IsUseGenerator { get; set; }
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+    }
+}
+namespace app.Em8001
+{
+    public class Em8001ThinkStateSet
+    {
+        public Enums.app.AI.CommonThinkState CommonState { get; set; }
+        public Enums.app.Em8001.ThinkState ThinkState { get; set; }
+    }
+    public class Em8001ThinkAppearSet
+    {
+        public Enums.app.Em8001.Em8001Order.Appear.Type AppearType { get; set; }
+    }
+}
