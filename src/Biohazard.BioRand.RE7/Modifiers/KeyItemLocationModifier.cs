@@ -43,37 +43,67 @@ internal class KeyItemLocationModifier : Modifier
 
         // Delete all original key item locations
         // TODO: Copy original Guids to new key items
-        foreach (var keyItem in keyItems)
+        foreach (var sceneGroup in keyItems.GroupBy(keyItem => keyItem.OriginalScnFile, StringComparer.OrdinalIgnoreCase))
         {
-            randomizer.FileRepository.ModifyScnFile(keyItem.OriginalScnFile, randomizer.IsOnRaytracingVersion, scene =>
+            var guidsToRemove = sceneGroup
+                .SelectMany(keyItem => itemService.FromId(keyItem.Id))
+                .Select(placement => placement.Guid)
+                .ToHashSet();
+
+            if (guidsToRemove.Count == 0)
+                continue;
+
+            randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
             {
-                var placements = itemService.FromId(keyItem.Id);
-                foreach (var placement in placements)
+                foreach (var guid in guidsToRemove)
                 {
-                    scene = scene.RemoveGameObject(placement.Guid);
+                    scene = scene.RemoveGameObject(guid);
                 }
                 return scene;
             });
         }
 
         // Add random new location
-        var groups = keyItems.GroupBy(k => k.Id).ToList();
-        foreach (var group in groups)
+        var newLocations = keyItems
+            .GroupBy(k => k.Id)
+            .Select(group => rng.Next(group))
+            .ToList();
+
+        foreach (var sceneGroup in newLocations.GroupBy(location => location.NewScnFile, StringComparer.OrdinalIgnoreCase))
         {
-            var newLocation = rng.Next(group);
-            randomizer.FileRepository.ModifyScnFile(newLocation.NewScnFile, randomizer.IsOnRaytracingVersion, scene =>
+            randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
             {
-                RszGameObject parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
+                var parentGuid = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))?.Guid
                     ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
-                var template = randomizer.TemplateService.GetItemTemplate(newLocation.Id);
 
-                var transform = template.FindComponent<via.Transform>()!;
-                transform.Position = new Vector3(newLocation.NewX, newLocation.NewY, newLocation.NewZ);
-                template = template.AddOrUpdateComponent(transform);
+                foreach (var newLocation in sceneGroup)
+                {
+                    var parentGameObject = scene.FindGameObject(parentGuid)!;
+                    var template = randomizer.TemplateService.GetItemTemplate(newLocation.Id).Clone();
+                    template = template.WithGuid(Guid.NewGuid());
 
-                parentGameObject = parentGameObject.AddOrUpdateChild(template);
-                return scene.UpdateGameObject(parentGameObject);
+                    var item = template.FindComponent<app.Item>();
+                    if (item != null)
+                    {
+                        item.ItemDataID = newLocation.Id;
+                        item.SaveGUID = Guid.NewGuid();
+                        template = template.AddOrUpdateComponent(item);
+                    }
+
+                    var transform = template.FindComponent<via.Transform>()!;
+                    transform.Position = new Vector3(newLocation.NewX, newLocation.NewY, newLocation.NewZ);
+                    template = template.AddOrUpdateComponent(transform);
+
+                    parentGameObject = parentGameObject.AddOrUpdateChild(template);
+                    scene = scene.UpdateGameObject(parentGameObject);
+                }
+
+                return scene;
             });
+        }
+
+        foreach (var newLocation in newLocations)
+        {
             logger.LogLine($"Chose new location for {newLocation.Id} in scene {newLocation.NewScnFile}: X={newLocation.NewX}, Y={newLocation.NewY}, Z={newLocation.NewZ}");
         }
     }

@@ -69,6 +69,8 @@ internal class EnemyModifier : Modifier
     }
 
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
+    private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
+    private readonly Dictionary<string, (bool IsSafe, string? Reason)> _generatorTemplateCompatibilityCache = new(StringComparer.OrdinalIgnoreCase);
 
     private RszGameObject GetOrCreateEnemyTemplate(
         Randomizer randomizer,
@@ -86,37 +88,72 @@ internal class EnemyModifier : Modifier
             _generatorTemplateCache[enemyId] = baseTemplate;
         }
 
+        var template = baseTemplate.Clone();
+
         if (updateTransform)
         {
-            baseTemplate = baseTemplate.AddOrUpdateComponent(transform);
+            template = template.AddOrUpdateComponent(transform);
         }
 
-        return baseTemplate
-            .WithGuid(newGuid)
-            .WithName(enemyId);
+        return template.WithName(enemyId);
     }
 
-    private RszGameObject ApplySpawnInfoProperties(app.EnemySpawnInfo originalSpawnInfoGO, RszGameObject newSpawnInfoGO)
+    private RszGameObject GetOrCreateSpawnInfoTemplate(
+        Randomizer randomizer,
+        string enemyId)
     {
-        var spawnInfo = newSpawnInfoGO.FindComponent<app.EnemySpawnInfo>()!;
+        if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template))
+        {
+            template = randomizer.TemplateService
+                .GetEnemySpawnInfo(enemyId)
+                .WithName(enemyId);
 
-        // Retain original properties that are not set by the template
-        spawnInfo.IsForceSpawn = originalSpawnInfoGO.IsForceSpawn;
-        spawnInfo.CanSpawnAndSetupForForceSpawn = originalSpawnInfoGO.CanSpawnAndSetupForForceSpawn;
-        spawnInfo.IsPermitDelayGenerate = originalSpawnInfoGO.IsPermitDelayGenerate;
-        spawnInfo.IsInvalidateCollisionAtStart = originalSpawnInfoGO.IsInvalidateCollisionAtStart;
-        spawnInfo.IsPlayerTargetingAtStart = originalSpawnInfoGO.IsPlayerTargetingAtStart;
-        spawnInfo.IsWaitRequestCommandAction = originalSpawnInfoGO.IsWaitRequestCommandAction;
+            _spawnInfoTemplateCache[enemyId] = template;
+        }
 
-        spawnInfo.resumeParameter.ResumePoints.Clear();
-        spawnInfo.MyGUID = Guid.NewGuid();
+        return template
+            .Clone()
+            .WithName($"ESI_{enemyId}");
+    }
 
-        // TODO Health
-        // TODO Resume/Suspend params?
-        // TODO Molded BackupParams
+    private bool IsGeneratorTemplateSafe(Randomizer randomizer, string enemyId, out string? reason)
+    {
+        if (_generatorTemplateCompatibilityCache.TryGetValue(enemyId, out var cached))
+        {
+            reason = cached.Reason;
+            return cached.IsSafe;
+        }
 
-        newSpawnInfoGO = newSpawnInfoGO.AddOrUpdateComponent(spawnInfo);
-        return newSpawnInfoGO;
+        var template = randomizer.TemplateService.GetEnemyTemplate(enemyId);
+        var gameObjects = new Stack<RszGameObject>();
+        gameObjects.Push(template);
+
+        while (gameObjects.Count > 0)
+        {
+            var gameObject = gameObjects.Pop();
+            if (gameObject.FindComponent("via.fsm.Fsm") != null)
+            {
+                reason = $"{gameObject.Name} contains via.fsm.Fsm";
+                _generatorTemplateCompatibilityCache[enemyId] = (false, reason);
+                return false;
+            }
+
+            if (gameObject.FindComponent("app.EnemySpawnInfo") != null)
+            {
+                reason = $"{gameObject.Name} contains app.EnemySpawnInfo";
+                _generatorTemplateCompatibilityCache[enemyId] = (false, reason);
+                return false;
+            }
+
+            foreach (var child in gameObject.Children)
+            {
+                gameObjects.Push(child);
+            }
+        }
+
+        reason = null;
+        _generatorTemplateCompatibilityCache[enemyId] = (true, null);
+        return true;
     }
 
     private RszScene ProcessGeneratorScene(
@@ -126,51 +163,41 @@ internal class EnemyModifier : Modifier
         EnemyGeneratorWrapper enemyGenerator,
         IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements)
     {
-        var pooledObjects = new Dictionary<string, RszGameObject>();
+        var pooledObjects = new List<RszGameObject>();
 
         foreach (var (spawnGuid, newEnemy) in replacements)
         {
             var enemyId = newEnemy.EnemyId.ToString();
 
-            var originalGO = scene.FindGameObject(spawnGuid)!;
-            var transform = originalGO.FindComponent<via.Transform>()!;
-            var originalSpawnInfo = originalGO.FindComponent<app.EnemySpawnInfo>()!;
+            var originalSpawnInfoGameObject = scene.FindGameObject(spawnGuid)!;
+            var originalTransform = originalSpawnInfoGameObject.FindComponent<via.Transform>()!;
+            var originalSpawnInfoComponent = originalSpawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
 
             if (newEnemy.UsesEnemyGenerator)
             {
-                // Replace SpawnInfo
-                var newSpawnInfo = randomizer.TemplateService
-                    .GetEnemySpawnInfo(enemyId)
-                    .WithGuid(spawnGuid)
-                    .AddOrUpdateComponent(transform);
+                // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
+                var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.StartsWith("app.EnemySpawnInfoOption"));
+                var newSpawnOptions = GetOrCreateSpawnInfoTemplate(randomizer, enemyId).FindComponent(newEnemy.SpawnOptionType!)!;
+                originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components
+                    .Remove(originalSpawnOptions)
+                    .Add(newSpawnOptions);
+                originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
 
-                newSpawnInfo = ApplySpawnInfoProperties(originalSpawnInfo, newSpawnInfo);
+                originalSpawnInfoComponent.UnitAlias = enemyId;
+                originalSpawnInfoGameObject = originalSpawnInfoGameObject
+                    .AddOrUpdateComponent(originalSpawnInfoComponent)
+                    .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);
 
-                var enemySave = newSpawnInfo.FindComponent<app.EnemySave>();
-                if (enemySave != null)
-                {
-                    enemySave.SaveGUID = Guid.NewGuid();
-                    newSpawnInfo = newSpawnInfo.AddOrUpdateComponent(enemySave);
-                }
+                scene = scene.UpdateGameObject(originalSpawnInfoGameObject);
 
-                scene = scene.ReplaceGameObject(spawnGuid, newSpawnInfo, keepChildren: false);
-
-                var spawnInfoComp = newSpawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-                spawnInfoComp.UnitAlias = enemyId;
-                newSpawnInfo = newSpawnInfo.AddOrUpdateComponent(spawnInfoComp);
-
-                // Prepare pooled object (deduped)
-                if (!pooledObjects.ContainsKey(enemyId))
-                {
-                    var template = GetOrCreateEnemyTemplate(
+                var template = GetOrCreateEnemyTemplate(
                         randomizer,
                         enemyId,
                         Guid.NewGuid(),
-                        transform,
-                        updateTransform: false);
-
-                    pooledObjects[enemyId] = template;
-                }
+                        originalTransform,
+                        updateTransform: false
+                );
+                pooledObjects.Add(template);
             }
             else
             {
@@ -179,7 +206,7 @@ internal class EnemyModifier : Modifier
                     randomizer,
                     enemyId,
                     Guid.NewGuid(),
-                    transform,
+                    originalTransform,
                     updateTransform: true)
                     .WithName($"{enemyId}_Static");
 
@@ -197,11 +224,11 @@ internal class EnemyModifier : Modifier
             .Single();
 
         var poolComponent = poolObject.FindComponent<app.EnemyPool>()!;
-        poolComponent.ExternalInstancePoolRefs.Clear();
+        //poolComponent.ExternalInstancePoolRefs.Clear();
 
         var newChildren = poolObject.Children.ToList();
 
-        foreach (var pooled in pooledObjects.Values)
+        foreach (var pooled in pooledObjects)
         {
             if (!newChildren.Any(c => c.Guid == pooled.Guid))
             {
@@ -227,6 +254,7 @@ internal class EnemyModifier : Modifier
     {
         logger.Push(area.Path);
 
+        var generatorChanges = new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
         foreach (var enemyGenerator in area.EnemyGenerators)
         {
             var spawnInfos = enemyGenerator.EnemySpawnInfos;
@@ -249,25 +277,49 @@ internal class EnemyModifier : Modifier
                 replacements.Add((spawnInfo.Guid, replacement));
             }
 
-            randomizer.FileRepository.ModifyScnFile(area.Path, randomizer.IsOnRaytracingVersion, scene =>
+            if (replacements.Count > 0)
             {
-                return ProcessGeneratorScene(scene, randomizer, logger, enemyGenerator, replacements);
-            });
+                generatorChanges.Add((enemyGenerator, replacements));
+            }
 
             logger.Pop();
+        }
+
+        if (generatorChanges.Count > 0)
+        {
+            randomizer.FileRepository.ModifyScnFile(area.Path, scene =>
+            {
+                foreach (var (generator, replacements) in generatorChanges)
+                {
+                    scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements);
+                }
+                return scene;
+            });
         }
 
         logger.Pop();
     }
 
-    private Rng.Table<IEnemyDefinition> CreateEnemyTable(Randomizer randomizer, Rng rng)
+    private Rng.Table<IEnemyDefinition> CreateEnemyTable(Randomizer randomizer, RandomizerLogger logger, Rng rng)
     {
         Rng.Table<IEnemyDefinition> table = rng.CreateProbabilityTable<IEnemyDefinition>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
+            if (!enemy.UsesEnemyGenerator)
+            {
+                continue;
+            }
+
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
+                var enemyId = enemy.EnemyId.ToString();
+                if (!IsGeneratorTemplateSafe(randomizer, enemyId, out var reason))
+                {
+                    logger.LogLine($"Skipping {enemy.Name} ({enemyId}) for generator randomization: {reason}");
+                    continue;
+                }
+
                 table.Add(enemy, ratio);
             }
         }
@@ -282,7 +334,7 @@ internal class EnemyModifier : Modifier
 
         var options = BuildOptions(randomizer);
         var rng = randomizer.GetRng(RandomizerKey);
-        var enemyTable = CreateEnemyTable(randomizer, rng);
+        var enemyTable = CreateEnemyTable(randomizer, logger, rng);
 
         if (enemyTable.IsEmpty)
         {

@@ -3,20 +3,9 @@
 public class FileVersions
 {
     public const int UserFileVersion = 2;
-    // User files don't exist in non-RT.
-
-    public const int SceneFileVersionRT = 20; 
-    public const int SceneFileVersionNonRT = 18;
-
-    public const int MsgFileVersionRT = 17;
-    public const int MsgFileVersionNonRT = 13;
-
-    public const int RcolFileVersionRT = 20;
-    public const int RcolFileVersionNonRT = 2;
-
-    public const int PfbFileVersionRT = 17;
-    public const int PfbFileVersionNonRT = 8;
-
-    public const int MotlistFileVersionRT = 524;
-    public const int MotlistFileVersionNonRT = -1;
+    public const int SceneFileVersion = 20;
+    public const int MsgFileVersion = 17;
+    public const int RcolFileVersion = 20;
+    public const int PfbFileVersion = 17;
+    public const int MotlistFileVersion = 524;
 }

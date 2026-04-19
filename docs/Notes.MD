@@ -202,3 +202,4 @@ Files where inventory size is changed:
 ## Misc
 
 - Eye drop params (max time and range): natives/stm/prefab/system/systemparameterdata.user
+- Lucas puzzle door FSM: leveldesign/fsm/chapter3/chapter3_4/levelfsm_c03_4.scn.20

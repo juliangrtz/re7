@@ -1,4 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Enemies;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
@@ -53,7 +53,7 @@ internal class Area
         Randomizer = randomizer;
         Definition = definition;
         ScnFile = randomizer.FileRepository
-            .GetScnFile(definition.Path, randomizer.IsOnRaytracingVersion)
+            .GetScnFile(definition.Path)
             .ToBuilder(randomizer.FileRepository.TypeRepository);
         Scan();
     }

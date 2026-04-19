@@ -1,4 +1,4 @@
-﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
 using Enums.app.GameFlowFsmManager;
@@ -6,13 +6,15 @@ using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class ItemRandomizer(Randomizer randomizer)
+internal class ItemRandomizer
 {
-    private readonly Randomizer _randomizer = randomizer;
+    private readonly Randomizer _randomizer;
     private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private readonly HashSet<string> _placedItemIds = [];
-    private readonly bool _allowUnlockables = randomizer.GetConfigOption<bool>("allow-bonus-items");
-    private readonly bool _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
+    private readonly bool _allowUnlockables;
+    private readonly bool _allowDlcItems;
+    private readonly Dictionary<ItemCategoryType, ItemDefinition[]> _allowedItemsByCategory;
+    private readonly ItemDefinition[] _allowedGuns;
     private readonly Dictionary<RandomItemSettings, EndlessBag<string>> _generalDrops = new();
 
     public string[] PlacedItemIds => _placedItemIds.ToArray();
@@ -56,6 +58,22 @@ internal class ItemRandomizer(Randomizer randomizer)
     private const double NormalAmmoDropAmountFactor = 1f;
     private const double MadhouseAmmoDropAmountFactor = 0.75f;
 
+    public ItemRandomizer(Randomizer randomizer)
+    {
+        _randomizer = randomizer;
+        _allowUnlockables = randomizer.GetConfigOption<bool>("allow-bonus-items");
+        _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
+        _allowedItemsByCategory = _itemDefinitions.Kinds
+            .ToDictionary(
+                kind => kind,
+                kind => _itemDefinitions.GetAll(kind)
+                    .Where(IsItemAllowed)
+                    .ToArray());
+        _allowedGuns = _allowedItemsByCategory.GetValueOrDefault(ItemCategoryType.Weapon, [])
+            .Where(IsGunCandidate)
+            .ToArray();
+    }
+
     // (easy #, normal #, madhouse #)
     public (uint, uint, uint) ApplyDifficultyToDropAmount(uint amount)
         => (
@@ -85,51 +103,10 @@ internal class ItemRandomizer(Randomizer randomizer)
     }
 
     public ItemDefinition? GetRandomGun(Rng rng, bool allowReoccurance = true)
-    {
-        static bool Check(ItemDefinition item)
-        {
-            if (item.WeaponId == null)
-                return false;
-
-            if (WeaponDefinitionRepository.Default.IsRestricted(item.WeaponId.Value))
-                return false;
-
-            var definition = WeaponDefinitionRepository.Default.FromWeaponId(item.WeaponId.Value.ToString());
-            if (definition.UserType != Enums.app.CharacterDefine.Type.Player)
-                return false;
-
-            if (!definition.IsGun)
-                return false;
-
-            return true;
-        }
-
-        return GetRandomItemDefinition(rng, ItemCategoryType.Weapon, allowReoccurance, Check);
-    }
+        => GetRandomItemFromPool(rng, _allowedGuns, allowReoccurance);
 
     public ItemDefinition? GetRandomItemDefinition(Rng rng, ItemCategoryType kind, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
-    {
-        var itemRepo = ItemDefinitionRepository.Default;
-        var poolEnumerable = itemRepo
-            .GetAll(kind)
-            .Where(IsItemAllowed);
-        if (extraCheck != null)
-        {
-            poolEnumerable = poolEnumerable.Where(extraCheck);
-        }
-        if (!allowReoccurance)
-        {
-            poolEnumerable = poolEnumerable
-                .Where(x => !_placedItemIds.Contains(x.Id));
-        }
-        var pool = poolEnumerable.ToArray();
-        if (pool.Length == 0)
-            return null;
-
-        var chosen = rng.Next(pool);
-        _placedItemIds.Add(chosen.Id);
-        return chosen;
-    }
+        => GetRandomItemFromPool(rng, _allowedItemsByCategory.GetValueOrDefault(kind, []), allowReoccurance, extraCheck);
 
     public bool IsItemAllowed(ItemDefinition itemDefinition)
     {
@@ -147,7 +124,6 @@ internal class ItemRandomizer(Randomizer randomizer)
     {
         var bag = CreateGeneralItemPool(settings, rng);
 
-        // TODO optimise this
         var id = bag.Next();
         for (var i = 0; i < 1000; i++)
         {
@@ -234,10 +210,66 @@ internal class ItemRandomizer(Randomizer randomizer)
         return new Item(itemDef.Id, amount);
     }
 
-
     public void MarkItemPlaced(string id) => _placedItemIds.Add(id);
 
     public bool IsItemPlaced(string id) => _placedItemIds.Contains(id);
+
+    private static bool IsGunCandidate(ItemDefinition item)
+    {
+        if (item.WeaponId == null)
+            return false;
+
+        if (WeaponDefinitionRepository.Default.IsRestricted(item.WeaponId.Value))
+            return false;
+
+        var definition = WeaponDefinitionRepository.Default.FromWeaponId(item.WeaponId.Value.ToString());
+        return definition.UserType == Enums.app.CharacterDefine.Type.Player
+            && definition.IsGun;
+    }
+
+    private ItemDefinition? GetRandomItemFromPool(
+        Rng rng,
+        IReadOnlyList<ItemDefinition> pool,
+        bool allowReoccurance,
+        Func<ItemDefinition, bool>? extraCheck = null)
+    {
+        if (pool.Count == 0)
+            return null;
+
+        if (allowReoccurance && extraCheck == null)
+        {
+            var chosen = pool[rng.Next(0, pool.Count)];
+            _placedItemIds.Add(chosen.Id);
+            return chosen;
+        }
+
+        var availableCount = 0;
+        foreach (var item in pool)
+        {
+            if ((allowReoccurance || !_placedItemIds.Contains(item.Id))
+                && (extraCheck?.Invoke(item) != false))
+            {
+                availableCount++;
+            }
+        }
+
+        if (availableCount == 0)
+            return null;
+
+        var index = rng.Next(0, availableCount);
+        foreach (var item in pool)
+        {
+            if ((allowReoccurance || !_placedItemIds.Contains(item.Id))
+                && (extraCheck?.Invoke(item) != false)
+                && index-- == 0)
+            {
+                _placedItemIds.Add(item.Id);
+                return item;
+            }
+        }
+
+        return null;
+    }
 }
 
 public class RandomItemSettings

@@ -102,7 +102,7 @@ internal class RecipeModifier : Modifier
 
         if (!randomizer.GetConfigOption<bool>("recipes-allow-stabilizers-and-steroids"))
         {
-            recipePool.RemoveAll(recipe => recipe.OutputItem is "Depressant" or "Stimulant");
+            recipePool.RemoveAll(recipe => _itemDefinitions.NameToId(recipe.OutputItem) is "Depressant" or "Stimulant");
         }
 
         // Some items are always added, no matter the mode.
@@ -120,7 +120,8 @@ internal class RecipeModifier : Modifier
         var toBeAdded = recipePool
             .OrderBy(_ => rng.Next())
             .Take(amount)
-            .Select(r => CreateRecipe(r, rng));
+            .Select(r => CreateRecipe(r, rng))
+            .ToList();
 
         if (randomizer.GetConfigOption<bool>("recipes-random-item-quantities"))
         {

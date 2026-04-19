@@ -5,6 +5,7 @@ namespace Biohazard.BioRand.RE7;
 public class AreaDefinitionRepository
 {
     private static AreaDefinitionRepository? _default;
+    private static readonly object _defaultLock = new();
 
     public List<AreaDefinition> All { get; set; } = [];
     public List<AreaDefinition> General { get; set; } = [];
@@ -25,8 +26,15 @@ public class AreaDefinitionRepository
         {
             if (_default == null)
             {
-                _default = new AreaDefinitionRepository();
-                _default.Initialize();
+                lock (_defaultLock)
+                {
+                    if (_default == null)
+                    {
+                        var repository = new AreaDefinitionRepository();
+                        repository.Initialize();
+                        _default = repository;
+                    }
+                }
             }
             return _default;
         }

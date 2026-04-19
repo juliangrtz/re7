@@ -8,6 +8,7 @@ namespace Biohazard.BioRand.RE7.Items;
 public sealed class ItemDefinitionRepository
 {
     private static ItemDefinitionRepository? _default;
+    private static readonly object _defaultLock = new();
     public List<ItemDefinition> Items { get; private set; } = [];
     public ImmutableArray<ItemCategoryType> Kinds { get; private set; }
     public ImmutableDictionary<ItemCategoryType, ImmutableArray<ItemDefinition>> KindToItemMap { get; private set; } = [];
@@ -22,11 +23,18 @@ public sealed class ItemDefinitionRepository
         {
             if (_default == null)
             {
-                _default = new ItemDefinitionRepository
+                lock (_defaultLock)
                 {
-                    Items = EmbeddedData.GetFile(ItemDefinitionFileName).DeserializeJson<List<ItemDefinition>>()
-                };
-                _default.Initialize();
+                    if (_default == null)
+                    {
+                        var repository = new ItemDefinitionRepository
+                        {
+                            Items = EmbeddedData.GetFile(ItemDefinitionFileName).DeserializeJson<List<ItemDefinition>>()
+                        };
+                        repository.Initialize();
+                        _default = repository;
+                    }
+                }
             }
             return _default;
         }

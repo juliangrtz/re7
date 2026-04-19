@@ -16,7 +16,6 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
 /// <summary>
-/// TODO Non-RT
 /// TODO DLCs
 /// </summary>
 internal class WeaponDefinitionGenerator : IFileGenerator
@@ -102,7 +101,7 @@ internal class WeaponDefinitionGenerator : IFileGenerator
             //"wp1030"
             "wp1000" or
             "wp0070" or
-            "wp0040" => _pakPaths.Where(p => new Regex($"{weaponId}.*.rcol.{FileVersions.RcolFileVersionRT}").IsMatch(p)).ToList(),
+            "wp0040" => _pakPaths.Where(p => new Regex($"{weaponId}.*.rcol.{FileVersions.RcolFileVersion}").IsMatch(p)).ToList(),
             "wp1110" => [
                 PakPath.RcolFile("collision/collider/weapon/acidbullets.rcol"),
                 PakPath.RcolFile("collision/collider/weapon/flamebullets.rcol"),
@@ -117,7 +116,7 @@ internal class WeaponDefinitionGenerator : IFileGenerator
 
         foreach (var rcolPath in rcolPaths)
         {
-            var rcolFile = new RcolFile(FileVersions.RcolFileVersionRT, _pakFile.GetEntryData(rcolPath)).ToBuilder(_rszRepository);
+            var rcolFile = new RcolFile(FileVersions.RcolFileVersion, _pakFile.GetEntryData(rcolPath)).ToBuilder(_rszRepository);
             var requestSets = isDefaultBulletWeapon
                             ? rcolFile.RequestSets.Where(rs => rs.Name.Equals(id, StringComparison.InvariantCultureIgnoreCase))
                             : rcolFile.RequestSets;
@@ -156,7 +155,7 @@ internal class WeaponDefinitionGenerator : IFileGenerator
             if (path == null || !path.StartsWith(_weaponPathPrefix) || !path.Contains(".pfb"))
                 continue;
 
-            var pfbFile = new PfbFile(FileVersions.PfbFileVersionRT, _pakFile.GetEntryData(path));
+            var pfbFile = new PfbFile(FileVersions.PfbFileVersion, _pakFile.GetEntryData(path));
             var go = pfbFile.ReadScene(_rszRepository).GetGameObjects().FirstOrDefault(g => g.FindComponent("app.Weapon") != null || g.FindComponent("app.WeaponGun") != null, null);
             var weaponComponent = go?.FindComponent<Weapon>();
             var weaponGunComponent = go?.FindComponent<WeaponGun>();
@@ -183,11 +182,11 @@ internal class WeaponDefinitionGenerator : IFileGenerator
                 var damage = GetDamageStats(rcolPaths, weaponComponent.WeaponID.ToString(), rcolPaths.Any(p => p.Contains("defaultbullet")));
                 var motlistPaths = _pakPaths.Where(
                         p => p.Contains(id) &&
-                        p.EndsWith($".motlist.{FileVersions.MotlistFileVersionRT}")
+                        p.EndsWith($".motlist.{FileVersions.MotlistFileVersion}")
                     ).ToList().EmptyToNull();
 
                 var pfbPath = _pakPaths.FirstOrDefault(
-                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersionRT}") ||
+                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
                         (p.Contains(weaponComponent.WeaponID.ToString(), StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
                     , null
                 );
@@ -240,11 +239,11 @@ internal class WeaponDefinitionGenerator : IFileGenerator
                 }
 
                 var motlistPaths = _pakPaths.Where(
-                        p => p.EndsWith($"{id}.motlist.{FileVersions.MotlistFileVersionRT}")
+                        p => p.EndsWith($"{id}.motlist.{FileVersions.MotlistFileVersion}")
                 ).ToList().EmptyToNull();
 
                 var pfbPath = _pakPaths.FirstOrDefault(
-                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersionRT}") ||
+                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
                         (p.Contains(weaponGunComponent.WeaponID.ToString(), StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
                     , null
                 );

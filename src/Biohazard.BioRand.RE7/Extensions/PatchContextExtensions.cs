@@ -32,19 +32,21 @@ public static class PatchContextExtensions
         context.SetFile(path, value.Data);
     }
 
-    public static ScnFile GetScnFile(this IPatchContext context, string path, bool isRt)
+    public static ScnFile GetScnFile(this IPatchContext context, string path)
     {
         var data = context.GetFile(path);
+        if (data != null)
+        {
+            return new ScnFile(FileVersions.SceneFileVersion, data);
+        }
+
         var stackTrace = new StackTrace();
-        // Get calling method name
-        return data == null
-            ? throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}")
-            : new ScnFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, data);
+        throw new RandomizerUserException($"Unable to read data file '{path}'\n{string.Join('\n', stackTrace.GetFrames())}");
     }
 
-    public static void ModifyScnFile(this IPatchContext context, string path, bool isRt, Func<RszScene, RszScene> callback)
+    public static void ModifyScnFile(this IPatchContext context, string path, Func<RszScene, RszScene> callback)
     {
-        var scnFile = context.GetScnFile(path, isRt).ToBuilder(context.TypeRepository);
+        var scnFile = context.GetScnFile(path).ToBuilder(context.TypeRepository);
         scnFile.Scene = callback(scnFile.Scene);
         context.SetScnFile(path, scnFile.AddMissingResources().Build());
     }
@@ -92,7 +94,13 @@ public static class PatchContextExtensions
 
     public static void ModifyUserFile<T>(this IPatchContext context, string path, Func<T, T> callback)
     {
-        SerializeUserFile(context, path, callback(DeserializeUserFile<T>(context, path)));
+        var userFile = context.GetUserFile(path);
+        var builder = userFile.ToBuilder(context.TypeRepository);
+        var targetType = builder.Objects[0].Type;
+        var value = RszSerializer.Deserialize<T>(builder.Objects[0])!;
+        var updatedValue = callback(value);
+        builder.Objects = [(RszObjectNode)RszSerializer.Serialize(targetType, updatedValue!)];
+        context.SetUserFile(path, builder.Build());
     }
 
     public static MsgFile GetMsgFile(this IPatchContext context, string path)
@@ -113,9 +121,13 @@ public static class PatchContextExtensions
         context.SetMsgFile(path, builder.Build());
     }
 
-    public static RcolFile GetRcolFile(this IPatchContext context, string path, bool isRt)
+    public static RcolFile GetRcolFile(this IPatchContext context, string path)
     {
-        return new RcolFile(isRt ? FileVersions.SceneFileVersionRT : FileVersions.SceneFileVersionNonRT, context.GetFile(path));
+        var data = context.GetFile(path);
+        if (data == null || data.Length < 4)
+            throw new RandomizerUserException($"Unable to read RCOL file '{path}'.");
+
+        return new RcolFile(FileVersions.RcolFileVersion, data);
     }
 
     public static void SetRcolFile(this IPatchContext context, string path, RcolFile rcol)
@@ -123,9 +135,9 @@ public static class PatchContextExtensions
         context.SetFile(path, rcol.Data.ToArray());
     }
 
-    public static void ModifyRcolFile(this IPatchContext context, string path, bool isRt, Action<RcolFile.Builder> callback)
+    public static void ModifyRcolFile(this IPatchContext context, string path, Action<RcolFile.Builder> callback)
     {
-        var rcolFile = context.GetRcolFile(path, isRt);
+        var rcolFile = context.GetRcolFile(path);
         var builder = rcolFile.ToBuilder(context.TypeRepository);
         callback(builder);
         context.SetRcolFile(path, builder.Build());

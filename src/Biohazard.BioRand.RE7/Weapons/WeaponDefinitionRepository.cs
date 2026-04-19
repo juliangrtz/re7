@@ -8,10 +8,12 @@ namespace Biohazard.BioRand.RE7.Weapons;
 public sealed class WeaponDefinitionRepository
 {
     private static WeaponDefinitionRepository? _default;
+    private static readonly object _defaultLock = new();
     public ImmutableList<WeaponDefinition> WeaponDefinitions { get; private set; } = [];
     public ImmutableDictionary<WeaponID, WeaponDefinition> IdToWeaponMap { get; private set; } = [];
     private readonly List<WeaponID> _restrictedWeapons = [
-        
+        WeaponID.GimmickKnife, WeaponID.GoldenBar, WeaponID.Lantern_C,
+        WeaponID.Lighter_Z
     ];
 
     private const string WeaponDefinitionFileName = "weapon_definitions.json";
@@ -22,11 +24,18 @@ public sealed class WeaponDefinitionRepository
         {
             if (_default == null)
             {
-                _default = new WeaponDefinitionRepository
+                lock (_defaultLock)
                 {
-                    WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName).DeserializeJson<List<WeaponDefinition>>().ToImmutableList()
-                };
-                _default.Initialize();
+                    if (_default == null)
+                    {
+                        var repository = new WeaponDefinitionRepository
+                        {
+                            WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName).DeserializeJson<List<WeaponDefinition>>().ToImmutableList()
+                        };
+                        repository.Initialize();
+                        _default = repository;
+                    }
+                }
             }
             return _default;
         }

@@ -2,11 +2,14 @@ using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Concurrent;
+using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7;
 
 internal class FileRepository : IPatchContext, IDisposable
 {
+    private readonly record struct FileCacheEntry(bool Exists, byte[] Data);
+
     public static RszTypeRepository RszRepository { get; private set; }
 
     public RszTypeRepository TypeRepository => RszRepository;
@@ -15,6 +18,7 @@ internal class FileRepository : IPatchContext, IDisposable
     private readonly Randomizer? _randomizer;
     private readonly PatchedPakFile? _inputPakFile;
     private readonly string? _inputGamePath;
+    private readonly ConcurrentDictionary<string, FileCacheEntry> _inputFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
 
     public Randomizer? Randomizer => _randomizer;
@@ -45,7 +49,7 @@ internal class FileRepository : IPatchContext, IDisposable
 
         if (RszRepository == null)
         {
-            var rszJson = EmbeddedData.GetFile($"rszre7{randomizer.RaytracingString}.json");
+            var rszJson = EmbeddedData.GetFile("rszre7rt.json");
             RszRepository = RszRepositorySerializer.Default.FromJson(rszJson);
         }
     }
@@ -65,24 +69,22 @@ internal class FileRepository : IPatchContext, IDisposable
         if (_outputFiles.TryGetValue(path, out var data))
             return data;
 
-        if (_inputGamePath == null)
-        {
-            return _inputPakFile?.GetEntryData(path);
-        }
-        else
-        {
-            var fullPath = Path.Combine(_inputGamePath, path);
-            if (File.Exists(fullPath))
-            {
-                return File.ReadAllBytes(fullPath);
-            }
-            return null;
-        }
+        var entry = _inputFiles.GetOrAdd(path, LoadInputFile);
+        return entry.Exists ? entry.Data : null;
     }
 
     public void SetFile(string path, byte[] data)
     {
         _outputFiles[path] = data;
+    }
+
+    internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot()
+    {
+        return _outputFiles.ToImmutableDictionary(
+            x => x.Key,
+            x => x.Value.ToArray(),
+            StringComparer.OrdinalIgnoreCase
+        );
     }
 
     public void WriteOutputPakFile(string path)
@@ -119,5 +121,24 @@ internal class FileRepository : IPatchContext, IDisposable
     {
         var randomizer = _randomizer;
         return randomizer == null ? defaultValue : randomizer.GetConfigOption(key, defaultValue);
+    }
+
+    private FileCacheEntry LoadInputFile(string path)
+    {
+        if (_inputGamePath == null)
+        {
+            var data = _inputPakFile?.GetEntryData(path);
+            return data == null
+                ? new FileCacheEntry(false, Array.Empty<byte>())
+                : new FileCacheEntry(true, data);
+        }
+
+        var fullPath = Path.Combine(_inputGamePath, path);
+        if (!File.Exists(fullPath))
+        {
+            return new FileCacheEntry(false, Array.Empty<byte>());
+        }
+
+        return new FileCacheEntry(true, File.ReadAllBytes(fullPath));
     }
 }

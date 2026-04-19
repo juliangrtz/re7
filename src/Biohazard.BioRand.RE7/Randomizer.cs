@@ -1,5 +1,4 @@
 using Biohazard.BioRand.RE7.Modifiers;
-using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
@@ -51,7 +50,6 @@ internal class Randomizer : IDisposable
         }
 
         DynamicData = new DynamicData(download);
-        PakPath.IsOnRT = IsOnRaytracingVersion;
     }
 
     public void Dispose()
@@ -172,7 +170,7 @@ internal class Randomizer : IDisposable
         [
             // Enemies
             new EnemyDirectiveModifier(),
-            //new EnemyModifier(),
+            new EnemyModifier(),
             new EnemyMultiplierModifier(),
             new EnemyPlaceModifier(),
 
@@ -221,12 +219,6 @@ internal class Randomizer : IDisposable
 
         return EnumExtensions.ParseOrNull<T>(value);
     }
-
-    public bool IsOnRaytracingVersion
-        => GetConfigOption<string>("game-version") == "dx12_rt";
-
-    public string RaytracingString
-        => IsOnRaytracingVersion ? "rt" : "";
 
     public bool HasSpecialTouch(string kind)
     {

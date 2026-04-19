@@ -31,9 +31,9 @@ public class RandomizerExecutor(string inputGamePath, IProgressReporter reporter
         }
     }
 
-    public static PakList GetDefaultPakList(bool isForRaytracingVersion)
+    public static PakList GetDefaultPakList()
     {
-        var pakListBytes = EmbeddedData.GetFile($"pakcontents{(isForRaytracingVersion ? "rt" : "")}.txt.gz").Ungzip();
+        var pakListBytes = EmbeddedData.GetFile("pakcontentsrt.txt.gz").Ungzip();
         var pakListText = Encoding.UTF8.GetString(pakListBytes);
         return new PakList(pakListText);
     }

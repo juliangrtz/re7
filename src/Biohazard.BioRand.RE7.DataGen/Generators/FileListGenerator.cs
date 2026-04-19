@@ -14,42 +14,35 @@ internal sealed class FileListGenerator : IFileGenerator
 
     private readonly PakFile _pakFile = new(EmbeddedData.GetFile("biorand-re7.pak"));
     private readonly PakList _pakList = new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
-    private readonly PakFile _pakFileNonRT = new(EmbeddedData.GetFile("biorand-re7-nonrt.pak"));
-    private readonly PakList _pakListNonRT = new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontents.txt.gz"))));
 
-    private static readonly Dictionary<string, (string rt, string nonRt)> _knownPatterns = new()
+    private static readonly Dictionary<string, string> _knownPatterns = new()
     {
-        { "rcol", (".rcol.20", ".rcol.2") },
-        { "prefab", (".user.2", ".pfb.16") },
-        { "scene", (".scn.20", ".scn.18") },
-        { "message", (".msg.17", ".msg.12") },
-        { "motlist", (".motlist.524", ".motlist.60") },
-        { "motbank", (".motbank.3", ".motbank.1") },
+        { "rcol", ".rcol.20" },
+        { "prefab", ".user.2" },
+        { "scene", ".scn.20" },
+        { "message", ".msg.17" },
+        { "motlist", ".motlist.524" },
+        { "motbank", ".motbank.3" },
     };
 
     public object Generate(GenerateCommand.GenerateSettings settings)
     {
         AnsiConsole.WriteLine("Known patterns: " + string.Join('|', _knownPatterns.Keys));
-        var inputRt = AnsiConsole.Ask<string>("Enter a known or custom pattern to filter RT files:");
-        var inputNonRt = AnsiConsole.Ask<string>("Enter a known or custom pattern to filter non-RT files:");
-
-        var patternRt = ResolvePattern(inputRt, isRt: true);
-        var patternNonRt = ResolvePattern(inputNonRt, isRt: false);
-        var rt = CollectPaths(_pakFile, _pakList, patternRt);
-        var nonRt = CollectPaths(_pakFileNonRT, _pakListNonRT, patternNonRt);
+        var input = AnsiConsole.Ask<string>("Enter a known or custom pattern to filter files:");
+        var pattern = ResolvePattern(input);
+        var files = CollectPaths(_pakFile, _pakList, pattern);
 
         return new FileListResult
         {
-            RT = rt,
-            NonRT = nonRt
+            Files = files
         };
     }
 
-    private static string ResolvePattern(string input, bool isRt)
+    private static string ResolvePattern(string input)
     {
-        if (_knownPatterns.TryGetValue(input, out var tuple))
+        if (_knownPatterns.TryGetValue(input, out var pattern))
         {
-            return isRt ? tuple.rt : tuple.nonRt;
+            return pattern;
         }
 
         return input;
@@ -73,7 +66,6 @@ internal sealed class FileListGenerator : IFileGenerator
 
     private sealed class FileListResult
     {
-        public required List<string> RT { get; init; }
-        public required List<string> NonRT { get; init; }
+        public required List<string> Files { get; init; }
     }
 }

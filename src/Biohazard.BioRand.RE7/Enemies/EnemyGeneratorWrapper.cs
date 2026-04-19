@@ -1,4 +1,4 @@
-﻿using IntelOrca.Biohazard.REE.Rsz;
+using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Enemies;
