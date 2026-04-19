@@ -27,6 +27,9 @@ public interface IEnemyDefinition
     public bool IsMolded =>
         Category == EnemyCategory.Molded;
 
+    public string? SpawnOptionType
+        => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+
     internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
         => (float)rng.NextDouble(
             randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),
