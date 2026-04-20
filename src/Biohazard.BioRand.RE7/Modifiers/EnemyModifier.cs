@@ -118,41 +118,13 @@ internal class EnemyModifier : Modifier
 
     private bool IsGeneratorTemplateSafe(Randomizer randomizer, string enemyId, out string? reason)
     {
-        if (_generatorTemplateCompatibilityCache.TryGetValue(enemyId, out var cached))
+        if (enemyId == "Em8001") // Nightmare DLC Jack{
         {
-            reason = cached.Reason;
-            return cached.IsSafe;
-        }
-
-        var template = randomizer.TemplateService.GetEnemyTemplate(enemyId);
-        var gameObjects = new Stack<RszGameObject>();
-        gameObjects.Push(template);
-
-        while (gameObjects.Count > 0)
-        {
-            var gameObject = gameObjects.Pop();
-            if (gameObject.FindComponent("via.fsm.Fsm") != null)
-            {
-                reason = $"{gameObject.Name} contains via.fsm.Fsm";
-                _generatorTemplateCompatibilityCache[enemyId] = (false, reason);
-                return false;
-            }
-
-            if (gameObject.FindComponent("app.EnemySpawnInfo") != null)
-            {
-                reason = $"{gameObject.Name} contains app.EnemySpawnInfo";
-                _generatorTemplateCompatibilityCache[enemyId] = (false, reason);
-                return false;
-            }
-
-            foreach (var child in gameObject.Children)
-            {
-                gameObjects.Push(child);
-            }
+            reason = "Nightmare Jack is still bugged!";
+            return false;
         }
 
         reason = null;
-        _generatorTemplateCompatibilityCache[enemyId] = (true, null);
         return true;
     }
 
@@ -305,11 +277,6 @@ internal class EnemyModifier : Modifier
         Rng.Table<IEnemyDefinition> table = rng.CreateProbabilityTable<IEnemyDefinition>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
-            if (!enemy.UsesEnemyGenerator)
-            {
-                continue;
-            }
-
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
