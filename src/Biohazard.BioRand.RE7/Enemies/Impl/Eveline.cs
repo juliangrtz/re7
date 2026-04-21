@@ -67,33 +67,37 @@ internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        {
+            logger.LogSkip("Enemy speed randomization is disabled.");
             return;
+        }
 
         var rng = randomizer.GetRng("enemy/em8900");
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        logger.LogMultiplier("Speed multiplier", speedMultiplier);
 
-        randomizer.FileRepository.ModifyUserFile<app.Em8900Directive>(
-            PakPath.UserFile("prefab/character/em8900/parameter/directives/em8900directivedefault.user"),
+        var phase1Path = PakPath.UserFile("prefab/character/em8900/parameter/directives/em8900directivedefault.user");
+        logger.LogDirectiveFile("Phase 1", phase1Path, () => randomizer.FileRepository.ModifyUserFile<app.Em8900Directive>(
+            phase1Path,
             directive =>
             {
-                var newSpeed = directive.wallParam.BaseMoveMotionSpeed * speedMultiplier;
-                logger.LogLine($"Wall move speed: {directive.wallParam.BaseMoveMotionSpeed} => {newSpeed}");
-                directive.wallParam.BaseMoveMotionSpeed = newSpeed;
+                var oldSpeed = directive.wallParam.BaseMoveMotionSpeed;
+                directive.wallParam.BaseMoveMotionSpeed *= speedMultiplier;
+                logger.LogChange("Wall move speed", oldSpeed, directive.wallParam.BaseMoveMotionSpeed);
                 return directive;
-            }
-        );
+            }));
 
-        randomizer.FileRepository.ModifyUserFile<app.Em8940Directive>(
-            PakPath.UserFile("prefab/character/em8940/parameter/directives/em8940directivedefault.user"),
+        var phase2Path = PakPath.UserFile("prefab/character/em8940/parameter/directives/em8940directivedefault.user");
+        logger.LogDirectiveFile("Phase 2", phase2Path, () => randomizer.FileRepository.ModifyUserFile<app.Em8940Directive>(
+            phase2Path,
             directive =>
             {
-                var newHangUpLoopTime = directive.hangUpParam.HangUpLoopTime / speedMultiplier;
-                logger.LogLine($"Hang up time: {directive.hangUpParam.HangUpLoopTime} => {newHangUpLoopTime}");
-                directive.hangUpParam.HangUpLoopTime = newHangUpLoopTime;
+                var oldHangUpLoopTime = directive.hangUpParam.HangUpLoopTime;
+                directive.hangUpParam.HangUpLoopTime /= speedMultiplier;
+                logger.LogChange("Hang-up loop time", oldHangUpLoopTime, directive.hangUpParam.HangUpLoopTime);
                 return directive;
-            }
-        );
+            }));
     }
 }

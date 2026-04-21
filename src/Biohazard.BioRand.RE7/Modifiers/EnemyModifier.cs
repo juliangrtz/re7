@@ -17,8 +17,7 @@ internal class EnemyModifier : Modifier
         bool IsBalanced,
         bool ProgressiveDifficulty,
         HealthOptions Health,
-        ScaleOptions Scale,
-        SpeedOptions Speed
+        ScaleOptions Scale
     );
 
     internal record HealthOptions(
@@ -30,13 +29,6 @@ internal class EnemyModifier : Modifier
         double Probability,
         float Min,
         float Max
-    );
-
-    internal record SpeedOptions(
-        double Probability,
-        float Min,
-        float Max,
-        bool ExcludeQuickMoldeds
     );
 
     internal sealed class ExtraEnemyPlacement
@@ -73,13 +65,6 @@ internal class EnemyModifier : Modifier
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),
                 Max: Math.Clamp(randomizer.GetConfigOption("enemy-scale-max", 2.00f), 0.1f, 10.0f)
-            ),
-
-            Speed: new SpeedOptions(
-                Probability: randomizer.GetConfigOption<double>("enemy-speed-probability", 0),
-                Min: Math.Clamp(randomizer.GetConfigOption("enemy-speed-min", 0.25f), 0.1f, 10.0f),
-                Max: Math.Clamp(randomizer.GetConfigOption("enemy-speed-max", 2.00f), 0.1f, 10.0f),
-                ExcludeQuickMoldeds: randomizer.GetConfigOption<bool>("enemy-speed-exclude-four-legged-moldeds")
             )
         );
     }

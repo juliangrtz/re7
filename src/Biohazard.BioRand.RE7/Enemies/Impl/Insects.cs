@@ -63,7 +63,10 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        {
+            logger.LogSkip("Enemy speed randomization is disabled.");
             return;
+        }
 
         var rng = randomizer.GetRng($"enemy/{enemy.EnemyId.ToString().ToLowerInvariant()}");
 
@@ -71,7 +74,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
 
-        logger.LogLine($"New speed: {speedMultiplier}x");
+        logger.LogMultiplier("Speed multiplier", speedMultiplier);
 
         if (enemy is FlyingBug)
         {
@@ -81,17 +84,9 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-
-                randomizer.FileRepository.ModifyUserFile<app.Em5400Directive>(userFilePath, directive =>
-                {
-                    directive.MyCommonParam.DefaultSpeed *= speedMultiplier;
-                    directive.MyCommonParam.AttackSpeed *= speedMultiplier;
-                    directive.MyCommonParam.AttackIntervalSecMin /= speedMultiplier;
-                    directive.MyCommonParam.AttackIntervalSecMax /= speedMultiplier;
-                    return directive;
-                });
+                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5400Directive>(
+                    userFilePath,
+                    directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
         }
         else if (enemy is InsectHive)
@@ -102,13 +97,9 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogLine($"[Rank {rank}] {userFilePath}");
-                randomizer.FileRepository.ModifyUserFile<app.Em5510UserData>(userFilePath, directive =>
-                {
-                    directive.MyGenerateParam.IntervalTime /= speedMultiplier;
-                    directive.MyGenerateParam.WaitTime /= speedMultiplier;
-                    return directive;
-                });
+                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5510UserData>(
+                    userFilePath,
+                    directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
         }
         else if (enemy is InsectSwarm)
@@ -119,16 +110,74 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogLine($"[Rank {rank}] {userFilePath}");
-                randomizer.FileRepository.ModifyUserFile<app.Em5520Directive>(userFilePath, directive =>
-                {
-                    directive.MyMoveParam.DefaultSpeed *= speedMultiplier;
-                    directive.MyMoveParam.NearPlayerSpeed *= speedMultiplier;
-                    directive.MyAttackParam.AttackTime /= speedMultiplier;
-                    directive.MyAttackParam.AttackIntervalTime /= speedMultiplier;
-                    return directive;
-                });
+                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5520Directive>(
+                    userFilePath,
+                    directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
         }
+    }
+
+    private static app.Em5400Directive ModifyDirective(
+        app.Em5400Directive directive,
+        RandomizerLogger logger,
+        float speedMultiplier)
+    {
+        var oldDefaultSpeed = directive.MyCommonParam.DefaultSpeed;
+        directive.MyCommonParam.DefaultSpeed *= speedMultiplier;
+        logger.LogChange("Default speed", oldDefaultSpeed, directive.MyCommonParam.DefaultSpeed);
+
+        var oldAttackSpeed = directive.MyCommonParam.AttackSpeed;
+        directive.MyCommonParam.AttackSpeed *= speedMultiplier;
+        logger.LogChange("Attack speed", oldAttackSpeed, directive.MyCommonParam.AttackSpeed);
+
+        var oldAttackIntervalMin = directive.MyCommonParam.AttackIntervalSecMin;
+        directive.MyCommonParam.AttackIntervalSecMin /= speedMultiplier;
+        logger.LogChange("Attack interval min", oldAttackIntervalMin, directive.MyCommonParam.AttackIntervalSecMin);
+
+        var oldAttackIntervalMax = directive.MyCommonParam.AttackIntervalSecMax;
+        directive.MyCommonParam.AttackIntervalSecMax /= speedMultiplier;
+        logger.LogChange("Attack interval max", oldAttackIntervalMax, directive.MyCommonParam.AttackIntervalSecMax);
+
+        return directive;
+    }
+
+    private static app.Em5510UserData ModifyDirective(
+        app.Em5510UserData directive,
+        RandomizerLogger logger,
+        float speedMultiplier)
+    {
+        var oldIntervalTime = directive.MyGenerateParam.IntervalTime;
+        directive.MyGenerateParam.IntervalTime /= speedMultiplier;
+        logger.LogChange("Generate interval", oldIntervalTime, directive.MyGenerateParam.IntervalTime);
+
+        var oldWaitTime = directive.MyGenerateParam.WaitTime;
+        directive.MyGenerateParam.WaitTime /= speedMultiplier;
+        logger.LogChange("Generate wait time", oldWaitTime, directive.MyGenerateParam.WaitTime);
+
+        return directive;
+    }
+
+    private static app.Em5520Directive ModifyDirective(
+        app.Em5520Directive directive,
+        RandomizerLogger logger,
+        float speedMultiplier)
+    {
+        var oldDefaultSpeed = directive.MyMoveParam.DefaultSpeed;
+        directive.MyMoveParam.DefaultSpeed *= speedMultiplier;
+        logger.LogChange("Default speed", oldDefaultSpeed, directive.MyMoveParam.DefaultSpeed);
+
+        var oldNearPlayerSpeed = directive.MyMoveParam.NearPlayerSpeed;
+        directive.MyMoveParam.NearPlayerSpeed *= speedMultiplier;
+        logger.LogChange("Near-player speed", oldNearPlayerSpeed, directive.MyMoveParam.NearPlayerSpeed);
+
+        var oldAttackTime = directive.MyAttackParam.AttackTime;
+        directive.MyAttackParam.AttackTime /= speedMultiplier;
+        logger.LogChange("Attack time", oldAttackTime, directive.MyAttackParam.AttackTime);
+
+        var oldAttackIntervalTime = directive.MyAttackParam.AttackIntervalTime;
+        directive.MyAttackParam.AttackIntervalTime /= speedMultiplier;
+        logger.LogChange("Attack interval", oldAttackIntervalTime, directive.MyAttackParam.AttackIntervalTime);
+
+        return directive;
     }
 }

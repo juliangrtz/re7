@@ -44,12 +44,25 @@ internal class MiaDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em2000");
+        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var speedMultiplier = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
+        logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
+        if (enemy.IsBoss)
+        {
+            if (applySpeed)
+            {
+                logger.LogMultiplier("Walk speed multiplier", speedMultiplier);
+            }
+            else
+            {
+                logger.LogLine("Walk speed multiplier: 1x (enemy speed randomization disabled)");
+            }
+        }
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
 
@@ -58,12 +71,10 @@ internal class MiaDirectiveModifier : IDirectiveModifier
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
                 userFilePath,
                 d => ModifyDirective(enemy, d, logger, healthMultiplier, speedMultiplier)
-            );
+            ));
         }
     }
 
@@ -76,18 +87,33 @@ internal class MiaDirectiveModifier : IDirectiveModifier
     {
         if (enemy.IsBoss)
         {
-            logger.LogLine($"Health: {directive.chapter1Battle4.Health} => {directive.chapter1Battle4.Health * healthMultiplier}");
+            var oldHealth = directive.chapter1Battle4.Health;
             directive.chapter1Battle4.Health *= healthMultiplier;
+            logger.LogChange("Chapter 1 battle 4 health", oldHealth, directive.chapter1Battle4.Health);
 
-            logger.LogLine($"Speed: {speedMultiplier}x normal speed");
+            if (speedMultiplier == 1f)
+            {
+                logger.LogLine("No walk speed changes.");
+                return directive;
+            }
+
+            var oldWalkSpeedThird = directive.chapter1Battle4.WalkSpeedRateThird;
             directive.chapter1Battle4.WalkSpeedRateThird *= speedMultiplier;
+            logger.LogChange("Walk speed rate (third)", oldWalkSpeedThird, directive.chapter1Battle4.WalkSpeedRateThird);
+
+            var oldWalkSpeedForRank = directive.chapter1Battle4.WalkSpeedRateForRank;
             directive.chapter1Battle4.WalkSpeedRateForRank *= speedMultiplier;
+            logger.LogChange("Walk speed rate (rank)", oldWalkSpeedForRank, directive.chapter1Battle4.WalkSpeedRateForRank);
+
+            var oldEvasiveWalkRate = directive.chapter1Battle4.EvasiveWalkRate;
             directive.chapter1Battle4.EvasiveWalkRate *= speedMultiplier;
+            logger.LogChange("Evasive walk rate", oldEvasiveWalkRate, directive.chapter1Battle4.EvasiveWalkRate);
         }
         else
         {
-            logger.LogLine($"Health: {directive.chapter1Battle2.Health} => {healthMultiplier}");
+            var oldHealth = directive.chapter1Battle2.Health;
             directive.chapter1Battle2.Health *= healthMultiplier;
+            logger.LogChange("Chapter 1 battle 2 health", oldHealth, directive.chapter1Battle2.Health);
         }
 
         return directive;

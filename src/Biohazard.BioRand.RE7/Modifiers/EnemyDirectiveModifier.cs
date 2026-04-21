@@ -31,20 +31,35 @@ internal class EnemyDirectiveModifier : Modifier
     {
         foreach (var enemy in EnemyDefinitions.Instance.All.OrderBy(em => em.EnemyId))
         {
-            foreach (var enemySpecificModifier in _enemySpecificDirectiveModifiers)
+            var matchingModifiers = _enemySpecificDirectiveModifiers
+                .Where(modifier => modifier.Supports(enemy))
+                .ToArray();
+
+            if (matchingModifiers.Length == 0)
             {
-                if (enemySpecificModifier.Supports(enemy))
+                continue;
+            }
+
+            logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
+            if (matchingModifiers.Length == 1)
+            {
+                matchingModifiers[0].Apply(enemy, randomizer, logger);
+            }
+            else
+            {
+                foreach (var enemySpecificModifier in matchingModifiers)
                 {
-                    logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
+                    logger.Push(enemySpecificModifier.GetLogLabel());
                     enemySpecificModifier.Apply(enemy, randomizer, logger);
                     logger.Pop();
                 }
             }
+            logger.Pop();
         }
 
         foreach (var modifier in _genericDirectiveModifiers)
         {
-            logger.Push($"Generic -- {modifier.GetType().Name}");
+            logger.Push($"Generic -- {modifier.GetLogLabel()}");
             modifier.Apply(null!, randomizer, logger);
             logger.Pop();
         }
@@ -66,6 +81,7 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
 
         if (!applySpeed && !applyDamage)
         {
+            logger.LogSkip("Enemy speed and damage randomization are both disabled.");
             return;
         }
 
@@ -81,12 +97,12 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
 
         if (applySpeed)
         {
-            logger.LogLine($"New enemy animation speed rate: {speedMultiplier}x");
+            logger.LogMultiplier("Animation speed multiplier", speedMultiplier);
         }
 
         if (applyDamage)
         {
-            logger.LogLine($"New enemy damage multiplier: {damageMultiplier}x");
+            logger.LogMultiplier("Damage multiplier", damageMultiplier);
         }
 
         var holderPath = PakPath.UserFile(EnemyRankParameterHolderPath);
@@ -97,9 +113,7 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
             var rank = unit.Rank;
             var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param =>
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param =>
             {
                 if (applySpeed)
                 {
@@ -111,11 +125,9 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
                     param.AnimationSpeedRateForDamage *= speedMultiplier;
                     param.AnimationSpeedRateForMove *= speedMultiplier;
 
-                    logger.LogLine(
-                        $"  Speed: " +
-                        $"Atk {oldAttack:F3} => {param.AnimationSpeedRateForAttack:F3}, " +
-                        $"Dmg {oldDamage:F3} => {param.AnimationSpeedRateForDamage:F3}, " +
-                        $"Move {oldMove:F3} => {param.AnimationSpeedRateForMove:F3}");
+                    logger.LogChange("Attack animation speed", oldAttack, param.AnimationSpeedRateForAttack);
+                    logger.LogChange("Damage animation speed", oldDamage, param.AnimationSpeedRateForDamage);
+                    logger.LogChange("Move animation speed", oldMove, param.AnimationSpeedRateForMove);
                 }
 
                 if (applyDamage)
@@ -124,12 +136,11 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
 
                     param.DamageRate *= damageMultiplier;
 
-                    logger.LogLine(
-                        $"  Damage: {oldRate:F3} => {param.DamageRate:F3}");
+                    logger.LogChange("Damage rate", oldRate, param.DamageRate);
                 }
 
                 return param;
-            });
+            }));
         }
     }
 
@@ -160,6 +171,7 @@ internal sealed class MoldedCommonRankParamsDirectiveModifier : IDirectiveModifi
 
         if (!applySpeed)
         {
+            logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
 
@@ -167,6 +179,7 @@ internal sealed class MoldedCommonRankParamsDirectiveModifier : IDirectiveModifi
                 randomizer.GetConfigOption<double>("enemy-speed-min"),
                 randomizer.GetConfigOption<double>("enemy-speed-max")
         );
+        logger.LogMultiplier("Molded common speed multiplier", speedMultiplier);
 
         var holderPath = PakPath.UserFile(MoldedCommonRankParameterHolder);
         var holder = randomizer.FileRepository.DeserializeUserFile<app.MoldedCommonRankParameterHolder>(holderPath);
@@ -176,29 +189,22 @@ internal sealed class MoldedCommonRankParamsDirectiveModifier : IDirectiveModifi
             var rank = unit.Rank;
             var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.MoldedCommonRankParameter>(userFilePath, param =>
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.MoldedCommonRankParameter>(userFilePath, param =>
             {
-                if (applySpeed)
-                {
-                    var oldThreat = param.ThreatIntervalTime;
-                    var oldGrapple = param.GrappleIntervalTime;
-                    var oldSlash = param.SlashIntervalTime;
+                var oldThreat = param.ThreatIntervalTime;
+                var oldGrapple = param.GrappleIntervalTime;
+                var oldSlash = param.SlashIntervalTime;
 
-                    param.ThreatIntervalTime /= speedMultiplier;
-                    param.GrappleIntervalTime /= speedMultiplier;
-                    param.SlashIntervalTime /= speedMultiplier;
+                param.ThreatIntervalTime /= speedMultiplier;
+                param.GrappleIntervalTime /= speedMultiplier;
+                param.SlashIntervalTime /= speedMultiplier;
 
-                    logger.LogLine(
-                        $"  Intervals: " +
-                        $"Threat {oldThreat:F3} => {param.ThreatIntervalTime:F3}, " +
-                        $"Grapple {oldGrapple:F3} => {param.GrappleIntervalTime:F3}, " +
-                        $"Slash {oldSlash:F3} => {param.SlashIntervalTime:F3}");
-                }
+                logger.LogChange("Threat interval", oldThreat, param.ThreatIntervalTime);
+                logger.LogChange("Grapple interval", oldGrapple, param.GrappleIntervalTime);
+                logger.LogChange("Slash interval", oldSlash, param.SlashIntervalTime);
 
                 return param;
-            });
+            }));
         }
     }
 }
