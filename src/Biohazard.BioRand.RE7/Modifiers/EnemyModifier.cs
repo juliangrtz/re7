@@ -16,8 +16,8 @@ internal class EnemyModifier : Modifier
         bool DebugUniqueHp,
         bool IsBalanced,
         bool ProgressiveDifficulty,
-        HealthOptions Health,
-        ScaleOptions Scale
+        HealthOptions HealthOptions,
+        ScaleOptions ScaleOptions
     );
 
     internal record HealthOptions(
@@ -56,12 +56,12 @@ internal class EnemyModifier : Modifier
             IsBalanced: randomizer.GetConfigOption<bool>("balanced-enemies"),
             ProgressiveDifficulty: randomizer.GetConfigOption("enemy-health-progressive-difficulty", false),
 
-            Health: new HealthOptions(
+            HealthOptions: new HealthOptions(
                 RandomEnemyHealth: randomizer.GetConfigOption<bool>("enemy-random-health"),
                 RandomBossHealth: randomizer.GetConfigOption<bool>("boss-random-health")
             ),
 
-            Scale: new ScaleOptions(
+            ScaleOptions: new ScaleOptions(
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),
                 Max: Math.Clamp(randomizer.GetConfigOption("enemy-scale-max", 2.00f), 0.1f, 10.0f)
@@ -73,11 +73,29 @@ internal class EnemyModifier : Modifier
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
     private readonly Dictionary<string, (bool IsSafe, string? Reason)> _generatorTemplateCompatibilityCache = new(StringComparer.OrdinalIgnoreCase);
 
+    private static int GetScaleProbabilityPercent(double probability)
+        => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
+
+    private static void RandomizeScale(via.Transform transform, ScaleOptions scaleOptions, Rng scaleRng)
+    {
+        var unusualScaleChance = GetScaleProbabilityPercent(scaleOptions.Probability);
+        if (!scaleRng.NextProbability(unusualScaleChance))
+        {
+            return;
+        }
+
+        var newScale = scaleRng.NextFloat(scaleOptions.Min, scaleOptions.Max);
+        transform.Scale = new Vector3(newScale, newScale, newScale);
+    }
+
     private RszGameObject GetOrCreateEnemyTemplate(
         Randomizer randomizer,
         string enemyId,
         via.Transform transform,
-        bool updateTransform)
+        bool updateTransform,
+        bool randomizeScale,
+        ScaleOptions scaleOptions,
+        Rng scaleRng)
     {
         if (!_generatorTemplateCache.TryGetValue(enemyId, out var baseTemplate))
         {
@@ -90,9 +108,18 @@ internal class EnemyModifier : Modifier
 
         var template = baseTemplate.Clone();
 
-        if (updateTransform)
+        if (updateTransform || randomizeScale)
         {
-            template = template.AddOrUpdateComponent(transform);
+            var templateTransform = updateTransform
+                ? transform
+                : template.FindComponent<via.Transform>()!;
+
+            if (randomizeScale)
+            {
+                RandomizeScale(templateTransform, scaleOptions, scaleRng);
+            }
+
+            template = template.AddOrUpdateComponent(templateTransform);
         }
 
         return template.WithName(enemyId);
@@ -132,7 +159,9 @@ internal class EnemyModifier : Modifier
         RszScene scene,
         Randomizer randomizer,
         EnemyGeneratorWrapper enemyGenerator,
-        IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements)
+        IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements,
+        EnemyRandomizerOptions options,
+        Rng scaleRng)
     {
         var pooledObjects = new List<RszGameObject>();
 
@@ -165,7 +194,10 @@ internal class EnemyModifier : Modifier
                         randomizer,
                         enemyId,
                         originalTransform,
-                        updateTransform: false
+                        updateTransform: false,
+                        randomizeScale: true,
+                        options.ScaleOptions,
+                        scaleRng
                 );
                 pooledObjects.Add(template);
             }
@@ -176,7 +208,10 @@ internal class EnemyModifier : Modifier
                     randomizer,
                     enemyId,
                     originalTransform,
-                    updateTransform: true)
+                    updateTransform: true,
+                    randomizeScale: true,
+                    options.ScaleOptions,
+                    scaleRng)
                     .WithName($"{enemyId}_Static");
 
                 scene = scene.RemoveGameObject(spawnGuid);
@@ -218,7 +253,9 @@ internal class EnemyModifier : Modifier
         Area area,
         Randomizer randomizer,
         RandomizerLogger logger,
-        Rng.Table<IEnemyDefinition> enemyTable)
+        Rng.Table<IEnemyDefinition> enemyTable,
+        EnemyRandomizerOptions options,
+        Rng scaleRng)
     {
         logger.Push(area.Path);
 
@@ -259,7 +296,7 @@ internal class EnemyModifier : Modifier
             {
                 foreach (var (generator, replacements) in generatorChanges)
                 {
-                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements);
+                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements, options, scaleRng);
                 }
                 return scene;
             });
@@ -290,13 +327,13 @@ internal class EnemyModifier : Modifier
         return table;
     }
 
-    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger)
+    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
 
-        var options = BuildOptions(randomizer);
         var rng = randomizer.GetRng(RandomizerKey);
+        var scaleRng = randomizer.GetRng("modifier/enemy-scale");
         var enemyTable = CreateEnemyTable(randomizer, logger, rng);
 
         if (enemyTable.IsEmpty)
@@ -311,17 +348,26 @@ internal class EnemyModifier : Modifier
         }
 
         var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable));
+        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, scaleRng));
     }
 
     private (RszGameObject, Guid) AddEnemyToGenerator(
         Randomizer randomizer,
         RszGameObject generator,
         ExtraEnemyPlacement placement,
-        via.Transform transform)
+        via.Transform transform,
+        EnemyRandomizerOptions options,
+        Rng scaleRng)
     {
         var pool = generator.Children[0];
-        var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, new via.Transform(), true).Clone();
+        var template = GetOrCreateEnemyTemplate(
+            randomizer,
+            placement.Id,
+            transform,
+            updateTransform: false,
+            randomizeScale: true,
+            options.ScaleOptions,
+            scaleRng).Clone();
         pool.Children = pool.Children.Add(template);
 
         var spawnPoints = pool.Children[0];
@@ -358,7 +404,9 @@ internal class EnemyModifier : Modifier
         RandomizerLogger logger,
         RszScene scene,
         ExtraEnemyPlacement placement,
-        RszGameObject generator)
+        RszGameObject generator,
+        EnemyRandomizerOptions options,
+        Rng scaleRng)
     {
         var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
@@ -371,14 +419,21 @@ internal class EnemyModifier : Modifier
 
         if (definition.UsesEnemyGenerator)
         {
-            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, transform);
+            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, transform, options, scaleRng);
             generator = newGenerator;
             scene = scene.Add(generator);
             scene = scene.Add(CreateFsmGenerator(randomizer, spawnInfoGuid));
         }
         else
         {
-            var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, transform, true);
+            var template = GetOrCreateEnemyTemplate(
+                randomizer,
+                placement.Id,
+                transform,
+                updateTransform: true,
+                randomizeScale: true,
+                options.ScaleOptions,
+                scaleRng);
             template = template.WithName(template.Name + "_Extra");
             scene = scene.Add(template);
         }
@@ -386,11 +441,13 @@ internal class EnemyModifier : Modifier
         return scene;
     }
 
-    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger)
+    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
     {
         var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
         if (extraEnemyPct == 0)
             return;
+
+        var scaleRng = randomizer.GetRng("modifier/enemy-scale");
 
         var extraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
             .Where(extraEnemy => extraEnemy.Enabled)
@@ -407,7 +464,7 @@ internal class EnemyModifier : Modifier
                 var generator = randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
                 foreach (var extraEnemy in enemySceneGroup)
                 {
-                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator);
+                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, scaleRng);
                 }
 
                 return root;
@@ -420,7 +477,8 @@ internal class EnemyModifier : Modifier
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
-        RandomizeEnemies(randomizer, logger);
-        PlaceExtraEnemies(randomizer, logger);
+        var options = BuildOptions(randomizer);
+        RandomizeEnemies(randomizer, logger, options);
+        PlaceExtraEnemies(randomizer, logger, options);
     }
 }
