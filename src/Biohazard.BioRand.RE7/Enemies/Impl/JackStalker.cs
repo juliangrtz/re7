@@ -45,7 +45,7 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var speedMultiplier = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
 

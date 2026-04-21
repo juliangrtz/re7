@@ -67,18 +67,17 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em4000");
-        logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
 
         // Health (vanilla prefab + rando prefab)
         var min = randomizer.GetConfigOption<int>("enemy-health-min-molded");
         var max = randomizer.GetConfigOption<int>("enemy-health-max-molded");
         var newHealth = (float)rng.NextDouble(min, max);
-        logger.LogLine($"Health: {enemy.BaseHealth} => {newHealth}");
+        logger.LogLine($"Health: {enemy.BaseHealth} => {enemy.BaseHealth * newHealth}");
 
         // Speed
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var newSpeed = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units)
@@ -93,8 +92,6 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
                 d => ModifyDirective(d, logger, newSpeed)
             );
         }
-
-        logger.Pop();
     }
 
     private app.Em4000BattleDirective ModifyDirective(

@@ -38,6 +38,9 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
+        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+            return;
+
         var rng = randomizer.GetRng("enemy/em3100");
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");

@@ -41,6 +41,9 @@ internal class MargeMutatedDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
+        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+            return;
+
         var rng = randomizer.GetRng("enemy/em3600");
 
         // Speed

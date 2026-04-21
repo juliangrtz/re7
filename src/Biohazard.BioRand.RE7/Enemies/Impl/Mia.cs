@@ -47,7 +47,7 @@ internal class MiaDirectiveModifier : IDirectiveModifier
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var speedMultiplier = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
 
@@ -76,7 +76,7 @@ internal class MiaDirectiveModifier : IDirectiveModifier
     {
         if (enemy.IsBoss)
         {
-            logger.LogLine($"Health: {directive.chapter1Battle4.Health} => {healthMultiplier}");
+            logger.LogLine($"Health: {directive.chapter1Battle4.Health} => {directive.chapter1Battle4.Health * healthMultiplier}");
             directive.chapter1Battle4.Health *= healthMultiplier;
 
             logger.LogLine($"Speed: {speedMultiplier}x normal speed");

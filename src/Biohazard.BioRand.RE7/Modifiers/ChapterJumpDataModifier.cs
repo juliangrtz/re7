@@ -95,7 +95,7 @@ internal class ChapterJumpDataModifier : Modifier
     private static List<ChapterNo> CreateDerangement(List<ChapterNo> original, Rng rng)
     {
         if (original.Count < 2)
-            return new List<ChapterNo>(original);
+            return [.. original];
 
         var shuffled = new List<ChapterNo>(original);
         for (var attempt = 0; attempt < 1024; attempt++)

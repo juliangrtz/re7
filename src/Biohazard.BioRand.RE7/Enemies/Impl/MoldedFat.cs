@@ -40,6 +40,28 @@ internal class MoldedFatDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        // TODO
+        var rng = randomizer.GetRng("enemy/em4200");
+        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4200DirectivesHolder>(enemy.DirectivesHolderPath);
+
+        foreach (var directive in holder.holder.Units)
+        {
+            var rank = directive.Rank;
+            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+
+            logger.LogLine($"[Rank {rank}] {userFilePath}");
+
+            randomizer.FileRepository.ModifyUserFile<app.Em4200BattleDirective>(
+                userFilePath,
+                d => ModifyDirective(d, logger)
+            );
+        }
+    }
+
+    private app.Em4200BattleDirective ModifyDirective(
+        app.Em4200BattleDirective directive,
+        RandomizerLogger logger)
+    {
+        // TODO: Make puke range configurable
+        return directive;
     }
 }
