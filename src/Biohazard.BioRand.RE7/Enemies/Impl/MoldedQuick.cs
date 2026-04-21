@@ -37,6 +37,41 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        // TODO
+        if (randomizer.GetConfigOption<bool>("enemy-speed-exclude-four-legged-moldeds"))
+        {
+            logger.LogLine("Speed modifier explicitly toggled off.");
+            return;
+        }
+
+        var rng = randomizer.GetRng("enemy/em4100");
+
+        // Speed
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
+        var newSpeed = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+
+        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4100DirectivesHolder>(enemy.DirectivesHolderPath);
+        foreach (var directive in holder.holder.Units)
+        {
+            var rank = directive.Rank;
+            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+
+            logger.LogLine($"[Rank {rank}] {userFilePath}");
+
+            randomizer.FileRepository.ModifyUserFile<app.Em4100BattleDirective>(
+                userFilePath,
+                d => ModifyDirective(d, logger, newSpeed)
+            );
+        }
+    }
+
+    private app.Em4100BattleDirective ModifyDirective(
+        app.Em4100BattleDirective directive,
+        RandomizerLogger logger,
+        float speed)
+    {
+        logger.LogLine($"Speed: {speed}x normal speed");
+        directive.movement.animationSpeedRate *= speed;
+        return directive;
     }
 }

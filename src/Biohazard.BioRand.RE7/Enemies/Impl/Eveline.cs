@@ -66,6 +66,9 @@ internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
+        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+            return;
+
         var rng = randomizer.GetRng("enemy/em8900");
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");

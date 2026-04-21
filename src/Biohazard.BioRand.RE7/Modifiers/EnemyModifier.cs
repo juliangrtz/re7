@@ -91,7 +91,6 @@ internal class EnemyModifier : Modifier
     private RszGameObject GetOrCreateEnemyTemplate(
         Randomizer randomizer,
         string enemyId,
-        Guid newGuid,
         via.Transform transform,
         bool updateTransform)
     {
@@ -132,7 +131,7 @@ internal class EnemyModifier : Modifier
             .WithName($"ESI_{enemyId}");
     }
 
-    private bool IsGeneratorTemplateSafe(Randomizer randomizer, string enemyId, out string? reason)
+    private bool IsGeneratorTemplateSafe(string enemyId, out string? reason)
     {
         if (enemyId == "Em8001") // Nightmare DLC Jack{
         {
@@ -147,7 +146,6 @@ internal class EnemyModifier : Modifier
     private RszScene ProcessGeneratorScene(
         RszScene scene,
         Randomizer randomizer,
-        RandomizerLogger logger,
         EnemyGeneratorWrapper enemyGenerator,
         IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements)
     {
@@ -181,7 +179,6 @@ internal class EnemyModifier : Modifier
                 var template = GetOrCreateEnemyTemplate(
                         randomizer,
                         enemyId,
-                        Guid.NewGuid(),
                         originalTransform,
                         updateTransform: false
                 );
@@ -193,7 +190,6 @@ internal class EnemyModifier : Modifier
                 var template = GetOrCreateEnemyTemplate(
                     randomizer,
                     enemyId,
-                    Guid.NewGuid(),
                     originalTransform,
                     updateTransform: true)
                     .WithName($"{enemyId}_Static");
@@ -236,7 +232,6 @@ internal class EnemyModifier : Modifier
     private void ProcessArea(
         Area area,
         Randomizer randomizer,
-        EnemyRandomizerOptions options,
         RandomizerLogger logger,
         Rng.Table<IEnemyDefinition> enemyTable)
     {
@@ -279,7 +274,7 @@ internal class EnemyModifier : Modifier
             {
                 foreach (var (generator, replacements) in generatorChanges)
                 {
-                    scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements);
+                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements);
                 }
                 return scene;
             });
@@ -297,7 +292,7 @@ internal class EnemyModifier : Modifier
             if (ratio != 0)
             {
                 var enemyId = enemy.EnemyId.ToString();
-                if (!IsGeneratorTemplateSafe(randomizer, enemyId, out var reason))
+                if (!IsGeneratorTemplateSafe(enemyId, out var reason))
                 {
                     logger.LogLine($"Skipping {enemy.Name} ({enemyId}) for generator randomization: {reason}");
                     continue;
@@ -331,7 +326,7 @@ internal class EnemyModifier : Modifier
         }
 
         var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, options, logger, enemyTable));
+        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable));
     }
 
     private (RszGameObject, Guid) AddEnemyToGenerator(
@@ -341,7 +336,7 @@ internal class EnemyModifier : Modifier
         via.Transform transform)
     {
         var pool = generator.Children[0];
-        var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, Guid.NewGuid(), new via.Transform(), true).Clone();
+        var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, new via.Transform(), true).Clone();
         pool.Children = pool.Children.Add(template);
 
         var spawnPoints = pool.Children[0];
@@ -398,7 +393,7 @@ internal class EnemyModifier : Modifier
         }
         else
         {
-            var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, Guid.NewGuid(), transform, true);
+            var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, transform, true);
             template = template.WithName(template.Name + "_Extra");
             scene = scene.Add(template);
         }
