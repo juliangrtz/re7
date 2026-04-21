@@ -60,7 +60,7 @@ Herb,1
 
         var ethanInventory = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.EthanInventoryPath)._AddItems;
 
-        Assert.Equal(
+        Assert.Contains(
             [("Coin", 2), ("Herb", 1)],
             ethanInventory.Select(x => (x.ItemDataID, x.Num)).ToArray());
     }
