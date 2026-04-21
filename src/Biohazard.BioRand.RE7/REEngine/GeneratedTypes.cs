@@ -2903,3 +2903,36 @@ namespace app.Em8001
         public Enums.app.Em8001.Em8001Order.Appear.Type AppearType { get; set; }
     }
 }
+
+namespace app.fsm
+{
+    public class EnemyGenerate
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+        public Enums.app.EnemyGenerator.Operation Operation { get; set; }
+        public bool IsReset { get; set; }
+        public bool InHardIgnored { get; set; }
+    }
+}
+
+namespace app.fsm
+{
+    public class ActivateObject
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public app.ObjectID GameObjID { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+        public string GameObjName { get; set; } = "";
+        public System.Guid GameObj { get; set; }
+        public bool Activate { get; set; }
+        public bool CollidersOff { get; set; }
+    }
+}
