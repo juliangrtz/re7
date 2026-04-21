@@ -726,6 +726,22 @@ namespace app
         public app.EnemyDirectivesHolder holder { get; set; }
     }
 
+    public class Em5400DirectivesHolder
+    {
+        public string Alias { get; set; } = "";
+        public app.EnemyDirectivesHolder holder { get; set; }
+    }
+
+    public class Em5510DirectivesHolder
+    {
+        public string Alias { get; set; } = "";
+        public app.EnemyDirectivesHolder holder { get; set; }
+    }
+    public class Em5520DirectivesHolder
+    {
+        public string Alias { get; set; } = "";
+        public app.EnemyDirectivesHolder holder { get; set; }
+    }
     public class EnemyDirectivesHolder
     {
         public RszUserDataNode defaultDirective { get; set; }
@@ -2901,5 +2917,639 @@ namespace app.Em8001
     public class Em8001ThinkAppearSet
     {
         public Enums.app.Em8001.Em8001Order.Appear.Type AppearType { get; set; }
+    }
+}
+
+namespace app.fsm
+{
+    public class EnemyGenerate
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public System.Guid SpawnInfo { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+        public Enums.app.EnemyGenerator.Operation Operation { get; set; }
+        public bool IsReset { get; set; }
+        public bool InHardIgnored { get; set; }
+    }
+}
+
+namespace app.fsm
+{
+    public class ActivateObject
+    {
+        public bool v0_Enabled { get; set; } = new();
+        public bool v1_Modified { get; set; } = new();
+        public uint v2_UID { get; set; } = new();
+        public byte v3_ListNo { get; set; } = new();
+        public app.ObjectID GameObjID { get; set; }
+        public app.ObjectManager.SelectableContainerObjectName GameObjContainer { get; set; }
+        public string GameObjName { get; set; } = "";
+        public System.Guid GameObj { get; set; }
+        public bool Activate { get; set; }
+        public bool CollidersOff { get; set; }
+    }
+}
+
+namespace app
+{
+    public class EnemyRankParameterHolder
+    {
+        public System.Collections.Generic.List<app.EnemyRankParameterHolder.Unit> Units { get; set; } = [];
+        public class Unit
+        {
+            public int Rank { get; set; }
+            public RszUserDataNode RankParameter { get; set; }
+        }
+    }
+    public class EnemyRankParameter
+    {
+        public float AttackRate { get; set; }
+        public float StunRate { get; set; }
+        public float DamageRate { get; set; }
+        public float AnimationSpeedRateForMove { get; set; }
+        public float AnimationSpeedRateForAttack { get; set; }
+        public float AnimationSpeedRateForDamage { get; set; }
+        public float AddRankPointForDamage { get; set; }
+        public float AddRankPointForAttack { get; set; }
+        public float DamageReviseRateForCombo { get; set; }
+        public float LostHeadRankPointThreshold { get; set; }
+        public class SpeedRateType
+        {
+            public int value__ { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class MoldedCommonRankParameterHolder
+    {
+        public System.Collections.Generic.List<app.MoldedCommonRankParameterHolder.Unit> Units { get; set; } = [];
+        public class Unit
+        {
+            public int Rank { get; set; }
+            public RszUserDataNode RankParameter { get; set; }
+        }
+    }
+    public class MoldedCommonRankParameter
+    {
+        public float ThreatIntervalTime { get; set; }
+        public float GrappleIntervalTime { get; set; }
+        public float SlashIntervalTime { get; set; }
+    }
+}
+
+namespace app
+{
+    public class Em4100BattleDirective
+    {
+        public app.Em4100BattleDirective.Basic basic { get; set; }
+        public app.Em4100BattleDirective.Movement movement { get; set; }
+        public app.Em4100BattleDirective.GuardDevise guardDevise { get; set; }
+        public app.Em4100BattleDirective.Dodge dodge { get; set; }
+        public app.Em4100BattleDirective.StrikeScratch strikeScratch { get; set; }
+        public app.Em4100BattleDirective.StrikeDash strikeDash { get; set; }
+        public app.Em4100BattleDirective.StrikeJump strikeJump { get; set; }
+        public app.Em4100BattleDirective.StrikeLongJump strikeLongJump { get; set; }
+        public app.Em4100BattleDirective.WallAttack wallAttack { get; set; }
+        public app.Em4100BattleDirective.AroundFlewover aroundFlewover { get; set; }
+        public app.Em4100BattleDirective.CancelAttack cancelAttack { get; set; }
+        public app.Em4100BattleDirective.Backstep backstep { get; set; }
+        public app.Em4100BattleDirective.Notice notice { get; set; }
+        public app.Em4100BattleDirective.Threat threat { get; set; }
+        public app.Em4100BattleDirective.NearBiteTry nearBiteTry { get; set; }
+        public app.Em4100BattleDirective.ChanceCounter chanceCounter { get; set; }
+        public class AroundFlewover
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+            public float animationSpeedRate { get; set; }
+        }
+        public class AttackBase
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class Backstep
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float nearPlayerRange { get; set; }
+            public bool isUseIdle { get; set; }
+            public float idleRange { get; set; }
+        }
+        public class Base
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+        }
+        public class Basic
+        {
+            public bool isLoverBandRally { get; set; }
+            public System.Numerics.Vector2 loverBandRangeForRootTranslate { get; set; }
+            public float range { get; set; }
+            public float fastStandupRange { get; set; }
+            public float returnAttackRightTimeLimit { get; set; }
+            public float appearCancelRange { get; set; }
+            public float resumeCancelRange { get; set; }
+            public float landingCancelRange { get; set; }
+        }
+        public class CancelAttack
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class ChanceCounter
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class Dodge
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float frontAngle { get; set; }
+            public System.Numerics.Vector2 range { get; set; }
+            public System.Numerics.Vector2 height { get; set; }
+            public float aimingTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public float animationSpeedRate { get; set; }
+        }
+        public class GuardDevise
+        {
+            public float backCancelDistance { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public bool isUseIdle { get; set; }
+            public float idleRange { get; set; }
+            public float homingSpeed { get; set; }
+        }
+        public class Movement
+        {
+            public float switchIntervalTime { get; set; }
+            public System.Numerics.Vector2 range { get; set; }
+            public System.Numerics.Vector2 cancelMoveRange { get; set; }
+            public float cancelMoveHomingSpeed { get; set; }
+            public float animationSpeedRate { get; set; }
+            public float homingSpeed { get; set; }
+            public float wandererHomingSpeed { get; set; }
+        }
+        public class NearBiteTry
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class Notice
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class StrikeDash
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class StrikeJump
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class StrikeLongJump
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class StrikeScratch
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+            public float animationSpeedRate { get; set; }
+        }
+        public class Threat
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float nearPlayerRange { get; set; }
+            public bool canIdling { get; set; }
+        }
+        public class WallAttack
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public bool isValidGuardDevise { get; set; }
+            public bool canFromBack { get; set; }
+            public bool canFromBackWithNotice { get; set; }
+            public float nearPlayerRange { get; set; }
+            public int frameLength { get; set; }
+            public System.Numerics.Vector2 wallToWallRange { get; set; }
+            public System.Numerics.Vector2 wallToGroundRange { get; set; }
+            public bool canThrust { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class Em4200BattleDirective
+    {
+        public app.Em4200BattleDirective.Basic basic { get; set; }
+        public app.Em4200BattleDirective.Movement movement { get; set; }
+        public app.Em4200BattleDirective.Rush rush { get; set; }
+        public app.Em4200BattleDirective.Splash splash { get; set; }
+        public app.Em4200BattleDirective.Breath breath { get; set; }
+        public app.Em4200BattleDirective.BreathSimple breathSimple { get; set; }
+        public app.Em4200BattleDirective.BreathForce breathForce { get; set; }
+        public app.Em4200BattleDirective.MountTry mountTry { get; set; }
+        public app.Em4200BattleDirective.Grapple grapple { get; set; }
+        public app.Em4200BattleDirective.Anger anger { get; set; }
+        public app.Em4200BattleDirective.CancelAttack cancelAttack { get; set; }
+        public class Anger
+        {
+            public bool isAlwaysAnger { get; set; }
+            public System.Collections.Generic.List<app.Em4200BattleDirective.Anger.Unit> units { get; set; } = [];
+            public class Unit
+            {
+                public float remainHealthRate { get; set; }
+                public float time { get; set; }
+            }
+        }
+        public class AttackBase
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class Base
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+        }
+        public class Basic
+        {
+            public bool isLoverBandRally { get; set; }
+            public System.Numerics.Vector2 loverBandRangeForRootTranslate { get; set; }
+            public System.Numerics.Vector2 loverBandRangeCrawlForRootTranslate { get; set; }
+            public float leaveElevatorDistance { get; set; }
+            public float range { get; set; }
+            public float fastStandupRange { get; set; }
+            public float returnAttackRightTimeLimit { get; set; }
+            public bool isUseCounterSplash { get; set; }
+            public float appearCancelRange { get; set; }
+            public float resumeCancelRange { get; set; }
+            public float landingCancelRange { get; set; }
+        }
+        public class Breath
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public float horizontalRange { get; set; }
+            public float horizontalAngleRate { get; set; }
+            public System.Numerics.Vector2 forceHorizontalRange { get; set; }
+            public int forceHorizontalCount { get; set; }
+            public bool isUseWalkingBreath { get; set; }
+            public float walkRange { get; set; }
+            public float walkHeight { get; set; }
+            public float verticalRange { get; set; }
+        }
+        public class BreathForce
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+        public class BreathSimple
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public int burstMaxForAnger { get; set; }
+            public int burstMaxForNormal { get; set; }
+            public float homingAngleForCrawl { get; set; }
+        }
+        public class CancelAttack
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public bool canLostPartsCancelAttack { get; set; }
+        }
+        public class Grapple
+        {
+            public float timeLimitNormalGrapple { get; set; }
+            public float timeLimitMountGrapple { get; set; }
+            public float intervalLoopMountGrapple { get; set; }
+        }
+        public class MountTry
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public System.Numerics.Vector2 limitRange { get; set; }
+            public float stayTime { get; set; }
+            public float grappleIntervalTime { get; set; }
+        }
+        public class Movement
+        {
+            public float switchIntervalTime { get; set; }
+            public System.Numerics.Vector2 range { get; set; }
+            public bool canDamageCancelMove { get; set; }
+            public bool canLostPartsCancelMove { get; set; }
+            public System.Numerics.Vector2 cancelMoveRange { get; set; }
+            public float cancelMoveHomingSpeed { get; set; }
+            public bool canIntervalWait { get; set; }
+            public float naviCircleValueForStand { get; set; }
+            public float naviCircleValueForCrawl { get; set; }
+        }
+        public class Rush
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+            public float continueTime { get; set; }
+            public float rushIntervalTime { get; set; }
+            public float homingAngleAtFirst { get; set; }
+        }
+        public class Splash
+        {
+            public bool isUse { get; set; }
+            public float priorityWeight { get; set; }
+            public bool isUseCancelSequence { get; set; }
+            public float homingSpeed { get; set; }
+            public float angle { get; set; }
+            public System.Numerics.Vector2 rangeOverIn { get; set; }
+            public System.Numerics.Vector2 heightLowHigh { get; set; }
+            public float attackIntervalTime { get; set; }
+            public float nearPlayerRange { get; set; }
+        }
+    }
+}
+
+namespace app.Em8001
+{
+    public class Em8001BattleDirective
+    {
+        public app.Em8001.Em8001BattleDirective.CommonParameter Common { get; set; }
+
+        public class CommonParameter
+        {
+            public float ModelScale { get; set; }
+            public float InitHP { get; set; }
+            public float DownTime { get; set; }
+            public float DownTimeReduceByDamageRatio { get; set; }
+            public float DownTimeReduceByDamageInterval { get; set; }
+            public float DamageStaggerAngle { get; set; }
+
+        }
+    }
+}
+
+namespace app
+{
+    public class Em5400Directive
+    {
+        public app.Em5400Directive.CommonParam MyCommonParam { get; set; }
+        public class CommonParam
+        {
+            public float MoveDesireAdd { get; set; }
+            public float MoveDesireSub { get; set; }
+            public float MoveDesireAddRadius { get; set; }
+            public float DefaultSpeed { get; set; }
+            public float AttackSpeed { get; set; }
+            public float AttackIntervalSecMin { get; set; }
+            public float AttackIntervalSecMax { get; set; }
+            public float AttackFailTime { get; set; }
+            public float SideMoveStartDist { get; set; }
+            public float SideMoveRangeDist { get; set; }
+            public float DirectChangeAngleMin { get; set; }
+            public float DirectChangeAngleMax { get; set; }
+            public float SinCurveMin { get; set; }
+            public float SinCurvecMax { get; set; }
+            public float SinCurveChengeSecMin { get; set; }
+            public float SinCurveChengeSecMax { get; set; }
+            public float AttackHoveringSecMin { get; set; }
+            public float AttackHoveringSecMax { get; set; }
+            public bool IsFastDead { get; set; }
+            public float GrappleProbability { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class Em5510UserData
+    {
+        public app.Em5510UserData.GenerateParam MyGenerateParam { get; set; }
+        public app.Em5510UserData.PassiveParam MyPassiveParam { get; set; }
+        public app.Em5510UserData.BreakParam MyBreakParam { get; set; }
+        public class BreakParam
+        {
+            public float FirstBreakHealthRate { get; set; }
+            public float SecondBreakHealthRate { get; set; }
+        }
+        public class GenerateParam
+        {
+            public float IntervalTime { get; set; }
+            public float Em5400GenerateRate { get; set; }
+            public float Em5520GenerateRate { get; set; }
+            public int WaitChangeGenerateNum { get; set; }
+            public float WaitTime { get; set; }
+        }
+        public class PassiveParam
+        {
+            public float GenerateDamage { get; set; }
+            public int SpawnNum { get; set; }
+        }
+    }
+}
+
+namespace app
+{
+    public class Em5520Directive
+    {
+        public app.Em5520Directive.MoveParam MyMoveParam { get; set; }
+        public app.Em5520Directive.AttackParam MyAttackParam { get; set; }
+        public app.Em5520Directive.AppearParam MyAppearParam { get; set; }
+        public app.Em5520Directive.SuspendParam MySuspendParam { get; set; }
+        public app.Em5520Directive.DamageWaitParam MyDamageWaitParam { get; set; }
+        public class AppearParam
+        {
+            public float StateChangeTime { get; set; }
+            public object MoveTimeRange { get; set; }
+            public object GatherStartPosDist { get; set; }
+            public object GatherEndPosDist { get; set; }
+        }
+        public class AttackParam
+        {
+            public float AttackTime { get; set; }
+            public float AttackIntervalTime { get; set; }
+        }
+        public class DamageWaitParam
+        {
+            public float DamageDistRange { get; set; }
+            public float DamageMoveSpeedRate { get; set; }
+            public float DamageMoveSpeedRateEnableSec { get; set; }
+            public float DamageMoveSleepTime { get; set; }
+        }
+        public class MoveParam
+        {
+            public float MoveDesireAdd { get; set; }
+            public float MoveDesireSub { get; set; }
+            public float MoveDesireRadius { get; set; }
+            public float MoveRange { get; set; }
+            public float DefaultSpeed { get; set; }
+            public float TargetNearSpeedChangeDistance { get; set; }
+            public float NearPlayerSpeed { get; set; }
+        }
+        public class SuspendParam
+        {
+            public object MoveTimeRange { get; set; }
+        }
     }
 }

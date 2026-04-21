@@ -42,12 +42,22 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em3000");
+        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var speedMultiplier = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
+        logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
+        if (applySpeed)
+        {
+            logger.LogMultiplier("Walk speed multiplier", speedMultiplier);
+        }
+        else
+        {
+            logger.LogLine("Walk speed multiplier: 1x (enemy speed randomization disabled)");
+        }
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3000DirectivesHolder>(enemy.DirectivesHolderPath);
 
@@ -56,12 +66,10 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(
                 userFilePath,
                 d => ModifyDirective(d, logger, healthMultiplier, speedMultiplier)
-            );
+            ));
         }
     }
 
@@ -75,17 +83,28 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
         // directive.common.ModelScale
 
         // Health
-        logger.LogLine($"Health: {directive.chapter3Battle1Final.Health} => {directive.chapter3Battle1Final.Health * healthMultiplier}");
+        var oldHealth = directive.chapter3Battle1Final.Health;
         directive.chapter3Battle1Final.Health *= healthMultiplier;
+        logger.LogChange("Chapter 3 final health", oldHealth, directive.chapter3Battle1Final.Health);
 
         // Speed
-        logger.LogLine($"Speed: {speedMultiplier}x normal speed");
-        //directive.common.MotionSpeedForBack *= speedMultiplier;
-        //directive.common.MotionSpeedForStepIn *= speedMultiplier;
-        directive.common.MotionSpeedForWalk *= speedMultiplier;
+        if (speedMultiplier == 1f)
+        {
+            logger.LogLine("No walk speed changes.");
+        }
+        else
+        {
+            //directive.common.MotionSpeedForBack *= speedMultiplier;
+            //directive.common.MotionSpeedForStepIn *= speedMultiplier;
+            var oldWalkSpeed = directive.common.MotionSpeedForWalk;
+            directive.common.MotionSpeedForWalk *= speedMultiplier;
+            logger.LogChange("Walk speed", oldWalkSpeed, directive.common.MotionSpeedForWalk);
+        }
 
         // Misc.
+        var oldDiscoveryTime = directive.chapter3Battle1.MansionAIForceDiscoveryTime;
         directive.chapter3Battle1.MansionAIForceDiscoveryTime = 0.5f; // ;)
+        logger.LogChange("Mansion AI forced discovery time", oldDiscoveryTime, directive.chapter3Battle1.MansionAIForceDiscoveryTime);
         return directive;
     }
 }

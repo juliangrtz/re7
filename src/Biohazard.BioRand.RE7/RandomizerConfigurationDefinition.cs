@@ -252,14 +252,11 @@ internal static class RandomizerConfigurationDefinition
         group = page.CreateGroup("Speed");
         group.Items.Add(new GroupItem()
         {
-            Id = $"enemy-speed-probability",
-            Label = "Unusual speed probability",
-            Description = "The percentage of enemies that move at an unusual speed.",
-            Type = "percent",
-            Min = 0.0,
-            Max = 1,
-            Step = 0.01,
-            Default = 0.0
+            Id = $"random-enemy-speed",
+            Label = "Random animation speed rate",
+            Description = "Whether to randomize the animation speed rate of enemies. Affects all enemies.",
+            Type = "switch",
+            Default = false
         });
 
         group.Items.Add(new GroupItem()
@@ -284,6 +281,49 @@ internal static class RandomizerConfigurationDefinition
             Max = 2.00,
             Step = 0.05,
             Default = 1.25
+        });
+
+        group = page.CreateGroup("Damage");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-enemy-damage",
+            Label = "Random damage",
+            Description = "Whether to randomize the damage values of enemies. Affects all enemies.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-insta-death",
+            Label = "One-hit Death",
+            Description = "Whether to instantly die from ANY kind of enemy damage.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-damage-min",
+            Label = "Min. Enemy Damage",
+            Description = "The minimum damage multiplier for enemies.",
+            Type = "range",
+            Min = 0.1,
+            Max = 3.00,
+            Step = 0.1,
+            Default = 0.8
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-damage-max",
+            Label = "Max. Enemy Damage",
+            Description = "The maximum damage multiplier for enemies.",
+            Type = "range",
+            Min = 0.1,
+            Max = 3.00,
+            Step = 0.1,
+            Default = 1.2
         });
 
         group = page.CreateGroup("Constraints");

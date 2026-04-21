@@ -37,6 +37,54 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        // TODO
+        if (randomizer.GetConfigOption<bool>("enemy-speed-exclude-four-legged-moldeds"))
+        {
+            logger.LogSkip("Four-legged Moldeds are excluded from enemy speed randomization.");
+            return;
+        }
+
+        var rng = randomizer.GetRng("enemy/em4100");
+        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
+
+        // Speed
+        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
+        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
+        var newSpeed = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        if (applySpeed)
+        {
+            logger.LogMultiplier("Animation speed multiplier", newSpeed);
+        }
+        else
+        {
+            logger.LogLine("Animation speed multiplier: 1x (enemy speed randomization disabled)");
+        }
+
+        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4100DirectivesHolder>(enemy.DirectivesHolderPath);
+        foreach (var directive in holder.holder.Units)
+        {
+            var rank = directive.Rank;
+            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em4100BattleDirective>(
+                userFilePath,
+                d => ModifyDirective(d, logger, newSpeed)));
+        }
+    }
+
+    private app.Em4100BattleDirective ModifyDirective(
+        app.Em4100BattleDirective directive,
+        RandomizerLogger logger,
+        float speed)
+    {
+        if (speed == 1f)
+        {
+            logger.LogLine("No speed changes.");
+            return directive;
+        }
+
+        var oldAnimationSpeed = directive.movement.animationSpeedRate;
+        directive.movement.animationSpeedRate *= speed;
+        logger.LogChange("Animation speed", oldAnimationSpeed, directive.movement.animationSpeedRate);
+        return directive;
     }
 }

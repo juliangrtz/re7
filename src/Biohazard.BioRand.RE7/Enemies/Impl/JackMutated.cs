@@ -40,6 +40,6 @@ internal class JackMutatedDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        // TODO
+        logger.LogLine("No directive changes are implemented for Jack Baker (Mutated) yet.");
     }
 }

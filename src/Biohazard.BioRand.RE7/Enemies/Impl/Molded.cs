@@ -67,18 +67,26 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em4000");
-        logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
+        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
 
         // Health (vanilla prefab + rando prefab)
         var min = randomizer.GetConfigOption<int>("enemy-health-min-molded");
         var max = randomizer.GetConfigOption<int>("enemy-health-max-molded");
         var newHealth = (float)rng.NextDouble(min, max);
-        logger.LogLine($"Health: {enemy.BaseHealth} => {newHealth}");
+        logger.LogHealthMultiplier(enemy.BaseHealth, newHealth);
 
         // Speed
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var newSpeed = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        if (applySpeed)
+        {
+            logger.LogMultiplier("Animation speed multiplier", newSpeed);
+        }
+        else
+        {
+            logger.LogLine("Animation speed multiplier: 1x (enemy speed randomization disabled)");
+        }
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units)
@@ -86,15 +94,10 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.Em4000BattleDirective>(
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em4000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(d, logger, newSpeed)
-            );
+                d => ModifyDirective(d, logger, newSpeed)));
         }
-
-        logger.Pop();
     }
 
     private app.Em4000BattleDirective ModifyDirective(
@@ -102,9 +105,19 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
         RandomizerLogger logger,
         float speed)
     {
-        logger.LogLine($"Speed: {speed}x normal speed");
+        if (speed == 1f)
+        {
+            logger.LogLine("No speed changes.");
+            return directive;
+        }
+
+        var oldIdleInterval = directive.movement.idleIntervalTime;
         directive.movement.idleIntervalTime /= speed;
+        logger.LogChange("Idle interval", oldIdleInterval, directive.movement.idleIntervalTime);
+
+        var oldAnimationSpeed = directive.movement.animationSpeedRate;
         directive.movement.animationSpeedRate *= speed;
+        logger.LogChange("Animation speed", oldAnimationSpeed, directive.movement.animationSpeedRate);
 
         return directive;
     }
