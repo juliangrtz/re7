@@ -166,8 +166,8 @@ internal class StartingInventoryModifier : Modifier
 
             if (randomizer.User.Equals("captainezekiel", StringComparison.InvariantCultureIgnoreCase)) // TODO Introduce tag
             {
-                root._AddItems.Clear();
                 var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
+                    .Where(x => x.Quantity > 0)
                     .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
                 root._AddItems.AddRange(debugItems);
             }
