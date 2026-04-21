@@ -22,6 +22,7 @@ internal class Randomizer : IDisposable
     public IProgressReporter Reporter { get; }
     public FileRepository FileRepository => _fileRepository;
     public DynamicData DynamicData { get; }
+    internal RandomizerLoggerIO? LastLog { get; private set; }
 
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
@@ -152,6 +153,7 @@ internal class Randomizer : IDisposable
             logger.Output.LogHr();
         });
 
+        LastLog = logger;
         return logger;
     }
 

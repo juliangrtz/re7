@@ -144,6 +144,7 @@ public sealed class RandomizerRunResult : IDisposable
     internal ItemRandomizer ItemRandomizer => _randomizer.ItemRandomizer;
     internal ItemPlacementService ItemPlacementService => _randomizer.ItemPlacementService;
     internal AreaService AreaService => _randomizer.AreaService;
+    public string ProcessLog => _randomizer.LastLog?.Process.Output ?? string.Empty;
 
     public byte[] ReadBeforeBytes(string path)
         => _beforeRepository.GetFile(path) ?? throw new InvalidOperationException($"Missing baseline file '{path}'.");

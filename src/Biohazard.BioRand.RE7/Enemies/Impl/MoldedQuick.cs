@@ -39,16 +39,25 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
     {
         if (randomizer.GetConfigOption<bool>("enemy-speed-exclude-four-legged-moldeds"))
         {
-            logger.LogLine("Speed modifier explicitly toggled off.");
+            logger.LogSkip("Four-legged Moldeds are excluded from enemy speed randomization.");
             return;
         }
 
         var rng = randomizer.GetRng("enemy/em4100");
+        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
 
         // Speed
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = randomizer.GetConfigOption<bool>("random-enemy-speed") ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var newSpeed = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        if (applySpeed)
+        {
+            logger.LogMultiplier("Animation speed multiplier", newSpeed);
+        }
+        else
+        {
+            logger.LogLine("Animation speed multiplier: 1x (enemy speed randomization disabled)");
+        }
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4100DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units)
@@ -56,12 +65,9 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.Em4100BattleDirective>(
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em4100BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(d, logger, newSpeed)
-            );
+                d => ModifyDirective(d, logger, newSpeed)));
         }
     }
 
@@ -70,8 +76,15 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
         RandomizerLogger logger,
         float speed)
     {
-        logger.LogLine($"Speed: {speed}x normal speed");
+        if (speed == 1f)
+        {
+            logger.LogLine("No speed changes.");
+            return directive;
+        }
+
+        var oldAnimationSpeed = directive.movement.animationSpeedRate;
         directive.movement.animationSpeedRate *= speed;
+        logger.LogChange("Animation speed", oldAnimationSpeed, directive.movement.animationSpeedRate);
         return directive;
     }
 }

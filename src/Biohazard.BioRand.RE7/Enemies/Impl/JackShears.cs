@@ -50,15 +50,16 @@ internal class JackShearsDirectiveModifier : IDirectiveModifier
         var min = randomizer.GetConfigOption<int>("boss-health-min-jackshears");
         var max = randomizer.GetConfigOption<int>("boss-health-max-jackshears");
         var healthMultiplier = (float)rng.NextDouble(min, max);
-        logger.LogLine($"Health: {enemy.BaseHealth} => {enemy.BaseHealth * healthMultiplier}");
+        logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
 
         var userFilePath = PakPath.UserFile("prefab/character/em8001/parameter/directive/em8001battledirective_default.user");
-        logger.LogLine($"[Default] {userFilePath}");
-
-        randomizer.FileRepository.ModifyUserFile(userFilePath, directive =>
+        logger.LogDirectiveFile("Default", userFilePath, () => randomizer.FileRepository.ModifyUserFile(userFilePath, directive =>
         {
-            directive = directive.Set("Common.InitHP", enemy.BaseHealth * healthMultiplier);
+            var oldInitHp = directive.Get<float>("Common.InitHP");
+            var newInitHp = enemy.BaseHealth * healthMultiplier;
+            logger.LogChange("Common.InitHP", oldInitHp, newInitHp);
+            directive = directive.Set("Common.InitHP", newInitHp);
             return directive;
-        });
+        }));
     }
 }

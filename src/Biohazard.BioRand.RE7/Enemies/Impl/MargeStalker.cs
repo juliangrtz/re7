@@ -39,13 +39,17 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        {
+            logger.LogSkip("Enemy speed randomization is disabled.");
             return;
+        }
 
         var rng = randomizer.GetRng("enemy/em3100");
 
         var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
         var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
         var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        logger.LogMultiplier("Speed multiplier", newSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units)
@@ -53,12 +57,10 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
-
-            randomizer.FileRepository.ModifyUserFile<app.Em3100Directive>(
+            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em3100Directive>(
                 userFilePath,
                 d => ModifyDirective(d, logger, newSpeed)
-            );
+            ));
         }
     }
 
@@ -68,14 +70,17 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
         float speed)
     {
         // Speed
-        logger.LogLine($"Walking speed: {directive.FretWalkSpeed} => {directive.FretWalkSpeed * speed}");
+        var oldWalkSpeed = directive.FretWalkSpeed;
         directive.FretWalkSpeed *= speed;
+        logger.LogChange("Walk speed", oldWalkSpeed, directive.FretWalkSpeed);
 
-        logger.LogLine($"Attack interval: {directive.bugHoleParam.AttackIntervalSec} => {directive.bugHoleParam.AttackIntervalSec / speed}");
+        var oldAttackInterval = directive.bugHoleParam.AttackIntervalSec;
         directive.bugHoleParam.AttackIntervalSec /= speed;
+        logger.LogChange("Attack interval", oldAttackInterval, directive.bugHoleParam.AttackIntervalSec);
 
-        logger.LogLine($"Bug spawn interval: {directive.bugHoleParam.Em5400SpawnInterval} => {directive.bugHoleParam.Em5400SpawnInterval / speed}");
+        var oldBugSpawnInterval = directive.bugHoleParam.Em5400SpawnInterval;
         directive.bugHoleParam.Em5400SpawnInterval /= speed;
+        logger.LogChange("Bug spawn interval", oldBugSpawnInterval, directive.bugHoleParam.Em5400SpawnInterval);
 
         return directive;
     }
