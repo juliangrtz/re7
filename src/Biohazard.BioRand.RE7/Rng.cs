@@ -129,6 +129,7 @@ public sealed class Rng
 
         public bool IsEmpty => _table.Count == 0;
         public T[] Values => _table.Select(x => x.Item1).ToArray();
+        public int Count => _table.Count;
 
         public Table(Rng rng)
         {

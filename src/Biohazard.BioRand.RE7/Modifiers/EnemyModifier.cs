@@ -1,6 +1,8 @@
 ﻿using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
+using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -8,7 +10,6 @@ internal class EnemyModifier : Modifier
 {
     private const string RandomizerKey = "modifier/enemies";
 
-    #region Config wrappers
     internal record EnemyRandomizerOptions(
         int EnemyVariety,
         int MaxPackSize,
@@ -37,7 +38,22 @@ internal class EnemyModifier : Modifier
         float Max,
         bool ExcludeQuickMoldeds
     );
-    #endregion
+
+    internal sealed class ExtraEnemyPlacement
+    {
+        public bool Enabled { get; init; }
+        public string Id { get; init; } = "";
+        public string Comment { get; init; } = "";
+        public string SceneFile { get; init; } = "";
+        public int Chapter { get; init; }
+        public float PosX { get; init; }
+        public float PosY { get; init; }
+        public float PosZ { get; init; }
+        public float RotX { get; init; }
+        public float RotY { get; init; }
+        public float RotZ { get; init; }
+        public float RotW { get; init; }
+    }
 
     private static EnemyRandomizerOptions BuildOptions(Randomizer randomizer)
     {
@@ -294,7 +310,7 @@ internal class EnemyModifier : Modifier
         return table;
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
+    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
@@ -308,10 +324,123 @@ internal class EnemyModifier : Modifier
             logger.LogLine("Constructed an empty enemy table! Aborting...");
             return;
         }
+        else
+        {
+            logger.LogLine($"Constructed an enemy table of size {enemyTable.Count}:");
+            logger.LogLine(string.Join(", ", enemyTable.Values.Select(em => em.Name)));
+        }
 
         var areaService = randomizer.AreaService;
-        //Parallel.ForEach(areaService.Areas, area => ProcessArea(area, randomizer, options, logger, enemyTable));
-        // messes up logging
         areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, options, logger, enemyTable));
+    }
+
+    private (RszGameObject, Guid) AddEnemyToGenerator(
+        Randomizer randomizer,
+        RszGameObject generator,
+        ExtraEnemyPlacement placement,
+        via.Transform transform)
+    {
+        var pool = generator.Children[0];
+        var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, Guid.NewGuid(), new via.Transform(), true).Clone();
+        pool.Children = pool.Children.Add(template);
+
+        var spawnPoints = pool.Children[0];
+        var spawnInfo = GetOrCreateSpawnInfoTemplate(randomizer, placement.Id).Clone();
+        var spawnInfoGuid = Guid.NewGuid();
+        spawnInfo = spawnInfo.AddOrUpdateComponent(transform);
+        spawnInfo = spawnInfo.WithGuid(spawnInfoGuid);
+
+        spawnPoints.Children = spawnPoints.Children.Add(spawnInfo);
+
+        pool = pool.AddOrUpdateChild(spawnPoints);
+        generator = generator.AddOrUpdateChild(pool);
+
+        return (generator, spawnInfoGuid);
+    }
+
+    private RszGameObject CreateFsmGenerator(Randomizer randomizer, Guid spawnInfoGuid)
+    {
+        var fsmGenerator = randomizer.TemplateService.GetObject("FsmGenerator").Clone();
+        fsmGenerator = fsmGenerator.WithName(fsmGenerator.Name + spawnInfoGuid);
+        return fsmGenerator.Visit(node =>
+        {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
+            {
+                var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
+                return RszSerializer.Serialize(RszFieldType.GameObjectRef, spawnInfoGuid);
+            }
+            return node;
+        });
+    }
+
+    private RszScene AddEnemyToScene(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        RszScene scene,
+        ExtraEnemyPlacement placement,
+        RszGameObject generator)
+    {
+        var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
+        logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
+        var transform = new via.Transform()
+        {
+            Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
+            Rotation = new Quaternion(placement.RotX, placement.RotY, placement.RotZ, placement.RotW),
+            Scale = Vector3.One,
+        };
+
+        if (definition.UsesEnemyGenerator)
+        {
+            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, transform);
+            generator = newGenerator;
+            scene = scene.Add(generator);
+            scene = scene.Add(CreateFsmGenerator(randomizer, spawnInfoGuid));
+        }
+        else
+        {
+            var template = GetOrCreateEnemyTemplate(randomizer, placement.Id, Guid.NewGuid(), transform, true);
+            template = template.WithName(template.Name + "_Extra");
+            scene = scene.Add(template);
+        }
+
+        return scene;
+    }
+
+    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger)
+    {
+        var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
+        if (extraEnemyPct == 0)
+            return;
+
+        var extraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
+            .Where(extraEnemy => extraEnemy.Enabled)
+            .GroupBy(extraEnemy => extraEnemy.SceneFile)
+            .ToList();
+
+        logger.Push("Additional enemies");
+        foreach (var enemySceneGroup in extraEnemies)
+        {
+            var scene = enemySceneGroup.Key;
+            logger.Push(scene);
+            randomizer.FileRepository.ModifyScnFile(scene, root =>
+            {
+                var generator = randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
+                foreach (var extraEnemy in enemySceneGroup)
+                {
+                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator);
+                }
+
+                return root;
+            });
+            logger.Pop();
+        }
+
+        logger.Pop();
+    }
+
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
+    {
+        RandomizeEnemies(randomizer, logger);
+        PlaceExtraEnemies(randomizer, logger);
     }
 }
