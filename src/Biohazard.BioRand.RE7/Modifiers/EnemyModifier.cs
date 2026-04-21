@@ -183,6 +183,7 @@ internal class EnemyModifier : Modifier
                     .Add(newSpawnOptions);
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
 
+                originalSpawnInfoComponent.HealthParameter.Health = newEnemy.BaseHealth; // TODO: Apply randomized HP values
                 originalSpawnInfoComponent.UnitAlias = enemyId;
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
