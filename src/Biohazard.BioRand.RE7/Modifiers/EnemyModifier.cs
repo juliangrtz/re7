@@ -16,13 +16,7 @@ internal class EnemyModifier : Modifier
         bool DebugUniqueHp,
         bool IsBalanced,
         bool ProgressiveDifficulty,
-        HealthOptions HealthOptions,
         ScaleOptions ScaleOptions
-    );
-
-    internal record HealthOptions(
-        bool RandomEnemyHealth,
-        bool RandomBossHealth
     );
 
     internal record ScaleOptions(
@@ -56,11 +50,6 @@ internal class EnemyModifier : Modifier
             IsBalanced: randomizer.GetConfigOption<bool>("balanced-enemies"),
             ProgressiveDifficulty: randomizer.GetConfigOption("enemy-health-progressive-difficulty", false),
 
-            HealthOptions: new HealthOptions(
-                RandomEnemyHealth: randomizer.GetConfigOption<bool>("enemy-random-health"),
-                RandomBossHealth: randomizer.GetConfigOption<bool>("boss-random-health")
-            ),
-
             ScaleOptions: new ScaleOptions(
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),
@@ -71,7 +60,6 @@ internal class EnemyModifier : Modifier
 
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
-    private readonly Dictionary<string, (bool IsSafe, string? Reason)> _generatorTemplateCompatibilityCache = new(StringComparer.OrdinalIgnoreCase);
 
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
@@ -145,7 +133,7 @@ internal class EnemyModifier : Modifier
 
     private bool IsGeneratorTemplateSafe(string enemyId, out string? reason)
     {
-        if (enemyId == "Em8001") // Nightmare DLC Jack{
+        if (enemyId == "Em8001") // Nightmare DLC Jack
         {
             reason = "Nightmare Jack is still bugged!";
             return false;
@@ -161,7 +149,8 @@ internal class EnemyModifier : Modifier
         EnemyGeneratorWrapper enemyGenerator,
         IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements,
         EnemyRandomizerOptions options,
-        Rng scaleRng)
+        Rng scaleRng,
+        Rng healthRng)
     {
         var pooledObjects = new List<RszGameObject>();
 
@@ -183,7 +172,7 @@ internal class EnemyModifier : Modifier
                     .Add(newSpawnOptions);
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
 
-                originalSpawnInfoComponent.HealthParameter.Health = newEnemy.BaseHealth; // TODO: Apply randomized HP values
+                originalSpawnInfoComponent.HealthParameter.Health = newEnemy.GetHealth(randomizer, healthRng);
                 originalSpawnInfoComponent.UnitAlias = enemyId;
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
@@ -256,7 +245,8 @@ internal class EnemyModifier : Modifier
         RandomizerLogger logger,
         Rng.Table<IEnemyDefinition> enemyTable,
         EnemyRandomizerOptions options,
-        Rng scaleRng)
+        Rng scaleRng,
+        Rng healthRng)
     {
         logger.Push(area.Path);
 
@@ -297,7 +287,7 @@ internal class EnemyModifier : Modifier
             {
                 foreach (var (generator, replacements) in generatorChanges)
                 {
-                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements, options, scaleRng);
+                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements, options, scaleRng, healthRng);
                 }
                 return scene;
             });
@@ -329,6 +319,9 @@ internal class EnemyModifier : Modifier
     }
 
     private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
+        => RandomizeEnemies(randomizer, logger, options, randomizer.GetRng("modifier/enemy-health"));
+
+    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, Rng healthRng)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
@@ -349,16 +342,18 @@ internal class EnemyModifier : Modifier
         }
 
         var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, scaleRng));
+        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, scaleRng, healthRng));
     }
 
     private (RszGameObject, Guid) AddEnemyToGenerator(
         Randomizer randomizer,
         RszGameObject generator,
         ExtraEnemyPlacement placement,
+        IEnemyDefinition definition,
         via.Transform transform,
         EnemyRandomizerOptions options,
-        Rng scaleRng)
+        Rng scaleRng,
+        Rng healthRng)
     {
         var pool = generator.Children[0];
         var template = GetOrCreateEnemyTemplate(
@@ -373,6 +368,9 @@ internal class EnemyModifier : Modifier
 
         var spawnPoints = pool.Children[0];
         var spawnInfo = GetOrCreateSpawnInfoTemplate(randomizer, placement.Id).Clone();
+        var spawnInfoComponent = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
+        spawnInfoComponent.HealthParameter.Health = definition.GetHealth(randomizer, healthRng);
+        spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
         var spawnInfoGuid = Guid.NewGuid();
         spawnInfo = spawnInfo.AddOrUpdateComponent(transform);
         spawnInfo = spawnInfo.WithGuid(spawnInfoGuid);
@@ -407,7 +405,8 @@ internal class EnemyModifier : Modifier
         ExtraEnemyPlacement placement,
         RszGameObject generator,
         EnemyRandomizerOptions options,
-        Rng scaleRng)
+        Rng scaleRng,
+        Rng healthRng)
     {
         var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
@@ -420,7 +419,7 @@ internal class EnemyModifier : Modifier
 
         if (definition.UsesEnemyGenerator)
         {
-            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, transform, options, scaleRng);
+            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, definition, transform, options, scaleRng, healthRng);
             generator = newGenerator;
             scene = scene.Add(generator);
             scene = scene.Add(CreateFsmGenerator(randomizer, spawnInfoGuid));
@@ -442,7 +441,7 @@ internal class EnemyModifier : Modifier
         return scene;
     }
 
-    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
+    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, Rng healthRng)
     {
         var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
         if (extraEnemyPct == 0)
@@ -465,7 +464,7 @@ internal class EnemyModifier : Modifier
                 var generator = randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
                 foreach (var extraEnemy in enemySceneGroup)
                 {
-                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, scaleRng);
+                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, scaleRng, healthRng);
                 }
 
                 return root;
@@ -479,7 +478,8 @@ internal class EnemyModifier : Modifier
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var options = BuildOptions(randomizer);
-        RandomizeEnemies(randomizer, logger, options);
-        PlaceExtraEnemies(randomizer, logger, options);
+        var healthRng = randomizer.GetRng("modifier/enemy-health");
+        RandomizeEnemies(randomizer, logger, options, healthRng);
+        PlaceExtraEnemies(randomizer, logger, options, healthRng);
     }
 }

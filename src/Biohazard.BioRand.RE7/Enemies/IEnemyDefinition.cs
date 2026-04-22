@@ -17,6 +17,8 @@ public interface IEnemyDefinition
 
     public int BaseHealth { get; }
 
+    public string HealthConfigId => Id;
+
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
@@ -31,8 +33,18 @@ public interface IEnemyDefinition
         => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
 
     internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
-        => (float)rng.NextDouble(
-            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),
-            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-max-{Id.ToLowerInvariant()}")
-       );
+    {
+        var healthPrefix = IsBoss ? "boss" : "enemy";
+        var healthConfigId = HealthConfigId.ToLowerInvariant();
+        var min = randomizer.GetConfigOption<double>($"{healthPrefix}-health-min-{healthConfigId}", 1.0);
+        var max = randomizer.GetConfigOption<double>($"{healthPrefix}-health-max-{healthConfigId}", 1.0);
+        return (float)rng.NextDouble(min, max);
+    }
+
+    internal float GetHealth(Randomizer randomizer, Rng rng)
+    {
+        var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
+        var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
+        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) ? BaseHealth * GetHealthMultiplier(randomizer, rng) : BaseHealth;
+    }
 }
