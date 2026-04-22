@@ -1,0 +1,4 @@
+Enabled,Id,Comment,SceneFile,Chapter,PosX,PosY,PosZ,RotX,RotY,RotZ,RotW
+FALSE,Em4100,Crawler - Debugging,natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20,1,-49,4.88,108,0,0,0,1
+FALSE,Em3000,Jack - Debugging,natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20,1,-47.92,4.99,100.86,0,0,0,1
+FALSE,Em4000,Molded - Debugging,natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,25,0,1,0,0,0,1

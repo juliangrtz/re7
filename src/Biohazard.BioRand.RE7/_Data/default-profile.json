@@ -14,7 +14,7 @@
   "enemy-scale-probability": 0.05,
   "enemy-scale-min": 0.25,
   "enemy-scale-max": 2,
-  "random-enemy-speed": true,
+  "random-enemy-speed": false,
   "enemy-speed-min": 0.5,
   "enemy-speed-max": 2,
   "random-enemy-damage": false,

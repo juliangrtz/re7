@@ -12,6 +12,7 @@ public class RandomizerEnemyDirectiveBehaviorTests
 
         using var result = RandomizerTest.RunState(config =>
         {
+            config["random-enemy-speed"] = true;
             config["enemy-speed-min"] = 2.0;
             config["enemy-speed-max"] = 2.0;
         });

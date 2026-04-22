@@ -29,7 +29,6 @@ public sealed class DynamicData(bool download)
         [DynamicDataName.Enemies] = ("enemies.csv", 2063646676),
         [DynamicDataName.ExtraEnemies] = ("extra_enemies.csv", 2063983386),
         [DynamicDataName.EnemyLimits] = ("enemy_limits.csv", 1254028764),
-        [DynamicDataName.Events] = ("events.csv", 1728585114),
         [DynamicDataName.Messages] = ("messages.csv", 1050646915),
         [DynamicDataName.BirdCages] = ("bird_cages.csv", 1920824337),
         [DynamicDataName.KeyItems] = ("key_items.csv", 91603961),
