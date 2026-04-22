@@ -25,6 +25,27 @@ internal class EnemyModifier : Modifier
         float Max
     );
 
+    internal sealed class EnemyHealthResolver(Randomizer randomizer, EnemyRandomizerOptions options, Rng healthRng)
+    {
+        private readonly HashSet<float> _assignedHealthValues = [];
+
+        public float GetHealth(IEnemyDefinition enemy)
+        {
+            var health = enemy.GetHealth(randomizer, healthRng);
+            if (!options.DebugUniqueHp)
+            {
+                return health;
+            }
+
+            while (!_assignedHealthValues.Add(health))
+            {
+                health += 1f;
+            }
+
+            return health;
+        }
+    }
+
     internal sealed class ExtraEnemyPlacement
     {
         public bool Enabled { get; init; }
@@ -146,11 +167,12 @@ internal class EnemyModifier : Modifier
     private RszScene ProcessGeneratorScene(
         RszScene scene,
         Randomizer randomizer,
+        RandomizerLogger logger,
         EnemyGeneratorWrapper enemyGenerator,
         IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements,
         EnemyRandomizerOptions options,
         Rng scaleRng,
-        Rng healthRng)
+        EnemyHealthResolver healthResolver)
     {
         var pooledObjects = new List<RszGameObject>();
 
@@ -172,13 +194,22 @@ internal class EnemyModifier : Modifier
                     .Add(newSpawnOptions);
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
 
-                originalSpawnInfoComponent.HealthParameter.Health = newEnemy.GetHealth(randomizer, healthRng);
+                var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
+                var assignedHealth = healthResolver.GetHealth(newEnemy);
+                originalSpawnInfoComponent.HealthParameter.Health = assignedHealth;
                 originalSpawnInfoComponent.UnitAlias = enemyId;
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
                     .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);
 
                 scene = scene.UpdateGameObject(originalSpawnInfoGameObject);
+                logger.LogSpawnHealthAssignment(
+                    newEnemy,
+                    assignedHealth,
+                    "generator replacement",
+                    originalSpawnInfoGameObject.Name,
+                    spawnGuid,
+                    $"PreviousAlias={oldUnitAlias}");
 
                 var template = GetOrCreateEnemyTemplate(
                         randomizer,
@@ -246,7 +277,7 @@ internal class EnemyModifier : Modifier
         Rng.Table<IEnemyDefinition> enemyTable,
         EnemyRandomizerOptions options,
         Rng scaleRng,
-        Rng healthRng)
+        EnemyHealthResolver healthResolver)
     {
         logger.Push(area.Path);
 
@@ -287,7 +318,7 @@ internal class EnemyModifier : Modifier
             {
                 foreach (var (generator, replacements) in generatorChanges)
                 {
-                    scene = ProcessGeneratorScene(scene, randomizer, generator, replacements, options, scaleRng, healthRng);
+                    scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements, options, scaleRng, healthResolver);
                 }
                 return scene;
             });
@@ -318,10 +349,7 @@ internal class EnemyModifier : Modifier
         return table;
     }
 
-    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
-        => RandomizeEnemies(randomizer, logger, options, randomizer.GetRng("modifier/enemy-health"));
-
-    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, Rng healthRng)
+    private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, EnemyHealthResolver healthResolver)
     {
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
@@ -342,18 +370,19 @@ internal class EnemyModifier : Modifier
         }
 
         var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, scaleRng, healthRng));
+        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, scaleRng, healthResolver));
     }
 
     private (RszGameObject, Guid) AddEnemyToGenerator(
         Randomizer randomizer,
+        RandomizerLogger logger,
         RszGameObject generator,
         ExtraEnemyPlacement placement,
         IEnemyDefinition definition,
         via.Transform transform,
         EnemyRandomizerOptions options,
         Rng scaleRng,
-        Rng healthRng)
+        EnemyHealthResolver healthResolver)
     {
         var pool = generator.Children[0];
         var template = GetOrCreateEnemyTemplate(
@@ -369,9 +398,10 @@ internal class EnemyModifier : Modifier
         var spawnPoints = pool.Children[0];
         var spawnInfo = GetOrCreateSpawnInfoTemplate(randomizer, placement.Id).Clone();
         var spawnInfoComponent = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-        spawnInfoComponent.HealthParameter.Health = definition.GetHealth(randomizer, healthRng);
-        spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
         var spawnInfoGuid = Guid.NewGuid();
+        var assignedHealth = healthResolver.GetHealth(definition);
+        spawnInfoComponent.HealthParameter.Health = assignedHealth;
+        spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
         spawnInfo = spawnInfo.AddOrUpdateComponent(transform);
         spawnInfo = spawnInfo.WithGuid(spawnInfoGuid);
 
@@ -379,6 +409,14 @@ internal class EnemyModifier : Modifier
 
         pool = pool.AddOrUpdateChild(spawnPoints);
         generator = generator.AddOrUpdateChild(pool);
+
+        logger.LogSpawnHealthAssignment(
+            definition,
+            assignedHealth,
+            "extra placement",
+            spawnInfo.Name,
+            spawnInfoGuid,
+            $"Scene={placement.SceneFile} | Comment={placement.Comment} | Position={placement.PosX}/{placement.PosY}/{placement.PosZ}");
 
         return (generator, spawnInfoGuid);
     }
@@ -406,7 +444,7 @@ internal class EnemyModifier : Modifier
         RszGameObject generator,
         EnemyRandomizerOptions options,
         Rng scaleRng,
-        Rng healthRng)
+        EnemyHealthResolver healthResolver)
     {
         var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
@@ -419,7 +457,7 @@ internal class EnemyModifier : Modifier
 
         if (definition.UsesEnemyGenerator)
         {
-            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, generator, placement, definition, transform, options, scaleRng, healthRng);
+            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, logger, generator, placement, definition, transform, options, scaleRng, healthResolver);
             generator = newGenerator;
             scene = scene.Add(generator);
             scene = scene.Add(CreateFsmGenerator(randomizer, spawnInfoGuid));
@@ -441,7 +479,7 @@ internal class EnemyModifier : Modifier
         return scene;
     }
 
-    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, Rng healthRng)
+    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, EnemyHealthResolver healthResolver)
     {
         var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
         if (extraEnemyPct == 0)
@@ -464,7 +502,7 @@ internal class EnemyModifier : Modifier
                 var generator = randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
                 foreach (var extraEnemy in enemySceneGroup)
                 {
-                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, scaleRng, healthRng);
+                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, scaleRng, healthResolver);
                 }
 
                 return root;
@@ -478,8 +516,13 @@ internal class EnemyModifier : Modifier
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var options = BuildOptions(randomizer);
-        var healthRng = randomizer.GetRng("modifier/enemy-health");
-        RandomizeEnemies(randomizer, logger, options, healthRng);
-        PlaceExtraEnemies(randomizer, logger, options, healthRng);
+        if (options.DebugUniqueHp)
+        {
+            logger.LogUniqueSpawnHpHelp();
+        }
+
+        var healthResolver = new EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
+        RandomizeEnemies(randomizer, logger, options, healthResolver);
+        PlaceExtraEnemies(randomizer, logger, options, healthResolver);
     }
 }
