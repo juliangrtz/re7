@@ -53,7 +53,34 @@ public class EnemyDefinitionHealthTests
     }
 
     [Fact]
-    public void ExtraEnemyPlacements_UseRandomizedHealthForNewSpawnInfos()
+    public void EnemyHealthResolver_DebugUniqueHp_MakesRepeatedHealthValuesDistinct()
+    {
+        using var randomizer = CreateRandomizer(config =>
+        {
+            config["debug-unique-enemy-hp"] = true;
+        });
+
+        var options = new EnemyModifier.EnemyRandomizerOptions(
+            EnemyVariety: 1,
+            MaxPackSize: 1,
+            DebugUniqueHp: true,
+            IsBalanced: false,
+            ProgressiveDifficulty: false,
+            ScaleOptions: new EnemyModifier.ScaleOptions(0.0, 1.0f, 1.0f)
+        );
+        var resolver = new EnemyModifier.EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
+        IEnemyDefinition enemy = EnemyDefinitions.Instance.All.OfType<Molded>().Single();
+
+        var firstHealth = resolver.GetHealth(enemy);
+        var secondHealth = resolver.GetHealth(enemy);
+
+        Assert.Equal(enemy.BaseHealth, firstHealth);
+        Assert.NotEqual(firstHealth, secondHealth);
+        Assert.True(secondHealth > firstHealth);
+    }
+
+    [Fact]
+    public void AddEnemyToGenerator_UsesRandomizedHealthForNewSpawnInfos()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -85,19 +112,22 @@ public class EnemyDefinitionHealthTests
             Rotation = Quaternion.Identity,
             Scale = Vector3.One
         };
+        var healthResolver = new EnemyModifier.EnemyHealthResolver(result.Randomizer, options, result.Randomizer.GetRng("modifier/enemy-health"));
+        var logger = new RandomizerLogger();
 
         var generator = result.Randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
         var invocationResult = addEnemyToGenerator!.Invoke(
             modifier,
             [
                 result.Randomizer,
+                logger,
                 generator,
                 placement,
                 definition,
                 transform,
                 options,
                 result.Randomizer.GetRng("modifier/enemy-scale"),
-                result.Randomizer.GetRng("modifier/enemy-health")
+                healthResolver
             ]);
 
         Assert.NotNull(invocationResult);
