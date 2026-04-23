@@ -8,4 +8,5 @@ public class FileVersions
     public const int RcolFileVersion = 20;
     public const int PfbFileVersion = 17;
     public const int MotlistFileVersion = 524;
+    public const int UvarFileVersion = 2;
 }

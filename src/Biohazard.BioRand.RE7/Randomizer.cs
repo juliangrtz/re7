@@ -193,6 +193,7 @@ internal class Randomizer : IDisposable
             // Misc.
             new ChapterJumpDataModifier(),
             new MessageModifier(),
+            new UvarDefaultsModifier(),
         ];
     }
 

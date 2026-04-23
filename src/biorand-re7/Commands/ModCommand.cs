@@ -1,5 +1,4 @@
-﻿using Biohazard.BioRand.RE7;
-using Spectre.Console.Cli;
+﻿using Spectre.Console.Cli;
 
 namespace Biohazard.BioRand.RE7.Commands;
 

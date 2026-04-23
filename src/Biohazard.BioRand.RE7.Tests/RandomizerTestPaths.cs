@@ -14,5 +14,6 @@ internal static class RandomizerTestPaths
     public static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
     public static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
     public static readonly string BirdCageScenePath = PakPath.SceneFile("environment/scene/chapter3/c03_trailerhouse.scn");
+    public static readonly string GlobalVariablesPath = $"{PakPath.Of("userdata/globalvariables.uvar")}.{FileVersions.UvarFileVersion}";
     public static readonly Guid GuestHouseJumpGuid = new("88045366-0683-481a-8b9a-1d8c59aa048a");
 }

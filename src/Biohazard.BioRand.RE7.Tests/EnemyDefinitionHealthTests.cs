@@ -1,4 +1,3 @@
-using Biohazard.BioRand.RE7;
 using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.Modifiers;
