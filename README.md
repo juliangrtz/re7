@@ -8,11 +8,11 @@
 </p>
 <br>
 
-BioRand 7 is a [cloud randomizer](https://beta-re7.biorand.net/) and mod-generation toolkit for [Resident Evil 7 Biohazard](https://store.steampowered.com/app/418370/Resident_Evil_7_Biohazard/).
+BioRand 7 is a [cloud randomizer](https://beta-re7.biorand.net/) and mod-generation toolkit for [Resident Evil 7 Biohazard](https://store.steampowered.com/app/418370/Resident_Evil_7_Biohazard/) based on the [BioRand infrastructure](https://github.com/biorand).
 
 This repository contains the .NET randomizer library, command-line tools, data-generation utilities, tests, REFramework plugin code, and reverse-engineering notes that support it.
 
-BioRand 7 is a fan-made project and is not affiliated with or endorsed by Capcom. You need a legally owned copy of Resident Evil 7 to use game-derived inputs locally.
+BioRand 7 is a fan-made project and is not affiliated with or endorsed by Capcom. You need a legally owned copy of Resident Evil 7 including all DLCs to use game-derived inputs locally.
 
 ## Status
 
