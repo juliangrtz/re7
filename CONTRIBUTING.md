@@ -1,0 +1,82 @@
+# Contributing
+
+Thanks for helping improve BioRand 7. This project sits close to game binaries, reverse-engineered formats, and progression logic, so small, well-tested changes are much easier to review than broad rewrites.
+
+## Good First Contributions
+
+- Fixing documentation gaps or stale commands.
+- Adding or tightening xUnit tests around an existing randomizer behavior.
+- Improving issue reproduction steps and logs.
+- Correcting data rows when the source and in-game behavior are understood.
+- Small bug fixes in one modifier, service, command, or generator.
+
+Large feature work is welcome too, but please open an issue first so the design and softlock risks can be discussed.
+
+## Development Setup
+
+```powershell
+git clone --recursive https://github.com/juliangrtz/re7.git
+cd re7
+dotnet restore .\biorand-re7.sln
+dotnet build .\biorand-re7.sln --no-restore
+dotnet test .\biorand-re7.sln --no-build --verbosity normal
+```
+
+If you cloned without submodules:
+
+```powershell
+git submodule update --init --recursive
+```
+
+Use .NET 10. Do not retarget projects to an older framework to make a local machine work.
+
+## Pull Request Expectations
+
+- Keep the PR focused on one behavior or one small family of related changes.
+- Include tests for behavior changes where practical.
+- Explain any manual in-game validation you performed, especially for progression, enemies, bosses, inventory, chapters, or REFramework features.
+- Mention generated files explicitly if the PR changes `_Data`, `GeneratedEnums.cs`, `GeneratedTypes.cs`, binary assets, or submodule pointers.
+- Do not commit build outputs, local logs, `GeneratedFiles/`, `TestResults/`, `out/`, `dumps/`, `bin/`, `obj/`, `.vs/`, user settings, or local credentials.
+- Do not submit copyrighted vanilla game dumps or complete original PAK files.
+
+## Code Guidelines
+
+- Follow the existing C# style: nullable enabled, file-scoped namespaces, and local helper/service patterns.
+- Keep randomization deterministic. Use `Randomizer.GetRng(...)` with stable keys instead of time-based or global randomness.
+- Prefer typed RE Engine helpers and serializers over string or byte patching when the project already has a structured API.
+- Treat `Randomizer.GetModifiers()` order as behavior. Changing it can change output and progression.
+- Keep REFramework requirements in sync with `Randomizer.IsREFrameworkRequired()` when adding features that need runtime support.
+- Avoid whole-repo format passes, especially over generated files and `src/reeutils/`.
+
+## Data And Generated Files
+
+Runtime data lives in `src/Biohazard.BioRand.RE7/_Data/` and is embedded into the randomizer assembly. Changes there are production behavior changes.
+
+Common data commands:
+
+```powershell
+dotnet run --project .\src\biorand-re7\biorand-re7.csproj -- update
+dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj -- generate config
+```
+
+Only refresh remote spreadsheet data when that is part of the task. Generated diffs should be easy to explain in the PR.
+
+## Testing Guidance
+
+Use the existing behavior-test helpers:
+
+- `RandomizerTest.CreateFeatureTestConfiguration(...)` disables most features so tests can isolate one behavior.
+- `RandomizerTest.RunState(...)` gives before/after file repositories and changed-file snapshots.
+- `RandomizerTestPaths` and `RandomizerTestHelpers` centralize common paths and scene readers.
+
+Run at least:
+
+```powershell
+dotnet test .\src\Biohazard.BioRand.RE7.Tests\Biohazard.BioRand.RE7.Tests.csproj --verbosity normal
+```
+
+Run the full solution test command before opening larger PRs.
+
+## Reporting Bugs
+
+Use the GitHub issue templates. For crashes and softlocks, attach the randomizer's ZIP output, not the Fluffy mod ZIP, and include the location, seed/profile if known, reproduction steps, and any workaround attempts.
