@@ -12,7 +12,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
 {

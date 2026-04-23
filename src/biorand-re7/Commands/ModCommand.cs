@@ -1,7 +1,7 @@
 ﻿using Biohazard.BioRand.RE7;
 using Spectre.Console.Cli;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class ModCommand : AsyncCommand<ModCommand.Settings>
 {
