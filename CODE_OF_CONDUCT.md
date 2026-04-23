@@ -1,6 +1,6 @@
 # Code Of Conduct
 
-BioRand 7 should be a useful, welcoming place for people working on RE7 modding, reverse engineering, testing, documentation, and randomizer design.
+This should be a useful, welcoming place for people working on BioRand 7, RE7 modding, reverse engineering, testing, documentation, and randomizer design.
 
 ## Expected Behavior
 
