@@ -1,4 +1,3 @@
-using Biohazard.BioRand.RE7;
 using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.BioRand;
 using Spectre.Console;

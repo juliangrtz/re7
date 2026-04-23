@@ -1,6 +1,7 @@
 using Enums.app.GameManager;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
+using IntelOrca.Biohazard.REE.Variables;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -77,6 +78,44 @@ internal static class RandomizerTestHelpers
 
         return states;
     }
+
+    public static List<UvarGroupState> ReadGlobalVariableGroups(RandomizerRunResult result, bool before)
+    {
+        var bytes = before
+            ? result.ReadBeforeBytes(RandomizerTestPaths.GlobalVariablesPath)
+            : result.ReadAfterBytes(RandomizerTestPaths.GlobalVariablesPath);
+        return ReadGlobalVariableGroups(bytes);
+    }
+
+    public static List<UvarGroupState> ReadGlobalVariableGroups(byte[] bytes)
+    {
+        var uvar = new UvarFile(bytes);
+        var result = new List<UvarGroupState>();
+
+        for (int i = 0; i < uvar.EmbeddedCount; i++)
+        {
+            var embeddedFile = uvar.GetEmbedded(i);
+            var variables = embeddedFile
+                .ToBuilder()
+                .Variables
+                .Select(variable => new UvarVariableState(
+                    embeddedFile.Name,
+                    variable.Guid,
+                    variable.Name,
+                    variable.Value,
+                    variable.TypeVal))
+                .ToList();
+
+            result.Add(new UvarGroupState(embeddedFile.Name, variables));
+        }
+
+        return result;
+    }
 }
 
 internal sealed record BirdCageState(Guid ContainerGuid, string ItemId, int ItemCount, int CoinCount);
+internal sealed record UvarGroupState(string Name, IReadOnlyList<UvarVariableState> Variables);
+internal sealed record UvarVariableState(string GroupName, Guid Guid, string Name, float Value, int TypeVal)
+{
+    public bool BooleanValue => Value != 0;
+}

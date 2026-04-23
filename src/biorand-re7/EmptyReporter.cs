@@ -1,6 +1,4 @@
-﻿using Biohazard.BioRand.RE7;
-
-namespace Biohazard.BioRand.RE7;
+﻿namespace Biohazard.BioRand.RE7;
 
 public class EmptyReporter : IProgressReporter
 {

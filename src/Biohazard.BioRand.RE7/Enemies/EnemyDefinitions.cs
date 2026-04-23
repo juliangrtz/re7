@@ -4,23 +4,19 @@ namespace Biohazard.BioRand.RE7.Enemies;
 
 public sealed class EnemyDefinitions
 {
-    private static EnemyDefinitions? _instance;
+    private static readonly Lazy<EnemyDefinitions> _instance = new(Create, isThreadSafe: true);
 
     public List<IEnemyDefinition> All { get; private set; } = [];
     public List<IEnemyDefinition> Bosses { get; private set; } = [];
     public List<IEnemyDefinition> NonBosses { get; private set; } = [];
 
-    public static EnemyDefinitions Instance
+    public static EnemyDefinitions Instance => _instance.Value;
+
+    private static EnemyDefinitions Create()
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new EnemyDefinitions();
-                _instance.Initialize();
-            }
-            return _instance;
-        }
+        var instance = new EnemyDefinitions();
+        instance.Initialize();
+        return instance;
     }
 
     private void Initialize()
