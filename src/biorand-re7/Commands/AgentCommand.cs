@@ -5,7 +5,7 @@ using Spectre.Console.Cli;
 
 using System.ComponentModel;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
 {

@@ -5,7 +5,7 @@ using Spectre.Console.Cli;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
 {
