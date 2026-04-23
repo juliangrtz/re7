@@ -23,6 +23,7 @@ For current design notes and planned work, see:
 - [Roadmap](docs/Roadmap.MD)
 - [Technical notes](docs/Notes.MD)
 - [Enemy spawning notes](docs/enemies/enemy_spawning.md)
+- [Flags, triggers, stats notes](docs/UvarVariables.MD)
 
 ## Features
 
