@@ -58,8 +58,6 @@ dotnet build .\biorand-re7.sln --no-restore
 dotnet test .\biorand-re7.sln --no-build --verbosity normal
 ```
 
-For a focused test pass:
-
 ## Data Workflows
 
 Some runtime data is embedded under `src/Biohazard.BioRand.RE7/_Data/`. Changes there affect generated seeds, not only tests.
@@ -98,6 +96,16 @@ assets/                                       Project assets and bundled mod ass
 Contributions are welcome, especially focused bug fixes, tests, documentation, data corrections, and carefully scoped randomizer improvements.
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md). For issues, use the existing GitHub templates and attach the randomizer ZIP output when reporting crashes or softlocks. Do not attach full vanilla game PAKs, game install dumps, local credentials, or private files.
+
+## Acknowledgements
+
+BioRand 7 would not be possible without a few amazing people and tools:
+
+- [IntelOrca](https://github.com/IntelOrca)'s [BioRand infrastructure](https://github.com/biorand)
+- [Battlezone](https://github.com/seifhassine)'s [REasy](https://github.com/seifhassine/REasy)
+- [kagenocookie](https://github.com/kagenocookie)'s [REE Content Editor](https://github.com/kagenocookie/REE-Content-Editor)
+- [praydog](https://github.com/praydog)'s [RE Framework](https://github.com/praydog/REFramework)
+- [alphaZomega](https://github.com/alphazolam)'s many contributions to RE modding
 
 ## License
 
