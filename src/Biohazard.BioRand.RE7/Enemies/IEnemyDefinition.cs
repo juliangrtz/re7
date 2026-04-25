@@ -37,8 +37,8 @@ public interface IEnemyDefinition
     {
         var healthPrefix = IsBoss ? "boss" : "enemy";
         var healthConfigId = HealthConfigId.ToLowerInvariant();
-        var min = randomizer.GetConfigOption<double>($"{healthPrefix}-health-min-{healthConfigId}", 1.0);
-        var max = randomizer.GetConfigOption<double>($"{healthPrefix}-health-max-{healthConfigId}", 1.0);
+        var min = randomizer.GetConfigOption($"{healthPrefix}-health-min-{healthConfigId}", 1.0);
+        var max = randomizer.GetConfigOption($"{healthPrefix}-health-max-{healthConfigId}", 1.0);
         return (float)rng.NextDouble(min, max);
     }
 
