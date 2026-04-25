@@ -177,11 +177,18 @@ internal class EnemyModifier : Modifier
             {
                 // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
                 var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.StartsWith("app.EnemySpawnInfoOption"));
-                var newSpawnOptions = GetOrCreateSpawnInfoTemplate(randomizer, enemyId).FindComponent(newEnemy.SpawnOptionType!)!;
+                var spawnInfoTemplate = GetOrCreateSpawnInfoTemplate(randomizer, enemyId);
+                var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
+                var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
+                originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
                 originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components
                     .Remove(originalSpawnOptions)
                     .Add(newSpawnOptions);
-                originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
+                if (dlcSpawnOptions != null)
+                {
+                    originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
+                    originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions);
+                }
 
                 var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
                 var assignedHealth = healthResolver.GetHealth(newEnemy);

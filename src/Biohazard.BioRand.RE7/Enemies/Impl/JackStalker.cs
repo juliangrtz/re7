@@ -8,7 +8,7 @@ internal class JackStalker : IEnemyDefinition
 {
     public string Id => "JackStalker";
 
-    public EnemyID EnemyId => EnemyID.Em3000;
+    public EnemyID EnemyId => EnemyID.Em3001;
 
     public EnemyCategory Category => EnemyCategory.Jack;
 
@@ -33,7 +33,7 @@ internal class JackStalker : IEnemyDefinition
     public string OriginalPrefabPath
         => PakPath.SceneFile($"scenes/enemy/em3000.scn");
 
-    public bool UsesEnemyGenerator => false;
+    public bool UsesEnemyGenerator => true;
 
     private readonly List<WeaponID> _availableWeapons = [
         /* Vanilla */ WeaponID.Shovel, WeaponID.Roller, WeaponID.FireAxe, 
@@ -53,7 +53,7 @@ internal class JackStalker : IEnemyDefinition
 internal class JackStalkerDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
-        => enemy.EnemyId == EnemyID.Em3000;
+        => enemy.EnemyId == EnemyID.Em3001;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
