@@ -1,90 +1,93 @@
-Pool,Count1,Item1,Count2,Item2,OutputCount,OutputItem,Comment
-AlwaysEnabled,1,Strong Chem Fluid,1,Strong Chem Fluid,1,Acid Powder,BioRand 7 | Activates unused item Acid Powder
-AlwaysEnabled,1,Chem Fluid,1,Chem Fluid,1,Chilled Chem Fluid,BioRand 7 | Activates unused item Chilled Chem Fluid
-AlwaysEnabled,1,Chem Fluid,1,Strong Chem Fluid,1,Weak Acid,BioRand 7 | Activates unused item Weak Acid
-Easy,20,Enhanced Handgun Ammo,2,Gunpowder,15,Shotgun Shells,BioRand 7 | Easy Pool
-Easy,30,Machine Gun Ammo,20,Handgun Ammo,5,44 MAG Ammo,BioRand 7 | Easy Pool
-Easy,10,Shotgun Shells,2,Gunpowder,5,44 MAG Ammo,BioRand 7 | Easy Pool
-Easy,20,Enhanced Handgun Ammo,1,Strong Chem Fluid,10,44 MAG Ammo,BioRand 7 | Easy Pool
-Easy,1,Neuro Rounds,1,Chem Fluid,3,Flame Rounds,BioRand 7 | Easy Pool
-Easy,1,Flame Rounds,1,Chem Fluid,3,Neuro Rounds,BioRand 7 | Easy Pool
-Easy,1,Knife,1,Chilled Chem Fluid,1,Axe,BioRand 7 | Easy Pool
-Easy,1,Axe,1,Weak Acid,1,Crowbar,BioRand 7 | Easy Pool
-Easy,1,Knife,1,Acid Powder,1,Survival Knife,BioRand 7 | Easy Pool
-Easy,5,Remote Bomb,1,Acid Powder,1,Chainsaw,BioRand 7 | Easy Pool
-Easy,1,G17 Handgun,1,Weak Acid,1,M19 Handgun,BioRand 7 | Easy Pool
-Easy,1,M19 Handgun,1,Weak Acid,1,MPM Handgun,BioRand 7 | Easy Pool
-Easy,1,MPM Handgun,1,Weak Acid,5,Remote Bomb,BioRand 7 | Easy Pool
-Easy,1,Psychostimulants,1,Psychostimulants,1,Herb,BioRand 7 | Easy Pool
-Easy,1,Psychostimulants,1,Herb,1,First Aid Med,BioRand 7 | Easy Pool
-Easy,1,Strong First Aid Med,1,Separating Agent,2,First Aid Med,BioRand 7 | Easy Pool
-Easy,1,First Aid Med,1,First Aid Med,1,Strong First Aid Med,BioRand 7 | Easy Pool
-Easy,1,Strong Chem Fluid,1,First Aid Med,1,Strong First Aid Med,BioRand 7 | Easy Pool
-Easy,1,Acid Powder,1,Acid Powder,1,Steroids,BioRand 7 | Easy Pool
-Easy,1,Stabilizer,1,Stabilizer,1,Steroids,BioRand 7 | Easy Pool
-Easy,1,Chilled Chem Fluid,1,Weak Acid,1,Stabilizer,BioRand 7 | Easy Pool
-Easy,1,Acid Powder,1,Weak Acid,1,Stabilizer,BioRand 7 | Easy Pool
-Easy,1,Chilled Chem Fluid,1,Chilled Chem Fluid,1,Repair Kit,BioRand 7 | Easy Pool
-Balanced,2,Gunpowder,1,Acid Powder,8,Flame Rounds,BioRand 7 | Balanced Pool
-Balanced,2,Gunpowder,1,Weak Acid,6,Neuro Rounds,BioRand 7 | Balanced Pool
-Balanced,20,Machine Gun Ammo,1,Strong Chem Fluid,15,Enhanced Handgun Ammo,BioRand 7 | Balanced Pool
-Balanced,20,Machine Gun Ammo,1,Chem Fluid,15,Handgun Ammo,BioRand 7 | Balanced Pool
-Balanced,1,Solid Fuel,1,Acid Powder,125,Burner Fuel,BioRand 7 | Balanced Pool
-Balanced,2,Solid Fuel,1,Weak Acid,200,Burner Fuel,BioRand 7 | Balanced Pool
-Balanced,1,Herb,1,Separating Agent,1,Supplements,BioRand 7 | Balanced Pool
-Balanced,2,Herb,1,Acid Powder,3,First Aid Med,BioRand 7 | Balanced Pool
-Balanced,1,Strong Chem Fluid,2,Supplements,1,Strong First Aid Med,BioRand 7 | Balanced Pool
-Balanced,1,Chem Fluid,2,Supplements,1,First Aid Med,BioRand 7 | Balanced Pool
-Balanced,1,Acid Powder,2,Strong Chem Fluid,8,Flame Rounds,BioRand 7 | Balanced Pool
-Balanced,1,Weak Acid,1,Chem Fluid,5,Neuro Rounds,BioRand 7 | Balanced Pool
-Balanced,2,Gunpowder,20,Machine Gun Ammo,15,Handgun Ammo,BioRand 7 | Balanced Pool
-Balanced,1,Remote Bomb,1,Strong Chem Fluid,1,Stabilizer,BioRand 7 | Balanced Pool
-Balanced,1,Remote Bomb,1,Acid Powder,1,Steroids,BioRand 7 | Balanced Pool
-Balanced,2,Herb,1,Weak Acid,1,First Aid Med,BioRand 7 | Balanced Pool
-Balanced,1,Separating Agent,1,Supplements,1,Psychostimulants,BioRand 7 | Balanced Pool
-Balanced,1,Separating Agent,1,Herb,1,Strong Chem Fluid,BioRand 7 | Balanced Pool
-Balanced,2,Solid Fuel,1,Strong Chem Fluid,50,Burner Fuel,BioRand 7 | Balanced Pool
-Balanced,50,Machine Gun Ammo,1,Acid Powder,8,Flame Rounds,BioRand 7 | Balanced Pool
-Balanced,10,Enhanced Handgun Ammo,5,Shotgun Shells,3,44 MAG Ammo,BioRand 7 | Balanced Pool
-Chaos,3,Gunpowder,1,Strong Chem Fluid,10,Enhanced Handgun Ammo,BioRand 7 | Chaos Pool
-Chaos,2,Gunpowder,1,Chem Fluid,10,Handgun Ammo,BioRand 7 | Chaos Pool
-Chaos,2,Gunpowder,1,Acid Powder,4,Flame Rounds,BioRand 7 | Chaos Pool
-Chaos,2,Gunpowder,1,Weak Acid,3,Neuro Rounds,BioRand 7 | Chaos Pool
-Chaos,1,Machine Gun Ammo,1,Strong Chem Fluid,6,Enhanced Handgun Ammo,BioRand 7 | Chaos Pool
-Chaos,1,Machine Gun Ammo,1,Acid Powder,4,Flame Rounds,BioRand 7 | Chaos Pool
-Chaos,2,Solid Fuel,1,Strong Chem Fluid,75,Burner Fuel,BioRand 7 | Chaos Pool
-Chaos,2,Solid Fuel,1,Chem Fluid,50,Burner Fuel,BioRand 7 | Chaos Pool
-Chaos,2,Herb,1,Strong Chem Fluid,1,First Aid Med,BioRand 7 | Chaos Pool
-Chaos,1,Herb,1,Acid Powder,1,First Aid Med,BioRand 7 | Chaos Pool
-Chaos,1,Herb,1,Weak Acid,1,Psychostimulants,BioRand 7 | Chaos Pool
-Chaos,1,Supplements,1,Weak Acid,1,Neuro Rounds,BioRand 7 | Chaos Pool
-Chaos,1,Supplements,1,Acid Powder,1,Flame Rounds,BioRand 7 | Chaos Pool
-Chaos,1,Strong First Aid Med,1,Separating Agent,1,Chem Fluid,BioRand 7 | Chaos Pool
-Chaos,1,First Aid Med,1,Strong Chem Fluid,1,Strong First Aid Med,BioRand 7 | Chaos Pool
-Chaos,1,Remote Bomb,1,Chem Fluid,2,44 MAG Ammo,BioRand 7 | Chaos Pool
-Chaos,1,Remote Bomb,1,Weak Acid,4,44 MAG Ammo,BioRand 7 | Chaos Pool
-Chaos,2,Machine Gun Ammo,1,Gunpowder,10,Handgun Ammo,BioRand 7 | Chaos Pool
-Chaos,1,Acid Powder,1,Strong Chem Fluid,4,Neuro Rounds,BioRand 7 | Chaos Pool
-Chaos,1,Weak Acid,1,Strong Chem Fluid,6,Flame Rounds,BioRand 7 | Chaos Pool
-Chaos,1,44 MAG Ammo,10,Enhanced Handgun Ammo,1,Stabilizer,BioRand 7 | Chaos Pool
-Crazy,1,Leg,1,Acid Powder,2,Strong Chem Fluid,BioRand 7 | Crazy Pool
-Crazy,1,Burner Grip,1,Derelict House Footage,1,Driver's License,BioRand 7 | Crazy Pool
-Crazy,1,Axe,1,Stabilizer,1,Psychostimulants,BioRand 7 | Crazy Pool
-Crazy,1,Driver's License,1,Mia,1,Strong Chem Fluid,BioRand 7 | Crazy Pool
-Crazy,1,Derelict House Footage,1,Weak Acid,1,Flame Rounds,BioRand 7 | Crazy Pool
-Crazy,1,Mia,1,Neuro Rounds,1,Happy Birthday,BioRand 7 | Crazy Pool
-Crazy,1,Happy Birthday,1,Chilled Chem Fluid,1,Acid Powder,BioRand 7 | Crazy Pool
-Crazy,1,Strong Chem Fluid,1,Psychostimulants,1,Burner Grip,BioRand 7 | Crazy Pool
-Crazy,1,Flame Rounds,1,Car Key,1,Axe,BioRand 7 | Crazy Pool
-Crazy,1,Neuro Rounds,1,Happy Birthday,1,Crowbar,BioRand 7 | Crazy Pool
-Crazy,1,Crowbar,1,Burner Grip,1,Stabilizer,BioRand 7 | Crazy Pool
-Crazy,1,Chilled Chem Fluid,1,Flame Rounds,1,Weak Acid,BioRand 7 | Crazy Pool
-Crazy,1,Weak Acid,1,Axe,1,Leg,BioRand 7 | Crazy Pool
-Crazy,1,Acid Powder,1,Assault Coin,1,Derelict House Footage,BioRand 7 | Crazy Pool
-Crazy,1,Psychostimulants,1,Crowbar,1,Chilled Chem Fluid,BioRand 7 | Crazy Pool
-Crazy,1,Dirty Coin,1,Dirty Coin,1,Dirty Coin,BioRand 7 | Crazy Pool
-Crazy,1,Car Key,1,Driver's License,1,Assault Coin,BioRand 7 | Crazy Pool
-Crazy,1,Assault Coin,1,Leg,3,Neuro Rounds,BioRand 7 | Crazy Pool
-Crazy,1,Albert-01R,1,Acid Powder,1,Herb,BioRand 7 | Crazy Pool
-Crazy,1,MPM Handgun,1,Separating Agent,10,Gunpowder,BioRand 7 | Crazy Pool
-Crazy,2,44 MAG Ammo,1,Separating Agent,50,Machine Gun Ammo,BioRand 7 | Crazy Pool
+Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
+AlwaysEnabled,1,1,Strong Chem Fluid,1,1,Strong Chem Fluid,1,1,Acid Powder,BioRand 7 | Activates unused item Acid Powder
+AlwaysEnabled,1,1,Chem Fluid,1,1,Chem Fluid,1,1,Chilled Chem Fluid,BioRand 7 | Activates unused item Chilled Chem Fluid
+AlwaysEnabled,1,1,Chem Fluid,1,1,Strong Chem Fluid,1,1,Weak Acid,BioRand 7 | Activates unused item Weak Acid
+AlwaysEnabled,7,9,Antique Coin,1,1,Acid Powder,1,1,Lock Pick,BioRand 7 | Ensures the ability to get lock picks
+Easy,20,20,Enhanced Handgun Ammo,2,2,Gunpowder,15,15,Shotgun Shells,BioRand 7 | Easy Pool
+Easy,30,30,Machine Gun Ammo,20,20,Handgun Ammo,5,5,44 MAG Ammo,BioRand 7 | Easy Pool
+Easy,10,10,Shotgun Shells,2,2,Gunpowder,5,5,44 MAG Ammo,BioRand 7 | Easy Pool
+Easy,20,20,Enhanced Handgun Ammo,1,1,Strong Chem Fluid,10,10,44 MAG Ammo,BioRand 7 | Easy Pool
+Easy,1,1,Neuro Rounds,1,1,Chem Fluid,3,3,Flame Rounds,BioRand 7 | Easy Pool
+Easy,1,1,Flame Rounds,1,1,Chem Fluid,3,3,Neuro Rounds,BioRand 7 | Easy Pool
+Easy,1,1,Knife,1,1,Chilled Chem Fluid,1,1,Axe,BioRand 7 | Easy Pool
+Easy,1,1,Axe,1,1,Weak Acid,1,1,Crowbar,BioRand 7 | Easy Pool
+Easy,1,1,Knife,1,1,Acid Powder,1,1,Survival Knife,BioRand 7 | Easy Pool
+Easy,5,5,Remote Bomb,1,1,Acid Powder,1,1,Chainsaw,BioRand 7 | Easy Pool
+Easy,1,1,G17 Handgun,1,1,Weak Acid,1,1,M19 Handgun,BioRand 7 | Easy Pool
+Easy,1,1,M19 Handgun,1,1,Weak Acid,1,1,MPM Handgun,BioRand 7 | Easy Pool
+Easy,1,1,MPM Handgun,1,1,Weak Acid,5,5,Remote Bomb,BioRand 7 | Easy Pool
+Easy,1,1,Psychostimulants,1,1,Psychostimulants,1,1,Herb,BioRand 7 | Easy Pool
+Easy,1,1,Psychostimulants,1,1,Herb,1,1,First Aid Med,BioRand 7 | Easy Pool
+Easy,1,1,Strong First Aid Med,1,1,Separating Agent,2,2,First Aid Med,BioRand 7 | Easy Pool
+Easy,1,1,First Aid Med,1,1,First Aid Med,1,1,Strong First Aid Med,BioRand 7 | Easy Pool
+Easy,1,1,Strong Chem Fluid,1,1,First Aid Med,1,1,Strong First Aid Med,BioRand 7 | Easy Pool
+Easy,1,1,Acid Powder,1,1,Acid Powder,1,1,Steroids,BioRand 7 | Easy Pool
+Easy,1,1,Stabilizer,1,1,Stabilizer,1,1,Steroids,BioRand 7 | Easy Pool
+Easy,1,1,Chilled Chem Fluid,1,1,Weak Acid,1,1,Stabilizer,BioRand 7 | Easy Pool
+Easy,1,1,Acid Powder,1,1,Weak Acid,1,1,Stabilizer,BioRand 7 | Easy Pool
+Easy,1,1,Chilled Chem Fluid,1,1,Chilled Chem Fluid,1,1,Repair Kit,BioRand 7 | Easy Pool
+Balanced,2,2,Gunpowder,1,1,Acid Powder,4,6,Flame Rounds,BioRand 7 | Balanced Pool
+Balanced,2,2,Gunpowder,1,1,Weak Acid,4,6,Neuro Rounds,BioRand 7 | Balanced Pool
+Balanced,40,40,Machine Gun Ammo,1,1,Acid Powder,5,8,Enhanced Handgun Ammo,BioRand 7 | Balanced Pool
+Balanced,20,20,Machine Gun Ammo,1,1,Chem Fluid,15,15,Handgun Ammo,BioRand 7 | Balanced Pool
+Balanced,1,1,Solid Fuel,1,1,Acid Powder,125,125,Burner Fuel,BioRand 7 | Balanced Pool
+Balanced,2,2,Solid Fuel,1,1,Weak Acid,200,200,Burner Fuel,BioRand 7 | Balanced Pool
+Balanced,1,1,Herb,1,1,Separating Agent,1,1,Supplements,BioRand 7 | Balanced Pool
+Balanced,2,2,Herb,1,1,Acid Powder,3,3,First Aid Med,BioRand 7 | Balanced Pool
+Balanced,1,1,Strong Chem Fluid,2,2,Supplements,1,1,Strong First Aid Med,BioRand 7 | Balanced Pool
+Balanced,1,1,Chem Fluid,2,2,Supplements,1,1,First Aid Med,BioRand 7 | Balanced Pool
+Balanced,1,1,Acid Powder,2,2,Strong Chem Fluid,6,8,Flame Rounds,BioRand 7 | Balanced Pool
+Balanced,1,1,Weak Acid,1,1,Strong Chem Fluid,4,6,Neuro Rounds,BioRand 7 | Balanced Pool
+Balanced,2,2,Gunpowder,20,20,Machine Gun Ammo,15,15,Handgun Ammo,BioRand 7 | Balanced Pool
+Balanced,1,1,Remote Bomb,1,1,Strong Chem Fluid,1,1,Stabilizer,BioRand 7 | Balanced Pool
+Balanced,1,1,Remote Bomb,1,1,Acid Powder,1,1,Steroids,BioRand 7 | Balanced Pool
+Balanced,2,2,Herb,1,1,Weak Acid,1,1,First Aid Med,BioRand 7 | Balanced Pool
+Balanced,1,1,Separating Agent,1,1,Supplements,1,1,Psychostimulants,BioRand 7 | Balanced Pool
+Balanced,2,2,Solid Fuel,1,1,Strong Chem Fluid,100,200,Burner Fuel,BioRand 7 | Balanced Pool
+Balanced,10,10,Enhanced Handgun Ammo,5,5,Shotgun Shells,3,3,44 MAG Ammo,BioRand 7 | Balanced Pool
+Balanced,20,25,Handgun Ammo,1,1,Chilled Chem Fluid,4,6,Shotgun Shells,BioRand 7 | Balanced Pool
+Balanced,5,5,Shotgun Shells,1,1,Separating Agent,1,1,Chilled Chem Fluid,BioRand 7 | Balanced Pool
+Balanced,20,25,Handgun Ammo,1,1,Chem Fluid,30,40,Machine Gun Ammo,BioRand 7 | Balanced Pool
+Balanced,15,20,Enhanced Handgun Ammo,1,1,Acid Powder,1,1,Remote Bomb,BioRand 7 | Balanced Pool
+Chaos,3,3,Gunpowder,1,1,Strong Chem Fluid,10,10,Enhanced Handgun Ammo,BioRand 7 | Chaos Pool
+Chaos,2,2,Gunpowder,1,1,Chem Fluid,10,10,Handgun Ammo,BioRand 7 | Chaos Pool
+Chaos,2,2,Gunpowder,1,1,Acid Powder,4,4,Flame Rounds,BioRand 7 | Chaos Pool
+Chaos,2,2,Gunpowder,1,1,Weak Acid,3,3,Neuro Rounds,BioRand 7 | Chaos Pool
+Chaos,1,1,Machine Gun Ammo,1,1,Strong Chem Fluid,6,6,Enhanced Handgun Ammo,BioRand 7 | Chaos Pool
+Chaos,1,1,Machine Gun Ammo,1,1,Acid Powder,4,4,Flame Rounds,BioRand 7 | Chaos Pool
+Chaos,2,2,Solid Fuel,1,1,Strong Chem Fluid,75,75,Burner Fuel,BioRand 7 | Chaos Pool
+Chaos,2,2,Solid Fuel,1,1,Chem Fluid,50,50,Burner Fuel,BioRand 7 | Chaos Pool
+Chaos,2,2,Herb,1,1,Strong Chem Fluid,1,1,First Aid Med,BioRand 7 | Chaos Pool
+Chaos,1,1,Herb,1,1,Acid Powder,1,1,First Aid Med,BioRand 7 | Chaos Pool
+Chaos,1,1,Herb,1,1,Weak Acid,1,1,Psychostimulants,BioRand 7 | Chaos Pool
+Chaos,1,1,Supplements,1,1,Weak Acid,1,1,Neuro Rounds,BioRand 7 | Chaos Pool
+Chaos,1,1,Supplements,1,1,Acid Powder,1,1,Flame Rounds,BioRand 7 | Chaos Pool
+Chaos,1,1,Strong First Aid Med,1,1,Separating Agent,1,1,Chem Fluid,BioRand 7 | Chaos Pool
+Chaos,1,1,First Aid Med,1,1,Strong Chem Fluid,1,1,Strong First Aid Med,BioRand 7 | Chaos Pool
+Chaos,1,1,Remote Bomb,1,1,Chem Fluid,2,2,44 MAG Ammo,BioRand 7 | Chaos Pool
+Chaos,1,1,Remote Bomb,1,1,Weak Acid,4,4,44 MAG Ammo,BioRand 7 | Chaos Pool
+Chaos,2,2,Machine Gun Ammo,1,1,Gunpowder,10,10,Handgun Ammo,BioRand 7 | Chaos Pool
+Chaos,1,1,Acid Powder,1,1,Strong Chem Fluid,4,4,Neuro Rounds,BioRand 7 | Chaos Pool
+Chaos,1,1,Weak Acid,1,1,Strong Chem Fluid,6,6,Flame Rounds,BioRand 7 | Chaos Pool
+Chaos,1,1,44 MAG Ammo,10,10,Enhanced Handgun Ammo,1,1,Stabilizer,BioRand 7 | Chaos Pool
+Crazy,1,1,Leg,1,1,Acid Powder,2,2,Strong Chem Fluid,BioRand 7 | Crazy Pool
+Crazy,1,1,Burner Grip,1,1,Derelict House Footage,1,1,Driver's License,BioRand 7 | Crazy Pool
+Crazy,1,1,Axe,1,1,Stabilizer,1,1,Psychostimulants,BioRand 7 | Crazy Pool
+Crazy,1,1,Driver's License,1,1,Mia,1,1,Strong Chem Fluid,BioRand 7 | Crazy Pool
+Crazy,1,1,Derelict House Footage,1,1,Weak Acid,1,1,Flame Rounds,BioRand 7 | Crazy Pool
+Crazy,1,1,Mia,1,1,Neuro Rounds,1,1,Happy Birthday,BioRand 7 | Crazy Pool
+Crazy,1,1,Happy Birthday,1,1,Chilled Chem Fluid,1,1,Acid Powder,BioRand 7 | Crazy Pool
+Crazy,1,1,Strong Chem Fluid,1,1,Psychostimulants,1,1,Burner Grip,BioRand 7 | Crazy Pool
+Crazy,1,1,Flame Rounds,1,1,Car Key,1,1,Axe,BioRand 7 | Crazy Pool
+Crazy,1,1,Neuro Rounds,1,1,Happy Birthday,1,1,Crowbar,BioRand 7 | Crazy Pool
+Crazy,1,1,Crowbar,1,1,Burner Grip,1,1,Stabilizer,BioRand 7 | Crazy Pool
+Crazy,1,1,Chilled Chem Fluid,1,1,Flame Rounds,1,1,Weak Acid,BioRand 7 | Crazy Pool
+Crazy,1,1,Weak Acid,1,1,Axe,1,1,Leg,BioRand 7 | Crazy Pool
+Crazy,1,1,Acid Powder,1,1,Assault Coin,1,1,Derelict House Footage,BioRand 7 | Crazy Pool
+Crazy,1,1,Psychostimulants,1,1,Crowbar,1,1,Chilled Chem Fluid,BioRand 7 | Crazy Pool
+Crazy,1,1,Dirty Coin,1,1,Dirty Coin,1,1,Dirty Coin,BioRand 7 | Crazy Pool
+Crazy,1,1,Car Key,1,1,Driver's License,1,1,Assault Coin,BioRand 7 | Crazy Pool
+Crazy,1,1,Assault Coin,1,1,Leg,3,3,Neuro Rounds,BioRand 7 | Crazy Pool
+Crazy,1,1,Albert-01R,1,1,Acid Powder,1,1,Herb,BioRand 7 | Crazy Pool
+Crazy,1,1,MPM Handgun,1,1,Separating Agent,10,10,Gunpowder,BioRand 7 | Crazy Pool
+Crazy,2,2,44 MAG Ammo,1,1,Separating Agent,50,50,Machine Gun Ammo,BioRand 7 | Crazy Pool

@@ -1,7 +1,6 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
-using BioHazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Package;

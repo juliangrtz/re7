@@ -1,9 +1,9 @@
-﻿using BioHazard.BioRand.RE7.Commands;
+﻿using Biohazard.BioRand.RE7.Commands;
 using Spectre.Console.Cli;
 using System.Reflection;
 using System.Text;
 
-namespace BioHazard.BioRand.RE7;
+namespace Biohazard.BioRand.RE7;
 
 internal class Program
 {

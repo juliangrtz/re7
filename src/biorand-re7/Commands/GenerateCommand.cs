@@ -1,4 +1,3 @@
-using Biohazard.BioRand.RE7;
 using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.BioRand;
 using Spectre.Console;
@@ -12,7 +11,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
 {

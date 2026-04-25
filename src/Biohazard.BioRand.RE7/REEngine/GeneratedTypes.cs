@@ -3553,3 +3553,26 @@ namespace app
         }
     }
 }
+
+namespace app
+{
+    public class EquipManager
+    {
+        public bool Enabled { get; set; } = new();
+        public Enums.app.WeaponID EquipWeaponIdRight { get; set; }
+        public Enums.app.WeaponID EquipWeaponIdLeft { get; set; }
+        public System.Collections.Generic.List<via.Prefab> WeaponPrefabs { get; set; } = [];
+        public bool HasDebugHandLight { get; set; }
+        public class EquipWeaponChangeDelegate
+        {
+        }
+    }
+    public class CH9PlayerEquipManager : EquipManager
+    {
+        public Enums.app.CH9PlayerEquipManager.WwiseSwitchListForEquipGauntlet wwiseSwitchListForEquipGauntlet { get; set; }
+        public class WwiseSwitchListForEquipGauntlet
+        {
+            public int value__ { get; set; }
+        }
+    }
+}

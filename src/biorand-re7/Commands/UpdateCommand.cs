@@ -2,7 +2,7 @@
 using Spectre.Console;
 using Spectre.Console.Cli;
 
-namespace BioHazard.BioRand.RE7.Commands;
+namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings>
 {

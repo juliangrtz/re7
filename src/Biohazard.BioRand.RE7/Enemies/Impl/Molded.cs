@@ -44,6 +44,8 @@ internal class MoldedBlade : IEnemyDefinition
 
     public int BaseHealth => 3000;
 
+    public string HealthConfigId => "Molded";
+
     public List<string> RcolPaths => [PakPath.RcolFile("collision/collider/enemy/em4000/em4000.rcol")];
 
     public string DirectivesHolderPath

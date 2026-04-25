@@ -1,4 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
+using Enums.app;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
@@ -6,7 +8,7 @@ internal class JackStalker : IEnemyDefinition
 {
     public string Id => "JackStalker";
 
-    public EnemyID EnemyId => EnemyID.Em3000;
+    public EnemyID EnemyId => EnemyID.Em3001;
 
     public EnemyCategory Category => EnemyCategory.Jack;
 
@@ -31,13 +33,27 @@ internal class JackStalker : IEnemyDefinition
     public string OriginalPrefabPath
         => PakPath.SceneFile($"scenes/enemy/em3000.scn");
 
-    public bool UsesEnemyGenerator => false;
+    public bool UsesEnemyGenerator => true;
+
+    private readonly List<WeaponID> _availableWeapons = [
+        /* Vanilla */ WeaponID.Shovel, WeaponID.Roller, WeaponID.FireAxe, 
+        /* Modded */ WeaponID.ChainSaw
+    ];
+
+    public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template)
+    {
+        var equipManager = template.FindComponent<app.EquipManager>()!;
+        equipManager.EquipWeaponIdRight = rng.Next(_availableWeapons);
+        //equipManager.EquipWeaponIdLeft = rng.Next(_availableWeapons);
+        template = template.AddOrUpdateComponent(equipManager);
+        return template;
+    }
 }
 
 internal class JackStalkerDirectiveModifier : IDirectiveModifier
 {
     public bool Supports(IEnemyDefinition enemy)
-        => enemy.EnemyId == EnemyID.Em3000;
+        => enemy.EnemyId == EnemyID.Em3001;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {

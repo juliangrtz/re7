@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IntelOrca.Biohazard.REE.Rsz;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
@@ -17,6 +18,8 @@ public interface IEnemyDefinition
 
     public int BaseHealth { get; }
 
+    public string HealthConfigId => Id;
+
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
@@ -24,15 +27,27 @@ public interface IEnemyDefinition
 
     public bool UsesEnemyGenerator { get; }
 
-    public bool IsMolded =>
-        Category == EnemyCategory.Molded;
+    public bool IsMolded => Category == EnemyCategory.Molded;
 
-    public string? SpawnOptionType
-        => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+    public string? SpawnOptionType => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+
+    public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template) => template;
 
     internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
-        => (float)rng.NextDouble(
-            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-min-{Id.ToLowerInvariant()}"),
-            randomizer.GetConfigOption<double>($"{(IsBoss ? "boss" : "enemy")}-health-max-{Id.ToLowerInvariant()}")
-       );
+    {
+        var healthPrefix = IsBoss ? "boss" : "enemy";
+        var healthConfigId = HealthConfigId.ToLowerInvariant();
+        var min = randomizer.GetConfigOption($"{healthPrefix}-health-min-{healthConfigId}", 1.0);
+        var max = randomizer.GetConfigOption($"{healthPrefix}-health-max-{healthConfigId}", 1.0);
+        return (float)rng.NextDouble(min, max);
+    }
+
+    internal float GetHealth(Randomizer randomizer, Rng rng)
+    {
+        var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
+        var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
+        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) 
+            ? BaseHealth * GetHealthMultiplier(randomizer, rng) 
+            : BaseHealth;
+    }
 }

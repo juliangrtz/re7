@@ -5,7 +5,7 @@ public enum EnemyID
 {
     Em2000 = 0,
     Em2000Chapter4 = 1,
-    Em3000 = 2,
+    Em3001 = 2,
     Em3100 = 3,
     Em3300 = 4,
     Em3600 = 5,

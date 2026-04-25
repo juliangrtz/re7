@@ -7,7 +7,7 @@ Wait, wrong game!"
 ,,,"It's okay ${user.name}, get up and try again!"
 ,,,Thank you for playing BioRand 7!
 ,,,Orcas are the largest member of the dolphin family.
-,,,"A male orca can be nearly ten metres in length and weight 10,000kg."
+,,,"A male orca can be nearly ten metres in length and weigh 10,000kg."
 ,,,Orcas are highly intelligent and able to coordinate hunting tactics.
 ,,,Female orcas are thought to live to 80 years of age or more.
 ,,,The dorsal fin of a male orca is up to two metres tall.
@@ -51,7 +51,7 @@ I did lie to you. I shouldn't have, but—<PAGE>
 All I can say is that if you get this...<PAGE>
 Stay away.
 ","<TIME 5.35, 6.22><TIME 7.07, 11.05><TIME 11.17, 15.05><TIME 19.00, 22.27><TIME 23.16, 25.24><TIME 27.05, 29><TIME 31.03, 32.11><TIME 32.19, 34.25><TIME 34.26, 37.1><TIME 38.15, 40><TIME 54.02, 55.09><TIME 58, 59><TIME 59.28, 62.05><TIME 64.15, 67.23><TIME 71, 73>Hey ${user.name}!<PAGE>
-★ Welcome to <COLOR FF0000>B</COLOR>ioRand <COLOR FF0000>VII</COLOR>! ★<PAGE>
+★ Welcome to <COLOR FF0000>B</COLOR>ioRand VII! ★<PAGE>
 Nothing is where you expect it to be.<PAGE>
 Items, enemies...—<PAGE>
 All scrambled.<PAGE>
