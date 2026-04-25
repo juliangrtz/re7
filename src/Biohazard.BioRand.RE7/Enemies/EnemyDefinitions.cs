@@ -32,7 +32,7 @@ public sealed class EnemyDefinitions
             new JackStalker(),
             new MargeMutated(),
             //new MargeStalker(),
-            new MiaChainsaw(),
+            //new MiaChainsaw(),
             //new MiaKnife(),
             new Impl.Molded(),
             new MoldedBlade(),
