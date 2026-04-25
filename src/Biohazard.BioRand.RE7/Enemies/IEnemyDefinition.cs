@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IntelOrca.Biohazard.REE.Rsz;
+using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
@@ -26,11 +27,11 @@ public interface IEnemyDefinition
 
     public bool UsesEnemyGenerator { get; }
 
-    public bool IsMolded =>
-        Category == EnemyCategory.Molded;
+    public bool IsMolded => Category == EnemyCategory.Molded;
 
-    public string? SpawnOptionType
-        => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+    public string? SpawnOptionType => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+
+    public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template) => template;
 
     internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
     {
@@ -45,6 +46,8 @@ public interface IEnemyDefinition
     {
         var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
         var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
-        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) ? BaseHealth * GetHealthMultiplier(randomizer, rng) : BaseHealth;
+        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) 
+            ? BaseHealth * GetHealthMultiplier(randomizer, rng) 
+            : BaseHealth;
     }
 }
