@@ -1,4 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
+using Enums.app;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
@@ -32,6 +34,20 @@ internal class JackStalker : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/em3000.scn");
 
     public bool UsesEnemyGenerator => false;
+
+    private readonly List<WeaponID> _availableWeapons = [
+        /* Vanilla */ WeaponID.Shovel, WeaponID.Roller, WeaponID.FireAxe, 
+        /* Modded */ WeaponID.ChainSaw
+    ];
+
+    public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template)
+    {
+        var equipManager = template.FindComponent<app.EquipManager>()!;
+        equipManager.EquipWeaponIdRight = rng.Next(_availableWeapons);
+        //equipManager.EquipWeaponIdLeft = rng.Next(_availableWeapons);
+        template = template.AddOrUpdateComponent(equipManager);
+        return template;
+    }
 }
 
 internal class JackStalkerDirectiveModifier : IDirectiveModifier
