@@ -17,13 +17,6 @@ internal class ItemModifier : Modifier
 
     private const int PreferredHealingDropProbability = 50; // TODO Config?
 
-    private Vector3 RandomizeScale(Rng rng)
-    {
-        float[] allowedScales = [0.5f, 0.75f, 1f, 1.25f, 1.5f];
-        var chosen = rng.Next(allowedScales);
-        return new Vector3(chosen, chosen, chosen);
-    }
-
     private RszScene AddExtraChest(
         RszScene scene,
         Randomizer randomizer,
@@ -52,25 +45,6 @@ internal class ItemModifier : Modifier
         {
             isFake = true;
             template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName).Clone();
-            var fsm = template.FindComponent<via.fsm.Fsm>()!;
-            foreach (var action in fsm.SceneData[0].v1_Actions)
-            {
-                if (action is app.fsm.PartsEnable partsEnable && partsEnable.GameObjSet.GameObj == template.Guid)
-                {
-                    partsEnable.GameObjSet.GameObj = newGuid;
-                }
-                else if (action is app.fsm.CollidersEnable collidersEnable && collidersEnable.GameObjSet.GameObj == template.Guid)
-                {
-                    collidersEnable.GameObjSet.GameObj = newGuid;
-                }
-            }
-
-            template = template.AddOrUpdateComponent(fsm);
-
-            var oilcan = template.FindComponent<app.Oilcan>()!;
-            oilcan.FsmObject = newGuid;
-            oilcan.DisableLucasMessage = true;
-            template = template.AddOrUpdateComponent(oilcan);
         }
         else
         {
@@ -81,13 +55,12 @@ internal class ItemModifier : Modifier
             template = template.AddOrUpdateComponent(itemDropDestruct);
         }
 
-        template = template.WithGuid(placement.Guid != Guid.Empty ? placement.Guid : newGuid);
+        //template = template.WithGuid(placement.Guid != Guid.Empty ? placement.Guid : newGuid);
         //template = template.WithName("sm9133_BreakableVLongBox01A_RigidBodyDestruction");
 
         var transform = template.FindComponent<via.Transform>()!;
         transform.Position = placement.Position;
-        transform.Rotation = new Quaternion(0, 0, 0, 1);
-        transform.Scale = RandomizeScale(rng);
+        transform.Scale = Vector3.One;
         template = template.AddOrUpdateComponent(transform);
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
