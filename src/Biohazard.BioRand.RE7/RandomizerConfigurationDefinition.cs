@@ -145,7 +145,6 @@ internal static class RandomizerConfigurationDefinition
             Max = enemyCount,
             Step = 1,
             Default = enemyCount,
-            Advanced = true
         });
 
         group.Items.Add(new GroupItem()
@@ -158,8 +157,7 @@ internal static class RandomizerConfigurationDefinition
             Min = 1,
             Max = 10,
             Step = 1,
-            Default = 6,
-            Advanced = true
+            Default = 1,
         });
 
         // TODO
