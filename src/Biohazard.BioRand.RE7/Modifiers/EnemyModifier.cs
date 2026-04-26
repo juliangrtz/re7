@@ -81,6 +81,11 @@ internal class EnemyModifier : Modifier
 
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
+    private readonly List<Guid> _barnFightMoldeds = [
+        new Guid("3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5"),
+        new Guid("7ae3d438-f9cb-49da-9a60-00435b946a59"),
+    ];
+    private Rng.Table<IEnemyDefinition>? _bossTable = null;
 
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
@@ -294,6 +299,9 @@ internal class EnemyModifier : Modifier
                 if (!component.Enabled)
                     continue;
 
+                if (_barnFightMoldeds.Contains(spawnInfo.Guid))
+                    continue;
+
                 var replacement = enemyTable.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
@@ -336,6 +344,20 @@ internal class EnemyModifier : Modifier
         }
 
         return table;
+    }
+
+    private IEnemyDefinition GetRandomBoss(Rng rng)
+    {
+        if (_bossTable == null)
+        {
+            _bossTable = new Rng.Table<IEnemyDefinition>(rng);
+            foreach (var boss in EnemyDefinitions.Instance.Bosses)
+            {
+                _bossTable.Add(boss, 0.5d);
+            }
+        }
+
+        return _bossTable.Next();
     }
 
     private void RandomizeEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, EnemyHealthResolver healthResolver)

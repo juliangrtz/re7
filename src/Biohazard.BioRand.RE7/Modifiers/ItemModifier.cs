@@ -13,7 +13,7 @@ internal class ItemModifier : Modifier
     private const string FakeItemBoxGameObjectName = "ItemBox_Fake";
 
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private readonly static HashSet<Guid> _birdCageGuids = new(BirdCageModifier.Guids);
+    private readonly static HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
 
     private const int PreferredHealingDropProbability = 50; // TODO Config?
 
@@ -148,7 +148,7 @@ internal class ItemModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         Rng rng,
-        IReadOnlyList<ItemPlacement> placements,
+        List<ItemPlacement> placements,
         RandomItemSettings randomItemSettings,
         bool allowExtraItems,
         bool allowExtraCrates)
