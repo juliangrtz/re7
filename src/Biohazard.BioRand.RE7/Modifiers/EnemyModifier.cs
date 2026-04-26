@@ -10,6 +10,11 @@ internal class EnemyModifier : Modifier
 {
     private const string RandomizerKey = "modifier/enemies";
 
+    internal sealed record EnemyTableEntry(
+        IEnemyDefinition Enemy,
+        double Weight
+    );
+
     internal record EnemyRandomizerOptions(
         int EnemyVariety,
         int MaxPackSize,
@@ -43,6 +48,49 @@ internal class EnemyModifier : Modifier
             }
 
             return health;
+        }
+    }
+
+    internal sealed class EnemyPackSelector
+    {
+        private readonly ImmutableArray<EnemyTableEntry> _enemyPool;
+        private readonly int _maxPackSize;
+        private readonly Rng _rng;
+        private IEnemyDefinition? _currentEnemy;
+        private int _remainingPackSize;
+
+        public EnemyPackSelector(IEnumerable<EnemyTableEntry> enemyPool, int maxPackSize, Rng rng)
+        {
+            _enemyPool = [.. enemyPool];
+            _maxPackSize = Math.Max(1, maxPackSize);
+            _rng = rng;
+        }
+
+        public IEnemyDefinition Next()
+        {
+            if (_currentEnemy == null || _remainingPackSize == 0)
+            {
+                _currentEnemy = ChooseNextEnemy();
+                _remainingPackSize = _rng.Next(1, _maxPackSize + 1);
+            }
+
+            _remainingPackSize--;
+            return _currentEnemy;
+        }
+
+        private IEnemyDefinition ChooseNextEnemy()
+        {
+            if (_enemyPool.IsDefaultOrEmpty)
+                throw new InvalidOperationException("Cannot choose an enemy from an empty pack selector.");
+
+            if (_enemyPool.Length == 1 || _currentEnemy == null)
+                return ChooseWeightedEnemy(_enemyPool, _rng);
+
+            var candidates = _enemyPool
+                .Where(entry => entry.Enemy != _currentEnemy)
+                .ToImmutableArray();
+
+            return ChooseWeightedEnemy(candidates, _rng);
         }
     }
 
@@ -81,14 +129,70 @@ internal class EnemyModifier : Modifier
 
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
-    private readonly List<Guid> _barnFightMoldeds = [
+    private static readonly HashSet<Guid> _barnFightMoldeds = [
         new Guid("3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5"),
         new Guid("7ae3d438-f9cb-49da-9a60-00435b946a59"),
     ];
     private Rng.Table<IEnemyDefinition>? _bossTable = null;
 
+    internal static bool ShouldReplaceSpawnInfo(RszGameObject spawnInfoGameObject)
+    {
+        var component = spawnInfoGameObject.FindComponent<app.EnemySpawnInfo>();
+        return component?.Enabled == true
+            && !_barnFightMoldeds.Contains(spawnInfoGameObject.Guid);
+    }
+
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
+
+    private static IEnemyDefinition ChooseWeightedEnemy(
+        IReadOnlyList<EnemyTableEntry> enemyPool,
+        Rng rng)
+    {
+        if (enemyPool.Count == 0)
+            throw new InvalidOperationException("No enemy entries are available.");
+
+        if (enemyPool.Count == 1)
+            return enemyPool[0].Enemy;
+
+        var totalWeight = enemyPool.Sum(entry => entry.Weight);
+        var roll = rng.NextDouble(0, totalWeight);
+        var cumulativeWeight = 0.0;
+
+        for (var i = 0; i < enemyPool.Count - 1; i++)
+        {
+            cumulativeWeight += enemyPool[i].Weight;
+            if (roll < cumulativeWeight)
+                return enemyPool[i].Enemy;
+        }
+
+        return enemyPool[^1].Enemy;
+    }
+
+    internal static ImmutableArray<EnemyTableEntry> SelectAreaEnemyPool(
+        IReadOnlyList<EnemyTableEntry> enemyPool,
+        int enemyVariety,
+        Rng rng)
+    {
+        if (enemyPool.Count == 0)
+            return [];
+
+        var desiredCount = Math.Clamp(enemyVariety, 1, enemyPool.Count);
+        if (desiredCount >= enemyPool.Count)
+            return [.. enemyPool];
+
+        var remainingEntries = enemyPool.ToList();
+        var selectedEntries = ImmutableArray.CreateBuilder<EnemyTableEntry>(desiredCount);
+        while (selectedEntries.Count < desiredCount)
+        {
+            var selectedEnemy = ChooseWeightedEnemy(remainingEntries, rng);
+            var selectedEntry = remainingEntries.First(entry => entry.Enemy == selectedEnemy);
+            selectedEntries.Add(selectedEntry);
+            remainingEntries.Remove(selectedEntry);
+        }
+
+        return selectedEntries.ToImmutable();
+    }
 
     private static void RandomizeScale(via.Transform transform, ScaleOptions scaleOptions, Rng rng)
     {
@@ -275,12 +379,15 @@ internal class EnemyModifier : Modifier
         Area area,
         Randomizer randomizer,
         RandomizerLogger logger,
-        Rng.Table<IEnemyDefinition> enemyTable,
+        IReadOnlyList<EnemyTableEntry> enemyPool,
         EnemyRandomizerOptions options,
         Rng rng,
         EnemyHealthResolver healthResolver)
     {
         logger.Push(area.Path);
+
+        var areaEnemyPool = SelectAreaEnemyPool(enemyPool, options.EnemyVariety, rng);
+        logger.LogLine($"Area enemy pool ({areaEnemyPool.Length}/{enemyPool.Count}): {string.Join(", ", areaEnemyPool.Select(entry => entry.Enemy.Name))}");
 
         var generatorChanges = new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
         foreach (var enemyGenerator in area.EnemyGenerators)
@@ -292,17 +399,15 @@ internal class EnemyModifier : Modifier
 
             logger.Push($"Generator '{enemyGenerator.Generator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
 
+            var packSelector = new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
             var replacements = new List<(Guid, IEnemyDefinition)>();
             foreach (var spawnInfo in spawnInfos)
             {
+                if (!ShouldReplaceSpawnInfo(spawnInfo))
+                    continue;
+
                 var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-                if (!component.Enabled)
-                    continue;
-
-                if (_barnFightMoldeds.Contains(spawnInfo.Guid))
-                    continue;
-
-                var replacement = enemyTable.Next();
+                var replacement = packSelector.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
                 replacements.Add((spawnInfo.Guid, replacement));
@@ -331,19 +436,19 @@ internal class EnemyModifier : Modifier
         logger.Pop();
     }
 
-    private Rng.Table<IEnemyDefinition> CreateEnemyTable(Randomizer randomizer, Rng rng)
+    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer)
     {
-        Rng.Table<IEnemyDefinition> table = rng.CreateProbabilityTable<IEnemyDefinition>();
+        var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
-                table.Add(enemy, ratio);
+                enemyPool.Add(new EnemyTableEntry(enemy, ratio));
             }
         }
 
-        return table;
+        return enemyPool.ToImmutable();
     }
 
     private IEnemyDefinition GetRandomBoss(Rng rng)
@@ -366,21 +471,21 @@ internal class EnemyModifier : Modifier
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
-        var enemyTable = CreateEnemyTable(randomizer, rng);
+        var enemyPool = CreateEnemyPool(randomizer);
 
-        if (enemyTable.IsEmpty)
+        if (enemyPool.IsDefaultOrEmpty)
         {
             logger.LogLine("Constructed an empty enemy table! Aborting...");
             return;
         }
         else
         {
-            logger.LogLine($"Constructed an enemy table of size {enemyTable.Count}:");
-            logger.LogLine(string.Join(", ", enemyTable.Values.Select(em => em.Name)));
+            logger.LogLine($"Constructed an enemy table of size {enemyPool.Length}:");
+            logger.LogLine(string.Join(", ", enemyPool.Select(entry => entry.Enemy.Name)));
         }
 
         var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyTable, options, rng, healthResolver));
+        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyPool, options, rng, healthResolver));
     }
 
     private (RszGameObject, Guid) AddEnemyToGenerator(
