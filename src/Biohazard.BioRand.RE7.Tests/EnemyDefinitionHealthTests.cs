@@ -66,7 +66,7 @@ public class EnemyDefinitionHealthTests
             ScaleOptions: new EnemyModifier.ScaleOptions(0.0, 1.0f, 1.0f)
         );
         var resolver = new EnemyModifier.EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
-        IEnemyDefinition enemy = EnemyDefinitions.Instance.All.OfType<Molded>().Single();
+        var enemy = EnemyDefinitions.Instance.All.OfType<Molded>().Single();
 
         var firstHealth = resolver.GetHealth(enemy);
         var secondHealth = resolver.GetHealth(enemy);

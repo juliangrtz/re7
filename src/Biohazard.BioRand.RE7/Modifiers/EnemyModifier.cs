@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
@@ -429,11 +430,14 @@ internal class EnemyModifier : Modifier
         logger.Pop();
     }
 
-    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer)
+    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true)
     {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
+            if (!includeBosses && enemy.IsBoss)
+                continue;
+
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
@@ -441,6 +445,32 @@ internal class EnemyModifier : Modifier
             }
         }
 
+        return enemyPool.ToImmutable();
+    }
+
+    private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer)
+    {
+        var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
+        foreach (var enemy in EnemyDefinitions.Instance.All)
+        {
+            if (enemy.EnemyId is EnemyID.Em3300) // Elder Eveline
+                continue;
+
+            if (enemy.IsBoss && enemy.EnemyId != EnemyID.Em3600)
+                continue;
+
+            if (enemy.IsInsect)
+                continue;
+
+            var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
+            if (ratio != 0)
+            {
+                enemyPool.Add(new EnemyTableEntry(enemy, ratio));
+            }
+        }
+
+        // Mia
+        enemyPool.Add(new EnemyTableEntry(new MiaChainsaw(), 0.25f)); // TODO Config
         return enemyPool.ToImmutable();
     }
 
@@ -496,7 +526,7 @@ internal class EnemyModifier : Modifier
 
     private static RszGameObject ReplaceGameObjectRefs(
         RszGameObject gameObject,
-        IReadOnlyDictionary<Guid, Guid> guidMap)
+        Dictionary<Guid, Guid> guidMap)
     {
         return gameObject.Visit(node =>
         {
@@ -513,15 +543,15 @@ internal class EnemyModifier : Modifier
         });
     }
 
-    private RszScene AddExtraEnemyToScene(
+    private RszGameObject CreateExtraEnemyGameObject(
         Randomizer randomizer,
         RandomizerLogger logger,
-        RszScene scene,
         ExtraEnemyPlacement placement,
+        IEnemyDefinition definition,
         EnemyRandomizerOptions options,
         Rng rng)
     {
-        var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
+        var enemyId = definition.EnemyId.ToString();
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
         var transform = new via.Transform()
         {
@@ -532,14 +562,37 @@ internal class EnemyModifier : Modifier
 
         var template = GetOrCreateEnemyTemplate(
             randomizer,
-            placement.Id,
+            enemyId,
             transform,
             updateTransform: true,
             randomizeScale: true,
             options.ScaleOptions,
             rng);
 
-        return scene.Add(template.WithName(template.Name + "_Extra"));
+        return template.WithName(template.Name + "_Extra");
+    }
+
+    private static bool IsRandomExtraEnemyId(string id)
+        => id.Equals("random", StringComparison.OrdinalIgnoreCase);
+
+    private static ImmutableArray<ExtraEnemyPlacement> SelectRandomExtraEnemyPlacementsWithoutReplacement(
+        List<ExtraEnemyPlacement> placements,
+        int count,
+        Rng rng)
+    {
+        if (count >= placements.Count)
+            return [.. placements];
+
+        var remainingPlacements = placements.ToList();
+        var selectedPlacements = ImmutableArray.CreateBuilder<ExtraEnemyPlacement>(Math.Max(0, count));
+        while (selectedPlacements.Count < count && remainingPlacements.Count > 0)
+        {
+            var selectedPlacement = rng.Next(remainingPlacements);
+            selectedPlacements.Add(selectedPlacement);
+            remainingPlacements.Remove(selectedPlacement);
+        }
+
+        return selectedPlacements.ToImmutable();
     }
 
     private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
@@ -550,6 +603,7 @@ internal class EnemyModifier : Modifier
 
         var rng = randomizer.GetRng("modifier/extra-enemies");
         var extraEnemyProbability = (int)Math.Round(Math.Clamp(extraEnemyPct, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
+        var enemyMultiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
 
         var extraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
             .Where(extraEnemy => extraEnemy.Enabled)
@@ -558,15 +612,74 @@ internal class EnemyModifier : Modifier
             .ToList();
 
         logger.Push("Additional enemies");
+        var hasRandomExtraEnemies = extraEnemies.Any(group => group.Any(extraEnemy => IsRandomExtraEnemyId(extraEnemy.Id)));
+        var randomEnemyPool = hasRandomExtraEnemies
+            ? CreateExtraEnemyPool(randomizer)
+            : [];
+        if (hasRandomExtraEnemies && randomEnemyPool.IsDefaultOrEmpty)
+        {
+            logger.LogLine("Constructed an empty enemy table! Random extra enemies will be skipped.");
+        }
+
         foreach (var enemySceneGroup in extraEnemies)
         {
             var scene = enemySceneGroup.Key;
-            logger.Push(scene);
+            var scenePlacements = enemySceneGroup.ToList();
+            var targetEnemyCount = EnemyMultiplierModifier.GetTargetEnemyCount(scenePlacements.Count, enemyMultiplier);
+            if (targetEnemyCount == 0)
+                continue;
+
+            var selectedPlacements = SelectRandomExtraEnemyPlacementsWithoutReplacement(
+                scenePlacements,
+                Math.Min(targetEnemyCount, scenePlacements.Count),
+                rng);
+            var sceneHasRandomExtraEnemies = selectedPlacements.Any(extraEnemy => IsRandomExtraEnemyId(extraEnemy.Id));
+
+            logger.Push(enemyMultiplier == 1.0
+                ? scene
+                : $"{scene} ({scenePlacements.Count} => {targetEnemyCount})");
             randomizer.FileRepository.ModifyScnFile(scene, root =>
             {
-                foreach (var extraEnemy in enemySceneGroup)
+                var areaEnemyPool = !sceneHasRandomExtraEnemies || randomEnemyPool.IsDefaultOrEmpty
+                    ? []
+                    : SelectAreaEnemyPool(randomEnemyPool, options.EnemyVariety, rng);
+                var packSelector = areaEnemyPool.IsDefaultOrEmpty
+                    ? null
+                    : new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
+
+                var addedExtraEnemies = new List<RszGameObject>(targetEnemyCount);
+                foreach (var extraEnemy in selectedPlacements)
                 {
-                    root = AddExtraEnemyToScene(randomizer, logger, root, extraEnemy, options, rng);
+                    IEnemyDefinition definition;
+                    if (IsRandomExtraEnemyId(extraEnemy.Id))
+                    {
+                        if (packSelector == null)
+                        {
+                            logger.LogLine($"Skipping random extra enemy at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: empty enemy table.");
+                            continue;
+                        }
+
+                        definition = packSelector.Next();
+                    }
+                    else
+                    {
+                        definition = EnemyDefinitions.Instance.FromId(extraEnemy.Id)
+                            ?? throw new InvalidOperationException($"Unknown extra enemy id '{extraEnemy.Id}'.");
+                    }
+
+                    var extraEnemyGameObject = CreateExtraEnemyGameObject(randomizer, logger, extraEnemy, definition, options, rng);
+                    addedExtraEnemies.Add(extraEnemyGameObject);
+                    root = root.Add(extraEnemyGameObject);
+                }
+
+                while (addedExtraEnemies.Count < targetEnemyCount && addedExtraEnemies.Count != 0)
+                {
+                    var source = rng.Next(addedExtraEnemies);
+                    var duplicate = CloneGameObject(source, rng);
+
+                    logger.LogLine($"Duplicating {source.Name} ({source.Guid} => {duplicate.Guid})");
+                    addedExtraEnemies.Add(duplicate);
+                    root = root.Add(duplicate);
                 }
 
                 return root;
