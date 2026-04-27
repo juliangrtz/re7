@@ -43,6 +43,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-variety"] = 1;
                 config["enemy-pack-max-size"] = 1;
                 ConfigureEnemyPool(config, "MoldedQuick");
+                config["enemy-ratio-moldedquick"] = 1000.0;
             });
 
         var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
@@ -80,6 +81,8 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-variety"] = 2;
                 config["enemy-pack-max-size"] = 1;
                 ConfigureEnemyPool(config, "Molded", "MoldedQuick");
+                config["enemy-ratio-molded"] = 1000.0;
+                config["enemy-ratio-moldedquick"] = 1000.0;
             });
 
         var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
@@ -88,6 +91,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         {
             "Em4000_Extra",
             "Em4100_Extra",
+            "Em2000_Extra",
         };
 
         Assert.Equal(6, enemyNames.Count);
@@ -96,6 +100,24 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         {
             Assert.NotEqual(enemyNames[i - 1], enemyNames[i]);
         }
+    }
+
+    [Fact]
+    public void ExtraEnemies_RandomId_CanUseCustomExtraEnemyDefinitions()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random"),
+            config =>
+            {
+                config["enemy-variety"] = 1;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureEnemyPool(config);
+            });
+
+        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+
+        var gameObject = Assert.Single(newRootEnemies);
+        Assert.Equal("Em2000_Extra", gameObject.Name);
     }
 
     [Fact]
