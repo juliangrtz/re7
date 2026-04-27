@@ -207,7 +207,8 @@ internal class EnemyModifier : Modifier
         bool updateTransform,
         bool randomizeScale,
         ScaleOptions scaleOptions,
-        Rng rng)
+        Rng rng,
+        IEnemyDefinition? definition = null)
     {
         if (!_generatorTemplateCache.TryGetValue(enemyId, out var baseTemplate))
         {
@@ -219,7 +220,9 @@ internal class EnemyModifier : Modifier
         }
 
         var template = CloneGameObject(baseTemplate, rng);
-        template = EnemyDefinitions.Instance.FromId(enemyId)!.IndividualizeTemplate(rng, template);
+        definition ??= EnemyDefinitions.Instance.FromId(enemyId)
+            ?? throw new InvalidOperationException($"Unknown enemy definition for '{enemyId}'.");
+        template = definition.IndividualizeTemplate(rng, template);
 
         if (updateTransform || randomizeScale)
         {
@@ -567,7 +570,8 @@ internal class EnemyModifier : Modifier
             updateTransform: true,
             randomizeScale: true,
             options.ScaleOptions,
-            rng);
+            rng,
+            definition);
 
         return template.WithName(template.Name + "_Extra");
     }
