@@ -40,6 +40,7 @@ internal class ChestService(Randomizer randomizer)
         };
 
         // Create weapon from template
+        // TODO: Shotguns are unlootable!
         var weaponGuid = _rng.NextGuid();
         var weapon = GetCachedWeaponOrCreate(weaponDrop.Id);
         weapon = weapon.WithGuid(weaponGuid);
