@@ -51,20 +51,13 @@ internal class EnemyModifier : Modifier
         }
     }
 
-    internal sealed class EnemyPackSelector
+    internal sealed class EnemyPackSelector(IEnumerable<EnemyModifier.EnemyTableEntry> enemyPool, int maxPackSize, Rng rng)
     {
-        private readonly ImmutableArray<EnemyTableEntry> _enemyPool;
-        private readonly int _maxPackSize;
-        private readonly Rng _rng;
+        private readonly List<EnemyTableEntry> _enemyPool = [.. enemyPool];
+        private readonly int _maxPackSize = Math.Max(1, maxPackSize);
+        private readonly Rng _rng = rng;
         private IEnemyDefinition? _currentEnemy;
         private int _remainingPackSize;
-
-        public EnemyPackSelector(IEnumerable<EnemyTableEntry> enemyPool, int maxPackSize, Rng rng)
-        {
-            _enemyPool = [.. enemyPool];
-            _maxPackSize = Math.Max(1, maxPackSize);
-            _rng = rng;
-        }
 
         public IEnemyDefinition Next()
         {
@@ -80,15 +73,15 @@ internal class EnemyModifier : Modifier
 
         private IEnemyDefinition ChooseNextEnemy()
         {
-            if (_enemyPool.IsDefaultOrEmpty)
+            if (_enemyPool.Count == 0)
                 throw new InvalidOperationException("Cannot choose an enemy from an empty pack selector.");
 
-            if (_enemyPool.Length == 1 || _currentEnemy == null)
+            if (_enemyPool.Count == 1 || _currentEnemy == null)
                 return ChooseWeightedEnemy(_enemyPool, _rng);
 
             var candidates = _enemyPool
                 .Where(entry => entry.Enemy != _currentEnemy)
-                .ToImmutableArray();
+                .ToList();
 
             return ChooseWeightedEnemy(candidates, _rng);
         }
@@ -146,7 +139,7 @@ internal class EnemyModifier : Modifier
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
 
     private static IEnemyDefinition ChooseWeightedEnemy(
-        IReadOnlyList<EnemyTableEntry> enemyPool,
+        List<EnemyTableEntry> enemyPool,
         Rng rng)
     {
         if (enemyPool.Count == 0)
