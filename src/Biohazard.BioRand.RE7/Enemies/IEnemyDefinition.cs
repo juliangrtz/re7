@@ -28,6 +28,7 @@ public interface IEnemyDefinition
     public bool UsesEnemyGenerator { get; }
 
     public bool IsMolded => Category == EnemyCategory.Molded;
+    public bool IsInsect => Category == EnemyCategory.Insect;
 
     public string? SpawnOptionType => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
 

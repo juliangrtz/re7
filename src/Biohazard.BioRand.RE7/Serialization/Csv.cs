@@ -1,6 +1,7 @@
 ﻿using IntelOrca.Biohazard.BioRand;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 
 namespace Biohazard.BioRand.RE7.Serialization;
@@ -106,7 +107,7 @@ public static class Csv
             return Enum.Parse(underlyingType, input, ignoreCase: true);
         }
 
-        return Convert.ChangeType(input, underlyingType);
+        return Convert.ChangeType(input, underlyingType, CultureInfo.InvariantCulture);
     }
 
     private static bool IsNullable(Type type)
