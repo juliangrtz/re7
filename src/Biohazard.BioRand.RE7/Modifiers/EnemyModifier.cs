@@ -217,7 +217,7 @@ internal class EnemyModifier : Modifier
             _generatorTemplateCache[enemyId] = baseTemplate;
         }
 
-        var template = baseTemplate.Clone();
+        var template = CloneGameObject(baseTemplate, rng);
         template = EnemyDefinitions.Instance.FromId(enemyId)!.IndividualizeTemplate(rng, template);
 
         if (updateTransform || randomizeScale)
@@ -239,7 +239,8 @@ internal class EnemyModifier : Modifier
 
     private RszGameObject GetOrCreateSpawnInfoTemplate(
         Randomizer randomizer,
-        string enemyId)
+        string enemyId,
+        Rng rng)
     {
         if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template))
         {
@@ -250,8 +251,7 @@ internal class EnemyModifier : Modifier
             _spawnInfoTemplateCache[enemyId] = template;
         }
 
-        return template
-            .Clone()
+        return CloneGameObject(template, rng)
             .WithName($"ESI_{enemyId}");
     }
 
@@ -279,7 +279,7 @@ internal class EnemyModifier : Modifier
             {
                 // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
                 var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.StartsWith("app.EnemySpawnInfoOption"));
-                var spawnInfoTemplate = GetOrCreateSpawnInfoTemplate(randomizer, enemyId);
+                var spawnInfoTemplate = GetOrCreateSpawnInfoTemplate(randomizer, enemyId, rng);
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
@@ -481,78 +481,45 @@ internal class EnemyModifier : Modifier
         areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyPool, options, rng, healthResolver));
     }
 
-    private (RszGameObject, Guid) AddEnemyToGenerator(
-        Randomizer randomizer,
-        RandomizerLogger logger,
-        RszGameObject generator,
-        ExtraEnemyPlacement placement,
-        IEnemyDefinition definition,
-        via.Transform transform,
-        EnemyRandomizerOptions options,
-        Rng rng,
-        EnemyHealthResolver healthResolver)
+    private static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng)
     {
-        var pool = generator.Children[0];
-        var template = GetOrCreateEnemyTemplate(
-            randomizer,
-            placement.Id,
-            transform,
-            updateTransform: false,
-            randomizeScale: true,
-            options.ScaleOptions,
-            rng).Clone();
-        pool.Children = pool.Children.Add(template);
+        var guidMap = new Dictionary<Guid, Guid>();
+        var root = rootGameObject.VisitGameObjects(gameObject =>
+        {
+            var newGuid = rng.NextGuid();
+            guidMap[gameObject.Guid] = newGuid;
+            return gameObject.WithGuid(newGuid);
+        });
 
-        var spawnPoints = pool.Children[0];
-        var spawnInfo = GetOrCreateSpawnInfoTemplate(randomizer, placement.Id).Clone();
-        var spawnInfoComponent = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-        var spawnInfoGuid = Guid.NewGuid();
-        var assignedHealth = healthResolver.GetHealth(definition);
-        spawnInfoComponent.HealthParameter.Health = assignedHealth;
-        spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
-        spawnInfo = spawnInfo.AddOrUpdateComponent(transform);
-        spawnInfo = spawnInfo.WithGuid(spawnInfoGuid);
-
-        spawnPoints.Children = spawnPoints.Children.Add(spawnInfo);
-
-        pool = pool.AddOrUpdateChild(spawnPoints);
-        generator = generator.AddOrUpdateChild(pool);
-
-        logger.LogSpawnHealthAssignment(
-            definition,
-            assignedHealth,
-            "extra placement",
-            spawnInfo.Name,
-            spawnInfoGuid,
-            $"Scene={placement.SceneFile} | Comment={placement.Comment} | Position={placement.PosX}/{placement.PosY}/{placement.PosZ}");
-
-        return (generator, spawnInfoGuid);
+        return ReplaceGameObjectRefs(root, guidMap);
     }
 
-    private RszGameObject CreateFsmGenerator(Randomizer randomizer, Guid spawnInfoGuid)
+    private static RszGameObject ReplaceGameObjectRefs(
+        RszGameObject gameObject,
+        IReadOnlyDictionary<Guid, Guid> guidMap)
     {
-        var fsmGenerator = randomizer.TemplateService.GetObject("FsmGenerator").Clone();
-        fsmGenerator = fsmGenerator.WithName(fsmGenerator.Name + spawnInfoGuid);
-        return fsmGenerator.Visit(node =>
+        return gameObject.Visit(node =>
         {
             if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
             {
                 var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                return RszSerializer.Serialize(RszFieldType.GameObjectRef, spawnInfoGuid);
+                if (guidMap.TryGetValue(refGuid, out var newGuid))
+                {
+                    return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
+                }
             }
+
             return node;
         });
     }
 
-    private RszScene AddEnemyToScene(
+    private RszScene AddExtraEnemyToScene(
         Randomizer randomizer,
         RandomizerLogger logger,
         RszScene scene,
         ExtraEnemyPlacement placement,
-        RszGameObject generator,
         EnemyRandomizerOptions options,
-        Rng rng,
-        EnemyHealthResolver healthResolver)
+        Rng rng)
     {
         var definition = EnemyDefinitions.Instance.FromId(placement.Id)!;
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
@@ -563,40 +530,30 @@ internal class EnemyModifier : Modifier
             Scale = Vector3.One,
         };
 
-        if (definition.UsesEnemyGenerator)
-        {
-            var (newGenerator, spawnInfoGuid) = AddEnemyToGenerator(randomizer, logger, generator, placement, definition, transform, options, rng, healthResolver);
-            generator = newGenerator;
-            scene = scene.Add(generator);
-            scene = scene.Add(CreateFsmGenerator(randomizer, spawnInfoGuid));
-        }
-        else
-        {
-            var template = GetOrCreateEnemyTemplate(
-                randomizer,
-                placement.Id,
-                transform,
-                updateTransform: true,
-                randomizeScale: true,
-                options.ScaleOptions,
-                rng);
-            template = template.WithName(template.Name + "_Extra");
-            scene = scene.Add(template);
-        }
+        var template = GetOrCreateEnemyTemplate(
+            randomizer,
+            placement.Id,
+            transform,
+            updateTransform: true,
+            randomizeScale: true,
+            options.ScaleOptions,
+            rng);
 
-        return scene;
+        return scene.Add(template.WithName(template.Name + "_Extra"));
     }
 
-    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options, EnemyHealthResolver healthResolver)
+    private void PlaceExtraEnemies(Randomizer randomizer, RandomizerLogger logger, EnemyRandomizerOptions options)
     {
         var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
         if (extraEnemyPct == 0)
             return;
 
-        var rng = randomizer.GetRng("modifier/enemy-scale");
+        var rng = randomizer.GetRng("modifier/extra-enemies");
+        var extraEnemyProbability = (int)Math.Round(Math.Clamp(extraEnemyPct, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
 
         var extraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
             .Where(extraEnemy => extraEnemy.Enabled)
+            .Where(_ => rng.NextProbability(extraEnemyProbability))
             .GroupBy(extraEnemy => extraEnemy.SceneFile)
             .ToList();
 
@@ -607,10 +564,9 @@ internal class EnemyModifier : Modifier
             logger.Push(scene);
             randomizer.FileRepository.ModifyScnFile(scene, root =>
             {
-                var generator = randomizer.TemplateService.GetObject("EnemyGenerator").Clone();
                 foreach (var extraEnemy in enemySceneGroup)
                 {
-                    root = AddEnemyToScene(randomizer, logger, root, extraEnemy, generator, options, rng, healthResolver);
+                    root = AddExtraEnemyToScene(randomizer, logger, root, extraEnemy, options, rng);
                 }
 
                 return root;
@@ -631,6 +587,6 @@ internal class EnemyModifier : Modifier
 
         var healthResolver = new EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
         RandomizeEnemies(randomizer, logger, options, healthResolver);
-        PlaceExtraEnemies(randomizer, logger, options, healthResolver);
+        PlaceExtraEnemies(randomizer, logger, options);
     }
 }
