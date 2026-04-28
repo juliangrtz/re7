@@ -120,9 +120,6 @@ internal class Randomizer : IDisposable
         // Patches
         Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
 
-        // Load Areas
-        Reporter.RunTask("Loading scenes", () => AreaService.LoadAreas());
-
         // Input
         IterateModifiers((n, m) =>
         {
