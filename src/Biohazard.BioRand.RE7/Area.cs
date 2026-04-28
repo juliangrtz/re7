@@ -6,6 +6,8 @@ namespace Biohazard.BioRand.RE7;
 
 internal class Area
 {
+    private ImmutableArray<Guid> _pendingGameObjectGuids = [];
+
     public Randomizer Randomizer { get; }
     public AreaDefinition Definition { get; }
     public string Path => Definition.Path;
@@ -63,15 +65,20 @@ internal class Area
         var enemyGenerators = ImmutableArray.CreateBuilder<EnemyGeneratorWrapper>();
         var weapons = ImmutableArray.CreateBuilder<RszGameObject>();
         var items = ImmutableArray.CreateBuilder<RszGameObject>();
+        var gameObjectGuids = ImmutableArray.CreateBuilder<Guid>();
+        var itemPlacementService = Randomizer.ItemPlacementService;
         ScanInner(Scene);
         EnemyGenerators = enemyGenerators.ToImmutable();
         Weapons = weapons.ToImmutable();
         Items = items.ToImmutable();
+        _pendingGameObjectGuids = gameObjectGuids.ToImmutable();
 
         void ScanInner(IRszSceneNode node)
         {
             if (node is RszGameObject gameObject)
             {
+                gameObjectGuids.Add(gameObject.Guid);
+
                 var enemyGeneratorComponent = gameObject.FindComponent<app.EnemyGenerator>();
                 if (enemyGeneratorComponent != null && enemyGeneratorComponent.Enabled)
                 {
@@ -79,7 +86,7 @@ internal class Area
                     return;
                 }
 
-                if (Randomizer.ItemPlacementService.HasItem(gameObject.Guid))
+                if (itemPlacementService.HasItem(gameObject.Guid))
                 {
                     items.Add(gameObject);
                     return;
@@ -97,6 +104,16 @@ internal class Area
                 ScanInner(child);
             }
         }
+    }
+
+    internal void MapGameObjectGuids(Dictionary<Guid, Area> guidToArea)
+    {
+        foreach (var guid in _pendingGameObjectGuids)
+        {
+            guidToArea[guid] = this;
+        }
+
+        _pendingGameObjectGuids = [];
     }
 
     public override string ToString() => FileName;
