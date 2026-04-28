@@ -1,4 +1,3 @@
-using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Services;
@@ -6,14 +5,38 @@ namespace Biohazard.BioRand.RE7.Services;
 internal class AreaService(Randomizer randomizer)
 {
     private readonly Dictionary<Guid, Area> _guidToArea = [];
+    private ImmutableArray<Area> _areas = [];
+    private bool _isLoaded;
 
-    public ImmutableArray<Area> Areas { get; private set; } = [];
+    public ImmutableArray<Area> Areas
+    {
+        get
+        {
+            EnsureLoaded();
+            return _areas;
+        }
+        private set => _areas = value;
+    }
+
     public Randomizer Randomizer { get; } = randomizer;
 
-    public void LoadAreas()
+    public void LoadAreas() => EnsureLoaded();
+
+    private void EnsureLoaded()
     {
+        if (_isLoaded)
+            return;
+
+        LoadAreasCore();
+        _isLoaded = true;
+    }
+
+    private void LoadAreasCore()
+    {
+        _guidToArea.Clear();
+
         var areaRepo = AreaDefinitionRepository.Default;
-        Areas = areaRepo.All // TODO Optimise performance. Must be 480 scenes.
+        Areas = areaRepo.All
             .Where(a => a.Dlc == null)
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
@@ -21,17 +44,15 @@ internal class AreaService(Randomizer randomizer)
             .ToImmutableArray();
 
         // Map initial guids
-        foreach (var area in Areas)
+        foreach (var area in _areas)
         {
-            area.Scene.VisitGameObjects(gameObject =>
-            {
-                _guidToArea[gameObject.Guid] = area;
-            });
+            area.MapGameObjectGuids(_guidToArea);
         }
     }
 
     public Area? FindAreaContainingGameObject(Guid guid)
     {
+        EnsureLoaded();
         _guidToArea.TryGetValue(guid, out var area);
         return area;
     }
@@ -48,6 +69,8 @@ internal class AreaService(Randomizer randomizer)
 
     public Area FindBestArea(AreaKind kind, int? chapter = null)
     {
+        EnsureLoaded();
+
         if (chapter != null)
         {
             return Areas
