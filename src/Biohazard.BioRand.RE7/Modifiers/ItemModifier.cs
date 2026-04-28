@@ -270,7 +270,7 @@ internal class ItemModifier : Modifier
             var randomizableItems = new List<(ItemDefinition Definition, ItemPlacement Placement)>();
             foreach (var itemGameObject in area.Items)
             {
-                foreach (var placement in itemPlacementService.FromGuid(itemGameObject.Guid))
+                foreach (var placement in itemPlacementService.FromSceneGuid(area.Path, itemGameObject.Guid))
                 {
                     if (placement.Dlc != null
                         || placement.IsExtra

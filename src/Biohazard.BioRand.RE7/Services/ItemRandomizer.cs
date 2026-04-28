@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
 using Enums.app.GameFlowFsmManager;
 using Enums.app.Item;
+using System.Globalization;
 
 namespace Biohazard.BioRand.RE7.Services;
 
@@ -148,31 +149,34 @@ internal class ItemRandomizer
     {
         if (!_generalDrops.TryGetValue(settings, out var result))
         {
-            var ratios = new Dictionary<string, double>();
+            var weights = new Dictionary<string, decimal>();
             foreach (var dropKind in ItemDrops.GenericDrops)
             {
-                var ratio = settings.GetItemRatio(dropKind);
-                if (ratio > 0)
+                var weight = ConvertToWeight(settings.GetItemRatio(dropKind));
+                if (weight > 0)
                 {
-                    ratios.Add(dropKind, ratio);
+                    weights.Add(dropKind, weight);
                 }
             }
 
-            if (ratios.Count == 0)
+            if (weights.Count == 0)
                 return new EndlessBag<string>(rng, ["EthanLeg"]);
 
-            var smallestRatio = ratios.Min(x => x.Value);
-            foreach (var k in ratios.Keys)
-            {
-                ratios[k] = ratios[k] / smallestRatio;
-            }
+            var scale = (decimal)Math.Pow(10, weights.Values.Max(GetDecimalPlaces));
+            var entries = weights
+                .Select(kvp => (Id: kvp.Key, Count: Math.Max(1, (int)decimal.Round(kvp.Value * scale, 0, MidpointRounding.AwayFromZero))))
+                .ToList();
+            var divisor = entries
+                .Select(x => x.Count)
+                .Aggregate(GetGreatestCommonDivisor);
 
             var pool = new List<string>();
-            foreach (var kvp in ratios)
+            foreach (var (id, count) in entries)
             {
-                for (var i = 0; i < kvp.Value; i++)
+                var repeats = count / divisor;
+                for (var i = 0; i < repeats; i++)
                 {
-                    pool.Add(kvp.Key);
+                    pool.Add(id);
                 }
             }
             result = new EndlessBag<string>(rng, pool);
@@ -269,6 +273,21 @@ internal class ItemRandomizer
         }
 
         return null;
+    }
+
+    private static decimal ConvertToWeight(double ratio)
+        => decimal.Parse(ratio.ToString("0.####", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+
+    private static int GetDecimalPlaces(decimal value)
+        => (decimal.GetBits(value)[3] >> 16) & 0xFF;
+
+    private static int GetGreatestCommonDivisor(int left, int right)
+    {
+        while (right != 0)
+        {
+            (left, right) = (right, left % right);
+        }
+        return Math.Abs(left);
     }
 }
 

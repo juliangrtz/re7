@@ -208,13 +208,17 @@ internal class BirdCage
         if (!PreserveItemModels)
         {
             var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-            var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID).First();
+            var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID)
+                .FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Mesh) && !string.IsNullOrWhiteSpace(x.Material));
 
-            mesh = mesh
-                .Set("Mesh", new RszResourceNode(newItem.Mesh))
-                .Set("Material", new RszResourceNode(newItem.Material));
+            if (newItem != null)
+            {
+                mesh = mesh
+                    .Set("Mesh", new RszResourceNode(newItem.Mesh))
+                    .Set("Material", new RszResourceNode(newItem.Material));
 
-            newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
+                newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
+            }
         }
 
         //var fsmItemGet = container.Children.FirstOrDefault(c => c.Name == "Fsm_ItemGet", null);
