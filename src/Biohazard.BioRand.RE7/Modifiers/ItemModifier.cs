@@ -9,8 +9,9 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class ItemModifier : Modifier
 {
     private const string RandomizerKey = "modifier/static-items";
-    private const string ItemBoxGameObjectName = "ItemBox_VLong";
-    private const string FakeItemBoxGameObjectName = "ItemBox_Fake";
+    private const string WoodenCrateGameObjectName = "ItemBox_VLong";
+    private const string FakeWoodenCrateGameObjectName = "ItemBox_Fake";
+    private const string ItemBoxGameObjectName = "ItemBox";
 
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private readonly static HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
@@ -44,11 +45,11 @@ internal class ItemModifier : Modifier
             (!placement.Tags.Contains(ItemPlacement.NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakePct)))
         {
             isFake = true;
-            template = randomizer.TemplateService.GetObject(FakeItemBoxGameObjectName).Clone();
+            template = randomizer.TemplateService.GetObject(FakeWoodenCrateGameObjectName).Clone();
         }
         else
         {
-            template = randomizer.TemplateService.GetObject(ItemBoxGameObjectName).Clone();
+            template = randomizer.TemplateService.GetObject(WoodenCrateGameObjectName).Clone();
             var itemDropDestruct = template.FindComponent<app.ItemDropDestruct>()!;
             itemDropDestruct.Enabled = true;
             itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : Guid.NewGuid();
@@ -66,6 +67,36 @@ internal class ItemModifier : Modifier
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
         logger.LogLine($"[EXTRA] {(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
         logger.LogLine($"GUID: {newGuid}");
+
+        return scene.UpdateGameObject(parentGameObject);
+    }
+
+    private RszScene AddExtraItemBox(
+        RszScene scene,
+        RszGameObject parentGameObject,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        ItemPlacement placement)
+    {
+        var template = randomizer.TemplateService.GetObject(ItemBoxGameObjectName).Clone();
+        var interactGameObject = template.Children.FirstOrDefault(child => child.FindComponent<app.InteractSendFsm>() != null);
+        if (interactGameObject != null)
+        {
+            var interact = interactGameObject.FindComponent<app.InteractSendFsm>()!;
+            interact.SaveGUID = Guid.NewGuid();
+            interactGameObject = interactGameObject.AddOrUpdateComponent(interact);
+            template = template.AddOrUpdateChild(interactGameObject);
+        }
+
+        var transform = template.FindComponent<via.Transform>()!;
+        transform.Position = placement.Position;
+        transform.Rotation = placement.Rotation;
+        transform.Scale = Vector3.One;
+        template = template.AddOrUpdateComponent(transform);
+
+        parentGameObject = parentGameObject.AddOrUpdateChild(template);
+        logger.LogLine($"[EXTRA] Item box at {placement.Position} in {placement.SceneFile}");
+        logger.LogLine($"GUID: {template.Guid}");
 
         return scene.UpdateGameObject(parentGameObject);
     }
@@ -179,6 +210,10 @@ internal class ItemModifier : Modifier
                 else if (placement.Tags.Contains(ItemPlacement.WeaponChestTag))
                 {
                     scene = AddExtraChest(scene, randomizer, logger, placement);
+                }
+                else if (allowExtraItems && placement.Tags.Contains(ItemPlacement.ItemBoxTag))
+                {
+                    scene = AddExtraItemBox(scene, GetDynamicParentGameObject(), randomizer, logger, placement);
                 }
                 else if (allowExtraItems)
                 {
