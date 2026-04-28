@@ -62,6 +62,28 @@ public class RandomizerItemRandomizationTests
     }
 
     [Fact]
+    public void ItemPlacementService_FromSceneGuid_FiltersDuplicateGuidsToCurrentScene()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var duplicatedGuid = new Guid("3e6a9272-9495-44b5-963e-299206d95e16");
+        var chapter3Scene = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+        var chapter4Scene = "natives/stm/environment/scene/chapter4/c04_mainhouse1flivingjack.scn.20";
+
+        var allPlacements = result.ItemPlacementService.FromGuid(duplicatedGuid)
+            .Where(x => x.Dlc == null)
+            .ToList();
+        var chapter3Placements = result.ItemPlacementService.FromSceneGuid(chapter3Scene, duplicatedGuid);
+        var chapter4Placements = result.ItemPlacementService.FromSceneGuid(chapter4Scene, duplicatedGuid);
+
+        Assert.True(allPlacements.Count >= 2);
+        Assert.Single(chapter3Placements);
+        Assert.Single(chapter4Placements);
+        Assert.All(chapter3Placements, placement => Assert.Equal(chapter3Scene, placement.SceneFile));
+        Assert.All(chapter4Placements, placement => Assert.Equal(chapter4Scene, placement.SceneFile));
+    }
+
+    [Fact]
     public void ItemRandomizer_ZeroDropRatios_FallsBackToEthanLeg()
     {
         using var result = RandomizerTest.RunState();
@@ -79,6 +101,29 @@ public class RandomizerItemRandomizationTests
         Assert.Equal(1, drop.CountEasy);
         Assert.Equal(1, drop.CountNormal);
         Assert.Equal(1, drop.CountMadhouse);
+    }
+
+    [Fact]
+    public void ItemRandomizer_CreateGeneralItemPool_PreservesFractionalWeightPrecision()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var bag = result.ItemRandomizer.CreateGeneralItemPool(
+            new RandomItemSettings
+            {
+                ItemRatioKeyFunc = id => id switch
+                {
+                    "Herb" => 0.03,
+                    "Gunpowder" => 0.04,
+                    _ => 0
+                }
+            },
+            result.Randomizer.GetRng("tests/pool-precision"));
+        var draws = bag.Next(bag.Count);
+
+        Assert.Equal(7, bag.Count);
+        Assert.Equal(3, draws.Count(x => x == "Herb"));
+        Assert.Equal(4, draws.Count(x => x == "Gunpowder"));
     }
 
     [Fact]
@@ -312,8 +357,8 @@ public class RandomizerItemRandomizationTests
         var itemRandomizer = result.ItemRandomizer;
 
         var match = result.AreaService.Areas
-            .SelectMany(area => area.Items)
-            .SelectMany(gameObject => result.ItemPlacementService.FromGuid(gameObject.Guid))
+            .SelectMany(area => area.Items.Select(gameObject => (AreaPath: area.Path, GameObject: gameObject)))
+            .SelectMany(x => result.ItemPlacementService.FromSceneGuid(x.AreaPath, x.GameObject.Guid))
             .DistinctBy(placement => placement.Guid)
             .Select(placement => (Definition: ItemDefinitionRepository.Default.FromId(placement.Id)!, Placement: placement))
             .Where(tuple =>
