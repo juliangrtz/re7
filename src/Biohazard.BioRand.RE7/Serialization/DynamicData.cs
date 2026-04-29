@@ -11,7 +11,6 @@ public enum DynamicDataName
     Enemies,
     ExtraEnemies,
     EnemyLimits,
-    Events,
     Messages,
     BirdCages,
     KeyItems,

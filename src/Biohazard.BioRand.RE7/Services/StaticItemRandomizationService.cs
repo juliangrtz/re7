@@ -1,7 +1,5 @@
 namespace Biohazard.BioRand.RE7.Services;
 
-// Shares the original static-item RNG and drop settings across the
-// extra-placement and vanilla-item modifiers so seed behavior stays stable.
 internal class StaticItemRandomizationService
 {
     private const string RandomizerKey = "modifier/static-items";

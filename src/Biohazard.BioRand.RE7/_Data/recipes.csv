@@ -2,7 +2,7 @@ Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,Out
 AlwaysEnabled,1,1,Strong Chem Fluid,1,1,Strong Chem Fluid,1,1,Acid Powder,BioRand 7 | Activates unused item Acid Powder
 AlwaysEnabled,1,1,Chem Fluid,1,1,Chem Fluid,1,1,Chilled Chem Fluid,BioRand 7 | Activates unused item Chilled Chem Fluid
 AlwaysEnabled,1,1,Chem Fluid,1,1,Strong Chem Fluid,1,1,Weak Acid,BioRand 7 | Activates unused item Weak Acid
-AlwaysEnabled,7,9,Antique Coin,1,1,Acid Powder,1,1,Lock Pick,BioRand 7 | Ensures the ability to get lock picks
+AlwaysEnabled,3,5,Antique Coin,1,1,Acid Powder,1,1,Lock Pick,BioRand 7 | Ensures the ability to get lock picks
 Easy,20,20,Enhanced Handgun Ammo,2,2,Gunpowder,15,15,Shotgun Shells,BioRand 7 | Easy Pool
 Easy,30,30,Machine Gun Ammo,20,20,Handgun Ammo,5,5,44 MAG Ammo,BioRand 7 | Easy Pool
 Easy,10,10,Shotgun Shells,2,2,Gunpowder,5,5,44 MAG Ammo,BioRand 7 | Easy Pool

@@ -24,6 +24,14 @@ internal class ExtraPlacementModifier : Modifier
 
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
+    private enum ExtraPlacementKind
+    {
+        Item,
+        WoodenCrate,
+        WeaponChest,
+        ItemBox
+    }
+
     private RszScene AddExtraChest(
         RszScene scene,
         Randomizer randomizer,
@@ -178,6 +186,88 @@ internal class ExtraPlacementModifier : Modifier
         return scene.UpdateGameObject(parentGameObject);
     }
 
+    private static ExtraPlacementKind GetPlacementKind(ItemPlacement placement)
+    {
+        var specialKinds = new List<ExtraPlacementKind>(3);
+        if (placement.Tags.Contains(WoodenCrateTag))
+        {
+            specialKinds.Add(ExtraPlacementKind.WoodenCrate);
+        }
+        if (placement.Tags.Contains(WeaponChestTag))
+        {
+            specialKinds.Add(ExtraPlacementKind.WeaponChest);
+        }
+        if (placement.Tags.Contains(ItemBoxTag))
+        {
+            specialKinds.Add(ExtraPlacementKind.ItemBox);
+        }
+
+        return specialKinds.Count switch
+        {
+            0 => ExtraPlacementKind.Item,
+            1 => specialKinds[0],
+            _ => throw new Exception(
+                $"Extra placement at {placement.Position} in {placement.SceneFile} has conflicting special tags: {string.Join(", ", placement.Tags)}")
+        };
+    }
+
+    private static bool IsPlacementEnabled(
+        ExtraPlacementKind kind,
+        bool allowExtraItems,
+        bool allowExtraCrates)
+        => kind switch
+        {
+            ExtraPlacementKind.ItemBox => true,
+            ExtraPlacementKind.WoodenCrate => allowExtraCrates,
+            ExtraPlacementKind.WeaponChest => allowExtraItems,
+            _ => allowExtraItems
+        };
+
+    private RszScene ApplyPlacementToScene(
+        RszScene scene,
+        RszGameObject parentGameObject,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        Rng rng,
+        ItemPlacement placement,
+        RandomItemSettings randomItemSettings,
+        bool allowExtraItems,
+        bool allowExtraCrates)
+    {
+        var kind = GetPlacementKind(placement);
+        if (!IsPlacementEnabled(kind, allowExtraItems, allowExtraCrates))
+            return scene;
+
+        return kind switch
+        {
+            ExtraPlacementKind.WoodenCrate => AddExtraCrate(scene, parentGameObject, randomizer, logger, placement, rng),
+            ExtraPlacementKind.WeaponChest => AddExtraChest(scene, randomizer, logger, placement),
+            ExtraPlacementKind.ItemBox => AddExtraItemBox(scene, parentGameObject, randomizer, logger, placement),
+            _ => AddPlacementItem(scene, parentGameObject, randomizer, logger, placement, rng, randomItemSettings)
+        };
+    }
+
+    private RszScene AddPlacementItem(
+        RszScene scene,
+        RszGameObject parentGameObject,
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        ItemPlacement placement,
+        Rng rng,
+        RandomItemSettings randomItemSettings)
+    {
+        var isRandom = placement.Tags.Contains(RandomItemTag);
+        var hasFixedItem = !string.IsNullOrWhiteSpace(placement.Id);
+
+        if (!isRandom && !hasFixedItem)
+        {
+            logger.LogLine($"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
+            return scene;
+        }
+
+        return AddExtraItem(scene, parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings);
+    }
+
     private void HandleExtraItemsForScene(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -187,7 +277,7 @@ internal class ExtraPlacementModifier : Modifier
         bool allowExtraItems,
         bool allowExtraCrates)
     {
-        if (placements.Count == 0 || (!allowExtraItems && !allowExtraCrates))
+        if (placements.Count == 0)
             return;
 
         randomizer.FileRepository.ModifyScnFile(placements[0].SceneFile, scene =>
@@ -206,32 +296,16 @@ internal class ExtraPlacementModifier : Modifier
 
             foreach (var placement in placements)
             {
-                if (allowExtraCrates && placement.Tags.Contains(WoodenCrateTag))
-                {
-                    scene = AddExtraCrate(scene, GetDynamicParentGameObject(), randomizer, logger, placement, rng);
-                }
-                else if (placement.Tags.Contains(WeaponChestTag))
-                {
-                    scene = AddExtraChest(scene, randomizer, logger, placement);
-                }
-                else if (allowExtraItems && placement.Tags.Contains(ItemBoxTag))
-                {
-                    scene = AddExtraItemBox(scene, GetDynamicParentGameObject(), randomizer, logger, placement);
-                }
-                else if (allowExtraItems)
-                {
-                    var isRandom = placement.Tags.Contains(RandomItemTag);
-                    var hasFixedItem = !string.IsNullOrWhiteSpace(placement.Id);
-
-                    if (isRandom || hasFixedItem)
-                    {
-                        scene = AddExtraItem(scene, GetDynamicParentGameObject(), randomizer, logger, placement, rng, isRandom, randomItemSettings);
-                    }
-                    else
-                    {
-                        logger.LogLine($"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
-                    }
-                }
+                scene = ApplyPlacementToScene(
+                    scene,
+                    GetDynamicParentGameObject(),
+                    randomizer,
+                    logger,
+                    rng,
+                    placement,
+                    randomItemSettings,
+                    allowExtraItems,
+                    allowExtraCrates);
             }
 
             return scene;
@@ -240,16 +314,20 @@ internal class ExtraPlacementModifier : Modifier
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!randomizer.GetConfigOption<bool>("random-items"))
-            return;
-
         var itemPlacementService = randomizer.ItemPlacementService;
         var context = randomizer.StaticItemRandomizationService;
+        var randomItemsEnabled = randomizer.GetConfigOption<bool>("random-items");
         var allowExtraItems = randomizer.GetConfigOption<bool>("additional-items");
         var allowExtraCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates");
-
-        itemPlacementService.ItemPlacements
+        var extraPlacements = itemPlacementService.ItemPlacements
             .Where(placement => placement.Enabled && placement.IsExtra && !string.IsNullOrEmpty(placement.SceneFile))
+            .ToList();
+        var hasAlwaysOnItemBoxes = extraPlacements.Any(placement => placement.Tags.Contains(ItemBoxTag));
+
+        if (!allowExtraItems && !allowExtraCrates && !hasAlwaysOnItemBoxes)
+            return;
+
+        extraPlacements
             .GroupBy(placement => placement.SceneFile, StringComparer.OrdinalIgnoreCase)
             .ToList()
             .ForEach(group => HandleExtraItemsForScene(

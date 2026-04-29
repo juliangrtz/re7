@@ -319,6 +319,42 @@ public class RandomizerItemRandomizationTests
     }
 
     [Fact]
+    public void ItemBoxes_AreAddedEvenWhenRandomAndAdditionalItemsAreDisabled()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var placements = result.ItemPlacementService.ItemPlacements
+            .Where(x =>
+                x.Enabled &&
+                x.IsExtra &&
+                !string.IsNullOrWhiteSpace(x.SceneFile) &&
+                x.Tags.Contains(ExtraPlacementModifier.ItemBoxTag))
+            .ToList();
+
+        Assert.NotEmpty(placements);
+
+        foreach (var sceneGroup in placements.GroupBy(x => x.SceneFile, StringComparer.OrdinalIgnoreCase))
+        {
+            var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(sceneGroup.Key));
+            var afterDynamic = GetDynamicParent(result.ReadAfterScene(sceneGroup.Key));
+            var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+
+            Assert.True(result.WasFileModified(sceneGroup.Key));
+            Assert.Equal(beforeDynamic.Children.Count() + sceneGroup.Count(), afterDynamic.Children.Count());
+
+            foreach (var placement in sceneGroup)
+            {
+                var newChild = Assert.Single(newChildren, child =>
+                {
+                    var transform = child.FindComponent<via.Transform>();
+                    return transform != null && TransformMatchesPlacement(transform, placement);
+                });
+                AssertPositionMatchesPlacement(newChild.FindComponent<via.Transform>()!, placement);
+            }
+        }
+    }
+
+    [Fact]
     public void BirdCageModifier_Enabled_ChangesRewardDataInBirdCageScene()
     {
         using var result = RandomizerTest.RunState(config =>
@@ -401,11 +437,15 @@ public class RandomizerItemRandomizationTests
 
     private static void AssertPositionMatchesPlacement(via.Transform transform, ItemPlacement placement)
     {
-        const float tolerance = 0.001f;
+        Assert.True(TransformMatchesPlacement(transform, placement));
+    }
 
-        Assert.InRange(Math.Abs(transform.Position.X - placement.PosX), 0, tolerance);
-        Assert.InRange(Math.Abs(transform.Position.Y - placement.PosY), 0, tolerance);
-        Assert.InRange(Math.Abs(transform.Position.Z - placement.PosZ), 0, tolerance);
+    private static bool TransformMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    {
+        const float tolerance = 0.001f;
+        return Math.Abs(transform.Position.X - placement.PosX) <= tolerance
+            && Math.Abs(transform.Position.Y - placement.PosY) <= tolerance
+            && Math.Abs(transform.Position.Z - placement.PosZ) <= tolerance;
     }
 
     private static List<BirdCageState> GetBirdCageStates(RszScene scene)
