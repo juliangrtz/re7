@@ -194,6 +194,16 @@ public class REFPlugin
             return;
         }
 
+        var dropTransform = drop.Transform;
+        if (dropTransform != null)
+        {
+            var worldPosition = dropTransform.Position;
+            var worldRotation = dropTransform.Rotation;
+            dropTransform.setParent(null!, true);
+            dropTransform.Position = worldPosition;
+            dropTransform.Rotation = worldRotation;
+        }
+
         logger.Log($"Spawned test enemy drop '{TestEnemyDropItemDataId}' for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);
     }
 
