@@ -33,10 +33,7 @@ internal class AreaService(Randomizer randomizer)
 
     private void LoadAreasCore()
     {
-        _guidToArea.Clear();
-
-        var areaRepo = AreaDefinitionRepository.Default;
-        Areas = areaRepo.All
+        Areas = AreaDefinitionRepository.Default.All
             .Where(a => a.Dlc == null)
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
@@ -44,6 +41,8 @@ internal class AreaService(Randomizer randomizer)
             .ToImmutableArray();
 
         // Map initial guids
+        _guidToArea.Clear();
+
         foreach (var area in _areas)
         {
             area.MapGameObjectGuids(_guidToArea);
