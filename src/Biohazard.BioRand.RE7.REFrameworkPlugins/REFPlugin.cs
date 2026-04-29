@@ -9,19 +9,31 @@ using static app.InventoryMenu;
 
 public class REFPlugin
 {
+    private const string TestEnemyDropItemDataId = "Herb";
+    private const int TestEnemyDropStackNum = 1;
+
     private static bool IsInitialized = false;
     private static readonly Configuration config = new();
     private static readonly Logger logger = new(config);
+    private static readonly Lock enemyDropStateLock = new();
+    private static readonly HashSet<ulong> droppedEnemyObjects = [];
 
     [PluginEntryPoint]
-    public static void Main()
-        => Initialize();
+    public static void Main() => Initialize();
 
     private static void Initialize()
     {
         ImGuiDrawUI.Post += OnImGuiDrawUi;
         IsInitialized = true;
         logger.Log("Loaded.");
+        if (config.LoadError != null)
+        {
+            logger.Log($"Failed to load configuration '{config.ConfigPath}': {config.LoadError}. Using defaults.");
+        }
+        else if (!config.HasConfigFile)
+        {
+            logger.Log($"Configuration file not found at '{config.ConfigPath}'. Using defaults.");
+        }
         logger.Log($"Configuration has {config.Entries} entries.");
     }
 
@@ -29,6 +41,10 @@ public class REFPlugin
     public static void OnUnload()
     {
         IsInitialized = false;
+        lock (enemyDropStateLock)
+        {
+            droppedEnemyObjects.Clear();
+        }
         logger.Log("Unloaded.");
     }
 
@@ -63,13 +79,13 @@ public class REFPlugin
 
         if (playerName.StartsWith("Pl00", StringComparison.Ordinal))
         {
-            var ethanSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-ethan"));
+            var ethanSize = ConfigInventorySizeToEnum(config.ReadOrDefault("random-starting-inventory-size-ethan", "12"));
             logger.Log($"Playing as Ethan, configured inventory size: {ethanSize}", isVerbose: true);
             return ethanSize;
         }
         else if (playerName.StartsWith("Pl2", StringComparison.Ordinal))
         {
-            var miaSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-mia"));
+            var miaSize = ConfigInventorySizeToEnum(config.ReadOrDefault("random-starting-inventory-size-mia", "12"));
             logger.Log($"Playing as Mia, configured inventory size: {miaSize}", isVerbose: true);
             return miaSize;
         }
@@ -143,6 +159,77 @@ public class REFPlugin
     }
 
     #endregion Inventory
+
+    #region Enemy Drops
+
+    private static ItemManager? GetItemManager()
+    {
+        return API.GetManagedSingleton("app.ItemManager")?.As<ItemManager>();
+    }
+
+    private static void ResetEnemyDropState(via.GameObject? enemyObject)
+    {
+        if (enemyObject == null)
+            return;
+
+        lock (enemyDropStateLock)
+        {
+            droppedEnemyObjects.Remove(enemyObject.Address());
+        }
+    }
+
+    private static void SpawnTestEnemyDrop(via.GameObject enemyObject)
+    {
+        var itemManager = GetItemManager();
+        if (itemManager == null)
+        {
+            logger.Log("Unable to spawn enemy drop because app.ItemManager was unavailable.");
+            return;
+        }
+
+        var drop = itemManager.createDropItemInstance(enemyObject, TestEnemyDropItemDataId, TestEnemyDropStackNum);
+        if (drop == null)
+        {
+            logger.Log($"Failed to create test enemy drop '{TestEnemyDropItemDataId}'.");
+            return;
+        }
+
+        logger.Log($"Spawned test enemy drop '{TestEnemyDropItemDataId}' for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);
+    }
+
+    [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.spawn), MethodHookType.Pre)]
+    private static PreHookResult EnemyActionController_spawn_Pre(Span<ulong> args)
+    {
+        ResetEnemyDropState(ManagedObject.ToManagedObject(args[1]).As<EnemyActionController>()?.GameObject);
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.forgetDie), MethodHookType.Pre)]
+    private static PreHookResult EnemyActionController_forgetDie_Pre(Span<ulong> args)
+    {
+        ResetEnemyDropState(ManagedObject.ToManagedObject(args[1]).As<EnemyActionController>()?.GameObject);
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(EnemyDamageController), nameof(EnemyDamageController.doDie), MethodHookType.Pre)]
+    private static PreHookResult EnemyDamageController_doDie_Pre(Span<ulong> args)
+    {
+        var controller = ManagedObject.ToManagedObject(args[1]).As<EnemyDamageController>();
+        var enemyObject = controller?.GameObject;
+        if (enemyObject == null)
+            return PreHookResult.Continue;
+
+        lock (enemyDropStateLock)
+        {
+            if (!droppedEnemyObjects.Add(enemyObject.Address()))
+                return PreHookResult.Continue;
+        }
+
+        SpawnTestEnemyDrop(enemyObject);
+        return PreHookResult.Continue;
+    }
+
+    #endregion Enemy Drops
 
     #region UI
 

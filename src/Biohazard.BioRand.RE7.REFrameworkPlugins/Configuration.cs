@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using static Biohazard.BioRand.RE7.REFrameworkPlugins.Logger;
+using System.Text.Json;
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
@@ -9,19 +8,38 @@ namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 /// </summary>
 internal class Configuration
 {
-    private const string workingDirectory = @"reframework\data\BioRand7";
+    private const string WorkingDirectory = @"reframework\data\BioRand7";
     private readonly Dictionary<string, JsonElement> jsonConfig = new();
+
+    public string ConfigPath { get; } = Path.GetFullPath(Path.Combine(WorkingDirectory, "config.json"));
+    public bool HasConfigFile { get; }
+    public string? LoadError { get; }
 
     public Configuration()
     {
-        var file = File.ReadAllText($@"{workingDirectory}\config.json");
-        jsonConfig = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file)
-            ?? throw new JsonException("Bad configuration!");
+        if (!File.Exists(ConfigPath))
+            return;
+
+        try
+        {
+            var file = File.ReadAllText(ConfigPath);
+            jsonConfig = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file) ?? new();
+            HasConfigFile = true;
+        }
+        catch (Exception ex)
+        {
+            LoadError = ex.Message;
+        }
     }
 
     public string Read(string key)
     {
-        return jsonConfig[key].ToString();
+        return ReadOrDefault(key, string.Empty);
+    }
+
+    public string ReadOrDefault(string key, string defaultValue)
+    {
+        return jsonConfig.TryGetValue(key, out var value) ? value.ToString() : defaultValue;
     }
 
     public int Entries => jsonConfig.Count;
