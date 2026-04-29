@@ -37,9 +37,31 @@ internal class Configuration
         return ReadOrDefault(key, string.Empty);
     }
 
-    public string ReadOrDefault(string key, string defaultValue)
+    public bool TryRead<T>(string key, out T value)
     {
-        return jsonConfig.TryGetValue(key, out var value) ? value.ToString() : defaultValue;
+        value = default!;
+
+        if (!jsonConfig.TryGetValue(key, out var jsonValue))
+            return false;
+
+        try
+        {
+            var parsed = JsonSerializer.Deserialize<T>(jsonValue.GetRawText());
+            if (parsed == null)
+                return false;
+
+            value = parsed;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public T ReadOrDefault<T>(string key, T defaultValue)
+    {
+        return TryRead(key, out T value) ? value : defaultValue;
     }
 
     public int Entries => jsonConfig.Count;

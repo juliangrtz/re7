@@ -5,6 +5,33 @@ namespace Biohazard.BioRand.RE7.Items;
 
 internal class ItemDrops
 {
+    private static readonly ImmutableDictionary<string, double> _defaultGenericDropRatios =
+        new Dictionary<string, double>(StringComparer.Ordinal)
+        {
+            ["HandgunBullet"] = 0.2,
+            ["HandgunBulletL"] = 0.2,
+            ["ShotgunBullet"] = 0.2,
+            ["MachineGunBullet"] = 0.2,
+            ["MagnumBullet"] = 0.05,
+            ["BurnerBullet"] = 0.1,
+            ["FlameBulletS"] = 0.08,
+            ["AcidBulletS"] = 0.08,
+            ["RemedyM"] = 0.05,
+            ["RemedyL"] = 0.05,
+            ["EyeDrops"] = 0.2,
+            ["Stimulant"] = 0.01,
+            ["Depressant"] = 0.01,
+            ["Herb"] = 0.1,
+            ["EasyBoots"] = 0.0,
+            ["AlphaGrass"] = 0.01,
+            ["ChemicalM"] = 0.1,
+            ["ChemicalL"] = 0.2,
+            ["ChemicalS"] = 0.2,
+            ["Gunpowder"] = 0.35,
+            ["LiquidBomb"] = 0.05,
+            ["Coin"] = 0.1,
+        }.ToImmutableDictionary(StringComparer.Ordinal);
+
     public static ImmutableList<string> GenericDrops { get; private set; } = [
         "EasyBoots",
         "AlphaGrass",
@@ -46,6 +73,9 @@ internal class ItemDrops
     public static List<string> GetEnabledValuableDrops() => [
         RepairKit, LockPick
     ];
+
+    public static double GetDefaultGenericDropRatio(string id)
+        => _defaultGenericDropRatios.GetValueOrDefault(id, 0.5);
 
     // Categories
     public const string None = "None";

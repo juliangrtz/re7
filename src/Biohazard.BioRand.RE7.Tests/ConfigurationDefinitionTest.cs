@@ -126,4 +126,24 @@ public class ConfigurationDefinitionTest
                 $"Item '{item.Id}' has no type.");
         }
     }
+
+    [Fact]
+    public void Test_EnemyDrop_Configuration_Items_Exist()
+    {
+        var ids = items
+            .Where(item => item.Id != null)
+            .Select(item => item.Id!)
+            .ToHashSet();
+
+        Assert.Contains("random-enemy-drops", ids);
+        Assert.Contains("enemy-drop-respect-difficulty", ids);
+        Assert.Contains("enemy-drop-ammo-only-available-weapons", ids);
+        Assert.Contains("enemy-drop-ammo-min", ids);
+        Assert.Contains("enemy-drop-ammo-max", ids);
+        Assert.Contains("enemy-drop-ratio-herb", ids);
+        Assert.Contains("enemy-drop-ratio-handgunbullet", ids);
+        Assert.Contains("enemy-drop-ratio-liquidbomb", ids);
+        Assert.Contains("enemy-drop-valuable-repair-kit", ids);
+        Assert.Contains("enemy-drop-valuable-lock-pick", ids);
+    }
 }
