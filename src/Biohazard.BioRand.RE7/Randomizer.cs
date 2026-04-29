@@ -34,7 +34,8 @@ internal class Randomizer : IDisposable
     ];
 
     private bool IsREFrameworkRequired()
-        => _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
+        => GetConfigOption<bool>("random-enemy-drops")
+                                        || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
@@ -179,6 +180,7 @@ internal class Randomizer : IDisposable
             new ItemStackModifier(),
 
             // Items
+            new ExtraPlacementModifier(),
             new ItemModifier(),
             new BirdCageModifier(),
             new ItemDropTableModifier(),
@@ -247,6 +249,7 @@ internal class Randomizer : IDisposable
     public AreaService AreaService => GetService<AreaService>();
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
     public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
+    public StaticItemRandomizationService StaticItemRandomizationService => GetService<StaticItemRandomizationService>();
     public FlagService FlagService => GetService<FlagService>();
     public ChestService ChestService => GetService<ChestService>();
 

@@ -62,6 +62,28 @@ public class RandomizerItemRandomizationTests
     }
 
     [Fact]
+    public void ItemPlacementService_FromSceneGuid_FiltersDuplicateGuidsToCurrentScene()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var duplicatedGuid = new Guid("3e6a9272-9495-44b5-963e-299206d95e16");
+        var chapter3Scene = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+        var chapter4Scene = "natives/stm/environment/scene/chapter4/c04_mainhouse1flivingjack.scn.20";
+
+        var allPlacements = result.ItemPlacementService.FromGuid(duplicatedGuid)
+            .Where(x => x.Dlc == null)
+            .ToList();
+        var chapter3Placements = result.ItemPlacementService.FromSceneGuid(chapter3Scene, duplicatedGuid);
+        var chapter4Placements = result.ItemPlacementService.FromSceneGuid(chapter4Scene, duplicatedGuid);
+
+        Assert.True(allPlacements.Count >= 2);
+        Assert.Single(chapter3Placements);
+        Assert.Single(chapter4Placements);
+        Assert.All(chapter3Placements, placement => Assert.Equal(chapter3Scene, placement.SceneFile));
+        Assert.All(chapter4Placements, placement => Assert.Equal(chapter4Scene, placement.SceneFile));
+    }
+
+    [Fact]
     public void ItemRandomizer_ZeroDropRatios_FallsBackToEthanLeg()
     {
         using var result = RandomizerTest.RunState();
@@ -79,6 +101,29 @@ public class RandomizerItemRandomizationTests
         Assert.Equal(1, drop.CountEasy);
         Assert.Equal(1, drop.CountNormal);
         Assert.Equal(1, drop.CountMadhouse);
+    }
+
+    [Fact]
+    public void ItemRandomizer_CreateGeneralItemPool_PreservesFractionalWeightPrecision()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var bag = result.ItemRandomizer.CreateGeneralItemPool(
+            new RandomItemSettings
+            {
+                ItemRatioKeyFunc = id => id switch
+                {
+                    "Herb" => 0.03,
+                    "Gunpowder" => 0.04,
+                    _ => 0
+                }
+            },
+            result.Randomizer.GetRng("tests/pool-precision"));
+        var draws = bag.Next(bag.Count);
+
+        Assert.Equal(7, bag.Count);
+        Assert.Equal(3, draws.Count(x => x == "Herb"));
+        Assert.Equal(4, draws.Count(x => x == "Gunpowder"));
     }
 
     [Fact]
@@ -226,7 +271,7 @@ public class RandomizerItemRandomizationTests
             x.Enabled &&
             x.IsExtra &&
             !string.IsNullOrEmpty(x.SceneFile) &&
-            x.Tags.Contains(ItemPlacement.RandomItemTag));
+            x.Tags.Contains(ExtraPlacementModifier.RandomItemTag));
 
         var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
         var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
@@ -257,8 +302,8 @@ public class RandomizerItemRandomizationTests
             x.Enabled &&
             x.IsExtra &&
             !string.IsNullOrEmpty(x.SceneFile) &&
-            x.Tags.Contains(ItemPlacement.WoodenCrateTag) &&
-            x.Tags.Contains(ItemPlacement.NotFakeCrateTag));
+            x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag) &&
+            x.Tags.Contains(ExtraPlacementModifier.NotFakeCrateTag));
 
         var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
         var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
@@ -271,6 +316,42 @@ public class RandomizerItemRandomizationTests
         Assert.NotNull(destruct);
         Assert.True(destruct!.Enabled);
         AssertPositionMatchesPlacement(transform, placement);
+    }
+
+    [Fact]
+    public void ItemBoxes_AreAddedEvenWhenRandomAndAdditionalItemsAreDisabled()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var placements = result.ItemPlacementService.ItemPlacements
+            .Where(x =>
+                x.Enabled &&
+                x.IsExtra &&
+                !string.IsNullOrWhiteSpace(x.SceneFile) &&
+                x.Tags.Contains(ExtraPlacementModifier.ItemBoxTag))
+            .ToList();
+
+        Assert.NotEmpty(placements);
+
+        foreach (var sceneGroup in placements.GroupBy(x => x.SceneFile, StringComparer.OrdinalIgnoreCase))
+        {
+            var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(sceneGroup.Key));
+            var afterDynamic = GetDynamicParent(result.ReadAfterScene(sceneGroup.Key));
+            var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+
+            Assert.True(result.WasFileModified(sceneGroup.Key));
+            Assert.Equal(beforeDynamic.Children.Count() + sceneGroup.Count(), afterDynamic.Children.Count());
+
+            foreach (var placement in sceneGroup)
+            {
+                var newChild = Assert.Single(newChildren, child =>
+                {
+                    var transform = child.FindComponent<via.Transform>();
+                    return transform != null && TransformMatchesPlacement(transform, placement);
+                });
+                AssertPositionMatchesPlacement(newChild.FindComponent<via.Transform>()!, placement);
+            }
+        }
     }
 
     [Fact]
@@ -312,8 +393,8 @@ public class RandomizerItemRandomizationTests
         var itemRandomizer = result.ItemRandomizer;
 
         var match = result.AreaService.Areas
-            .SelectMany(area => area.Items)
-            .SelectMany(gameObject => result.ItemPlacementService.FromGuid(gameObject.Guid))
+            .SelectMany(area => area.Items.Select(gameObject => (AreaPath: area.Path, GameObject: gameObject)))
+            .SelectMany(x => result.ItemPlacementService.FromSceneGuid(x.AreaPath, x.GameObject.Guid))
             .DistinctBy(placement => placement.Guid)
             .Select(placement => (Definition: ItemDefinitionRepository.Default.FromId(placement.Id)!, Placement: placement))
             .Where(tuple =>
@@ -356,11 +437,15 @@ public class RandomizerItemRandomizationTests
 
     private static void AssertPositionMatchesPlacement(via.Transform transform, ItemPlacement placement)
     {
-        const float tolerance = 0.001f;
+        Assert.True(TransformMatchesPlacement(transform, placement));
+    }
 
-        Assert.InRange(Math.Abs(transform.Position.X - placement.PosX), 0, tolerance);
-        Assert.InRange(Math.Abs(transform.Position.Y - placement.PosY), 0, tolerance);
-        Assert.InRange(Math.Abs(transform.Position.Z - placement.PosZ), 0, tolerance);
+    private static bool TransformMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    {
+        const float tolerance = 0.001f;
+        return Math.Abs(transform.Position.X - placement.PosX) <= tolerance
+            && Math.Abs(transform.Position.Y - placement.PosY) <= tolerance
+            && Math.Abs(transform.Position.Z - placement.PosZ) <= tolerance;
     }
 
     private static List<BirdCageState> GetBirdCageStates(RszScene scene)

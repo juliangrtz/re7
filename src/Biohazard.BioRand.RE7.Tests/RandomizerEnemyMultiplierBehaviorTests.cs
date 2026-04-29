@@ -162,19 +162,21 @@ public class RandomizerEnemyMultiplierBehaviorTests
     [Fact]
     public void Randomizer_EnemyMultiplierAboveOne_UpdatesChangedSceneCounts()
     {
+        const double multiplier = 1.5;
+
         using var result = RandomizerTest.RunState(config =>
         {
-            config["enemy-multiplier"] = 1.5;
+            config["enemy-multiplier"] = multiplier;
         });
 
-        var changedScenePaths = GetChangedScenePaths(result);
+        var changedScenePaths = GetChangedScenePaths(result, multiplier);
 
         Assert.NotEmpty(changedScenePaths);
         foreach (var path in changedScenePaths)
         {
             var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
             var afterSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadAfterScene(path));
-            var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, 1.5);
+            var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
 
             Assert.NotEqual(beforeSlots.Length, targetCount);
             Assert.Equal(targetCount, afterSlots.Length);
@@ -184,28 +186,36 @@ public class RandomizerEnemyMultiplierBehaviorTests
     [Fact]
     public void Randomizer_EnemyMultiplierBelowOne_UpdatesChangedSceneCounts()
     {
+        const double multiplier = 0.5;
+
         using var result = RandomizerTest.RunState(config =>
         {
-            config["enemy-multiplier"] = 0.5;
+            config["enemy-multiplier"] = multiplier;
         });
 
-        var changedScenePaths = GetChangedScenePaths(result);
+        var changedScenePaths = GetChangedScenePaths(result, multiplier);
 
         Assert.NotEmpty(changedScenePaths);
         foreach (var path in changedScenePaths)
         {
             var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
             var afterSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadAfterScene(path));
-            var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, 0.5);
+            var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
 
             Assert.NotEqual(beforeSlots.Length, targetCount);
             Assert.Equal(targetCount, afterSlots.Length);
         }
     }
 
-    private static List<string> GetChangedScenePaths(RandomizerRunResult result)
+    private static List<string> GetChangedScenePaths(RandomizerRunResult result, double multiplier)
         => result.ChangedFiles.Keys
             .Where(path => path.EndsWith(".scn.20", StringComparison.OrdinalIgnoreCase))
+            .Where(path =>
+            {
+                var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
+                var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
+                return beforeSlots.Length > 0 && beforeSlots.Length != targetCount;
+            })
             .OrderBy(path => path, StringComparer.Ordinal)
             .ToList();
 

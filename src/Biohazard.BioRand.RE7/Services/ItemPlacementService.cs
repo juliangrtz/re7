@@ -32,6 +32,14 @@ internal class ItemPlacementService
         return item;
     }
 
+    public List<ItemPlacement> FromSceneGuid(string sceneFile, Guid guid)
+        => FromGuid(guid)
+            .Where(x => string.Equals(x.SceneFile, sceneFile, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+    public List<ItemPlacement> FromSceneGuid(string sceneFile, string guid)
+        => FromSceneGuid(sceneFile, new Guid(guid));
+
     public bool HasItem(Guid guid) => GuidToItemsMap.ContainsKey(guid);
 
     public List<ItemPlacement> FromGuid(Guid guid) => GuidToItemsMap[guid];

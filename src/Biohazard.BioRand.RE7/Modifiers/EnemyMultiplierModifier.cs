@@ -27,7 +27,10 @@ internal class EnemyMultiplierModifier : Modifier
     {
         var multiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
         if (multiplier == 1.0)
+        {
+            logger.LogLine("Not running modifier with default modifier of 1.0.");
             return;
+        }
 
         var rng = randomizer.GetRng(RandomizerKey);
         foreach (var area in randomizer.AreaService.Areas)

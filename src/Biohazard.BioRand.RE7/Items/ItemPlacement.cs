@@ -46,12 +46,5 @@ public class ItemPlacement
     public SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
     public EulerAngles Euler => new(Rotation);
 
-    // Tags
-    public const string WoodenCrateTag = "crate";
-    public const string NotFakeCrateTag = "not_fake";
-    public const string FakeCrateTag = "fake";
-    public const string WeaponChestTag = "weapon_chest";
-    public const string ItemBoxTag = "item_box";
-    public const string RandomItemTag = "random";
     public const string ExcludeTag = "exclude";
 }

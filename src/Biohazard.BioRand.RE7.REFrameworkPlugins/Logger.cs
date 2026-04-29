@@ -2,10 +2,15 @@
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
-internal static class Logger
+internal class Logger(Configuration config)
 {
-    // TODO Support verbosity option
+    public bool LogVerbose { get; set; } = config.ReadOrDefault("verbose-reframework-plugin-logging", false);
 
-    public static void Log(string message)
-        => API.LogInfo($"[BIORAND 7] {message}");
+    public void Log(string message, bool isVerbose = false)
+    {
+        if (isVerbose && !LogVerbose)
+            return;
+
+        API.LogInfo($"[BIORAND 7] {message}");
+    }
 }

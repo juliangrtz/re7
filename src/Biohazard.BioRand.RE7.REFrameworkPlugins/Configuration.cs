@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using static Biohazard.BioRand.RE7.REFrameworkPlugins.Logger;
+using System.Text.Json;
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
@@ -9,19 +8,61 @@ namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 /// </summary>
 internal class Configuration
 {
-    private const string workingDirectory = @"reframework\data\BioRand7";
+    private const string WorkingDirectory = @"reframework\data\BioRand7";
     private readonly Dictionary<string, JsonElement> jsonConfig = new();
+
+    public string ConfigPath { get; } = Path.GetFullPath(Path.Combine(WorkingDirectory, "config.json"));
+    public bool HasConfigFile { get; }
+    public string? LoadError { get; }
 
     public Configuration()
     {
-        var file = File.ReadAllText($@"{workingDirectory}\config.json");
-        jsonConfig = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file)
-            ?? throw new JsonException("Bad configuration!");
-        Log($"Configuration successfully initialized, {jsonConfig.Count} entries loaded.");
+        if (!File.Exists(ConfigPath))
+            return;
+
+        try
+        {
+            var file = File.ReadAllText(ConfigPath);
+            jsonConfig = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file) ?? new();
+            HasConfigFile = true;
+        }
+        catch (Exception ex)
+        {
+            LoadError = ex.Message;
+        }
     }
 
     public string Read(string key)
     {
-        return jsonConfig[key].ToString();
+        return ReadOrDefault(key, string.Empty);
     }
+
+    public bool TryRead<T>(string key, out T value)
+    {
+        value = default!;
+
+        if (!jsonConfig.TryGetValue(key, out var jsonValue))
+            return false;
+
+        try
+        {
+            var parsed = JsonSerializer.Deserialize<T>(jsonValue.GetRawText());
+            if (parsed == null)
+                return false;
+
+            value = parsed;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public T ReadOrDefault<T>(string key, T defaultValue)
+    {
+        return TryRead(key, out T value) ? value : defaultValue;
+    }
+
+    public int Entries => jsonConfig.Count;
 }
