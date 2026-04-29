@@ -14,8 +14,13 @@ public class ConfigurationIdUsageTest
     private static readonly string[] Exclusions =
     [
         "debug-force-reframework",
+        "verbose-reframework-plugin-logging",
         "username",
         "special",
+        "enemy-drop-respect-difficulty",
+        "enemy-drop-ammo-only-available-weapons",
+        "enemy-drop-ammo-min",
+        "enemy-drop-ammo-max",
         "item-drop-ratio-",
         "item-drop-valuable-",
         "inventory-weapon-",

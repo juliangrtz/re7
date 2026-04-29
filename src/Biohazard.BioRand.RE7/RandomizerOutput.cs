@@ -2,6 +2,7 @@ using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 using System.Net.Http;
+using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7;
 
@@ -79,7 +80,7 @@ public sealed class RandomizerOutput
                 EmbeddedData.GetFile(REFrameworkPluginName)
             );
 
-            builder.AddEntry("reframework/data/BioRand7/config.json", configBytes);
+            builder.AddEntry("reframework/data/BioRand7/config.json", GetREFrameworkConfigBytes());
         }
 
         if (Input.Configuration.GetValueOrDefault<bool>("debug-download-reframework-nightly"))
@@ -102,6 +103,13 @@ public sealed class RandomizerOutput
         }
 
         return builder;
+    }
+
+    private byte[] GetREFrameworkConfigBytes()
+    {
+        var config = JsonNode.Parse(Input.Configuration.ToJson())?.AsObject() ?? [];
+        config["biorand-seed"] = Input.Seed;
+        return Encoding.UTF8.GetBytes(config.ToJsonString());
     }
 
     private byte[] GetModInfo()

@@ -366,85 +366,96 @@ internal static class RandomizerConfigurationDefinition
 
         var genericItemDrops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
 
-        //group = page.CreateGroup("Drops");
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = $"random-enemy-drops",
-        //    Label = "Random enemy drops",
-        //    Description = "Let Biorand randomize the enemy drops.",
-        //    Type = "switch",
-        //    Default = true
-        //});
+        group = page.CreateGroup("Drops");
+        group.Warning = "This feature requires RE Framework.";
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"random-enemy-drops",
+            Label = "Random Enemy Drops",
+            Description = "Let BioRand randomize the items dropped by defeated enemies through RE Framework.",
+            Type = "switch",
+            Default = true
+        });
 
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = $"enemy-drop-ammo-only-available-weapons",
-        //    Label = "Ammo for available weapons only",
-        //    Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
-        //    Type = "switch",
-        //    Default = true
-        //});
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-respect-difficulty",
+            Label = "Enemy ammo drops respect the difficulty",
+            Description = "Will drop more ammo on Easy/Normal and less on Madhouse. " +
+            "If you disable this all difficulties will share the same enemy ammo quantities.",
+            Type = "switch",
+            Default = true
+        });
 
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = $"enemy-drop-ammo-min",
-        //    Label = "Min. Ammo Quantity",
-        //    Description = "The minimum percentage of an ammo stack to drop.",
-        //    Type = "percent",
-        //    Min = 0.1,
-        //    Max = 1,
-        //    Step = 0.1,
-        //    Default = 0.1
-        //});
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-only-available-weapons",
+            Label = "Ammo for available weapons only",
+            Description = "Only drop ammo for weapons that are available before or in the chapter with the drop.",
+            Type = "switch",
+            Default = true
+        });
 
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = $"enemy-drop-ammo-max",
-        //    Label = "Max. Ammo Quantity",
-        //    Description = "The maximum percentage of an ammo stack to drop.",
-        //    Type = "percent",
-        //    Min = 0.1,
-        //    Max = 1,
-        //    Step = 0.1,
-        //    Default = 1
-        //});
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-min",
+            Label = "Min. Ammo Quantity",
+            Description = "The minimum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 1,
+            Step = 0.1,
+            Default = 0.1
+        });
 
-        //group = page.CreateGroup("");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-ammo-max",
+            Label = "Max. Ammo Quantity",
+            Description = "The maximum percentage of an ammo stack to drop.",
+            Type = "percent",
+            Min = 0.1,
+            Max = 10,
+            Step = 0.1,
+            Default = 0.4
+        });
 
-        //foreach (var drop in genericItemDrops)
-        //{
-        //    var category = ItemDrops.GetCategory(drop);
-        //    var (bgColor, textColor) = ItemDrops.GetColor(category);
-        //    group.Items.Add(new GroupItem()
-        //    {
-        //        Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
-        //        Label = _itemDefinitions.FromId(drop.ToString())!.Name,
-        //        Category = new GroupItemCategory()
-        //        {
-        //            Label = category,
-        //            BackgroundColor = bgColor,
-        //            TextColor = textColor,
-        //        },
-        //        Type = "range",
-        //        Min = 0,
-        //        Max = 1,
-        //        Step = 0.01,
-        //        Default = 0.5
-        //    });
-        //}
+        group = page.CreateGroup("General Drops");
 
-        //group = page.CreateGroup("Valuable Drops");
-        //group.Advanced = true;
-        //foreach (var drop in ItemDrops.HighValueDrops)
-        //{
-        //    group.Items.Add(new GroupItem()
-        //    {
-        //        Id = $"enemy-drop-valuable-{drop}",
-        //        Label = ItemDrops.GetHighValueDropLabel(drop),
-        //        Type = "switch",
-        //        Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
-        //    });
-        //}
+        foreach (var drop in genericItemDrops)
+        {
+            var category = ItemDrops.GetCategory(drop);
+            var (bgColor, textColor) = ItemDrops.GetColor(category);
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
+                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
+                Category = new GroupItemCategory()
+                {
+                    Label = category,
+                    BackgroundColor = bgColor,
+                    TextColor = textColor,
+                },
+                Type = "range",
+                Min = 0,
+                Max = 1,
+                Step = 0.01,
+                Default = ItemDrops.GetDefaultGenericDropRatio(drop)
+            });
+        }
+
+        group = page.CreateGroup("Valuable Drops");
+        group.Advanced = true;
+        foreach (var drop in ItemDrops.HighValueDrops)
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-drop-valuable-{drop}",
+                Label = ItemDrops.GetHighValueDropLabel(drop),
+                Type = "switch",
+                Default = false
+            });
+        }
 
         #endregion
 

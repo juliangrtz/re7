@@ -34,7 +34,8 @@ internal class Randomizer : IDisposable
     ];
 
     private bool IsREFrameworkRequired()
-        => _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
+        => GetConfigOption<bool>("random-enemy-drops")
+                                        || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
