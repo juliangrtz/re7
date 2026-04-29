@@ -1147,6 +1147,15 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
+            Id = "verbose-reframework-plugin-logging",
+            Label = "Verbose RE Framework Plugin Logging",
+            Description = "Useful when troubleshooting the RE Framework plugin.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
             Id = $"enable-special",
             Label = "Enable Personal Touch",
             Description = "Enables a personal touch or meme for the current user.",

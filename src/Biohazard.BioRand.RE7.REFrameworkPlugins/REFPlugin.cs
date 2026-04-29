@@ -6,12 +6,12 @@ using REFrameworkNET;
 using REFrameworkNET.Attributes;
 using REFrameworkNET.Callbacks;
 using static app.InventoryMenu;
-using static Logger;
 
 public class REFPlugin
 {
     private static bool IsInitialized = false;
     private static readonly Configuration config = new();
+    private static readonly Logger logger = new(config);
 
     [PluginEntryPoint]
     public static void Main()
@@ -21,14 +21,15 @@ public class REFPlugin
     {
         ImGuiDrawUI.Post += OnImGuiDrawUi;
         IsInitialized = true;
-        Log("Loaded.");
+        logger.Log("Loaded.");
+        logger.Log($"Configuration has {config.Entries} entries.");
     }
 
     [PluginExitPoint]
     public static void OnUnload()
     {
         IsInitialized = false;
-        Log("Unloaded.");
+        logger.Log("Unloaded.");
     }
 
     #region Inventory
@@ -63,13 +64,13 @@ public class REFPlugin
         if (playerName.StartsWith("Pl00", StringComparison.Ordinal))
         {
             var ethanSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-ethan"));
-            Log($"Playing as Ethan, configured inventory size: {ethanSize}");
+            logger.Log($"Playing as Ethan, configured inventory size: {ethanSize}", isVerbose: true);
             return ethanSize;
         }
         else if (playerName.StartsWith("Pl2", StringComparison.Ordinal))
         {
             var miaSize = ConfigInventorySizeToEnum(config.Read("random-starting-inventory-size-mia"));
-            Log($"Playing as Mia, configured inventory size: {miaSize}");
+            logger.Log($"Playing as Mia, configured inventory size: {miaSize}", isVerbose: true);
             return miaSize;
         }
         else
@@ -89,7 +90,7 @@ public class REFPlugin
 
         if (inventory.ExtendLv < desiredLevel)
         {
-            Log("Increase Inventory._ExtendLv");
+            logger.Log("Increase Inventory._ExtendLv", isVerbose: true);
             inventory._ExtendLv = desiredLevel.Value;
         }
         return PreHookResult.Continue;
@@ -105,7 +106,7 @@ public class REFPlugin
 
         if (newLevel < (int)desiredLevel)
         {
-            Log("Prevent Inventory._ExtendLv shrinking");
+            logger.Log("Prevent Inventory._ExtendLv shrinking");
             args[2] = (ulong)desiredLevel;
         }
 
@@ -124,7 +125,7 @@ public class REFPlugin
 
         if (current != MaxCombineUIRowNum)
         {
-            Log($"Patch DictionaryCombineUIController.RowNum from {current} to {MaxCombineUIRowNum}");
+            logger.Log($"Patch DictionaryCombineUIController.RowNum from {current} to {MaxCombineUIRowNum}", isVerbose: true);
             field.SetDataBoxed(controller.Address(), MaxCombineUIRowNum, false);
         }
 
@@ -136,7 +137,7 @@ public class REFPlugin
     {
         if (retval != 1)
         {
-            Log("Patch InventoryMenu.DictionaryCombine_UnlockedCombine from false to true");
+            logger.Log("Patch InventoryMenu.DictionaryCombine_UnlockedCombine from false to true", isVerbose: true);
             retval = 1;
         }
     }

@@ -17,11 +17,12 @@ internal class Configuration
         var file = File.ReadAllText($@"{workingDirectory}\config.json");
         jsonConfig = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file)
             ?? throw new JsonException("Bad configuration!");
-        Log($"Configuration successfully initialized, {jsonConfig.Count} entries loaded.");
     }
 
     public string Read(string key)
     {
         return jsonConfig[key].ToString();
     }
+
+    public int Entries => jsonConfig.Count;
 }
