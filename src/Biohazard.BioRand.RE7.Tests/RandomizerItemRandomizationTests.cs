@@ -271,7 +271,7 @@ public class RandomizerItemRandomizationTests
             x.Enabled &&
             x.IsExtra &&
             !string.IsNullOrEmpty(x.SceneFile) &&
-            x.Tags.Contains(ItemPlacement.RandomItemTag));
+            x.Tags.Contains(ExtraPlacementModifier.RandomItemTag));
 
         var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
         var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
@@ -302,8 +302,8 @@ public class RandomizerItemRandomizationTests
             x.Enabled &&
             x.IsExtra &&
             !string.IsNullOrEmpty(x.SceneFile) &&
-            x.Tags.Contains(ItemPlacement.WoodenCrateTag) &&
-            x.Tags.Contains(ItemPlacement.NotFakeCrateTag));
+            x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag) &&
+            x.Tags.Contains(ExtraPlacementModifier.NotFakeCrateTag));
 
         var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
         var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));

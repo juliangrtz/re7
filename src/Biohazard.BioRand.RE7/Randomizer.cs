@@ -179,6 +179,7 @@ internal class Randomizer : IDisposable
             new ItemStackModifier(),
 
             // Items
+            new ExtraPlacementModifier(),
             new ItemModifier(),
             new BirdCageModifier(),
             new ItemDropTableModifier(),
@@ -247,6 +248,7 @@ internal class Randomizer : IDisposable
     public AreaService AreaService => GetService<AreaService>();
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
     public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
+    public StaticItemRandomizationService StaticItemRandomizationService => GetService<StaticItemRandomizationService>();
     public FlagService FlagService => GetService<FlagService>();
     public ChestService ChestService => GetService<ChestService>();
 
