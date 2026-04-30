@@ -154,6 +154,16 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.Equal(2, newRootEnemies.Count);
     }
 
+    [Fact]
+    public void ExtraEnemies_PipeSeparatedId_WithUnknownEnemy_Throws()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            RunWithExtraEnemies(BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "BogusEnemy|")));
+
+        Assert.Contains("Unknown extra enemy id 'BogusEnemy|'", exception.Message, StringComparison.Ordinal);
+        Assert.Contains("selected 'BogusEnemy'", exception.Message, StringComparison.Ordinal);
+    }
+
     private static RandomizerRunResult RunWithExtraEnemies()
     {
         var extraEnemiesCsv = $"""

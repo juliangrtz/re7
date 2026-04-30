@@ -1,32 +1,76 @@
 Enabled,Id,Comment,SceneFile,Chapter,PosX,PosY,PosZ,RotX,RotY,RotZ,RotW
 FALSE,Em4100,Crawler - Debugging,natives/stm/environment/scene/chapter1/c01_outside02.scn.20,1,-49,5,108,0,0,0,1
 FALSE,Em3001,Jack - Debugging,natives/stm/environment/scene/chapter1/c01_outside02.scn.20,1,-47.92,5,100.86,0,0,0,1
-FALSE,Em4000,Molded - Debugging,natives/stm/environment/scene/chapter1/c01_outside02.scn.20,3,25,0,1,0,0,0,1
-TRUE,random,Outside - In front of Guest House gate,natives/stm/environment/scene/chapter1/c01_outside05.scn.20,1,-11.59,6.33,87.41,0,0,0,1
+FALSE,Em4000|Em4100|Em4200,Random Molded - Debugging,natives/stm/environment/scene/chapter1/c01_outside02.scn.20,3,25,0,1,0,0,0,1
+FALSE,random,Outside - Near Spawn,natives/stm/environment/scene/chapter1/c01_outside02.scn.20,1,-39.04,5,96.78,0,0,0,1
 TRUE,random,Outside - In front of Deer Body Effigy After Jack Mini Cutscene,natives/stm/environment/scene/chapter1/c01_outside10.scn.20,1,-34.16,3.18,7.18,0,0,0,1
-TRUE,random,Guest House - In front of Fuse Closet ,natives/stm/environment/scene/chapter1/c01_corridor01.scn.20,1,18.87,0,19.33,0,0,0,1
-TRUE,random,"Guest House - Little Room under Stairs, Mia Hand Cutoff Jumpscare",natives/stm/environment/scene/chapter1/c01_corridor02.scn.20,1,5.67,0,10.31,0,0,0,1
+FALSE,random,Guest House - In front of Fuse Closet ,natives/stm/environment/scene/chapter1/c01_corridor01.scn.20,1,18.87,0,19.33,0,0,0,1
+FALSE,random,"Guest House - Little Room under Stairs, Mia Hand Cutoff Jumpscare",natives/stm/environment/scene/chapter1/c01_corridor02.scn.20,1,5.67,0,10.31,0,0,0,1
 TRUE,Em4100,Guest House - Water Corridor - Crawler,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,1,25.84,-8.65,25.37,0,0,0,1
 TRUE,random,Guest House - In front of Mia's Cell,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1,11.72,-6.8,8.81,0,0,0,1
 TRUE,random,Guest House - Corridor Mia 1,natives/stm/environment/scene/chapter1/c01_corridor03.scn.20,1,-13.19,0,0.09,0,0,0,1
 TRUE,random,Guest House - Attic - Loot Room,natives/stm/environment/scene/chapter1/c01_3f.scn.20,1,10.71,6.5,7.97,0,0,0,1
 TRUE,random,Guest House - Attic - Middle,natives/stm/environment/scene/chapter1/c01_3f.scn.20,1,13.55,6.5,15.55,0,0,0,1
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
-FALSE,,,,,,,,,,,
+TRUE,Em4000|Em4100|Em4200,Main House - Living Room (Clock Pendulum),natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20,3,15.88,1,0.26,0,0,0,1
+TRUE,Em4100,Main House - Tunnel To Laundry - Crawler,natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,3,10.629,-1.2,10.971,0,0,0,1
+TRUE,random,Main House - Main Hallway (Hatch Key),natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,12.72,0,12.87,0,0,0,1
+TRUE,random,Main House - Bicycle Room Next To Ox Statuette Door,natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,5.79,0,-2.12,0,0,0,1
+TRUE,random,Main House - Main Hall - In Front of Dog Head Door,natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,3,-0.83,0,13.28,0,0,0,1
+TRUE,random,Main House - Main Hall - Shadow Puzzle Room,natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,3,-7.7,0.4,1.29,0,0,0,1
+TRUE,random,Main House - Corridor After First Molded Spawn Room,natives/stm/environment/scene/chapter3/c03_rightarea1fhallway1.scn.20,3,-0.64,4,4.54,0,0,0,1
+TRUE,random,Main House - 2F - Outside Terrace,natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace2f.scn.20,3,19,4,14.58,0,0,0,1
+TRUE,random,Main House - 2F - Grandma's Room,natives/stm/environment/scene/chapter3/c03_mainhouse2fgrandma.scn.20,3,10.91,4,11.1,0,0,0,1
+TRUE,random,Main House - Basement - Right After Going Down Stairs To The Right,natives/stm/environment/scene/chapter3/c03_rightareab1fhallway1.scn.20,3,-22.82,-5.25,16.59,0,0,0,1
+TRUE,random,Main House - Jack 2 Arena - Corner,natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20,3,-5.68,-7.75,10.88,0,0,0,1
+TRUE,random,Main House - Jack 2 Arena - Corner,natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20,3,-0.32,-7.75,4.76,0,0,0,1
+TRUE,random,Main House - Yard,natives/stm/environment/scene/chapter3/c03_gardenarea1.scn.20,3,-4.33,-0.25,26.58,0,0,0,1
+TRUE,random,Main House - Yard,natives/stm/environment/scene/chapter3/c03_gardenarea1.scn.20,3,18.3,-2.02,43.67,0,0,0,1
+TRUE,Em4100,Old House - Tunnel - Crank - Crawler,natives/stm/environment/scene/chapter3/c03_oldhouse1funderfloor01.scn.20,3,2.46,-4.52,87.39,0,0,0,1
+TRUE,random,Green House - 1F - Entrance Area,natives/stm/environment/scene/chapter3/c03_gh2fsaferoom01.scn.20,3,16.93,0.85,78.02,0,0,0,1
+TRUE,random,Green House - 1F - Room with Bed,natives/stm/environment/scene/chapter3/c03_gh2froom01.scn.20,3,18.07,-2.95,75.34,0,0,0,1
+TRUE,random,Green House - 2F - Corridor,natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20,3,27.099,0.85,82.909,0,0,0,1
+TRUE,random,Green House - 2F - Balcony Bridge,natives/stm/environment/scene/chapter3/c03_gh2fterrace01.scn.20,3,36.17,0.85,77.45,0,0,0,1
+TRUE,random,Green House - 1F - Yard - Ladder Block,natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20,3,35.93,-2.91,73.38,0,0,0,1
+TRUE,random,Main House - 2F - Master Bedroom (Clock Puzzle),natives/stm/environment/scene/chapter3/c03_mainhouse2fbedroom.scn.20,3,-10.02,4,8.05,0,0,0,1
+TRUE,random,Main House - B - Workshop (Red Keycard),natives/stm/environment/scene/chapter3/c03_rightareab1fpowerroom.scn.20,3,-37.51,-5.25,9.82,0,0,0,1
+TRUE,random,Main House - 3F - Attic,natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20,3,9.74,7.98,8.19,0,0,0,1
+TRUE,random,Testing Area - TV Room,natives/stm/environment/scene/chapter3/c03_leftarea2ftvroom.scn.20,3,41.904,4.004,18.387,0,0,0,1
+TRUE,random,Testing Area - First Trip Wire Room,natives/stm/environment/scene/chapter3/c03_leftarea2froom1.scn.20,3,42.44,4,23.83,0,0,0,1
+TRUE,random,Testing Area - Second Trip Wire Room,natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20,3,46.36,4,34.1,0,0,0,1
+TRUE,random,Testing Area - Trap Room With Item Box,natives/stm/environment/scene/chapter3/c03_leftarea1ftraproom.scn.20,3,56.05,-0.6,22.64,0,0,0,1
+TRUE,random,Testing Area - Cow Carcass Room,natives/stm/environment/scene/chapter3/c03_cowroom01.scn.20,3,59.91,-1.56,10.05,0,0,0,1
+TRUE,random,Testing Area - Barn Fight - Elevator,natives/stm/environment/scene/chapter3/c03_cowshed01.scn.20,3,66.34,1.66,-7.28,0,0,0,1
+TRUE,random,Testing Area - Barn Fight - Elevator,natives/stm/environment/scene/chapter3/c03_cowshed01.scn.20,3,58.4,1.66,-5.92,0,0,0,1
+TRUE,random,Boat House - Bridge - First Crank Usage,natives/stm/environment/scene/chapter3/c03_boat1fbridge01.scn.20,3,36.54,-1.18,47.26,0,0,0,1
+TRUE,random,Boat House - Jack 3 - Above,natives/stm/environment/scene/chapter3/c03_boat1fboss01.scn.20,3,116.42,-0.51,74.62,0,0,0,1
+TRUE,random,Boat House - Jack 3 - Above,natives/stm/environment/scene/chapter3/c03_boat1fboss01.scn.20,3,129.52,-0.51,82.68,0,0,0,1
+TRUE,random,Boat House - Jack 3 - Below,natives/stm/environment/scene/chapter3/c03_boat1fboss01.scn.20,3,130.59,-5.41,70.59,0,0,0,1
+TRUE,random,Boat House - Jack 3 - Below,natives/stm/environment/scene/chapter3/c03_boat1fboss01.scn.20,3,117.11,-5.41,81.07,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Ship - ,,4,,,,0,0,0,1
+FALSE,random,Ship - ,,4,,,,0,0,0,1
+FALSE,random,Ship - ,,4,,,,0,0,0,1
+FALSE,random,Ship - ,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Wrecked Ship -,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+FALSE,random,Salt Mines - ,,4,,,,0,0,0,1
+,random,Final Evie - ,,4,,,,0,0,0,1
+,random,Final Evie - ,,4,,,,0,0,0,1

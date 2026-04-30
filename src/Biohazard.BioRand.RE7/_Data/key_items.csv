@@ -1,6 +1,4 @@
-Enabled,OriginalScnFile,NewScnFile,Id,NewX,NewY,NewZ,Comment
-FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,16.46,-6.581,23.8,"Alternative Bolt Cutter Location 1
-Disabled due to softlock"
-FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,13.443,-6.102,23.605,"Alternative Bolt Cutter Location 2
-Disabled due to softlock"
-,natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20,natives/stm/environment/scene/chapter3/c03_mainhouse1fgarage.scn.20,PendulumClock,1,2,3,Example
+Enabled,OriginalScnFile,KeyItemGuid,NewScnFile,Id,NewX,NewY,NewZ,Comment
+FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1a17da81-3f83-47a1-ac82-ead889f829fc,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,16.46,-6.581,23.8,Softlocks
+FALSE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1a17da81-3f83-47a1-ac82-ead889f829fc,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,13.443,-6,23.605,Softlocks
+FALSE,natives/stm/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn.20,665a86ed-7e9c-4b56-a889-4377fa1d3f47,natives/stm/environment/scene/chapter1/c01_living01.scn.20,FloorDoorKey,12.493,0.6,0.829,Softlocks

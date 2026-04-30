@@ -160,7 +160,7 @@ internal static class RandomizerConfigurationDefinition
             Default = 1,
         });
 
-        // TODO
+        // TODO Implement waves
         //group = page.CreateGroup("Waves");
         //group.Items.Add(new GroupItem()
         //{

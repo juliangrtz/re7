@@ -17,8 +17,6 @@ internal class JackShears : IEnemyDefinition
 
     public int BaseHealth => 4500;
 
-    // TODO: Fix paths
-
     public List<string> RcolPaths => [
         PakPath.RcolFile("collision/collider/enemy/em8000/em8000.rcol"),
         PakPath.RcolFile("collision/collider/enemy/em8000/em8000chainsawsensor.rcol"),
@@ -32,7 +30,7 @@ internal class JackShears : IEnemyDefinition
         => PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameterholder.user");
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/chapter/chapter3/enemy_em8000.scn");
+        => PakPath.SceneFile($"scenes/chapter/chapter7/chapter7_3/wave5.scn");
 
     public bool UsesEnemyGenerator => true;
 }
@@ -44,7 +42,7 @@ internal class JackShearsDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        var rng = randomizer.GetRng("enemy/em8100");
+        var rng = randomizer.GetRng("enemy/em8001");
 
         // Health
         var min = randomizer.GetConfigOption<int>("boss-health-min-jackshears");

@@ -667,8 +667,15 @@ internal class EnemyModifier : Modifier
                     }
                     else
                     {
-                        definition = EnemyDefinitions.Instance.FromId(extraEnemy.Id)
-                            ?? throw new InvalidOperationException($"Unknown extra enemy id '{extraEnemy.Id}'.");
+                        var possibleEnemies = extraEnemy.Id.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        var selectedEnemyId = possibleEnemies.Length switch
+                        {
+                            0 => extraEnemy.Id.Trim(),
+                            1 => possibleEnemies[0],
+                            _ => rng.Next(possibleEnemies),
+                        };
+                        definition = EnemyDefinitions.Instance.FromId(selectedEnemyId)
+                            ?? throw new InvalidOperationException($"Unknown extra enemy id '{extraEnemy.Id}' (selected '{selectedEnemyId}').");
                     }
 
                     var extraEnemyGameObject = CreateExtraEnemyGameObject(randomizer, logger, extraEnemy, definition, options, rng);
