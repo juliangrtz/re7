@@ -4,6 +4,7 @@ using app;
 using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
+using REFrameworkNET.Callbacks;
 using static app.InventoryMenu;
 
 public class REFPlugin
@@ -79,9 +80,9 @@ public class REFPlugin
         ["C03_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS"],
         ["C03_4_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet"],
         ["C03_5_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet"],
-        ["C04_1_Main"] = ["MachineGunBullet"],
-        ["C04_2_Main"] = ["MachineGunBullet"],
-        ["C04_3_Main"] = ["MachineGunBullet"],
+        ["C04_1_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
+        ["C04_2_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
+        ["C04_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
     };
 
     private static readonly Dictionary<string, (int MinWeight, int MaxWeight)> DlcCoinWeights = new(StringComparer.Ordinal)
@@ -264,14 +265,11 @@ public class REFPlugin
     private static bool IsEnemyDropEnabled()
         => config.ReadOrDefault("random-enemy-drops", true);
 
-    private static string? GetCurrentChapterName()
-        => API.GetManagedSingleton("app.GameFlowFsmManager")?.Call("get_CurrentMainGameFlow")?.ToString();
+    private static string GetCurrentChapterName()
+        => API.GetManagedSingleton("app.GameFlowFsmManager").As<GameFlowFsmManager>().CurrentMainGameFlow.ToString();
 
-    private static int? GetCurrentDifficulty()
-    {
-        var gameManager = API.GetManagedSingleton("app.GameManager")?.As<GameManager>();
-        return gameManager == null ? null : (int)gameManager.GameDifficulty;
-    }
+    private static GameManager.Difficulty GetCurrentDifficulty()
+        => API.GetManagedSingleton("app.GameManager").As<GameManager>().GameDifficulty;
 
     private static bool IsAmmoEnemyDrop(string itemDataId)
         => AmmoEnemyDropItemDataIds.Contains(itemDataId);
@@ -295,9 +293,9 @@ public class REFPlugin
     {
         var factor = GetCurrentDifficulty() switch
         {
-            0 => EasyAmmoDropAmountFactor,
-            1 => NormalAmmoDropAmountFactor,
-            2 => MadhouseAmmoDropAmountFactor,
+            GameManager.Difficulty.Easy => EasyAmmoDropAmountFactor,
+            GameManager.Difficulty.Normal => NormalAmmoDropAmountFactor,
+            GameManager.Difficulty.Hard => MadhouseAmmoDropAmountFactor,
             _ => 1
         };
 
@@ -339,6 +337,7 @@ public class REFPlugin
         if (filterAmmoByChapter)
         {
             var chapterName = GetCurrentChapterName();
+            logger.Log($"Current chapter: {(chapterName ?? "null")}", isVerbose: true);
             if (chapterName != null && ChapterAmmoAvailability.TryGetValue(chapterName, out var ammoIds))
             {
                 allowedAmmo = [.. ammoIds];
@@ -497,12 +496,12 @@ public class REFPlugin
     [MethodHook(typeof(EnemyDamageController), nameof(EnemyDamageController.doDie), MethodHookType.Pre)]
     private static PreHookResult EnemyDamageController_doDie_Pre(Span<ulong> args)
     {
+        if (!IsEnemyDropEnabled())
+            return PreHookResult.Continue;
+
         var controller = ManagedObject.ToManagedObject(args[1]).As<EnemyDamageController>();
         var enemyObject = controller?.GameObject;
         if (enemyObject == null)
-            return PreHookResult.Continue;
-
-        if (!IsEnemyDropEnabled())
             return PreHookResult.Continue;
 
         if (!TryBeginEnemyDrop(enemyObject, out var generation))
