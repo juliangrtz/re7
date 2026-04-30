@@ -10,6 +10,7 @@ using static app.InventoryMenu;
 public class REFPlugin
 {
     private const string PluginSeedConfigKey = "biorand-seed";
+    private const double DefaultEnemyDropMultiplier = 1.0;
     private const double EasyAmmoDropAmountFactor = 1.5;
     private const double NormalAmmoDropAmountFactor = 1.0;
     private const double MadhouseAmmoDropAmountFactor = 0.75;
@@ -61,7 +62,7 @@ public class REFPlugin
         "AcidBulletS",
     };
 
-    private static readonly Dictionary<string, int> DefaultAmmoStackSizes = new(StringComparer.Ordinal)
+    private static readonly Dictionary<string, int> DefaultEnemyDropStackLimits = new(StringComparer.Ordinal)
     {
         ["HandgunBullet"] = 30,
         ["HandgunBulletL"] = 20,
@@ -71,6 +72,14 @@ public class REFPlugin
         ["BurnerBullet"] = 500,
         ["FlameBulletS"] = 5,
         ["AcidBulletS"] = 5,
+        ["Coin"] = 999,
+        ["CylinderKey"] = 20,
+        ["EyeDrops"] = 5,
+        ["Gunpowder"] = 10,
+        ["Herb"] = 5,
+        ["LiquidBomb"] = 20,
+        ["RemedyL"] = 3,
+        ["RemedyM"] = 3,
     };
 
     private static readonly Dictionary<string, string[]> ChapterAmmoAvailability = new(StringComparer.Ordinal)
@@ -92,6 +101,41 @@ public class REFPlugin
         ["GoodLuckCoinC_Buy"] = (5, 10),
         ["GoodLuckCoinD_Buy"] = (10, 15),
         ["GoodLuckCoinE_Buy"] = (1, 3),
+    };
+
+    private static readonly Dictionary<string, double> SpecialEnemyDropMultipliers = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Em4200"] = 1.25, // Fat Molded
+        ["Em2000"] = 1.35, // Mia
+        ["Em3001"] = 1.5, // Stalker Jack
+        ["Em8001"] = 1.75, // Chainsaw Jack
+        ["Em3600"] = 2, // Mutated Marguerite
+    };
+
+    private static readonly HashSet<string> BossEnemyTypeIds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Em2000", // Mia
+        "Em3001", // Stalker Jack
+        "Em3600", // Mutated Marguerite
+        "Em8001", // Chainsaw Jack
+    };
+
+    private static readonly HashSet<string> BossEnemyDropItemDataIds = new(StringComparer.Ordinal)
+    {
+        "LiquidBomb",
+        "HandgunBulletL",
+        "ShotgunBullet",
+        "MachineGunBullet",
+        "MagnumBullet",
+        "BurnerBullet",
+        "FlameBulletS",
+        "AcidBulletS",
+        "RemedyL",
+        "EyeDrops",
+        "Stimulant",
+        "Depressant",
+        "ChemicalM",
+        "Coin",
     };
 
     private readonly record struct EnemyDropCandidate(string ItemDataId, double Weight);
@@ -274,10 +318,59 @@ public class REFPlugin
     private static bool IsAmmoEnemyDrop(string itemDataId)
         => AmmoEnemyDropItemDataIds.Contains(itemDataId);
 
-    private static int GetAmmoStackSize(string itemDataId)
+    private static int GetItemStackLimit(string itemDataId)
     {
-        var defaultStackSize = DefaultAmmoStackSizes.GetValueOrDefault(itemDataId, 1);
+        var defaultStackSize = DefaultEnemyDropStackLimits.GetValueOrDefault(itemDataId, 1);
         return config.ReadOrDefault($"inventory-stack-limit-{itemDataId.ToLowerInvariant()}", defaultStackSize);
+    }
+
+    private static string? GetManagedObjectRuntimeTypeName(ManagedObject? managedObject)
+    {
+        var runtimeType = managedObject?.GetTypeDefinition()?.GetRuntimeType();
+        return runtimeType?.Call("get_FullName") as string
+            ?? runtimeType?.Call("get_Name") as string;
+    }
+
+    private static string? ExtractEnemyTypeId(string? runtimeTypeName)
+    {
+        if (string.IsNullOrEmpty(runtimeTypeName))
+            return null;
+
+        for (var index = 0; index <= runtimeTypeName.Length - 6; index++)
+        {
+            if ((runtimeTypeName[index] is 'E' or 'e')
+                && (runtimeTypeName[index + 1] is 'M' or 'm')
+                && char.IsDigit(runtimeTypeName[index + 2])
+                && char.IsDigit(runtimeTypeName[index + 3])
+                && char.IsDigit(runtimeTypeName[index + 4])
+                && char.IsDigit(runtimeTypeName[index + 5]))
+            {
+                return runtimeTypeName.Substring(index, 6);
+            }
+        }
+
+        return null;
+    }
+
+    private static bool IsBossEnemyTypeId(string? enemyTypeId)
+        => enemyTypeId != null && BossEnemyTypeIds.Contains(enemyTypeId);
+
+    private static double GetEnemyDropMultiplier(ManagedObject controllerObject, out string? enemyTypeId)
+    {
+        var runtimeTypeName = GetManagedObjectRuntimeTypeName(controllerObject);
+        enemyTypeId = ExtractEnemyTypeId(runtimeTypeName);
+        if (enemyTypeId != null && SpecialEnemyDropMultipliers.TryGetValue(enemyTypeId, out var dropMultiplier))
+        {
+            logger.Log(
+                $"Enemy damage controller '{runtimeTypeName}' matched '{enemyTypeId}' and will use drop multiplier x{dropMultiplier}.",
+                isVerbose: true);
+            return dropMultiplier;
+        }
+
+        logger.Log(
+            $"Enemy damage controller '{runtimeTypeName ?? "unknown"}' will use the default drop multiplier x{DefaultEnemyDropMultiplier}.",
+            isVerbose: true);
+        return DefaultEnemyDropMultiplier;
     }
 
     private static Random CreateEnemyDropRandom(ulong enemyObjectAddress, int generation)
@@ -307,7 +400,7 @@ public class REFPlugin
         if (!IsAmmoEnemyDrop(itemDataId))
             return 1;
 
-        var stackSize = GetAmmoStackSize(itemDataId);
+        var stackSize = GetItemStackLimit(itemDataId);
         var min = ReadEnemyDropConfigOrDefault("enemy-drop-ammo-min", "item-drop-ammo-min", 0.1);
         var max = ReadEnemyDropConfigOrDefault("enemy-drop-ammo-max", "item-drop-ammo-max", 0.4);
         if (max < min)
@@ -325,13 +418,34 @@ public class REFPlugin
         return ApplyDifficultyToDropAmount(amount);
     }
 
-    private static List<EnemyDropCandidate> BuildEnemyDropCandidates(Random rng)
+    private static int ApplyEnemyDropMultiplier(string itemDataId, int stackNum, double dropMultiplier)
+    {
+        var sanitizedMultiplier = Math.Max(1.0, dropMultiplier);
+        if (sanitizedMultiplier == 1.0)
+            return stackNum;
+
+        var stackLimit = Math.Max(1.0, GetItemStackLimit(itemDataId));
+        var multipliedStackNum = stackNum * sanitizedMultiplier;
+        var finalStackNum = (int)Math.Round(Math.Clamp(multipliedStackNum, 1.0, stackLimit));
+
+        logger.Log(
+            $"Adjusted enemy drop '{itemDataId}' stack from {stackNum} to {finalStackNum} using multiplier x{sanitizedMultiplier}.",
+            isVerbose: true);
+        return finalStackNum;
+    }
+
+    private static List<EnemyDropCandidate> BuildEnemyDropCandidates(Random rng, bool restrictToBossDropPool)
     {
         var result = new List<EnemyDropCandidate>();
         var filterAmmoByChapter = ReadEnemyDropConfigOrDefault(
             "enemy-drop-ammo-only-available-weapons",
             "item-drop-ammo-only-available-weapons",
             true);
+
+        if (restrictToBossDropPool)
+        {
+            logger.Log("Restricting enemy drop pool to boss-quality items.", isVerbose: true);
+        }
 
         HashSet<string>? allowedAmmo = null;
         if (filterAmmoByChapter)
@@ -346,6 +460,9 @@ public class REFPlugin
 
         foreach (var itemDataId in GenericEnemyDropItemDataIds)
         {
+            if (restrictToBossDropPool && !BossEnemyDropItemDataIds.Contains(itemDataId))
+                continue;
+
             if (allowedAmmo != null && IsAmmoEnemyDrop(itemDataId) && !allowedAmmo.Contains(itemDataId))
                 continue;
 
@@ -385,10 +502,10 @@ public class REFPlugin
         return result;
     }
 
-    private static EnemyDropSelection? SelectEnemyDrop(via.GameObject enemyObject, int generation)
+    private static EnemyDropSelection? SelectEnemyDrop(via.GameObject enemyObject, int generation, bool restrictToBossDropPool)
     {
         var rng = CreateEnemyDropRandom(enemyObject.Address(), generation);
-        var candidates = BuildEnemyDropCandidates(rng);
+        var candidates = BuildEnemyDropCandidates(rng, restrictToBossDropPool);
         if (candidates.Count == 0)
             return null;
 
@@ -467,16 +584,24 @@ public class REFPlugin
         logger.Log($"Spawned enemy drop '{itemDataId}' x{stackNum} for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);
     }
 
-    private static void SpawnConfiguredEnemyDrop(via.GameObject enemyObject, int generation)
+    private static void SpawnConfiguredEnemyDrop(ManagedObject controllerObject, via.GameObject enemyObject, int generation)
     {
-        var selection = SelectEnemyDrop(enemyObject, generation);
+        var dropMultiplier = GetEnemyDropMultiplier(controllerObject, out var enemyTypeId);
+        var selection = SelectEnemyDrop(
+            enemyObject,
+            generation,
+            restrictToBossDropPool: IsBossEnemyTypeId(enemyTypeId));
         if (selection == null)
         {
             logger.Log($"No eligible enemy drop candidates for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);
             return;
         }
 
-        SpawnEnemyDrop(enemyObject, selection.Value.ItemDataId, selection.Value.StackNum);
+        var finalStackNum = ApplyEnemyDropMultiplier(
+            selection.Value.ItemDataId,
+            selection.Value.StackNum,
+            dropMultiplier);
+        SpawnEnemyDrop(enemyObject, selection.Value.ItemDataId, finalStackNum);
     }
 
     [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.spawn), MethodHookType.Pre)]
@@ -499,7 +624,8 @@ public class REFPlugin
         if (!IsEnemyDropEnabled())
             return PreHookResult.Continue;
 
-        var controller = ManagedObject.ToManagedObject(args[1]).As<EnemyDamageController>();
+        var controllerObject = ManagedObject.ToManagedObject(args[1]);
+        var controller = controllerObject.As<EnemyDamageController>();
         var enemyObject = controller?.GameObject;
         if (enemyObject == null)
             return PreHookResult.Continue;
@@ -507,7 +633,7 @@ public class REFPlugin
         if (!TryBeginEnemyDrop(enemyObject, out var generation))
             return PreHookResult.Continue;
 
-        SpawnConfiguredEnemyDrop(enemyObject, generation);
+        SpawnConfiguredEnemyDrop(controllerObject, enemyObject, generation);
         return PreHookResult.Continue;
     }
 
