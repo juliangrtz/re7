@@ -4,7 +4,6 @@ using app;
 using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
-using REFrameworkNET.Callbacks;
 using static app.InventoryMenu;
 
 public class REFPlugin
@@ -268,8 +267,11 @@ public class REFPlugin
     private static string? GetCurrentChapterName()
         => API.GetManagedSingleton("app.GameFlowFsmManager")?.Call("get_CurrentMainGameFlow")?.ToString();
 
-    private static string? GetCurrentDifficultyName()
-        => API.GetManagedSingleton("app.GameManager")?.Call("get_Difficulty")?.ToString();
+    private static int? GetCurrentDifficulty()
+    {
+        var gameManager = API.GetManagedSingleton("app.GameManager")?.As<GameManager>();
+        return gameManager == null ? null : (int)gameManager.GameDifficulty;
+    }
 
     private static bool IsAmmoEnemyDrop(string itemDataId)
         => AmmoEnemyDropItemDataIds.Contains(itemDataId);
@@ -291,11 +293,12 @@ public class REFPlugin
 
     private static int ApplyDifficultyToDropAmount(int amount)
     {
-        var factor = GetCurrentDifficultyName() switch
+        var factor = GetCurrentDifficulty() switch
         {
-            "Easy" => EasyAmmoDropAmountFactor,
-            "Hard" => MadhouseAmmoDropAmountFactor,
-            _ => NormalAmmoDropAmountFactor,
+            0 => EasyAmmoDropAmountFactor,
+            1 => NormalAmmoDropAmountFactor,
+            2 => MadhouseAmmoDropAmountFactor,
+            _ => 1
         };
 
         return Math.Max(1, (int)Math.Round(amount * factor));
@@ -494,12 +497,12 @@ public class REFPlugin
     [MethodHook(typeof(EnemyDamageController), nameof(EnemyDamageController.doDie), MethodHookType.Pre)]
     private static PreHookResult EnemyDamageController_doDie_Pre(Span<ulong> args)
     {
-        if (!IsEnemyDropEnabled())
-            return PreHookResult.Continue;
-
         var controller = ManagedObject.ToManagedObject(args[1]).As<EnemyDamageController>();
         var enemyObject = controller?.GameObject;
         if (enemyObject == null)
+            return PreHookResult.Continue;
+
+        if (!IsEnemyDropEnabled())
             return PreHookResult.Continue;
 
         if (!TryBeginEnemyDrop(enemyObject, out var generation))
