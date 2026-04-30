@@ -31,7 +31,7 @@ internal class ChestService(Randomizer randomizer)
         {
             Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
             Rotation = new Quaternion(placement.RotX, placement.RotY, placement.RotZ, placement.RotW),
-            Scale = Vector3.One, // TODO: GL might be too big
+            Scale = Vector3.One,
             ParentJoint = "",
             SameJointsContraint = false,
             AbsoluteScaling = false,
@@ -40,7 +40,6 @@ internal class ChestService(Randomizer randomizer)
         };
 
         // Create weapon from template
-        // TODO: Shotguns are unlootable!
         var weaponGuid = _rng.NextGuid();
         var weapon = GetCachedWeaponOrCreate(weaponDrop.Id);
         weapon = weapon.WithGuid(weaponGuid);

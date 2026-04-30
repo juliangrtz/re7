@@ -41,13 +41,55 @@ internal class KeyItemLocationModifier : Modifier
             .Where(k => k.Enabled && !string.IsNullOrWhiteSpace(k.Id))
             .ToImmutableList();
 
-        // Delete all original key item locations
-        // TODO: Copy original Guids to new key items
+        var newLocations = keyItems
+            .GroupBy(k => k.Id)
+            .Select(group => rng.Next(group))
+            .ToList();
+
+        var relocationPlans = new List<KeyItemRelocationPlan>();
+        foreach (var newLocation in newLocations)
+        {
+            var sourcePlacements = itemService.FromId(newLocation.Id)
+                .Where(placement =>
+                    placement.Enabled &&
+                    !placement.IsExtra &&
+                    string.Equals(placement.SceneFile, newLocation.OriginalScnFile, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            if (sourcePlacements.Count == 0)
+            {
+                logger.LogLine($"Skipped relocating {newLocation.Id}: no source placements found in {newLocation.OriginalScnFile}.");
+                continue;
+            }
+
+            var sourceScene = randomizer.FileRepository.GetScnFile(newLocation.OriginalScnFile)
+                .ReadScene(randomizer.FileRepository.TypeRepository);
+            var sourcePlacementGuids = sourcePlacements
+                .Select(placement => placement.Guid)
+                .ToHashSet();
+            if (!Guid.TryParse(newLocation.KeyItemGuid, out var sourceGuid))
+            {
+                logger.LogLine($"Skipped relocating {newLocation.Id}: invalid source GUID \"{newLocation.KeyItemGuid}\".");
+                continue;
+            }
+
+            var sourceGameObject = sourceScene.FindGameObject(sourceGuid);
+            if (sourceGameObject == null)
+            {
+                logger.LogLine($"Skipped relocating {newLocation.Id}: failed to resolve source object in {newLocation.OriginalScnFile}.");
+                continue;
+            }
+
+            relocationPlans.Add(new KeyItemRelocationPlan(
+                newLocation,
+                CloneSourceGameObject(sourceGameObject, newLocation),
+                sourcePlacementGuids));
+        }
+
         foreach (var sceneGroup in keyItems.GroupBy(keyItem => keyItem.OriginalScnFile, StringComparer.OrdinalIgnoreCase))
         {
-            var guidsToRemove = sceneGroup
-                .SelectMany(keyItem => itemService.FromId(keyItem.Id))
-                .Select(placement => placement.Guid)
+            var guidsToRemove = relocationPlans
+                .Where(plan => string.Equals(plan.Location.OriginalScnFile, sceneGroup.Key, StringComparison.OrdinalIgnoreCase))
+                .SelectMany(plan => plan.SourceGuidsToRemove)
                 .ToHashSet();
 
             if (guidsToRemove.Count == 0)
@@ -58,47 +100,30 @@ internal class KeyItemLocationModifier : Modifier
                 foreach (var guid in guidsToRemove)
                 {
                     scene = scene.RemoveGameObject(guid);
+                    //var originalKeyItem = scene.FindGameObject(guid)!;
+                    //originalKeyItem = originalKeyItem.WithSettings(originalKeyItem.Settings
+                    //    .Set("Update", false)
+                    //    .Set("Draw", false)
+                    //);
+                    //scene = scene.UpdateGameObject(originalKeyItem);
                 }
                 return scene;
             });
         }
 
-        // Add random new location
-        var newLocations = keyItems
-            .GroupBy(k => k.Id)
-            .Select(group => rng.Next(group))
-            .ToList();
-
-        foreach (var sceneGroup in newLocations.GroupBy(location => location.NewScnFile, StringComparer.OrdinalIgnoreCase))
+        foreach (var sceneGroup in relocationPlans.GroupBy(plan => plan.Location.NewScnFile, StringComparer.OrdinalIgnoreCase))
         {
             randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
             {
-                var parentGuid = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))?.Guid
+                var parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
                     ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
 
-                foreach (var newLocation in sceneGroup)
+                foreach (var relocationPlan in sceneGroup)
                 {
-                    var parentGameObject = scene.FindGameObject(parentGuid)!;
-                    var template = randomizer.TemplateService.GetItemTemplate(newLocation.Id).Clone();
-                    template = template.WithGuid(Guid.NewGuid());
-
-                    var item = template.FindComponent<app.Item>();
-                    if (item != null)
-                    {
-                        item.ItemDataID = newLocation.Id;
-                        item.SaveGUID = Guid.NewGuid();
-                        template = template.AddOrUpdateComponent(item);
-                    }
-
-                    var transform = template.FindComponent<via.Transform>()!;
-                    transform.Position = new Vector3(newLocation.NewX, newLocation.NewY, newLocation.NewZ);
-                    template = template.AddOrUpdateComponent(transform);
-
-                    parentGameObject = parentGameObject.AddOrUpdateChild(template);
-                    scene = scene.UpdateGameObject(parentGameObject);
+                    parentGameObject = parentGameObject.AddOrUpdateChild(relocationPlan.GameObject);
                 }
 
-                return scene;
+                return scene.UpdateGameObject(parentGameObject);
             });
         }
 
@@ -108,10 +133,50 @@ internal class KeyItemLocationModifier : Modifier
         }
     }
 
+    private static RszGameObject CloneSourceGameObject(RszGameObject sourceGameObject, KeyItemLocation location)
+    {
+        var clone = sourceGameObject.Clone();
+        var clonedRootGuid = clone.Guid;
+        clone = clone.WithGuid(sourceGameObject.Guid);
+        clone = clone.WithSettings(clone.Settings
+            .Set("Update", true)
+            .Set("Draw", true)
+        );
+        clone = ReplaceGameObjectRefs(clone, new Dictionary<Guid, Guid>
+        {
+            [clonedRootGuid] = sourceGameObject.Guid
+        });
+
+        var transform = clone.FindComponent<via.Transform>()
+            ?? throw new Exception($"Failed to relocate {location.Id}: missing via.Transform component!");
+        transform.Position = new Vector3(location.NewX, location.NewY, location.NewZ);
+        return clone.AddOrUpdateComponent(transform);
+    }
+
+    private static RszGameObject ReplaceGameObjectRefs(
+        RszGameObject gameObject,
+        Dictionary<Guid, Guid> guidMap)
+    {
+        return gameObject.Visit(node =>
+        {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
+            {
+                var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
+                if (guidMap.TryGetValue(refGuid, out var newGuid))
+                {
+                    return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
+                }
+            }
+
+            return node;
+        });
+    }
+
     internal class KeyItemLocation
     {
         public bool Enabled { get; init; }
         public string OriginalScnFile { get; init; } = "";
+        public string KeyItemGuid { get; init; } = "";
         public string NewScnFile { get; init; } = "";
         public string Id { get; init; } = "";
         public float NewX { get; init; }
@@ -119,4 +184,9 @@ internal class KeyItemLocationModifier : Modifier
         public float NewZ { get; init; }
         public string Comment { get; init; } = "";
     }
+
+    private sealed record KeyItemRelocationPlan(
+        KeyItemLocation Location,
+        RszGameObject GameObject,
+        IReadOnlySet<Guid> SourceGuidsToRemove);
 }
