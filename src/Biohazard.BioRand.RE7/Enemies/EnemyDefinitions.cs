@@ -47,5 +47,5 @@ public sealed class EnemyDefinitions
         => All.FirstOrDefault(em => em?.EnemyId == id, null);
 
     public IEnemyDefinition? FromId(string id)
-        => All.FirstOrDefault(em => em?.EnemyId.ToString() == id, null);
+        => All.FirstOrDefault(em => em?.EnemyId.ToString().Equals(id, StringComparison.InvariantCultureIgnoreCase) == true, null);
 }
