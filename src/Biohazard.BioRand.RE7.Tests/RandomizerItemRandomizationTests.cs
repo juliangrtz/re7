@@ -304,15 +304,27 @@ public class RandomizerItemRandomizationTests
             !string.IsNullOrEmpty(x.SceneFile) &&
             x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag) &&
             x.Tags.Contains(ExtraPlacementModifier.NotFakeCrateTag));
+        var expectedAdditions = result.ItemPlacementService.ItemPlacements.Count(x =>
+            x.Enabled &&
+            x.IsExtra &&
+            x.SceneFile == placement.SceneFile &&
+            (x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag)
+                || x.Tags.Contains(ExtraPlacementModifier.ItemBoxTag)));
 
         var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
         var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
-        var newChild = Assert.Single(GetNewChildren(beforeDynamic, afterDynamic));
+        var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+        var newChild = Assert.Single(newChildren, child =>
+        {
+            var transform = child.FindComponent<via.Transform>();
+            return transform != null && TransformMatchesPlacement(transform, placement);
+        });
         var transform = newChild.FindComponent<via.Transform>()!;
         var destruct = newChild.FindComponent<app.ItemDropDestruct>();
 
         Assert.True(result.WasFileModified(placement.SceneFile));
-        Assert.Equal(beforeDynamic.Children.Count() + 1, afterDynamic.Children.Count());
+        Assert.Equal(expectedAdditions, newChildren.Count);
+        Assert.Equal(beforeDynamic.Children.Count() + expectedAdditions, afterDynamic.Children.Count());
         Assert.NotNull(destruct);
         Assert.True(destruct!.Enabled);
         AssertPositionMatchesPlacement(transform, placement);
