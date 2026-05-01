@@ -1,3 +1,5 @@
+using Biohazard.BioRand.RE7.Items;
+
 namespace Biohazard.BioRand.RE7.Tests;
 
 public class RandomizerItemDropTableBehaviorTests
@@ -21,6 +23,53 @@ public class RandomizerItemDropTableBehaviorTests
         Assert.True(result.WasFileModified(RandomizerTestPaths.Chapter4DropTablePath));
         Assert.DoesNotContain(table.DataList, x => x.ItemID == "HandgunBullet");
         Assert.Contains(table.DataList, x => x.ItemID == "MachineGunBullet" && x.NormalDropRate == 25);
-        Assert.Contains(table.DataList, x => x.ItemID == "CylinderKey" && x.NormalDropRate == 3 && x.NormalDropNum == 1);
+        Assert.Contains(table.DataList, x => x.ItemID == "CylinderKey"
+            && x.NormalDropRate == ItemDrops.GetValuableDropRate(ItemDrops.LockPick)
+            && x.NormalDropNum == ItemDrops.GetValuableDropCount(ItemDrops.LockPick));
+    }
+
+    [Fact]
+    public void ItemDropTable_WeaponValuableDrop_AddsRandomAllowedWeapon()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["item-drop-valuable-weapon"] = true;
+            config["item-drop-valuable-birthday-skill"] = false;
+            config["item-drop-valuable-lock-pick"] = false;
+            config["item-drop-valuable-repair-kit"] = false;
+            config["item-drop-valuable-dlc-coin"] = false;
+        });
+
+        var table = result.ReadAfterUserFile<app.ReliefItemTable>(RandomizerTestPaths.Chapter4DropTablePath);
+        var weaponDrop = Assert.Single(table.DataList, x =>
+            ItemDefinitionRepository.Default.FromId(x.ItemID)?.IsWeapon == true &&
+            x.NormalDropRate == ItemDrops.GetValuableDropRate(ItemDrops.Weapon));
+
+        Assert.True(result.WasFileModified(RandomizerTestPaths.Chapter4DropTablePath));
+        Assert.NotEqual("NoName", weaponDrop.ItemID);
+        Assert.True(result.ItemRandomizer.IsItemAllowed(ItemDefinitionRepository.Default.FromId(weaponDrop.ItemID)!));
+        Assert.Equal((uint)ItemDrops.GetValuableDropCount(ItemDrops.Weapon), weaponDrop.NormalDropNum);
+    }
+
+    [Fact]
+    public void ItemDropTable_BirthdaySkillValuableDrop_AddsRealSkillWhenDlcItemsAreAllowed()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["allow-dlc-items"] = true;
+            config["item-drop-valuable-birthday-skill"] = true;
+            config["item-drop-valuable-lock-pick"] = false;
+            config["item-drop-valuable-repair-kit"] = false;
+            config["item-drop-valuable-weapon"] = false;
+            config["item-drop-valuable-dlc-coin"] = false;
+        });
+
+        var table = result.ReadAfterUserFile<app.ReliefItemTable>(RandomizerTestPaths.Chapter4DropTablePath);
+        var skillDrop = Assert.Single(table.DataList, x => ItemDrops.IsBirthdaySkill(x.ItemID));
+
+        Assert.True(result.WasFileModified(RandomizerTestPaths.Chapter4DropTablePath));
+        Assert.False(skillDrop.ItemID.EndsWith("no", StringComparison.OrdinalIgnoreCase));
+        Assert.Equal(ItemDrops.GetValuableDropRate(ItemDrops.BirthdaySkill), skillDrop.NormalDropRate);
+        Assert.Equal((uint)ItemDrops.GetValuableDropCount(ItemDrops.BirthdaySkill), skillDrop.NormalDropNum);
     }
 }

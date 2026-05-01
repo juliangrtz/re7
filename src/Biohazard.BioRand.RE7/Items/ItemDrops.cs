@@ -60,13 +60,50 @@ internal class ItemDrops
     public static ImmutableList<string> HighValueDrops { get; private set; } = [
         Weapon,
         DlcCoin,
+        BirthdaySkill,
         LockPick,
         RepairKit,
     ];
 
+    public static ImmutableArray<string> BirthdaySkillIds { get; } =
+           new int[] {
+               1 /* Infinite Ammo */,
+               2 /* Health Regen */,
+               3 /* Clairvoyance (Perma Psychostimulants) */,
+               /* 4, 5, 6, 7 (Time Bonuses) */
+               8 /* Defense II */,
+               9 /* Defense I */,
+               10 /* Speed Up II */,
+               11 /* Speed Up I */,
+               12 /* Firepower Up II */,
+               13 /* Firepower Up I */,
+               14 /* Impact II */,
+               15 /* Impact I */,
+               16 /* Toughness II */,
+               17 /* Toughness I */,
+               18 /* Guard Up */,
+               19 /* Quick Reload */,
+               /* 20 (Masochist) */
+               21 /* Vengeance */,
+               22 /* Narrow Escape */,
+               23 /* Brawler */,
+           }.Select(index => $"skl{index:000}")
+            .ToImmutableArray();
+
+    public static ImmutableArray<(string Id, uint MinDropRate, uint MaxDropRate)> DlcCoinDrops { get; } = [
+        ("GoodLuckCoinA_Buy", 3u, 5u),  // Defense Coin
+        ("GoodLuckCoinB_Buy", 3u, 5u),  // Attack Coin
+        ("GoodLuckCoinC_Buy", 5u, 10u), // Instinct Coin
+        ("GoodLuckCoinD_Buy", 10u, 15u), // Reload Coin
+        ("GoodLuckCoinE_Buy", 1u, 3u),  // Universal Coin
+    ];
+
+    public const string BirthdaySkillVisualTemplateFallback = "Herb";
+
     public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
     {
         DlcCoin => "DLC Coin",
+        BirthdaySkill => "Jack's 55th Birthday Skill",
         _ => highValueDrop.Replace("-", " ").ToTitleCase()
     };
 
@@ -90,8 +127,21 @@ internal class ItemDrops
     // High value drops
     public const string Weapon = "weapon";
     public const string DlcCoin = "dlc-coin";
+    public const string BirthdaySkill = "birthday-skill";
     public const string LockPick = "lock-pick";
     public const string RepairKit = "repair-kit";
+
+    public static bool IsBirthdaySkill(string id)
+        => id.StartsWith("skl", StringComparison.OrdinalIgnoreCase)
+        && !id.EndsWith("no", StringComparison.OrdinalIgnoreCase);
+
+    public static uint GetValuableDropRate(string highValueDrop) => highValueDrop switch
+    {
+        Weapon => 1u,
+        _ => 3u
+    };
+
+    public static int GetValuableDropCount(string highValueDrop) => 1;
 
     public static string ToItemID(string highValueDrop) => highValueDrop switch
     {
@@ -127,6 +177,8 @@ internal class ItemDrops
         "GoodLuckCoinC" => CategoryCoin,
         "GoodLuckCoinD" => CategoryCoin,
         "GoodLuckCoinE" => CategoryCoin,
+        "PowerUpCoin01A" => CategoryCoin,
+        "PowerUpCoin01B" => CategoryCoin,
         "Coin" => CategoryCoin,
         _ => CategoryOther
     };

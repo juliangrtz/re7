@@ -62,6 +62,24 @@ public class RandomizerItemRandomizationTests
     }
 
     [Fact]
+    public void ItemRandomizer_AllowedGunDrops_HaveItemTemplates()
+    {
+        using var result = RandomizerTest.RunState();
+        var rng = result.Randomizer.GetRng("tests/allowed-gun-templates");
+        var guns = new List<ItemDefinition>();
+
+        for (var gun = result.ItemRandomizer.GetRandomGun(rng, allowReoccurance: false);
+            gun != null;
+            gun = result.ItemRandomizer.GetRandomGun(rng, allowReoccurance: false))
+        {
+            guns.Add(gun);
+            result.Randomizer.TemplateService.GetItemTemplate(gun.Id);
+        }
+
+        Assert.NotEmpty(guns);
+    }
+
+    [Fact]
     public void ItemPlacementService_FromSceneGuid_FiltersDuplicateGuidsToCurrentScene()
     {
         using var result = RandomizerTest.RunState();
@@ -174,6 +192,53 @@ public class RandomizerItemRandomizationTests
         Assert.Equal(1, afterItem._DifficultItemNumSetting.EasyNum);
         Assert.Equal(1, afterItem._DifficultItemNumSetting.HardNum);
         Assert.NotEqual(beforeItem.SaveGUID, afterItem.SaveGUID);
+    }
+
+    [Fact]
+    public void RandomItems_BirthdaySkillValuableDrop_UsesVisibleTemplateWithSkillItemDataId()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            config["allow-dlc-items"] = true;
+            config["item-drop-valuable-birthday-skill"] = true;
+            ConfigureSingleDrop(config, ForcedDropId);
+        });
+
+        var (placement, beforeItem, afterItem) = FindChangedPlacementByAfterItem(result, ItemDrops.IsBirthdaySkill);
+        var afterScene = result.ReadAfterScene(placement.SceneFile);
+        var afterGameObject = afterScene.FindGameObject(placement.Guid);
+
+        Assert.True(result.WasFileModified(placement.SceneFile));
+        Assert.NotEqual(beforeItem.ItemDataID, afterItem.ItemDataID);
+        Assert.True(ItemDrops.IsBirthdaySkill(afterItem.ItemDataID));
+        Assert.Equal(1, afterItem.ItemStackNum);
+        Assert.NotNull(afterGameObject);
+        Assert.NotNull(afterGameObject!.FindComponent("via.render.Mesh"));
+    }
+
+    [Fact]
+    public void RandomItems_ValuableWeaponDrop_PlacesWeaponBeforeGeneralPool()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            config["item-drop-valuable-weapon"] = true;
+            config["item-drop-valuable-birthday-skill"] = false;
+            config["item-drop-valuable-lock-pick"] = false;
+            config["item-drop-valuable-repair-kit"] = false;
+            config["item-drop-valuable-dlc-coin"] = false;
+            ConfigureSingleDrop(config, ForcedDropId);
+        });
+
+        var (placement, beforeItem, afterItem) = FindChangedPlacementByAfterItem(
+            result,
+            itemId => ItemDefinitionRepository.Default.FromId(itemId)?.IsWeapon == true);
+
+        Assert.True(result.WasFileModified(placement.SceneFile));
+        Assert.NotEqual(beforeItem.ItemDataID, afterItem.ItemDataID);
+        Assert.True(ItemDefinitionRepository.Default.FromId(afterItem.ItemDataID)!.IsWeapon);
+        Assert.Equal(1, afterItem.ItemStackNum);
     }
 
     [Fact]
@@ -407,7 +472,7 @@ public class RandomizerItemRandomizationTests
         var match = result.AreaService.Areas
             .SelectMany(area => area.Items.Select(gameObject => (AreaPath: area.Path, GameObject: gameObject)))
             .SelectMany(x => result.ItemPlacementService.FromSceneGuid(x.AreaPath, x.GameObject.Guid))
-            .DistinctBy(placement => placement.Guid)
+            .DistinctBy(placement => (placement.SceneFile, placement.Guid))
             .Select(placement => (Definition: ItemDefinitionRepository.Default.FromId(placement.Id)!, Placement: placement))
             .Where(tuple =>
                 tuple.Definition != null &&
@@ -422,6 +487,46 @@ public class RandomizerItemRandomizationTests
 
         Assert.NotNull(match.Definition);
         return match;
+    }
+
+    private static (ItemPlacement Placement, app.Item BeforeItem, app.Item AfterItem) FindChangedPlacementByAfterItem(
+        RandomizerRunResult result,
+        Func<string, bool> predicate)
+    {
+        var itemRandomizer = result.ItemRandomizer;
+        var placements = result.AreaService.Areas
+            .SelectMany(area => area.Items.Select(gameObject => (AreaPath: area.Path, GameObject: gameObject)))
+            .SelectMany(x => result.ItemPlacementService.FromSceneGuid(x.AreaPath, x.GameObject.Guid))
+            .DistinctBy(placement => (placement.SceneFile, placement.Guid))
+            .Where(placement =>
+            {
+                var definition = ItemDefinitionRepository.Default.FromId(placement.Id);
+                return definition != null &&
+                    placement.Dlc == null &&
+                    !placement.IsExtra &&
+                    placement.Enabled &&
+                    !placement.Tags.Contains(ItemPlacement.ExcludeTag) &&
+                    itemRandomizer.IsItemAllowed(definition) &&
+                    !BirdCageModifier.Guids.Contains(placement.Guid);
+            });
+
+        foreach (var placement in placements)
+        {
+            if (!result.WasFileModified(placement.SceneFile))
+            {
+                continue;
+            }
+
+            var beforeItem = GetItem(result.ReadBeforeScene(placement.SceneFile), placement.Guid);
+            var afterItem = GetItem(result.ReadAfterScene(placement.SceneFile), placement.Guid);
+            if (beforeItem.ItemDataID != afterItem.ItemDataID && predicate(afterItem.ItemDataID))
+            {
+                return (placement, beforeItem, afterItem);
+            }
+        }
+
+        Assert.Fail("No changed item placement matched the expected replacement item.");
+        throw new InvalidOperationException();
     }
 
     private static app.Item GetItem(RszScene scene, Guid guid)

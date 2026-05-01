@@ -145,5 +145,6 @@ public class ConfigurationDefinitionTest
         Assert.Contains("enemy-drop-ratio-liquidbomb", ids);
         Assert.Contains("enemy-drop-valuable-repair-kit", ids);
         Assert.Contains("enemy-drop-valuable-lock-pick", ids);
+        Assert.Contains("enemy-drop-valuable-birthday-skill", ids);
     }
 }

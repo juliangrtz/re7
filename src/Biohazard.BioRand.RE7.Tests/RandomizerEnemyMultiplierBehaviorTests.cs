@@ -210,6 +210,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
     private static List<string> GetChangedScenePaths(RandomizerRunResult result, double multiplier)
         => result.ChangedFiles.Keys
             .Where(path => path.EndsWith(".scn.20", StringComparison.OrdinalIgnoreCase))
+            .Where(path => !path.StartsWith("natives/stm/scenes/items/resources/skl")) // Birthday skills
             .Where(path =>
             {
                 var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
