@@ -84,6 +84,8 @@ public class REFPlugin
 
     private static readonly Dictionary<string, string[]> ChapterAmmoAvailability = new(StringComparer.Ordinal)
     {
+        ["C00_Main"] = ["HandgunBullet", "HandgunBulletL"],
+        ["C01_Main"] = ["HandgunBullet", "HandgunBulletL"],
         ["C03_1_Main"] = ["HandgunBullet", "HandgunBulletL"],
         ["C03_2_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet"],
         ["C03_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS"],
@@ -91,6 +93,7 @@ public class REFPlugin
         ["C03_5_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet"],
         ["C04_1_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
         ["C04_2_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
+        ["FF050_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
         ["C04_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
     };
 
@@ -217,6 +220,61 @@ public class REFPlugin
         {
             return null;
         }
+    }
+
+    private static bool IsBirthdaySkillItem(Item? item)
+    {
+        var itemDataId = item?.ItemDataID;
+        return itemDataId != null
+            && itemDataId.StartsWith("skl", StringComparison.OrdinalIgnoreCase)
+            && !itemDataId.EndsWith("no", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static IPlayerOrder? GetPlayerOrder()
+    {
+        var objectManager = API.GetManagedSingleton("app.ObjectManager");
+        if (objectManager == null)
+            return null;
+
+        var playerObj = (objectManager.GetField("PlayerObj") as ManagedObject)?.As<via.GameObject>();
+        var playerOrderType = PlayerOrder.REFType.GetRuntimeType().As<_System.Type>();
+        return playerOrderType == null
+            ? null
+            : playerObj?.getComponent(playerOrderType)?.Cast<IPlayerOrder>();
+    }
+
+    private static bool TryRegisterBirthdayPassiveSkill(PassiveSkillItem? passiveSkillItem)
+    {
+        if (passiveSkillItem == null || !IsBirthdaySkillItem(passiveSkillItem.Item))
+            return false;
+
+        var passiveSkill = passiveSkillItem.PassiveSkill;
+        if (passiveSkill == null)
+        {
+            logger.Log("Birthday skill item had no PassiveSkill userdata.");
+            return true;
+        }
+
+        var playerOrder = GetPlayerOrder();
+        if (playerOrder == null)
+        {
+            logger.Log($"Unable to register Birthday skill '{passiveSkillItem.Item.ItemDataID}' because app.PlayerOrder was unavailable.");
+            return true;
+        }
+
+        passiveSkillItem.PlayerOrder = playerOrder;
+        playerOrder.registerPassiveSkill(passiveSkill);
+        logger.Log($"Registered Birthday passive skill '{passiveSkillItem.Item.ItemDataID}'.", isVerbose: true);
+        return true;
+    }
+
+    [MethodHook(typeof(PassiveSkillItem), nameof(PassiveSkillItem.onInsertInventory), MethodHookType.Pre)]
+    private static PreHookResult PassiveSkillItem_onInsertInventory_Pre(Span<ulong> args)
+    {
+        var passiveSkillItem = ManagedObject.ToManagedObject(args[1]).As<PassiveSkillItem>();
+        return TryRegisterBirthdayPassiveSkill(passiveSkillItem)
+            ? PreHookResult.Skip
+            : PreHookResult.Continue;
     }
 
     [MethodHook(typeof(Inventory), nameof(Inventory.setupItemSlotManager), MethodHookType.Pre)]

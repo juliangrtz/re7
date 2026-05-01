@@ -164,13 +164,17 @@ internal class StartingInventoryModifier : Modifier
                 root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
             }
 
-            if (randomizer.User.Equals("captainezekiel", StringComparison.InvariantCultureIgnoreCase)) // TODO Introduce tag
+#if !DEBUG
+            if (randomizer.UserTags.Contains("re7:debugstartitems"))
             {
-                var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
-                    .Where(x => x.Quantity > 0)
-                    .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
-                root._AddItems.AddRange(debugItems);
+#endif
+            var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
+                .Where(x => x.Quantity > 0)
+                .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
+            root._AddItems.AddRange(debugItems);
+#if !DEBUG
             }
+#endif
 
             return root;
         });
