@@ -140,7 +140,8 @@ internal class ExtraPlacementModifier : Modifier
                 drop = randomizer.ItemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
             }
 
-            template = randomizer.TemplateService.GetItemTemplate(drop.Id);
+            var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
+            template = randomizer.TemplateService.GetItemTemplate(templateItemId);
             item = template.FindComponent<app.Item>()!;
 
             item.ItemDataID = drop.Id;
@@ -155,7 +156,8 @@ internal class ExtraPlacementModifier : Modifier
         }
         else
         {
-            template = randomizer.TemplateService.GetItemTemplate(placement.Id);
+            var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(placement.Id, rng, randomItemSettings);
+            template = randomizer.TemplateService.GetItemTemplate(templateItemId);
             item = template.FindComponent<app.Item>()!;
 
             item.ItemDataID = placement.Id;

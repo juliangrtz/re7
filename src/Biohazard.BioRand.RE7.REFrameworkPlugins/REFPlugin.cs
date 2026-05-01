@@ -5,6 +5,7 @@ using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
 using REFrameworkNET.Callbacks;
+using System.Collections.Immutable;
 using static app.InventoryMenu;
 
 public class REFPlugin
@@ -105,6 +106,31 @@ public class REFPlugin
         ["GoodLuckCoinD_Buy"] = (10, 15),
         ["GoodLuckCoinE_Buy"] = (1, 3),
     };
+
+    public static ImmutableArray<string> BirthdaySkillItemDataIds { get; } =
+       new int[] {
+               1 /* Infinite Ammo */,
+               2 /* Health Regen */,
+               3 /* Clairvoyance (Perma Psychostimulants) */,
+               /* 4, 5, 6, 7 (Time Bonuses) */
+               8 /* Defense II */,
+               9 /* Defense I */,
+               10 /* Speed Up II */,
+               11 /* Speed Up I */,
+               12 /* Firepower Up II */,
+               13 /* Firepower Up I */,
+               14 /* Impact II */,
+               15 /* Impact I */,
+               16 /* Toughness II */,
+               17 /* Toughness I */,
+               18 /* Guard Up */,
+               19 /* Quick Reload */,
+               /* 20 (Masochist) */
+               21 /* Vengeance */,
+               22 /* Narrow Escape */,
+               23 /* Brawler */,
+       }.Select(index => $"skl{index:000}")
+        .ToImmutableArray();
 
     private static readonly Dictionary<string, double> SpecialEnemyDropMultipliers = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -555,6 +581,14 @@ public class REFPlugin
             {
                 result.Add(new EnemyDropCandidate(itemDataId, rng.Next(minWeight, maxWeight + 1)));
             }
+        }
+
+        if (config.ReadOrDefault("allow-dlc-items", false)
+            && ReadEnemyDropConfigOrDefault("enemy-drop-valuable-birthday-skill", "item-drop-valuable-birthday-skill", false))
+        {
+            result.Add(new EnemyDropCandidate(
+                BirthdaySkillItemDataIds[rng.Next(BirthdaySkillItemDataIds.Length)],
+                ValuableDropChanceWeight));
         }
 
         return result;

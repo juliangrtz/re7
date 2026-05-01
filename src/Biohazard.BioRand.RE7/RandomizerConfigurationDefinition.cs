@@ -16,6 +16,27 @@ internal static class RandomizerConfigurationDefinition
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private static readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
 
+    private static GroupItem CreateValuableDropSwitch(string prefix, string drop, bool defaultValue)
+        => new()
+        {
+            Id = $"{prefix}-valuable-{drop}",
+            Label = ItemDrops.GetHighValueDropLabel(drop),
+            Description = GetValuableDropDescription(drop),
+            Type = "switch",
+            Default = defaultValue
+        };
+
+    private static string? GetValuableDropDescription(string drop)
+        => drop switch
+        {
+            ItemDrops.Weapon => "Adds weapons. Includes all weapon types.",
+            ItemDrops.DlcCoin => "Adds the five DLC coins.",
+            ItemDrops.BirthdaySkill => "Adds Jack's 55th Birthday passive skills. Requires \"Allow DLC Weapons\"",
+            ItemDrops.LockPick => "Adds lock picks.",
+            ItemDrops.RepairKit => "Adds repair kits.",
+            _ => null
+        };
+
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
         var configDefinition = new IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition();
@@ -448,13 +469,7 @@ internal static class RandomizerConfigurationDefinition
         group.Advanced = true;
         foreach (var drop in ItemDrops.HighValueDrops)
         {
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"enemy-drop-valuable-{drop}",
-                Label = ItemDrops.GetHighValueDropLabel(drop),
-                Type = "switch",
-                Default = false
-            });
+            group.Items.Add(CreateValuableDropSwitch("enemy-drop", drop, defaultValue: false));
         }
 
         #endregion
@@ -750,13 +765,10 @@ internal static class RandomizerConfigurationDefinition
         group.Advanced = true;
         foreach (var drop in ItemDrops.HighValueDrops)
         {
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"item-drop-valuable-{drop}",
-                Label = ItemDrops.GetHighValueDropLabel(drop),
-                Type = "switch",
-                Default = ItemDrops.GetEnabledValuableDrops().Contains(drop)
-            });
+            group.Items.Add(CreateValuableDropSwitch(
+                "item-drop",
+                drop,
+                defaultValue: ItemDrops.GetEnabledValuableDrops().Contains(drop)));
         }
 
         #endregion Items
