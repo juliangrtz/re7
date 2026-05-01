@@ -9,6 +9,9 @@ internal static class RandomizerTestPaths
     public static readonly string MiaInventoryPath = PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user");
     public static readonly string MiaVhsInventoryPath = PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user");
     public static readonly string ReloadSpeedTablePath = PakPath.UserFile("prefab/character/pl0000/pl0000reloadspeedratetable.user");
+    public static readonly string KeyItemSettingsPath = PakPath.UserFile("prefab/item/keyitemsettings.user");
+    public static readonly string ItemResourcesScenePath = PakPath.SceneFile("scenes/items/itemresources.scn");
+    public static readonly string UiItemMessagePath = PakPath.MessageFile("message/ui_item_mes.msg");
     public static readonly string ChapterJumpScenePath = PakPath.SceneFile("scenes/chapterjumpdata/chapterjumpdata.scn");
     public static readonly string Chapter4DropTablePath = PakPath.UserFile("prefab/item/reliefitemtable_04_01_0000.user");
     public static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");

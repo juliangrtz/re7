@@ -17,6 +17,7 @@ public class ConfigurationIdUsageTest
         "verbose-reframework-plugin-logging",
         "username",
         "special",
+        "tags",
         "enemy-drop-respect-difficulty",
         "enemy-drop-ammo-only-available-weapons",
         "enemy-drop-ammo-min",

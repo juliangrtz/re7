@@ -5,6 +5,7 @@ using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
 using REFrameworkNET.Callbacks;
+using System.Collections.Immutable;
 using static app.InventoryMenu;
 
 public class REFPlugin
@@ -84,6 +85,8 @@ public class REFPlugin
 
     private static readonly Dictionary<string, string[]> ChapterAmmoAvailability = new(StringComparer.Ordinal)
     {
+        ["C00_Main"] = ["HandgunBullet", "HandgunBulletL"],
+        ["C01_Main"] = ["HandgunBullet", "HandgunBulletL"],
         ["C03_1_Main"] = ["HandgunBullet", "HandgunBulletL"],
         ["C03_2_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet"],
         ["C03_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS"],
@@ -91,6 +94,7 @@ public class REFPlugin
         ["C03_5_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet"],
         ["C04_1_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
         ["C04_2_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
+        ["FF050_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
         ["C04_3_Main"] = ["HandgunBullet", "HandgunBulletL", "ShotgunBullet", "MagnumBullet", "AcidBulletS", "FlameBulletS", "BurnerBullet", "MachineGunBullet"],
     };
 
@@ -102,6 +106,31 @@ public class REFPlugin
         ["GoodLuckCoinD_Buy"] = (10, 15),
         ["GoodLuckCoinE_Buy"] = (1, 3),
     };
+
+    public static ImmutableArray<string> BirthdaySkillItemDataIds { get; } =
+       new int[] {
+               1 /* Infinite Ammo */,
+               2 /* Health Regen */,
+               3 /* Clairvoyance (Perma Psychostimulants) */,
+               /* 4, 5, 6, 7 (Time Bonuses) */
+               8 /* Defense II */,
+               9 /* Defense I */,
+               10 /* Speed Up II */,
+               11 /* Speed Up I */,
+               12 /* Firepower Up II */,
+               13 /* Firepower Up I */,
+               14 /* Impact II */,
+               15 /* Impact I */,
+               16 /* Toughness II */,
+               17 /* Toughness I */,
+               18 /* Guard Up */,
+               19 /* Quick Reload */,
+               /* 20 (Masochist) */
+               21 /* Vengeance */,
+               22 /* Narrow Escape */,
+               23 /* Brawler */,
+       }.Select(index => $"skl{index:000}")
+        .ToImmutableArray();
 
     private static readonly Dictionary<string, double> SpecialEnemyDropMultipliers = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -217,6 +246,61 @@ public class REFPlugin
         {
             return null;
         }
+    }
+
+    private static bool IsBirthdaySkillItem(Item? item)
+    {
+        var itemDataId = item?.ItemDataID;
+        return itemDataId != null
+            && itemDataId.StartsWith("skl", StringComparison.OrdinalIgnoreCase)
+            && !itemDataId.EndsWith("no", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static IPlayerOrder? GetPlayerOrder()
+    {
+        var objectManager = API.GetManagedSingleton("app.ObjectManager");
+        if (objectManager == null)
+            return null;
+
+        var playerObj = (objectManager.GetField("PlayerObj") as ManagedObject)?.As<via.GameObject>();
+        var playerOrderType = PlayerOrder.REFType.GetRuntimeType().As<_System.Type>();
+        return playerOrderType == null
+            ? null
+            : playerObj?.getComponent(playerOrderType)?.Cast<IPlayerOrder>();
+    }
+
+    private static bool TryRegisterBirthdayPassiveSkill(PassiveSkillItem? passiveSkillItem)
+    {
+        if (passiveSkillItem == null || !IsBirthdaySkillItem(passiveSkillItem.Item))
+            return false;
+
+        var passiveSkill = passiveSkillItem.PassiveSkill;
+        if (passiveSkill == null)
+        {
+            logger.Log("Birthday skill item had no PassiveSkill userdata.");
+            return true;
+        }
+
+        var playerOrder = GetPlayerOrder();
+        if (playerOrder == null)
+        {
+            logger.Log($"Unable to register Birthday skill '{passiveSkillItem.Item.ItemDataID}' because app.PlayerOrder was unavailable.");
+            return true;
+        }
+
+        passiveSkillItem.PlayerOrder = playerOrder;
+        playerOrder.registerPassiveSkill(passiveSkill);
+        logger.Log($"Registered Birthday passive skill '{passiveSkillItem.Item.ItemDataID}'.", isVerbose: true);
+        return true;
+    }
+
+    [MethodHook(typeof(PassiveSkillItem), nameof(PassiveSkillItem.onInsertInventory), MethodHookType.Pre)]
+    private static PreHookResult PassiveSkillItem_onInsertInventory_Pre(Span<ulong> args)
+    {
+        var passiveSkillItem = ManagedObject.ToManagedObject(args[1]).As<PassiveSkillItem>();
+        return TryRegisterBirthdayPassiveSkill(passiveSkillItem)
+            ? PreHookResult.Skip
+            : PreHookResult.Continue;
     }
 
     [MethodHook(typeof(Inventory), nameof(Inventory.setupItemSlotManager), MethodHookType.Pre)]
@@ -497,6 +581,14 @@ public class REFPlugin
             {
                 result.Add(new EnemyDropCandidate(itemDataId, rng.Next(minWeight, maxWeight + 1)));
             }
+        }
+
+        if (config.ReadOrDefault("allow-dlc-items", false)
+            && ReadEnemyDropConfigOrDefault("enemy-drop-valuable-birthday-skill", "item-drop-valuable-birthday-skill", false))
+        {
+            result.Add(new EnemyDropCandidate(
+                BirthdaySkillItemDataIds[rng.Next(BirthdaySkillItemDataIds.Length)],
+                ValuableDropChanceWeight));
         }
 
         return result;

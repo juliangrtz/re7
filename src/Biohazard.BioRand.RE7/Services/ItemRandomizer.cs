@@ -186,6 +186,82 @@ internal class ItemRandomizer
         return result;
     }
 
+    public string GetItemTemplateIdForDrop(string itemDataId, Rng rng, RandomItemSettings settings)
+    {
+        if (!ItemDrops.IsBirthdaySkill(itemDataId))
+        {
+            return itemDataId;
+        }
+
+        var visibleTemplateCandidates = ItemDrops.GenericDrops
+            .Where(id => settings.GetItemRatio(id) > 0)
+            .Where(id => id != itemDataId)
+            .ToArray();
+
+        return visibleTemplateCandidates.Length == 0
+            ? ItemDrops.BirthdaySkillVisualTemplateFallback
+            : rng.Next(visibleTemplateCandidates);
+    }
+
+    public IReadOnlyList<ValuableDrop> GetValuableDrops(Rng rng, string configPrefix)
+    {
+        var result = new List<ValuableDrop>();
+
+        foreach (var type in ItemDrops.HighValueDrops)
+        {
+            if (!_randomizer.GetConfigOption<bool>($"{configPrefix}-valuable-{type}"))
+            {
+                continue;
+            }
+
+            switch (type)
+            {
+                case ItemDrops.Weapon:
+                    var weapon = GetRandomGun(rng, allowReoccurance: false);
+                    if (weapon != null)
+                    {
+                        result.Add(CreateValuableDrop(weapon.Id, type));
+                    }
+                    break;
+                case ItemDrops.DlcCoin:
+                    foreach (var (coinId, minDropRate, maxDropRate) in ItemDrops.DlcCoinDrops)
+                    {
+                        result.Add(CreateValuableDrop(
+                            coinId,
+                            type,
+                            (uint)rng.Next((int)minDropRate, (int)maxDropRate + 1)));
+                    }
+                    break;
+                case ItemDrops.BirthdaySkill:
+                    if (_allowDlcItems)
+                    {
+                        result.Add(CreateValuableDrop(rng.Next(ItemDrops.BirthdaySkillIds), type));
+                    }
+                    break;
+                default:
+                    var itemId = ItemDrops.ToItemID(type);
+                    if (itemId != Enums.app.ItemID.NoName.ToString())
+                    {
+                        result.Add(CreateValuableDrop(itemId, type));
+                    }
+                    break;
+            }
+        }
+
+        return result;
+    }
+
+    private static ValuableDrop CreateValuableDrop(
+        string id,
+        string highValueDrop,
+        uint? dropRate = null)
+    {
+        var count = ItemDrops.GetValuableDropCount(highValueDrop);
+        return new ValuableDrop(
+            new Item(id, count),
+            dropRate ?? ItemDrops.GetValuableDropRate(highValueDrop));
+    }
+
     private Item? GetRandomSingleItem(Rng rng, ItemCategoryType kind, bool allowReoccurance = false)
     {
         ItemDefinition? itemDefinition = kind switch
@@ -290,6 +366,8 @@ internal class ItemRandomizer
         return Math.Abs(left);
     }
 }
+
+internal readonly record struct ValuableDrop(Item Item, uint DropRate);
 
 public class RandomItemSettings
 {

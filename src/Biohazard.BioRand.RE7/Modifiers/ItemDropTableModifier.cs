@@ -26,19 +26,6 @@ internal class ItemDropTableModifier : Modifier
         (GameFlowKindEnum.C04_3_Main, PakPath.UserFile("prefab/item/reliefitemtable_04_03_0000.user")),
     };
 
-    private const uint ValuableDropChance = 3u;
-    private const uint ValuableDropNum = 1u;
-
-    // (id, min%, max%)
-    private readonly Dictionary<string, (uint, uint)> _dlcCoinDrops = new()
-    {
-        {"GoodLuckCoinA_Buy", (3, 5)},  // Defense Coin
-        {"GoodLuckCoinB_Buy", (3, 5)}, // Attack Coin
-        {"GoodLuckCoinC_Buy", (5, 10)}, // Instinct Coin
-        {"GoodLuckCoinD_Buy", (10, 15)}, // Reload Coin
-        {"GoodLuckCoinE_Buy", (1, 3)} // Universal Coin
-    };
-
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
         logger.Push("Original item drop tables");
@@ -55,7 +42,7 @@ internal class ItemDropTableModifier : Modifier
         logger.Pop();
     }
 
-    private ItemDropTable ConstructItemDropTable(Randomizer randomizer, GameFlowKindEnum chapter)
+    private ItemDropTable ConstructItemDropTable(Randomizer randomizer, GameFlowKindEnum chapter, string path)
     {
         var result = new ItemDropTable()
         {
@@ -66,7 +53,7 @@ internal class ItemDropTableModifier : Modifier
         var ammoOnlyAvailableWeapons = randomizer.GetConfigOption<bool>("item-drop-ammo-only-available-weapons");
         var min = randomizer.GetConfigOption("item-drop-ammo-min", 0.1);
         var max = randomizer.GetConfigOption("item-drop-ammo-max", 1.0);
-        var rng = randomizer.GetRng(RandomizerKey);
+        var rng = randomizer.GetRng(RandomizerKey, chapter, path);
 
         foreach (var id in ItemDrops.GenericDrops)
         {
@@ -100,63 +87,19 @@ internal class ItemDropTableModifier : Modifier
             });
         }
 
-        foreach (var type in ItemDrops.HighValueDrops)
+        foreach (var valuableDrop in itemRandomizer.GetValuableDrops(rng, "item-drop"))
         {
-            if (randomizer.GetConfigOption<bool>($"item-drop-valuable-{type}"))
+            var drop = valuableDrop.Item;
+            result.DataList.Add(new ItemDropDistribution()
             {
-                string id = ItemID.NoName.ToString();
-                uint chance = 0u;
-
-                if (type == ItemDrops.Weapon)
-                {
-                    // TODO: Support more weapons than remote bomb
-                    result.DataList.Add(new ItemDropDistribution()
-                    {
-                        ItemID = ItemID.LiquidBomb.ToString(),
-                        EasyDropRate = 1u,
-                        NormalDropRate = 1u,
-                        HardDropRate = 1u,
-                        ReliefDropNum = ValuableDropNum,
-                        NormalDropNum = ValuableDropNum,
-                        ReliefNum = ValuableDropNum
-                    });
-
-                    continue;
-                }
-                else if (type == ItemDrops.DlcCoin)
-                {
-                    foreach (var (coinId, (coinPctMin, coinPctMax)) in _dlcCoinDrops)
-                    {
-                        var coinChance = (uint)rng.Next((int)coinPctMin, (int)coinPctMax);
-                        result.DataList.Add(new ItemDropDistribution()
-                        {
-                            ItemID = coinId.ToString(),
-                            EasyDropRate = coinChance,
-                            NormalDropRate = coinChance,
-                            HardDropRate = coinChance,
-                            ReliefDropNum = ValuableDropNum,
-                            NormalDropNum = ValuableDropNum,
-                            ReliefNum = ValuableDropNum
-                        });
-                    }
-                }
-                else
-                {
-                    id = ItemDrops.ToItemID(type);
-                    chance = ValuableDropChance;
-                }
-
-                result.DataList.Add(new ItemDropDistribution()
-                {
-                    ItemID = id,
-                    EasyDropRate = chance,
-                    NormalDropRate = chance,
-                    HardDropRate = chance,
-                    ReliefDropNum = ValuableDropNum,
-                    NormalDropNum = ValuableDropNum,
-                    ReliefNum = ValuableDropNum
-                });
-            }
+                ItemID = drop.Id,
+                EasyDropRate = valuableDrop.DropRate,
+                NormalDropRate = valuableDrop.DropRate,
+                HardDropRate = valuableDrop.DropRate,
+                ReliefDropNum = (uint)drop.CountEasy,
+                NormalDropNum = (uint)drop.CountNormal,
+                ReliefNum = (uint)drop.CountMadhouse
+            });
         }
 
         return result;
@@ -166,7 +109,7 @@ internal class ItemDropTableModifier : Modifier
     {
         foreach (var (chapter, path) in _dropTableFiles)
         {
-            var dropTable = ConstructItemDropTable(randomizer, chapter);
+            var dropTable = ConstructItemDropTable(randomizer, chapter, path);
 
             logger.Push($"Modified item drop table ({chapter})");
             dropTable.Log(logger);
