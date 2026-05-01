@@ -35,6 +35,7 @@ internal class Randomizer : IDisposable
 
     private bool IsREFrameworkRequired()
         => GetConfigOption<bool>("random-enemy-drops")
+                                        || GetConfigOption<bool>("allow-dlc-items")
                                         || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
@@ -197,6 +198,7 @@ internal class Randomizer : IDisposable
     }
 
     public string User => GetConfigOption<string>("username") ?? "player";
+    public List<string> UserTags => GetConfigOption<string>("tags")?.Split(",")?.ToList() ?? [];
     public int Seed => Input.Seed;
 
     public Rng GetRng(params object[] key)

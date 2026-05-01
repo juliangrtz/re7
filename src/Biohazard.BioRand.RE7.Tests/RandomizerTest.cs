@@ -165,6 +165,10 @@ public sealed class RandomizerRunResult : IDisposable
     public RszScene ReadAfterScene(string path)
         => _randomizer.FileRepository.GetScnFile(path).ReadScene(_randomizer.FileRepository.TypeRepository);
 
+    public RszScene ReadAfterPfb(string path)
+        => new PfbFile(FileVersions.PfbFileVersion, ReadAfterBytes(path))
+            .ReadScene(_randomizer.FileRepository.TypeRepository);
+
     public bool WasFileModified(string path) => ChangedFiles.ContainsKey(path);
 
     public void Dispose()

@@ -91,6 +91,7 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
             }
 
             config["username"] = userName;
+            config["tags"] = string.Join(",", queueItem.UserTags);
             config["special"] = string.Join(",", specials);
 
             var randomizer = new RandomizerExecutor(gameInputPath, new EmptyReporter());
