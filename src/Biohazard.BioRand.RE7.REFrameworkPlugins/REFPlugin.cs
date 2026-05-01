@@ -25,6 +25,7 @@ public class REFPlugin
     private static readonly HashSet<ulong> droppedEnemyObjects = [];
     private static readonly Dictionary<ulong, int> enemyDropGenerations = [];
 
+    #region Data
     private static readonly string[] GenericEnemyDropItemDataIds =
     [
         "EasyBoots",
@@ -166,6 +167,7 @@ public class REFPlugin
         "ChemicalM",
         "Coin",
     };
+    #endregion
 
     private readonly record struct EnemyDropCandidate(string ItemDataId, double Weight);
     private readonly record struct EnemyDropSelection(string ItemDataId, int StackNum);
