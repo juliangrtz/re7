@@ -1,0 +1,1742 @@
+Path,Chapter,Description,OnlyDifficulty,Dlc,Kind,IsCopy
+natives/stm/environment/scene/chapter7/c07_gardenarea1_low02_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_gimmickobject_reset_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fhallway_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fbedroom_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fhallway_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fstoreroom_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousehall_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousestair01_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutside_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsidesub01_7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_1/c07_1_player.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_1/c07_1_soft.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_1/chapter7_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_1/enemy_c07_1.scn.20,,,,Bedroom,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_1object.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/files/fileresource_c07_1.scn.20,,,,Bedroom,General,FALSE
+natives/stm/scenes/items/itemresources_chapter7_1.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/alcoholch71.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/clockhand.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/clockhand2.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickfork.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickknife.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmicklighter.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickopener.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickpicturea.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickpictureb.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickpicturec.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/gimmickspoon.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/lantern_c.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/lanternhooka.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/lanternhookb.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/portablestove.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/portablestovefuel.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_1/shadowpiece4.scn.20,,,,Bedroom,Item,FALSE
+natives/stm/environment/scene/chapter7/c07_gardenarea1_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_gardenarea1_low01_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_gardenarea1_low02_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fgarage_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fgaragehallway_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fgarageoutside_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fhallway_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fldk_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fliving_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fpantry_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse1fwash_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fbath_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fgrandma_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fhallway_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fhallway2_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fkids_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fkids02_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhouse2fplay_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousefakeset01_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousehall_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutside_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsidesub01_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace1f_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace2f_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace2f2_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace2f3_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/environment/scene/chapter7/c07_trailerhouse_7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/aimap_c07_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/c07_4_player.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/c07_4_soft.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/chapter7_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/0/c03_cullingcollisionboathouse.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/1/c03_cullingcollisiongareden.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/2/c03_cullingcollisiongh.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/3/c03_cullingcollisionmainhouse.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/4/c03_cullingcollisionoldhouse.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/5/c03_cullingcollisiontaxidermyroom.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/6/c03_cullingcollisioncowshed.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/7/c03_cullingcollisionlucasarea.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/copy/c03_cullingcollision/c03_cullingcollision.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/enemy_c07_4.scn.20,,,,Daughters,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/levelfsm_c07_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4/objectivefsm_c07_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_4object.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/files/fileresource_c07_4.scn.20,,,,Daughters,General,FALSE
+natives/stm/scenes/items/itemresources_chapter7_4.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/3crestkeybch74.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/carkey.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/clothes.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/gimmickforkch7_4.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/itemrope.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/lighter_z_noequip.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/lighter_z.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/safebottle.scn.20,,,,Daughters,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_4/trophyswitch.scn.20,,,,Daughters,Item,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_alligatorswamp.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bakerroad01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bakerroad02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bakerroadground.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bakerroadtree01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bakerroadtree02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_bigwall.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaalley01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaalley02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaground01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaground02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaground03.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaground04.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareainsidea.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareainsideb.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareainsidec.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareaoutsidelow.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareatree01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareatree02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareatree03.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campareatree04.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campsaferoominside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_campsaferoomoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_cemetery.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_cemeterylow.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_church.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_churchlow.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_climbinghut.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_climbinghutlow.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_collapsehut.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_gardenarea1.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_ghoutside01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehouse.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01tree01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01tree02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehousearea01tree03.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehouseground01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_joehouseinside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousehall.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhouseoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsidesub01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace1f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace2f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace2f2.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_mainhousoutsideterrace2f3.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground03.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground04.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground05.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground05low.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground06.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_moldswampground06low.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fbridge01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fbridge02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fbridgestorag01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fbridgewc01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fentrance01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fhallway01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fhole01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fhollway01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fkitchen01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fpuzzle01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1froom01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouse1fwallinside01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhouseoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_oldhousesaferoom01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat1f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat1fasset01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat1fasset02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat2f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat2fasset01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat2fasset02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat3f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboat3fasset.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboatb1f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboatb1fasset.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboatdistantview.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboatoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_steamboatoutsidelow.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_swamphut01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_swamphut02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_trailerhouse.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_waterwayground01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_waterwaysaferoom01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_waterwaytree01.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_waterwaytree02.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/environment/scene/chapter9/c09_waterwaytree03.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/bakerroad.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/camparea_ground.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea/camparea.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/camparea/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/church/church.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/church/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/church/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/church/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/climbinghut.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/gardenarea.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09_1.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09_2.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09_3.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09_4.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/itemset_c09.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/joehousearea.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/mainhouse/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/mainhouse/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/mainhouse/mainhouse.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/mainhouse/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/moldswamp.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/oldhouse.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/easy.scn.20,,,Easy,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/hard.scn.20,,,Madhouse,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/normal.scn.20,,,Normal,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/steamboat.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/leveldesign/lightscene/light_c09_1.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/leveldesign/lightscene/light_c09_2.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/leveldesign/lightscene/light_c09_3.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/leveldesign/lightscene/light_c09_4.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_1_2_3_levelprop.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_1_levelprop.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_2_levelprop.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_3_levelprop.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_4_levelprop.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_additionalasset.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_ending.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_ingame.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_itemresources.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_light.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_loadtemp.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_souko.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/c09_title.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/chapter9.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/chapter9object.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/chapter9resident.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_1/c09_1_cullingcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_1/c09_cullingcollision_joehouse.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_2/c09_2_cullingcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_2/c09_cullingcollision_camp.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_2/c09_cullingcollision_steamboat.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_3/c09_3_cullingcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_3/c09_cullingcollision_church.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_4_cullingcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisionbakerroad.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisiongareden.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisionmainhouse2.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_4/c09_cullingcollisionoldhouse.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_cullingcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/cullingcollision/c09_waterway/c09_cullingcollision_waterway.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/enemy_c09.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_1/aimap_c09_1.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_1/enemy_c09_1.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_1/joehousearea/c09_1_enemyset_joehousearea.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_1/joehousearea/c09_1_soft_joehousearea.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_1/joehousearea/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/aimap_c09_2.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/c09_2_enemyset_camparea.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/c09_2_soft_camparea.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/c09_2_enemyset_campareaground.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/c09_2_soft_campareaground.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/enemy_c09_2.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/c09_2_enemyset_steamboat.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/c09_2_soft_steamboat.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/aimap_c09_3.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/c09_3_enemyset_church.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/c09_3_soft_church.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/c09_3_enemyset_climbhut.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/c09_3_soft_climbhut.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/enemy_c09_3.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/c09_3_enemyset_moldswamp.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/c09_3_soft_moldswamp.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/aimap_c09_4.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/c09_24_enemyset_bakerroad.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/c09_4_soft_bakerroad.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/enemy_c09_4.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/oldhouse/c09_4_enemyset_oldhouse.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/oldhouse/c09_4_soft_oldhouse.scn.20,,,,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/enemy/chapter9_4/oldhouse/hard.scn.20,,,Madhouse,EndOfZoe,Enemy,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_1.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_2.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_3.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_4.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_common.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09_waterway.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/env/env_c09.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_1_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_1/c09_1_joehouse.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_2_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_camparea.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_campareaground.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_2/c09_steamboat.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_3_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_3/c09_moldswamp.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_3/c09_moldswampground.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_bakerroad.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_garden.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_ghoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_mainhousehall.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_mainhousoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_oldhouse1f.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_4/c09_oldhouseoutside.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/loadingcollision/c09_waterway_loadcollision.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_c09_1.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_c09_2.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_c09_3.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_c09_4.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_c09.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/npc/npc_common.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/openingmovie.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/chapter/ui_c09.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/files/c09_fileresource.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/ch9/scenes/items/itemresources_chapter9 .scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp000.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp001.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp002.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp003.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp004.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp005.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/ch9_wp006.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem000.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem001.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem002.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem003.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem004.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem006.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem007.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem009.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem010.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem013.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem022.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem030.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem031.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem072.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/environment/scene/chapter1/c01_outside09.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/environment/scene/chapter99/c99_vrtutorial.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/environment/scene/ff000/c01_outside09.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/prefab/character/em9200/c01f01/pos_c01f01_em9200.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/scenes/dlc/dlc_chapter9.scn.20,,,,EndOfZoe,General,FALSE
+natives/stm/scenes/items/resources/brokenhandgun_m19.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/scenes/items/resources/handgun_m19.scn.20,,,,EndOfZoe,Item,FALSE
+natives/stm/scenes/imd/aimap_imd/cowshed.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/aimap_imd/gardenarea.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/aimap_imd/greenhouse.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/aimap_imd/lucasarea.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/aimap_imd/mainhouse.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/aimapasyncload.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/chapter3_imd_mainmenu.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/chapter3_imd.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/0/c03_cullingcollisionboathouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/1/c03_cullingcollisiongareden.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/2/c03_cullingcollisiongh.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/3/c03_cullingcollisionmainhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/4/c03_cullingcollisionoldhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/5/c03_cullingcollisiontaxidermyroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/6/c03_cullingcollisioncowshed.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/7/c03_cullingcollisionlucasarea.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_cullingcollision/c03_cullingcollision.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1_low01/c03_gardenarea1_low01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1_low02/c03_gardenarea1_low02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1/1/c03_gardenarea1_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1/c03_gardenarea1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1sub01/c03_gardenarea1sub01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1sub02/c03_gardenarea1sub02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenarea1sub03/c03_gardenarea1sub03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenareaboat01/c03_gardenareaboat01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gardenareaboat02/c03_gardenareaboat02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fentrance01/0/c03_gh1fentrance01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fentrance01/c03_gh1fentrance01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fentrance02/0/c03_gh1fentrance02_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fentrance02/c03_gh1fentrance02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fhallway01/0/c03_gh1fhallway01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fhallway01/c03_gh1fhallway01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1flowerroom01/0/c03_gh1flowerroom01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1flowerroom01/c03_gh1flowerroom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom01/0/c03_gh1froom01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom01/c03_gh1froom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom02/0/c03_gh1froom02_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom02/c03_gh1froom02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom03/0/c03_gh1froom03_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1froom03/c03_gh1froom03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fstairs01/0/c03_gh1fstairs01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh1fstairs01/c03_gh1fstairs01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fhallway01/0/c03_gh2fhallway01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fhallway01/c03_gh2fhallway01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2froom01/0/c03_gh2froom01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2froom01/c03_gh2froom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fsaferoom01/0/c03_gh2fsaferoom01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fsaferoom01/c03_gh2fsaferoom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fsaferoom02/0/c03_gh2fsaferoom02_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fsaferoom02/c03_gh2fsaferoom02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fterrace01/0/c03_gh2fterrace01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_gh2fterrace01/c03_gh2fterrace01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_ghinsidelow01/c03_ghinsidelow01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_ghoutside01/1/c03_ghoutside_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_ghoutside01/c03_ghoutside01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_ghoutsidegarden/c03_ghoutsidegarden.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_loadcollision/c03_loadcollision.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fgaragehallway/0/c03_mainhouse1fgaragehallway_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fgaragehallway/c03_mainhouse1fgaragehallway.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fgarageoutside/c03_mainhouse1fgarageoutside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fhallway/0/c03_mainhouse1fhallway_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fhallway/1/c03_mainhouse1fhallway_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fhallway/c03_mainhouse1fhallway.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fldk/0/c03_mainhouse1fldk_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fldk/c03_mainhouse1fldk.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fliving/0/c03_mainhouse1fliving_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fliving/c03_mainhouse1fliving.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fpantry/0/c03_mainhouse1fpantry_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fpantry/c03_mainhouse1fpantry.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fwash/0/c03_mainhouse1fwash_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse1fwash/c03_mainhouse1fwash.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fbath/0/c03_mainhouse2fbath_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fbath/c03_mainhouse2fbath.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fbedroom/0/c03_mainhouse2fbedroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fbedroom/c03_mainhouse2fbedroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fgrandma/0/c03_mainhouse2fgrandma_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fgrandma/c03_mainhouse2fgrandma.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fhallway/0/c03_mainhouse2fhallway_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fhallway/c03_mainhouse2fhallway.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fhallway2/0/c03_mainhouse2fhallway2_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fhallway2/c03_mainhouse2fhallway2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fplay/0/c03_mainhouse2fplay_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fplay/c03_mainhouse2fplay.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fstoreroom/0/c03_mainhouse2fstoreroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhouse2fstoreroom/c03_mainhouse2fstoreroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousefakeset01/c03_mainhousefakeset01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousehall/0/c03_mainhousehall_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousehall/1/c03_mainhousehall_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousehall/c03_mainhousehall.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousestair01/0/c03_mainhousestair01_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousestair01/c03_mainhousestair01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutside/0/c03_mainhousoutside_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutside/c03_mainhousoutside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsidesub01/c03_mainhousoutsidesub01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace1f/0/c03_mainhousoutsideterrace1f_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace1f/c03_mainhousoutsideterrace1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace2f/0/0/1/lightasset_mainhousoutsideterrace2f_inside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace2f/0/c03_mainhousoutsideterrace2f_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace2f/c03_mainhousoutsideterrace2f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace2f2/c03_mainhousoutsideterrace2f2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_mainhousoutsideterrace2f3/c03_mainhousoutsideterrace2f3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_oldhouse1fbridge01/1/c03_oldhouse1fbridge01_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_oldhouse1fbridge01/c03_oldhouse1fbridge01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_oldhouse1fentrance01/c03_oldhouse1fentrance01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_oldhouseoutside/1/c03_oldhouseoutside_mapzone.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_oldhouseoutside/c03_oldhouseoutside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fhallway1/0/c03_rightarea1fhallway1_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fhallway1/c03_rightarea1fhallway1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fhallway2/0/c03_rightarea1fhallway2_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fhallway2/c03_rightarea1fhallway2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fmonitorroom/0/c03_rightarea1fmonitorroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fmonitorroom/c03_rightarea1fmonitorroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1foffice/0/c03_rightarea1foffice_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1foffice/c03_rightarea1foffice.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fopeninghallway/c03_rightarea1fopeninghallway.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fparlor/0/c03_rightarea1fparlor_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fparlor/c03_rightarea1fparlor.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fstorageroom/0/c03_rightarea1fstorageroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fstorageroom/c03_rightarea1fstorageroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fstudy/0/c03_rightarea1fstudy_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightarea1fstudy/c03_rightarea1fstudy.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1ffreezer/0/c03_rightareab1ffreezer_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1ffreezer/c03_rightareab1ffreezer.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway1/0/c03_rightareab1fhallway1_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway1/c03_rightareab1fhallway1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway2/0/c03_rightareab1fhallway2_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway2/c03_rightareab1fhallway2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway3/0/c03_rightareab1fhallway3_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway3/c03_rightareab1fhallway3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway4/0/c03_rightareab1fhallway4_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fhallway4/c03_rightareab1fhallway4.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fmoldedcreationroom/0/c03_rightareab1fmoldedcreationroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fmoldedcreationroom/c03_rightareab1fmoldedcreationroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fmorgue/0/c03_rightareab1fmorgue_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fmorgue/c03_rightareab1fmorgue.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fpowerroom/0/c03_rightareab1fpowerroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fpowerroom/c03_rightareab1fpowerroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstorageroom1/0/c03_rightareab1fstorageroom1_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstorageroom1/c03_rightareab1fstorageroom1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstorageroom2/0/c03_rightareab1fstorageroom2_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstorageroom2/c03_rightareab1fstorageroom2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstoreroom/0/c03_rightareab1fstoreroom_light.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_rightareab1fstoreroom/c03_rightareab1fstoreroom.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/c03_trailerhouse/c03_trailerhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/0/mainhouse_west.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/1/mainhouse_east.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/2/gardenarea.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/4/1/normal.scn.20,,,Normal,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/4/greenhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/itemset_c03/itemset_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/0/occ_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/1/ibl_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/2/zone_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/0/0/probe_mainhouse1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/0/2/probe_gardenarea1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/0/3/probe_gh.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/0/5/probe_mainhousehall.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/0/6/probe_oldhouse1froom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/1/0/probe_mainhouse2fhallway.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/1/1/probe_rightareab1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/2/1/probe_mainhouse1fgarage.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/4/probe.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/light_c03/light_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/safezone_c03/safezone_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/0/0/snd_spacedeterminationlist_c3_garden.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/0/snd_load_zone_chapter3_garden.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/1/0/snd_spacedeterminationlist_c3_mainhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/1/snd_load_zone_chapter3_mainhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/2/0/snd_spacedeterminationlist_c3_oldhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/2/snd_load_zone_chapter3_oldhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/0/snd_load_zone_chapter3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/1/snd_load_progression_chapter3_1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/2/snd_load_progression_chapter3_2.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/3/snd_load_progression_chapter3_3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/4/snd_load_progression_chapter3_4.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/5/snd_load_progression_chapter3_5.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/6/snd_spacedeterminationstatelist_chapter3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/sound_c03/sound_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/ui_c03/0/chapter3.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/ui_c03/ui_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/0/vfx_c03_other.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/0/0/vfx_c03_oldhouse1fhole01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/0/1/0/vfx_c03_oldhousecave02.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/0/1/1/vfx_c03_oldhousecave03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/0/1/vfx_c03_oldhousecave01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/0/vfx_c03_oldhouse1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/1/vfx_c03_oldhouse2f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/2/vfx_c03_oldhouseoutside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/3/vfx_c03_oldhouse1funderfloor01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/1/vfx_c03_oldhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/2/0/vfx_c03_greenhouse1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/2/1/vfx_c03_greenhouse2f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/2/2/vfx_c03_gh1flowerroom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/2/vfx_c03_greenhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/3/vfx_c03_boathouse1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/0/0/vfx_c03_mainhouse1fpantry.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/0/1/vfx_c03_mainhouse1fldk.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/0/2/vfx_c03_mainhouse1fgarage.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/0/vfx_c03_mainhouse1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/1/0/vfx_c03_mainhouse2fbath.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/1/vfx_c03_mainhouse2f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/2/vfx_c03_mainhouseanywhere.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/3/vfx_c03_mainhouseoutside.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/4/vfx_c03_mainhousearea.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/5/0/0/vfx_c03_gardenarea1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/5/0/1/vfx_c03_trailerhouse.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/5/0/vfx_c03_garden.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/5/vfx_c03_maingardenarea.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/6/0/vfx_c03_cowshed01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/6/1/vfx_c03_cowroom01.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/6/vfx_c03_cowshed.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/7/0/vfx_c03_leftarea1f.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/7/1/vfx_c03_leftarea2froom1.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/7/vfx_c03_lucasarea.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/vfx_c03.scn.20,,,,EthanMustDie,General,TRUE
+natives/stm/scenes/imd/enemy_imd.scn.20,,,,EthanMustDie,Enemy,FALSE
+natives/stm/scenes/imd/loadtemp_imd.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/randomitemboxset_imd.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/resident_imd.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/imd/soft_imd.scn.20,,,,EthanMustDie,General,FALSE
+natives/stm/scenes/birthday/birthdaymaster.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/birtydayloading.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/player/player01.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/player/player02.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/players.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/result.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage1/copyasset/c01_2f/c01_2f_light/c01_2f_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_2f/c01_2f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_3f/c01_3f_mapzone/c01_3f_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_3f/c01_3f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1a/c01_b1a_light/c01_b1a_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1a/c01_b1a.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1b/c01_b1b_light/c01_b1b_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1b/c01_b1b.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1c/c01_b1c_light/c01_b1c_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1c/c01_b1c.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1d/c01_b1d_light/c01_b1d_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1d/c01_b1d.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1e/c01_b1e_light/c01_b1e_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1e/c01_b1e.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f_light/c01_b1f_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f_mapzone/c01_b1f_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1g/c01_b1g_light/c01_b1g_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1g/c01_b1g.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1h/c01_b1h_light/c01_b1h_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1h/c01_b1h.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1i/c01_b1i_light/c01_b1i_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1i/c01_b1i.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1j/c01_b1j_light/c01_b1j_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_b1j/c01_b1j.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_bathroom01/c01_bathroom01_light/c01_bathroom01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_bathroom01/c01_bathroom01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01_light/c01_corridor01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01_mapzone/c01_corridor01_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor01/c01_corridor01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02_light/c01_corridor02_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02_mapzone/c01_corridor02_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor03/c01_corridor03_light/c01_corridor03_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_corridor03/c01_corridor03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_cullingcollision/c01_cullingcollision.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_kitchen01/c01_kitchen01_light/c01_kitchen01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_kitchen01/c01_kitchen01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01_light/c01_living01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01_mapzone/c01_living01_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_living01/c01_living01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_loadcollision/c01_loadcollision.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_shadow01/c01_shadow01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_storeroom01/c01_storeroom01_light/c01_storeroom01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/c01_storeroom01/c01_storeroom01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/light_c01/ibl_c01/ibl_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/light_c01/light_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/light_c01/occ_c01/occ_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/light_c01/probe_c01/probe_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/light_c01/zone_c01/zone_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/ui_c01/map_stage1_seta.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/ui_c01/map_stage1_setb.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_1f/vfx_c01_1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_anywhere/vfx_c01_anywhere.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_b1/vfx_c01_b1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01_other1/vfx_c01_other1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/copyasset/vfx_c01/vfx_c01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage1/stage1_common.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage1/stage1_seta.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage1/stage1_setb.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage1/stage1_static.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage1/stage1.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowhallway01/c03_cowhallway01_light/c03_cowhallway01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowhallway01/c03_cowhallway01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom01/c03_cowroom01_light/c03_cowroom01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom01/c03_cowroom01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom02/c03_cowroom02_light/c03_cowroom02_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom02/c03_cowroom02.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom03/c03_cowroom03_light/c03_cowroom03_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom03/c03_cowroom03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom05/c03_cowroom05_light/c03_cowroom05_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom05/c03_cowroom05.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom06/c03_cowroom06_light/c03_cowroom06_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom06/c03_cowroom06.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01_light/c03_cowshed01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01_mapzone/c03_cowshed01_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowshed01/c03_cowshed01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cowshedoutside01/c03_cowshedoutside01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cullingcollisioncowshed/c03_cullingcollisioncowshed.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_cullingcollisionlucasarea/c03_cullingcollisionlucasarea.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fbackstage/c03_leftarea1fbackstage.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fhallway/c03_leftarea1fhallway_light/c03_leftarea1fhallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fhallway/c03_leftarea1fhallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fmonitorroom/c03_leftarea1fmonitorroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom1/c03_leftarea1fpuzzleroom1_light/c03_leftarea1fpuzzleroom1_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom1/c03_leftarea1fpuzzleroom1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom2/c03_leftarea1fpuzzleroom2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom2/c03_leftarea1fpuzzleroomballoon/c03_leftarea1fpuzzleroomballoon.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1ftraproom/c03_leftarea1ftraproom_light/c03_leftarea1ftraproom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1ftraproom/c03_leftarea1ftraproom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2fhallway/c03_leftarea2fhallway_light/c03_leftarea2fhallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2fhallway/c03_leftarea2fhallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom1/c03_leftarea2froom1_light/c03_leftarea2froom1_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom1/c03_leftarea2froom1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom2/c03_leftarea2froom2_light/c03_leftarea2froom2_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2froom2/c03_leftarea2froom2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2ftvroom/c03_leftarea2ftvroom_light/c03_leftarea2ftvroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea2ftvroom/c03_leftarea2ftvroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/c03_loadcollision/c03_loadcollision.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/eventlight_c03/eventlight_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/ibl_c03/ibl_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/light_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/occ_c03/occ_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/probe.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/light_c03/zone_c03/zone_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/ui_c03/map_stage2_seta.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/ui_c03/map_stage2_setb.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_cowshed/1/vfx_c03_cowroom01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_cowshed/vfx_c03_cowshed.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/0/vfx_c03_leftarea1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/1/vfx_c03_leftarea2froom1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_lucasarea/vfx_c03_lucasarea.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/copyasset/vfx_c03_other/vfx_c03_other.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage2/stage2_common.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/stage2_seta.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/stage2_setb.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/stage2_static.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/stage2.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage2/vfx_c03.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/0/c03_cullingcollisionboathouse.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/1/c03_cullingcollisiongareden.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/2/c03_cullingcollisiongh.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/3/c03_cullingcollisionmainhouse.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/4/c03_cullingcollisionoldhouse.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/5/c03_cullingcollisiontaxidermyroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/6/c03_cullingcollisioncowshed.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/7/c03_cullingcollisionlucasarea.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_cullingcollision/c03_cullingcollision.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_gardenarea1_low01/c03_gardenarea1_low01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_gardenarea1_low02/c03_gardenarea1_low02.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_loadcollision/c03_loadcollision.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarage/0/c03_mainhouse1fgarage_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarage/c03_mainhouse1fgarage.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgaragehallway/0/c03_mainhouse1fgaragehallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgaragehallway/c03_mainhouse1fgaragehallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarageoutside/c03_mainhouse1fgarageoutside.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/0/c03_mainhouse1fhallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/1/c03_mainhouse1fhallway_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fhallway/c03_mainhouse1fhallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fldk/0/c03_mainhouse1fldk_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fldk/c03_mainhouse1fldk.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fliving/0/c03_mainhouse1fliving_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fliving/c03_mainhouse1fliving.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fpantry/0/c03_mainhouse1fpantry_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fpantry/c03_mainhouse1fpantry.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fwash/0/c03_mainhouse1fwash_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fwash/c03_mainhouse1fwash.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbath/0/c03_mainhouse2fbath_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbath/c03_mainhouse2fbath.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbedroom/0/c03_mainhouse2fbedroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbedroom/c03_mainhouse2fbedroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fgrandma/0/c03_mainhouse2fgrandma_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fgrandma/c03_mainhouse2fgrandma.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway/0/c03_mainhouse2fhallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway/c03_mainhouse2fhallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway2/0/c03_mainhouse2fhallway2_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fhallway2/c03_mainhouse2fhallway2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids/0/c03_mainhouse2fkids_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids/c03_mainhouse2fkids.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids02/0/c03_mainhouse2fkids02_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids02/c03_mainhouse2fkids02.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fplay/0/c03_mainhouse2fplay_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fplay/c03_mainhouse2fplay.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fstoreroom/0/c03_mainhouse2fstoreroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fstoreroom/c03_mainhouse2fstoreroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/0/c03_mainhousehall_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/1/c03_mainhousehall_mapzone.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousehall/c03_mainhousehall.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousestair01/0/c03_mainhousestair01_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousestair01/c03_mainhousestair01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutside/c03_mainhousoutside.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsidesub01/c03_mainhousoutsidesub01.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace1f/0/c03_mainhousoutsideterrace1f_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace1f/c03_mainhousoutsideterrace1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/0/0/1/lightasset_mainhousoutsideterrace2f_inside.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/0/c03_mainhousoutsideterrace2f_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f/c03_mainhousoutsideterrace2f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f2/c03_mainhousoutsideterrace2f2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_mainhousoutsideterrace2f3/c03_mainhousoutsideterrace2f3.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway1/0/c03_rightarea1fhallway1_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway1/c03_rightarea1fhallway1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway2/0/c03_rightarea1fhallway2_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fhallway2/c03_rightarea1fhallway2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fmonitorroom/0/c03_rightarea1fmonitorroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fmonitorroom/c03_rightarea1fmonitorroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1foffice/0/c03_rightarea1foffice_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1foffice/c03_rightarea1foffice.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fopeninghallway/0/c03_rightarea1fopeninghallway_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fopeninghallway/c03_rightarea1fopeninghallway.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fparlor/0/c03_rightarea1fparlor_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fparlor/c03_rightarea1fparlor.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstorageroom/0/c03_rightarea1fstorageroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstorageroom/c03_rightarea1fstorageroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstudy/0/c03_rightarea1fstudy_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fstudy/c03_rightarea1fstudy.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1ffreezer/0/c03_rightareab1ffreezer_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1ffreezer/c03_rightareab1ffreezer.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway1/0/c03_rightareab1fhallway1_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway1/c03_rightareab1fhallway1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway2/0/c03_rightareab1fhallway2_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway2/c03_rightareab1fhallway2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway3/0/c03_rightareab1fhallway3_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway3/c03_rightareab1fhallway3.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway4/0/c03_rightareab1fhallway4_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fhallway4/c03_rightareab1fhallway4.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmoldedcreationroom/0/c03_rightareab1fmoldedcreationroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmoldedcreationroom/c03_rightareab1fmoldedcreationroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmorgue/0/c03_rightareab1fmorgue_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmorgue/c03_rightareab1fmorgue.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fpowerroom/0/c03_rightareab1fpowerroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fpowerroom/c03_rightareab1fpowerroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom1/0/c03_rightareab1fstorageroom1_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom1/c03_rightareab1fstorageroom1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom2/0/c03_rightareab1fstorageroom2_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstorageroom2/c03_rightareab1fstorageroom2.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstoreroom/0/c03_rightareab1fstoreroom_light.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstoreroom/c03_rightareab1fstoreroom.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/0/occ_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/1/ibl_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/2/zone_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/3/eventlight_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/1/probe_gardenarea1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhouse1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhouse2f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_mainhousehall.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/0/probe_rightarea1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/1/1/probe_rightareab1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/4/probe.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/light_c03/light_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/ui_c03/map_stage3_seta.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/ui_c03/map_stage3_setb.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/0/vfx_c03_other.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/0/vfx_c03_mainhouse1fpantry.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/1/vfx_c03_mainhouse1fldk.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/0/vfx_c03_mainhouse1f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/1/0/vfx_c03_mainhouse2fbath.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/1/vfx_c03_mainhouse2f.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/4/vfx_c03_mainhousearea.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/0/0/vfx_c03_gardenarea1.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/0/vfx_c03_garden.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/5/vfx_c03_maingardenarea.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/vfx_c03.scn.20,,,,Jacks55thBirthday,General,TRUE
+natives/stm/scenes/birthday/stage3/stage3_common.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage3/stage3_seta.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage3/stage3_setb.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage3/stage3_static.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stage3/stage3.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/birthday/stageselect.scn.20,,,,Jacks55thBirthday,General,FALSE
+natives/stm/scenes/itemsettings/container/itemsettingscontainerbirthday.scn.20,,,,Jacks55thBirthday,Item,FALSE
+natives/stm/scenes/itemsettings/itemsettingsbirthday.scn.20,,,,Jacks55thBirthday,Item,FALSE
+natives/stm/environment/scene/chapter7/c07_rightarea1fhallway2_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1ffreezer_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fhallway1_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fhallway2_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fhallway3_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fhallway4_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fmoldedcreationroom_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fmorgue_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fpowerroom_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fstorageroom1_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fstorageroom2_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/environment/scene/chapter7/c07_rightareab1fstoreroom_7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/aimap_c07_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/c07_3_itemset.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/c07_3_player.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/c07_3_soft.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/c07_cullingcollisiontaxidermyroom.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/chapter7_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/em8001.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/enemy_c07_3.scn.20,,,,Nightmare,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm_normalmode.scn.20,,,,Nightmare,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm.scn.20,,,,Nightmare,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/levelfsm_c07_3_normalmode.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/levelfsm_c07_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/wave1.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/wave2.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/wave3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/wave4.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/wave5.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3object.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/files/fileresource_c07_3.scn.20,,,,Nightmare,General,FALSE
+natives/stm/scenes/items/itemresources_chapter7_3.scn.20,,,,Nightmare,Item,FALSE
+natives/stm/scenes/items/resources_chapter7_3/resurrectionmedium.scn.20,,,,Nightmare,Item,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_afterbosspassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_bossroom01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cave01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cave02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cave03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_caveev01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cavepassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cavepassage02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cavepassage03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cavepassage04.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_cavepassage05.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_elevatorhall01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labo01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labo02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labo03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labopassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labopassage02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labopassage03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labopassage04.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_labopassage05.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_lucasdoor_gmk.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_mine01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_mineterminal01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningcollapse01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningdome01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningelevator01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage04.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage05.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningpassage06.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningroom01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_miningtunnel01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_referenceroom01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_saltminecorridor01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_shieldmachine_center.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_shieldmachine_entra.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage04.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage05.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storage06.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storagefuseroom01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storagepassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_storageunderlayer01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_train01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_train02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_train03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_traincollapse01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_trainpassage01.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_trainpassage02.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_trainpassage03.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_trainpassage04.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/environment/scene/chapter8/c08_trainpassage05.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/leveldesign/aimap/chapter8/c08_aimap.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/leveldesign/aimap/chapter8/quicknomove.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/leveldesign/aimap/chapter8/slopearea.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/c08_bossroom01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave01/c08_cave01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave02/c08_cave02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave03/c08_cave03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage01/c08_cavepassage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage02/c08_cavepassage02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage03/c08_cavepassage03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage04/c08_cavepassage04_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage04/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage04/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage04/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/c08_cavepassage05_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_elevatorhall01/c08_elevatorhall01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_elevatorhall01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_elevatorhall01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_elevatorhall01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/c08_labo01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/c08_labo02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo03/c08_labo03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage01/c08_labopassage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage02/c08_labopassage02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/c08_labopassage03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage04/c08_labopassage04_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage04/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage04/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage04/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage05/c08_labopassage05_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage05/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage05/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage05/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/c08_mine01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mineterminal01/c08_mineterminal01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mineterminal01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mineterminal01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_mineterminal01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/c08_miningcollapse01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/c08_miningdome01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/c08_miningpassage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage02/c08_miningpassage02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage03/c08_miningpassage03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/c08_miningpassage04_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage05/c08_miningpassage05_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage05/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage05/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage05/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/c08_miningpassage06_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningroom01/c08_miningroom01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningroom01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningroom01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningroom01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/c08_miningtunnel01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_saltminecorridor01/c08_saltminecorridor01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_saltminecorridor01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_saltminecorridor01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_saltminecorridor01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/c08_shieldmachine_center_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/c08_shieldmachine_entra.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/c08_storage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/c08_storage02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage03/c08_storage03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/c08_storage04_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/c08_storage05_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/c08_storage06_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/c08_storagefuseroom01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagepassage01/c08_storagepassage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagepassage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagepassage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagepassage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/c08_storageunderlayer01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_storageunderlayer01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train01/c08_train01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/c08_train02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/c08_train03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/c08_traincollapse01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/c08_trainpassage01_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage02/c08_trainpassage02_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage02/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage02/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage02/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage03/c08_trainpassage03_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage03/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage03/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage03/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage04/c08_trainpassage04_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage04/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage04/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage04/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/c08_trainpassage05_itemset.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/casual.scn.20,,,Easy,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/hard.scn.20,,,Madhouse,NotAHero,Item,FALSE
+natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/normal.scn.20,,,Normal,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/c08_savepoints.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/casual.scn.20,,,Easy,NotAHero,General,FALSE
+natives/stm/ch8/scenes/ch8_game.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/ch8_loadtemp.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/ch8_result.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/ch8_title.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_cullingcollision.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_enemyboss.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_enemyfsmforhard.scn.20,,,Madhouse,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_loadcollision.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_motherloder.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/c08_shieldmachine_center_enemyset.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/chapter8resident.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/enemy_c08.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/enemygenerator.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/environment_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/light_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/main100generator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/main200generator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/main300generator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/main400generator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/main500generator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/mother_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/motherfsm_hard.scn.20,,,Madhouse,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/newenemyfsm.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/ch8/scenes/chapter/chapter8/tutorial_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter8.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter8hud_movie_2040.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/chapter8hud_movie_2041.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/endingmovie.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/files/filesettings_chapter8.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/hard.scn.20,,,Madhouse,NotAHero,General,FALSE
+natives/stm/ch8/scenes/items/itemresources_chapter8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/albertbullet.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/alberthandgunbullet.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/albertshotgunbullet.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/ch8cagekey.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/chrishandgun.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/chrisknife.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/chrisshotgun.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/depressantampoules.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/fusech8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/grenadebomb.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/keyitem01ch8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/keyitem02ch8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/keyitem03ch8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/keyitem04ch8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/keyitem05ch8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/minemasterkey.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/remedyampoulesl.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/remedyampoulesm.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/sitescopea.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/sitescopeb.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/sitescopec.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/stangrenadebomb.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/stimulantampoules.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/thermatebomb.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/umbrellafile00.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/items/resources_chapter8/umbrellafile01.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/itemset_resident.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/itemset.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/itemsettings/container/itemsettingscontainer_chapter8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/itemsettings/itemsettings_chapter8.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/ch8/scenes/levelfsm_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/message_c08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/normal.scn.20,,,Normal,NotAHero,General,FALSE
+natives/stm/ch8/scenes/openingmovie.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/player.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/residentweapons.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/savepoints/laboarea.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/savepoints/prevmineelevator.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch8/scenes/savepoints/prevshieldmachine.scn.20,,,,NotAHero,General,FALSE
+natives/stm/ch9/scenes/items/resource/numaitem008.scn.20,,,,NotAHero,Item,FALSE
+natives/stm/environment/scene/chapter1/c01_outside08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/environment/scene/ff000/c01_outside08.scn.20,,,,NotAHero,General,FALSE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/0/vfx_c03_rightareab1fhallway4.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/1/vfx_c03_rightareab1fstorageroom1.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/2/vfx_c03_rightareab1ffreezer.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/3/vfx_c03_rightareab1fstorageroom2.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/4/vfx_c03_rightareab1fpowerroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/vfx_c03_rightareab1fmoldedcreationroom/vfx_c03_rightareab1fmoldedcreationroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/0/vfx_c03_taxidermyroomb1f.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/0/vfx_c03_rightarea1fparlor.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/1/vfx_c03_rightarea1fmonitorroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/1/vfx_c03_taxidermyroom1f.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/birthday/stage3/copyasset/vfx_c03/8/vfx_c03_taxidermyroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/chapter/chapter3/enemy_em8000.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/scenes/dlc/dlc_chapter8.scn.20,,,,NotAHero,General,FALSE
+natives/stm/scenes/enemy/em8100.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/scenes/enemy/em8900.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/scenes/enemy/em8940.scn.20,,,,NotAHero,Enemy,FALSE
+natives/stm/scenes/imd/copyscene/itemset_c03/8/mainhouse_hall.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/0/vfx_c03_rightareab1fhallway4.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/1/vfx_c03_rightareab1fstorageroom1.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/2/vfx_c03_rightareab1ffreezer.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/3/vfx_c03_rightareab1fstorageroom2.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/4/vfx_c03_rightareab1fpowerroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/5/vfx_c03_rightareab1fmoldedcreationroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/0/vfx_c03_taxidermyroomb1f.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/1/0/vfx_c03_rightarea1fparlor.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/1/1/vfx_c03_rightarea1fmonitorroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/1/vfx_c03_taxidermyroom1f.scn.20,,,,NotAHero,General,TRUE
+natives/stm/scenes/imd/copyscene/vfx_c03/8/vfx_c03_taxidermyroom.scn.20,,,,NotAHero,General,TRUE
+natives/stm/environment/scene/chapter7/c07_leftarea1fbackstage_7_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/environment/scene/chapter7/c07_leftarea1fmonitorroom_7_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/environment/scene/chapter7/c07_leftarea1fpuzzleroom1_7_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/environment/scene/chapter7/c07_leftarea1fpuzzleroom2_7_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/c07_2_player.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/chapter7_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9800.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9801.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9802.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9803.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9804.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9805.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9806.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9807.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9808.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/em9809.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/enemy_c07_2.scn.20,,,,TwentyOne,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2/useitemobject_c07_2.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_2object.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm_survivalmode.scn.20,,,,TwentyOne,Enemy,FALSE
+natives/stm/scenes/chapter/chapter7/chapter7_3/levelfsm_c07_3_survivalmode.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/dlc/addcommand/chapter7_2_commandupdater.scn.20,,,,TwentyOne,General,FALSE
+natives/stm/scenes/items/itemresources_chapter7_2.scn.20,,,,TwentyOne,Item,FALSE
+natives/stm/environment/scene/chapter1/c01_2f.scn.20,1,Guest House / 2F / Stairs up / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_3f.scn.20,1,Guest House / 3F / Mia 2,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1a.scn.20,1,Guest House / B / Ladder,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1b.scn.20,1,Guest House / B / Water Corridor 1,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1c.scn.20,1,Guest House / B / Water Corridor 2 / André's body,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1d.scn.20,1,Guest House / B / Water Exit / Missing people placards,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1e.scn.20,1,Guest House / B / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1,Guest House / B / Mia Cell,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1g.scn.20,1,Guest House / B / Mia Follow 1,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1h.scn.20,1,Guest House / B / Mia Follow 2,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1i.scn.20,1,Guest House / B / Mia Follow 3 / Wall Break,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1j.scn.20,1,Guest House / B / Staircase,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_bathroom01.scn.20,1,Guest House / 1F / Bathroom,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_corridor01.scn.20,1,Guest House / 1F / Entrance Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_corridor02.scn.20,1,Guest House / 1F / Corridor at the back,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_corridor03.scn.20,1,Guest House / 1F / Corridor / Mia 1,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_kitchen01.scn.20,1,Guest House / 1F / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_living01.scn.20,1,Guest House / 1F / Living room,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside01.scn.20,1,Outside / Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside02.scn.20,1,Outside / Mia Mail,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside03.scn.20,1,Outside / Gate,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside04.scn.20,1,Outside / Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside05.scn.20,1,Outside / Sewer Gators Car,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside06.scn.20,1,Outside / Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside07.scn.20,1,Outside / Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside10.scn.20,1,Outside / Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outside11.scn.20,1,Outside / Before Guest House,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outsidea.scn.20,1,Outside / Guest House Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_outsideb.scn.20,1,Outside / Guest House Entrance Area,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_shadow01.scn.20,1,Outside / Shadow Map,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_storeroom01.scn.20,1,Guest House / Store Room / Mia 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat1fboss01.scn.20,3,Boat House / 2F / Jack 3,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat1fbridge01.scn.20,3,Boat House / 1F / Bridges,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat1fbridge01low.scn.20,3,Boat House / 1F / Bridges / Low Poly,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat1fbridge02.scn.20,3,Boat House / 1F / Bridge / Serum Choice,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat1fentrance01.scn.20,3,Boat House / 1F / Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boat2froom01.scn.20,3,Boat House / 2F / Mia and Zoe,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_boatoutside01.scn.20,3,Boat House / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowhallway01.scn.20,3,Testing Area / 1F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowroom01.scn.20,3,Testing Area / 1F / Carcass Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowroom02.scn.20,3,Testing Area / 1F / Fertilizer Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowroom03.scn.20,3,Testing Area / 2F / Supply Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowroom05.scn.20,3,Testing Area / 3F / Clancy's burnt body,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowroom06.scn.20,3,Testing Area / 3F / Stairs down,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowshed01.scn.20,3,Testing Area / 1F / Barn / Fat Molded Fight,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_cowshedoutside01.scn.20,3,Testing Area / 1F / Barn / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1_low01.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1_low02.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1.scn.20,3,Main House - Yard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1sub01.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1sub02.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenarea1sub03.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenareaboat01.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gardenareaboat02.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fentrance01.scn.20,3,Green House / Exit,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fentrance02.scn.20,3,Green House / 1F / Ladder,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fhallway01.scn.20,3,Green House / 1F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20,3,Green House / 1F / Yard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom01.scn.20,3,Green House / 1F / Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20,3,Green House / 1F / Room 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom03.scn.20,3,Green House / 1F / Room 3,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fstairs01.scn.20,3,Green House / 1F / Stairs / Marge Trigger,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20,3,Green House / 2F / Stairs,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2froom01.scn.20,3,Green House / 1F / Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fsaferoom01.scn.20,3,Green House / 2F / Entrance / Loot,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fsaferoom02.scn.20,3,Green House / 2F / Entrance / Hole,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fterrace01.scn.20,3,Green House / 2F / Terrace,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghinsidelow01.scn.20,3,Green House / Low Poly,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghoutside01.scn.20,3,Green House / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghoutsidegarden.scn.20,3,Green House / Exterior Yard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fbackstage.scn.20,3,Testing Area / 2F / Backstage,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fhallway.scn.20,3,Testing Area / 2F / Staircase down,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fmonitorroom.scn.20,3,Testing Area / 1F / Monitor Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom1.scn.20,3,Testing Area / 1F / Puzzle Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom2.scn.20,3,Testing Area / 1F / Puzzle Room 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroomballoon.scn.20,3,Testing Area / 1F / Puzzle Room 2 / Balloons,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea1ftraproom.scn.20,3,Testing Area / 1F / Puzzle Room Entrance / Trap,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea2fhallway.scn.20,3,Testing Area / 2F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea2froom1.scn.20,3,Testing Area / 2F / Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20,3,Testing Area / 2F / Room 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_leftarea2ftvroom.scn.20,3,Testing Area / 2F / TV Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fgarage.scn.20,3,Main House / 1F / Garage,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fgaragehallway.scn.20,3,Main House  / 1F / Garage Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fgarageoutside.scn.20,3,Main House  / 1F / Garage Outside,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,Main House  / 1F / Main Hallway,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,3,Main House  / 1F / Dining Room / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20,3,Main House  / 1F / Living Room / Pendulum,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,3,Main House  / 1F / Pantry / Hatch,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20,3,Main House  / 1F / Laundry / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fbath.scn.20,3,Main House / 2F / Bathroom,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fbedroom.scn.20,3,Main House / 2F / Bedroom / Clock Puzzle,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fgrandma.scn.20,3,Main House / 2F / Grandma's Room / Shotgun,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fhallway.scn.20,3,Main House / 2F / Corridor 1 / Both Molded and Non-Molded,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fhallway2.scn.20,3,Main House / 2F / Corridor 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fkids.scn.20,3,Main House / 2F / Lucas' teenage room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20,3,Main House / 2F / Lucas' teenage room / Attic,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fplay.scn.20,3,Main House / 2F / Play Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fstoreroom.scn.20,3,Main House / 2F / Storage Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousefakeset01.scn.20,3,Main House / Fake Set,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,3,Main House / Hall,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousestair01.scn.20,3,Main House / 2F / Stair leading to basement,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutside.scn.20,3,Main House / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutsidesub01.scn.20,3,Main House / Exterior / Windows,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace1f.scn.20,3,Main House / 1F / Terrace,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace2f.scn.20,3,Main House / 2F / Terrace,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace2f2.scn.20,3,Main House / 2F / Terrace,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace2f3.scn.20,3,Main House / Stairs leading to Testing Area / Keycards,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fbridge01.scn.20,3,Old House / Entrance Bridge,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fbridge02.scn.20,3,Old House / 1F / Bridges at the back,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fbridgestorag01.scn.20,3,Old House / 1F / Bridges / Storage Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fbridgewc01.scn.20,3,Old House / 1F / Bridges /Toilet,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fentrance01.scn.20,3,Old House / 1F / Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fhallway01.scn.20,3,Old House / 1F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fhole01.scn.20,3,Old House / 1F / Hole Area / Crank,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fhollway01.scn.20,3,Old House / 1F / Staircase / Lucas abducts Mia,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fkitchen01.scn.20,3,Old House / 1F / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fpuzzle01.scn.20,3,Old House / 1F / Shadow Puzzle Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1froom01.scn.20,3,Old House / 1F / Room to the right / Insect Nest,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20,3,Old House / 1F / Room to the left,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fstairs01.scn.20,3,Old House / 1F / Altar / D-Series Arm,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fstorage.scn.20,3,Old House / 1F / Storage Room / Unused?,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1funderfloor01.scn.20,3,Old House / 1F / Underground Tunnel / Crank,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fwallinside01.scn.20,3,Old House / 1F / Centipide Wall,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fbedroom.scn.20,3,Old House / 2F / Bedroom,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway02.scn.20,3,Old House / 2F / Corridor / D-Series Case,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway03.scn.20,3,Old House / 2F / Corridor / Lantern Placement,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway04.scn.20,3,Old House / 2F / Corridor / After first lantern door,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fkidsroom01.scn.20,3,Old House / 2F / Child's room / Alligator,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fkidsroom02.scn.20,3,Old House / 2F / Child's room / Toys,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse2fstudy01.scn.20,3,Old House / 2F / Moldy study room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhousecave01.scn.20,3,Old House / Tunnel / Mutated Marge,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouseoutside.scn.20,3,Old House / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhousesaferoom01.scn.20,3,Old House / Bridges / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fhallway1.scn.20,3,Main House / 1F / Right Side Corridor / Scorpion Key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fhallway2.scn.20,3,Main House / 1F / Right Side Corridor/ Staircase leading to basement,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fmonitorroom.scn.20,3,Main House / 1F / Moldy Monitor Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1foffice.scn.20,3,Main House / 1F / Office / Unused?,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fopeninghallway.scn.20,3,Main House / 1F / Wall after Shadow Puzzle,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fparlor.scn.20,3,Main House / 1F / Right Side Parlor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fstorageroom.scn.20,3,Main House / 1F / Right Side Storage Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fstudy.scn.20,3,Main House / 1F / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20,3,Main House / B / Jack 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway1.scn.20,3,Main House / B / Corridor / After going down,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway2.scn.20,3,Main House / B / Corridor / Workshop / Green barrier,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway3.scn.20,3,Main House / B / Staircase / Snake key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway4.scn.20,3,Main House / B / Corridor / Jack Cutscene,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fmoldedcreationroom.scn.20,3,Main House / B / Molded Creation Room / Bath tubs,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fmorgue.scn.20,3,Main House / B / Morgue / Dissection Room Key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fpowerroom.scn.20,3,Main House / B / Carcasses / Red Keycard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom1.scn.20,3,Main House / B / Electricity Room / Four-Legged Moldeds,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom2.scn.20,3,Main House / B / Storage Room / Scorpion Key / Treasure Photo,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstoreroom.scn.20,3,Main House / B / Police Officer's body / Snake Key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_trailerhouse.scn.20,3,Yard / Trailer,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c012f.scn.20,4,Guest House / 2F / Stairs up,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c013f.scn.20,4,Guest House / 3F / Evie,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1h.scn.20,4,Guest House / B / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1i.scn.20,4,Guest House / B / Mia Wall Break,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1j.scn.20,4,Guest House / B / Staircase,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01bathroom01.scn.20,4,Guest House / 1F / Bathroom,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01corridor01.scn.20,4,Guest House / 1F / Corridor / Ethan threatens Evie,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01corridor02.scn.20,4,Guest House / 1F / Corridor at the back,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01corridor03.scn.20,4,Guest House / 1F / Corridor / Mia Flashback,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01kitchen01.scn.20,4,Guest House / 1F / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01living01.scn.20,4,Guest House / 1F / Living Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01outside01.scn.20,4,Guest House / Skybox,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01outside10.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01outside11.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01outsideb.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01storeroom01.scn.20,4,Guest House / 1F / Store Room / Unused?,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cave01.scn.20,4,Salt Mine / B3 / Cavern,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cave02.scn.20,4,Salt Mine / B3 / Tunnels,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cave03.scn.20,4,Salt Mine / B3 / North Cavern,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cave04.scn.20,4,Salt Mine / B3 / Flooded Cavern,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_caveev01.scn.20,4,Salt Mine / Elevator,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_caveev02.scn.20,4,Salt Mine / B1 / Small Passage,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_caveev03.scn.20,4,Salt Mine / B1 / Exit Passage,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavehall.scn.20,4,Salt Mine / B1 / Abandoned Mine / Props,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavemine.scn.20,4,Salt Mine / B1 / Abandoned Mine / Fat Moldeds,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavepassage01.scn.20,4,Salt Mine / B3 / Tunnel,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavepassage02.scn.20,4,Salt Mine / B3 / Tunnel,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavepassage03.scn.20,4,Salt Mine / B3 / Tunnel / Mine Car,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavepassage04.scn.20,4,Salt Mine / B3 / Tunnel,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20,4,Salt Mine / B3 / Cultivation Room / Serum,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cottage.scn.20,4,Swamp / Mine Office,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cottageswamp01.scn.20,4,Swamp / Dead Fish,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_cottageswamp02.scn.20,4,Swamp / Mine Entrance Path,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_mainhouse1flivingjack.scn.20,4,Main House / 1F / Living Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_outsidepastfront.scn.20,4,Ship / Deck,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fcabina.scn.20,4,Wrecked Ship / 1F / Recreation Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fcabinb.scn.20,4,Wrecked Ship / 1F / Cabin,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fcorridor.scn.20,4,Wrecked Ship / 1F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1flaundry.scn.20,4,Wrecked Ship / 1F / Laundry Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1foffice.scn.20,4,Wrecked Ship / 1F / Maintenance Room / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fshaft.scn.20,4,Wrecked Ship / 1F / Shaft,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fstairs.scn.20,4,Wrecked Ship / S1 / Stairwell / After Evie Appearance,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fwarehousea.scn.20,4,Wrecked Ship / 1F / Storage,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship1fwarehouseb.scn.20,4,Wrecked Ship / 1F / Storage,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabina.scn.20,4,Wrecked Ship / 2F / Bunk Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabinapast.scn.20,4,Ship / 2F / Bunk Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabinmia.scn.20,4,Wrecked Ship / 2F / Guest Room / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabinmiapast.scn.20,4,Ship / 2F / Guest Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcorridorc.scn.20,4,Wrecked Ship / 2F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcorridorcpast.scn.20,4,Ship / 2F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fkitchen.scn.20,4,Wrecked Ship / 2F / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fkitchenpast.scn.20,4,Ship / 2F / Kitchen Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20,4,Wrecked Ship / 2F / Lounge,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2freceptionroompast.scn.20,4,Ship / 2F / Lounge Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2frestaurant.scn.20,4,Wrecked Ship / 2F / Dining Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2frestaurantpast.scn.20,4,Ship / 2F / Dining Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fshaft.scn.20,4,Wrecked Ship / 2F / Shaft,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fshaftpast.scn.20,4,Ship / 2F / Shaft Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2ftearoom.scn.20,4,Wrecked Ship / 2F / Break Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2ftearoompast.scn.20,4,Ship / 2F / Break Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor01.scn.20,4,Wrecked Ship / 3F / Corridor at the back,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor01past.scn.20,4,Wrecked Ship / 3F / Corridor at the back / Evie cutscene,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor02.scn.20,4,Wrecked Ship / 3F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor02past.scn.20,4,Ship / 3F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor03.scn.20,4,Wrecked Ship / 3F / Broken Elevator Door Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor03past.scn.20,4,Ship / 3F / Broken Elevator Door Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor04.scn.20,4,Wrecked Ship / 3F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor04past.scn.20,4,Ship / 3F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3felectricdistributionroom.scn.20,4,Wrecked Ship / 3F / Control Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3felectricdistributionroompast.scn.20,4,Ship / 3F / Control Room Pest,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20,4,Wrecked Ship / 3F / Sick Bay,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3finfirmarypa.scn.20,4,Ship / 3F / Sick Bay Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3finfirmarypast.scn.20,4,Ship / 3F / Sick Bay Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fsecurityroom.scn.20,4,Wrecked Ship / 3F / Security,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fsecurityroompast.scn.20,4,Ship / 3F / Security Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshaft.scn.20,4,Wrecked Ship / 3F / Shaft,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshaftpast.scn.20,4,Ship / 3F / Shaft Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshowerroom.scn.20,4,Wrecked Ship / 3F / Shower Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshowerroompast.scn.20,4,Ship / 3F / Shower Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship4fbridge.scn.20,4,Wrecked Ship / 4F / Bridge,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship4fcabina.scn.20,4,Wrecked Ship / 4F / Captain's Cabin,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship4fcorridora.scn.20,4,Wrecked Ship / 4F / Corridor with staircase leading downwards,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship4fcorridorb.scn.20,4,Wrecked Ship / 4F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship4fcorridorc.scn.20,4,Wrecked Ship / 4F / Broken Elevator Door Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1corridor01.scn.20,4,Wrecked Ship / S3 / L Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1corridor02.scn.20,4,Wrecked Ship / S3 / Straight Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1corridor03.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1corridor04.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1corridor05.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1flashback.scn.20,4,Wrecked Ship / S2 / Workshop / Flashback,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1ladde.scn.20,4,Wrecked Ship / S2 / Maintenance Access,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1outside01.scn.20,4,Wrecked Ship / S3 / Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1outside02.scn.20,4,Wrecked Ship / S3 / Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1pipingspace.scn.20,4,Wrecked Ship / S2 / Workers Access Passage 1,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1room01.scn.20,4,Wrecked Ship / S2 / Locker Jumpscare,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1room02.scn.20,4,Wrecked Ship / S2 / ?,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1stairs.scn.20,4,Wrecked Ship / S2 / Moldy Stairwell,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb1workshop.scn.20,4,Wrecked Ship / S2 / Workshop,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor01.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor01past.scn.20,4,Ship / S2 / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor02.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor03.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor03past.scn.20,4,Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor04.scn.20,4,Wrecked Ship / S2 / Moldy Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor04past.scn.20,4,Ship / S2 / Moldy Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2engineroom01.scn.20,4,Wrecked Ship / S2 / No. 2 Engine Room / Evie,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2engineroom01past.scn.20,4,Ship / S2 / No. 2 Engine Room / Evie,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage01.scn.20,4,Wrecked Ship / S2 / Store Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage01past.scn.20,4,Ship / S2 / Store Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage02.scn.20,4,Wrecked Ship / S2 / Pressure Gauge Room / Near Swamp Exit,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage03.scn.20,4,Wrecked Ship / S2 / No. 1 Engine Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage03past.scn.20,4,Ship / S2 / No. 1 Engine Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipelevatorshaft01a.scn.20,4,Wrecked Ship / Elevator Shaft,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipstairs.scn.20,4,Wrecked Ship / Staircase,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipstairspast.scn.20,4,Ship / Staircase Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_swamp01.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_swamp02.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_swamp03.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_swamp04.scn.20,4,Terrain,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_tankerback.scn.20,4,Wrecked Ship / Back,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_tankerbrokenparts.scn.20,4,Wrecked Ship / Broken Parts / Props,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_tankercenter.scn.20,4,Wrecked Ship / Exterior Center,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_tankerfront.scn.20,4,Wrecked Ship / Exterior Front,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_tankerstern.scn.20,4,Wrecked Ship / Exterior Stern,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_2f.scn.20,1,Derelict House Footage / Guest House / 2F / Stairs,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1a.scn.20,1,Derelict House Footage / Guest House / B / André,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1b.scn.20,1,Derelict House Footage / Guest House / B / Water Corridor,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1c.scn.20,1,Derelict House Footage / Guest House / B / Water Corridor,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_corridor01.scn.20,1,Derelict House Footage / Guest House / 1F / Entrance Corridor,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_corridor02.scn.20,1,Derelict House Footage / Guest House / 1F / Corridor at the back,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_kitchen01.scn.20,1,Derelict House Footage / Guest House / 1F / Kitchen,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_living01.scn.20,1,Derelict House Footage / Guest House / 1F / Living Room,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_outside01.scn.20,1,Terrain,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_outside10.scn.20,1,Terrain,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_outside11.scn.20,1,Terrain,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_outsidea.scn.20,1,Derelict House Footage / Main House / Exterior,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_outsideb.scn.20,1,Derelict House Footage / Guest House / Exterior,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_shadow01.scn.20,1,Shadow Map,,,General,FALSE
+natives/stm/environment/scene/ff010/c01_corridor01.scn.20,1,C04 Flashback / Corridor,,,General,FALSE
+natives/stm/environment/scene/ff010/c01_corridor02.scn.20,1,C04 Flashback / Corridor,,,General,FALSE
+natives/stm/environment/scene/ff010/c01_kitchen01.scn.20,1,C04 Flashback / Kitchen,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_gardenarea1.scn.20,3,Terrain,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fbridge01.scn.20,3,Mia VHS / Old House / Entrance Bridge,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fbridge02.scn.20,3,Mia VHS / Old House / Bridges,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fbridgestorag01.scn.20,3,Mia VHS / Old House / Bridges / Storage Room,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fbridgewc01.scn.20,3,Mia VHS / Old House / Bridges / Toilet,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fentrance01.scn.20,3,Mia VHS / Old House / Entrance Area,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fhallway01.scn.20,3,Mia VHS / Old House / Corridor / Mia Hide Spot,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fhole01.scn.20,3,Mia VHS / Old House / Hole Area,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fhollway01.scn.20,3,Mia VHS / Old House / Corridor behind Insect Nest,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fkitchen01.scn.20,3,Mia VHS / Old House / Kitchen,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fpuzzle01.scn.20,3,Mia VHS / Old House / Shadow Puzzle Room,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1froom01.scn.20,3,Mia VHS / Old House / Room with Insect Nest,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1froom02.scn.20,3,Mia VHS / Old House / Room with TVs,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fstairs01.scn.20,3,Mia VHS / Old House / Altar,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fstorage.scn.20,3,Mia VHS / Old House / Storage Room / Unused?,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1funderfloor01.scn.20,3,Mia VHS / Old House / Underground Tunnel,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fwallinside01.scn.20,3,Mia VHS / Old House / Centipide Wall,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse2fhallway01.scn.20,3,Mia VHS / Old House / Corridor,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse2fhallway02.scn.20,3,Mia VHS / Old House / Corridor,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse2fkidsroom01.scn.20,3,Mia VHS / Old House / Child's Room 1,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse2fkidsroom02.scn.20,3,Mia VHS / Old House / Child's Room 2,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouseoutside.scn.20,3,Mia VHS / Old House / Exterior,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhousesaferoom01.scn.20,3,Mia VHS / Old House / Safe Room,,,General,FALSE
+natives/stm/environment/scene/ff050/c04_shipelevator_ff.scn.20,4,Old Ship Videotape / Elevator,,,General,FALSE
+natives/stm/leveldesign/aimap/chapter3/safezone_c03.scn.20,3,Chapter 3 Safe Zones (prevent enemies from entering safe rooms),,,General,FALSE
+natives/stm/leveldesign/itemset/chapter0/itemset_c00.scn.20,0,Unused,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter1/hard.scn.20,1,"2x Cassette Tapes, 10x Handgun Bullets, 1x First Aid Med",Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter1/itemset_c01.scn.20,1,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/boatshed/boatshed.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/boatshed/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/cowshed/cowshed.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/cowshed/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/cowshed/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/cowshed/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/gardenarea/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/gardenarea/gardenarea.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/gardenarea/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/greenhouse/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/greenhouse/greenhouse.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/itemset_c03.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/lucasarea/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/lucasarea/lucasarea.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_east/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_east/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/mainhouse_hall.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_west/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/mainhouse_west/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/oldhouse/easy.scn.20,3,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/oldhouse/hard.scn.20,3,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20,3,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter3/oldhouse/oldhouse.scn.20,3,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/itemset_c04.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/lastbattle/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/lastbattle/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/lastbattle/lastbattle.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/lastbattle/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/saltdomeb1f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/saltdomeb2f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship1f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship1f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship1f/ship1f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship2f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship2f/ship2f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship3f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship3f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship3f/ship3f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship4f/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship4f/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship4f/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/ship4f/ship4f.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipbf/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipbf/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipbf/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipbf/shipbf.scn.20,4,,,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipoutside/easy.scn.20,4,,Easy,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipoutside/hard.scn.20,4,,Madhouse,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20,4,,Normal,,Item,FALSE
+natives/stm/leveldesign/itemset/chapter4/shipoutside/shipoutside.scn.20,4,,,,Item,FALSE
+natives/stm/prefab/character/em2000/c01e00/pos_c01e00.scn.20,1,,,,General,FALSE
+natives/stm/prefab/character/em6200/c01f01/pos_c01f01_em6200.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter0.scn.20,0,,,,General,FALSE
+natives/stm/scenes/chapter/chapter0/c00_cullingcollision.scn.20,0,,,,General,FALSE
+natives/stm/scenes/chapter/chapter0/c00_loadcollistion.scn.20,0,,,,General,FALSE
+natives/stm/scenes/chapter/chapter0/enemy_c00.scn.20,0,Mia,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter1.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter1/birdeyeviewmovie.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter1/c01_cullingcollision.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter1/c01_loadcollision.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20,1,"Mia, Jack",,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter1/mansionai_c01_3f.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter1/soft_c01.scn.20,1,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/aimap_c03_1.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/aimap_c03_2.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/aimap_c03_3.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/aimap_c03_4.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/aimap_c03_5.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_1_deactivate_dinnerafter.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollision.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisionboathouse.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisioncowshed.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisiongareden.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisiongh.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisionlucasarea.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisionmainhouse.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisionoldhouse.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_cullingcollisiontaxidermyroom.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_loadcollision.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_soft_1.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_soft_2.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_soft_3.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_soft_4.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_soft_5.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/c03_souko.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_2/hard.scn.20,3,,Madhouse,,General,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20,3,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_3/hard.scn.20,3,,Madhouse,,General,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_3/moldeads.scn.20,3,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_4/hard.scn.20,3,,Madhouse,,General,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_4/moldeads.scn.20,3,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/chapter3_5/moldeads.scn.20,3,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03_1.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03_2.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03_4.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03_5.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20,3,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_em3600.scn.20,3,Mutated Marge,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/mansionai_c03_2.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter3/mansoinai_c03_1.scn.20,3,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/aimap_c04_1.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/aimap_c04_2.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/aimap_c04_3.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_cullingcollision.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_cullingcollisionannex.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_cullingcollisioncave.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_cullingcollisionelevator.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_cullingcollisionship.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_loadcollision.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_shipelevator.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_soft_1.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_soft_2.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_soft_3.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/c04_souko.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/chapter4_1/hard.scn.20,4,,Madhouse,,General,FALSE
+natives/stm/scenes/chapter/chapter4/chapter4_1/moldeads.scn.20,4,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20,4,,Madhouse,,General,FALSE
+natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20,4,Moldeds,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/character_c04_1_2.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/enemy_c04_1.scn.20,4,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/enemy_c04_2.scn.20,4,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/enemy_c04_3.scn.20,4,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/enemy_c04.scn.20,4,,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter4/player_c04_pl0000.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/player_c04_pl2000.scn.20,4,,,,General,FALSE
+natives/stm/scenes/chapter/chapter4/player_c04.scn.20,4,,,,General,FALSE
+natives/stm/scenes/enemy/em2000chapter4.scn.20,4,,,,Enemy,FALSE
+natives/stm/scenes/items/resources/fusech4.scn.20,4,,,,Item,FALSE
+natives/stm/scenes/loadtempscene/loadtemp_chapter1.scn.20,1,,,,General,FALSE
+natives/stm/scenes/loadtempscene/loadtemp_chapter3.scn.20,3,,,,General,FALSE
+natives/stm/scenes/loadtempscene/loadtemp_chapter4.scn.20,4,,,,General,FALSE
