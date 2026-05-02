@@ -17,6 +17,7 @@ Important projects and directories:
 - `src/Biohazard.BioRand.RE7.Tests/` - xUnit behavior/regression tests over the embedded baseline pak.
 - `src/reeutils/` - git submodule for RE Engine tooling. Do not edit it casually; call out any intentional submodule changes.
 - `docs/` - active reverse-engineering notes and roadmap. Read `docs/Notes.MD` before changing item, enemy, inventory, recipe, chapter, or DLC logic.
+- `.analysis/re7_src/` - locally generated REFramework.NET C# type database. Prefer it for DLC class names, inheritance, fields, and enums before spending time in IDA.
 - `assets/`, `reframework/`, `reversing/`, `dumps/` - mod assets and research material. `dumps/` and local output folders are not normal source changes.
 
 ## Before Editing
@@ -25,6 +26,7 @@ Important projects and directories:
 - If dependencies look missing, run `git submodule update --init --recursive`.
 - Prefer focused edits. This code touches game binaries and softlock-prone state; avoid broad refactors unless the task asks for them.
 - Keep generated/game-data churn deliberate. Large diffs in `_Data`, `GeneratedEnums.cs`, `GeneratedTypes.cs`, or binary assets need a clear reason.
+- For DLC work, check `docs/Notes.MD`, `docs/enemies/enemy_spawning.md`, `docs/enemies/spawnInfoOptions.md`, and the relevant `.analysis/*-findings.md` note before editing.
 
 ## Build And Test
 
@@ -116,6 +118,12 @@ Softlock prevention beats chaos.
 - Starting inventory and inventory-size changes affect multiple Ethan, Mia, and VHS/Clancy files.
 - Chapter shuffling and key-item changes can softlock progression. Prefer explicit constraints and behavior tests over pure random placement.
 - Some options require REFramework artifacts (`recipes-add-new`, forced REFramework, non-12 inventory sizes). Keep `Randomizer.IsREFrameworkRequired()` in sync with new requirements.
+- DLC integration usually requires the full runtime component chain, not only assets or IDs. For CH8 enemies this means `app.CH8EnemyGenerator`, `app.CH8EnemyPool`, `app.CH8EnemySpawnInfo`, and the matching `app.CH8EnemySpawnInfoOptionEm####`; for CH9 generator spawns at least `app.CH9EnemySpawnInfo` and `app.CH9EnemySpawnInfoOptionEm####` are required.
+- `CH8` is Not a Hero and `CH9` is End of Zoe. Jack's 55th Birthday uses Birthday/FsmBirthday classes, not CH8 classes.
+- DLC enemy aliases can reuse another enemy's option/component stack. Examples: `Em4210` uses the `CH8Em4200` stack and `CH8EnemySpawnInfoOptionEm4200`; `Em4600` uses the `CH8Em4000` stack and `CH8EnemySpawnInfoOptionEm4000`.
+- Treat boss DLC enemies as special cases until runtime-proven. `Em4500` is Mutated Lucas, the Not a Hero final boss, and should not be used as the representative CH8 test enemy.
+- DLC asset loading needs scene-root activation plus dependency closure copying. Do not assume that adding a prefab or mesh reference alone mounts the DLC scene folders or their dependent resources.
+- Birthday passive skills need the inventory prefab/passive userdata chain plus REFramework runtime handling; `skl###no` entries are locked/dummy Birthday variants and should not be injected as usable main-game skills.
 
 ## Artifacts, Secrets, And Repo Hygiene
 

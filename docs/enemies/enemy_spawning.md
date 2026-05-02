@@ -42,6 +42,38 @@
   The important conclusion is that RE7 is not primarily “creating enemies from scratch” on each request here. The code I found is mostly a pooled-
   instance activation system driven by EnemySpawnInfo records and EnemyGenerator selection logic.
 
+## DLC enemy component shapes
+
+Main-game generator scenes normally use this hierarchy:
+
+- `app.EnemyGenerator`
+- `app.EnemyPool`
+- `app.EnemySpawnInfo`
+- `app.EnemySpawnInfoOptionEm####`
+
+Not a Hero (CH8) scenes use their own generator and pool subclasses:
+
+- `app.CH8EnemyGenerator`
+- `app.CH8EnemyPool`
+- `app.CH8EnemySpawnInfo`
+- `app.CH8EnemySpawnInfoOptionEm####`
+
+End of Zoe (CH9) enemy spawn-info objects use:
+
+- `app.CH9EnemySpawnInfo`
+- `app.CH9EnemySpawnInfoOptionEm####`
+
+No `app.CH9EnemyGenerator` or `app.CH9EnemyPool` type was found in the current TDB, but CH8 definitely has both. For CH8 enemies in main-game generator scenes, replacing only the enemy-specific option component is not enough. The randomized generator should also be promoted to `app.CH8EnemyGenerator` and its child pool to `app.CH8EnemyPool`, while the individual spawn info should become `app.CH8EnemySpawnInfo`.
+
+`app.EnemySpawnInfoOptionDLC` exists and `app.EnemySpawnInfo` exposes DLC-option-like state, but real DLC spawn infos do not universally include it. Prefer copying the real imported DLC spawn-info object shape for the target alias and copying only shared campaign fields from the original main-game spawn info.
+
+Important CH8 alias quirks:
+
+- `Em4210` is Fat Headless Molded. Its `UnitAlias` is `Em4210`, but its component/option stack is based on `CH8Em4200`.
+- `Em4600` is Fumer. Its `UnitAlias` is `Em4600`, but its component/option stack is based on `CH8Em4000`.
+- `Em4460` is Mama Mold. It has a normal generator-style source and also appears in a wrapper-style object with nested `Em4450` spawn info.
+- `Em4500` is Mutated Lucas, the Not a Hero final boss. Treat it as a special-case/boss enemy, not a safe baseline integration target.
+
 ## Scene limit mapping
 
 `app.fsm.EnemyGenerate::start357603` resolves its target `EnemySpawnInfo` by GUID first. It can fall back to
