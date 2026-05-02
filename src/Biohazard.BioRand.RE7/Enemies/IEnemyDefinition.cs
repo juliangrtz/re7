@@ -20,6 +20,10 @@ public interface IEnemyDefinition
 
     public string HealthConfigId => Id;
 
+    public bool UseTemplateHealth => false;
+
+    public double DefaultEnemyRatio => 0.5;
+
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
 
@@ -27,10 +31,22 @@ public interface IEnemyDefinition
 
     public bool UsesEnemyGenerator { get; }
 
+    public DlcType? Dlc => null;
+
+    public bool IsDlc => Dlc != null;
+
+    public string EnemyAlias => EnemyId.ToString();
+
+    public string? TemplateComponentPrefix => null;
+
+    public string EnemyGeneratorComponentType => EnemyGenerationComponents.EnemyGeneratorType;
+
+    public string EnemyPoolComponentType => EnemyGenerationComponents.EnemyPoolType;
+
     public bool IsMolded => Category == EnemyCategory.Molded;
     public bool IsInsect => Category == EnemyCategory.Insect;
 
-    public string? SpawnOptionType => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyId}" : null;
+    public string? SpawnOptionType => UsesEnemyGenerator ? $"app.EnemySpawnInfoOption{EnemyAlias}" : null;
 
     public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template) => template;
 
@@ -43,12 +59,13 @@ public interface IEnemyDefinition
         return (float)rng.NextDouble(min, max);
     }
 
-    internal float GetHealth(Randomizer randomizer, Rng rng)
+    internal float GetHealth(Randomizer randomizer, Rng rng, float? templateHealth = null)
     {
         var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
         var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
-        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) 
-            ? BaseHealth * GetHealthMultiplier(randomizer, rng) 
-            : BaseHealth;
+        var baseHealth = UseTemplateHealth && templateHealth is > 0 ? templateHealth.Value : BaseHealth;
+        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss)
+            ? baseHealth * GetHealthMultiplier(randomizer, rng)
+            : baseHealth;
     }
 }

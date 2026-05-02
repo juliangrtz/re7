@@ -35,9 +35,9 @@ internal class EnemyModifier : Modifier
     {
         private readonly HashSet<float> _assignedHealthValues = [];
 
-        public float GetHealth(IEnemyDefinition enemy)
+        public float GetHealth(IEnemyDefinition enemy, float? templateHealth = null)
         {
-            var health = enemy.GetHealth(randomizer, healthRng);
+            var health = enemy.GetHealth(randomizer, healthRng, templateHealth);
             if (!options.DebugUniqueHp)
             {
                 return health;
@@ -131,7 +131,7 @@ internal class EnemyModifier : Modifier
 
     internal static bool ShouldReplaceSpawnInfo(RszGameObject spawnInfoGameObject)
     {
-        var component = spawnInfoGameObject.FindComponent<app.EnemySpawnInfo>();
+        var component = EnemySpawnInfoComponents.FindSpawnInfo(spawnInfoGameObject);
         return component?.Enabled == true
             && !_barnFightMoldeds.Contains(spawnInfoGameObject.Guid);
     }
@@ -273,35 +273,44 @@ internal class EnemyModifier : Modifier
 
         foreach (var (spawnGuid, newEnemy) in replacements)
         {
-            var enemyId = newEnemy.EnemyId.ToString();
+            var enemyId = newEnemy.EnemyAlias;
 
             var originalSpawnInfoGameObject = scene.FindGameObject(spawnGuid)!;
             var originalTransform = originalSpawnInfoGameObject.FindComponent<via.Transform>()!;
-            var originalSpawnInfoComponent = originalSpawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
+            var originalSpawnInfoNode = EnemySpawnInfoComponents.FindSpawnInfoNode(originalSpawnInfoGameObject)!;
+            var originalSpawnInfoComponent = EnemySpawnInfoComponents.FindSpawnInfo(originalSpawnInfoGameObject)!;
 
             if (newEnemy.UsesEnemyGenerator)
             {
-                // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
-                var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
                 var spawnInfoTemplate = GetOrCreateSpawnInfoTemplate(randomizer, enemyId, rng);
-                var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
-                var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
-                originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
-                originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components
-                    .Remove(originalSpawnOptions)
-                    .Add(newSpawnOptions);
+                var spawnInfoTemplateNode = EnemySpawnInfoComponents.FindSpawnInfoNode(spawnInfoTemplate)
+                    ?? throw new InvalidOperationException($"Spawn info template '{enemyId}' is missing a spawn info component.");
+                var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)
+                    ?? throw new InvalidOperationException($"Spawn info template '{enemyId}' is missing '{newEnemy.SpawnOptionType}'.");
+                var dlcSpawnOptions = spawnInfoTemplate.FindComponent(EnemySpawnInfoComponents.DlcSpawnInfoOptionType);
+
+                var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
+                var templateSpawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(spawnInfoTemplate);
+                var assignedHealth = healthResolver.GetHealth(newEnemy, templateSpawnInfo?.HealthParameter?.Health);
+                var newSpawnInfoNode = CopyCommonFields(originalSpawnInfoNode, spawnInfoTemplateNode)
+                    .Set("UnitAlias", enemyId)
+                    .Set("HealthParameter.Health", assignedHealth);
+
+                originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
+                    originalSpawnInfoGameObject.Components
+                        .Select(component => EnemySpawnInfoComponents.IsSpawnInfo(component.Type.Name)
+                            ? newSpawnInfoNode
+                            : component)
+                        .Where(component => !EnemySpawnInfoComponents.IsEnemySpecificSpawnInfoOption(component.Type.Name) &&
+                                            !EnemySpawnInfoComponents.IsDlcSpawnInfoOption(component.Type.Name))
+                        .ToImmutableArray()
+                        .Add(newSpawnOptions));
                 if (dlcSpawnOptions != null)
                 {
-                    originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
                     originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions);
                 }
 
-                var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
-                var assignedHealth = healthResolver.GetHealth(newEnemy);
-                originalSpawnInfoComponent.HealthParameter.Health = assignedHealth;
-                originalSpawnInfoComponent.UnitAlias = enemyId;
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
-                    .AddOrUpdateComponent(originalSpawnInfoComponent)
                     .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);
 
                 scene = scene.UpdateGameObject(originalSpawnInfoGameObject);
@@ -342,16 +351,21 @@ internal class EnemyModifier : Modifier
             }
         }
 
+        var requiredGeneratorType = GetRequiredGeneratorComponentType(replacements.Select(replacement => replacement.enemy));
+        var requiredPoolType = GetRequiredPoolComponentType(replacements.Select(replacement => replacement.enemy));
         var generator = scene.FindGameObject(enemyGenerator.GameObject.Guid)!;
+        generator = EnsureGenerationComponent(
+            generator,
+            requiredGeneratorType,
+            EnemyGenerationComponents.FindGeneratorNode,
+            randomizer.FileRepository.TypeRepository);
+        scene = scene.UpdateGameObject(generator);
 
         var poolObject = generator.Children
-            .Select(child => new { Child = child, Pool = child.FindComponent<app.EnemyPool>() })
+            .Select(child => new { Child = child, Pool = EnemyGenerationComponents.FindPoolNode(child) })
             .Where(x => x.Pool != null)
             .Select(x => x.Child)
             .Single();
-
-        var poolComponent = poolObject.FindComponent<app.EnemyPool>()!;
-        //poolComponent.ExternalInstancePoolRefs.Clear();
 
         var newChildren = poolObject.Children.ToList();
 
@@ -364,12 +378,53 @@ internal class EnemyModifier : Modifier
         }
 
         poolObject.Children = newChildren.ToImmutableArray();
-
-        poolObject = poolObject.AddOrUpdateComponent(poolComponent);
-
+        poolObject = EnsureGenerationComponent(
+            poolObject,
+            requiredPoolType,
+            EnemyGenerationComponents.FindPoolNode,
+            randomizer.FileRepository.TypeRepository);
         scene = scene.UpdateGameObject(poolObject);
 
         return scene;
+    }
+
+    private static string GetRequiredGeneratorComponentType(IEnumerable<IEnemyDefinition> enemies)
+        => enemies.Any(enemy => enemy.EnemyGeneratorComponentType == EnemyGenerationComponents.Ch8EnemyGeneratorType)
+            ? EnemyGenerationComponents.Ch8EnemyGeneratorType
+            : EnemyGenerationComponents.EnemyGeneratorType;
+
+    private static string GetRequiredPoolComponentType(IEnumerable<IEnemyDefinition> enemies)
+        => enemies.Any(enemy => enemy.EnemyPoolComponentType == EnemyGenerationComponents.Ch8EnemyPoolType)
+            ? EnemyGenerationComponents.Ch8EnemyPoolType
+            : EnemyGenerationComponents.EnemyPoolType;
+
+    private static RszGameObject EnsureGenerationComponent(
+        RszGameObject gameObject,
+        string targetTypeName,
+        Func<RszGameObject, RszObjectNode?> findComponent,
+        RszTypeRepository repository)
+    {
+        var source = findComponent(gameObject)
+            ?? throw new InvalidOperationException($"GameObject '{gameObject.Name}' is missing generation component '{targetTypeName}'.");
+        var replacement = EnemyGenerationComponents.ChangeComponentType(source, repository, targetTypeName);
+
+        return gameObject.WithComponents(gameObject.Components
+            .Select(component => component.Type.Name == source.Type.Name ? replacement : component)
+            .ToImmutableArray());
+    }
+
+    private static RszObjectNode CopyCommonFields(RszObjectNode source, RszObjectNode target)
+    {
+        var result = target;
+        foreach (var targetField in target.Type.Fields)
+        {
+            if (source.Type.FindFieldIndex(targetField.Name) is var sourceIndex && sourceIndex != -1)
+            {
+                result = result.SetField(targetField.Name, source.Children[sourceIndex]);
+            }
+        }
+
+        return result;
     }
 
     private void ProcessArea(
@@ -394,7 +449,7 @@ internal class EnemyModifier : Modifier
             if (spawnInfos.Length == 0)
                 continue;
 
-            logger.Push($"Generator '{enemyGenerator.Generator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
+            logger.Push($"Generator '{enemyGenerator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
 
             var packSelector = new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
             var replacements = new List<(Guid, IEnemyDefinition)>();
@@ -403,7 +458,7 @@ internal class EnemyModifier : Modifier
                 if (!ShouldReplaceSpawnInfo(spawnInfo))
                     continue;
 
-                var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
+                var component = EnemySpawnInfoComponents.FindSpawnInfo(spawnInfo)!;
                 var replacement = packSelector.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
@@ -433,7 +488,32 @@ internal class EnemyModifier : Modifier
         logger.Pop();
     }
 
-    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true)
+    private bool HasRequiredEnemyTemplates(
+        Randomizer randomizer,
+        IEnemyDefinition enemy,
+        bool requireSpawnInfo,
+        out string reason)
+    {
+        if (!randomizer.TemplateService.HasEnemyTemplate(enemy.EnemyAlias))
+        {
+            reason = $"missing EnemyTemplate_{enemy.EnemyAlias}";
+            return false;
+        }
+
+        if (requireSpawnInfo && enemy.UsesEnemyGenerator && !randomizer.TemplateService.HasEnemySpawnInfo(enemy.EnemyAlias))
+        {
+            reason = $"missing EnemySpawnInfo_{enemy.EnemyAlias}";
+            return false;
+        }
+
+        reason = string.Empty;
+        return true;
+    }
+
+    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        bool includeBosses = true)
     {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
@@ -444,6 +524,12 @@ internal class EnemyModifier : Modifier
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
+                if (!HasRequiredEnemyTemplates(randomizer, enemy, requireSpawnInfo: true, out var reason))
+                {
+                    logger.LogLine($"Skipping {enemy.Name}: {reason}.");
+                    continue;
+                }
+
                 enemyPool.Add(new EnemyTableEntry(enemy, ratio));
             }
         }
@@ -451,7 +537,7 @@ internal class EnemyModifier : Modifier
         return enemyPool.ToImmutable();
     }
 
-    private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer)
+    private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer, RandomizerLogger logger)
     {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
@@ -468,6 +554,12 @@ internal class EnemyModifier : Modifier
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0)
             {
+                if (!HasRequiredEnemyTemplates(randomizer, enemy, requireSpawnInfo: false, out var reason))
+                {
+                    logger.LogLine($"Skipping {enemy.Name}: {reason}.");
+                    continue;
+                }
+
                 enemyPool.Add(new EnemyTableEntry(enemy, ratio));
             }
         }
@@ -497,7 +589,7 @@ internal class EnemyModifier : Modifier
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
-        var enemyPool = CreateEnemyPool(randomizer);
+        var enemyPool = CreateEnemyPool(randomizer, logger);
 
         if (enemyPool.IsDefaultOrEmpty)
         {
@@ -554,7 +646,7 @@ internal class EnemyModifier : Modifier
         EnemyRandomizerOptions options,
         Rng rng)
     {
-        var enemyId = definition.EnemyId.ToString();
+        var enemyId = definition.EnemyAlias;
         logger.LogLine($"{definition.Name} at {placement.PosX}/{placement.PosY}/{placement.PosZ}");
         var transform = new via.Transform()
         {
@@ -618,7 +710,7 @@ internal class EnemyModifier : Modifier
         logger.Push("Additional enemies");
         var hasRandomExtraEnemies = extraEnemies.Any(group => group.Any(extraEnemy => IsRandomExtraEnemyId(extraEnemy.Id)));
         var randomEnemyPool = hasRandomExtraEnemies
-            ? CreateExtraEnemyPool(randomizer)
+            ? CreateExtraEnemyPool(randomizer, logger)
             : [];
         if (hasRandomExtraEnemies && randomEnemyPool.IsDefaultOrEmpty)
         {
@@ -678,6 +770,12 @@ internal class EnemyModifier : Modifier
                         };
                         definition = EnemyDefinitions.Instance.FromId(selectedEnemyId)
                             ?? throw new InvalidOperationException($"Unknown extra enemy id '{extraEnemy.Id}' (selected '{selectedEnemyId}').");
+                    }
+
+                    if (!HasRequiredEnemyTemplates(randomizer, definition, requireSpawnInfo: false, out var reason))
+                    {
+                        logger.LogLine($"Skipping {definition.Name} at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: {reason}.");
+                        continue;
                     }
 
                     var extraEnemyGameObject = CreateExtraEnemyGameObject(randomizer, logger, extraEnemy, definition, options, rng);

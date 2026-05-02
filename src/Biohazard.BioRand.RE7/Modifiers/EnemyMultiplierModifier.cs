@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Services;
+using Biohazard.BioRand.RE7.Enemies;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
@@ -144,7 +145,7 @@ internal class EnemyMultiplierModifier : Modifier
         {
             if (EnemyModifier.ShouldReplaceSpawnInfo(gameObject))
             {
-                var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>()!;
+                var spawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(gameObject)!;
                 spawnInfoAliases[gameObject.Guid] = spawnInfo.UnitAlias;
             }
         });
@@ -233,11 +234,12 @@ internal class EnemyMultiplierModifier : Modifier
                     continue;
                 }
 
-                var enemyPoolGuid = FindAncestorWithComponent(parentByChild, scene, spawnInfoGuid, "app.EnemyPool");
+                var enemyPoolGuid = FindAncestorWithComponent(parentByChild, scene, spawnInfoGuid, gameObject =>
+                    EnemyGenerationComponents.FindPoolNode(gameObject) != null);
                 if (enemyPoolGuid == null)
                     continue;
 
-                var spawnInfo = spawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
+                var spawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(spawnInfoGameObject)!;
                 slots.Add(new EnemySpawnSlot(
                     spawnInfoGuid,
                     spawnInfoParentGuid,
@@ -552,13 +554,13 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableDictionary<Guid, Guid> parentByChild,
         RszScene scene,
         Guid childGuid,
-        string componentName)
+        Func<RszGameObject, bool> hasComponent)
     {
         var currentGuid = childGuid;
         while (parentByChild.TryGetValue(currentGuid, out var parentGuid))
         {
             var parent = scene.FindGameObject(parentGuid);
-            if (parent?.FindComponent(componentName) != null)
+            if (parent != null && hasComponent(parent))
                 return parentGuid;
 
             currentGuid = parentGuid;

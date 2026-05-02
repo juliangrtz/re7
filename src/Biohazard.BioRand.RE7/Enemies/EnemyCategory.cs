@@ -9,7 +9,8 @@ public enum EnemyCategory
     Jack,
     Marguerite,
     Insect,
-    Eveline
+    Eveline,
+    Dlc
 }
 
 internal static class EnemyCategoryExtensions
@@ -22,6 +23,7 @@ internal static class EnemyCategoryExtensions
         EnemyCategory.Marguerite => new ConfigCategory("Marguerite", "#1e7d0b", "#fff"),
         EnemyCategory.Insect => new ConfigCategory("Insect", "#3b1603", "#fff"),
         EnemyCategory.Eveline => new ConfigCategory("Eveline", "#e1eaeb", "#000"),
+        EnemyCategory.Dlc => new ConfigCategory("DLC", "#184e77", "#fff"),
         _ => throw new NotImplementedException(),
     };
 }

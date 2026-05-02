@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -8,6 +9,25 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyModifierBehaviorTests
 {
+    private static readonly string DlcActiveRootScenePath = PakPath.SceneFile("scenes/dlc/dlc_active_root.scn");
+    private static readonly string DlcChapter8ScenePath = PakPath.SceneFile("scenes/dlc/dlc_chapter8.scn");
+    private static readonly string DlcChapter9ScenePath = PakPath.SceneFile("scenes/dlc/dlc_chapter9.scn");
+    private static readonly string Ch8ChapterScenePath = PakPath.SceneFile("ch8/scenes/chapter8.scn");
+    private static readonly string Ch8GameScenePath = PakPath.SceneFile("ch8/scenes/ch8_game.scn");
+    private const string Ch8Em4600MeshPath = "CH8/Character/Enemy/em4600/em4600.mesh";
+    private const string Ch8Em4600MaterialPath = "CH8/Character/Enemy/em4600/em4600.mdf2";
+    private const string Ch8Em4600MeshPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mesh.220128762";
+    private const string Ch8Em4600MaterialPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mdf2.21";
+    private const string Ch8Em4600DeadBodyPrefabPakPath = "natives/stm/ch8/prefab/character/enemy/em4600/nomove/em4600deadbody.pfb.17";
+    private static readonly string Ch9ChapterScenePath = PakPath.SceneFile("ch9/scenes/chapter/chapter9.scn");
+    private static readonly string Ch9InGameScenePath = PakPath.SceneFile("ch9/scenes/chapter/c09_ingame.scn");
+    private static readonly string Ch9EnemyScenePath = PakPath.SceneFile("ch9/scenes/chapter/enemy_c09.scn");
+    private static readonly string Ch9VfxScenePath = PakPath.SceneFile("ch9/vfx/vfx_scene/vfx_c09.scn");
+    private static readonly HashSet<string> MainGameAreaScenePaths = AreaDefinitionRepository.Default.All
+        .Where(area => area.Dlc == null)
+        .Select(area => area.Path)
+        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
     private static readonly string[] GeneratorEnemyIds =
     [
         "Molded",
@@ -31,6 +51,265 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.Equal(2, selectedEnemies.Length);
         Assert.Equal(2, selectedEnemies.Select(x => x.Enemy.Id).Distinct(StringComparer.Ordinal).Count());
         Assert.All(selectedEnemies, selected => Assert.Contains(enemyPool, entry => entry.Enemy.Id == selected.Enemy.Id));
+    }
+
+    [Theory]
+    [InlineData("app.EnemySpawnInfoOptionEm4000", true)]
+    [InlineData("app.CH8EnemySpawnInfoOptionEm4400", true)]
+    [InlineData("app.CH9EnemySpawnInfoOptionEm7700", true)]
+    [InlineData("app.EnemySpawnInfoOptionDLC", false)]
+    [InlineData("app.EnemySpawnInfoOptionBase", false)]
+    public void IsEnemySpecificSpawnInfoOption_RecognizesOnlyConcreteEnemyOptions(string typeName, bool expected)
+    {
+        Assert.Equal(expected, EnemySpawnInfoComponents.IsEnemySpecificSpawnInfoOption(typeName));
+    }
+
+    [Fact]
+    public void DlcEnemyDefinitions_MapNotAHeroAliasesToTheirRuntimeOptionStacks()
+    {
+        var dlcEnemies = EnemyDefinitions.Instance.All
+            .Where(enemy => enemy.IsDlc)
+            .ToArray();
+
+        Assert.NotEmpty(dlcEnemies);
+        Assert.DoesNotContain(dlcEnemies, enemy => enemy.SpawnOptionType == "app.CH8EnemySpawnInfoOptionEm4100");
+        Assert.Contains(dlcEnemies, enemy =>
+            enemy.Id == "NotAHeroEm4210" &&
+            enemy.SpawnOptionType == "app.CH8EnemySpawnInfoOptionEm4200" &&
+            enemy.TemplateComponentPrefix == "app.CH8Em4200");
+        Assert.Contains(dlcEnemies, enemy =>
+            enemy.Id == "NotAHeroEm4600" &&
+            enemy.SpawnOptionType == "app.CH8EnemySpawnInfoOptionEm4000" &&
+            enemy.TemplateComponentPrefix == "app.CH8Em4000");
+        Assert.Contains(dlcEnemies, enemy => enemy.Id == "NotAHeroEm4400" && enemy.Name == "Mama Mold (Em4400)");
+        Assert.Contains(dlcEnemies, enemy => enemy.Id == "NotAHeroEm4450" && enemy.Name == "Little Crawler (Em4450)");
+        Assert.Contains(dlcEnemies, enemy => enemy.Id == "NotAHeroEm4460" && enemy.Name == "Mama Mold (Em4460)");
+        Assert.Contains(dlcEnemies, enemy => enemy.Id == "NotAHeroEm4500" && enemy.IsBoss && enemy.Name == "Mutated Lucas (Em4500)");
+        Assert.Contains(dlcEnemies, enemy => enemy.Id == "NotAHeroEm4600" && enemy.Name == "Fumer (Em4600)");
+        Assert.Contains(dlcEnemies, enemy => enemy.SpawnOptionType == "app.CH9EnemySpawnInfoOptionEm7700");
+    }
+
+    [Fact]
+    public void DefaultConfiguration_DlcEnemyRatiosAreOptIn()
+    {
+        var configuration = RandomizerExecutor.DefaultConfiguration;
+        foreach (var enemy in EnemyDefinitions.Instance.All.Where(enemy => enemy.IsDlc))
+        {
+            var ratio = Convert.ToDouble(configuration[$"enemy-ratio-{enemy.Id.ToLowerInvariant()}"]);
+            Assert.Equal(0.0, ratio);
+        }
+    }
+
+    [Fact]
+    public void TemplateService_ContainsDlcEnemyTemplatesImportedFromCh8Ch9()
+    {
+        using var result = RandomizerTest.RunState();
+        var templateService = result.Randomizer.TemplateService;
+        var importedAliases = new[]
+        {
+            "Em4210",
+            "Em4400",
+            "Em4450",
+            "Em4460",
+            "Em4500",
+            "Em4600",
+            "Em7500",
+            "Em7700",
+            "Em7800",
+            "Em7900"
+        };
+
+        foreach (var alias in importedAliases)
+        {
+            Assert.True(templateService.HasEnemyTemplate(alias), $"Missing EnemyTemplate_{alias}.");
+            Assert.True(templateService.HasEnemySpawnInfo(alias), $"Missing EnemySpawnInfo_{alias}.");
+        }
+    }
+
+    [Fact]
+    public void DlcEnemySupport_StandbysDlcEnemyAssetSceneChains()
+    {
+        using var result = RandomizerTest.RunState();
+
+        Assert.True(result.WasFileModified(DlcActiveRootScenePath));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcActiveRootScenePath), "DLC_Chapter8"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcActiveRootScenePath), "DLC_Chapter9"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcChapter8ScenePath), "Chapter8"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcChapter9ScenePath), "Chapter9"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8ChapterScenePath), "CH8_Game"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8GameScenePath), "Enemy_c08"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8GameScenePath), "Mother_c08"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9ChapterScenePath), "c09_InGame"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9InGameScenePath), "Enemy_c09"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9InGameScenePath), "VFX_c09"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_1"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_2"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_3"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_4"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_1"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_2"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_3"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_4"));
+        Assert.True(IsSceneFolderControlDefaultStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_1"));
+        Assert.True(IsSceneFolderControlDefaultStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_1"));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_DlcEnemiesWithTemplatesCanEnterGeneratorPool()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["EndOfZoeEm7700"]);
+        });
+
+        Assert.Contains("Constructed an enemy table of size 1:", result.ProcessLog);
+        Assert.Contains("End of Zoe Enemy (Em7700)", result.ProcessLog);
+        Assert.DoesNotContain("Skipping End of Zoe Enemy (Em7700)", result.ProcessLog);
+        Assert.Contains(GetChangedScenePaths(result), path =>
+            GetEligibleGeneratorAliases(result.ReadAfterScene(path))
+                .Any(aliases => aliases.Contains("Em7700", StringComparer.OrdinalIgnoreCase)));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Em4600AddsMeshAndMaterialResourcesToModifiedScenes()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4600"]);
+        });
+
+        var em4600Scenes = GetChangedScenePaths(result)
+            .Where(path => GetEligibleGeneratorAliases(result.ReadAfterScene(path))
+                .Any(aliases => aliases.Contains("Em4600", StringComparer.OrdinalIgnoreCase)))
+            .ToArray();
+
+        Assert.NotEmpty(em4600Scenes);
+        foreach (var path in em4600Scenes)
+        {
+            var scnFile = new ScnFile(FileVersions.SceneFileVersion, result.ReadAfterBytes(path));
+            Assert.Contains(Ch8Em4600MeshPath, scnFile.Resources, StringComparer.OrdinalIgnoreCase);
+            Assert.Contains(Ch8Em4600MaterialPath, scnFile.Resources, StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    [Fact]
+    public void RandomizeEnemies_NotAHeroReplacementsUseCh8GeneratorAndPoolComponents()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4600"]);
+        });
+
+        var matchingGenerators = 0;
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
+            {
+                var generator = EnemyGenerationComponents.FindGeneratorNode(gameObject);
+                if (generator == null || !ContainsSpawnInfoAlias(gameObject, "Em4600"))
+                {
+                    return;
+                }
+
+                matchingGenerators++;
+                Assert.Equal(EnemyGenerationComponents.Ch8EnemyGeneratorType, generator.Type.Name);
+                var pool = gameObject.Children
+                    .Select(EnemyGenerationComponents.FindPoolNode)
+                    .SingleOrDefault(component => component != null);
+                Assert.NotNull(pool);
+                Assert.Equal(EnemyGenerationComponents.Ch8EnemyPoolType, pool.Type.Name);
+            });
+        }
+
+        Assert.True(matchingGenerators > 0, "Expected at least one Em4600 generator replacement.");
+    }
+
+    [Fact]
+    public void RandomizeEnemies_NotAHeroReplacementsRemainMultipliableAfterCh8Promotion()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            config["enemy-multiplier"] = 1.25;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4600"]);
+        });
+
+        Assert.Contains(GetChangedScenePaths(result), path =>
+            GetEligibleGeneratorAliases(result.ReadAfterScene(path))
+                .Any(aliases => aliases.Contains("Em4600", StringComparer.OrdinalIgnoreCase)));
+    }
+
+    [Theory]
+    [InlineData("NotAHeroEm4210", "Em4210", "app.CH8EnemySpawnInfo")]
+    [InlineData("NotAHeroEm4460", "Em4460", "app.CH8EnemySpawnInfo")]
+    [InlineData("NotAHeroEm4600", "Em4600", "app.CH8EnemySpawnInfo")]
+    [InlineData("EndOfZoeEm7700", "Em7700", "app.CH9EnemySpawnInfo")]
+    public void RandomizeEnemies_DlcEnemyReplacementsUseDlcSpawnInfoComponents(
+        string enabledEnemyId,
+        string enemyAlias,
+        string expectedSpawnInfoType)
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, [enabledEnemyId]);
+        });
+
+        var spawnInfos = GetChangedScenePaths(result)
+            .SelectMany(path => GetSpawnInfoGameObjects(result.ReadAfterScene(path), enemyAlias))
+            .ToArray();
+
+        Assert.NotEmpty(spawnInfos);
+        foreach (var spawnInfoGameObject in spawnInfos)
+        {
+            Assert.Equal(
+                expectedSpawnInfoType,
+                EnemySpawnInfoComponents.FindSpawnInfoNode(spawnInfoGameObject)?.Type.Name);
+        }
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Em4600CopiesAssetFilesIntoOutputPak()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4600"]);
+        });
+
+        AssertCopiedIfInputExists(result, Ch8Em4600MeshPakPath);
+        AssertCopiedIfInputExists(result, Ch8Em4600MaterialPakPath);
+        Assert.True(result.WasFileModified(Ch8Em4600DeadBodyPrefabPakPath));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_DlcEnemiesWithoutImportedTemplatesAreSkipped()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["EndOfZoeEm5700"]);
+        });
+
+        Assert.Contains("Skipping End of Zoe Enemy (Em5700): missing EnemyTemplate_Em5700.", result.ProcessLog);
+        Assert.Contains("Constructed an empty enemy table! Aborting...", result.ProcessLog);
     }
 
     [Fact]
@@ -109,7 +388,7 @@ public class RandomizerEnemyModifierBehaviorTests
 
     private static List<string> GetChangedScenePaths(RandomizerRunResult result)
         => result.ChangedFiles.Keys
-            .Where(path => path.EndsWith(".scn.20", StringComparison.OrdinalIgnoreCase))
+            .Where(MainGameAreaScenePaths.Contains)
             .OrderBy(path => path, StringComparer.Ordinal)
             .ToList();
 
@@ -119,8 +398,8 @@ public class RandomizerEnemyModifierBehaviorTests
 
         scene.VisitGameObjects(gameObject =>
         {
-            var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
-            if (enemyGenerator?.Enabled != true)
+            var enemyGenerator = EnemyGenerationComponents.FindGeneratorNode(gameObject);
+            if (enemyGenerator == null || !EnemyGenerationComponents.IsEnabled(enemyGenerator))
                 return;
 
             var aliases = new List<string>();
@@ -129,7 +408,7 @@ public class RandomizerEnemyModifierBehaviorTests
                 if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
                     return;
 
-                var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
+                var spawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(child);
                 if (spawnInfo != null)
                 {
                     aliases.Add(spawnInfo.UnitAlias);
@@ -143,6 +422,105 @@ public class RandomizerEnemyModifierBehaviorTests
         });
 
         return result;
+    }
+
+    private static bool ContainsSpawnInfoAlias(RszGameObject gameObject, string alias)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            if (EnemySpawnInfoComponents.FindSpawnInfo(child)?.UnitAlias.Equals(alias, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                result = true;
+            }
+        });
+        return result;
+    }
+
+    private static List<RszGameObject> GetSpawnInfoGameObjects(RszScene scene, string alias)
+    {
+        var result = new List<RszGameObject>();
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (EnemySpawnInfoComponents.FindSpawnInfo(gameObject)?.UnitAlias.Equals(alias, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                result.Add(gameObject);
+            }
+        });
+        return result;
+    }
+
+    private static bool IsFolderStandby(RszScene scene, string folderName)
+    {
+        var result = false;
+        VisitSceneNodes(scene, node =>
+        {
+            if (node is RszFolder folder &&
+                folder.Name.Equals(folderName, StringComparison.OrdinalIgnoreCase) &&
+                folder.Settings["Standby"] is RszValueNode standby)
+            {
+                result = RszSerializer.Deserialize<bool>(standby);
+            }
+        });
+        return result;
+    }
+
+    private static bool IsSceneFolderControlDefaultStandby(RszScene scene, string controlName)
+    {
+        var result = false;
+        scene.VisitComponents(component =>
+        {
+            if (component.Type.Name != "app.SceneFolderControl")
+            {
+                return;
+            }
+
+            var currentControlName = ((RszStringNode)component["ControlName"]).Value;
+            if (currentControlName.Equals(controlName, StringComparison.OrdinalIgnoreCase) &&
+                component["isDefaultStandby"] is RszValueNode defaultStandby)
+            {
+                result = RszSerializer.Deserialize<bool>(defaultStandby);
+            }
+        });
+        return result;
+    }
+
+    private static string? GetFolderScenePath(RszScene scene, string folderName)
+    {
+        string? result = null;
+        VisitSceneNodes(scene, node =>
+        {
+            if (node is RszFolder folder &&
+                folder.Name.Equals(folderName, StringComparison.OrdinalIgnoreCase) &&
+                folder.Settings["ScenePath"] is RszResourceNode scenePath)
+            {
+                result = scenePath.Value;
+            }
+        });
+        return result;
+    }
+
+    private static void VisitSceneNodes(IRszSceneNode node, Action<IRszSceneNode> visitor)
+    {
+        visitor(node);
+        foreach (var child in node.Children)
+        {
+            VisitSceneNodes(child, visitor);
+        }
+    }
+
+    private static void AssertCopiedIfInputExists(RandomizerRunResult result, string path)
+    {
+        try
+        {
+            result.ReadBeforeBytes(path);
+        }
+        catch (InvalidOperationException)
+        {
+            return;
+        }
+
+        Assert.True(result.WasFileModified(path), $"Expected '{path}' to be copied into the output pak.");
     }
 
     private sealed class TestEnemyDefinition(string id, EnemyID enemyId) : IEnemyDefinition

@@ -381,7 +381,7 @@ internal static class RandomizerConfigurationDefinition
                 Min = 0,
                 Max = 1,
                 Step = 0.01,
-                Default = 0.5
+                Default = enemy.DefaultEnemyRatio
             });
         }
 

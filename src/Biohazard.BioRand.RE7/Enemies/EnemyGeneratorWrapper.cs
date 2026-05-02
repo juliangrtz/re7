@@ -7,11 +7,11 @@ internal class EnemyGeneratorWrapper
 {
     public Area Area { get; }
     public RszGameObject GameObject { get; private set; }
-    public app.EnemyGenerator Generator { get; private set; }
+    public RszObjectNode Generator { get; private set; }
     public ImmutableArray<RszGameObject> EnemyGameObjects { get; private set; }
     public ImmutableArray<RszGameObject> EnemySpawnInfos { get; private set; }
 
-    public EnemyGeneratorWrapper(Area area, RszGameObject gameObject, app.EnemyGenerator enemyGeneratorComponent)
+    public EnemyGeneratorWrapper(Area area, RszGameObject gameObject, RszObjectNode enemyGeneratorComponent)
     {
         Area = area;
         GameObject = gameObject;
@@ -21,9 +21,11 @@ internal class EnemyGeneratorWrapper
 
     public bool Enabled
     {
-        get => Generator.Enabled;
-        set => Generator.Enabled = value;
+        get => EnemyGenerationComponents.IsEnabled(Generator);
+        set => Generator = Generator.SetField("Enabled", value);
     }
+
+    public string Alias => EnemyGenerationComponents.GetAlias(Generator);
 
     private void ScanEnemies()
     {
@@ -39,7 +41,7 @@ internal class EnemyGeneratorWrapper
                 enemies.Add(go);
             }
 
-            var spawnInfo = go.FindComponent<app.EnemySpawnInfo>();
+            var spawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(go);
             if (spawnInfo != null)
             {
                 enemySpawnInfos.Add(go);
@@ -51,5 +53,5 @@ internal class EnemyGeneratorWrapper
     }
 
     public override string ToString()
-        => Generator.Alias;
+        => Alias;
 }

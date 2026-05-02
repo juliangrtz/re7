@@ -79,8 +79,8 @@ internal class Area
             {
                 gameObjectGuids.Add(gameObject.Guid);
 
-                var enemyGeneratorComponent = gameObject.FindComponent<app.EnemyGenerator>();
-                if (enemyGeneratorComponent != null && enemyGeneratorComponent.Enabled)
+                var enemyGeneratorComponent = EnemyGenerationComponents.FindGeneratorNode(gameObject);
+                if (enemyGeneratorComponent != null && EnemyGenerationComponents.IsEnabled(enemyGeneratorComponent))
                 {
                     enemyGenerators.Add(new EnemyGeneratorWrapper(this, gameObject, enemyGeneratorComponent));
                     return;

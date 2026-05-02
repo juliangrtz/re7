@@ -37,7 +37,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
     {
         var patternList = settings.Full ? FullPatterns : MiniPatterns;
         var gamePath = settings.InputPath!;
-        var pak = new RePakCollection(gamePath); // TODO: Doesn't work for DLC PAKs yet as they are named differently!
+        using var pak = OpenGamePakCollection(gamePath);
 
         var outputPath = settings.OutputPath!;
         if (outputPath.EndsWith(".pak", StringComparison.OrdinalIgnoreCase))
@@ -88,8 +88,45 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         }
     }
 
+    private static PakFileCollection OpenGamePakCollection(string gamePath)
+    {
+        var basePakPath = Path.Combine(gamePath, "re_chunk_000.pak");
+        if (!File.Exists(basePakPath))
+        {
+            throw new FileNotFoundException("Failed to find re_chunk_000.pak.", basePakPath);
+        }
+
+        var pakFiles = new List<IPakFile> { new PatchedPakFile(basePakPath) };
+        var rootPakPaths = new HashSet<string>(
+            Directory.EnumerateFiles(gamePath, "*.pak", SearchOption.TopDirectoryOnly)
+                .Select(Path.GetFullPath),
+            StringComparer.OrdinalIgnoreCase);
+
+        foreach (var pakPath in Directory
+            .EnumerateFiles(gamePath, "*.pak", SearchOption.AllDirectories)
+            .Select(Path.GetFullPath)
+            .Where(path => !rootPakPaths.Contains(path))
+            .Order(StringComparer.OrdinalIgnoreCase))
+        {
+            pakFiles.Add(new PakFile(pakPath));
+        }
+
+        return new PakFileCollection(pakFiles.ToImmutableArray());
+    }
+
     private static readonly ImmutableArray<string> FullPatterns = [
         @"natives/.*\.gui\.\d+",
+        @"natives/stm/ch[89]/.*\.aimap\.\d+",
+        @"natives/stm/ch[89]/.*\.fsm\.\d+",
+        @"natives/stm/ch[89]/.*\.jmap\.\d+",
+        @"natives/stm/ch[89]/.*\.mcol\.\d+",
+        @"natives/stm/ch[89]/.*\.mdf2\.\d+",
+        @"natives/stm/ch[89]/.*\.mesh\.\d+",
+        @"natives/stm/ch[89]/.*\.motlist\.\d+",
+        @"natives/stm/ch[89]/.*\.rbs\.\d+",
+        @"natives/stm/ch[89]/.*\.rdd\.\d+",
+        @"natives/stm/ch[89]/.*\.rtex\.\d+",
+        @"natives/stm/ch[89]/.*\.tml\.\d+",
         @"natives/.*\.motfsm2\.\d+",
         @"natives/.*\.msg\.\d+",
         @"natives/.*\.pfb\.\d+",
@@ -97,6 +134,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
         @"natives/.*\.user\.\d+",
         @"natives/.*\.uvar\.\d+",
         @"natives/.*\.rcol\.\d+",
+        @"natives/stm/sound/resource/snd_container/.*chp[89].*\.wcc\.\d+",
         @"natives/stm/animation/weapon/.*\.motlist\.\d+", // only weapons, otherwise the PAK file size explodes
         @"natives/stm/animation/weapon/.*\.motbank\.\d+"
     ];
