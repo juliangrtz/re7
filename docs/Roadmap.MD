@@ -84,6 +84,12 @@ Status: **Not completed**
 * In-depth reverse engineering required
 * In the worst case binary patching might be necessary!
 * Ethan Must Die crate quality concept in main game
+* Current DLC integration progress:
+  * Jack's 55th Birthday passive skills can be surfaced through main-game inventory/drop paths with REFramework support.
+  * Not a Hero / End of Zoe enemy templates and spawn-info templates can be imported into `template.scn.20`.
+  * Not a Hero enemies require CH8 generator/pool/spawn-info subclasses; partial main-game component shapes are not reliable.
+  * DLC enemy assets require scene-root activation and dependency closure copying, not just direct prefab references.
+  * Mutated Lucas (`Em4500`) should remain a special-case final boss target until runtime-proven.
 
 *Estimated completion: August*  
 Status: **Not completed**
