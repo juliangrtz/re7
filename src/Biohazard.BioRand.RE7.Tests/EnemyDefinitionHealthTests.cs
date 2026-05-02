@@ -5,6 +5,7 @@ using IntelOrca.Biohazard.BioRand;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class EnemyDefinitionHealthTests
 {
     [Fact]

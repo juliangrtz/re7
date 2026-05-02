@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.REEngine;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerEnemyDirectiveBehaviorTests
 {
     [Fact]

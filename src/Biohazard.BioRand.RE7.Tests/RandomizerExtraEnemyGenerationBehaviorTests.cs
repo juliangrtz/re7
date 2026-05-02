@@ -6,6 +6,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerExtraEnemyGenerationBehaviorTests
 {
     private const string ExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20";

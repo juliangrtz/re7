@@ -3,6 +3,7 @@ using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerEnemyDropPluginBehaviorTests
 {
     [Fact]

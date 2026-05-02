@@ -6,6 +6,7 @@ using IntelOrca.Biohazard.REE.Messages;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerBehaviorTests
 {
     private static readonly string EthanInventoryPath = PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user");

@@ -2,6 +2,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class AreaServiceTests
 {
     [Fact]

@@ -9,17 +9,14 @@ using System.Text.Json;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class ScnFileTests
 {
     private readonly RszTypeRepository _repo =
         RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip());
 
     private readonly PakFile _pakFile =
-        new(EmbeddedData.GetFile(Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-            ".biorand",
-            "biorand-re7.pak"
-    )));
+        new(File.ReadAllBytes(RandomizerTest.InputPakPath));
 
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(

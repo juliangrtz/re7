@@ -2,6 +2,7 @@ using Enums.app.GameManager;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerChapterJumpBehaviorTests
 {
     [Fact]

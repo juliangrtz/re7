@@ -6,6 +6,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerBirthdaySkillInventoryBehaviorTests
 {
     private const string Skl001ItemPrefabPath = "Prefab/Skill/skl001/Skl001.pfb";
