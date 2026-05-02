@@ -1,5 +1,24 @@
-ItemId,Quantity
-TalismanKey,0
-PendulumClock,0
-MorgueKey,0
-MasterKey,0
+ItemId,Quantity,Comment
+TalismanKey,0,Crow Key
+PendulumClock,0,Clock Pendulum
+MorgueKey,0,Scorpion Key
+MasterKey,0,Snake Key
+skl001,0,Infinite Ammo
+skl002,0,Health Regen
+skl003,0,Clairvoyance
+skl008,0,Defense II
+skl009,0,Defense I
+skl010,0,Speed Up II
+skl011,0,Speed Up I
+skl012,0,Firepower Up II
+skl013,0,Firepower Up I
+skl014,0,Impact II
+skl015,0,Impact I
+skl016,0,Toughness II
+skl017,0,Toughness I
+skl018,0,Guard Up
+skl019,0,Quick Reload
+skl020,0,Masochist
+skl021,0,Vengeance
+skl022,0,Narrow Escape
+skl023,0,Brawler

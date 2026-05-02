@@ -118,6 +118,9 @@ public static class RandomizerTest
         };
 
         var randomizer = new Randomizer(input, PAKPath, new EmptyReporter());
+        randomizer.DynamicData.SetData(
+            DynamicDataName.EnemyLimits,
+            System.Text.Encoding.UTF8.GetBytes("SceneFile,MaxEnemies,Comment\r\n"));
         prepareRandomizer?.Invoke(randomizer);
         var beforeRepository = new FileRepository(randomizer, PAKPath, randomizer.DynamicData);
         randomizer.Randomize();

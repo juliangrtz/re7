@@ -282,7 +282,7 @@ internal class EnemyModifier : Modifier
             if (newEnemy.UsesEnemyGenerator)
             {
                 // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
-                var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.StartsWith("app.EnemySpawnInfoOption"));
+                var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
                 var spawnInfoTemplate = GetOrCreateSpawnInfoTemplate(randomizer, enemyId, rng);
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
@@ -629,7 +629,11 @@ internal class EnemyModifier : Modifier
         {
             var scene = enemySceneGroup.Key;
             var scenePlacements = enemySceneGroup.ToList();
-            var targetEnemyCount = EnemyMultiplierModifier.GetTargetEnemyCount(scenePlacements.Count, enemyMultiplier);
+            var sceneLimit = randomizer.EnemySceneLimitService.GetMaxEnemiesForExtraScene(scene);
+            var uncappedTargetEnemyCount = EnemyMultiplierModifier.GetTargetEnemyCount(scenePlacements.Count, enemyMultiplier);
+            var targetEnemyCount = sceneLimit == null
+                ? uncappedTargetEnemyCount
+                : Math.Min(uncappedTargetEnemyCount, sceneLimit.Value);
             if (targetEnemyCount == 0)
                 continue;
 
@@ -639,9 +643,7 @@ internal class EnemyModifier : Modifier
                 rng);
             var sceneHasRandomExtraEnemies = selectedPlacements.Any(extraEnemy => IsRandomExtraEnemyId(extraEnemy.Id));
 
-            logger.Push(enemyMultiplier == 1.0
-                ? scene
-                : $"{scene} ({scenePlacements.Count} => {targetEnemyCount})");
+            logger.Push(FormatExtraEnemySceneLog(scene, scenePlacements.Count, uncappedTargetEnemyCount, targetEnemyCount, sceneLimit));
             randomizer.FileRepository.ModifyScnFile(scene, root =>
             {
                 var areaEnemyPool = !sceneHasRandomExtraEnemies || randomEnemyPool.IsDefaultOrEmpty
@@ -699,6 +701,27 @@ internal class EnemyModifier : Modifier
         }
 
         logger.Pop();
+    }
+
+    private static string FormatExtraEnemySceneLog(
+        string scene,
+        int placementCount,
+        int uncappedTargetEnemyCount,
+        int targetEnemyCount,
+        int? sceneLimit)
+    {
+        if (sceneLimit == null && placementCount == targetEnemyCount)
+        {
+            return scene;
+        }
+
+        var label = $"{scene} ({placementCount} => {targetEnemyCount}";
+        if (sceneLimit != null && targetEnemyCount != uncappedTargetEnemyCount)
+        {
+            label += $", limit {sceneLimit}";
+        }
+
+        return label + ")";
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)

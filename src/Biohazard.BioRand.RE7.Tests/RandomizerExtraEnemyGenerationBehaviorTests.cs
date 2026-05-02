@@ -155,6 +155,18 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     }
 
     [Fact]
+    public void ExtraEnemies_EnemyLimitsCapScenePlacements()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "Em4000", "Em4000", "Em4000", "Em4000"),
+            enemyLimitsCsv: BuildEnemyLimitsCsv(RandomExtraEnemyScenePath, 2));
+
+        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+
+        Assert.Equal(2, newRootEnemies.Count);
+    }
+
+    [Fact]
     public void ExtraEnemies_PipeSeparatedId_WithUnknownEnemy_Throws()
     {
         var exception = Assert.Throws<InvalidOperationException>(() =>
@@ -177,7 +189,8 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
 
     private static RandomizerRunResult RunWithExtraEnemies(
         string extraEnemiesCsv,
-        Action<RandomizerConfiguration>? configure = null)
+        Action<RandomizerConfiguration>? configure = null,
+        string? enemyLimitsCsv = null)
         => RandomizerTest.RunState(
             config =>
             {
@@ -189,6 +202,13 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 randomizer.DynamicData.SetData(
                     DynamicDataName.ExtraEnemies,
                     System.Text.Encoding.UTF8.GetBytes(extraEnemiesCsv));
+
+                if (enemyLimitsCsv != null)
+                {
+                    randomizer.DynamicData.SetData(
+                        DynamicDataName.EnemyLimits,
+                        System.Text.Encoding.UTF8.GetBytes(enemyLimitsCsv));
+                }
             });
 
     private static string BuildExtraEnemiesCsv(string scenePath, params string[] enemyIds)
@@ -202,6 +222,12 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
 
         return builder.ToString();
     }
+
+    private static string BuildEnemyLimitsCsv(string scenePath, int maxEnemies)
+        => $"""
+            SceneFile,MaxEnemies,Comment
+            {scenePath},{maxEnemies},Test limit
+            """;
 
     private static void ConfigureEnemyPool(RandomizerConfiguration configuration, params string[] enabledEnemyIds)
     {

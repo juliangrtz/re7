@@ -1,3 +1,4 @@
+using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 
@@ -23,6 +24,13 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableArray<EnemySpawnSlot> SpawnSlots
     );
 
+    internal sealed record EnemyGenerateSlot(
+        Guid SpawnInfoGuid,
+        Guid GenerationGameObjectGuid,
+        string UnitAlias,
+        RszGameObject GenerationGameObject
+    );
+
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var multiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
@@ -32,11 +40,20 @@ internal class EnemyMultiplierModifier : Modifier
             return;
         }
 
+        var enemyLimitService = randomizer.EnemySceneLimitService;
         var rng = randomizer.GetRng(RandomizerKey);
         foreach (var area in randomizer.AreaService.Areas)
         {
             var scnFile = randomizer.FileRepository.GetScnFile(area.Path).ToBuilder(randomizer.FileRepository.TypeRepository);
-            var updatedScene = ProcessScene(scnFile.Scene, randomizer, logger, area.Path, multiplier, rng);
+            var updatedScene = ProcessScene(
+                scnFile.Scene,
+                randomizer,
+                logger,
+                area.Path,
+                multiplier,
+                rng,
+                enemyLimitService.GetMaxEnemiesForScene(area.Path),
+                enemyLimitService);
             if (!ReferenceEquals(updatedScene, scnFile.Scene))
             {
                 scnFile.Scene = updatedScene;
@@ -51,20 +68,43 @@ internal class EnemyMultiplierModifier : Modifier
         RandomizerLogger logger,
         string scenePath,
         double multiplier,
-        Rng rng)
+        Rng rng,
+        int? maxEnemyCount = null,
+        EnemySceneLimitService? enemyLimitService = null)
     {
         var slots = CollectMultipliableSpawnSlots(scene);
-        if (slots.Length == 0)
+        var limitableSlots = maxEnemyCount == null
+            ? []
+            : CollectLimitableSpawnSlots(scene, enemyLimitService);
+        var currentEnemyCount = limitableSlots.IsDefaultOrEmpty
+            ? slots.Length
+            : limitableSlots.Length;
+
+        if (currentEnemyCount == 0)
             return scene;
 
-        var targetCount = GetTargetEnemyCount(slots.Length, multiplier);
-        if (targetCount == slots.Length)
+        var uncappedTargetCount = GetTargetEnemyCount(currentEnemyCount, multiplier);
+        var targetCount = maxEnemyCount == null
+            ? uncappedTargetCount
+            : ApplyMaxEnemyCount(currentEnemyCount, uncappedTargetCount, maxEnemyCount.Value);
+        if (targetCount == currentEnemyCount)
             return scene;
 
-        logger.Push($"{scenePath}: enemy multiplier {slots.Length} => {targetCount}");
-        scene = targetCount < slots.Length
-            ? RemoveSpawnSlots(scene, slots, slots.Length - targetCount, logger, rng)
-            : AddSpawnSlots(scene, randomizer, slots, targetCount - slots.Length, logger, rng);
+        var limitLabel = maxEnemyCount != null && targetCount != uncappedTargetCount
+            ? $", limit {Math.Max(0, maxEnemyCount.Value)}"
+            : "";
+        logger.Push($"{scenePath}: enemy multiplier {currentEnemyCount} => {targetCount}{limitLabel}");
+        if (targetCount < currentEnemyCount)
+        {
+            scene = limitableSlots.IsDefaultOrEmpty
+                ? RemoveSpawnSlots(scene, slots, currentEnemyCount - targetCount, logger, rng)
+                : DisableGenerateSlots(scene, limitableSlots, currentEnemyCount - targetCount, logger, rng);
+        }
+        else if (slots.Length != 0)
+        {
+            scene = AddSpawnSlots(scene, randomizer, slots, targetCount - currentEnemyCount, logger, rng);
+        }
+
         logger.Pop();
 
         return scene;
@@ -79,10 +119,62 @@ internal class EnemyMultiplierModifier : Modifier
         return Math.Max(0, (int)Math.Round(currentEnemyCount * safeMultiplier, MidpointRounding.AwayFromZero));
     }
 
+    internal static int ApplyMaxEnemyCount(int currentEnemyCount, int uncappedTargetCount, int maxEnemyCount)
+    {
+        var safeMaxEnemyCount = Math.Max(0, maxEnemyCount);
+        if (uncappedTargetCount >= currentEnemyCount)
+        {
+            return Math.Max(currentEnemyCount, Math.Min(uncappedTargetCount, safeMaxEnemyCount));
+        }
+
+        return Math.Min(uncappedTargetCount, safeMaxEnemyCount);
+    }
+
     internal static ImmutableArray<EnemySpawnSlot> CollectMultipliableSpawnSlots(RszScene scene)
         => CollectMultipliableSpawnGroups(scene)
             .SelectMany(group => group.SpawnSlots)
             .ToImmutableArray();
+
+    internal static ImmutableArray<EnemyGenerateSlot> CollectLimitableSpawnSlots(
+        RszScene scene,
+        EnemySceneLimitService? enemyLimitService = null)
+    {
+        var spawnInfoAliases = new Dictionary<Guid, string>();
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (EnemyModifier.ShouldReplaceSpawnInfo(gameObject))
+            {
+                var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>()!;
+                spawnInfoAliases[gameObject.Guid] = spawnInfo.UnitAlias;
+            }
+        });
+
+        var slots = ImmutableArray.CreateBuilder<EnemyGenerateSlot>();
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (!IsGenerationGameObject(gameObject))
+                return;
+
+            foreach (var spawnInfoGuid in GetEnabledEnemyGenerateSpawnInfoRefs(gameObject).Distinct())
+            {
+                if (!spawnInfoAliases.TryGetValue(spawnInfoGuid, out var unitAlias))
+                {
+                    if (enemyLimitService?.TryGetVanillaSpawnInfo(spawnInfoGuid, out var placement) != true)
+                        continue;
+
+                    unitAlias = placement.UnitAlias;
+                }
+
+                slots.Add(new EnemyGenerateSlot(
+                    spawnInfoGuid,
+                    gameObject.Guid,
+                    unitAlias,
+                    gameObject));
+            }
+        });
+
+        return slots.ToImmutable();
+    }
 
     internal static ImmutableArray<EnemySpawnGroup> CollectMultipliableSpawnGroups(RszScene scene)
     {
@@ -214,6 +306,37 @@ internal class EnemyMultiplierModifier : Modifier
         {
             logger.LogLine($"Removing {slot.UnitAlias} ({slot.SpawnInfoGuid})");
             scene = scene.RemoveGameObject(slot.SpawnInfoGuid);
+        }
+
+        return scene;
+    }
+
+    private static RszScene DisableGenerateSlots(
+        RszScene scene,
+        ImmutableArray<EnemyGenerateSlot> slots,
+        int removeCount,
+        RandomizerLogger logger,
+        Rng rng)
+    {
+        var removedSlots = SelectRandomSlotsWithoutReplacement(slots, removeCount, rng);
+        var removedSpawnInfosByGeneration = removedSlots
+            .GroupBy(slot => slot.GenerationGameObjectGuid)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Select(slot => slot.SpawnInfoGuid).ToHashSet());
+
+        foreach (var (generationGameObjectGuid, removedSpawnInfoGuids) in removedSpawnInfosByGeneration)
+        {
+            var generationGameObject = scene.FindGameObject(generationGameObjectGuid);
+            if (generationGameObject != null)
+            {
+                scene = scene.UpdateGameObject(DisableEnemyGenerateActions(generationGameObject, removedSpawnInfoGuids));
+            }
+        }
+
+        foreach (var slot in removedSlots)
+        {
+            logger.LogLine($"Disabling {slot.UnitAlias} ({slot.SpawnInfoGuid})");
         }
 
         return scene;
@@ -395,13 +518,13 @@ internal class EnemyMultiplierModifier : Modifier
     private static bool IsMatchingEnemyInstance(RszGameObject gameObject, string unitAlias)
         => gameObject.Name.Contains(unitAlias, StringComparison.OrdinalIgnoreCase);
 
-    private static ImmutableArray<EnemySpawnSlot> SelectRandomSlotsWithoutReplacement(
-        ImmutableArray<EnemySpawnSlot> slots,
+    private static ImmutableArray<T> SelectRandomSlotsWithoutReplacement<T>(
+        ImmutableArray<T> slots,
         int count,
         Rng rng)
     {
         var remainingSlots = slots.ToList();
-        var selectedSlots = ImmutableArray.CreateBuilder<EnemySpawnSlot>(Math.Min(count, slots.Length));
+        var selectedSlots = ImmutableArray.CreateBuilder<T>(Math.Min(count, slots.Length));
         while (selectedSlots.Count < count && remainingSlots.Count > 0)
         {
             var selectedSlot = rng.Next(remainingSlots);
