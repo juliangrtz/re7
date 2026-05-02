@@ -28,6 +28,8 @@ internal class Molded : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/em4000.scn");
 
     public bool UsesEnemyGenerator => true;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class MoldedBlade : IEnemyDefinition
@@ -58,6 +60,8 @@ internal class MoldedBlade : IEnemyDefinition
     => PakPath.SceneFile($"scenes/enemy/em4000.scn");
 
     public bool UsesEnemyGenerator => true;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 // TODO Molded common params
@@ -69,7 +73,7 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em4000");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
+        var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
 
         // Health (vanilla prefab + rando prefab)
         var min = randomizer.GetConfigOption<int>("enemy-health-min-molded");
@@ -78,9 +82,7 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
         logger.LogHealthMultiplier(enemy.BaseHealth, newHealth);
 
         // Speed
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         if (applySpeed)
         {
             logger.LogMultiplier("Animation speed multiplier", newSpeed);

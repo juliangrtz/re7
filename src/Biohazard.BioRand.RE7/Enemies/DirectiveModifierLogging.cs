@@ -9,7 +9,6 @@ internal static class DirectiveModifierLogging
         => modifier switch
         {
             EnemyRankParamDirectiveModifier => "Enemy rank parameters",
-            MoldedCommonRankParamsDirectiveModifier => "Molded common rank parameters",
             _ => modifier.GetType().Name.Replace("DirectiveModifier", string.Empty, StringComparison.Ordinal),
         };
 

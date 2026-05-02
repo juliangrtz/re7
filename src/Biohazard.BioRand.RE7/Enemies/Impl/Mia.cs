@@ -34,6 +34,8 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
         => PakPath.SceneFile($"scenes/enemy/em2000.scn"); // also there is scenes/enemy/em2000chapter4.scn
 
     public bool UsesEnemyGenerator => false;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class MiaDirectiveModifier : IDirectiveModifier
@@ -44,11 +46,8 @@ internal class MiaDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em2000");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
-
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
+        var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
         logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);

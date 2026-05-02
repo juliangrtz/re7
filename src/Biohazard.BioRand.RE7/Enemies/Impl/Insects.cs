@@ -53,6 +53,8 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
         => PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
 
     public bool UsesEnemyGenerator => true;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class InsectsDirectiveModifier : IDirectiveModifier
@@ -62,17 +64,13 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        if (!enemy.ShouldRandomizeSpeed(randomizer))
         {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
 
-        var rng = randomizer.GetRng($"enemy/{enemy.EnemyId.ToString().ToLowerInvariant()}");
-
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
         logger.LogMultiplier("Speed multiplier", speedMultiplier);
 

@@ -29,6 +29,8 @@ internal class MargeStalker : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/em3100.scn");
 
     public bool UsesEnemyGenerator => false;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class MargeStalkerDirectiveModifier : IDirectiveModifier
@@ -38,17 +40,13 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        if (!enemy.ShouldRandomizeSpeed(randomizer))
         {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
 
-        var rng = randomizer.GetRng("enemy/em3100");
-
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", newSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);

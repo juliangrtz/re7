@@ -35,6 +35,8 @@ public class ConfigurationIdUsageTest
         "enemy-drop-valuable-",
         "enemy-health-min-",
         "enemy-health-max-",
+        "enemy-speed-min-",
+        "enemy-speed-max-",
         "boss-health-min-",
         "boss-health-max-",
     ];

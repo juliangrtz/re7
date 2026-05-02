@@ -28,6 +28,8 @@ internal class MoldedQuick : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/em4100.scn");
 
     public bool UsesEnemyGenerator => true;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class MoldedQuickDirectiveModifier : IDirectiveModifier
@@ -43,13 +45,10 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
             return;
         }
 
-        var rng = randomizer.GetRng("enemy/em4100");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
+        var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
 
         // Speed
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         if (applySpeed)
         {
             logger.LogMultiplier("Animation speed multiplier", newSpeed);

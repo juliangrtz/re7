@@ -19,6 +19,8 @@ public interface IEnemyDefinition
     public int BaseHealth { get; }
 
     public string HealthConfigId => Id;
+    public string SpeedConfigId => Id;
+    public bool SupportsSpeedRandomization => false;
 
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
@@ -50,5 +52,23 @@ public interface IEnemyDefinition
         return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) 
             ? BaseHealth * GetHealthMultiplier(randomizer, rng) 
             : BaseHealth;
+    }
+
+    internal bool ShouldRandomizeSpeed(Randomizer randomizer)
+        => SupportsSpeedRandomization && randomizer.GetConfigOption<bool>("random-enemy-speed");
+
+    internal float GetSpeedMultiplier(Randomizer randomizer)
+    {
+        if (!ShouldRandomizeSpeed(randomizer))
+            return 1f;
+
+        var speedConfigId = SpeedConfigId.ToLowerInvariant();
+        var legacyGlobalMinConfigId = "enemy-speed-min";
+        var legacyGlobalMaxConfigId = "enemy-speed-max";
+        var globalMin = randomizer.GetConfigOption(legacyGlobalMinConfigId, 0.5);
+        var globalMax = randomizer.GetConfigOption(legacyGlobalMaxConfigId, 2.0);
+        var min = randomizer.GetConfigOption($"enemy-speed-min-{speedConfigId}", globalMin);
+        var max = randomizer.GetConfigOption($"enemy-speed-max-{speedConfigId}", globalMax);
+        return (float)randomizer.GetRng("enemy/speed", speedConfigId).NextDouble(min, max);
     }
 }

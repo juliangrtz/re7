@@ -117,6 +117,7 @@ internal static class RandomizerConfigurationDefinition
         var allEnemies = EnemyDefinitions.Instance.All.OrderBy(boss => boss.Name);
         var bosses = EnemyDefinitions.Instance.Bosses.OrderBy(boss => boss.Name);
         var nonBosses = EnemyDefinitions.Instance.NonBosses.OrderBy(nonBoss => nonBoss.Name);
+        var speedConfigurableEnemies = allEnemies.Where(enemy => enemy.SupportsSpeedRandomization);
 
         page = configDefinition.CreatePage("Enemies");
         group = page.CreateGroup("");
@@ -236,7 +237,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"enemy-scale-probability",
             Label = "Unusual scale probability",
-            Description = "The percentage of enemies that are an unusual size.",
+            Description = "The probability of enemies having an unusual scale.",
             Type = "percent",
             Min = 0.0,
             Max = 1,
@@ -272,35 +273,39 @@ internal static class RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = $"random-enemy-speed",
-            Label = "Random animation speed rate",
-            Description = "Whether to randomize the animation speed rate of enemies. Affects all enemies.",
+            Label = "Random enemy speed",
+            Description = "Whether to randomize enemy speed using the per-enemy speed ranges.",
             Type = "switch",
             Default = false
         });
 
-        group.Items.Add(new GroupItem()
+        group = page.CreateGroup("Speed Ranges");
+        group.Warning = "Random enemy speed must be enabled for these values to take effect.";
+        foreach (var enemy in speedConfigurableEnemies)
         {
-            Id = $"enemy-speed-min",
-            Label = "Min. Enemy Speed",
-            Description = "The minimum speed multiplier of enemies.",
-            Type = "range",
-            Min = 0.5,
-            Max = 2.00,
-            Step = 0.05,
-            Default = 0.75
-        });
+            var speedConfigId = enemy.SpeedConfigId.ToLowerInvariant();
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-speed-min-{speedConfigId}",
+                Label = $"Min. {enemy.Name} Speed Multiplier",
+                Type = "range",
+                Min = 0.5,
+                Max = 2.00,
+                Step = 0.05,
+                Default = 0.5
+            });
 
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"enemy-speed-max",
-            Label = "Max. Enemy Speed",
-            Description = "The maximum speed multiplier of enemies.",
-            Type = "range",
-            Min = 0.5,
-            Max = 2.00,
-            Step = 0.05,
-            Default = 1.25
-        });
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-speed-max-{speedConfigId}",
+                Label = $"Max. {enemy.Name} Speed Multiplier",
+                Type = "range",
+                Min = 0.5,
+                Max = 2.00,
+                Step = 0.05,
+                Default = 2.00
+            });
+        }
 
         group = page.CreateGroup("Damage");
         group.Items.Add(new GroupItem()
