@@ -4,6 +4,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerEnemyMultiplierBehaviorTests
 {
     private const string TestScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";

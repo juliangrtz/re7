@@ -5,6 +5,7 @@ using Biohazard.BioRand.RE7.Serialization;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerStartingInventoryAdditionalBehaviorTests
 {
     [Fact]

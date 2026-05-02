@@ -2,6 +2,7 @@ using Biohazard.BioRand.RE7.Items;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerItemDropTableBehaviorTests
 {
     [Fact]

@@ -32,6 +32,7 @@ internal class StartingInventoryModifier : Modifier
     {
         public string ItemId { get; init; } = "";
         public int Quantity { get; init; }
+        public string Comment { get; init; } = "";
         public DebugStartItem() { }
     }
 
@@ -171,7 +172,12 @@ internal class StartingInventoryModifier : Modifier
             var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
                 .Where(x => x.Quantity > 0)
                 .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
-            root._AddItems.AddRange(debugItems);
+
+            if (debugItems.Any())
+            {
+                logger.LogLine($"Adding debug items: {string.Join(", ", debugItems.Select(x => $"{x.Num}x {x.ItemDataID}"))}");
+                root._AddItems.AddRange(debugItems);
+            }
 #if !DEBUG
             }
 #endif

@@ -49,7 +49,7 @@ internal class FileRepository : IPatchContext, IDisposable
 
         if (RszRepository == null)
         {
-            var rszJson = EmbeddedData.GetFile("rszre7rt.json");
+            var rszJson = EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip();
             RszRepository = RszRepositorySerializer.Default.FromJson(rszJson);
         }
     }

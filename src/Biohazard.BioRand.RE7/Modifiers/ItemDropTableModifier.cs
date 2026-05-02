@@ -1,6 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
-using Enums.app;
 using Enums.app.GameFlowFsmManager;
 using Enums.app.Item;
 using IntelOrca.Biohazard.BioRand;

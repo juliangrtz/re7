@@ -6,6 +6,7 @@ using IntelOrca.Biohazard.BioRand;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Collection("FlagService serial")]
+[Trait("Category", "RequiresPak")]
 public class FlagServiceTests
 {
     private static readonly (Guid Guid, string Name)[] RecipeUnlockFlags =

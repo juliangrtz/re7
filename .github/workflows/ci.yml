@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BIORAND_RE7_TEST_PAK_URL: ${{ secrets.BIORAND_RE7_TEST_PAK_URL }}
+      BIORAND_RE7_TEST_PAK_SHA256: ${{ secrets.BIORAND_RE7_TEST_PAK_SHA256 }}
 
     steps:
     - uses: actions/checkout@v4
@@ -18,9 +21,27 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 10.0
+    - name: Download baseline PAK
+      if: env.BIORAND_RE7_TEST_PAK_URL != ''
+      run: |
+        set -euo pipefail
+        mkdir -p "$HOME/.biorand"
+        pak_path="$HOME/.biorand/biorand-re7.pak"
+        curl --fail --location --retry 3 --retry-delay 5 --output "$pak_path" "$BIORAND_RE7_TEST_PAK_URL"
+        if [ -n "$BIORAND_RE7_TEST_PAK_SHA256" ]; then
+          echo "$BIORAND_RE7_TEST_PAK_SHA256  $pak_path" | sha256sum --check --strict
+        fi
+        echo "BIORAND_RE7_TEST_PAK=$pak_path" >> "$GITHUB_ENV"
+    - name: Note missing baseline PAK
+      if: env.BIORAND_RE7_TEST_PAK_URL == ''
+      run: echo "::notice::BIORAND_RE7_TEST_PAK_URL is not configured; pak-dependent tests will be skipped."
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
+      if: env.BIORAND_RE7_TEST_PAK_URL != ''
       run: dotnet test --no-build --verbosity normal
+    - name: Test without baseline PAK
+      if: env.BIORAND_RE7_TEST_PAK_URL == ''
+      run: dotnet test --no-build --verbosity normal --filter "Category!=RequiresPak"

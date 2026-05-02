@@ -2,6 +2,7 @@ using Biohazard.BioRand.RE7.Weapons;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerWeaponModifierBehaviorTests
 {
     [Fact]

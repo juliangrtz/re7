@@ -12,35 +12,24 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public static class RandomizerTest
 {
+    private const string TestPAKPathEnvVariable = "BIORAND_RE7_TEST_PAK";
+    private const string PAKName = "biorand-re7.pak";
+
     private static readonly string BiorandDirectory = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
         ".biorand"
     );
 
-    private const string PAKName = "biorand-re7.pak";
-
-    private static readonly string PAKPath = Path.Combine(
+    private static readonly string LocalPAKPath = Path.Combine(
         BiorandDirectory,
         PAKName
     );
 
-    static RandomizerTest()
-    {
-        if (!Directory.Exists(BiorandDirectory))
-        {
-            Directory.CreateDirectory(BiorandDirectory);
-        }
-
-        if (!File.Exists(PAKPath))
-        {
-            File.WriteAllBytes(PAKPath, EmbeddedData.GetFile(PAKName));
-        }
-    }
-
-    private static readonly RandomizerExecutor executor = new(PAKPath, new EmptyReporter());
+    private static readonly Lazy<string> PakPath = new(ResolvePAKPath);
+    private static readonly Lazy<RandomizerExecutor> Executor = new(() => new(PakPath.Value, new EmptyReporter()));
     private const int DefaultTestingSeed = 0x42424242;
 
-    public static string InputPakPath => PAKPath;
+    public static string InputPakPath => PakPath.Value;
 
     public static RandomizerConfiguration CreateFeatureTestConfiguration(Action<RandomizerConfiguration>? configure = null)
     {
@@ -84,7 +73,7 @@ public static class RandomizerTest
             Configuration = RandomizerConfiguration.FromJson(configJson)
         };
 
-        var output = executor.Randomize(input);
+        var output = Executor.Value.Randomize(input);
         Assert.NotNull(output);
 
         var zipAsset = output.Assets.FirstOrDefault(asset => asset.Key == "1-patch")?.Data.Unzip();
@@ -117,15 +106,45 @@ public static class RandomizerTest
             Configuration = configuration
         };
 
-        var randomizer = new Randomizer(input, PAKPath, new EmptyReporter());
+        var randomizer = new Randomizer(input, InputPakPath, new EmptyReporter());
         randomizer.DynamicData.SetData(
             DynamicDataName.EnemyLimits,
             System.Text.Encoding.UTF8.GetBytes("SceneFile,MaxEnemies,Comment\r\n"));
         prepareRandomizer?.Invoke(randomizer);
-        var beforeRepository = new FileRepository(randomizer, PAKPath, randomizer.DynamicData);
+        var beforeRepository = new FileRepository(randomizer, InputPakPath, randomizer.DynamicData);
         randomizer.Randomize();
 
         return new RandomizerRunResult(randomizer, beforeRepository);
+    }
+
+    private static string ResolvePAKPath()
+    {
+        var configuredPath = Environment.GetEnvironmentVariable(TestPAKPathEnvVariable);
+        if (!string.IsNullOrWhiteSpace(configuredPath))
+        {
+            if (!File.Exists(configuredPath))
+            {
+                throw new FileNotFoundException("Configured baseline PAK not found.", configuredPath);
+            }
+
+            return configuredPath;
+        }
+
+        if (File.Exists(LocalPAKPath))
+        {
+            return LocalPAKPath;
+        }
+
+        var embeddedPAK = EmbeddedData.TryGetFile(PAKName);
+        if (embeddedPAK is not null)
+        {
+            Directory.CreateDirectory(BiorandDirectory);
+            File.WriteAllBytes(LocalPAKPath, embeddedPAK);
+            return LocalPAKPath;
+        }
+
+        throw new FileNotFoundException(
+            $"Baseline {PAKName} not found. Put it at {LocalPAKPath} or set {TestPAKPathEnvVariable}.");
     }
 }
 

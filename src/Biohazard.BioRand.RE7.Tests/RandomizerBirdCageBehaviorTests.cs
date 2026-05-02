@@ -1,5 +1,6 @@
 namespace Biohazard.BioRand.RE7.Tests;
 
+[Trait("Category", "RequiresPak")]
 public class RandomizerBirdCageBehaviorTests
 {
     [Fact]

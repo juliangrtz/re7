@@ -31,7 +31,7 @@ internal static class RandomizerConfigurationDefinition
         {
             ItemDrops.Weapon => "Adds weapons. Includes all weapon types.",
             ItemDrops.DlcCoin => "Adds the five DLC coins.",
-            ItemDrops.BirthdaySkill => "Adds Jack's 55th Birthday passive skills. Requires \"Allow DLC items\"",
+            ItemDrops.BirthdaySkill => "Adds Jack's 55th Birthday passive skills. Requires \"Allow DLC Content\"",
             ItemDrops.LockPick => "Adds lock picks.",
             ItemDrops.RepairKit => "Adds repair kits.",
             _ => null
@@ -104,10 +104,10 @@ internal static class RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = $"allow-dlc-items",
-            Label = "Allow DLC items",
-            Description = "Let BioRand include the DLC weapons as well as items in the drop pool.",
+            Label = "Allow DLC Content",
+            Description = "Let BioRand include the DLC items as well as weapons in the drop pool.",
             Type = "switch",
-            Default = false
+            Default = true
         });
 
         #endregion General

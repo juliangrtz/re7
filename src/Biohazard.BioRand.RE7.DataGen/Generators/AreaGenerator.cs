@@ -14,8 +14,7 @@ internal class AreaGenerator : IFileGenerator
     public string Id => "areas";
     public bool CopyToDataDirectory => true;
 
-    private readonly PakFile _pakFile =
-        new(EmbeddedData.GetFile("biorand-re7.pak"));
+    private readonly PakFile _pakFile = Constants.BioRandPakFile;
 
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
