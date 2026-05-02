@@ -1,4 +1,5 @@
-﻿using Biohazard.BioRand.RE7.Serialization;
+﻿using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -11,10 +12,14 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class ScnFileTests
 {
     private readonly RszTypeRepository _repo =
-        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
+        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip());
 
     private readonly PakFile _pakFile =
-        new(EmbeddedData.GetFile("biorand-re7.pak"));
+        new(EmbeddedData.GetFile(Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            ".biorand",
+            "biorand-re7.pak"
+    )));
 
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(

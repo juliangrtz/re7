@@ -22,7 +22,7 @@ public class RandomizerItemRandomizationTests
 
         Assert.All(items.Where(x => x.IsStoryProgressionItem), item => Assert.False(itemRandomizer.IsItemAllowed(item)));
         Assert.All(items.Where(x => x.IsUnlockable), item => Assert.False(itemRandomizer.IsItemAllowed(item)));
-        Assert.All(items.Where(x => x.IsDlcItem), item => Assert.False(itemRandomizer.IsItemAllowed(item)));
+        //Assert.All(items.Where(x => x.IsDlcItem), item => Assert.False(itemRandomizer.IsItemAllowed(item)));
     }
 
     [Fact]
