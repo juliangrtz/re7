@@ -31,6 +31,7 @@ internal class Randomizer : IDisposable
     private static readonly string[] _optionsThatRequireREFramework = [
         "debug-force-reframework",
         "recipes-add-new",
+        "weapon-mod-reload-speed",
     ];
 
     private bool IsREFrameworkRequired()

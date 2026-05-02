@@ -30,6 +30,8 @@ public class ConfigurationIdUsageTest
         "weapon-damage-max-",
         "weapon-ammo-capacity-min-",
         "weapon-ammo-capacity-max-",
+        "weapon-reload-speed-min-",
+        "weapon-reload-speed-max-",
         "enemy-ratio-",
         "enemy-drop-ratio-",
         "enemy-drop-valuable-",
@@ -46,7 +48,7 @@ public class ConfigurationIdUsageTest
     {
         var projectRoot = GetProjectRoot();
         var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
-        var configRegex = new Regex("Get(ConfigOption|ValueOrDefault).*\\(\"([a-zA-Z0-9\\-]+)\".*\\)", RegexOptions.Compiled);
+        var configRegex = new Regex("(?:Get(?:ConfigOption|ValueOrDefault)|ReadOrDefault).*\\(\"([a-zA-Z0-9\\-]+)\".*\\)", RegexOptions.Compiled);
         var invalidUsages = new HashSet<string>();
 
         foreach (var file in csFiles)
@@ -54,7 +56,7 @@ public class ConfigurationIdUsageTest
             var content = File.ReadAllText(file);
             foreach (Match match in configRegex.Matches(content))
             {
-                var value = match.Groups[2].Value;
+                var value = match.Groups[1].Value;
 
                 if (IsValidId(value))
                     continue;
@@ -74,7 +76,7 @@ public class ConfigurationIdUsageTest
         var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
 
         var content = string.Join("\n", csFiles.Select(File.ReadAllText));
-        static Regex Regex(string id) => new Regex($"Get(ConfigOption|ValueOrDefault).*\\(\"{id}\".*\\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static Regex Regex(string id) => new Regex($"(?:Get(?:ConfigOption|ValueOrDefault)|ReadOrDefault).*\\(\"{id}\".*\\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         var unused = _definedIds
             .Where(id =>

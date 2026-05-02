@@ -1110,33 +1110,38 @@ internal static class RandomizerConfigurationDefinition
         group.Items.Add(new GroupItem()
         {
             Id = "weapon-mod-reload-speed-include-stabilizers",
-            Label = "Include Stabilizer ",
+            Label = "Include Stabilizers",
             Description = "Whether to also randomize the reload speed when using stabilizers.",
             Type = "switch",
             Default = true
         });
 
-        group.Items.Add(new GroupItem()
+        foreach (var definition in guns)
         {
-            Id = $"weapon-reload-speed-min",
-            Label = $"Min. Reload Speed Multiplier",
-            Type = "range",
-            Min = 0.1,
-            Max = 2,
-            Step = 0.1,
-            Default = 0.3
-        });
+            var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
+            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-reload-speed-min-{sanitizedId}",
+                Label = $"Min. Reload Speed Multiplier {name}",
+                Type = "range",
+                Min = 0.1,
+                Max = 2,
+                Step = 0.1,
+                Default = 0.3
+            });
 
-        group.Items.Add(new GroupItem()
-        {
-            Id = $"weapon-reload-speed-max",
-            Label = $"Max. Reload Speed Multiplier",
-            Type = "range",
-            Min = 0.1,
-            Max = 2,
-            Step = 0.1,
-            Default = 1.8
-        });
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"weapon-reload-speed-max-{sanitizedId}",
+                Label = $"Max. Reload Speed Multiplier {name}",
+                Type = "range",
+                Min = 0.1,
+                Max = 2,
+                Step = 0.1,
+                Default = 1.8
+            });
+        }
 
         #endregion
 

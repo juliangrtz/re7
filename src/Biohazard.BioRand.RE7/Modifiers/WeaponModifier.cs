@@ -39,7 +39,7 @@ internal class WeaponModifier : Modifier
 
         if (randomizer.GetConfigOption<bool>("weapon-mod-reload-speed"))
         {
-            RandomizeReloadSpeedRate(randomizer, logger, rng);
+            LogReloadSpeedRuntimeHandling(logger);
         }
     }
 
@@ -176,26 +176,9 @@ internal class WeaponModifier : Modifier
         }
     }
 
-    private void RandomizeReloadSpeedRate(Randomizer randomizer, RandomizerLogger logger, Rng rng)
+    private void LogReloadSpeedRuntimeHandling(RandomizerLogger logger)
     {
-        var reloadSpeedRateTablePath = PakPath.UserFile("prefab/character/pl0000/pl0000reloadspeedratetable.user");
-        var includeStabilizers = randomizer.GetConfigOption<bool>("weapon-mod-reload-speed-include-stabilizers");
-        var min = randomizer.GetConfigOption<double>("weapon-reload-speed-min");
-        var max = randomizer.GetConfigOption<double>("weapon-reload-speed-max");
-        var factor = rng.NextDouble(min, max);
-
-        randomizer.FileRepository.ModifyUserFile<app.PlayerReloadSpeedRateTable>(reloadSpeedRateTablePath, root =>
-        {
-            var upper = includeStabilizers ? root.ReloadSpeedRateList.Count : 1;
-            for (int i = 0; i < upper; i++)
-            {
-                var @new = Math.Max(0.1f, Math.Round(root.ReloadSpeedRateList[i] * factor, 2));
-                logger.LogLine($"[{i} stabilizers] Changing reload speed rate from {root.ReloadSpeedRateList[i]} to {@new}");
-                root.ReloadSpeedRateList[i] = (float)@new;
-            }
-
-            return root;
-        });
+        logger.LogLine("Weapon reload speed randomization is applied by the REFramework plugin at runtime.");
     }
 
     // TODO: Acid/Fire Bullets
