@@ -1,4 +1,6 @@
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Weapons;
+using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -6,22 +8,50 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerWeaponModifierBehaviorTests
 {
     [Fact]
-    public void WeaponModifier_ReloadSpeed_LeavesStabilizersUntouchedWhenExcluded()
+    public void WeaponModifier_ReloadSpeed_DoesNotModifySharedReloadSpeedTable()
     {
         using var result = RandomizerTest.RunState(config =>
         {
             config["weapon-mod-reload-speed"] = true;
             config["weapon-mod-reload-speed-include-stabilizers"] = false;
-            config["weapon-reload-speed-min"] = 0.5;
-            config["weapon-reload-speed-max"] = 0.5;
+            config["weapon-reload-speed-min-handgun-g17"] = 0.5;
+            config["weapon-reload-speed-max-handgun-g17"] = 0.5;
         });
 
-        var before = result.ReadBeforeUserFile<app.PlayerReloadSpeedRateTable>(RandomizerTestPaths.ReloadSpeedTablePath);
-        var after = result.ReadAfterUserFile<app.PlayerReloadSpeedRateTable>(RandomizerTestPaths.ReloadSpeedTablePath);
+        Assert.False(result.WasFileModified(RandomizerTestPaths.ReloadSpeedTablePath));
+        Assert.Equal(
+            result.ReadBeforeBytes(RandomizerTestPaths.ReloadSpeedTablePath),
+            result.ReadAfterBytes(RandomizerTestPaths.ReloadSpeedTablePath));
+    }
 
-        Assert.True(result.WasFileModified(RandomizerTestPaths.ReloadSpeedTablePath));
-        Assert.Equal(before.ReloadSpeedRateList[0] * 0.5f, after.ReloadSpeedRateList[0], 3);
-        Assert.Equal(before.ReloadSpeedRateList.Skip(1), after.ReloadSpeedRateList.Skip(1));
+    [Fact]
+    public void WeaponModifier_ReloadSpeed_IncludesREFrameworkConfigWithPerWeaponRanges()
+    {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
+        {
+            config["allow-dlc-items"] = false;
+            config["random-enemy-drops"] = false;
+            config["recipes-add-new"] = false;
+            config["weapon-mod-reload-speed"] = true;
+            config["weapon-reload-speed-min-handgun-g17"] = 0.5;
+            config["weapon-reload-speed-max-handgun-g17"] = 0.5;
+        });
+
+        var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x51EED);
+        using var zipDisposable = zip;
+
+        var reframeworkConfigEntry = zip.GetEntry("reframework/data/BioRand7/config.json");
+
+        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(reframeworkConfigEntry);
+
+        var reframeworkConfig = JsonNode.Parse(reframeworkConfigEntry!.GetBytes())!.AsObject();
+        Assert.Equal(0x51EED, reframeworkConfig["biorand-seed"]!.GetValue<int>());
+        Assert.True(reframeworkConfig["weapon-mod-reload-speed"]!.GetValue<bool>());
+        Assert.Equal(0.5, reframeworkConfig["weapon-reload-speed-min-handgun-g17"]!.GetValue<double>());
+        Assert.Equal(0.5, reframeworkConfig["weapon-reload-speed-max-handgun-g17"]!.GetValue<double>());
+        Assert.Null(reframeworkConfig["weapon-reload-speed-min"]);
+        Assert.Null(reframeworkConfig["weapon-reload-speed-max"]);
     }
 
     [Fact]

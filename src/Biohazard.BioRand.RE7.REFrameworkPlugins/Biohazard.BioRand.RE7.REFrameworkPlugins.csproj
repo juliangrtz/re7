@@ -59,5 +59,8 @@
     <Copy
       SourceFiles="$(TargetPath)"
       DestinationFolder="..\Biohazard.BioRand.RE7\bin\$(Configuration)\$(TargetFramework)\plugins\" />
+    <Copy
+      SourceFiles="$(TargetPath)"
+      DestinationFolder="..\Biohazard.BioRand.RE7\_Data\" />
   </Target>
 </Project>

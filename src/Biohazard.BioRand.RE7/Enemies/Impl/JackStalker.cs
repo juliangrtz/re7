@@ -35,6 +35,8 @@ internal class JackStalker : IEnemyDefinition
 
     public bool UsesEnemyGenerator => true;
 
+    public bool SupportsSpeedRandomization => true;
+
     private readonly List<WeaponID> _availableWeapons = [
         /* Vanilla */ WeaponID.Shovel, WeaponID.Roller, WeaponID.FireAxe, 
         /* Modded */ WeaponID.ChainSaw
@@ -58,11 +60,8 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
         var rng = randomizer.GetRng("enemy/em3000");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
-
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = applySpeed ? (float)rng.NextDouble(minSpeed, maxSpeed) : 1f;
+        var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
+        var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
         var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
         logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
@@ -76,6 +75,10 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
         }
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3000DirectivesHolder>(enemy.DirectivesHolderPath);
+        var scaleProbability = (int)(randomizer.GetConfigOption<double>("enemy-scale-probability", 0) * 100);
+        var scaleMin = Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f);
+        var scaleMax = Math.Clamp(randomizer.GetConfigOption("enemy-scale-max", 2.00f), 0.1f, 10.0f);
+        var scaleMultiplier = rng.NextProbability(scaleProbability) ? rng.NextDouble(scaleMin, scaleMax) : 1.0;
 
         foreach (var directive in holder.holder.Units)
         {
@@ -84,7 +87,7 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
 
             logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(d, logger, healthMultiplier, speedMultiplier)
+                d => ModifyDirective(d, logger, healthMultiplier, speedMultiplier, scaleMultiplier)
             ));
         }
     }
@@ -93,10 +96,11 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
         app.Em3000BattleDirective directive,
         RandomizerLogger logger,
         float healthMultiplier,
-        float speedMultiplier)
+        float speedMultiplier,
+        double scaleMultiplier)
     {
-        // TODO Scale?
-        // directive.common.ModelScale
+        // Scale
+        directive.common.ModelScale *= (float)scaleMultiplier;
 
         // Health
         var oldHealth = directive.chapter3Battle1Final.Health;

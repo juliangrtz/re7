@@ -49,6 +49,38 @@ birthday => Jacks55thBirthday
 (dlcitem|coin)_05 => UniversalCoinAndMadhouseUnlock
 `
 
+## DLC integration notes
+
+General lessons:
+
+- The C# TDB in `.analysis/re7_src` is the fastest source for class names, inheritance, fields, and enums. Use IDA for xrefs, decompilation, strings, and runtime control flow after narrowing the target.
+- `CH8` is Not a Hero and `CH9` is End of Zoe. Jack's 55th Birthday logic uses `Birthday*` and `FsmBirthday*` classes, not CH8 classes.
+- Bringing a DLC object into the main game usually requires the full runtime component chain and asset load chain. A prefab, mesh, or enum ID alone is rarely enough.
+- `natives/stm/scenes/master.scn.20` and `natives/stm/scenes/dlc/dlc_active_root.scn.20` are important DLC scene roots. Standby/default-standby state on the DLC folder chain can decide whether referenced DLC scenes and assets are actually mounted.
+- If a DLC asset still does not appear after scene data looks correct, compare what the DLC mode loads from the main menu rather than only inspecting the final object prefab.
+
+Birthday skills:
+
+- Skills are defined under `natives/stm/prefab/item/birthdayskillitemsetting.user.2` and use IDs `skl001` through `skl023`.
+- The `skl###no` entries are locked/dummy Birthday variants and should not be injected as usable main-game skills.
+- Direct placement of `Prefab/Skill/skl001/Skl001PassiveSkill.user` into Ethan's `app.PlayerPassiveSkillManager.PlayerPassiveSkill` worked and granted infinite ammo, proving the main-game player manager can consume Birthday passive userdata.
+- For inventory support, the important chain is the original skill inventory prefab `Prefab/Skill/skl###/Skl###.pfb`, its `app.PassiveSkillItem`, the referenced `PlayerPassiveSkill.user`, messages copied into `ui_item_mes.msg.17`, and REFramework handling to avoid the native Birthday-only inventory callback freeze.
+- Birthday skills do not have normal world pickup meshes. Static/random placements should use a known-good pickup shell and override `app.Item.ItemDataID` to the chosen `skl###`.
+
+Not a Hero and End of Zoe enemies:
+
+- DLC enemies need imported enemy templates and spawn-info templates in `template.scn.20`; missing templates should be skipped rather than emitted partially.
+- Not a Hero generator replacements require `app.CH8EnemyGenerator`, `app.CH8EnemyPool`, `app.CH8EnemySpawnInfo`, and the concrete `app.CH8EnemySpawnInfoOptionEm####`.
+- End of Zoe generator replacements use `app.CH9EnemySpawnInfo` and `app.CH9EnemySpawnInfoOptionEm####`; no `CH9EnemyGenerator`/`CH9EnemyPool` types were found in the current TDB.
+- `app.EnemySpawnInfoOptionDLC` exists, but real DLC spawn-info objects do not universally include or require it.
+- Template import must match concrete `UnitAlias` and prefab alias, not just option class suffix. Some CH8 aliases reuse base stacks.
+- `Em4210` = Fat Headless Molded. It uses `UnitAlias = Em4210`, but the runtime stack is `app.CH8Em4200*` plus `app.CH8EnemySpawnInfoOptionEm4200`.
+- `Em4400` = Mama Mold.
+- `Em4450` = Little Crawler.
+- `Em4460` = Mama Mold. A wrapper object with nested `Em4450` exists, but `main300generator.scn.20` also has a normal generator-style `UnitAlias = Em4460` source.
+- `Em4500` = Mutated Lucas. This is the Not a Hero final boss and should stay opt-in/special-case until runtime-proven.
+- `Em4600` = Fumer. It uses `UnitAlias = Em4600`, but the runtime stack is `app.CH8Em4000*` plus `app.CH8EnemySpawnInfoOptionEm4000`.
+
 ## Recipes
 
 - `prefab/item/dictionarycombinedata.user.2`

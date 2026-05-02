@@ -17,13 +17,24 @@ public class REFPlugin
     private const double MadhouseAmmoDropAmountFactor = 0.75;
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
+    private const double DefaultWeaponReloadSpeedMin = 0.3;
+    private const double DefaultWeaponReloadSpeedMax = 1.8;
 
     private static bool IsInitialized = false;
     private static readonly Configuration config = new();
     private static readonly Logger logger = new(config);
+    private static readonly Lock weaponReloadSpeedCacheLock = new();
+    private static readonly Lock weaponReloadSpeedLogLock = new();
+    private static readonly Dictionary<WeaponID, double?> weaponReloadSpeedMultiplierCache = [];
     private static readonly Lock enemyDropStateLock = new();
     private static readonly HashSet<ulong> droppedEnemyObjects = [];
     private static readonly Dictionary<ulong, int> enemyDropGenerations = [];
+    private static WeaponID? lastLoggedWeaponReloadSpeedWeapon;
+    private static int? lastLoggedWeaponReloadSpeedDepressantLevel;
+    private static float? lastLoggedWeaponReloadSpeedRate;
+
+    [ThreadStatic]
+    private static PlayerMotionController? pendingReloadSpeedController;
 
     #region Data
     private static readonly string[] GenericEnemyDropItemDataIds =
@@ -195,6 +206,17 @@ public class REFPlugin
     public static void OnUnload()
     {
         IsInitialized = false;
+        pendingReloadSpeedController = null;
+        lock (weaponReloadSpeedCacheLock)
+        {
+            weaponReloadSpeedMultiplierCache.Clear();
+        }
+        lock (weaponReloadSpeedLogLock)
+        {
+            lastLoggedWeaponReloadSpeedWeapon = null;
+            lastLoggedWeaponReloadSpeedDepressantLevel = null;
+            lastLoggedWeaponReloadSpeedRate = null;
+        }
         lock (enemyDropStateLock)
         {
             droppedEnemyObjects.Clear();
@@ -369,6 +391,158 @@ public class REFPlugin
     }
 
     #endregion Inventory
+
+    #region Weapon Reload Speed
+
+    private static string GetWeaponReloadSpeedConfigId(WeaponID weaponId)
+        => weaponId.ToString().ToLowerInvariant().Replace("_", "-");
+
+    private static bool TryReadWeaponReloadSpeedRange(WeaponID weaponId, out double min, out double max)
+    {
+        var configId = GetWeaponReloadSpeedConfigId(weaponId);
+        var hasMin = config.TryRead($"weapon-reload-speed-min-{configId}", out min);
+        var hasMax = config.TryRead($"weapon-reload-speed-max-{configId}", out max);
+
+        if (!hasMin && !hasMax)
+        {
+            var legacyMinKey = "weapon-reload-speed-min";
+            var legacyMaxKey = "weapon-reload-speed-max";
+            hasMin = config.TryRead(legacyMinKey, out min);
+            hasMax = config.TryRead(legacyMaxKey, out max);
+        }
+
+        if (!hasMin && !hasMax)
+            return false;
+
+        if (!hasMin)
+            min = DefaultWeaponReloadSpeedMin;
+        if (!hasMax)
+            max = DefaultWeaponReloadSpeedMax;
+        if (max < min)
+            (min, max) = (max, min);
+        return true;
+    }
+
+    private static Random CreateWeaponReloadSpeedRandom(WeaponID weaponId)
+    {
+        unchecked
+        {
+            var seed = (uint)config.ReadOrDefault(PluginSeedConfigKey, 0);
+            var hash = (seed ^ 2166136261U) * 16777619U;
+            foreach (var c in weaponId.ToString())
+            {
+                hash = (hash ^ char.ToLowerInvariant(c)) * 16777619U;
+            }
+            return new Random((int)hash);
+        }
+    }
+
+    private static bool TryGetWeaponReloadSpeedMultiplier(WeaponID weaponId, out double multiplier)
+    {
+        lock (weaponReloadSpeedCacheLock)
+        {
+            if (weaponReloadSpeedMultiplierCache.TryGetValue(weaponId, out var cachedMultiplier))
+            {
+                multiplier = cachedMultiplier ?? 1.0;
+                return cachedMultiplier.HasValue;
+            }
+        }
+
+        double? result = null;
+        if (TryReadWeaponReloadSpeedRange(weaponId, out var min, out var max))
+        {
+            var rng = CreateWeaponReloadSpeedRandom(weaponId);
+            result = min + (rng.NextDouble() * (max - min));
+        }
+
+        lock (weaponReloadSpeedCacheLock)
+        {
+            weaponReloadSpeedMultiplierCache[weaponId] = result;
+        }
+
+        multiplier = result ?? 1.0;
+        return result.HasValue;
+    }
+
+    private static void LogWeaponReloadSpeedRate(WeaponID weaponId, int depressantLevel, float baseRate, double multiplier, float newRate)
+    {
+        lock (weaponReloadSpeedLogLock)
+        {
+            if (lastLoggedWeaponReloadSpeedWeapon == weaponId
+                && lastLoggedWeaponReloadSpeedDepressantLevel == depressantLevel
+                && lastLoggedWeaponReloadSpeedRate == newRate)
+            {
+                return;
+            }
+
+            lastLoggedWeaponReloadSpeedWeapon = weaponId;
+            lastLoggedWeaponReloadSpeedDepressantLevel = depressantLevel;
+            lastLoggedWeaponReloadSpeedRate = newRate;
+        }
+
+        logger.Log(
+            $"Applied reload speed for {weaponId} with {depressantLevel} stabilizers: {baseRate:0.###} x {multiplier:0.###} = {newRate:0.###}.",
+            isVerbose: true);
+    }
+
+    private static void ApplyConfiguredWeaponReloadSpeed(PlayerMotionController controller)
+    {
+        if (!config.ReadOrDefault("weapon-mod-reload-speed", false))
+            return;
+
+        var table = controller.PlayerReloadSpeedRateTable;
+        var motionManager = controller.MotionManager;
+        if (table == null || motionManager == null)
+            return;
+
+        var weaponId = controller.CurrentWeaponID;
+        if (!TryGetWeaponReloadSpeedMultiplier(weaponId, out var multiplier))
+        {
+            var currentWeaponId = controller.CurrentWeapon?.WeaponID ?? weaponId;
+            if (currentWeaponId == weaponId || !TryGetWeaponReloadSpeedMultiplier(currentWeaponId, out multiplier))
+                return;
+
+            weaponId = currentWeaponId;
+        }
+
+        var depressantLevel = Math.Max(0, controller.DepressantLevel);
+        if (!config.ReadOrDefault("weapon-mod-reload-speed-include-stabilizers", true)
+            && depressantLevel > 0)
+        {
+            multiplier = 1.0;
+        }
+
+        var baseRate = table.getReloadSpeedRate(depressantLevel);
+        var newRate = Math.Max(0.1f, (float)Math.Round(baseRate * multiplier, 2));
+        controller.ReloadSpeedRate = newRate;
+        motionManager.setFloatToMotionVariable(PlayerMotionController.VariableNameHash.fReloadSpeedRate, newRate);
+        LogWeaponReloadSpeedRate(weaponId, depressantLevel, baseRate, multiplier, newRate);
+    }
+
+    [MethodHook(typeof(PlayerMotionController), nameof(PlayerMotionController.update), MethodHookType.Pre)]
+    private static PreHookResult PlayerMotionController_update_Pre(Span<ulong> args)
+    {
+        pendingReloadSpeedController = null;
+        if (config.ReadOrDefault("weapon-mod-reload-speed", false))
+        {
+            pendingReloadSpeedController = ManagedObject.ToManagedObject(args[1])?.As<PlayerMotionController>();
+        }
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(PlayerMotionController), nameof(PlayerMotionController.update), MethodHookType.Post)]
+    private static void PlayerMotionController_update_Post(ref ulong _)
+    {
+        var controller = pendingReloadSpeedController;
+        pendingReloadSpeedController = null;
+
+        if (controller == null)
+            return;
+
+        ApplyConfiguredWeaponReloadSpeed(controller);
+    }
+
+    #endregion Weapon Reload Speed
 
     #region Enemy Drops
 

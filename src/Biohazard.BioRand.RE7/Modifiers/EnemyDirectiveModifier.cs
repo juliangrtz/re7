@@ -24,7 +24,6 @@ internal class EnemyDirectiveModifier : Modifier
     private readonly List<IDirectiveModifier> _genericDirectiveModifiers =
     [
         new EnemyRankParamDirectiveModifier(),
-        new MoldedCommonRankParamsDirectiveModifier(),
     ];
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -75,35 +74,17 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        var rng = randomizer.GetRng("enemy/enemy-rank-params");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
         var applyDamage = randomizer.GetConfigOption<bool>("random-enemy-damage");
 
-        if (!applySpeed && !applyDamage)
+        if (!applyDamage)
         {
-            logger.LogSkip("Enemy speed and damage randomization are both disabled.");
+            logger.LogSkip("Enemy damage randomization is disabled.");
             return;
         }
 
-        var speedMultiplier = applySpeed
-            ? (float)rng.NextDouble(
-                randomizer.GetConfigOption<double>("enemy-speed-min"),
-                randomizer.GetConfigOption<double>("enemy-speed-max"))
-            : 1f;
-
-        var damageMultiplier = applyDamage
-            ? GetDamageMultiplier(randomizer, rng)
-            : 1f;
-
-        if (applySpeed)
-        {
-            logger.LogMultiplier("Animation speed multiplier", speedMultiplier);
-        }
-
-        if (applyDamage)
-        {
-            logger.LogMultiplier("Damage multiplier", damageMultiplier);
-        }
+        var rng = randomizer.GetRng("enemy/enemy-rank-params");
+        var damageMultiplier = GetDamageMultiplier(randomizer, rng);
+        logger.LogMultiplier("Damage multiplier", damageMultiplier);
 
         var holderPath = PakPath.UserFile(EnemyRankParameterHolderPath);
         var holder = randomizer.FileRepository.DeserializeUserFile<app.EnemyRankParameterHolder>(holderPath);
@@ -115,29 +96,9 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
 
             logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param =>
             {
-                if (applySpeed)
-                {
-                    var oldAttack = param.AnimationSpeedRateForAttack;
-                    var oldDamage = param.AnimationSpeedRateForDamage;
-                    var oldMove = param.AnimationSpeedRateForMove;
-
-                    param.AnimationSpeedRateForAttack *= speedMultiplier;
-                    param.AnimationSpeedRateForDamage *= speedMultiplier;
-                    param.AnimationSpeedRateForMove *= speedMultiplier;
-
-                    logger.LogChange("Attack animation speed", oldAttack, param.AnimationSpeedRateForAttack);
-                    logger.LogChange("Damage animation speed", oldDamage, param.AnimationSpeedRateForDamage);
-                    logger.LogChange("Move animation speed", oldMove, param.AnimationSpeedRateForMove);
-                }
-
-                if (applyDamage)
-                {
-                    var oldRate = param.DamageRate;
-
-                    param.DamageRate *= damageMultiplier;
-
-                    logger.LogChange("Damage rate", oldRate, param.DamageRate);
-                }
+                var oldRate = param.DamageRate;
+                param.DamageRate *= damageMultiplier;
+                logger.LogChange("Damage rate", oldRate, param.DamageRate);
 
                 return param;
             }));
@@ -157,54 +118,3 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
     }
 }
 
-internal sealed class MoldedCommonRankParamsDirectiveModifier : IDirectiveModifier
-{
-    private const string MoldedCommonRankParameterHolder =
-        "prefab/character/misc/parameter/moldedcommon/moldedcommonrankparameterholder.user";
-
-    public bool Supports(IEnemyDefinition enemy) => enemy.IsMolded;
-
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
-        var rng = randomizer.GetRng("enemy/enemy-rank-params");
-        var applySpeed = randomizer.GetConfigOption<bool>("random-enemy-speed");
-
-        if (!applySpeed)
-        {
-            logger.LogSkip("Enemy speed randomization is disabled.");
-            return;
-        }
-
-        var speedMultiplier = (float)rng.NextDouble(
-                randomizer.GetConfigOption<double>("enemy-speed-min"),
-                randomizer.GetConfigOption<double>("enemy-speed-max")
-        );
-        logger.LogMultiplier("Molded common speed multiplier", speedMultiplier);
-
-        var holderPath = PakPath.UserFile(MoldedCommonRankParameterHolder);
-        var holder = randomizer.FileRepository.DeserializeUserFile<app.MoldedCommonRankParameterHolder>(holderPath);
-
-        foreach (var unit in holder.Units)
-        {
-            var rank = unit.Rank;
-            var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
-
-            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.MoldedCommonRankParameter>(userFilePath, param =>
-            {
-                var oldThreat = param.ThreatIntervalTime;
-                var oldGrapple = param.GrappleIntervalTime;
-                var oldSlash = param.SlashIntervalTime;
-
-                param.ThreatIntervalTime /= speedMultiplier;
-                param.GrappleIntervalTime /= speedMultiplier;
-                param.SlashIntervalTime /= speedMultiplier;
-
-                logger.LogChange("Threat interval", oldThreat, param.ThreatIntervalTime);
-                logger.LogChange("Grapple interval", oldGrapple, param.GrappleIntervalTime);
-                logger.LogChange("Slash interval", oldSlash, param.SlashIntervalTime);
-
-                return param;
-            }));
-        }
-    }
-}

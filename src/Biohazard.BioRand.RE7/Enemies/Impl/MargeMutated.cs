@@ -32,6 +32,8 @@ internal class MargeMutated : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/chapter/chapter3/enemy_em3600.scn");
 
     public bool UsesEnemyGenerator => true;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class MargeMutatedDirectiveModifier : IDirectiveModifier
@@ -41,18 +43,14 @@ internal class MargeMutatedDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        if (!enemy.ShouldRandomizeSpeed(randomizer))
         {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
 
-        var rng = randomizer.GetRng("enemy/em3600");
-
         // Speed
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var newSpeed = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", newSpeed);
 
         var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3600DirectivesHolder>(enemy.DirectivesHolderPath);

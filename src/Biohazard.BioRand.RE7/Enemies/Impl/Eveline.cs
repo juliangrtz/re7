@@ -57,6 +57,8 @@ internal class EvelineFinalBoss : IEnemyDefinition
         => PakPath.SceneFile($"scenes/enemy/em8900.scn");
 
     public bool UsesEnemyGenerator => false;
+
+    public bool SupportsSpeedRandomization => true;
 }
 
 internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier
@@ -66,16 +68,13 @@ internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!randomizer.GetConfigOption<bool>("random-enemy-speed"))
+        if (!enemy.ShouldRandomizeSpeed(randomizer))
         {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
 
-        var rng = randomizer.GetRng("enemy/em8900");
-        var minSpeed = randomizer.GetConfigOption<double>("enemy-speed-min");
-        var maxSpeed = randomizer.GetConfigOption<double>("enemy-speed-max");
-        var speedMultiplier = (float)rng.NextDouble(minSpeed, maxSpeed);
+        var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", speedMultiplier);
 
         var phase1Path = PakPath.UserFile("prefab/character/em8900/parameter/directives/em8900directivedefault.user");
