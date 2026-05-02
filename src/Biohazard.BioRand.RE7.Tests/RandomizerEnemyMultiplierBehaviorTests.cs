@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Modifiers;
+using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -6,6 +7,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerEnemyMultiplierBehaviorTests
 {
     private const string TestScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
+    private const string ExternalGenerateScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20";
 
     [Fact]
     public void CollectMultipliableSpawnSlots_FindsFsmGeneratedSpawnInfos()
@@ -125,6 +127,29 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
+    public void ApplyMaxEnemyCount_BelowCurrentLimit_PreservesCurrentForNeutralOrIncrease()
+    {
+        Assert.Equal(7, EnemyMultiplierModifier.ApplyMaxEnemyCount(
+            currentEnemyCount: 7,
+            uncappedTargetCount: 7,
+            maxEnemyCount: 0));
+
+        Assert.Equal(7, EnemyMultiplierModifier.ApplyMaxEnemyCount(
+            currentEnemyCount: 7,
+            uncappedTargetCount: 14,
+            maxEnemyCount: 0));
+    }
+
+    [Fact]
+    public void ApplyMaxEnemyCount_CapsReducedTarget()
+    {
+        Assert.Equal(1, EnemyMultiplierModifier.ApplyMaxEnemyCount(
+            currentEnemyCount: 7,
+            uncappedTargetCount: 4,
+            maxEnemyCount: 1));
+    }
+
+    [Fact]
     public void MoldedsScene_MultiplierAboveOne_DuplicatesFilteredGenerationClones()
     {
         using var result = RandomizerTest.RunState();
@@ -207,6 +232,60 @@ public class RandomizerEnemyMultiplierBehaviorTests
         }
     }
 
+    [Fact]
+    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DoesNotDisableVanillaWithDefaultMultiplier()
+    {
+        using var result = RandomizerTest.RunState(
+            prepareRandomizer: randomizer =>
+            {
+                randomizer.DynamicData.SetData(
+                    DynamicDataName.EnemyLimits,
+                    System.Text.Encoding.UTF8.GetBytes(BuildEnemyLimitCsv(
+                        ExternalGenerateScenePath,
+                        maxEnemies: 1)));
+            });
+
+        var beforeSlots = EnemyMultiplierModifier.CollectLimitableSpawnSlots(
+            result.ReadBeforeScene(ExternalGenerateScenePath),
+            result.Randomizer.EnemySceneLimitService);
+        var afterSlots = EnemyMultiplierModifier.CollectLimitableSpawnSlots(
+            result.ReadAfterScene(ExternalGenerateScenePath),
+            result.Randomizer.EnemySceneLimitService);
+
+        Assert.True(beforeSlots.Length > 1);
+        Assert.False(result.WasFileModified(ExternalGenerateScenePath));
+        Assert.Equal(beforeSlots.Length, afterSlots.Length);
+    }
+
+    [Fact]
+    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DisablesExcessWhenMultiplierReduces()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["enemy-multiplier"] = 0.5;
+            },
+            prepareRandomizer: randomizer =>
+            {
+                randomizer.DynamicData.SetData(
+                    DynamicDataName.EnemyLimits,
+                    System.Text.Encoding.UTF8.GetBytes(BuildEnemyLimitCsv(
+                        ExternalGenerateScenePath,
+                        maxEnemies: 1)));
+            });
+
+        var beforeSlots = EnemyMultiplierModifier.CollectLimitableSpawnSlots(
+            result.ReadBeforeScene(ExternalGenerateScenePath),
+            result.Randomizer.EnemySceneLimitService);
+        var afterSlots = EnemyMultiplierModifier.CollectLimitableSpawnSlots(
+            result.ReadAfterScene(ExternalGenerateScenePath),
+            result.Randomizer.EnemySceneLimitService);
+
+        Assert.True(beforeSlots.Length > 1);
+        Assert.True(result.WasFileModified(ExternalGenerateScenePath));
+        Assert.Single(afterSlots);
+    }
+
     private static List<string> GetChangedScenePaths(RandomizerRunResult result, double multiplier)
         => result.ChangedFiles.Keys
             .Where(path => path.EndsWith(".scn.20", StringComparison.OrdinalIgnoreCase))
@@ -283,4 +362,10 @@ public class RandomizerEnemyMultiplierBehaviorTests
             Assert.DoesNotContain(guid, EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(gameObject));
         });
     }
+
+    private static string BuildEnemyLimitCsv(string sceneFile, int maxEnemies)
+        => $"""
+            SceneFile,MaxEnemies,Comment
+            {sceneFile},{maxEnemies},Test limit
+            """;
 }

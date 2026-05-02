@@ -41,3 +41,21 @@
 
   The important conclusion is that RE7 is not primarily “creating enemies from scratch” on each request here. The code I found is mostly a pooled-
   instance activation system driven by EnemySpawnInfo records and EnemyGenerator selection logic.
+
+## Scene limit mapping
+
+`app.fsm.EnemyGenerate::start357603` resolves its target `EnemySpawnInfo` by GUID first. It can fall back to
+`app.ObjectManager::findObjectInContainer170087(containerName, objectName)`, but the base-game molded/hard spawn scenes inspected for this
+work had empty `GameObjContainer` names and direct `SpawnInfo` GUID references.
+
+IDA also showed that `via.SceneManager::loadScene267475` takes a path string, hands it to the resource manager, and the resource manager hashes
+the path internally for lookup/caching. `EnemyGenerate` itself does not store that hash or a full path; it stores the target `SpawnInfo` GUID.
+The useful static mapping is therefore:
+
+1. collect enabled `EnemyGenerate.SpawnInfo` GUID references from the General scene being limited,
+2. resolve those GUIDs through the vanilla `enemies.csv` spawn-info data,
+3. disable surplus `EnemyGenerate` actions in the General scene only when the multiplier is already reducing the vanilla count.
+
+This avoids a manual vanilla-scene-file column. The pooled `EnemySpawnInfo` records can still live in separate files such as
+`natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20`; the cap acts on the General scene's requests that point at those records.
+For neutral or upward multipliers, scene limits cap added vanilla enemies but do not delete the baseline vanilla requests.
