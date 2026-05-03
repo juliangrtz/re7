@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Services;
@@ -6,6 +7,7 @@ namespace Biohazard.BioRand.RE7.Services;
 internal class TemplateService
 {
     private const string TemplateSceneFileName = "template.scn";
+    private const string EnemyFsmGeneratorTemplateName = "FsmGenerator";
     private readonly ScnFile _templateScnFile;
     private readonly RszScene _scene;
     private readonly Dictionary<string, RszGameObject> _itemTemplates = new();
@@ -35,6 +37,12 @@ internal class TemplateService
 
     public RszGameObject GetEnemySpawnInfo(string enemyID)
         => GetObject($"EnemySpawnInfo_{enemyID}");
+
+    public RszGameObject GetEnemyGenerator()
+        => GetObject("EnemyGenerator");
+
+    public RszGameObject GetEnemyFsmGenerator()
+        => GetObject(EnemyFsmGeneratorTemplateName);
 
     // TODO: DLC item support
     public RszGameObject GetItemTemplate(string id)

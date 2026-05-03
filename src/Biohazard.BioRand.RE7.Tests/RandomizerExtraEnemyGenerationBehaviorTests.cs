@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -10,28 +11,82 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerExtraEnemyGenerationBehaviorTests
 {
     private const string ExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20";
+    private const string EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+    private const string EnvironmentExtraEnemyGeneratorScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20";
     private const string RandomExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
+    private const string ExtraEnemyFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
+    private static readonly uint[] ExtraEnemyGenerateActionUids =
+    [
+        2860522480,
+    ];
 
     [Fact]
-    public void ExtraEnemies_AddPlainEnemyTemplatesAtSceneRoot()
+    public void ExtraEnemies_AddDynamicGeneratorSlots()
     {
         using var result = RunWithExtraEnemies();
         var beforeScene = result.ReadBeforeScene(ExtraEnemyScenePath);
         var afterScene = result.ReadAfterScene(ExtraEnemyScenePath);
 
         var newGameObjects = GetNewGameObjects(afterScene, beforeScene);
-        var newRootEnemies = GetNewRootGameObjects(afterScene, beforeScene)
-            .Where(gameObject => gameObject.Name.EndsWith("_Extra", StringComparison.Ordinal))
+        var newRootGenerators = GetNewRootGameObjects(afterScene, beforeScene)
+            .Where(gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName)
             .ToList();
+        var newRootFsmGenerators = GetNewRootGameObjects(afterScene, beforeScene)
+            .Where(IsFsmGenerationObject)
+            .ToList();
+        var extraSpawnInfos = GetNewExtraSpawnInfos(afterScene, beforeScene);
+        var extraInstances = GetNewExtraEnemyInstances(afterScene, beforeScene);
+        var extraPool = newRootGenerators.Single()
+            .Children.Single(child => child.Name == EnemyModifier.ExtraEnemyPoolName);
+        var extraPoolComponent = extraPool.FindComponent<app.EnemyPool>()!;
 
         Assert.True(result.WasFileModified(ExtraEnemyScenePath));
-        Assert.Equal(2, newRootEnemies.Count);
-        Assert.DoesNotContain(newGameObjects, gameObject => gameObject.FindComponent<app.EnemyGenerator>() != null);
-        Assert.DoesNotContain(newGameObjects, gameObject => gameObject.FindComponent<app.EnemySpawnInfo>() != null);
-        Assert.DoesNotContain(newGameObjects, IsFsmGenerationObject);
+        Assert.Single(newRootGenerators);
+        Assert.Equal(2, newRootFsmGenerators.Count);
+        Assert.Equal(2, extraSpawnInfos.Count);
+        Assert.Equal(2, extraInstances.Count);
+        Assert.Equal([extraPool.Guid], extraPoolComponent.ExternalInstancePoolRefs);
+        Assert.Contains(newGameObjects, gameObject => gameObject.FindComponent<app.EnemyPool>() != null);
+        Assert.DoesNotContain(newGameObjects, gameObject => gameObject.Name.EndsWith("_Extra", StringComparison.Ordinal));
+        Assert.All(newRootFsmGenerators, AssertImmediateFsmGenerator);
+        AssertEnemyGenerateRefs(extraSpawnInfos, newRootFsmGenerators);
+        Assert.Equal(
+            extraSpawnInfos.Select(GetSpawnInfo).Select(spawnInfo => spawnInfo.UnitAlias).Order().ToList(),
+            extraInstances.Select(gameObject => gameObject.Name).Order().ToList());
+        AssertPoolInstancesStayAtTemplatePosition(extraSpawnInfos, extraInstances);
 
-        AssertExtraEnemy(newRootEnemies, "Em4000_Extra", -49, 4.88f, 108);
-        AssertExtraEnemy(newRootEnemies, "Em4100_Extra", -47.92f, 4.99f, 100.86f);
+        AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -49, 4.88f, 108, 3000);
+        AssertExtraSpawnInfo(extraSpawnInfos, "Em4100", -47.92f, 4.99f, 100.86f, 900);
+    }
+
+    [Fact]
+    public void ExtraEnemies_EnvironmentScene_AddsFsmUnderDynamicParentAndGeneratorToChapterScene()
+    {
+        using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(EnvironmentExtraEnemyScenePath, 3, "Em4000"));
+        var beforeEnvironmentScene = result.ReadBeforeScene(EnvironmentExtraEnemyScenePath);
+        var afterEnvironmentScene = result.ReadAfterScene(EnvironmentExtraEnemyScenePath);
+        var beforeGeneratorScene = result.ReadBeforeScene(EnvironmentExtraEnemyGeneratorScenePath);
+        var afterGeneratorScene = result.ReadAfterScene(EnvironmentExtraEnemyGeneratorScenePath);
+
+        var dynamicParent = afterEnvironmentScene.FindGameObject(gameObject =>
+            gameObject.Name.EndsWith("_dynamic", StringComparison.OrdinalIgnoreCase))!;
+        var newDynamicChildren = dynamicParent.Children
+            .Where(gameObject => beforeEnvironmentScene.FindGameObject(gameObject.Guid) == null)
+            .ToList();
+        var newEnvironmentGameObjects = GetNewGameObjects(afterEnvironmentScene, beforeEnvironmentScene);
+        var newRootGenerators = GetNewRootGameObjects(afterGeneratorScene, beforeGeneratorScene)
+            .Where(gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName)
+            .ToList();
+        var extraSpawnInfos = GetNewExtraSpawnInfos(afterGeneratorScene, beforeGeneratorScene);
+        var fsmGenerator = Assert.Single(newDynamicChildren, IsFsmGenerationObject);
+
+        Assert.True(result.WasFileModified(EnvironmentExtraEnemyScenePath));
+        Assert.True(result.WasFileModified(EnvironmentExtraEnemyGeneratorScenePath));
+        Assert.Single(newRootGenerators);
+        Assert.DoesNotContain(newEnvironmentGameObjects, gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName);
+        AssertImmediateFsmGenerator(fsmGenerator);
+        AssertEnemyGenerateRefs(extraSpawnInfos, [fsmGenerator]);
+        AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -50, 5, 100, 3000);
     }
 
     [Fact]
@@ -47,11 +102,11 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-ratio-moldedquick"] = 1000.0;
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
         Assert.True(result.WasFileModified(RandomExtraEnemyScenePath));
-        Assert.Equal(3, newRootEnemies.Count);
-        Assert.All(newRootEnemies, gameObject => Assert.Equal("Em4100_Extra", gameObject.Name));
+        Assert.Equal(3, extraSpawnInfos.Count);
+        Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4100", GetSpawnInfo(gameObject).UnitAlias));
     }
 
     [Fact]
@@ -66,10 +121,10 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 ConfigureEnemyPool(config, "Molded", "MoldedQuick", "MoldedFat");
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
-        Assert.Equal(4, newRootEnemies.Count);
-        Assert.Single(newRootEnemies.Select(gameObject => gameObject.Name).Distinct(StringComparer.Ordinal));
+        Assert.Equal(4, extraSpawnInfos.Count);
+        Assert.Single(extraSpawnInfos.Select(gameObject => GetSpawnInfo(gameObject).UnitAlias).Distinct(StringComparer.Ordinal));
     }
 
     [Fact]
@@ -86,25 +141,24 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-ratio-moldedquick"] = 1000.0;
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
-        var enemyNames = newRootEnemies.Select(gameObject => gameObject.Name).ToList();
-        var allowedEnemyNames = new HashSet<string>(StringComparer.Ordinal)
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+        var enemyAliases = extraSpawnInfos.Select(gameObject => GetSpawnInfo(gameObject).UnitAlias).ToList();
+        var allowedEnemyAliases = new HashSet<string>(StringComparer.Ordinal)
         {
-            "Em4000_Extra",
-            "Em4100_Extra",
-            "Em2000_Extra",
+            "Em4000",
+            "Em4100",
         };
 
-        Assert.Equal(6, enemyNames.Count);
-        Assert.All(enemyNames, name => Assert.Contains(name, allowedEnemyNames));
-        for (var i = 1; i < enemyNames.Count; i++)
+        Assert.Equal(6, enemyAliases.Count);
+        Assert.All(enemyAliases, alias => Assert.Contains(alias, allowedEnemyAliases));
+        for (var i = 1; i < enemyAliases.Count; i++)
         {
-            Assert.NotEqual(enemyNames[i - 1], enemyNames[i]);
+            Assert.NotEqual(enemyAliases[i - 1], enemyAliases[i]);
         }
     }
 
     [Fact]
-    public void ExtraEnemies_RandomId_CanUseCustomExtraEnemyDefinitions()
+    public void ExtraEnemies_RandomId_SkipsWhenGeneratorEnemyPoolIsEmpty()
     {
         using var result = RunWithExtraEnemies(
             BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random"),
@@ -115,10 +169,10 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 ConfigureEnemyPool(config);
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
-        var gameObject = Assert.Single(newRootEnemies);
-        Assert.Equal("Em2000_Extra", gameObject.Name);
+        Assert.Empty(extraSpawnInfos);
+        Assert.False(result.WasFileModified(RandomExtraEnemyScenePath));
     }
 
     [Fact]
@@ -131,11 +185,11 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-multiplier"] = 1.5;
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
-        var positions = GetPositions(newRootEnemies);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+        var positions = GetPositions(extraSpawnInfos);
 
-        Assert.Equal(5, newRootEnemies.Count);
-        Assert.Equal(newRootEnemies.Count, newRootEnemies.Select(gameObject => gameObject.Guid).Distinct().Count());
+        Assert.Equal(5, extraSpawnInfos.Count);
+        Assert.Equal(extraSpawnInfos.Count, extraSpawnInfos.Select(gameObject => gameObject.Guid).Distinct().Count());
         Assert.Equal(3, positions.Distinct().Count());
         Assert.Contains(positions.GroupBy(position => position), group => group.Count() > 1);
     }
@@ -150,9 +204,9 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 config["enemy-multiplier"] = 0.5;
             });
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
-        Assert.Equal(2, newRootEnemies.Count);
+        Assert.Equal(2, extraSpawnInfos.Count);
     }
 
     [Fact]
@@ -162,9 +216,9 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
             BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "Em4000", "Em4000", "Em4000", "Em4000"),
             enemyLimitsCsv: BuildEnemyLimitsCsv(RandomExtraEnemyScenePath, 2));
 
-        var newRootEnemies = GetNewRootExtraEnemies(result, RandomExtraEnemyScenePath);
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
-        Assert.Equal(2, newRootEnemies.Count);
+        Assert.Equal(2, extraSpawnInfos.Count);
     }
 
     [Fact]
@@ -213,12 +267,15 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
             });
 
     private static string BuildExtraEnemiesCsv(string scenePath, params string[] enemyIds)
+        => BuildExtraEnemiesCsv(scenePath, 4, enemyIds);
+
+    private static string BuildExtraEnemiesCsv(string scenePath, int chapter, params string[] enemyIds)
     {
         var builder = new System.Text.StringBuilder();
         builder.AppendLine("Enabled,Id,Comment,SceneFile,Chapter,PosX,PosY,PosZ,RotX,RotY,RotZ,RotW");
         for (var i = 0; i < enemyIds.Length; i++)
         {
-            builder.AppendLine($"TRUE,{enemyIds[i]},Random extra {i},{scenePath},4,{-50 + i},5,{100 + i},0,0,0,1");
+            builder.AppendLine($"TRUE,{enemyIds[i]},Random extra {i},{scenePath},{chapter},{-50 + i},5,{100 + i},0,0,0,1");
         }
 
         return builder.ToString();
@@ -239,13 +296,26 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         }
     }
 
-    private static List<RszGameObject> GetNewRootExtraEnemies(RandomizerRunResult result, string scenePath)
+    private static List<RszGameObject> GetNewExtraSpawnInfos(RandomizerRunResult result, string scenePath)
     {
         var beforeScene = result.ReadBeforeScene(scenePath);
         var afterScene = result.ReadAfterScene(scenePath);
 
-        return GetNewRootGameObjects(afterScene, beforeScene)
-            .Where(gameObject => gameObject.Name.EndsWith("_Extra", StringComparison.Ordinal))
+        return GetNewExtraSpawnInfos(afterScene, beforeScene);
+    }
+
+    private static List<RszGameObject> GetNewExtraSpawnInfos(RszScene afterScene, RszScene beforeScene)
+        => GetNewGameObjects(afterScene, beforeScene)
+            .Where(EnemyModifier.IsExtraEnemySpawnInfo)
+            .ToList();
+
+    private static List<RszGameObject> GetNewExtraEnemyInstances(RszScene afterScene, RszScene beforeScene)
+    {
+        var generator = GetNewGameObjects(afterScene, beforeScene)
+            .Single(gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName);
+        var pool = generator.Children.Single(child => child.Name == EnemyModifier.ExtraEnemyPoolName);
+        return pool.Children
+            .Where(gameObject => gameObject.Name != EnemyModifier.ExtraEnemySpawnPointsName)
             .ToList();
     }
 
@@ -277,22 +347,112 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     }
 
     private static bool IsFsmGenerationObject(RszGameObject gameObject)
-        => gameObject.FindComponent("via.fsm.Fsm") != null &&
-           gameObject.FindComponent("app.TriggerInAction") != null;
+        => gameObject.Name.StartsWith(EnemyModifier.ExtraEnemyGeneratePrefix, StringComparison.Ordinal)
+            && gameObject.FindComponent("via.fsm.Fsm") != null;
 
-    private static void AssertExtraEnemy(
-        IReadOnlyCollection<RszGameObject> newRootEnemies,
-        string expectedName,
+    private static void AssertImmediateFsmGenerator(RszGameObject gameObject)
+    {
+        var fsm = gameObject.FindComponent("via.fsm.Fsm")!;
+
+        Assert.Equal(
+            ["via.Transform", "via.fsm.Fsm"],
+            gameObject.Components.Select(component => component.Type.Name).ToArray());
+        Assert.Null(gameObject.FindComponent("app.GimmickActiveControl"));
+        Assert.Null(gameObject.FindComponent("via.physics.Colliders"));
+        Assert.Null(gameObject.FindComponent("app.TriggerInAction"));
+        Assert.Equal(ExtraEnemyFsmResource, ((RszResourceNode)fsm["Resource"]).Value);
+        Assert.True(RszSerializer.Deserialize<bool>(fsm["UseExecuteOnScene"]));
+        Assert.True(RszSerializer.Deserialize<bool>(fsm["ExecuteOnScene"]));
+        Assert.Equal(["app.fsm.EnemyGenerate"], GetFsmActionTypes(gameObject));
+        Assert.Equal(ExtraEnemyGenerateActionUids, GetEnemyGenerateActionUids(gameObject));
+    }
+
+    private static string[] GetFsmActionTypes(RszGameObject gameObject)
+    {
+        var actionTypes = new List<string>();
+        gameObject.Visit(node =>
+        {
+            if (node is not RszObjectNode objectNode || objectNode.Type.Name != "via.fsm.SceneFsmData")
+                return;
+
+            var actions = (RszArrayNode)objectNode["v1_Actions"];
+            foreach (var action in actions.Children.OfType<RszObjectNode>())
+            {
+                actionTypes.Add(action.Type.Name);
+            }
+        });
+
+        return actionTypes.ToArray();
+    }
+
+    private static uint[] GetEnemyGenerateActionUids(RszGameObject gameObject)
+    {
+        var uids = new List<uint>();
+        gameObject.Visit(node =>
+        {
+            if (node is RszObjectNode objectNode && objectNode.Type.Name == "app.fsm.EnemyGenerate")
+            {
+                uids.Add(RszSerializer.Deserialize<uint>(objectNode["v2_UID"]));
+            }
+        });
+
+        return uids.ToArray();
+    }
+
+    private static void AssertEnemyGenerateRefs(
+        IReadOnlyCollection<RszGameObject> spawnInfos,
+        IReadOnlyCollection<RszGameObject> fsmGenerators)
+    {
+        var expectedRefs = spawnInfos.Select(gameObject => gameObject.Guid).Order().ToList();
+        var actualRefs = fsmGenerators
+            .SelectMany(gameObject => EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(gameObject))
+            .Order()
+            .ToList();
+
+        Assert.Equal(expectedRefs, actualRefs);
+    }
+
+    private static app.EnemySpawnInfo GetSpawnInfo(RszGameObject gameObject)
+        => gameObject.FindComponent<app.EnemySpawnInfo>()!;
+
+    private static void AssertPoolInstancesStayAtTemplatePosition(
+        IReadOnlyCollection<RszGameObject> spawnInfos,
+        IReadOnlyCollection<RszGameObject> instances)
+    {
+        foreach (var instance in instances)
+        {
+            var spawnInfo = spawnInfos.Single(gameObject => GetSpawnInfo(gameObject).UnitAlias == instance.Name);
+
+            Assert.NotEqual(
+                GetPosition(spawnInfo),
+                GetPosition(instance));
+        }
+    }
+
+    private static (float X, float Y, float Z) GetPosition(RszGameObject gameObject)
+    {
+        var position = gameObject.FindComponent<via.Transform>()!.Position;
+        return (position.X, position.Y, position.Z);
+    }
+
+    private static void AssertExtraSpawnInfo(
+        IReadOnlyCollection<RszGameObject> spawnInfos,
+        string expectedAlias,
         float expectedX,
         float expectedY,
-        float expectedZ)
+        float expectedZ,
+        float expectedHealth)
     {
-        var gameObject = Assert.Single(newRootEnemies, gameObject => gameObject.Name == expectedName);
+        var gameObject = Assert.Single(spawnInfos, gameObject => GetSpawnInfo(gameObject).UnitAlias == expectedAlias);
         var transform = gameObject.FindComponent<via.Transform>()!;
+        var spawnInfo = GetSpawnInfo(gameObject);
         var componentNames = string.Join(", ", gameObject.Components.Select(component => component.Type.Name));
 
-        Assert.True(Math.Abs(transform.Position.X - expectedX) <= 0.001f, $"{expectedName} X mismatch; components: {componentNames}");
-        Assert.True(Math.Abs(transform.Position.Y - expectedY) <= 0.001f, $"{expectedName} Y mismatch; components: {componentNames}");
-        Assert.True(Math.Abs(transform.Position.Z - expectedZ) <= 0.001f, $"{expectedName} Z mismatch; components: {componentNames}");
+        Assert.Equal(expectedAlias, gameObject.Name);
+        Assert.StartsWith(EnemyModifier.ExtraEnemySpawnInfoPrefix, spawnInfo.Comment);
+        Assert.True(Math.Abs(transform.Position.X - expectedX) <= 0.001f, $"{expectedAlias} X mismatch; components: {componentNames}");
+        Assert.True(Math.Abs(transform.Position.Y - expectedY) <= 0.001f, $"{expectedAlias} Y mismatch; components: {componentNames}");
+        Assert.True(Math.Abs(transform.Position.Z - expectedZ) <= 0.001f, $"{expectedAlias} Z mismatch; components: {componentNames}");
+        Assert.Equal(expectedHealth, spawnInfo.HealthParameter.Health);
     }
 }
