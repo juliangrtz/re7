@@ -11,6 +11,8 @@ using static app.InventoryMenu;
 public class REFPlugin
 {
     private const string PluginSeedConfigKey = "biorand-seed";
+    private const string EnemyStampSaveHookConfigKey = "enemy-stamp-save-hook";
+    private const string StampSaveSuppressionCommentPrefix = "BioRandDisableStampSave";
     private const double DefaultEnemyDropMultiplier = 1.0;
     private const double EasyAmmoDropAmountFactor = 1.5;
     private const double NormalAmmoDropAmountFactor = 1.0;
@@ -29,6 +31,8 @@ public class REFPlugin
     private static readonly Lock enemyDropStateLock = new();
     private static readonly HashSet<ulong> droppedEnemyObjects = [];
     private static readonly Dictionary<ulong, int> enemyDropGenerations = [];
+    private static readonly Lock enemyStampSaveStateLock = new();
+    private static readonly HashSet<ulong> stampSaveSuppressedEnemyOrders = [];
     private static WeaponID? lastLoggedWeaponReloadSpeedWeapon;
     private static int? lastLoggedWeaponReloadSpeedDepressantLevel;
     private static float? lastLoggedWeaponReloadSpeedRate;
@@ -221,6 +225,10 @@ public class REFPlugin
         {
             droppedEnemyObjects.Clear();
             enemyDropGenerations.Clear();
+        }
+        lock (enemyStampSaveStateLock)
+        {
+            stampSaveSuppressedEnemyOrders.Clear();
         }
         logger.Log("Unloaded.");
     }
@@ -543,6 +551,148 @@ public class REFPlugin
     }
 
     #endregion Weapon Reload Speed
+
+    #region Enemy Stamp Save
+
+    private static bool IsEnemyStampSaveHookEnabled()
+        => config.ReadOrDefault(EnemyStampSaveHookConfigKey, true);
+
+    private static T? TryGetManagedHookObject<T>(Span<ulong> args, int index, string source)
+        where T : class
+    {
+        if ((uint)index >= (uint)args.Length || args[index] == 0)
+            return null;
+
+        try
+        {
+            return ManagedObject.ToManagedObject(args[index])?.As<T>();
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Unable to read {source} hook argument {index} as {typeof(T).FullName}: {ex.Message}", isVerbose: true);
+            return null;
+        }
+    }
+
+    private static bool IsStampSaveSuppressed(EnemySpawnInfo? spawnInfo)
+    {
+        if (!IsEnemyStampSaveHookEnabled())
+            return false;
+
+        try
+        {
+            var comment = spawnInfo?.Comment;
+            return comment?.Contains(StampSaveSuppressionCommentPrefix, StringComparison.Ordinal) == true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Unable to inspect enemy spawn-info stamp-save marker: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static void SetEnemyOrderStampSaveSuppression(EnemyOrder? enemyOrder, bool isSuppressed)
+    {
+        if (enemyOrder == null || !IsEnemyStampSaveHookEnabled())
+            return;
+
+        lock (enemyStampSaveStateLock)
+        {
+            var address = enemyOrder.Address();
+            if (isSuppressed)
+            {
+                stampSaveSuppressedEnemyOrders.Add(address);
+            }
+            else
+            {
+                stampSaveSuppressedEnemyOrders.Remove(address);
+            }
+        }
+    }
+
+    private static bool IsEnemyOrderStampSaveSuppressed(EnemyOrder? enemyOrder)
+    {
+        if (enemyOrder == null || !IsEnemyStampSaveHookEnabled())
+            return false;
+
+        lock (enemyStampSaveStateLock)
+        {
+            return stampSaveSuppressedEnemyOrders.Contains(enemyOrder.Address());
+        }
+    }
+
+    private static bool TryClearStampSaveData(EnemyStatus.EnemyStampSaveDataClass? saveData, string source)
+    {
+        if (saveData == null)
+            return false;
+
+        try
+        {
+            saveData.clearData();
+            logger.Log($"Suppressed enemy stamp save data from {source}.", isVerbose: true);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Unable to suppress enemy stamp save data from {source}: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    [MethodHook(typeof(EnemyOrder), nameof(EnemyOrder.setSpawnInfo), MethodHookType.Pre)]
+    private static PreHookResult EnemyOrder_setSpawnInfo_Pre(Span<ulong> args)
+    {
+        var enemyOrder = TryGetManagedHookObject<EnemyOrder>(args, 1, nameof(EnemyOrder_setSpawnInfo_Pre));
+        var spawnInfo = TryGetManagedHookObject<EnemySpawnInfo>(args, 2, nameof(EnemyOrder_setSpawnInfo_Pre));
+        SetEnemyOrderStampSaveSuppression(enemyOrder, IsStampSaveSuppressed(spawnInfo));
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(EnemySpawnInfo), nameof(EnemySpawnInfo.saveStampData), MethodHookType.Pre)]
+    private static PreHookResult EnemySpawnInfo_saveStampData_Pre(Span<ulong> args)
+    {
+        var spawnInfo = TryGetManagedHookObject<EnemySpawnInfo>(args, 1, nameof(EnemySpawnInfo_saveStampData_Pre));
+        if (!IsStampSaveSuppressed(spawnInfo))
+            return PreHookResult.Continue;
+
+        var saveData = TryGetManagedHookObject<EnemyStatus.EnemyStampSaveDataClass>(args, 2, nameof(EnemySpawnInfo_saveStampData_Pre));
+        if (saveData == null)
+            return PreHookResult.Continue;
+
+        return TryClearStampSaveData(saveData, $"spawn info '{GetEnemySpawnInfoUnitAlias(spawnInfo)}'")
+            ? PreHookResult.Skip
+            : PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(EnemyOrder), nameof(EnemyOrder.saveStampData), MethodHookType.Pre)]
+    private static PreHookResult EnemyOrder_saveStampData_Pre(Span<ulong> args)
+    {
+        var enemyOrder = TryGetManagedHookObject<EnemyOrder>(args, 1, nameof(EnemyOrder_saveStampData_Pre));
+        if (!IsEnemyOrderStampSaveSuppressed(enemyOrder))
+            return PreHookResult.Continue;
+
+        var saveData = TryGetManagedHookObject<EnemyStatus.EnemyStampSaveDataClass>(args, 2, nameof(EnemyOrder_saveStampData_Pre));
+        if (saveData == null)
+            return PreHookResult.Continue;
+
+        return TryClearStampSaveData(saveData, $"enemy order 0x{enemyOrder?.Address() ?? 0:X}")
+            ? PreHookResult.Skip
+            : PreHookResult.Continue;
+    }
+
+    private static string GetEnemySpawnInfoUnitAlias(EnemySpawnInfo? spawnInfo)
+    {
+        try
+        {
+            return spawnInfo?.UnitAlias ?? "unknown";
+        }
+        catch
+        {
+            return "unknown";
+        }
+    }
+
+    #endregion Enemy Stamp Save
 
     #region Enemy Drops
 

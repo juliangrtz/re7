@@ -371,6 +371,15 @@ internal static class RandomizerConfigurationDefinition
             Default = false
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "enemy-stamp-save-hook",
+            Label = "Use RE Framework enemy stamp save hook",
+            Description = "Suppresses vulnerable enemy stamp render data when BioRand replaces insect spawns with non-insect enemies, or the reverse. Requires RE Framework.",
+            Type = "switch",
+            Default = true
+        });
+
         //group = page.CreateGroup("Specific");
         // TODO
 

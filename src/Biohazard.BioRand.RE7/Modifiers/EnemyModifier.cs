@@ -14,6 +14,7 @@ internal class EnemyModifier : Modifier
     internal const string ExtraEnemySpawnPointsName = "BioRandExtraEnemySpawnPoints";
     internal const string ExtraEnemySpawnInfoPrefix = "BioRandExtraEnemySpawnInfo";
     internal const string ExtraEnemyGeneratePrefix = "BioRandExtraEnemyGenerate";
+    internal const string StampSaveSuppressionCommentPrefix = "BioRandDisableStampSave";
     private const string EnemyGenerationFsmFolderName = "EnemyGenFsm";
     private const string ExtraEnemyGenerateFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
     private static readonly IReadOnlyDictionary<int, string> ExtraEnemyGeneratorSceneByChapter = new Dictionary<int, string>()
@@ -148,6 +149,14 @@ internal class EnemyModifier : Modifier
         new Guid("3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5"),
         new Guid("7ae3d438-f9cb-49da-9a60-00435b946a59"),
     ];
+    private static readonly HashSet<string> _insectSpawnAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Em5400",
+        "Em5510",
+        "Em5511",
+        "Em5512",
+        "Em5520",
+    };
     private Rng.Table<IEnemyDefinition>? _bossTable = null;
 
     internal static bool ShouldReplaceSpawnInfo(RszGameObject spawnInfoGameObject)
@@ -166,6 +175,27 @@ internal class EnemyModifier : Modifier
 
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
+
+    internal static bool IsInsectSpawnAlias(string unitAlias)
+        => _insectSpawnAliases.Contains(unitAlias);
+
+    internal static bool NeedsStampSaveSuppression(string originalUnitAlias, IEnemyDefinition replacement)
+        => IsInsectSpawnAlias(originalUnitAlias) != replacement.IsInsect;
+
+    private static string BuildStampSaveSuppressionComment(
+        string? existingComment,
+        string originalUnitAlias,
+        string replacementUnitAlias)
+    {
+        var marker = $"{StampSaveSuppressionCommentPrefix}:{originalUnitAlias}->{replacementUnitAlias}";
+        if (string.IsNullOrWhiteSpace(existingComment))
+            return marker;
+
+        if (existingComment.Contains(StampSaveSuppressionCommentPrefix, StringComparison.Ordinal))
+            return existingComment;
+
+        return $"{existingComment};{marker}";
+    }
 
     private static IEnemyDefinition ChooseWeightedEnemy(
         List<EnemyTableEntry> enemyPool,
@@ -328,6 +358,15 @@ internal class EnemyModifier : Modifier
                 var assignedHealth = healthResolver.GetHealth(newEnemy);
                 originalSpawnInfoComponent.HealthParameter.Health = assignedHealth;
                 originalSpawnInfoComponent.UnitAlias = enemyId;
+                if (NeedsStampSaveSuppression(oldUnitAlias, newEnemy))
+                {
+                    originalSpawnInfoComponent.Comment = BuildStampSaveSuppressionComment(
+                        originalSpawnInfoComponent.Comment,
+                        oldUnitAlias,
+                        enemyId);
+                    logger.LogLine($"Marking {originalSpawnInfoGameObject.Name} for RE Framework stamp-save suppression ({oldUnitAlias} -> {enemyId})");
+                }
+
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
                     .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);

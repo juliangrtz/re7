@@ -37,6 +37,7 @@ internal class Randomizer : IDisposable
     private bool IsREFrameworkRequired()
         => GetConfigOption<bool>("random-enemy-drops")
                                         || GetConfigOption<bool>("allow-dlc-items")
+                                        || (GetConfigOption<bool>("random-enemies") && GetConfigOption("enemy-stamp-save-hook", true))
                                         || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";

@@ -8,6 +8,8 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyModifierBehaviorTests
 {
+    private const string OldHouseBugGeneratorScene = "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20";
+
     private static readonly string[] GeneratorEnemyIds =
     [
         "Molded",
@@ -98,6 +100,33 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.True(generatorsWithMultipleEligibleSpawns > 0);
     }
 
+    [Fact]
+    public void RandomizeEnemies_MarksCrossFamilyInsectReplacementsForStampSaveHook()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["random-enemies"] = true;
+                config["enemy-variety"] = 1;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureGeneratorEnemyPool(config, ["Molded"]);
+            },
+            seed: 410980);
+
+        var beforeSpawns = GetGeneratorSpawnInfos(result.ReadBeforeScene(OldHouseBugGeneratorScene), "Bug");
+        Assert.NotEmpty(beforeSpawns);
+        Assert.All(beforeSpawns, spawn => Assert.True(EnemyModifier.IsInsectSpawnAlias(spawn.UnitAlias)));
+
+        var afterSpawns = GetGeneratorSpawnInfos(result.ReadAfterScene(OldHouseBugGeneratorScene), "Bug");
+        var replacedSpawns = afterSpawns
+            .Where(spawn => string.Equals(spawn.UnitAlias, "Em4000", StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        Assert.NotEmpty(replacedSpawns);
+        Assert.All(replacedSpawns, spawn =>
+            Assert.Contains(EnemyModifier.StampSaveSuppressionCommentPrefix, spawn.Comment, StringComparison.Ordinal));
+    }
+
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -140,6 +169,32 @@ public class RandomizerEnemyModifierBehaviorTests
             {
                 result.Add(aliases);
             }
+        });
+
+        return result;
+    }
+
+    private static List<(string UnitAlias, string Comment)> GetGeneratorSpawnInfos(RszScene scene, string generatorAlias)
+    {
+        var result = new List<(string, string)>();
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
+            if (enemyGenerator?.Enabled != true ||
+                !string.Equals(enemyGenerator.Alias, generatorAlias, StringComparison.Ordinal))
+            {
+                return;
+            }
+
+            gameObject.VisitGameObjects(child =>
+            {
+                var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
+                if (spawnInfo != null)
+                {
+                    result.Add((spawnInfo.UnitAlias, spawnInfo.Comment));
+                }
+            });
         });
 
         return result;

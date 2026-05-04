@@ -31,4 +31,28 @@ public class RandomizerEnemyDropPluginBehaviorTests
         Assert.Equal(0x12345678, reframeworkConfig["biorand-seed"]!.GetValue<int>());
         Assert.True(reframeworkConfig["random-enemy-drops"]!.GetValue<bool>());
     }
+
+    [Fact]
+    public void RandomEnemiesStampSaveHook_IncludesREFrameworkPlugin()
+    {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
+        {
+            config["allow-dlc-items"] = false;
+            config["random-enemy-drops"] = false;
+            config["recipes-add-new"] = false;
+            config["random-enemies"] = true;
+            config["enemy-stamp-save-hook"] = true;
+        });
+
+        var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x5AFE);
+        using var zipDisposable = zip;
+
+        var reframeworkConfigEntry = zip.GetEntry("reframework/data/BioRand7/config.json");
+
+        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(reframeworkConfigEntry);
+
+        var reframeworkConfig = JsonNode.Parse(reframeworkConfigEntry!.GetBytes())!.AsObject();
+        Assert.True(reframeworkConfig["enemy-stamp-save-hook"]!.GetValue<bool>());
+    }
 }
