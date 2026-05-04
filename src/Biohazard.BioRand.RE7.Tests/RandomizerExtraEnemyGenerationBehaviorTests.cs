@@ -11,6 +11,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerExtraEnemyGenerationBehaviorTests
 {
     private const string ExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20";
+    private const string Chapter1EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter1/c01_b1c.scn.20";
     private const string EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
     private const string EnvironmentExtraEnemyGeneratorScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20";
     private const string RandomExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
@@ -87,6 +88,44 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         AssertImmediateFsmGenerator(fsmGenerator);
         AssertEnemyGenerateRefs(extraSpawnInfos, [fsmGenerator]);
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -50, 5, 100, 3000);
+    }
+
+    [Fact]
+    public void ExtraEnemies_Chapter1EnvironmentMoldeds_EnableSceneAiMap()
+    {
+        using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(Chapter1EnvironmentExtraEnemyScenePath, 1, "Em4100"));
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, ExtraEnemyScenePath);
+
+        Assert.Single(extraSpawnInfos);
+        AssertMoldedAiMap(extraSpawnInfos, "Em4100", "c01_AIMap");
+    }
+
+    [Fact]
+    public void ExtraEnemies_Chapter3EnvironmentMoldeds_EnableSceneAiMap()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(EnvironmentExtraEnemyScenePath, 3, "Em4000", "Em4100", "Em4200"),
+            enemyLimitsCsv: BuildEnemyLimitsCsv(EnvironmentExtraEnemyScenePath, 3));
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, EnvironmentExtraEnemyGeneratorScenePath);
+
+        Assert.Equal(3, extraSpawnInfos.Count);
+        AssertMoldedAiMap(extraSpawnInfos, "Em4000", "c03_4_AIMap");
+        AssertMoldedAiMap(extraSpawnInfos, "Em4100", "c03_4_AIMap");
+        AssertMoldedAiMap(extraSpawnInfos, "Em4200", "c03_4_AIMap");
+    }
+
+    [Fact]
+    public void ExtraEnemies_Chapter3TestingAreaMoldeds_UseBarnAiMap()
+    {
+        const string cowshedScenePath = "natives/stm/environment/scene/chapter3/c03_cowshed01.scn.20";
+        using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(cowshedScenePath, 3, "Em4000"));
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, EnvironmentExtraEnemyGeneratorScenePath);
+
+        Assert.Single(extraSpawnInfos);
+        AssertMoldedAiMap(extraSpawnInfos, "Em4000", "c03_4_Lucus_Cowshed");
     }
 
     [Fact]
@@ -454,5 +493,18 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.True(Math.Abs(transform.Position.Y - expectedY) <= 0.001f, $"{expectedAlias} Y mismatch; components: {componentNames}");
         Assert.True(Math.Abs(transform.Position.Z - expectedZ) <= 0.001f, $"{expectedAlias} Z mismatch; components: {componentNames}");
         Assert.Equal(expectedHealth, spawnInfo.HealthParameter.Health);
+    }
+
+    private static void AssertMoldedAiMap(
+        IReadOnlyCollection<RszGameObject> spawnInfos,
+        string expectedAlias,
+        string expectedMapName)
+    {
+        var gameObject = Assert.Single(spawnInfos, gameObject => GetSpawnInfo(gameObject).UnitAlias == expectedAlias);
+        var spawnInfo = GetSpawnInfo(gameObject);
+
+        Assert.True(spawnInfo.MapParameter.IsUseCheck);
+        Assert.Equal(expectedMapName, spawnInfo.MapParameter.MapName);
+        Assert.Equal("", spawnInfo.MapParameter.VolumeSpaceMapName);
     }
 }
