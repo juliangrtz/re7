@@ -148,6 +148,14 @@ internal class EnemyModifier : Modifier
         new Guid("3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5"),
         new Guid("7ae3d438-f9cb-49da-9a60-00435b946a59"),
     ];
+    private static readonly HashSet<string> _insectSpawnAliases = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Em5400",
+        "Em5510",
+        "Em5511",
+        "Em5512",
+        "Em5520",
+    };
     private Rng.Table<IEnemyDefinition>? _bossTable = null;
 
     internal static bool ShouldReplaceSpawnInfo(RszGameObject spawnInfoGameObject)
@@ -163,6 +171,12 @@ internal class EnemyModifier : Modifier
         var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
         return spawnInfo?.Comment.StartsWith(ExtraEnemySpawnInfoPrefix, StringComparison.Ordinal) == true;
     }
+
+    internal static bool IsInsectSpawnAlias(string unitAlias)
+        => _insectSpawnAliases.Contains(unitAlias);
+
+    internal static bool IsCompatibleReplacement(app.EnemySpawnInfo spawnInfo, IEnemyDefinition enemy)
+        => IsInsectSpawnAlias(spawnInfo.UnitAlias) == enemy.IsInsect;
 
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
@@ -424,7 +438,8 @@ internal class EnemyModifier : Modifier
 
             logger.Push($"Generator '{enemyGenerator.Generator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
 
-            var packSelector = new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
+            var packSelectorsByInsectCompatibility = new Dictionary<bool, EnemyPackSelector>();
+            var skippedIncompatibleCounts = new Dictionary<bool, int>();
             var replacements = new List<(Guid, IEnemyDefinition)>();
             foreach (var spawnInfo in spawnInfos)
             {
@@ -432,10 +447,34 @@ internal class EnemyModifier : Modifier
                     continue;
 
                 var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
+                var isInsectSpawn = IsInsectSpawnAlias(component.UnitAlias);
+                if (!packSelectorsByInsectCompatibility.TryGetValue(isInsectSpawn, out var packSelector))
+                {
+                    var compatibleEnemyPool = areaEnemyPool
+                        .Where(entry => IsCompatibleReplacement(component, entry.Enemy))
+                        .ToList();
+                    if (compatibleEnemyPool.Count == 0)
+                    {
+                        skippedIncompatibleCounts[isInsectSpawn] =
+                            skippedIncompatibleCounts.GetValueOrDefault(isInsectSpawn) + 1;
+                        continue;
+                    }
+
+                    packSelector = new EnemyPackSelector(compatibleEnemyPool, options.MaxPackSize, rng);
+                    packSelectorsByInsectCompatibility[isInsectSpawn] = packSelector;
+                }
+
                 var replacement = packSelector.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
                 replacements.Add((spawnInfo.Guid, replacement));
+            }
+
+            foreach (var (isInsectSpawn, count) in skippedIncompatibleCounts)
+            {
+                var replacementFamily = isInsectSpawn ? "insect" : "non-insect";
+                logger.LogLine(
+                    $"Skipping {count} {replacementFamily} spawn infos: area enemy pool has no compatible replacements.");
             }
 
             if (replacements.Count > 0)

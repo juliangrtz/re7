@@ -8,11 +8,13 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyModifierBehaviorTests
 {
+    private const string OldHouseBugEnemyScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20";
+
     private static readonly string[] GeneratorEnemyIds =
     [
         "Molded",
         "MoldedFat",
-        "FlyingBug"
+        "MoldedQuick"
     ];
 
     [Fact]
@@ -98,6 +100,27 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.True(generatorsWithMultipleEligibleSpawns > 0);
     }
 
+    [Fact]
+    public void RandomizeEnemies_DoesNotReplaceOldHouseInsectSpawnsWithNonInsects()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["random-enemies"] = true;
+                config["enemy-variety"] = 3;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureGeneratorEnemyPool(config, ["Molded", "MoldedFat", "JackStalker"]);
+            },
+            seed: 410980);
+
+        var beforeAliases = GetGeneratorSpawnAliases(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug");
+        var afterAliases = GetGeneratorSpawnAliases(result.ReadAfterScene(OldHouseBugEnemyScenePath), "Bug");
+
+        Assert.NotEmpty(beforeAliases);
+        Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.Equal(beforeAliases, afterAliases);
+    }
+
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -140,6 +163,32 @@ public class RandomizerEnemyModifierBehaviorTests
             {
                 result.Add(aliases);
             }
+        });
+
+        return result;
+    }
+
+    private static List<string> GetGeneratorSpawnAliases(RszScene scene, string generatorAlias)
+    {
+        var result = new List<string>();
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
+            if (!string.Equals(enemyGenerator?.Alias, generatorAlias, StringComparison.Ordinal))
+                return;
+
+            gameObject.VisitGameObjects(child =>
+            {
+                if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                    return;
+
+                var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
+                if (spawnInfo != null)
+                {
+                    result.Add(spawnInfo.UnitAlias);
+                }
+            });
         });
 
         return result;
