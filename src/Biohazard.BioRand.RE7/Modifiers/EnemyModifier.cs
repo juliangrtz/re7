@@ -22,6 +22,30 @@ internal class EnemyModifier : Modifier
         [3] = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20",
         [4] = "natives/stm/scenes/chapter/chapter4/enemy_c04.scn.20",
     };
+    private static readonly HashSet<string> ExtraEnemyMoldedIds = new(StringComparer.Ordinal)
+    {
+        "Em4000",
+        "Em4100",
+        "Em4200",
+    };
+    private static readonly (string ScenePrefix, string MapName)[] ExtraEnemyMoldedAiMapByScenePrefix =
+    [
+        ("natives/stm/environment/scene/chapter3/c03_gh", "c03_AIMap"),
+        ("natives/stm/environment/scene/chapter3/c03_oldhouse", "c03_AIMap"),
+        ("natives/stm/environment/scene/chapter3/c03_cow", "c03_4_Lucus_Cowshed"),
+        ("natives/stm/environment/scene/chapter3/c03_leftarea", "c03_4_AIMap"),
+        ("natives/stm/environment/scene/chapter3/c03_boat", "c03_4_AIMap"),
+        ("natives/stm/environment/scene/chapter3/", "c03_4_AIMap"),
+        ("natives/stm/scenes/chapter/chapter3/chapter3_4/", "c03_4_AIMap"),
+        ("natives/stm/scenes/chapter/chapter3/chapter3_3/", "c03_AIMap"),
+        ("natives/stm/scenes/chapter/chapter3/", "c03_AIMap"),
+        ("natives/stm/environment/scene/chapter1/", "c01_AIMap"),
+        ("natives/stm/scenes/chapter/chapter1/", "c01_AIMap"),
+        ("natives/stm/environment/scene/chapter4/c04_1", "c04_1_AIMap"),
+        ("natives/stm/scenes/chapter/chapter4/chapter4_1/", "c04_1_AIMap"),
+        ("natives/stm/environment/scene/chapter4/c04_2", "c04_2_AIMap"),
+        ("natives/stm/scenes/chapter/chapter4/chapter4_2/", "c04_2_AIMap"),
+    ];
     private static readonly uint[] ExtraEnemyGenerateActionUids =
     [
         2860522480,
@@ -637,6 +661,7 @@ internal class EnemyModifier : Modifier
         spawnInfoComponent.UnitAlias = enemyId;
         spawnInfoComponent.Comment = $"{ExtraEnemySpawnInfoPrefix}_{enemyId}_{index:000}";
         spawnInfoComponent.HealthParameter.Health = assignedHealth;
+        ConfigureExtraEnemyMoldedAiMap(spawnInfoComponent, enemyId, request.Placement.SceneFile);
         spawnInfoComponent.MyGUID = rng.NextGuid();
         spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
         spawnInfo = RefreshRuntimeGuids(spawnInfo, rng);
@@ -649,6 +674,38 @@ internal class EnemyModifier : Modifier
             spawnInfo.Guid);
 
         return spawnInfo;
+    }
+
+    private static void ConfigureExtraEnemyMoldedAiMap(
+        app.EnemySpawnInfo spawnInfo,
+        string enemyId,
+        string sceneFile)
+    {
+        if (!ExtraEnemyMoldedIds.Contains(enemyId))
+            return;
+
+        var mapName = ResolveExtraEnemyMoldedAiMapName(sceneFile);
+        if (mapName == null)
+            return;
+
+        spawnInfo.MapParameter ??= new app.EnemySpawnInfo.AIMapParameter();
+        spawnInfo.MapParameter.IsUseCheck = true;
+        spawnInfo.MapParameter.MapName = mapName;
+        spawnInfo.MapParameter.VolumeSpaceMapName = "";
+    }
+
+    private static string? ResolveExtraEnemyMoldedAiMapName(string sceneFile)
+    {
+        var normalizedSceneFile = sceneFile.Replace('\\', '/');
+        foreach (var (scenePrefix, mapName) in ExtraEnemyMoldedAiMapByScenePrefix)
+        {
+            if (normalizedSceneFile.StartsWith(scenePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                return mapName;
+            }
+        }
+
+        return null;
     }
 
     private RszGameObject CreateExtraEnemyInstance(
