@@ -10,7 +10,9 @@ internal class FileRepository : IPatchContext, IDisposable
 {
     private readonly record struct FileCacheEntry(bool Exists, byte[] Data);
 
-    public static RszTypeRepository RszRepository { get; private set; }
+    private static readonly Lazy<RszTypeRepository> _rszRepository = new(LoadRszRepository);
+
+    public static RszTypeRepository RszRepository => _rszRepository.Value;
 
     public RszTypeRepository TypeRepository => RszRepository;
     public bool ExportingMod => false;
@@ -46,12 +48,12 @@ internal class FileRepository : IPatchContext, IDisposable
             _inputGamePath = inputGamePath;
         }
         DynamicData = dynamicData;
+    }
 
-        if (RszRepository == null)
-        {
-            var rszJson = EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip();
-            RszRepository = RszRepositorySerializer.Default.FromJson(rszJson);
-        }
+    private static RszTypeRepository LoadRszRepository()
+    {
+        var rszJson = EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip();
+        return RszRepositorySerializer.Default.FromJson(rszJson);
     }
 
     public void Dispose()
