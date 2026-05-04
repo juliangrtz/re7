@@ -67,9 +67,9 @@ internal class ItemDrops
 
     public static ImmutableArray<string> BirthdaySkillIds { get; } =
            new int[] {
-               1 /* Infinite Ammo */,
+               /* 1  Infinite Ammo */
                2 /* Health Regen */,
-               3 /* Clairvoyance (Perma Psychostimulants) */,
+               /*3  Clairvoyance (Perma Psychostimulants) */
                /* 4, 5, 6, 7 (Time Bonuses) */
                8 /* Defense II */,
                9 /* Defense I */,

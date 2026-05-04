@@ -121,9 +121,9 @@ public class REFPlugin
 
     public static ImmutableArray<string> BirthdaySkillItemDataIds { get; } =
        new int[] {
-               1 /* Infinite Ammo */,
+               /* 1  Infinite Ammo */
                2 /* Health Regen */,
-               3 /* Clairvoyance (Perma Psychostimulants) */,
+               /*3  Clairvoyance (Perma Psychostimulants) */
                /* 4, 5, 6, 7 (Time Bonuses) */
                8 /* Defense II */,
                9 /* Defense I */,

@@ -1,54 +1,46 @@
 ﻿using System.Text.RegularExpressions;
 
+using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Enemies.Impl;
+using Biohazard.BioRand.RE7.Inventory;
+using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Weapons;
+
 namespace Biohazard.BioRand.RE7.Tests;
 
 public class ConfigurationIdUsageTest
 {
+    private const string ConfigReadMethodPattern =
+        @"(?:Get(?:ConfigOption|ValueOrDefault)|Read(?:OrDefault|EnemyDropConfigOrDefault))";
+
     private readonly HashSet<string> _definedIds =
         RandomizerExecutor.ConfigurationDefinition.AllItems
             .Where(i => i.Id != null)
             .Select(i => i.Id!)
-            .ToHashSet();
+            .ToHashSet(StringComparer.Ordinal);
 
-    // TODO: Find better way to determine dynamically created IDs
-    private static readonly string[] Exclusions =
-    [
-        "debug-force-reframework",
-        "verbose-reframework-plugin-logging",
+    private static readonly HashSet<string> RuntimeConfigIds = new(StringComparer.Ordinal)
+    {
         "username",
         "special",
         "tags",
-        "enemy-drop-respect-difficulty",
-        "enemy-drop-ammo-only-available-weapons",
-        "enemy-drop-ammo-min",
-        "enemy-drop-ammo-max",
-        "item-drop-ratio-",
-        "item-drop-valuable-",
-        "inventory-weapon-",
-        "inventory-stack-limit-",
-        "weapon-damage-min-",
-        "weapon-damage-max-",
-        "weapon-ammo-capacity-min-",
-        "weapon-ammo-capacity-max-",
-        "weapon-reload-speed-min-",
-        "weapon-reload-speed-max-",
-        "enemy-ratio-",
-        "enemy-drop-ratio-",
-        "enemy-drop-valuable-",
-        "enemy-health-min-",
-        "enemy-health-max-",
-        "enemy-speed-min-",
-        "enemy-speed-max-",
-        "boss-health-min-",
-        "boss-health-max-",
-    ];
+    };
+
+    private static readonly HashSet<string> IndirectlyReferencedConfigIds = new(StringComparer.Ordinal)
+    {
+        "debug-force-reframework",
+    };
+
+    private static readonly Lazy<HashSet<string>> GeneratedConfigIds = new(CreateGeneratedConfigIds);
 
     [Fact]
     public void Test_All_StringId_References_Exist()
     {
         var projectRoot = GetProjectRoot();
         var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
-        var configRegex = new Regex("(?:Get(?:ConfigOption|ValueOrDefault)|ReadOrDefault).*\\(\"([a-zA-Z0-9\\-]+)\".*\\)", RegexOptions.Compiled);
+        var configRegex = new Regex(
+            $"{ConfigReadMethodPattern}(?:<[^>]+>)?\\s*\\(\\s*\"([a-zA-Z0-9\\-]+)\"",
+            RegexOptions.Compiled);
         var invalidUsages = new HashSet<string>();
 
         foreach (var file in csFiles)
@@ -76,12 +68,15 @@ public class ConfigurationIdUsageTest
         var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
 
         var content = string.Join("\n", csFiles.Select(File.ReadAllText));
-        static Regex Regex(string id) => new Regex($"(?:Get(?:ConfigOption|ValueOrDefault)|ReadOrDefault).*\\(\"{id}\".*\\)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        static Regex UsageRegex(string id) => new(
+            $"{ConfigReadMethodPattern}(?:<[^>]+>)?\\s*\\(\\s*\"{Regex.Escape(id)}\"",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         var unused = _definedIds
             .Where(id =>
-                !Regex(id).IsMatch(content) &&
-                !Exclusions.Any(prefix => id.StartsWith(prefix)))
+                !UsageRegex(id).IsMatch(content) &&
+                !GeneratedConfigIds.Value.Contains(id) &&
+                !IndirectlyReferencedConfigIds.Contains(id))
             .ToList();
 
         Assert.True(unused.Count == 0,
@@ -93,8 +88,102 @@ public class ConfigurationIdUsageTest
         if (_definedIds.Contains(value))
             return true;
 
-        return Exclusions.Any(prefix => value.StartsWith(prefix));
+        return RuntimeConfigIds.Contains(value) ||
+            GeneratedConfigIds.Value.Contains(value);
     }
+
+    private static HashSet<string> CreateGeneratedConfigIds()
+    {
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+
+        AddDropIds(ids, "enemy-drop");
+        AddDropIds(ids, "item-drop");
+        AddEnemyIds(ids);
+        AddInventoryIds(ids);
+        AddWeaponIds(ids);
+
+        return ids;
+    }
+
+    private static void AddDropIds(HashSet<string> ids, string configPrefix)
+    {
+        foreach (var drop in ItemDrops.GenericDrops)
+        {
+            ids.Add($"{configPrefix}-ratio-{drop.ToLowerInvariant()}");
+        }
+
+        foreach (var drop in ItemDrops.HighValueDrops)
+        {
+            ids.Add($"{configPrefix}-valuable-{drop}");
+        }
+    }
+
+    private static void AddEnemyIds(HashSet<string> ids)
+    {
+        foreach (var enemy in EnemyDefinitions.Instance.All)
+        {
+            var id = enemy.Id.ToLowerInvariant();
+            ids.Add($"enemy-ratio-{id}");
+
+            if (enemy.SupportsSpeedRandomization)
+            {
+                ids.Add($"enemy-speed-min-{id}");
+                ids.Add($"enemy-speed-max-{id}");
+            }
+
+            if (enemy.IsBoss)
+            {
+                ids.Add($"boss-health-min-{id}");
+                ids.Add($"boss-health-max-{id}");
+            }
+            else if (enemy is not MargeStalker and not MoldedBlade and not EvelineGrandmother)
+            {
+                ids.Add($"enemy-health-min-{id}");
+                ids.Add($"enemy-health-max-{id}");
+            }
+        }
+    }
+
+    private static void AddInventoryIds(HashSet<string> ids)
+    {
+        foreach (var character in new[] { "ethan", "mia" })
+        {
+            foreach (var category in Enum.GetValues<StartingWeaponCategory>())
+            {
+                ids.Add($"inventory-weapon-{category.ToString().ToLowerInvariant()}-{character}");
+            }
+        }
+
+        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackable && !item.IsDlcItem))
+        {
+            ids.Add($"inventory-stack-limit-{item.Id.ToLowerInvariant()}");
+        }
+    }
+
+    private static void AddWeaponIds(HashSet<string> ids)
+    {
+        var weaponDefinitions = WeaponDefinitionRepository.Default;
+        var weapons = weaponDefinitions.PlayerWeapons
+            .Where(wp => !wp.WeaponId.ToString().Contains("blaster", StringComparison.InvariantCultureIgnoreCase));
+        foreach (var weapon in weapons)
+        {
+            var id = SanitizeWeaponId(weapon);
+            ids.Add($"weapon-damage-min-{id}");
+            ids.Add($"weapon-damage-max-{id}");
+        }
+
+        foreach (var gun in weaponDefinitions.Guns.Where(gun => gun.UserType == Enums.app.CharacterDefine.Type.Player))
+        {
+            var id = SanitizeWeaponId(gun);
+            ids.Add($"weapon-ammo-capacity-min-{id}");
+            ids.Add($"weapon-ammo-capacity-max-{id}");
+            ids.Add($"weapon-reload-speed-min-{id}");
+            ids.Add($"weapon-reload-speed-max-{id}");
+        }
+    }
+
+    private static string SanitizeWeaponId(WeaponDefinition weapon)
+        => weapon.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
 
     private string GetProjectRoot()
     {

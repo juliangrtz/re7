@@ -1,5 +1,7 @@
 ﻿using IntelOrca.Biohazard.REE.Cryptography;
 using IntelOrca.Biohazard.REE.Variables;
+using System.Globalization;
+using System.Text;
 
 namespace Biohazard.BioRand.RE7.Services;
 
@@ -53,12 +55,64 @@ internal class FlagService
     private string GetReadableTypeVal(int typeVal)
         => ((Enums.via.userdata.TypeKind)typeVal).ToString();
 
-    private string FormatValue(int typeVal, float value)
-        => ((Enums.via.userdata.TypeKind)typeVal) switch
+    // TODO: Move into reeutils
+    private static string FormatValue(UvarFile.Builder.Variable variable)
+    {
+        var data = variable.ValueData;
+        return ((Enums.via.userdata.TypeKind)variable.TypeVal) switch
         {
-            Enums.via.userdata.TypeKind.Boolean => (value != 0).ToString(),
-            _ => value.ToString() // TODO Improve formatting
+            Enums.via.userdata.TypeKind.Boolean => (variable.Value != 0).ToString(),
+            Enums.via.userdata.TypeKind.Int8 when data.Length >= sizeof(byte) =>
+                ((sbyte)data[0]).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Uint8 when data.Length >= sizeof(byte) =>
+                data[0].ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Int16 when data.Length >= sizeof(short) =>
+                BitConverter.ToInt16(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Uint16 when data.Length >= sizeof(ushort) =>
+                BitConverter.ToUInt16(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Int32 when data.Length >= sizeof(int) =>
+                BitConverter.ToInt32(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Uint32 when data.Length >= sizeof(uint) =>
+                BitConverter.ToUInt32(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Int64 when data.Length >= sizeof(long) =>
+                BitConverter.ToInt64(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Uint64 when data.Length >= sizeof(ulong) =>
+                BitConverter.ToUInt64(data).ToString(CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Single =>
+                variable.Value.ToString("G9", CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.Double when data.Length >= sizeof(double) =>
+                BitConverter.ToDouble(data).ToString("G17", CultureInfo.InvariantCulture),
+            Enums.via.userdata.TypeKind.C8 =>
+                FormatNullTerminatedString(data, Encoding.UTF8),
+            Enums.via.userdata.TypeKind.C16 or Enums.via.userdata.TypeKind.String =>
+                FormatNullTerminatedString(data, Encoding.Unicode),
+            Enums.via.userdata.TypeKind.GUID when data.Length >= 16 =>
+                new Guid(data.AsSpan(0, 16)).ToString(),
+            _ => FormatRawValue(variable)
         };
+    }
+
+    private static string FormatNullTerminatedString(byte[] data, Encoding encoding)
+    {
+        if (data.Length == 0)
+            return "";
+
+        var value = encoding.GetString(data);
+        var nullTerminator = value.IndexOf('\0');
+        if (nullTerminator != -1)
+        {
+            value = value[..nullTerminator];
+        }
+        return value;
+    }
+
+    private static string FormatRawValue(UvarFile.Builder.Variable variable)
+    {
+        var value = variable.Value.ToString("G9", CultureInfo.InvariantCulture);
+        return variable.ValueData.Length == 0
+            ? value
+            : $"{value} (0x{Convert.ToHexString(variable.ValueData)})";
+    }
 
     public void Save(RandomizerLogger logger)
     {
@@ -73,7 +127,7 @@ internal class FlagService
             foreach (var variable in variables)
             {
                 logger.LogLine($"[{variable.Guid}] {variable.Name} ({GetReadableTypeVal(variable.TypeVal)}): " +
-                    $"{FormatValue(variable.TypeVal, variable.Value)}");
+                    $"{FormatValue(variable)}");
             }
             logger.Pop();
         }
@@ -125,8 +179,8 @@ internal class FlagService
                 if (preVars[j].Value != postVars[j].Value)
                 {
                     logger.LogLine($"[{preVars[j].Guid}] {preVars[j].Name} changed from " +
-                        $"{FormatValue(preVars[j].TypeVal, preVars[j].Value)} to " +
-                        $"{FormatValue(postVars[j].TypeVal, postVars[j].Value)} ({preFile})");
+                        $"{FormatValue(preVars[j])} to " +
+                        $"{FormatValue(postVars[j])} ({preFile})");
                 }
             }
         }

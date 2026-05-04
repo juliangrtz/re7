@@ -8,6 +8,8 @@ namespace Biohazard.BioRand.RE7.Commands;
 
 internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
 {
+    private const string BasePakFileName = "re_chunk_000.pak";
+
     public sealed class Settings : CommandSettings
     {
         [CommandOption("-i|--input")]
@@ -37,7 +39,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
     {
         var patternList = settings.Full ? FullPatterns : MiniPatterns;
         var gamePath = settings.InputPath!;
-        var pak = new RePakCollection(gamePath); // TODO: Doesn't work for DLC PAKs yet as they are named differently!
+        using var pak = OpenGamePaks(gamePath);
 
         var outputPath = settings.OutputPath!;
         if (outputPath.EndsWith(".pak", StringComparison.OrdinalIgnoreCase))
@@ -60,6 +62,43 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings>
             });
         }
         return Task.FromResult(0);
+    }
+
+    private static IPakFile OpenGamePaks(string gamePath)
+    {
+        var basePakPath = Path.Combine(gamePath, BasePakFileName);
+        if (!File.Exists(basePakPath))
+            throw new FileNotFoundException($"Failed to find {BasePakFileName}.", basePakPath);
+
+        var paks = new List<IPakFile>
+        {
+            new PatchedPakFile(basePakPath)
+        };
+        paks.AddRange(EnumerateAdditionalPakPaths(gamePath).Select(path => (IPakFile)new PakFile(path)));
+
+        return new PakFileCollection(paks.ToImmutableArray());
+    }
+
+    private static IEnumerable<string> EnumerateAdditionalPakPaths(string gamePath)
+        => Directory.EnumerateFiles(gamePath, "*.pak", SearchOption.AllDirectories)
+            .Where(path => !IsBasePakFamily(gamePath, path))
+            .OrderBy(path => path, StringComparer.OrdinalIgnoreCase);
+
+    private static bool IsBasePakFamily(string gamePath, string path)
+    {
+        var relativePath = Path.GetRelativePath(gamePath, path);
+        if (relativePath.Contains(Path.DirectorySeparatorChar) ||
+            relativePath.Contains(Path.AltDirectorySeparatorChar))
+        {
+            return false;
+        }
+
+        var fileName = Path.GetFileName(path);
+        return fileName.Equals(BasePakFileName, StringComparison.OrdinalIgnoreCase) ||
+            Regex.IsMatch(
+                fileName,
+                $"^{Regex.Escape(BasePakFileName)}\\.patch_[0-9]{{3}}\\.pak$",
+                RegexOptions.IgnoreCase);
     }
 
     private static void HarvestFiles(
