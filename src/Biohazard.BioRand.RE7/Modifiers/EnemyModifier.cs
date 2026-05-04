@@ -307,6 +307,58 @@ internal class EnemyModifier : Modifier
         return template.WithName(enemyId);
     }
 
+    private List<RszGameObject> CreatePoolInstancesForNestedSpawnInfos(
+        Randomizer randomizer,
+        RszGameObject template,
+        EnemyRandomizerOptions options,
+        Rng rng)
+    {
+        var nestedSpawnAliases = new List<string>();
+        template.VisitGameObjects(gameObject =>
+        {
+            var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
+            if (spawnInfo?.Enabled == true && !string.IsNullOrWhiteSpace(spawnInfo.UnitAlias))
+            {
+                nestedSpawnAliases.Add(spawnInfo.UnitAlias);
+            }
+        });
+
+        if (nestedSpawnAliases.Count == 0)
+            return [];
+
+        var instances = new List<RszGameObject>(nestedSpawnAliases.Count);
+        var transform = new via.Transform()
+        {
+            Position = Vector3.Zero,
+            Rotation = Quaternion.Identity,
+            Scale = Vector3.One,
+        };
+
+        foreach (var nestedSpawnAlias in nestedSpawnAliases)
+        {
+            var definition = EnemyDefinitions.Instance.FromId(nestedSpawnAlias)
+                ?? throw new InvalidOperationException(
+                    $"Enemy template '{template.Name}' contains a nested spawn info for unsupported enemy '{nestedSpawnAlias}'.");
+            if (!definition.UsesEnemyGenerator)
+            {
+                throw new InvalidOperationException(
+                    $"Enemy template '{template.Name}' contains a nested spawn info for non-generator enemy '{nestedSpawnAlias}'.");
+            }
+
+            instances.Add(GetOrCreateEnemyTemplate(
+                randomizer,
+                nestedSpawnAlias,
+                transform,
+                updateTransform: false,
+                randomizeScale: false,
+                options.ScaleOptions,
+                rng,
+                definition));
+        }
+
+        return instances;
+    }
+
     private RszGameObject GetOrCreateSpawnInfoTemplate(
         Randomizer randomizer,
         string enemyId,
@@ -389,6 +441,7 @@ internal class EnemyModifier : Modifier
                         rng
                 );
                 pooledObjects.Add(template);
+                pooledObjects.AddRange(CreatePoolInstancesForNestedSpawnInfos(randomizer, template, options, rng));
             }
             else
             {
@@ -708,7 +761,7 @@ internal class EnemyModifier : Modifier
         return null;
     }
 
-    private RszGameObject CreateExtraEnemyInstance(
+    private List<RszGameObject> CreateExtraEnemyInstances(
         Randomizer randomizer,
         ResolvedExtraEnemyPlacement request,
         EnemyRandomizerOptions options,
@@ -722,7 +775,7 @@ internal class EnemyModifier : Modifier
             Scale = Vector3.One,
         };
 
-        return RefreshRuntimeGuids(GetOrCreateEnemyTemplate(
+        var instance = RefreshRuntimeGuids(GetOrCreateEnemyTemplate(
                 randomizer,
                 enemyId,
                 transform,
@@ -732,6 +785,14 @@ internal class EnemyModifier : Modifier
                 rng,
                 request.Enemy)
             .WithName(enemyId), rng);
+        var instances = new List<RszGameObject>()
+        {
+            instance,
+        };
+        instances.AddRange(CreatePoolInstancesForNestedSpawnInfos(randomizer, instance, options, rng)
+            .Select(nestedInstance => RefreshRuntimeGuids(nestedInstance, rng)));
+
+        return instances;
     }
 
     private static RszGameObject CreateExtraEnemyFsmGenerator(
@@ -1116,11 +1177,11 @@ internal class EnemyModifier : Modifier
             {
                 var request = extraEnemyRequests[i];
                 var spawnInfo = CreateExtraEnemySpawnInfo(randomizer, logger, request, healthResolver, i, rng);
-                var instance = CreateExtraEnemyInstance(randomizer, request, options, rng);
+                var requestInstances = CreateExtraEnemyInstances(randomizer, request, options, rng);
                 var fsmGenerator = CreateExtraEnemyFsmGenerator(randomizer, request, spawnInfo, i, rng);
 
                 spawnInfos.Add(spawnInfo);
-                instances.Add(instance);
+                instances.AddRange(requestInstances);
                 fsmGenerators.Add(fsmGenerator);
             }
 

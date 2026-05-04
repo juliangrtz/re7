@@ -32,22 +32,61 @@ internal class EnemyGeneratorWrapper
 
         GameObject.VisitGameObjects(go =>
         {
-            var mesh = go.FindComponent("via.render.Mesh");
-            if (mesh != null
-                && mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true)
+            if (HasEnemyMesh(go))
             {
                 enemies.Add(go);
             }
+        });
 
-            var spawnInfo = go.FindComponent<app.EnemySpawnInfo>();
-            if (spawnInfo != null)
+        var enemyPools = new List<RszGameObject>();
+        GameObject.VisitGameObjects(go =>
+        {
+            if (go.FindComponent<app.EnemyPool>() != null)
             {
-                enemySpawnInfos.Add(go);
+                enemyPools.Add(go);
             }
         });
 
+        foreach (var enemyPool in enemyPools)
+        {
+            foreach (var poolChild in enemyPool.Children)
+            {
+                if (ContainsEnemyMesh(poolChild))
+                    continue;
+
+                poolChild.VisitGameObjects(go =>
+                {
+                    if (go.FindComponent<app.EnemySpawnInfo>() != null)
+                    {
+                        enemySpawnInfos.Add(go);
+                    }
+                });
+            }
+        }
+
         EnemyGameObjects = enemies.ToImmutableArray();
         EnemySpawnInfos = enemySpawnInfos.ToImmutableArray();
+    }
+
+    private static bool HasEnemyMesh(RszGameObject gameObject)
+    {
+        var mesh = gameObject.FindComponent("via.render.Mesh");
+        return mesh != null
+            && mesh.Children.Length > 2
+            && mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true;
+    }
+
+    private static bool ContainsEnemyMesh(RszGameObject gameObject)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            if (HasEnemyMesh(child))
+            {
+                result = true;
+            }
+        });
+        return result;
     }
 
     public override string ToString()

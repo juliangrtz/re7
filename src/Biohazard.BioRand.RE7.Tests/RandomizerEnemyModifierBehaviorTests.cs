@@ -121,6 +121,27 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.Equal(beforeAliases, afterAliases);
     }
 
+    [Fact]
+    public void RandomizeEnemies_ReplacingOldHouseInsectsWithHives_PreservesHiveInsectSpawnSlots()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["random-enemies"] = true;
+                config["enemy-variety"] = 1;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureGeneratorEnemyPool(config, ["InsectHive"]);
+            },
+            seed: 410980);
+
+        var afterScene = result.ReadAfterScene(OldHouseBugEnemyScenePath);
+        var nestedSpawnAliases = GetSpawnAliasesByGameObjectNamePrefix(afterScene, "Em5400SpawnInfo", "Em5520SpawnInfo");
+
+        Assert.NotEmpty(nestedSpawnAliases);
+        Assert.All(nestedSpawnAliases["Em5400SpawnInfo"], alias => Assert.Equal("Em5400", alias));
+        Assert.All(nestedSpawnAliases["Em5520SpawnInfo"], alias => Assert.Equal("Em5520", alias));
+    }
+
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -189,6 +210,26 @@ public class RandomizerEnemyModifierBehaviorTests
                     result.Add(spawnInfo.UnitAlias);
                 }
             });
+        });
+
+        return result;
+    }
+
+    private static Dictionary<string, List<string>> GetSpawnAliasesByGameObjectNamePrefix(RszScene scene, params string[] prefixes)
+    {
+        var result = prefixes.ToDictionary(prefix => prefix, _ => new List<string>(), StringComparer.Ordinal);
+        scene.VisitGameObjects(gameObject =>
+        {
+            var matchingPrefix = prefixes.FirstOrDefault(prefix =>
+                gameObject.Name.StartsWith(prefix, StringComparison.Ordinal));
+            if (matchingPrefix == null)
+                return;
+
+            var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
+            if (spawnInfo != null)
+            {
+                result[matchingPrefix].Add(spawnInfo.UnitAlias);
+            }
         });
 
         return result;
