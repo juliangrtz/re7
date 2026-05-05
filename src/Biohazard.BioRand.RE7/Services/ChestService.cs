@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
@@ -9,11 +10,12 @@ internal class ChestService(Randomizer randomizer)
     private readonly RszGameObject _chestTemplate = randomizer.TemplateService.GetObject("Chest");
     private readonly Dictionary<string, RszGameObject> _weaponCache = new();
     private readonly Rng _rng = randomizer.GetRng("drops/weapon-chests");
+    private readonly Rng _templateRng = randomizer.GetRng("drops/weapon-chests/template-instances");
 
     private RszGameObject GetCachedWeaponOrCreate(string weaponId)
     {
         if (!_weaponCache.ContainsKey(weaponId))
-            _weaponCache[weaponId] = randomizer.TemplateService.GetItemTemplate(weaponId).Clone();
+            _weaponCache[weaponId] = randomizer.TemplateService.GetItemTemplate(weaponId);
         return _weaponCache[weaponId];
     }
 
@@ -41,8 +43,8 @@ internal class ChestService(Randomizer randomizer)
 
         // Create weapon from template
         var weaponGuid = _rng.NextGuid();
-        var weapon = GetCachedWeaponOrCreate(weaponDrop.Id);
-        weapon = weapon.WithGuid(weaponGuid);
+        var weapon = GetCachedWeaponOrCreate(weaponDrop.Id)
+            .CloneWithNewGuids(_templateRng, weaponGuid);
 
         // Prevent weapon pickup without using the lock pick
         weapon = weapon.WithSettings(

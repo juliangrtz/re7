@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Services;
+using Biohazard.BioRand.RE7.Extensions;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -26,6 +27,7 @@ internal class ItemModifier : Modifier
         var replaceWeapons = randomizer.GetConfigOption<bool>("replace-weapons");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         var randomItemSettings = context.RandomItemSettings;
+        var templateInstanceRng = randomizer.GetRng("modifier/static-items/template-instances");
 
         var candidates = new List<ItemReplacementCandidate>();
         foreach (var area in areaService.Areas)
@@ -114,8 +116,9 @@ internal class ItemModifier : Modifier
                     originalGameObject = originalGameObject.AddOrUpdateComponent(itemComponent);
 
                     var templateItemId = itemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
-                    var newGameObject = templateService.GetItemTemplate(templateItemId);
-                    newGameObject = newGameObject.WithGuid(originalGameObject.Guid);
+                    var newGameObject = templateService
+                        .GetItemTemplate(templateItemId)
+                        .CloneWithNewGuids(templateInstanceRng, originalGameObject.Guid);
                     newGameObject = newGameObject.AddOrUpdateComponent(originalTransform);
                     newGameObject = newGameObject.AddOrUpdateComponent(itemComponent);
 
@@ -132,7 +135,7 @@ internal class ItemModifier : Modifier
                         .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
                         .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"));
 
-                    scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject);
+                    scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject, keepChildren: false);
                 }
 
                 return scene;

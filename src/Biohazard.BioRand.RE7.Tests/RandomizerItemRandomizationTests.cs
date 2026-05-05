@@ -198,6 +198,32 @@ public class RandomizerItemRandomizationTests
     }
 
     [Fact]
+    public void RandomItems_SingleDropPool_UsesReplacementTemplateInteractionChildren()
+    {
+        const string replacementId = "BurnerBullet";
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            ConfigureSingleDrop(config, replacementId);
+        });
+
+        var (_, placement, beforeGameObject) = FindRandomizedPlacementWithBeforeObject(
+            result,
+            (item, _, gameObject) =>
+                !item.IsWeapon &&
+                item.Id != replacementId &&
+                gameObject.Children.Length > 0);
+        var afterGameObject = result.ReadAfterScene(placement.SceneFile).FindGameObject(placement.Guid);
+        var template = result.Randomizer.TemplateService.GetItemTemplate(replacementId);
+
+        Assert.NotNull(afterGameObject);
+        Assert.Equal(replacementId, afterGameObject!.FindComponent<app.Item>()!.ItemDataID);
+        AssertTemplateChildShape(template, afterGameObject);
+        AssertNoSharedDescendantGuids(beforeGameObject, afterGameObject);
+        AssertNoSharedDescendantGuids(template, afterGameObject);
+    }
+
+    [Fact]
     public void RandomItems_BirthdaySkillValuableDrop_UsesVisibleTemplateWithSkillItemDataId()
     {
         using var result = RandomizerTest.RunState(config =>
@@ -374,6 +400,8 @@ public class RandomizerItemRandomizationTests
         Assert.Equal(ForcedDropId, item.ItemDataID);
         Assert.Equal(1, item.ItemStackNum);
         AssertPositionMatchesPlacement(transform, placement);
+        AssertTemplateChildShape(result.Randomizer.TemplateService.GetItemTemplate(ForcedDropId), newItem);
+        AssertNoSharedDescendantGuids(result.Randomizer.TemplateService.GetItemTemplate(ForcedDropId), newItem);
     }
 
     [Fact]
@@ -513,6 +541,48 @@ public class RandomizerItemRandomizationTests
         return match;
     }
 
+    private static (ItemDefinition Definition, ItemPlacement Placement, RszGameObject BeforeGameObject) FindRandomizedPlacementWithBeforeObject(
+        RandomizerRunResult result,
+        Func<ItemDefinition, ItemPlacement, RszGameObject, bool> predicate)
+    {
+        var itemRandomizer = result.ItemRandomizer;
+        var sceneCache = new Dictionary<string, RszScene>();
+        var placements = result.AreaService.Areas
+            .SelectMany(area => area.Items.Select(gameObject => (AreaPath: area.Path, GameObject: gameObject)))
+            .SelectMany(x => result.ItemPlacementService.FromSceneGuid(x.AreaPath, x.GameObject.Guid))
+            .DistinctBy(placement => (placement.SceneFile, placement.Guid));
+
+        foreach (var placement in placements)
+        {
+            var definition = ItemDefinitionRepository.Default.FromId(placement.Id);
+            if (definition == null ||
+                placement.Dlc != null ||
+                placement.IsExtra ||
+                !placement.Enabled ||
+                placement.Tags.Contains(ItemPlacement.ExcludeTag) ||
+                !itemRandomizer.IsItemAllowed(definition) ||
+                BirdCageModifier.Guids.Contains(placement.Guid))
+            {
+                continue;
+            }
+
+            if (!sceneCache.TryGetValue(placement.SceneFile, out var scene))
+            {
+                scene = result.ReadBeforeScene(placement.SceneFile);
+                sceneCache[placement.SceneFile] = scene;
+            }
+
+            var gameObject = scene.FindGameObject(placement.Guid);
+            if (gameObject != null && predicate(definition, placement, gameObject))
+            {
+                return (definition, placement, gameObject);
+            }
+        }
+
+        Assert.Fail("No randomized item placement matched the expected before-object predicate.");
+        throw new InvalidOperationException();
+    }
+
     private static (ItemPlacement Placement, app.Item BeforeItem, app.Item AfterItem) FindChangedPlacementByAfterItem(
         RandomizerRunResult result,
         Func<string, bool> predicate)
@@ -574,6 +644,42 @@ public class RandomizerItemRandomizationTests
     {
         var beforeGuids = before.Children.Select(child => child.Guid).ToHashSet();
         return after.Children.Where(child => !beforeGuids.Contains(child.Guid)).ToArray();
+    }
+
+    private static void AssertTemplateChildShape(RszGameObject template, RszGameObject actual)
+    {
+        Assert.Equal(template.Children.Length, actual.Children.Length);
+        for (var i = 0; i < template.Children.Length; i++)
+        {
+            AssertTemplateShape(template.Children[i], actual.Children[i]);
+        }
+    }
+
+    private static void AssertTemplateShape(RszGameObject template, RszGameObject actual)
+    {
+        Assert.Equal(template.Name, actual.Name);
+        Assert.Equal(template.Prefab, actual.Prefab);
+        Assert.Equal(
+            template.Components.Select(component => component.Type.Name),
+            actual.Components.Select(component => component.Type.Name));
+        AssertTemplateChildShape(template, actual);
+    }
+
+    private static void AssertNoSharedDescendantGuids(RszGameObject left, RszGameObject right)
+    {
+        var leftGuids = GetDescendantGuids(left);
+        var rightGuids = GetDescendantGuids(right);
+        Assert.Empty(leftGuids.Intersect(rightGuids));
+    }
+
+    private static HashSet<Guid> GetDescendantGuids(RszGameObject gameObject)
+    {
+        var result = new HashSet<Guid>();
+        foreach (var child in gameObject.Children)
+        {
+            child.VisitGameObjects(descendant => result.Add(descendant.Guid));
+        }
+        return result;
     }
 
     private static void AssertPositionMatchesPlacement(via.Transform transform, ItemPlacement placement)
