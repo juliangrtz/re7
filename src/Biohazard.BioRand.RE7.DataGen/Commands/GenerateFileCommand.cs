@@ -57,14 +57,33 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
     public override int Execute(CommandContext context, GenerateSettings settings, CancellationToken token)
     {
         var idSet = new HashSet<string>(settings.Generators, StringComparer.OrdinalIgnoreCase);
-        var fileGenerators = Assembly
-                                .GetExecutingAssembly()
-                                .GetTypes()
-                                .Where(t => typeof(IFileGenerator).IsAssignableFrom(t)
-                                            && !t.IsInterface
-                                            && !t.IsAbstract)
-                                .Select(t => (IFileGenerator)Activator.CreateInstance(t)!)
-                                .ToList();
+        var fileGenerators = new List<IFileGenerator>();
+        var generatorLoadFailures = new List<(Type Type, Exception Exception)>();
+        foreach (var type in Assembly
+            .GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => typeof(IFileGenerator).IsAssignableFrom(t)
+                && !t.IsInterface
+                && !t.IsAbstract))
+        {
+            try
+            {
+                fileGenerators.Add((IFileGenerator)Activator.CreateInstance(type)!);
+            }
+            catch (Exception ex)
+            {
+                generatorLoadFailures.Add((type, ex));
+            }
+        }
+
+        if (settings.Verbose)
+        {
+            foreach (var failure in generatorLoadFailures)
+            {
+                AnsiConsole.MarkupLine($"[yellow]Skipped generator type '{failure.Type.Name}': {failure.Exception.GetBaseException().Message}[/]");
+            }
+        }
+
         var selected = fileGenerators
             .Where(gen => idSet.Contains(gen.Id))
             .ToArray();

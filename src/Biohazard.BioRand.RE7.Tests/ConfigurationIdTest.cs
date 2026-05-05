@@ -154,9 +154,9 @@ public class ConfigurationIdUsageTest
             }
         }
 
-        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackable && !item.IsDlcItem))
+        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackLimitConfigurable))
         {
-            ids.Add($"inventory-stack-limit-{item.Id.ToLowerInvariant()}");
+            ids.Add(item.StackLimitConfigId);
         }
     }
 

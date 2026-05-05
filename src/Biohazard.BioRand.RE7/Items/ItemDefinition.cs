@@ -93,6 +93,14 @@ public sealed class ItemDefinition
     public bool IsStackable => MaxStack > 1;
 
     [JsonIgnore]
+    public bool IsStackLimitConfigurable => !IsDlcItem && !IsStackLimitExcludedWeapon && !string.IsNullOrWhiteSpace(SourceUserFile);
+
+    private bool IsStackLimitExcludedWeapon => Id is "ToyShotgun" or "DummyAxe" || CategoryType is ItemCategoryType.Weapon;
+
+    [JsonIgnore]
+    public string StackLimitConfigId => $"inventory-stack-limit-{CreateStackLimitConfigIdSuffix(Id)}";
+
+    [JsonIgnore]
     public bool IsDlcItem => Dlc != null;
 
     public ItemID? ItemId => EnumExtensions.ParseOrNull<ItemID>(Id);
@@ -129,4 +137,32 @@ public sealed class ItemDefinition
 
     // Tags
     public const string StoryProgressionTag = "story";
+
+    private static string CreateStackLimitConfigIdSuffix(string id)
+    {
+        var sb = new StringBuilder(id.Length);
+        var previousWasSeparator = false;
+
+        foreach (var c in id)
+        {
+            var lower = char.ToLowerInvariant(c);
+            if (lower is >= 'a' and <= 'z' or >= '0' and <= '9')
+            {
+                sb.Append(lower);
+                previousWasSeparator = false;
+            }
+            else if (!previousWasSeparator && sb.Length > 0)
+            {
+                sb.Append('-');
+                previousWasSeparator = true;
+            }
+        }
+
+        if (sb.Length > 0 && sb[^1] == '-')
+        {
+            sb.Length--;
+        }
+
+        return sb.ToString();
+    }
 }
