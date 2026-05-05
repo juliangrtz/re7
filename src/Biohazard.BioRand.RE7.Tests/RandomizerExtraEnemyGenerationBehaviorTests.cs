@@ -129,6 +129,28 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     }
 
     [Fact]
+    public void ExtraEnemies_HivePlacement_AddsGeneratedInsectPoolInstances()
+    {
+        using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(ExtraEnemyScenePath, 1, "Em5510"));
+        var beforeScene = result.ReadBeforeScene(ExtraEnemyScenePath);
+        var afterScene = result.ReadAfterScene(ExtraEnemyScenePath);
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(afterScene, beforeScene);
+        var extraInstances = GetNewExtraEnemyInstances(afterScene, beforeScene);
+        var instanceAliases = extraInstances
+            .Select(gameObject => gameObject.Name)
+            .ToList();
+        var hive = Assert.Single(extraInstances, gameObject => gameObject.Name == "Em5510");
+
+        Assert.Single(extraSpawnInfos);
+        AssertExtraSpawnInfo(extraSpawnInfos, "Em5510", -50, 5, 100, 2400);
+        Assert.Equal(3, instanceAliases.Count(alias => alias == "Em5400"));
+        Assert.Equal(2, instanceAliases.Count(alias => alias == "Em5520"));
+        AssertHiveTemplateUsesEm5510Assets(hive);
+        AssertHiveNestedSpawnInfos(hive);
+    }
+
+    [Fact]
     public void ExtraEnemies_RandomId_UsesConfiguredEnemyRatios()
     {
         using var result = RunWithExtraEnemies(
@@ -493,6 +515,42 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.True(Math.Abs(transform.Position.Y - expectedY) <= 0.001f, $"{expectedAlias} Y mismatch; components: {componentNames}");
         Assert.True(Math.Abs(transform.Position.Z - expectedZ) <= 0.001f, $"{expectedAlias} Z mismatch; components: {componentNames}");
         Assert.Equal(expectedHealth, spawnInfo.HealthParameter.Health);
+    }
+
+    private static void AssertHiveTemplateUsesEm5510Assets(RszGameObject hive)
+    {
+        var think = hive.FindComponent("app.Em5510Think")!;
+        var otherDirectives = (RszArrayNode)think["OtherDirectivesHolder"];
+
+        Assert.Equal("Prefab/Character/Em5510/Em5510.pfb", hive.Prefab);
+        Assert.Equal(
+            "Prefab/Character/Em5510/Em5510DirectivesHolder.user",
+            ((RszUserDataNode)think["DirectivesHolder"]).Path);
+        Assert.Empty(otherDirectives.Children);
+    }
+
+    private static void AssertHiveNestedSpawnInfos(RszGameObject hive)
+    {
+        var aliasesByName = new Dictionary<string, List<string>>(StringComparer.Ordinal)
+        {
+            ["Em5400SpawnInfo"] = [],
+            ["Em5520SpawnInfo"] = [],
+        };
+
+        hive.VisitGameObjects(gameObject =>
+        {
+            if (!aliasesByName.TryGetValue(gameObject.Name, out var aliases))
+                return;
+
+            var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
+            if (spawnInfo != null)
+            {
+                aliases.Add(spawnInfo.UnitAlias);
+            }
+        });
+
+        Assert.Equal(["Em5400", "Em5400", "Em5400"], aliasesByName["Em5400SpawnInfo"]);
+        Assert.Equal(["Em5520", "Em5520"], aliasesByName["Em5520SpawnInfo"]);
     }
 
     private static void AssertMoldedAiMap(
