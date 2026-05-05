@@ -9,6 +9,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerEnemyModifierBehaviorTests
 {
     private const string OldHouseBugEnemyScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20";
+    private const string MiaPastVhsEnemyScenePath = "natives/stm/scenes/chapter/ff050/enemy_ff050.scn.20";
 
     private static readonly string[] GeneratorEnemyIds =
     [
@@ -147,6 +148,34 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.NotEmpty(nestedSpawnAliases);
         Assert.All(nestedSpawnAliases["Em5400SpawnInfo"], alias => Assert.Equal("Em5400", alias));
         Assert.All(nestedSpawnAliases["Em5520SpawnInfo"], alias => Assert.Equal("Em5520", alias));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_MiaPastVhsEnemyScene_IsLoadedAndRandomized()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["MoldedFat"]);
+        });
+
+        var area = Assert.Single(result.AreaService.Areas, area => area.Path == MiaPastVhsEnemyScenePath);
+        Assert.NotEmpty(area.EnemyGenerators);
+
+        var beforeAliases = GetEligibleGeneratorAliases(result.ReadBeforeScene(MiaPastVhsEnemyScenePath))
+            .SelectMany(x => x)
+            .ToList();
+        var afterAliases = GetEligibleGeneratorAliases(result.ReadAfterScene(MiaPastVhsEnemyScenePath))
+            .SelectMany(x => x)
+            .ToList();
+
+        Assert.True(result.WasFileModified(MiaPastVhsEnemyScenePath));
+        Assert.NotEmpty(beforeAliases);
+        Assert.Contains(beforeAliases, alias => alias != "Em4200");
+        Assert.NotEmpty(afterAliases);
+        Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
     }
 
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)

@@ -2428,6 +2428,51 @@
     "Kind": "General"
   },
   {
+    "Path": "natives/stm/scenes/chapter/ff050/enemy_ff050.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "Kind": "Enemy"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/2f/2f.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "Kind": "Item"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/2f/easy.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "OnlyDifficulty": "Easy",
+    "Kind": "Item"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/2f/hard.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "OnlyDifficulty": "Madhouse",
+    "Kind": "Item"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/2f/normal.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "OnlyDifficulty": "Normal",
+    "Kind": "Item"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "Kind": "Item"
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/itemset_ff050.scn.20",
+    "Chapter": 4,
+    "Description": "",
+    "Kind": "Item"
+  },
+  {
     "Path": "natives/stm/environment/scene/chapter4/c04_c01b1j.scn.20",
     "Chapter": 4,
     "Description": "",

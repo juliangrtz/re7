@@ -38,10 +38,11 @@ internal class AreaGenerator : IFileGenerator
     ];
 
     private readonly Regex chapterRegex = new Regex(@"(chapter|ch|c)[_-]*(\d+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private readonly Regex foundFootageRegex = new Regex(@"(?:^|[\/_])ff(\d{3})(?:[\/_\.]|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private readonly Regex itemRegex = new Regex(@"/items/|/itemsettings/|/itemset/|_item_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private readonly Regex enemyRegex = new Regex(@"enemy|enemies", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    private int? ExtractChapter(string path, GenerateCommand.GenerateSettings settings)
+    private int? ExtractChapter(string path, AreaKind kind, GenerateCommand.GenerateSettings settings)
     {
         var match = chapterRegex.Match(path);
         if (match.Success)
@@ -59,15 +60,40 @@ internal class AreaGenerator : IFileGenerator
             }
             else return null;
         }
-        else
-        {
-            if (settings.Verbose)
-            {
-                AnsiConsole.MarkupLine($"[yellow]Failed to extract chapter for path '{path}'[/]!");
-            }
 
+        var foundFootageChapter = kind is AreaKind.Item or AreaKind.Enemy
+            ? ExtractFoundFootageChapter(path)
+            : null;
+        if (foundFootageChapter != null)
+        {
+#if DEBUG
+            AnsiConsole.MarkupLine($"[grey]Found footage chapter match:[/] chapter {foundFootageChapter} in '{path}'");
+#endif
+            return foundFootageChapter;
+        }
+
+        if (settings.Verbose)
+        {
+            AnsiConsole.MarkupLine($"[yellow]Failed to extract chapter for path '{path}'[/]!");
+        }
+
+        return null;
+    }
+
+    private int? ExtractFoundFootageChapter(string path)
+    {
+        var match = foundFootageRegex.Match(path);
+        if (!match.Success || !int.TryParse(match.Groups[1].Value, out var footageId))
+        {
             return null;
         }
+
+        // FF050 item/enemy scene paths omit c04/chapter4 but are part of the main-game ship section.
+        return footageId switch
+        {
+            50 => 4,
+            _ => null
+        };
     }
 
 
@@ -128,8 +154,8 @@ internal class AreaGenerator : IFileGenerator
             }
 
             var dlc = DlcTypeExtensions.FromPakFileName(path);
-            var chapter = dlc == null ? ExtractChapter(path, settings) : null;
             var kind = ExtractKind(path);
+            var chapter = dlc == null ? ExtractChapter(path, kind, settings) : null;
             var difficulty = ExtractDifficulty(path);
 
             if (chapter == null && dlc == null)

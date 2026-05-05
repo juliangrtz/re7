@@ -13,6 +13,8 @@ public class RandomizerItemRandomizationTests
 {
     private const string ForcedDropId = "Herb";
     private const string BirdCageScenePath = "environment/scene/chapter3/c03_trailerhouse.scn";
+    private const string MiaPastVhsItemScenePath = "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20";
+    private static readonly Guid MiaPastVhsChemicalGuid = new("e3b64592-382a-4446-8753-ab6bf1eefeb8");
 
     [Fact]
     public void ItemRandomizer_DefaultFilters_RejectStoryUnlockableAndDlcItems()
@@ -319,6 +321,27 @@ public class RandomizerItemRandomizationTests
         var afterItem = GetItem(result.ReadAfterScene(placement.SceneFile), placement.Guid);
 
         Assert.Equal("SaveTape", beforeItem.ItemDataID);
+        Assert.Equal(ForcedDropId, afterItem.ItemDataID);
+        Assert.NotEqual(beforeItem.SaveGUID, afterItem.SaveGUID);
+    }
+
+    [Fact]
+    public void RandomItems_MiaPastVhsItemScene_IsLoadedAndRandomized()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            ConfigureSingleDrop(config, ForcedDropId);
+        });
+
+        var area = Assert.Single(result.AreaService.Areas, area => area.Path == MiaPastVhsItemScenePath);
+        Assert.Contains(area.Items, item => item.Guid == MiaPastVhsChemicalGuid);
+
+        var beforeItem = GetItem(result.ReadBeforeScene(MiaPastVhsItemScenePath), MiaPastVhsChemicalGuid);
+        var afterItem = GetItem(result.ReadAfterScene(MiaPastVhsItemScenePath), MiaPastVhsChemicalGuid);
+
+        Assert.True(result.WasFileModified(MiaPastVhsItemScenePath));
+        Assert.Equal("ChemicalS", beforeItem.ItemDataID);
         Assert.Equal(ForcedDropId, afterItem.ItemDataID);
         Assert.NotEqual(beforeItem.SaveGUID, afterItem.SaveGUID);
     }
