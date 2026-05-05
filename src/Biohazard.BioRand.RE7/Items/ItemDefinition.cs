@@ -93,9 +93,16 @@ public sealed class ItemDefinition
     public bool IsStackable => MaxStack > 1;
 
     [JsonIgnore]
-    public bool IsStackLimitConfigurable => !IsDlcItem && !IsStackLimitExcludedWeapon && !string.IsNullOrWhiteSpace(SourceUserFile);
+    public bool IsStackLimitConfigurable =>
+        !IsDlcItem &&
+        !IsStackLimitExcludedWeapon &&
+        !string.IsNullOrWhiteSpace(SourceUserFile) &&
+        !string.IsNullOrWhiteSpace(Name) &&
+        (IsStackable || IsDrugOrMaterial);
 
     private bool IsStackLimitExcludedWeapon => Id is "ToyShotgun" or "DummyAxe" || CategoryType is ItemCategoryType.Weapon;
+
+    private bool IsDrugOrMaterial => CategoryType is ItemCategoryType.Drug or ItemCategoryType.Material;
 
     [JsonIgnore]
     public string StackLimitConfigId => $"inventory-stack-limit-{CreateStackLimitConfigIdSuffix(Id)}";
