@@ -832,6 +832,24 @@ internal static class RandomizerConfigurationDefinition
 
         group.Items.Add(new GroupItem()
         {
+            Id = "random-starting-inventory-skills-ethan",
+            Label = "Ethan: Random starting skills",
+            Description = "Whether to give Ethan 1 or 2 random Jack's 55th Birthday passive skills at the start. Requires RE Framework.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-starting-inventory-skills-mia",
+            Label = "Mia: Random starting skills",
+            Description = "Whether to give Mia 1 or 2 random Jack's 55th Birthday passive skills at the start. Requires RE Framework.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
             Id = "random-starting-inventory-size-ethan",
             Label = "Ethan: Inventory size",
             Description = "Controls the size of your starting inventory as Ethan. The default is 12. Requires RE Framework.",

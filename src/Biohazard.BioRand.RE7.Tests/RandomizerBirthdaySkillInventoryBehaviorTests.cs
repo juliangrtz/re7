@@ -107,6 +107,24 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests
         Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
     }
 
+    [Fact]
+    public void BirthdaySkillSupport_IncludesREFrameworkPlugin_WhenStartingSkillsAreEnabled()
+    {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
+        {
+            config["allow-dlc-items"] = false;
+            config["random-starting-inventory-skills-mia"] = true;
+            config["random-enemy-drops"] = false;
+            config["recipes-add-new"] = false;
+        });
+
+        var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x7B157);
+        using var zipDisposable = zip;
+
+        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
+    }
+
     private static string PrefabPath(string prefabPath)
         => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
 }

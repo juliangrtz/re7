@@ -304,7 +304,21 @@ internal class EnemyModifier : Modifier
             template = template.AddOrUpdateComponent(templateTransform);
         }
 
-        return template.WithName(enemyId);
+        return DisableEnemyStampSerialization(template.WithName(enemyId));
+    }
+
+    private static RszGameObject DisableEnemyStampSerialization(RszGameObject gameObject)
+    {
+        return gameObject.VisitComponents(component =>
+        {
+            if (component.Type.Name == "app.StampController" &&
+                component.Type.FindFieldIndex("IsSerializeTexture") != -1)
+            {
+                return component.SetField("IsSerializeTexture", false);
+            }
+
+            return component;
+        });
     }
 
     private List<RszGameObject> CreatePoolInstancesForNestedSpawnInfos(
@@ -603,7 +617,7 @@ internal class EnemyModifier : Modifier
             if (enemy.EnemyId is EnemyID.Em3300) // Elder Eveline
                 continue;
 
-            if (enemy.IsBoss && enemy.EnemyId != EnemyID.Em3600)
+            if (enemy.IsBoss)
                 continue;
 
             if (enemy.IsInsect)

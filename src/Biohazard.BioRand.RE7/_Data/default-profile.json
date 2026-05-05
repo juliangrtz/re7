@@ -175,6 +175,8 @@
   "random-starting-inventory-mia": true,
   "random-starting-inventory-give-ammo": true,
   "random-starting-inventory-vhs": true,
+  "random-starting-inventory-skills-ethan": false,
+  "random-starting-inventory-skills-mia": false,
   "random-starting-inventory-size-ethan": "12",
   "random-starting-inventory-size-mia": "12",
   "inventory-weapon-bladed-ethan": true,
