@@ -83,7 +83,7 @@ public class RandomizerBehaviorTests
 
         using var result = RandomizerTest.RunState(config =>
         {
-            config["inventory-stack-limit-handgunbullet"] = 99;
+            config[handgunBullets.StackLimitConfigId] = 99;
         });
 
         var before = result.ReadBeforeUserFile<app.ItemSettings>(itemSettingsPath);
@@ -98,6 +98,32 @@ public class RandomizerBehaviorTests
         Assert.Equal(handgunBullets.MaxStack, beforeHandgunBullets.MaxStackNum);
         Assert.Equal(99, afterHandgunBullets.MaxStackNum);
         Assert.Equal(beforeShotgunShells.MaxStackNum, afterShotgunShells.MaxStackNum);
+    }
+
+    [Fact]
+    public void ItemStackModifier_CustomStackSize_ChangesConfiguredNonStackableItem()
+    {
+        var chemFluid = ItemDefinitionRepository.Default.FromId("ChemicalS")!;
+        var strongChemFluid = ItemDefinitionRepository.Default.FromId("ChemicalM")!;
+        var itemSettingsPath = $"{PakPath.Of("prefab/item")}/{chemFluid.SourceUserFile}";
+
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config[chemFluid.StackLimitConfigId] = 5;
+        });
+
+        var before = result.ReadBeforeUserFile<app.ItemSettings>(itemSettingsPath);
+        var after = result.ReadAfterUserFile<app.ItemSettings>(itemSettingsPath);
+
+        var beforeChemFluid = before._Settings.Single(x => x.ItemDataID == chemFluid.Id);
+        var afterChemFluid = after._Settings.Single(x => x.ItemDataID == chemFluid.Id);
+        var beforeStrongChemFluid = before._Settings.Single(x => x.ItemDataID == strongChemFluid.Id);
+        var afterStrongChemFluid = after._Settings.Single(x => x.ItemDataID == strongChemFluid.Id);
+
+        Assert.True(result.WasFileModified(itemSettingsPath));
+        Assert.Equal(chemFluid.MaxStack, beforeChemFluid.MaxStackNum);
+        Assert.Equal(5, afterChemFluid.MaxStackNum);
+        Assert.Equal(beforeStrongChemFluid.MaxStackNum, afterStrongChemFluid.MaxStackNum);
     }
 
     [Fact]
