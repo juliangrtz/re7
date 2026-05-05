@@ -17,8 +17,6 @@ public class REFPlugin
     private const double MadhouseAmmoDropAmountFactor = 0.75;
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
-    private const double DefaultWeaponReloadSpeedMin = 0.3;
-    private const double DefaultWeaponReloadSpeedMax = 1.8;
 
     private static bool IsInitialized = false;
     private static readonly Configuration config = new();
@@ -397,45 +395,8 @@ public class REFPlugin
     private static string GetWeaponReloadSpeedConfigId(WeaponID weaponId)
         => weaponId.ToString().ToLowerInvariant().Replace("_", "-");
 
-    private static bool TryReadWeaponReloadSpeedRange(WeaponID weaponId, out double min, out double max)
-    {
-        var configId = GetWeaponReloadSpeedConfigId(weaponId);
-        var hasMin = config.TryRead($"weapon-reload-speed-min-{configId}", out min);
-        var hasMax = config.TryRead($"weapon-reload-speed-max-{configId}", out max);
-
-        if (!hasMin && !hasMax)
-        {
-            var legacyMinKey = "weapon-reload-speed-min";
-            var legacyMaxKey = "weapon-reload-speed-max";
-            hasMin = config.TryRead(legacyMinKey, out min);
-            hasMax = config.TryRead(legacyMaxKey, out max);
-        }
-
-        if (!hasMin && !hasMax)
-            return false;
-
-        if (!hasMin)
-            min = DefaultWeaponReloadSpeedMin;
-        if (!hasMax)
-            max = DefaultWeaponReloadSpeedMax;
-        if (max < min)
-            (min, max) = (max, min);
-        return true;
-    }
-
-    private static Random CreateWeaponReloadSpeedRandom(WeaponID weaponId)
-    {
-        unchecked
-        {
-            var seed = (uint)config.ReadOrDefault(PluginSeedConfigKey, 0);
-            var hash = (seed ^ 2166136261U) * 16777619U;
-            foreach (var c in weaponId.ToString())
-            {
-                hash = (hash ^ char.ToLowerInvariant(c)) * 16777619U;
-            }
-            return new Random((int)hash);
-        }
-    }
+    private static string GetWeaponReloadSpeedMultiplierConfigKey(WeaponID weaponId)
+        => $"weapon-reload-speed-multiplier-{GetWeaponReloadSpeedConfigId(weaponId)}";
 
     private static bool TryGetWeaponReloadSpeedMultiplier(WeaponID weaponId, out double multiplier)
     {
@@ -449,10 +410,9 @@ public class REFPlugin
         }
 
         double? result = null;
-        if (TryReadWeaponReloadSpeedRange(weaponId, out var min, out var max))
+        if (config.TryRead(GetWeaponReloadSpeedMultiplierConfigKey(weaponId), out double configuredMultiplier))
         {
-            var rng = CreateWeaponReloadSpeedRandom(weaponId);
-            result = min + (rng.NextDouble() * (max - min));
+            result = configuredMultiplier;
         }
 
         lock (weaponReloadSpeedCacheLock)

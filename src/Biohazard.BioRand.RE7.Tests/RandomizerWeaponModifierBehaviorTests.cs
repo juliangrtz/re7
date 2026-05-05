@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Weapons;
+using IntelOrca.Biohazard.REE.Messages;
 using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -50,6 +51,7 @@ public class RandomizerWeaponModifierBehaviorTests
         Assert.True(reframeworkConfig["weapon-mod-reload-speed"]!.GetValue<bool>());
         Assert.Equal(0.5, reframeworkConfig["weapon-reload-speed-min-handgun-g17"]!.GetValue<double>());
         Assert.Equal(0.5, reframeworkConfig["weapon-reload-speed-max-handgun-g17"]!.GetValue<double>());
+        Assert.Equal(0.5, reframeworkConfig["weapon-reload-speed-multiplier-handgun-g17"]!.GetValue<double>());
         Assert.Null(reframeworkConfig["weapon-reload-speed-min"]);
         Assert.Null(reframeworkConfig["weapon-reload-speed-max"]);
     }
@@ -78,5 +80,36 @@ public class RandomizerWeaponModifierBehaviorTests
         Assert.True(result.WasFileModified(rcolPath));
         Assert.Equal(beforeHandgun.Damage * 2, afterHandgun.Damage);
         Assert.Equal(beforeHandgun.Stun, afterHandgun.Stun);
+    }
+
+    [Fact]
+    public void WeaponModifier_ReplacesWeaponDescriptionWithRandomizedRolls()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["weapon-mod-damage"] = true;
+            config["weapon-mod-damage-include-stun"] = false;
+            config["weapon-mod-damage-include-player-damage"] = false;
+            config["weapon-damage-min-handgun-g17"] = 1.5;
+            config["weapon-damage-max-handgun-g17"] = 1.5;
+
+            config["weapon-mod-ammo-capacity"] = true;
+            config["weapon-ammo-capacity-min-handgun-g17"] = 2.0;
+            config["weapon-ammo-capacity-max-handgun-g17"] = 2.0;
+
+            config["weapon-mod-reload-speed"] = true;
+            config["weapon-reload-speed-min-handgun-g17"] = 0.8;
+            config["weapon-reload-speed-max-handgun-g17"] = 0.8;
+        });
+
+        var itemSettings = result.ReadBeforeUserFile<app.ItemSettings>(RandomizerTestPaths.ResourceItemSettingsPath);
+        var handgun = itemSettings._Settings.Single(x => x.ItemDataID == "Handgun_G17");
+        var afterDescription = result.ReadAfterMsgFile(RandomizerTestPaths.UiItemMessagePath)
+            .GetString(handgun.ManualMsg, LanguageId.English);
+
+        Assert.True(result.WasFileModified(RandomizerTestPaths.UiItemMessagePath));
+        Assert.Equal(
+            "BioRand: Damage 1.5x, Ammo capacity 2x, Reload speed 0.8x",
+            afterDescription);
     }
 }
