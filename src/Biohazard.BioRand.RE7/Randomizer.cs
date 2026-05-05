@@ -30,6 +30,7 @@ internal class Randomizer : IDisposable
 
     private static readonly string[] _optionsThatRequireREFramework = [
         "debug-force-reframework",
+        "madhouse-normal-saves",
         "recipes-add-new",
         "weapon-mod-reload-speed",
     ];
@@ -192,6 +193,7 @@ internal class Randomizer : IDisposable
             new WeaponModifier(),
 
             // Misc.
+            new MadhouseSaveModifier(),
             new ChapterJumpDataModifier(),
             new MessageModifier(),
             new UvarDefaultsModifier(),
