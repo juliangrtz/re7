@@ -21,7 +21,8 @@ internal class ItemModifier : Modifier
         var itemPlacementService = randomizer.ItemPlacementService;
         var areaService = randomizer.AreaService;
         var templateService = randomizer.TemplateService;
-        var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes");
+        var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes")
+            || MadhouseSaveModifier.IsEnabled(randomizer);
         var replaceWeapons = randomizer.GetConfigOption<bool>("replace-weapons");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         var randomItemSettings = context.RandomItemSettings;

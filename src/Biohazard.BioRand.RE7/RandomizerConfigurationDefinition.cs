@@ -90,6 +90,15 @@ internal static class RandomizerConfigurationDefinition
             Default = true
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = "madhouse-normal-saves",
+            Label = "Madhouse Normal Saves",
+            Description = "Use the Easy/Normal autosave and manual save behavior on Madhouse, without requiring cassette tapes.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("");
 
         group.Items.Add(new GroupItem()
