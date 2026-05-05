@@ -31,6 +31,8 @@ internal class Randomizer : IDisposable
     private static readonly string[] _optionsThatRequireREFramework = [
         "debug-force-reframework",
         "madhouse-normal-saves",
+        "random-starting-inventory-skills-ethan",
+        "random-starting-inventory-skills-mia",
         "recipes-add-new",
         "weapon-mod-reload-speed",
     ];

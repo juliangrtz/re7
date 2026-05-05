@@ -13,6 +13,28 @@ internal class StartingInventoryModifier : Modifier
     private const string RandomizerKey = "modifier/inventory";
     private const int AntiqueCoinsProbabilityPct = 1;
     private const int AntiqueCoinsCount = 2;
+    private static readonly string[] StartingSkillLevelOneIds =
+    [
+        "skl009", // Defense I
+        "skl011", // Speed Up I
+        "skl013", // Firepower Up I
+        "skl015", // Impact I
+        "skl017", // Toughness I
+        "skl018", // Guard Up
+        "skl019", // Quick Reload
+        "skl021", // Vengeance
+        "skl022", // Narrow Escape
+    ];
+    private static readonly string[] StartingSkillLevelTwoIds =
+    [
+        "skl002", // Health Regen
+        "skl008", // Defense II
+        "skl010", // Speed Up II
+        "skl012", // Firepower Up II
+        "skl014", // Impact II
+        "skl016", // Toughness II
+        "skl023", // Brawler
+    ];
 
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new()
     {
@@ -109,18 +131,23 @@ internal class StartingInventoryModifier : Modifier
     private void RandomizeStartingInventory(
         Randomizer randomizer,
         RandomizerLogger logger,
-        Rng rng,
+        Rng inventoryRng,
+        Rng skillRng,
         MainCampaignCharacter character,
+        bool randomizeInventory,
+        bool giveRandomSkills,
         List<StartingWeaponCategory> weapons
     )
     {
         var giveAmmo = randomizer.GetConfigOption<bool>("random-starting-inventory-give-ammo");
-        var (primary, secondary) = PickRandomWeaponPair(rng, weapons);
+        var (primary, secondary) = randomizeInventory
+            ? PickRandomWeaponPair(inventoryRng, weapons)
+            : ((ItemID?)null, (ItemID?)null);
         var path = _paths[character];
         logger.Push($"{character} @ {path}");
         randomizer.FileRepository.ModifyUserFile<AddItemListData>(path, root =>
         {
-            if (primary != null)
+            if (randomizeInventory && primary != null)
             {
                 logger.LogLine($"Primary weapon: {primary}");
                 var id = primary.Value.ToString();
@@ -136,7 +163,7 @@ internal class StartingInventoryModifier : Modifier
                             continue;
 
                         (int min, int max) = DetermineAppropriateStartingAmmoCount(wpId);
-                        var ammoCount = rng.Next(min, max);
+                        var ammoCount = inventoryRng.Next(min, max);
                         if (ammoCount == 0)
                         {
                             logger.LogLine("Avoiding extra ammo (unsupported weapon type).");
@@ -151,7 +178,7 @@ internal class StartingInventoryModifier : Modifier
                 }
             }
 
-            if (secondary != null)
+            if (randomizeInventory && secondary != null)
             {
                 logger.LogLine($"Secondary weapon: {secondary}");
                 root._AddItems.Add(
@@ -159,7 +186,7 @@ internal class StartingInventoryModifier : Modifier
                 );
             }
 
-            if (rng.NextProbability(AntiqueCoinsProbabilityPct))
+            if (randomizeInventory && inventoryRng.NextProbability(AntiqueCoinsProbabilityPct))
             {
                 logger.LogLine($"Nice! {AntiqueCoinsCount}x extra antique coin(s)!");
                 root._AddItems.Add(new StartingInventoryItem() { ItemDataID = "Coin", Num = AntiqueCoinsCount });
@@ -169,22 +196,55 @@ internal class StartingInventoryModifier : Modifier
             if (randomizer.UserTags.Contains("re7:debugstartitems"))
             {
 #endif
-            var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
-                .Where(x => x.Quantity > 0)
-                .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity });
-
-            if (debugItems.Any())
+            if (randomizeInventory)
             {
-                logger.LogLine($"Adding debug items: {string.Join(", ", debugItems.Select(x => $"{x.Num}x {x.ItemDataID}"))}");
-                root._AddItems.AddRange(debugItems);
+                var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
+                    .Where(x => x.Quantity > 0)
+                    .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity })
+                    .ToArray();
+
+                if (debugItems.Any())
+                {
+                    logger.LogLine($"Adding debug items: {string.Join(", ", debugItems.Select(x => $"{x.Num}x {x.ItemDataID}"))}");
+                    root._AddItems.AddRange(debugItems);
+                }
             }
 #if !DEBUG
             }
 #endif
 
+            if (giveRandomSkills)
+            {
+                var skills = PickRandomStartingSkills(skillRng);
+                logger.LogLine($"Random starting skill(s): {string.Join(", ", skills)}");
+                root._AddItems.AddRange(skills.Select(id => new StartingInventoryItem()
+                {
+                    ItemDataID = id,
+                    Num = 1,
+                }));
+            }
+
             return root;
         });
         logger.Pop();
+    }
+
+    private static List<string> PickRandomStartingSkills(Rng rng)
+    {
+        var result = new List<string>();
+
+        result.Add(rng.Next(StartingSkillLevelOneIds));
+
+        var skillCount = rng.Next(1, 3);
+        if (skillCount == 2)
+        {
+            var secondPool = rng.CoinToss()
+                ? StartingSkillLevelOneIds.Where(id => !result.Contains(id)).ToArray()
+                : StartingSkillLevelTwoIds;
+            result.Add(rng.Next(secondPool));
+        }
+
+        return result;
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -192,8 +252,10 @@ internal class StartingInventoryModifier : Modifier
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
         var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
         var randomizeVhs = randomizer.GetConfigOption<bool>("random-starting-inventory-vhs");
+        var giveRandomSkillsEthan = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-ethan");
+        var giveRandomSkillsMia = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-mia");
 
-        if (!randomizeEthansInventory && !randomizeMiasInventory)
+        if (!randomizeEthansInventory && !randomizeMiasInventory && !giveRandomSkillsEthan && !giveRandomSkillsMia)
         {
             return;
         }
@@ -204,21 +266,30 @@ internal class StartingInventoryModifier : Modifier
         var categories = Enum.GetValues<StartingWeaponCategory>();
         foreach (var character in Enum.GetValues<MainCampaignCharacter>())
         {
-            if (!randomizeVhs && character is MainCampaignCharacter.ClancyVHS or MainCampaignCharacter.MiaVHS)
-                continue;
+            var shouldRandomizeInventory = character switch
+            {
+                MainCampaignCharacter.Ethan => randomizeEthansInventory,
+                MainCampaignCharacter.Mia => randomizeMiasInventory,
+                MainCampaignCharacter.ClancyVHS => randomizeVhs && (randomizeEthansInventory || randomizeMiasInventory),
+                MainCampaignCharacter.MiaVHS => randomizeMiasInventory && randomizeVhs,
+                _ => false,
+            };
+            var shouldGiveRandomSkills = character switch
+            {
+                MainCampaignCharacter.Ethan => giveRandomSkillsEthan,
+                MainCampaignCharacter.Mia => giveRandomSkillsMia,
+                _ => false,
+            };
 
-            if (!randomizeEthansInventory && character is MainCampaignCharacter.Ethan)
-                continue;
-
-            if (!randomizeMiasInventory && character is MainCampaignCharacter.Mia or MainCampaignCharacter.MiaVHS)
+            if (!shouldRandomizeInventory && !shouldGiveRandomSkills)
                 continue;
 
             var configuredCategories = new List<StartingWeaponCategory>();
-            if (character is MainCampaignCharacter.ClancyVHS) // Allow all weapons for Clancy, it doesn't really matter
+            if (shouldRandomizeInventory && character is MainCampaignCharacter.ClancyVHS) // Allow all weapons for Clancy, it doesn't really matter
             {
                 configuredCategories = Enum.GetValues<StartingWeaponCategory>().ToList();
             }
-            else
+            else if (shouldRandomizeInventory)
             {
                 foreach (var category in categories)
                 {
@@ -233,7 +304,15 @@ internal class StartingInventoryModifier : Modifier
             }
 
 
-            RandomizeStartingInventory(randomizer, logger, rng, character, configuredCategories);
+            RandomizeStartingInventory(
+                randomizer,
+                logger,
+                rng,
+                randomizer.GetRng(RandomizerKey, "skills", character),
+                character,
+                shouldRandomizeInventory,
+                shouldGiveRandomSkills,
+                configuredCategories);
         }
     }
 }
