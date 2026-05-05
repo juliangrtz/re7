@@ -55,6 +55,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
             extraSpawnInfos.Select(GetSpawnInfo).Select(spawnInfo => spawnInfo.UnitAlias).Order().ToList(),
             extraInstances.Select(gameObject => gameObject.Name).Order().ToList());
         AssertPoolInstancesStayAtTemplatePosition(extraSpawnInfos, extraInstances);
+        AssertEnemyStampSerializationDisabled(extraInstances);
 
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -49, 4.88f, 108, 3000);
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4100", -47.92f, 4.99f, 100.86f, 900);
@@ -168,6 +169,19 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.True(result.WasFileModified(RandomExtraEnemyScenePath));
         Assert.Equal(3, extraSpawnInfos.Count);
         Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4100", GetSpawnInfo(gameObject).UnitAlias));
+    }
+
+    [Fact]
+    public void ExtraEnemies_RandomId_ExcludesBossEnemies()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random"),
+            config => ConfigureEnemyPool(config, "MargeMutated", "Molded"));
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+
+        Assert.Equal(3, extraSpawnInfos.Count);
+        Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4000", GetSpawnInfo(gameObject).UnitAlias));
     }
 
     [Fact]
@@ -488,6 +502,25 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
                 GetPosition(spawnInfo),
                 GetPosition(instance));
         }
+    }
+
+    private static void AssertEnemyStampSerializationDisabled(IReadOnlyCollection<RszGameObject> instances)
+    {
+        var stampControllers = new List<RszObjectNode>();
+        foreach (var instance in instances)
+        {
+            instance.VisitComponents(component =>
+            {
+                if (component.Type.Name == "app.StampController")
+                {
+                    stampControllers.Add(component);
+                }
+            });
+        }
+
+        Assert.NotEmpty(stampControllers);
+        Assert.All(stampControllers, component =>
+            Assert.False(RszSerializer.Deserialize<bool>(component["IsSerializeTexture"])));
     }
 
     private static (float X, float Y, float Z) GetPosition(RszGameObject gameObject)
