@@ -992,15 +992,15 @@ internal static class RandomizerConfigurationDefinition
         group.Advanced = true;
 
         var items = from item in _itemDefinitions.Items
-                    where item.IsStackable && !item.IsDlcItem // TODO: Remove second condition when DLCs are supported.
-                    select (item.Id, item.Name, item.MaxStack);
+                    where item.IsStackLimitConfigurable
+                    select (item.StackLimitConfigId, item.Name, item.MaxStack);
 
-        foreach ((string id, string name, int maxStack) in items)
+        foreach ((string id, string? name, int maxStack) in items)
         {
             group.Items.Add(new GroupItem()
             {
-                Id = $"inventory-stack-limit-{id.ToLowerInvariant()}",
-                Label = name,
+                Id = id,
+                Label = name ?? id,
                 Type = "range",
                 Min = 0,
                 Max = 999,

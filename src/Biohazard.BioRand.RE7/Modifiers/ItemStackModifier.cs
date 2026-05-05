@@ -15,10 +15,10 @@ internal class ItemStackModifier : Modifier
 
         foreach (var item in itemDefinitions.Items)
         {
-            if (!item.IsStackable || item.IsDlcItem)
+            if (!item.IsStackLimitConfigurable)
                 continue;
 
-            var configuredStackSize = randomizer.GetConfigOption($"inventory-stack-limit-{item.Id.ToLowerInvariant()}", item.MaxStack);
+            var configuredStackSize = randomizer.GetConfigOption(item.StackLimitConfigId, item.MaxStack);
             if (configuredStackSize != item.MaxStack)
             {
                 result[item] = configuredStackSize;
@@ -34,7 +34,7 @@ internal class ItemStackModifier : Modifier
         logger.Push("Stack sizes");
         foreach (var item in itemDefinitions.Items)
         {
-            if (!item.IsStackable || item.IsDlcItem)
+            if (!item.IsStackLimitConfigurable)
                 continue;
 
             var logLine = $"{item.Name} ({item.Id}), stack = {item.MaxStack}";

@@ -199,9 +199,6 @@ internal class EnemyModifier : Modifier
     internal static bool IsInsectSpawnAlias(string unitAlias)
         => _insectSpawnAliases.Contains(unitAlias);
 
-    internal static bool IsCompatibleReplacement(app.EnemySpawnInfo spawnInfo, IEnemyDefinition enemy)
-        => IsInsectSpawnAlias(spawnInfo.UnitAlias) == enemy.IsInsect;
-
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
 
@@ -529,8 +526,7 @@ internal class EnemyModifier : Modifier
 
             logger.Push($"Generator '{enemyGenerator.Generator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
 
-            var packSelectorsByInsectCompatibility = new Dictionary<bool, EnemyPackSelector>();
-            var skippedIncompatibleCounts = new Dictionary<bool, int>();
+            var packSelector = new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
             var replacements = new List<(Guid, IEnemyDefinition)>();
             foreach (var spawnInfo in spawnInfos)
             {
@@ -538,34 +534,10 @@ internal class EnemyModifier : Modifier
                     continue;
 
                 var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-                var isInsectSpawn = IsInsectSpawnAlias(component.UnitAlias);
-                if (!packSelectorsByInsectCompatibility.TryGetValue(isInsectSpawn, out var packSelector))
-                {
-                    var compatibleEnemyPool = areaEnemyPool
-                        .Where(entry => IsCompatibleReplacement(component, entry.Enemy))
-                        .ToList();
-                    if (compatibleEnemyPool.Count == 0)
-                    {
-                        skippedIncompatibleCounts[isInsectSpawn] =
-                            skippedIncompatibleCounts.GetValueOrDefault(isInsectSpawn) + 1;
-                        continue;
-                    }
-
-                    packSelector = new EnemyPackSelector(compatibleEnemyPool, options.MaxPackSize, rng);
-                    packSelectorsByInsectCompatibility[isInsectSpawn] = packSelector;
-                }
-
                 var replacement = packSelector.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
                 replacements.Add((spawnInfo.Guid, replacement));
-            }
-
-            foreach (var (isInsectSpawn, count) in skippedIncompatibleCounts)
-            {
-                var replacementFamily = isInsectSpawn ? "insect" : "non-insect";
-                logger.LogLine(
-                    $"Skipping {count} {replacementFamily} spawn infos: area enemy pool has no compatible replacements.");
             }
 
             if (replacements.Count > 0)

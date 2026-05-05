@@ -101,7 +101,7 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_DoesNotReplaceOldHouseInsectSpawnsWithNonInsects()
+    public void RandomizeEnemies_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
     {
         using var result = RandomizerTest.RunState(
             config =>
@@ -114,11 +114,18 @@ public class RandomizerEnemyModifierBehaviorTests
             seed: 410980);
 
         var beforeAliases = GetGeneratorSpawnAliases(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug");
-        var afterAliases = GetGeneratorSpawnAliases(result.ReadAfterScene(OldHouseBugEnemyScenePath), "Bug");
+        var afterScene = result.ReadAfterScene(OldHouseBugEnemyScenePath);
+        var afterAliases = GetGeneratorSpawnAliases(afterScene, "Bug");
+        var replacementInstances = GetGeneratorPoolInstances(afterScene, "Bug")
+            .Where(gameObject => afterAliases.Contains(gameObject.Name, StringComparer.OrdinalIgnoreCase))
+            .ToList();
 
         Assert.NotEmpty(beforeAliases);
         Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
-        Assert.Equal(beforeAliases, afterAliases);
+        Assert.NotEmpty(afterAliases);
+        Assert.All(afterAliases, alias => Assert.False(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.NotEqual(beforeAliases, afterAliases);
+        AssertStampSerializationDisabled(replacementInstances);
     }
 
     [Fact]
@@ -168,17 +175,17 @@ public class RandomizerEnemyModifierBehaviorTests
                 return;
 
             var aliases = new List<string>();
-            gameObject.VisitGameObjects(child =>
+            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
                 if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
-                    return;
+                    continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
                 if (spawnInfo != null)
                 {
                     aliases.Add(spawnInfo.UnitAlias);
                 }
-            });
+            }
 
             if (aliases.Count > 0)
             {
@@ -199,20 +206,96 @@ public class RandomizerEnemyModifierBehaviorTests
             if (!string.Equals(enemyGenerator?.Alias, generatorAlias, StringComparison.Ordinal))
                 return;
 
-            gameObject.VisitGameObjects(child =>
+            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
                 if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
-                    return;
+                    continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
                 if (spawnInfo != null)
                 {
                     result.Add(spawnInfo.UnitAlias);
                 }
-            });
+            }
         });
 
         return result;
+    }
+
+    private static List<RszGameObject> GetGeneratorSpawnInfoGameObjects(RszGameObject generator)
+    {
+        var result = new List<RszGameObject>();
+        foreach (var pool in generator.Children.Where(child => child.FindComponent<app.EnemyPool>() != null))
+        {
+            foreach (var poolChild in pool.Children)
+            {
+                if (ContainsEnemyMesh(poolChild))
+                    continue;
+
+                poolChild.VisitGameObjects(gameObject =>
+                {
+                    if (gameObject.FindComponent<app.EnemySpawnInfo>() != null)
+                    {
+                        result.Add(gameObject);
+                    }
+                });
+            }
+        }
+
+        return result;
+    }
+
+    private static List<RszGameObject> GetGeneratorPoolInstances(RszScene scene, string generatorAlias)
+    {
+        var result = new List<RszGameObject>();
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
+            if (!string.Equals(enemyGenerator?.Alias, generatorAlias, StringComparison.Ordinal))
+                return;
+
+            var pool = gameObject.Children.Single(child => child.FindComponent<app.EnemyPool>() != null);
+            result.AddRange(pool.Children.Where(ContainsEnemyMesh));
+        });
+
+        return result;
+    }
+
+    private static bool ContainsEnemyMesh(RszGameObject gameObject)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            var mesh = child.FindComponent("via.render.Mesh");
+            if (mesh != null &&
+                mesh.Children.Length > 2 &&
+                mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true)
+            {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
+    private static void AssertStampSerializationDisabled(IReadOnlyCollection<RszGameObject> instances)
+    {
+        var stampControllers = new List<RszObjectNode>();
+        foreach (var instance in instances)
+        {
+            instance.VisitComponents(component =>
+            {
+                if (component.Type.Name == "app.StampController")
+                {
+                    stampControllers.Add(component);
+                }
+            });
+        }
+
+        Assert.NotEmpty(stampControllers);
+        Assert.All(stampControllers, component =>
+            Assert.False(RszSerializer.Deserialize<bool>(component["IsSerializeTexture"])));
     }
 
     private static Dictionary<string, List<string>> GetSpawnAliasesByGameObjectNamePrefix(RszScene scene, params string[] prefixes)

@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Items;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -115,6 +116,46 @@ public class ConfigurationDefinitionTest
         {
             Assert.IsType<bool>(item.Default);
         }
+    }
+
+    [Fact]
+    public void Test_Stack_Limit_Items_Include_NonWeapon_Inventory_Items()
+    {
+        var ids = items
+            .Where(item => item.Id != null)
+            .Select(item => item.Id!)
+            .ToHashSet(StringComparer.Ordinal);
+        var itemDefinitions = ItemDefinitionRepository.Default;
+
+        Assert.Contains(itemDefinitions.FromId("ChemicalS")!.StackLimitConfigId, ids);
+        Assert.Contains(itemDefinitions.FromId("ChemicalM")!.StackLimitConfigId, ids);
+        Assert.Contains(itemDefinitions.FromId("ChemicalL")!.StackLimitConfigId, ids);
+        Assert.Contains(itemDefinitions.FromId("Stimulant")!.StackLimitConfigId, ids);
+        Assert.Contains(itemDefinitions.FromId("Depressant")!.StackLimitConfigId, ids);
+        Assert.Contains(itemDefinitions.FromId("LiquidBomb")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("Handgun_G17")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("BackDoorKey")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("PendulumClock")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("EvelynRadar")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("EvelynRadar2")!.StackLimitConfigId, ids);
+        Assert.DoesNotContain(itemDefinitions.FromId("EvelynRadar3")!.StackLimitConfigId, ids);
+    }
+
+    [Fact]
+    public void Test_Stack_Limit_Items_Have_Readable_Unique_Labels()
+    {
+        var stackLimitItems = items
+            .Where(item => item.Id?.StartsWith("inventory-stack-limit-", StringComparison.Ordinal) == true)
+            .ToArray();
+        var duplicateLabels = stackLimitItems
+            .GroupBy(item => item.Label)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToList();
+
+        Assert.All(stackLimitItems, item => Assert.False(string.IsNullOrWhiteSpace(item.Label), item.Id));
+        Assert.True(duplicateLabels.Count == 0,
+            $"Duplicate stack limit labels found: {string.Join(", ", duplicateLabels)}");
     }
 
     [Fact]
