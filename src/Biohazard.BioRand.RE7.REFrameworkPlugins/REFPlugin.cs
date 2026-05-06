@@ -149,6 +149,7 @@ public class REFPlugin
         ["Em4200"] = 1.25, // Fat Molded
         ["Em2000"] = 1.35, // Mia
         ["Em3001"] = 1.5, // Stalker Jack
+        ["Em8000"] = 1.75, // Chainsaw Jack
         ["Em8001"] = 1.75, // Chainsaw Jack
         ["Em3600"] = 2, // Mutated Marguerite
     };
@@ -158,6 +159,7 @@ public class REFPlugin
         "Em2000", // Mia
         "Em3001", // Stalker Jack
         "Em3600", // Mutated Marguerite
+        "Em8000", // Chainsaw Jack
         "Em8001", // Chainsaw Jack
     };
 
@@ -657,20 +659,34 @@ public class REFPlugin
     private static bool IsBossEnemyTypeId(string? enemyTypeId)
         => enemyTypeId != null && BossEnemyTypeIds.Contains(enemyTypeId);
 
-    private static double GetEnemyDropMultiplier(ManagedObject controllerObject, out string? enemyTypeId)
+    private static string? GetEnemyTypeId(ManagedObject dropSourceObject, via.GameObject? enemyObject)
     {
-        var runtimeTypeName = GetManagedObjectRuntimeTypeName(controllerObject);
-        enemyTypeId = ExtractEnemyTypeId(runtimeTypeName);
+        var runtimeTypeName = GetManagedObjectRuntimeTypeName(dropSourceObject);
+        var runtimeTypeId = ExtractEnemyTypeId(runtimeTypeName);
+        var objectTypeId = ExtractEnemyTypeId(enemyObject?.Name);
+        if (string.Equals(runtimeTypeId, "Em3000", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(objectTypeId, "Em8000", StringComparison.OrdinalIgnoreCase))
+        {
+            return objectTypeId;
+        }
+
+        return runtimeTypeId ?? objectTypeId;
+    }
+
+    private static double GetEnemyDropMultiplier(ManagedObject dropSourceObject, via.GameObject? enemyObject, out string? enemyTypeId)
+    {
+        var runtimeTypeName = GetManagedObjectRuntimeTypeName(dropSourceObject);
+        enemyTypeId = GetEnemyTypeId(dropSourceObject, enemyObject);
         if (enemyTypeId != null && SpecialEnemyDropMultipliers.TryGetValue(enemyTypeId, out var dropMultiplier))
         {
             logger.Log(
-                $"Enemy damage controller '{runtimeTypeName}' matched '{enemyTypeId}' and will use drop multiplier x{dropMultiplier}.",
+                $"Enemy drop source '{runtimeTypeName}' / object '{enemyObject?.Name ?? "unknown"}' matched '{enemyTypeId}' and will use drop multiplier x{dropMultiplier}.",
                 isVerbose: true);
             return dropMultiplier;
         }
 
         logger.Log(
-            $"Enemy damage controller '{runtimeTypeName ?? "unknown"}' will use the default drop multiplier x{DefaultEnemyDropMultiplier}.",
+            $"Enemy drop source '{runtimeTypeName ?? "unknown"}' / object '{enemyObject?.Name ?? "unknown"}' will use the default drop multiplier x{DefaultEnemyDropMultiplier}.",
             isVerbose: true);
         return DefaultEnemyDropMultiplier;
     }
@@ -894,9 +910,9 @@ public class REFPlugin
         logger.Log($"Spawned enemy drop '{itemDataId}' x{stackNum} for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);
     }
 
-    private static void SpawnConfiguredEnemyDrop(ManagedObject controllerObject, via.GameObject enemyObject, int generation)
+    private static void SpawnConfiguredEnemyDrop(ManagedObject dropSourceObject, via.GameObject enemyObject, int generation)
     {
-        var dropMultiplier = GetEnemyDropMultiplier(controllerObject, out var enemyTypeId);
+        var dropMultiplier = GetEnemyDropMultiplier(dropSourceObject, enemyObject, out var enemyTypeId);
         var selection = SelectEnemyDrop(
             enemyObject,
             generation,
@@ -914,6 +930,17 @@ public class REFPlugin
         SpawnEnemyDrop(enemyObject, selection.Value.ItemDataId, finalStackNum);
     }
 
+    private static void TrySpawnConfiguredEnemyDrop(ManagedObject dropSourceObject, via.GameObject? enemyObject)
+    {
+        if (!IsEnemyDropEnabled() || enemyObject == null)
+            return;
+
+        if (!TryBeginEnemyDrop(enemyObject, out var generation))
+            return;
+
+        SpawnConfiguredEnemyDrop(dropSourceObject, enemyObject, generation);
+    }
+
     [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.spawn), MethodHookType.Pre)]
     private static PreHookResult EnemyActionController_spawn_Pre(Span<ulong> args)
     {
@@ -928,22 +955,23 @@ public class REFPlugin
         return PreHookResult.Continue;
     }
 
+    [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.finishDead), MethodHookType.Pre)]
+    private static PreHookResult EnemyActionController_finishDead_Pre(Span<ulong> args)
+    {
+        var controllerObject = ManagedObject.ToManagedObject(args[1]);
+        var controller = controllerObject.As<EnemyActionController>();
+        TrySpawnConfiguredEnemyDrop(controllerObject, controller?.GameObject);
+
+        return PreHookResult.Continue;
+    }
+
     [MethodHook(typeof(EnemyDamageController), nameof(EnemyDamageController.doDie), MethodHookType.Pre)]
     private static PreHookResult EnemyDamageController_doDie_Pre(Span<ulong> args)
     {
-        if (!IsEnemyDropEnabled())
-            return PreHookResult.Continue;
-
         var controllerObject = ManagedObject.ToManagedObject(args[1]);
         var controller = controllerObject.As<EnemyDamageController>();
-        var enemyObject = controller?.GameObject;
-        if (enemyObject == null)
-            return PreHookResult.Continue;
+        TrySpawnConfiguredEnemyDrop(controllerObject, controller?.GameObject);
 
-        if (!TryBeginEnemyDrop(enemyObject, out var generation))
-            return PreHookResult.Continue;
-
-        SpawnConfiguredEnemyDrop(controllerObject, enemyObject, generation);
         return PreHookResult.Continue;
     }
 
