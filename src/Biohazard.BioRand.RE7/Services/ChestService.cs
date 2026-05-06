@@ -56,11 +56,11 @@ internal class ChestService(Randomizer randomizer)
         weapon = weapon.AddOrUpdateComponent(transform);
 
         // Prepare chest
-        var chest = _chestTemplate.Clone();
+        var chest = _chestTemplate.CloneWithNewGuids(_templateRng);
         chest = chest.AddOrUpdateComponent(transform);
         var interactDrawer = chest.Children.Single(c => c.Name == "InteractDrawer");
         var interactDrawerComponent = interactDrawer.FindComponent<app.InteractDrawer>()!;
-        interactDrawerComponent.SaveGUID = Guid.NewGuid();
+        interactDrawerComponent.SaveGUID = _templateRng.NextGuid();
         interactDrawerComponent.IsDirectGameObjectSet = true;
         interactDrawerComponent.DirectSetGameObject = weaponGuid;
         interactDrawer = interactDrawer.AddOrUpdateComponent(interactDrawerComponent);

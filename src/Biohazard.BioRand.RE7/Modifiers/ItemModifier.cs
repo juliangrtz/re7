@@ -107,7 +107,7 @@ internal class ItemModifier : Modifier
                     logger.LogLine($"GUID: {originalGameObject.Guid}");
                     logger.LogLine($"Scene: {placement.SceneFile}");
 
-                    itemComponent.SaveGUID = Guid.NewGuid(); // IMPORTANT!
+                    itemComponent.SaveGUID = rng.NextGuid(); // IMPORTANT!
                     itemComponent.ItemDataID = drop.Id;
                     itemComponent.ItemStackNum = drop.CountNormal;
                     itemComponent._IsOverwriteDifficultItemNumSetting = true;

@@ -80,9 +80,9 @@ internal class ItemDropTableModifier : Modifier
                 EasyDropRate = ratePct,
                 NormalDropRate = ratePct,
                 HardDropRate = ratePct,
-                ReliefDropNum = easyDropAmount,
+                ReliefNum = easyDropAmount,
                 NormalDropNum = normalDropAmount,
-                ReliefNum = madhouseDropAmount
+                ReliefDropNum = madhouseDropAmount
             });
         }
 
@@ -95,9 +95,9 @@ internal class ItemDropTableModifier : Modifier
                 EasyDropRate = valuableDrop.DropRate,
                 NormalDropRate = valuableDrop.DropRate,
                 HardDropRate = valuableDrop.DropRate,
-                ReliefDropNum = (uint)drop.CountEasy,
+                ReliefNum = (uint)drop.CountEasy,
                 NormalDropNum = (uint)drop.CountNormal,
-                ReliefNum = (uint)drop.CountMadhouse
+                ReliefDropNum = (uint)drop.CountMadhouse
             });
         }
 

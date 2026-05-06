@@ -54,20 +54,28 @@ internal class ExtraPlacementModifier : Modifier
         var newGuid = rng.NextGuid();
         var minFakePct = randomizer.GetConfigOption<double>("additional-wooden-crates-fakes-pct-min");
         var maxFakePct = randomizer.GetConfigOption<double>("additional-wooden-crates-fakes-pct-max");
-        var fakePct = (int)rng.NextDouble(minFakePct, maxFakePct);
+        var fakeProbability = rng.NextDouble(minFakePct, maxFakePct);
 
         if ((allowFakeCrates && placement.Tags.Contains(FakeCrateTag)) ||
-            (!placement.Tags.Contains(NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakePct)))
+            (!placement.Tags.Contains(NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakeProbability)))
         {
             isFake = true;
-            template = randomizer.TemplateService.GetObject(FakeWoodenCrateGameObjectName).Clone();
+            template = randomizer.TemplateService
+                .GetObject(FakeWoodenCrateGameObjectName)
+                .CloneWithNewGuids(
+                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile, placement.GuidOrAuto, true),
+                    newGuid);
         }
         else
         {
-            template = randomizer.TemplateService.GetObject(WoodenCrateGameObjectName).Clone();
+            template = randomizer.TemplateService
+                .GetObject(WoodenCrateGameObjectName)
+                .CloneWithNewGuids(
+                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile, placement.GuidOrAuto, false),
+                    newGuid);
             var itemDropDestruct = template.FindComponent<app.ItemDropDestruct>()!;
             itemDropDestruct.Enabled = true;
-            itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : Guid.NewGuid();
+            itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : rng.NextGuid();
             template = template.AddOrUpdateComponent(itemDropDestruct);
         }
 
@@ -88,14 +96,20 @@ internal class ExtraPlacementModifier : Modifier
         RszGameObject parentGameObject,
         Randomizer randomizer,
         RandomizerLogger logger,
-        ItemPlacement placement)
+        ItemPlacement placement,
+        Rng rng)
     {
-        var template = randomizer.TemplateService.GetObject(ItemBoxGameObjectName).Clone();
+        var newGuid = rng.NextGuid();
+        var template = randomizer.TemplateService
+            .GetObject(ItemBoxGameObjectName)
+            .CloneWithNewGuids(
+                randomizer.GetRng("modifier/extra-placement/item-box-template-instances", placement.SceneFile, placement.GuidOrAuto),
+                newGuid);
         var interactGameObject = template.Children.FirstOrDefault(child => child.FindComponent<app.InteractSendFsm>() != null);
         if (interactGameObject != null)
         {
             var interact = interactGameObject.FindComponent<app.InteractSendFsm>()!;
-            interact.SaveGUID = Guid.NewGuid();
+            interact.SaveGUID = rng.NextGuid();
             interactGameObject = interactGameObject.AddOrUpdateComponent(interact);
             template = template.AddOrUpdateChild(interactGameObject);
         }
@@ -108,7 +122,7 @@ internal class ExtraPlacementModifier : Modifier
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
         logger.LogLine($"[EXTRA] Item box at {placement.Position} in {placement.SceneFile}");
-        logger.LogLine($"GUID: {template.Guid}");
+        logger.LogLine($"GUID: {newGuid}");
 
         return scene.UpdateGameObject(parentGameObject);
     }
@@ -190,7 +204,7 @@ internal class ExtraPlacementModifier : Modifier
 
         logger.LogLine($"GUID: {newGuid}");
 
-        item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : Guid.NewGuid();
+        item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : rng.NextGuid();
         item.RoomId = 0;
         item.Enabled = true;
         template = template.AddOrUpdateComponent(item);
@@ -260,7 +274,7 @@ internal class ExtraPlacementModifier : Modifier
         {
             ExtraPlacementKind.WoodenCrate => AddExtraCrate(scene, parentGameObject, randomizer, logger, placement, rng),
             ExtraPlacementKind.WeaponChest => AddExtraChest(scene, randomizer, logger, placement),
-            ExtraPlacementKind.ItemBox => AddExtraItemBox(scene, parentGameObject, randomizer, logger, placement),
+            ExtraPlacementKind.ItemBox => AddExtraItemBox(scene, parentGameObject, randomizer, logger, placement, rng),
             _ => AddPlacementItem(scene, parentGameObject, randomizer, logger, placement, rng, randomItemSettings)
         };
     }

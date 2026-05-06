@@ -53,6 +53,33 @@ public class RandomizerItemDropTableBehaviorTests
     }
 
     [Fact]
+    public void ItemDropTable_AmmoAmounts_MapToDifficultyFields()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            RandomizerTestHelpers.ConfigureSingleDropRate(config, "ShotgunBullet", 1.0);
+            config["item-drop-ammo-only-available-weapons"] = false;
+            config["item-drop-respect-difficulty"] = true;
+            config["item-drop-ammo-min"] = 0.5;
+            config["item-drop-ammo-max"] = 0.5;
+            config["item-drop-valuable-lock-pick"] = false;
+            config["item-drop-valuable-repair-kit"] = false;
+            config["item-drop-valuable-weapon"] = false;
+            config["item-drop-valuable-dlc-coin"] = false;
+            config["item-drop-valuable-birthday-skill"] = false;
+        });
+
+        var table = result.ReadAfterUserFile<app.ReliefItemTable>(RandomizerTestPaths.Chapter4DropTablePath);
+        var shotgunDrop = Assert.Single(table.DataList, x => x.ItemID == "ShotgunBullet");
+        var baseAmount = (uint)Math.Round(ItemDefinitionRepository.Default.FromId("ShotgunBullet")!.MaxStack * 0.5);
+
+        Assert.Equal(result.ItemRandomizer.ApplyDifficultyToDropAmount(baseAmount), (
+            shotgunDrop.ReliefNum,
+            shotgunDrop.NormalDropNum,
+            shotgunDrop.ReliefDropNum));
+    }
+
+    [Fact]
     public void ItemDropTable_BirthdaySkillValuableDrop_AddsRealSkillWhenDlcItemsAreAllowed()
     {
         using var result = RandomizerTest.RunState(config =>

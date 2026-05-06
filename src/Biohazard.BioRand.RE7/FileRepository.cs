@@ -92,7 +92,7 @@ internal class FileRepository : IPatchContext, IDisposable
     public void WriteOutputPakFile(string path)
     {
         var builder = new PakFileBuilder();
-        foreach (var outputFile in _outputFiles)
+        foreach (var outputFile in GetOrderedOutputFiles())
         {
             builder.AddEntry(outputFile.Key, outputFile.Value);
         }
@@ -102,7 +102,7 @@ internal class FileRepository : IPatchContext, IDisposable
     public PakFileBuilder GetOutputPakFile()
     {
         var builder = new PakFileBuilder();
-        foreach (var outputFile in _outputFiles)
+        foreach (var outputFile in GetOrderedOutputFiles())
         {
             builder.AddEntry(outputFile.Key, outputFile.Value);
         }
@@ -111,13 +111,16 @@ internal class FileRepository : IPatchContext, IDisposable
 
     public void WriteOutputFolder(string path)
     {
-        foreach (var outputFile in _outputFiles)
+        foreach (var outputFile in GetOrderedOutputFiles())
         {
             var fullPath = Path.Combine(path, outputFile.Key);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
             File.WriteAllBytes(fullPath, outputFile.Value);
         }
     }
+
+    private IOrderedEnumerable<KeyValuePair<string, byte[]>> GetOrderedOutputFiles()
+        => _outputFiles.OrderBy(outputFile => outputFile.Key, StringComparer.Ordinal);
 
     public T? GetConfigOption<T>(string key, T? defaultValue = default)
     {
