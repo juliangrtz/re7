@@ -4,6 +4,45 @@ namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class RszExtensions
 {
+    public static RszGameObject CloneWithNewGuids(
+        this RszGameObject rootGameObject,
+        Rng rng,
+        Guid? rootGuid = null)
+    {
+        var guidMap = new Dictionary<Guid, Guid>();
+        var isRoot = true;
+        var root = rootGameObject.VisitGameObjects(gameObject =>
+        {
+            var newGuid = rootGuid.HasValue && isRoot
+                ? rootGuid.Value
+                : rng.NextGuid();
+            isRoot = false;
+            guidMap[gameObject.Guid] = newGuid;
+            return gameObject.WithGuid(newGuid);
+        });
+
+        return ReplaceGameObjectRefs(root, guidMap);
+    }
+
+    private static RszGameObject ReplaceGameObjectRefs(
+        RszGameObject gameObject,
+        IReadOnlyDictionary<Guid, Guid> guidMap)
+    {
+        return gameObject.Visit(node =>
+        {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
+            {
+                var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
+                if (guidMap.TryGetValue(refGuid, out var newGuid))
+                {
+                    return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
+                }
+            }
+
+            return node;
+        });
+    }
+
 #if false
     public static Dictionary<string, object> ToDictionary(this RszInstance instance)
     {

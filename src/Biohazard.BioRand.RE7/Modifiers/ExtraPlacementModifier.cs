@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -125,6 +126,7 @@ internal class ExtraPlacementModifier : Modifier
         RszGameObject template;
         Item drop;
         app.Item item;
+        Guid newGuid;
 
         if (isRandom)
         {
@@ -141,7 +143,15 @@ internal class ExtraPlacementModifier : Modifier
             }
 
             var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
-            template = randomizer.TemplateService.GetItemTemplate(templateItemId);
+            newGuid = rng.NextGuid();
+            var templateInstanceRng = randomizer.GetRng(
+                "modifier/extra-placement/template-instances",
+                placement.SceneFile,
+                placement.GuidOrAuto,
+                templateItemId);
+            template = randomizer.TemplateService
+                .GetItemTemplate(templateItemId)
+                .CloneWithNewGuids(templateInstanceRng, newGuid);
             item = template.FindComponent<app.Item>()!;
 
             item.ItemDataID = drop.Id;
@@ -157,7 +167,15 @@ internal class ExtraPlacementModifier : Modifier
         else
         {
             var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(placement.Id, rng, randomItemSettings);
-            template = randomizer.TemplateService.GetItemTemplate(templateItemId);
+            newGuid = rng.NextGuid();
+            var templateInstanceRng = randomizer.GetRng(
+                "modifier/extra-placement/template-instances",
+                placement.SceneFile,
+                placement.GuidOrAuto,
+                templateItemId);
+            template = randomizer.TemplateService
+                .GetItemTemplate(templateItemId)
+                .CloneWithNewGuids(templateInstanceRng, newGuid);
             item = template.FindComponent<app.Item>()!;
 
             item.ItemDataID = placement.Id;
@@ -170,8 +188,6 @@ internal class ExtraPlacementModifier : Modifier
             logger.LogLine($"[EXTRA] [{placement.EasyNum}, {placement.StackNum}, {placement.HardNum}]x {name} at {placement.Position} in {placement.SceneFile}");
         }
 
-        var newGuid = rng.NextGuid();
-        template.Guid = newGuid;
         logger.LogLine($"GUID: {newGuid}");
 
         item.SaveGUID = placement.SaveGuid != Guid.Empty ? placement.SaveGuid : Guid.NewGuid();

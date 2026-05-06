@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -84,10 +85,33 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests
         Assert.Equal(
             Skl001PassiveSkillUserPath,
             ((RszUserDataNode)itemPassiveSkill!["PassiveSkill"]).Path);
-        Assert.Equal(result.ReadBeforeBytes(passiveSkillUserPath), result.ReadAfterBytes(passiveSkillUserPath));
+        var passiveSkill = ReadAfterPassiveSkillUser(result, Skl001PassiveSkillUserPath);
+        Assert.Equal(0.5f, passiveSkill.Get<float>("ReloadSpeedChangeRate"));
+        Assert.Equal(-0.4f, passiveSkill.Get<float>("HitTimeBonusChangeRate"));
+        Assert.True(passiveSkill.Get<bool>("IsBulletStackNumInfinity"));
         Assert.NotNull(uiItemMessages.FindMessage(skillSetting.NameMsg));
         Assert.NotNull(uiItemMessages.FindMessage(skillSetting.ManualMsg));
         Assert.Equal("Infinite Ammo", uiItemMessages.GetString(skillSetting.NameMsg, LanguageId.English));
+    }
+
+    [Fact]
+    public void BirthdaySkillPassiveValues_AreReadFromCsv()
+    {
+        var csv = System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile("birthday_skills.csv"))
+            .Replace(
+                "skl001,Infinite Ammo,Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE",
+                "skl001,Infinite Ammo,Prefab/Skill/skl001/Skl001PassiveSkill.user,1.25,0,0,0,0,0,0,0,0,0,0,0.75,-0.4,-0.4,0,FALSE,TRUE");
+
+        using var result = RandomizerTest.RunState(prepareRandomizer: randomizer =>
+        {
+            randomizer.DynamicData.SetData(DynamicDataName.BirthdaySkills, System.Text.Encoding.UTF8.GetBytes(csv));
+        });
+
+        var passiveSkill = ReadAfterPassiveSkillUser(result, Skl001PassiveSkillUserPath);
+        Assert.Equal(1.25f, passiveSkill.Get<float>("AttackChangeRate"));
+        Assert.Equal(0.75f, passiveSkill.Get<float>("ReloadSpeedChangeRate"));
+        Assert.False(passiveSkill.Get<bool>("IsBulletStackNumInfinity"));
+        Assert.True(passiveSkill.Get<bool>("IsPsychostimulantEffectInfinity"));
     }
 
     [Fact]
@@ -127,4 +151,11 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests
 
     private static string PrefabPath(string prefabPath)
         => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
+
+    private static RszObjectNode ReadAfterPassiveSkillUser(RandomizerRunResult result, string userPath)
+    {
+        var path = PakPath.UserFile(userPath);
+        return new UserFile(result.ReadAfterBytes(path))
+            .GetObjects(result.Randomizer.FileRepository.TypeRepository)[0];
+    }
 }

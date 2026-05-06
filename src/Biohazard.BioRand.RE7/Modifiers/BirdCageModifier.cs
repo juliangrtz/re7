@@ -1,6 +1,7 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
@@ -65,16 +66,61 @@ internal class BirdCageModifier : Modifier
         public BirdCageReplacement() { }
     }
 
-    private ReplacementData GetReplacement(ImmutableList<BirdCageReplacement> replacements, ReplacementCategory category, Rng rng)
+    private sealed class BirdCageReplacementPicker
     {
-        var filtered = replacements.Where(r => r.Category == category).ToList();
-        var replacement = rng.Next(filtered);
-        return (replacement.ItemId, rng.Next(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
+        private readonly ImmutableList<BirdCageReplacement> _replacements;
+        private readonly HashSet<string> _selectedItemIds = new(StringComparer.OrdinalIgnoreCase);
+
+        public BirdCageReplacementPicker(ImmutableList<BirdCageReplacement> replacements)
+        {
+            _replacements = replacements;
+        }
+
+        public ReplacementData GetReplacement(ReplacementCategory category, Rng rng, ItemRandomizer itemRandomizer)
+        {
+            var categoryReplacements = _replacements
+                .Where(replacement => replacement.Category == category)
+                .ToList();
+            var candidates = categoryReplacements
+                .Where(replacement => !_selectedItemIds.Contains(replacement.ItemId.ToString()))
+                .ToList();
+            var weaponSafeCandidates = candidates
+                .Where(replacement => !IsAlreadyPlacedWeapon(replacement, itemRandomizer))
+                .ToList();
+
+            if (weaponSafeCandidates.Count > 0)
+            {
+                candidates = weaponSafeCandidates;
+            }
+            else if (candidates.Count == 0)
+            {
+                candidates = categoryReplacements
+                    .Where(replacement => !IsAlreadyPlacedWeapon(replacement, itemRandomizer))
+                    .ToList();
+            }
+
+            if (candidates.Count == 0)
+            {
+                candidates = categoryReplacements;
+            }
+
+            var replacement = rng.Next(candidates);
+            var itemId = replacement.ItemId.ToString();
+            _selectedItemIds.Add(itemId);
+            itemRandomizer.MarkItemPlaced(itemId);
+            return (replacement.ItemId, rng.Next(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
+        }
+
+        private static bool IsAlreadyPlacedWeapon(BirdCageReplacement replacement, ItemRandomizer itemRandomizer)
+        {
+            var itemId = replacement.ItemId.ToString();
+            return _items.FromId(itemId)?.IsWeapon == true && itemRandomizer.IsItemPlaced(itemId);
+        }
     }
 
-    private void RandomizeBirdCageContent(ImmutableList<BirdCageReplacement> replacements, Rng rng, BirdCage birdCage, ReplacementCategory category)
+    private void RandomizeBirdCageContent(BirdCageReplacementPicker replacementPicker, Rng rng, BirdCage birdCage, ReplacementCategory category, ItemRandomizer itemRandomizer)
     {
-        var (Id, Quantity, Coins, ValidItemIDs) = GetReplacement(replacements, category, rng);
+        var (Id, Quantity, Coins, ValidItemIDs) = replacementPicker.GetReplacement(category, rng, itemRandomizer);
         birdCage.Item.ItemDataID = Id.ToString();
         birdCage.Item.ItemStackNum = Quantity;
         birdCage.CoinCounter.CoinMax = Coins;
@@ -107,6 +153,7 @@ internal class BirdCageModifier : Modifier
         var randomizeDrugsAndPowerCoins = randomizer.GetConfigOption<bool>("random-bird-cage-drugs-coins");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         var rng = randomizer.GetRng(RandomizerKey);
+        var replacementPicker = new BirdCageReplacementPicker(replacements);
         foreach (var file in _birdCageScnFiles)
         {
             logger.Push(file);
@@ -133,7 +180,7 @@ internal class BirdCageModifier : Modifier
                             (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
                         var beforeName = _items.FromId(beforeItemId)!.Name;
 
-                        RandomizeBirdCageContent(replacements, rng, birdCage, category);
+                        RandomizeBirdCageContent(replacementPicker, rng, birdCage, category, randomizer.ItemRandomizer);
                         changedBirdCages.Add(birdCage);
                         var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
 
