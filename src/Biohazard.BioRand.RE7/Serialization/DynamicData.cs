@@ -15,13 +15,14 @@ public enum DynamicDataName
     BirdCages,
     KeyItems,
     DebugStartItems,
+    BirthdaySkills,
 }
 
 public sealed class DynamicData(bool download)
 {
     private const string GoogleSheetUrl = "https://docs.google.com/spreadsheets/d/1YNdX9LWrhh6KDKd8Mx7JpTCMq8XY8u6BfX20YYNx9jk/export?format=csv&gid={0}";
 
-    private static readonly ImmutableDictionary<DynamicDataName, (string, int)> g_map = new Dictionary<DynamicDataName, (string, int)>
+    private static readonly ImmutableDictionary<DynamicDataName, (string FileName, int? GoogleSheetId)> g_map = new Dictionary<DynamicDataName, (string, int?)>
     {
         [DynamicDataName.ItemPlacements] = ("item_placements.csv", 1561602125),
         [DynamicDataName.Recipes] = ("recipes.csv", 358865420),
@@ -32,6 +33,7 @@ public sealed class DynamicData(bool download)
         [DynamicDataName.BirdCages] = ("bird_cages.csv", 1920824337),
         [DynamicDataName.KeyItems] = ("key_items.csv", 91603961),
         [DynamicDataName.DebugStartItems] = ("debug_start_items.csv", 639198893),
+        [DynamicDataName.BirthdaySkills] = ("birthday_skills.csv", 1933511558),
     }.ToImmutableDictionary();
 
     private readonly Dictionary<DynamicDataName, byte[]> _map = [];
@@ -41,8 +43,7 @@ public sealed class DynamicData(bool download)
     {
         if (g_map.TryGetValue(name, out var entry))
         {
-            var (fileName, _) = entry;
-            return fileName;
+            return entry.FileName;
         }
         return null;
     }
@@ -54,9 +55,9 @@ public sealed class DynamicData(bool download)
             if (!_map.TryGetValue(name, out var data))
             {
                 var (fileName, gid) = g_map[name];
-                if (download)
+                if (download && gid.HasValue)
                 {
-                    var downloadUrl = string.Format(GoogleSheetUrl, gid);
+                    var downloadUrl = string.Format(GoogleSheetUrl, gid.Value);
                     data = Download(downloadUrl);
                 }
                 else

@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.REEngine;
+using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Messages;
@@ -25,20 +26,67 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             .Where(IsBirthdaySkill)
             .OrderBy(x => x.ItemDataID, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+        var birthdaySkillValues = LoadBirthdaySkillValues(birthdaySkills);
 
-        CopySkillInventoryAssets(birthdaySkills);
+        CopySkillInventoryAssets(birthdaySkills, birthdaySkillValues);
         ApplyKeyItemSettings(birthdaySkills);
         ApplyDropPrefabs(birthdaySkills);
         ApplyItemResources(birthdaySkills);
         ApplyBirthdayMessages(birthdaySkills);
     }
 
-    private void CopySkillInventoryAssets(IReadOnlyList<app.ItemData> birthdaySkills)
+    private IReadOnlyDictionary<string, BirthdaySkillValueRow> LoadBirthdaySkillValues(IReadOnlyList<app.ItemData> birthdaySkills)
+    {
+        var csv = context.DynamicData.GetData(DynamicDataName.BirthdaySkills)
+            ?? throw new RandomizerUserException("Unable to load Birthday skill CSV data.");
+        var rows = Serialization.Csv.Deserialize<BirthdaySkillValueRow>(csv)
+            .Where(x => !string.IsNullOrWhiteSpace(x.ItemDataID))
+            .ToArray();
+
+        var duplicateIds = rows
+            .GroupBy(x => x.ItemDataID.Trim(), StringComparer.OrdinalIgnoreCase)
+            .Where(x => x.Count() > 1)
+            .Select(x => x.Key)
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (duplicateIds.Length != 0)
+        {
+            throw new RandomizerUserException($"Duplicate Birthday skill CSV rows: {string.Join(", ", duplicateIds)}.");
+        }
+
+        var result = rows.ToDictionary(x => x.ItemDataID.Trim(), StringComparer.OrdinalIgnoreCase);
+        var expectedIds = birthdaySkills
+            .Select(x => x.ItemDataID)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var missingIds = expectedIds
+            .Where(x => !result.ContainsKey(x))
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (missingIds.Length != 0)
+        {
+            throw new RandomizerUserException($"Missing Birthday skill CSV rows: {string.Join(", ", missingIds)}.");
+        }
+
+        var unknownIds = result.Keys
+            .Where(x => !expectedIds.Contains(x))
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (unknownIds.Length != 0)
+        {
+            throw new RandomizerUserException($"Unknown Birthday skill CSV rows: {string.Join(", ", unknownIds)}.");
+        }
+
+        return result;
+    }
+
+    private void CopySkillInventoryAssets(
+        IReadOnlyList<app.ItemData> birthdaySkills,
+        IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues)
     {
         foreach (var skill in birthdaySkills)
         {
             CopyRequiredFile(GetSkillItemPrefabPath(skill), $"Birthday skill '{skill.ItemDataID}' item prefab");
-            CopyRequiredFile(GetPassiveSkillUserPath(skill), $"Birthday skill '{skill.ItemDataID}' passive skill userdata");
+            CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill), birthdaySkillValues[skill.ItemDataID]);
         }
     }
 
@@ -46,6 +94,76 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
     {
         var data = context.GetFile(path) ?? throw new RandomizerUserException($"Unable to read {description} at '{path}'.");
         context.SetFile(path, data);
+    }
+
+    private void CopyConfiguredPassiveSkillFile(app.ItemData skill, string path, BirthdaySkillValueRow values)
+    {
+        ValidatePassiveSkillPath(skill, path, values.PassiveSkillUserPath);
+        context.ModifyUserFile(path, root =>
+        {
+            if (!string.Equals(root.Type.Name, "app.PlayerPassiveSkill", StringComparison.Ordinal))
+            {
+                throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' passive userdata is '{root.Type.Name}', expected 'app.PlayerPassiveSkill'.");
+            }
+
+            return ApplyBirthdaySkillValues(root, values);
+        });
+    }
+
+    private static void ValidatePassiveSkillPath(app.ItemData skill, string path, string csvPath)
+    {
+        if (string.IsNullOrWhiteSpace(csvPath))
+        {
+            return;
+        }
+
+        if (!string.Equals(
+            NormalizeUserFilePath(path),
+            NormalizeUserFilePath(csvPath),
+            StringComparison.OrdinalIgnoreCase))
+        {
+            throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' CSV row points to '{csvPath}', expected '{path}'.");
+        }
+    }
+
+    private static string NormalizeUserFilePath(string path)
+    {
+        var result = path.Trim().Replace('\\', '/');
+        const string prefix = "natives/stm/";
+        if (result.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+        {
+            result = result[prefix.Length..];
+        }
+
+        var versionSuffix = $".{FileVersions.UserFileVersion}";
+        if (result.EndsWith(versionSuffix, StringComparison.OrdinalIgnoreCase))
+        {
+            result = result[..^versionSuffix.Length];
+        }
+
+        return result;
+    }
+
+    private static RszObjectNode ApplyBirthdaySkillValues(RszObjectNode root, BirthdaySkillValueRow values)
+    {
+        return root
+            .Set("AttackChangeRate", values.AttackChangeRate)
+            .Set("MeleeAttackChangeRate", values.MeleeAttackChangeRate)
+            .Set("DyingAttackChangeRate", values.DyingAttackChangeRate)
+            .Set("StunChangeRate", values.StunChangeRate)
+            .Set("MaxHealthChangeValue", values.MaxHealthChangeValue)
+            .Set("DamageChangeRate", values.DamageChangeRate)
+            .Set("IdleAutoRecoverySpeedChangeValue", values.IdleAutoRecoverySpeedChangeValue)
+            .Set("GuardDamageCutRateChangeValue", values.GuardDamageCutRateChangeValue)
+            .Set("WalkSpeedChangeRate", values.WalkSpeedChangeRate)
+            .Set("MoveSpeedChangeRate", values.MoveSpeedChangeRate)
+            .Set("DyingMoveSpeedChangeRate", values.DyingMoveSpeedChangeRate)
+            .Set("ReloadSpeedChangeRate", values.ReloadSpeedChangeRate)
+            .Set("HitTimeBonusChangeRate", values.HitTimeBonusChangeRate)
+            .Set("KillTimeBonusChangeRate", values.KillTimeBonusChangeRate)
+            .Set("DamageTimeBonusChangeRate", values.DamageTimeBonusChangeRate)
+            .Set("IsBulletStackNumInfinity", values.IsBulletStackNumInfinity)
+            .Set("IsPsychostimulantEffectInfinity", values.IsPsychostimulantEffectInfinity);
     }
 
     private void ApplyKeyItemSettings(IReadOnlyList<app.ItemData> birthdaySkills)
@@ -346,4 +464,28 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             RoomID = source.RoomID,
             MapIconFrameNo = source.MapIconFrameNo,
         };
+
+    private sealed class BirthdaySkillValueRow
+    {
+        public string ItemDataID { get; set; } = "";
+        public string Name { get; set; } = "";
+        public string PassiveSkillUserPath { get; set; } = "";
+        public float AttackChangeRate { get; set; }
+        public float MeleeAttackChangeRate { get; set; }
+        public float DyingAttackChangeRate { get; set; }
+        public float StunChangeRate { get; set; }
+        public float MaxHealthChangeValue { get; set; }
+        public float DamageChangeRate { get; set; }
+        public float IdleAutoRecoverySpeedChangeValue { get; set; }
+        public float GuardDamageCutRateChangeValue { get; set; }
+        public float WalkSpeedChangeRate { get; set; }
+        public float MoveSpeedChangeRate { get; set; }
+        public float DyingMoveSpeedChangeRate { get; set; }
+        public float ReloadSpeedChangeRate { get; set; }
+        public float HitTimeBonusChangeRate { get; set; }
+        public float KillTimeBonusChangeRate { get; set; }
+        public float DamageTimeBonusChangeRate { get; set; }
+        public bool IsBulletStackNumInfinity { get; set; }
+        public bool IsPsychostimulantEffectInfinity { get; set; }
+    }
 }
