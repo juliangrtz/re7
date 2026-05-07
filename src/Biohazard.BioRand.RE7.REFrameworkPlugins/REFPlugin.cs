@@ -21,8 +21,10 @@ public class REFPlugin
     private const double MadhouseAmmoDropAmountFactor = 0.75;
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
+    private const int ImportedDlcEnemyRuntimeScanIntervalFrames = 30;
 
     private static bool IsInitialized = false;
+    private static int importedDlcEnemyRuntimeScanFrame = 0;
     private static readonly Configuration config = new();
     private static readonly Logger logger = new(config);
     private static readonly Lock enemyDropStateLock = new();
@@ -30,7 +32,9 @@ public class REFPlugin
     private static readonly Dictionary<ulong, int> enemyDropGenerations = [];
     private static readonly HashSet<ulong> preparedDlcEnemyRuntimeObjects = [];
     private static readonly HashSet<ulong> completedImportedDlcEnemySetups = [];
+    private static readonly HashSet<ulong> deferredImportedDlcEnemySetups = [];
     private static readonly HashSet<ulong> bridgedCh8Em4400Instances = [];
+    private static readonly HashSet<ulong> attemptedCh8Em4400NativeCommandRegistration = [];
     private static readonly HashSet<ulong> initializedCh8Em4400CommandActions = [];
     private static readonly HashSet<(ulong UpdateController, ulong Target)> registeredCh8EnemyUpdateTargets = [];
     private static readonly List<ManagedObject> globalizedDlcCommandActions = [];
@@ -251,10 +255,13 @@ public class REFPlugin
         }
         preparedDlcEnemyRuntimeObjects.Clear();
         completedImportedDlcEnemySetups.Clear();
+        deferredImportedDlcEnemySetups.Clear();
         bridgedCh8Em4400Instances.Clear();
+        attemptedCh8Em4400NativeCommandRegistration.Clear();
         initializedCh8Em4400CommandActions.Clear();
         registeredCh8EnemyUpdateTargets.Clear();
         globalizedDlcCommandActions.Clear();
+        importedDlcEnemyRuntimeScanFrame = 0;
         logger.Log("Unloaded.");
     }
 
@@ -701,10 +708,12 @@ public class REFPlugin
         try
         {
             spawnInfo.IsSpawned = true;
-            spawnInfo.IsAppeared = true;
+            // Live CH8 Em4400 instances stay active with IsAppeared=false and completedOperation=true.
+            // Forcing the opposite left imported main-game instances in a stale generator state.
+            spawnInfo.IsAppeared = false;
             spawnInfo.IsAlive = true;
             spawnInfo.IsCompleted = false;
-            spawnInfo.isCompletedOperation = false;
+            spawnInfo.isCompletedOperation = true;
 
             var action = CastObject<EnemyActionController>(spawnInfo.EnemyActionController);
             if (action != null)
@@ -771,13 +780,6 @@ public class REFPlugin
 
     private static void TryBridgeImportedCh8Em4400Spawn(EnemySpawnInfo? spawnInfo)
     {
-        // Disabled after 2026-05-07 live testing. Even the narrow command-controller
-        // idle kick can corrupt the REFramework VM in campaign scenes. Do not call
-        // CH8 Em4400 lifecycle/update methods here until the native CH8 setup path is
-        // traced and replicated at the scene/component level instead.
-        return;
-
-#pragma warning disable CS0162
         if (spawnInfo?.EnemyInstance == null || !IsNonDlcChapterActive())
             return;
 
@@ -786,8 +788,10 @@ public class REFPlugin
         if (action == null)
             return;
 
-        TryKickImportedCh8Em4400Idle(spawnInfo.EnemyInstance, action);
-#pragma warning restore CS0162
+        // Keep this bridge deliberately narrow. The real CH8 Em4400 has no
+        // CH8EnemyUpdateController and may have IdleAction=null, so lifecycle ticks
+        // and synthetic command/update-controller creation are counterproductive.
+        TryBridgeImportedCh8Em4400Instance(spawnInfo.EnemyInstance, action);
     }
 
     private static void TryKickImportedCh8Em4400Idle(
@@ -970,10 +974,6 @@ public class REFPlugin
                     navigationSurface);
             }
 
-            TryEnsureCh8Em4400CommandActions(enemyInstance, action);
-            TryEnsureCh8Em4400UpdateController(enemyInstance, action, think, commandController, visionSensor, hearingSensor);
-
-            action.isStarted = true;
             if (instanceAddress != 0 && IsImportedCh8Em4400BridgeComplete(action))
             {
                 bridgedCh8Em4400Instances.Add(instanceAddress);
@@ -995,7 +995,8 @@ public class REFPlugin
             return TryRead(() => action.myStatus) != null &&
                 TryRead(() => action.myThink) != null &&
                 TryRead(() => action.enemyThink) != null &&
-                TryRead(() => action.myCommandActionController) != null;
+                TryRead(() => action.myCommandActionController) is { } commandController &&
+                GetCommandActionCount(commandController) > 0;
         }
         catch
         {
@@ -1344,7 +1345,7 @@ public class REFPlugin
         }
     }
 
-    private static void TryEnsureCh8Em4400CommandActions(
+    private static bool TryEnsureCh8Em4400CommandActions(
         via.GameObject owner,
         CH8Em4400ActionController action)
     {
@@ -1353,7 +1354,7 @@ public class REFPlugin
             var actionAddress = GetObjectAddress(action);
             var commandController = GetComponent<CH8CommandActionController>(owner, CH8CommandActionController.REFType);
             if (commandController == null)
-                return;
+                return false;
 
             ForceDoomsRuntimeActive(commandController);
             ForceDoomsRuntimeActive(commandController.Commander);
@@ -1364,8 +1365,10 @@ public class REFPlugin
 
             if (actionAddress != 0 && initializedCh8Em4400CommandActions.Contains(actionAddress))
             {
-                TryAdvanceCh8Em4400CommandController(action, commandController);
-                return;
+                if (GetCommandActionCount(commandController) > 0 && IsImportedCh8Em4400BridgeComplete(action))
+                    return true;
+
+                initializedCh8Em4400CommandActions.Remove(actionAddress);
             }
 
             InitializeCh8CommandController(owner, action, commandController);
@@ -1383,7 +1386,7 @@ public class REFPlugin
 
             var actionList = commandController.ActionList;
             if (actionList == null)
-                return;
+                return false;
 
             var beforeActionCount = actionList.Count;
             if (beforeActionCount == 0)
@@ -1429,33 +1432,19 @@ public class REFPlugin
             commandController.IdleAction = commandController.findIdleAction()
                 ?? FindCommandActionById(commandController.ActionList, 0);
 
-            if (!commandController.isStarted)
-            {
-                commandController.doAwake();
-                InitializeCh8CommandController(owner, action, commandController);
-                InitializeRegisteredCh8CommandActions(owner, action, commandController);
-                commandController.IdleAction = commandController.findIdleAction()
-                    ?? FindCommandActionById(commandController.ActionList, 0);
-
-                commandController.doStart();
-                InitializeCh8CommandController(owner, action, commandController);
-                InitializeRegisteredCh8CommandActions(owner, action, commandController);
-                commandController.IdleAction = commandController.findIdleAction()
-                    ?? FindCommandActionById(commandController.ActionList, 0);
-
-                commandController.isStarted = true;
-            }
-
             TryRequestCh8Em4400IdleAnimation(action, commandController);
-            TryAdvanceCh8Em4400CommandController(action, commandController);
-            if (actionAddress != 0)
+            var isReady = GetCommandActionCount(commandController) > 0;
+            if (isReady && actionAddress != 0)
             {
                 initializedCh8Em4400CommandActions.Add(actionAddress);
             }
+
+            return isReady;
         }
         catch (Exception ex)
         {
             logger.Log($"Failed to initialize imported CH8 Em4400 command actions: {ex.Message}", isVerbose: true);
+            return false;
         }
     }
 
@@ -1701,6 +1690,117 @@ public class REFPlugin
         }
 
         return null;
+    }
+
+    private static int GetCommandActionCount(CommandActionController? commandController)
+    {
+        try
+        {
+            return commandController?.ActionList?.Count ?? 0;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    private static int GetCommandActionContainerCount(CH8Em4400ActionController? action)
+    {
+        try
+        {
+            return Convert.ToInt32((action?.MyCommandActionContainer as IObject)?.Call("get_count") ?? 0);
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    private static bool TryRunImportedCh8Em4400NativeCommandRegistration(
+        via.GameObject? owner,
+        CH8Em4400ActionController action,
+        CommandActionController commandController)
+    {
+        var actionAddress = GetObjectAddress(action);
+        var shouldAttemptNative = actionAddress == 0 ||
+            attemptedCh8Em4400NativeCommandRegistration.Add(actionAddress);
+
+        try
+        {
+            ForceDoomsRuntimeActive(action);
+            ForceDoomsRuntimeActive(commandController);
+
+            if (shouldAttemptNative && GetCommandActionContainerCount(action) == 0)
+            {
+                action.doAwake();
+            }
+
+            var container = CastObject<CommandActionContainerBase>(action.MyCommandActionContainer);
+            if (GetCommandActionCount(commandController) == 0 &&
+                GetCommandActionContainerCount(action) > 0 &&
+                container != null)
+            {
+                commandController.regist(container);
+            }
+
+            var actionCount = GetCommandActionCount(commandController);
+            var containerCount = GetCommandActionContainerCount(action);
+            if (actionCount > 0)
+            {
+                logger.Log(
+                    $"Completed native imported CH8 Em4400 command registration rescue: container={containerCount}, actions={actionCount}.",
+                    isVerbose: true);
+                return true;
+            }
+
+            owner ??= TryRead(() => action.GameObject);
+            if (owner != null && TryEnsureCh8Em4400CommandActions(owner, action))
+            {
+                logger.Log(
+                    $"Completed managed imported CH8 Em4400 command registration fallback: container={containerCount}, actions={GetCommandActionCount(commandController)}.",
+                    isVerbose: true);
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed native imported CH8 Em4400 command registration rescue: {ex.Message}", isVerbose: true);
+        }
+
+        return false;
+    }
+
+    private static bool IsImportedCh8Em4400CommandRegistrationReady(EnemySpawnInfo spawnInfo)
+    {
+        var action = CastObject<CH8Em4400ActionController>(spawnInfo.EnemyActionController)
+            ?? GetComponent<CH8Em4400ActionController>(spawnInfo.EnemyInstance, CH8Em4400ActionController.REFType);
+        if (action == null)
+            return true;
+
+        var commandController = TryRead(() => action.myCommandActionController)
+            ?? GetComponent<CH8CommandActionController>(spawnInfo.EnemyInstance, CH8CommandActionController.REFType);
+        if (commandController == null)
+            return false;
+
+        var actionCount = GetCommandActionCount(commandController);
+        var containerCount = GetCommandActionContainerCount(action);
+        if (actionCount > 0)
+            return true;
+
+        if (TryRunImportedCh8Em4400NativeCommandRegistration(spawnInfo.EnemyInstance, action, commandController))
+            return true;
+
+        actionCount = GetCommandActionCount(commandController);
+        containerCount = GetCommandActionContainerCount(action);
+        var spawnInfoAddress = GetObjectAddress(spawnInfo);
+        if (spawnInfoAddress != 0 && deferredImportedDlcEnemySetups.Add(spawnInfoAddress))
+        {
+            logger.Log(
+                $"Deferring imported CH8 Em4400 setup for '{spawnInfo.UnitAlias}' until native command actions are registered (container={containerCount}, actions={actionCount}).",
+                isVerbose: true);
+        }
+
+        return false;
     }
 
     private static bool TryPrepareImportedDlcEnemySpawnInfo(object? spawnInfoObject)
@@ -1954,6 +2054,12 @@ public class REFPlugin
     private static void TryPrepareImportedDlcEnemyGenerators()
         => TryPrepareImportedDlcEnemyGenerators(API.GetManagedSingleton("app.EnemyGeneratorManager"));
 
+    private static bool ShouldRunImportedDlcEnemyRuntimeScan()
+    {
+        importedDlcEnemyRuntimeScanFrame++;
+        return importedDlcEnemyRuntimeScanFrame % ImportedDlcEnemyRuntimeScanIntervalFrames == 0;
+    }
+
     private static void TryPrepareImportedDlcEnemyRuntime(object? spawnInfoObject, object? managerObject = null)
     {
         if (!IsImportedDlcEnemySpawnInfo(spawnInfoObject) || !IsNonDlcChapterActive())
@@ -1990,6 +2096,9 @@ public class REFPlugin
 
             var spawnInfoAddress = GetObjectAddress(spawnInfoObject);
             if (spawnInfoAddress != 0 && completedImportedDlcEnemySetups.Contains(spawnInfoAddress))
+                return;
+
+            if (!IsImportedCh8Em4400CommandRegistrationReady(spawnInfo))
                 return;
 
             spawnInfo.hasBackup = false;
@@ -2067,7 +2176,11 @@ public class REFPlugin
     [MethodHook(typeof(EnemyGeneratorManager), nameof(EnemyGeneratorManager.doUpdate), MethodHookType.Pre)]
     private static PreHookResult EnemyGeneratorManager_doUpdate_Pre(Span<ulong> args)
     {
-        TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]), tickInstances: false);
+        if (ShouldRunImportedDlcEnemyRuntimeScan())
+        {
+            TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]), tickInstances: false);
+        }
+
         return PreHookResult.Continue;
     }
 
@@ -2154,7 +2267,73 @@ public class REFPlugin
     }
 
     private static T? CastObject<T>(object? obj) where T : class
-        => (obj as IObject)?.As<T>();
+    {
+        var objectValue = obj as IObject;
+        if (objectValue == null)
+            return null;
+
+        var targetType = GetProxyTypeDefinition<T>();
+        if (targetType == null || !IsCompatibleProxyType(objectValue, targetType))
+            return null;
+
+        return objectValue.As<T>();
+    }
+
+    private static TypeDefinition? GetProxyTypeDefinition<T>() where T : class
+    {
+        try
+        {
+            return typeof(T)
+                .GetField("REFType", global::System.Reflection.BindingFlags.Public | global::System.Reflection.BindingFlags.Static)
+                ?.GetValue(null) as TypeDefinition;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static bool IsCompatibleProxyType(IObject objectValue, TypeDefinition targetType)
+    {
+        try
+        {
+            var targetTypeName = targetType.GetFullName();
+            if (IsKnownInterfaceProxyCompatible(objectValue, targetTypeName))
+                return true;
+
+            for (var currentType = objectValue.GetTypeDefinition(); currentType != null; currentType = currentType.ParentType)
+            {
+                if (currentType.GetFullName() == targetTypeName)
+                    return true;
+            }
+        }
+        catch
+        {
+        }
+
+        return false;
+    }
+
+    private static bool IsKnownInterfaceProxyCompatible(IObject objectValue, string targetTypeName)
+    {
+        var compatibleBaseTypeName = targetTypeName switch
+        {
+            "app.IEnemyStatus" => "app.EnemyStatus",
+            "app.ICharacterStatus" => "app.CharacterCommonStatus",
+            "app.IPlayerStatus" => "app.PlayerStatus",
+            _ => null,
+        };
+        if (compatibleBaseTypeName == null)
+            return false;
+
+        for (var currentType = objectValue.GetTypeDefinition(); currentType != null; currentType = currentType.ParentType)
+        {
+            if (currentType.GetFullName() == compatibleBaseTypeName)
+                return true;
+        }
+
+        return false;
+    }
 
     private static ulong GetObjectAddress(object? obj)
         => (obj as IObject)?.GetAddress() ?? 0;
@@ -2481,7 +2660,10 @@ public class REFPlugin
     {
         if (!IsInitialized) return;
 
-        TryPrepareImportedDlcEnemyGenerators();
+        if (ShouldRunImportedDlcEnemyRuntimeScan())
+        {
+            TryPrepareImportedDlcEnemyGenerators();
+        }
 
         if (ImGui.TreeNode("BioRand 7"))
         {
