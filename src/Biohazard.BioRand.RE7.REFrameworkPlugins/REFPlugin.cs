@@ -1,13 +1,16 @@
 ﻿namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
 using app;
+using app.AI;
 using app.Command;
+using app.Collision;
 using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
 using REFrameworkNET.Callbacks;
 using System.Collections.Immutable;
 using static app.InventoryMenu;
+using via.physics;
 
 public class REFPlugin
 {
@@ -27,7 +30,9 @@ public class REFPlugin
     private static readonly Dictionary<ulong, int> enemyDropGenerations = [];
     private static readonly HashSet<ulong> preparedDlcEnemyRuntimeObjects = [];
     private static readonly HashSet<ulong> completedImportedDlcEnemySetups = [];
+    private static readonly HashSet<ulong> bridgedCh8Em4400Instances = [];
     private static readonly HashSet<ulong> initializedCh8Em4400CommandActions = [];
+    private static readonly HashSet<(ulong UpdateController, ulong Target)> registeredCh8EnemyUpdateTargets = [];
     private static readonly List<ManagedObject> globalizedDlcCommandActions = [];
     [ThreadStatic] private static EnemySpawnInfo? pendingDlcSpawnInfo;
     [ThreadStatic] private static EnemySpawnInfo? pendingDlcSetupInfo;
@@ -246,7 +251,9 @@ public class REFPlugin
         }
         preparedDlcEnemyRuntimeObjects.Clear();
         completedImportedDlcEnemySetups.Clear();
+        bridgedCh8Em4400Instances.Clear();
         initializedCh8Em4400CommandActions.Clear();
+        registeredCh8EnemyUpdateTargets.Clear();
         globalizedDlcCommandActions.Clear();
         logger.Log("Unloaded.");
     }
@@ -480,6 +487,215 @@ public class REFPlugin
         }
     }
 
+    private static bool IsGameObjectRuntimeActive(via.GameObject? gameObject)
+    {
+        if (gameObject == null)
+            return false;
+
+        try
+        {
+            return gameObject.Valid && (gameObject.Update || gameObject.Draw);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void ForceAiSensorRuntimeActive(AISensor? sensor)
+    {
+        if (sensor == null)
+            return;
+
+        ForceDoomsRuntimeActive(sensor);
+        try
+        {
+            sensor.Enable = true;
+            sensor._IsEnable = true;
+            sensor.IsStop = false;
+            sensor._IsStop = false;
+        }
+        catch
+        {
+            // Sensor activation is best-effort; command ticking is the critical imported-CH8 bridge.
+        }
+    }
+
+    private static T? TryRead<T>(Func<T?> read)
+        where T : class
+    {
+        try
+        {
+            return read();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static void TryWrite(Action write)
+    {
+        try
+        {
+            write();
+        }
+        catch
+        {
+            // Some inherited CH8 members are present in the generated TDB but absent on campaign-runtime objects.
+        }
+    }
+
+    private static bool TrySetObjectField(object? target, string fieldName, object? value)
+    {
+        if (target == null)
+            return false;
+
+        try
+        {
+            var method = target.GetType().GetMethod("SetField", [typeof(string), typeof(object)]);
+            if (method != null)
+            {
+                method.Invoke(target, [fieldName, value]);
+                return true;
+            }
+        }
+        catch
+        {
+        }
+
+        try
+        {
+            ((dynamic)target).SetField(fieldName, value);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TrySetFieldDataIfNull(
+        object? target,
+        TypeDefinition typeDefinition,
+        string fieldName,
+        object? value)
+    {
+        // Live testing showed broad object-reference writes through TDB Field.SetDataBoxed
+        // can corrupt the REFramework VM and crash RE7. Keep call sites inert until a
+        // single-field write is proven safe under a controlled runtime probe.
+        return false;
+    }
+
+    private static T? TryGetComponent<T>(via.GameObject? gameObject, TypeDefinition typeDefinition)
+        where T : class
+    {
+        try
+        {
+            return GetComponent<T>(gameObject, typeDefinition);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static void ForEachComponent<T>(via.GameObject? gameObject, TypeDefinition typeDefinition, Action<T> action)
+        where T : class
+    {
+        if (gameObject == null)
+            return;
+
+        try
+        {
+            var runtimeType = typeDefinition.GetRuntimeType().As<_System.Type>();
+            if (runtimeType == null)
+                return;
+
+            ForEachGameObjectInHierarchy(gameObject, currentGameObject =>
+            {
+                var components = currentGameObject.findComponents(runtimeType);
+                var count = GetObjectListCount(components);
+                for (var index = 0; index < count; index++)
+                {
+                    var component = CastObject<T>(GetObjectListItem(components, index));
+                    if (component != null)
+                    {
+                        action(component);
+                    }
+                }
+            });
+        }
+        catch
+        {
+            // Component enumeration can fail while RE Engine is tearing down or rebuilding scene folders.
+        }
+    }
+
+    private static void ForEachGameObjectInHierarchy(via.GameObject? root, Action<via.GameObject> action)
+    {
+        if (root == null)
+            return;
+
+        var visited = new HashSet<ulong>();
+        var stack = new Stack<via.Transform>();
+        try
+        {
+            if (root.Transform != null)
+            {
+                stack.Push(root.Transform);
+            }
+        }
+        catch
+        {
+            action(root);
+            return;
+        }
+
+        while (stack.Count > 0)
+        {
+            var transform = stack.Pop();
+            var transformAddress = GetObjectAddress(transform);
+            if (transformAddress != 0 && !visited.Add(transformAddress))
+                continue;
+
+            via.GameObject? gameObject = null;
+            try { gameObject = transform.GameObject; } catch { }
+            if (gameObject != null)
+            {
+                action(gameObject);
+            }
+
+            try
+            {
+                for (var child = transform.Child; child != null; child = child.Next)
+                {
+                    stack.Push(child);
+                }
+            }
+            catch
+            {
+                // Child traversal is best-effort; root-level components are still handled.
+            }
+        }
+    }
+
+    private static void ForceCollidableRuntimeActive(CollidableBase? collidable)
+    {
+        if (collidable == null)
+            return;
+
+        try
+        {
+            collidable.Enabled = true;
+            collidable.onDirty();
+        }
+        catch
+        {
+            // Physics colliders are best-effort; direct damage-controller state is handled separately.
+        }
+    }
+
     private static void TryNormalizeImportedDlcEnemySpawnState(EnemySpawnInfo spawnInfo)
     {
         try
@@ -493,12 +709,7 @@ public class REFPlugin
             var action = CastObject<EnemyActionController>(spawnInfo.EnemyActionController);
             if (action != null)
             {
-                action.hasDie = false;
-                action.isFinishedDead = false;
-                action.calledFinishedDead = false;
-                action.isMarkedDeadStats = false;
-                try { action.forgetDie(); } catch { }
-                try { action.recoveryAll(); } catch { }
+                TryNormalizeImportedDlcEnemyActionState(action);
             }
 
             var status = CastObject<EnemyStatus>(spawnInfo.EnemyStatus);
@@ -560,67 +771,418 @@ public class REFPlugin
 
     private static void TryBridgeImportedCh8Em4400Spawn(EnemySpawnInfo? spawnInfo)
     {
+        // Disabled after 2026-05-07 live testing. Even the narrow command-controller
+        // idle kick can corrupt the REFramework VM in campaign scenes. Do not call
+        // CH8 Em4400 lifecycle/update methods here until the native CH8 setup path is
+        // traced and replicated at the scene/component level instead.
+        return;
+
+#pragma warning disable CS0162
         if (spawnInfo?.EnemyInstance == null || !IsNonDlcChapterActive())
             return;
 
-        var action = CastObject<CH8Em4400ActionController>(spawnInfo.EnemyActionController);
+        var action = CastObject<CH8Em4400ActionController>(spawnInfo.EnemyActionController)
+            ?? GetComponent<CH8Em4400ActionController>(spawnInfo.EnemyInstance, CH8Em4400ActionController.REFType);
+        if (action == null)
+            return;
+
+        TryKickImportedCh8Em4400Idle(spawnInfo.EnemyInstance, action);
+#pragma warning restore CS0162
+    }
+
+    private static void TryKickImportedCh8Em4400Idle(
+        via.GameObject owner,
+        CH8Em4400ActionController action)
+    {
+        try
+        {
+            var commandController = GetComponent<CH8CommandActionController>(owner, CH8CommandActionController.REFType);
+            if (commandController == null)
+                return;
+
+            ForceGameObjectRuntimeActive(owner);
+            ForceDoomsRuntimeActive(action);
+            ForceDoomsRuntimeActive(commandController);
+            ForceDoomsRuntimeActive(commandController.Commander);
+            ForceDoomsRuntimeActive(commandController.Requester);
+
+            var idleAction = commandController.IdleAction;
+            if (idleAction == null)
+            {
+                try { idleAction = commandController.findIdleAction(); } catch { }
+                idleAction ??= FindCommandActionById(commandController.ActionList, 0);
+                if (idleAction != null)
+                {
+                    commandController.IdleAction = idleAction;
+                }
+            }
+
+            if (commandController.CurrentAction == null && idleAction == null)
+                return;
+
+            commandController.doUpdate();
+            logger.Log("Kicked imported CH8 Em4400 command controller once for idle animation.", isVerbose: true);
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to kick imported CH8 Em4400 command controller: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static bool TryBridgeImportedCh8Em4400Instance(
+        via.GameObject? enemyInstance,
+        CH8Em4400ActionController? action = null)
+    {
+        if (enemyInstance == null || !IsNonDlcChapterActive())
+            return false;
+
+        action ??= GetComponent<CH8Em4400ActionController>(enemyInstance, CH8Em4400ActionController.REFType);
+        if (action == null)
+            return false;
+
+        try
+        {
+            var instanceAddress = GetObjectAddress(enemyInstance);
+            if (instanceAddress != 0 &&
+                bridgedCh8Em4400Instances.Contains(instanceAddress) &&
+                IsImportedCh8Em4400BridgeComplete(action))
+            {
+                return true;
+            }
+
+            ForceGameObjectRuntimeActive(enemyInstance);
+            ForceDoomsRuntimeActive(action);
+
+            var status = TryRead(() => action.myStatus)
+                ?? CastObject<CH8Em4400Status>(TryRead(() => action.enemyStatus))
+                ?? TryGetComponent<CH8Em4400Status>(enemyInstance, CH8Em4400Status.REFType);
+            var think = TryGetComponent<CH8Em4400Think>(enemyInstance, CH8Em4400Think.REFType);
+            var commandController = TryGetComponent<CH8CommandActionController>(enemyInstance, CH8CommandActionController.REFType);
+            var visionSensor = TryGetComponent<AIVisionSensor>(enemyInstance, AIVisionSensor.REFType);
+            var hearingSensor = TryGetComponent<AIHearingSensor>(enemyInstance, AIHearingSensor.REFType);
+            var order = TryRead(() => action.enemyOrder)
+                ?? TryGetComponent<EnemyOrder>(enemyInstance, EnemyOrder.REFType);
+            var damageController = TryRead(() => action.enemyDamageController)
+                ?? CastObject<EnemyDamageController>(TryGetComponent<CH8Em4400DamageController>(enemyInstance, CH8Em4400DamageController.REFType))
+                ?? TryGetComponent<EnemyDamageController>(enemyInstance, EnemyDamageController.REFType);
+            var strikeController = TryRead(() => action.enemyStrikeController)
+                ?? CastObject<EnemyStrikeController>(TryGetComponent<CH8Em4400StrikeController>(enemyInstance, CH8Em4400StrikeController.REFType))
+                ?? TryGetComponent<EnemyStrikeController>(enemyInstance, EnemyStrikeController.REFType);
+            var hitController = TryRead(() => action.hitController)
+                ?? TryGetComponent<HitController>(enemyInstance, HitController.REFType);
+            var movementController = TryRead(() => action.movementController)
+                ?? TryGetComponent<MovementController>(enemyInstance, MovementController.REFType);
+            var commandRequester = TryRead(() => action.myCommandRequester)
+                ?? commandController?.Requester
+                ?? TryGetComponent<CommandRequester>(enemyInstance, CommandRequester.REFType);
+            var basicAnimController = TryRead(() => action.myBasicAnimController)
+                ?? TryGetComponent<BasicAnimationController>(enemyInstance, BasicAnimationController.REFType);
+            var smoothAnimator = TryRead(() => action.mySmoothAnim)
+                ?? TryGetComponent<SmoothAnimator>(enemyInstance, SmoothAnimator.REFType);
+            var motionManager = TryRead(() => action.myMotionManager)
+                ?? commandController?.MotionManager
+                ?? TryGetComponent<MotionManager>(enemyInstance, MotionManager.REFType);
+            var motion = TryRead(() => action.myMotion)
+                ?? TryGetComponent<via.motion.Motion>(enemyInstance, via.motion.Motion.REFType);
+            var sequenceController = TryRead(() => action.mySequenceController)
+                ?? TryGetComponent<SequenceController>(enemyInstance, SequenceController.REFType);
+            var mesh = TryRead(() => action.myMesh)
+                ?? TryGetComponent<via.render.Mesh>(enemyInstance, via.render.Mesh.REFType);
+            var characterController = TryRead(() => action.characterController)
+                ?? TryGetComponent<CharacterController>(enemyInstance, CharacterController.REFType);
+            var humanoid = TryRead(() => action.humanoid)
+                ?? TryGetComponent<Humanoid>(enemyInstance, Humanoid.REFType);
+            var rankManager = TryRead(() => action.enemyRankManager)
+                ?? TryGetComponent<EnemyRankManager>(enemyInstance, EnemyRankManager.REFType);
+            var grapple = TryRead(() => action.enemyGrapple)
+                ?? CastObject<EnemyGrappleBase>(TryGetComponent<CH8Em4400Grapple>(enemyInstance, CH8Em4400Grapple.REFType))
+                ?? TryGetComponent<EnemyGrappleBase>(enemyInstance, EnemyGrappleBase.REFType);
+            var navigationSurface = TryGetComponent<via.navigation.NavigationSurface>(enemyInstance, via.navigation.NavigationSurface.REFType);
+
+            TryNormalizeImportedDlcEnemyActionState(action);
+
+            TryWrite(() => action.myStatus ??= status);
+            TryWrite(() => action.enemyStatus ??= CastObject<EnemyStatus>(status));
+            TryWrite(() => action.enemyThink ??= think);
+            TryWrite(() => action.myThink ??= think);
+            TryWrite(() => action.myCommandActionController ??= commandController);
+            TryWrite(() => action.myCommandRequester ??= commandRequester);
+            TryWrite(() => action.myBasicAnimController ??= basicAnimController);
+            TryWrite(() => action.mySmoothAnim ??= smoothAnimator);
+            TryWrite(() => action.myMotionManager ??= motionManager);
+            TryWrite(() => action.myMotion ??= motion);
+            TryWrite(() => action.mySequenceController ??= sequenceController);
+            TryWrite(() => action.myMesh ??= mesh);
+            TryWrite(() => action.characterController ??= characterController);
+            TryWrite(() => action.humanoid ??= humanoid);
+            TryWrite(() => action.movementController ??= movementController);
+            TryWrite(() => action.hitController ??= hitController);
+            TryWrite(() => action.enemyOrder ??= order);
+            TryWrite(() => action.enemyDamageController ??= damageController);
+            TryWrite(() => action.enemyStrikeController ??= strikeController);
+            TryWrite(() => action.enemyRankManager ??= rankManager);
+            TryWrite(() => action.enemyGrapple ??= grapple);
+            TryWrite(() => action.visionSensor ??= visionSensor);
+            TryWrite(() => action.hearingSensor ??= hearingSensor);
+            TryWrite(() => action.playerStatus ??= GetPlayerStatus());
+
+            TrySetFieldDataIfNull(action, CH8Em4400ActionController.REFType, "<myStatus>k__BackingField", status);
+            TrySetFieldDataIfNull(action, CH8Em4400ActionController.REFType, "<myThink>k__BackingField", think);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyStatus>k__BackingField", CastObject<EnemyStatus>(status));
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyThink>k__BackingField", CastObject<EnemyThinkBase>(think));
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myCommandActionController>k__BackingField", commandController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myCommandRequester>k__BackingField", commandRequester);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myBasicAnimController>k__BackingField", basicAnimController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<mySmoothAnim>k__BackingField", smoothAnimator);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myMotionManager>k__BackingField", motionManager);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myMotion>k__BackingField", motion);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<mySequenceController>k__BackingField", sequenceController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<myMesh>k__BackingField", mesh);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<characterController>k__BackingField", characterController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<humanoid>k__BackingField", humanoid);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<movementController>k__BackingField", movementController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<hitController>k__BackingField", hitController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyOrder>k__BackingField", order);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyDamageController>k__BackingField", damageController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyStrikeController>k__BackingField", strikeController);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyRankManager>k__BackingField", rankManager);
+            TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyGrapple>k__BackingField", grapple);
+            TrySetFieldDataIfNull(action, MoldedActionController.REFType, "<visionSensor>k__BackingField", visionSensor);
+            TrySetFieldDataIfNull(action, MoldedActionController.REFType, "<hearingSensor>k__BackingField", hearingSensor);
+            TrySetFieldDataIfNull(action, MoldedActionController.REFType, "<playerStatus>k__BackingField", GetPlayerStatus());
+
+            TryBridgeImportedCh8Em4400Status(status, action, think, commandController, order, damageController, strikeController, movementController, smoothAnimator);
+            TryBridgeImportedCh8EnemyOrder(order, action, think, status, commandController, visionSensor, basicAnimController, motionManager);
+            TryBridgeImportedCh8EnemyDamageController(damageController, action, commandController, status, hitController);
+
+            if (think != null)
+            {
+                TryBridgeImportedCh8Em4400Think(
+                    think,
+                    action,
+                    status,
+                    commandController,
+                    order,
+                    visionSensor,
+                    hearingSensor,
+                    commandRequester,
+                    basicAnimController,
+                    navigationSurface);
+            }
+
+            TryEnsureCh8Em4400CommandActions(enemyInstance, action);
+            TryEnsureCh8Em4400UpdateController(enemyInstance, action, think, commandController, visionSensor, hearingSensor);
+
+            action.isStarted = true;
+            if (instanceAddress != 0 && IsImportedCh8Em4400BridgeComplete(action))
+            {
+                bridgedCh8Em4400Instances.Add(instanceAddress);
+            }
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 Em4400 runtime: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static bool IsImportedCh8Em4400BridgeComplete(CH8Em4400ActionController action)
+    {
+        try
+        {
+            return TryRead(() => action.myStatus) != null &&
+                TryRead(() => action.myThink) != null &&
+                TryRead(() => action.enemyThink) != null &&
+                TryRead(() => action.myCommandActionController) != null;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static void TryNormalizeImportedDlcEnemyActionState(EnemyActionController? action)
+    {
         if (action == null)
             return;
 
         try
         {
-            ForceDoomsRuntimeActive(action);
-
-            action.myStatus ??= CastObject<CH8Em4400Status>(action.enemyStatus);
-            action.myThink ??=
-                CastObject<CH8Em4400Think>(action.enemyThink) ??
-                GetComponent<CH8Em4400Think>(spawnInfo.EnemyInstance, CH8Em4400Think.REFType);
-
-            action.playerStatus ??= GetPlayerStatus();
-
-            if (action.myThink != null)
-            {
-                TryBridgeImportedCh8Em4400Think(action.myThink, action);
-            }
-
-            TryEnsureCh8Em4400CommandActions(spawnInfo, action);
-
-            if (action.myUpdateController == null)
-            {
-                var updateController = GetOrCreateComponent<CH8EnemyUpdateController>(
-                    spawnInfo.EnemyInstance,
-                    CH8EnemyUpdateController.REFType);
-                if (updateController != null)
-                {
-                    ForceDoomsRuntimeActive(updateController);
-                    try { updateController.addTargetComponentList(action); } catch { }
-                    try { updateController.doAwake(); } catch { }
-                    try { updateController.doStart(); } catch { }
-                    action.myUpdateController = updateController;
-                }
-            }
-
-            action.isStarted = true;
+            TryWrite(() => action.hasDie = false);
+            TryWrite(() => action.isFinishedDead = false);
+            TryWrite(() => action.calledFinishedDead = false);
+            TryWrite(() => action.isMarkedDeadStats = false);
+            TrySetObjectField(action, "<hasDie>k__BackingField", false);
+            TrySetObjectField(action, "<isFinishedDead>k__BackingField", false);
+            TrySetObjectField(action, "<calledFinishedDead>k__BackingField", false);
+            TrySetObjectField(action, "<isMarkedDeadStats>k__BackingField", false);
         }
         catch (Exception ex)
         {
-            logger.Log($"Failed to bridge imported CH8 Em4400 runtime: {ex.Message}", isVerbose: true);
+            logger.Log($"Failed to normalize imported DLC enemy action state: {ex.Message}", isVerbose: true);
         }
     }
 
-    private static void TryBridgeImportedCh8Em4400Think(CH8Em4400Think think, CH8Em4400ActionController action)
+    private static void TryBridgeImportedCh8Em4400Status(
+        CH8Em4400Status? status,
+        CH8Em4400ActionController action,
+        CH8Em4400Think? think,
+        CommandActionController? commandController,
+        EnemyOrder? order,
+        EnemyDamageController? damageController,
+        EnemyStrikeController? strikeController,
+        MovementController? movementController,
+        SmoothAnimator? smoothAnimator)
+    {
+        if (status == null)
+            return;
+
+        try
+        {
+            ForceDoomsRuntimeActive(status);
+            TryWrite(() => status.myActionController ??= action);
+            TryWrite(() => status.myThink ??= think);
+            TryWrite(() => status.commandActionController ??= commandController);
+            TryWrite(() => status.EnemyThink ??= think);
+            TryWrite(() => status.enemyActionController ??= action);
+            TryWrite(() => status.enemyDamageController ??= damageController);
+            TryWrite(() => status.enemyStrikeController ??= strikeController);
+            TryWrite(() => status.EnemyOrder ??= order);
+            TryWrite(() => status.movementController ??= movementController);
+            TryWrite(() => status.SmoothAnim ??= smoothAnimator);
+            TrySetFieldDataIfNull(status, CH8Em4400Status.REFType, "myActionController", action);
+            TrySetFieldDataIfNull(status, CH8Em4400Status.REFType, "myThink", think);
+            TrySetFieldDataIfNull(status, CH8Em4400Status.REFType, "commandActionController", commandController);
+            status.isAppeared = true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 Em4400 status state: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static void TryBridgeImportedCh8EnemyOrder(
+        EnemyOrder? order,
+        CH8Em4400ActionController action,
+        CH8Em4400Think? think,
+        CH8Em4400Status? status,
+        CommandActionController? commandController,
+        AIVisionSensor? visionSensor,
+        BasicAnimationController? basicAnimController,
+        MotionManager? motionManager)
+    {
+        if (order == null)
+            return;
+
+        try
+        {
+            ForceDoomsRuntimeActive(order);
+            TryWrite(() => order.enemyActionController ??= action);
+            TryWrite(() => order.CommandAction ??= commandController);
+            TryWrite(() => order.Think ??= CastObject<ThinkBase>(think));
+            TryWrite(() => order.VisionSensor ??= visionSensor);
+            if (status is IObject statusObject)
+            {
+                TryWrite(() => order.CharacterStatus ??= statusObject.As<ICharacterStatus>());
+                TryWrite(() => order.EnemyStatus ??= statusObject.As<IEnemyStatus>());
+            }
+            TryWrite(() => order.BasicAnimController ??= basicAnimController);
+            TryWrite(() => order.MotManager ??= motionManager);
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "<enemyActionController>k__BackingField", action);
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "CommandAction", commandController);
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "Think", CastObject<ThinkBase>(think));
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "VisionSensor", visionSensor);
+            if (status is IObject statusObjectForFields)
+            {
+                TrySetFieldDataIfNull(order, EnemyOrder.REFType, "CharacterStatus", statusObjectForFields.As<ICharacterStatus>());
+                TrySetFieldDataIfNull(order, EnemyOrder.REFType, "EnemyStatus", statusObjectForFields.As<IEnemyStatus>());
+            }
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "BasicAnimController", basicAnimController);
+            TrySetFieldDataIfNull(order, EnemyOrder.REFType, "MotManager", motionManager);
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 enemy order state: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static void TryBridgeImportedCh8EnemyDamageController(
+        EnemyDamageController? damageController,
+        CH8Em4400ActionController action,
+        CommandActionController? commandController,
+        CH8Em4400Status? status,
+        HitController? hitController)
+    {
+        if (damageController == null)
+            return;
+
+        try
+        {
+            ForceDoomsRuntimeActive(damageController);
+            TryWrite(() => damageController.enemyActionController ??= action);
+            TryWrite(() => damageController.MyCommandActionController ??= commandController);
+            TryWrite(() => damageController.HitController ??= hitController);
+            if (status is IObject statusObject)
+            {
+                TryWrite(() => damageController.CharacterStatus ??= statusObject.As<ICharacterStatus>());
+            }
+            TrySetFieldDataIfNull(damageController, EnemyDamageController.REFType, "<enemyActionController>k__BackingField", action);
+            TrySetFieldDataIfNull(damageController, EnemyDamageController.REFType, "<MyCommandActionController>k__BackingField", commandController);
+            TrySetFieldDataIfNull(damageController, EnemyDamageController.REFType, "HitController", hitController);
+            TrySetFieldDataIfNull(damageController, CH8Em4400DamageController.REFType, "<myActionController>k__BackingField", action);
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 enemy damage state: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static void TryBridgeImportedCh8Em4400Think(
+        CH8Em4400Think think,
+        CH8Em4400ActionController action,
+        CH8Em4400Status? status,
+        CommandActionController? commandController,
+        EnemyOrder? order,
+        AIVisionSensor? visionSensor,
+        AIHearingSensor? hearingSensor,
+        CommandRequester? commandRequester,
+        BasicAnimationController? basicAnimController,
+        via.navigation.NavigationSurface? navigationSurface)
     {
         try
         {
             ForceDoomsRuntimeActive(think);
 
-            think.myActionController ??= action;
-            think.myStatus ??= action.myStatus ?? CastObject<CH8Em4400Status>(action.enemyStatus);
+            TryWrite(() => think.myActionController ??= action);
+            TryWrite(() => think.myStatus ??= status);
+            TryWrite(() => think.Commander ??= commandController?.Commander);
+            TryWrite(() => think.BasicAnimCtrl ??= basicAnimController);
+            TryWrite(() => think.NaviSurface ??= navigationSurface);
+            TrySetFieldDataIfNull(think, CH8Em4400Think.REFType, "<myActionController>k__BackingField", action);
+            TrySetFieldDataIfNull(think, CH8Em4400Think.REFType, "<myStatus>k__BackingField", status);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "BasicAnimCtrl", basicAnimController);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "NaviSurface", navigationSurface);
+            TrySetFieldDataIfNull(think, ThinkBase.REFType, "Commander", commandController?.Commander);
 
             if (think.status == null)
             {
-                think.status = CastObject<IEnemyStatus>(action.enemyStatus);
+                think.status = CastObject<IEnemyStatus>(status);
             }
+            TryWrite(() => think.enemyStatus ??= CastObject<EnemyStatus>(status));
+            TryWrite(() => think.enemyOrder ??= order);
+            TryWrite(() => think.commandRequester ??= commandRequester);
+            TryWrite(() => think.visionSensor ??= visionSensor);
+            TryWrite(() => think.hearingSensor ??= hearingSensor);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<status>k__BackingField", CastObject<IEnemyStatus>(status));
+            TrySetFieldDataIfNull(think, CH8Em4400Think.REFType, "<enemyStatus>k__BackingField", CastObject<EnemyStatus>(status));
+            TrySetFieldDataIfNull(think, CH8Em4400Think.REFType, "<enemyOrder>k__BackingField", order);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<commandRequester>k__BackingField", commandRequester);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<visionSensor>k__BackingField", visionSensor);
+            TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<hearingSensor>k__BackingField", hearingSensor);
+            ForceAiSensorRuntimeActive(visionSensor);
+            ForceAiSensorRuntimeActive(hearingSensor);
 
             var playerObject = GetPlayerObject();
             var playerStatus = GetPlayerStatus();
@@ -628,11 +1190,15 @@ public class REFPlugin
             {
                 think.playerStatus ??= playerStatusObject.As<IPlayerStatus>();
                 think.targetStatus ??= playerStatusObject.As<ICharacterStatus>();
+                TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<playerStatus>k__BackingField", playerStatusObject.As<IPlayerStatus>());
+                TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "<targetStatus>k__BackingField", playerStatusObject.As<ICharacterStatus>());
             }
 
             if (think.Target == null && playerObject != null)
             {
-                think.setTarget(playerObject, EnemyThinkBase.ReasonType.Outer);
+                TrySetFieldDataIfNull(think, EnemyThinkBase.REFType, "_Target", playerObject);
+                TrySetObjectField(think, "_Target", playerObject);
+                try { think.setTarget(playerObject, EnemyThinkBase.ReasonType.Outer); } catch { }
             }
 
             if (think.isThinkOff)
@@ -646,28 +1212,155 @@ public class REFPlugin
         }
     }
 
+    private static void TryEnsureCh8Em4400UpdateController(
+        via.GameObject owner,
+        CH8Em4400ActionController action,
+        CH8Em4400Think? think,
+        CommandActionController? commandController,
+        AIVisionSensor? visionSensor,
+        AIHearingSensor? hearingSensor)
+    {
+        try
+        {
+            var updateController = TryRead(() => action.myUpdateController)
+                ?? GetOrCreateComponent<CH8EnemyUpdateController>(owner, CH8EnemyUpdateController.REFType);
+            if (updateController == null)
+                return;
+
+            ForceDoomsRuntimeActive(updateController);
+            TryWrite(() => action.myUpdateController = updateController);
+
+            TryAddCh8EnemyUpdateTarget(updateController, action);
+            TryAddCh8EnemyUpdateTarget(updateController, think);
+            TryAddCh8EnemyUpdateTarget(updateController, commandController);
+            TryAddCh8EnemyUpdateTarget(updateController, commandController?.Commander);
+            TryAddCh8EnemyUpdateTarget(updateController, commandController?.Requester);
+            TryAddCh8EnemyUpdateTarget(updateController, visionSensor);
+            TryAddCh8EnemyUpdateTarget(updateController, hearingSensor);
+
+            try { updateController.intervalFrame = 1; } catch { }
+            try { updateController.setLevel(0); } catch { }
+            try { updateController.doAwake(); } catch { }
+            try { updateController.doStart(); } catch { }
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 Em4400 update controller: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static void TryAddCh8EnemyUpdateTarget(CH8EnemyUpdateController updateController, via.Behavior? behavior)
+    {
+        if (behavior == null)
+            return;
+
+        try
+        {
+            var updateControllerAddress = GetObjectAddress(updateController);
+            var behaviorAddress = GetObjectAddress(behavior);
+            if (updateControllerAddress != 0 &&
+                behaviorAddress != 0 &&
+                !registeredCh8EnemyUpdateTargets.Add((updateControllerAddress, behaviorAddress)))
+            {
+                return;
+            }
+
+            updateController.addTargetComponentList(behavior);
+        }
+        catch
+        {
+            // The explicit command-controller tick below is authoritative; this list only restores CH8 parity where it works.
+        }
+    }
+
+    private static void TryEnsureImportedCh8Em4400DamageAndColliders(
+        via.GameObject owner,
+        CH8Em4400ActionController action,
+        CommandActionController? commandController,
+        CH8Em4400Status? status)
+    {
+        try
+        {
+            ForEachComponent<HitController>(owner, HitController.REFType, hitController =>
+            {
+                ForceDoomsRuntimeActive(hitController);
+                try { hitController.doAwake(); } catch { }
+                try { hitController.doStart(); } catch { }
+                try { hitController.update(); } catch { }
+            });
+
+            ForEachComponent<DamageController>(owner, DamageController.REFType, damageController =>
+            {
+                ForceDoomsRuntimeActive(damageController);
+                TryWrite(() => damageController.CharacterStatus ??= CastObject<ICharacterStatus>(status));
+                TryWrite(() => damageController.HitController ??= TryGetComponent<HitController>(owner, HitController.REFType));
+                try { damageController.doAwake(); } catch { }
+                try { damageController.doStart(); } catch { }
+                try { damageController.doUpdate(); } catch { }
+            });
+
+            ForEachComponent<EnemyDamageController>(owner, EnemyDamageController.REFType, damageController =>
+            {
+                ForceDoomsRuntimeActive(damageController);
+                TryWrite(() => damageController.enemyActionController ??= action);
+                TryWrite(() => damageController.MyCommandActionController ??= commandController);
+                try { damageController.doAwake(); } catch { }
+                try { damageController.doStart(); } catch { }
+            });
+
+            ForEachComponent<CH8Em4400DamageController>(owner, CH8Em4400DamageController.REFType, damageController =>
+            {
+                ForceDoomsRuntimeActive(damageController);
+                TryWrite(() => damageController.myActionController ??= action);
+                TryWrite(() => damageController.enemyStatus ??= CastObject<CH8EnemyStatus>(status));
+                try { damageController.doStart(); } catch { }
+            });
+
+            ForEachComponent<CollidersController>(owner, CollidersController.REFType, controller =>
+            {
+                ForceDoomsRuntimeActive(controller);
+                try { controller.doStart(); } catch { }
+            });
+
+            ForEachComponent<RequestSetCollider>(owner, RequestSetCollider.REFType, collider =>
+            {
+                ForceCollidableRuntimeActive(collider);
+                try { collider.updatePose(); } catch { }
+                try { collider.updateBroadphase(); } catch { }
+                try { collider.updateNotify(); } catch { }
+            });
+
+            ForEachComponent<ColliderSet>(owner, ColliderSet.REFType, collider =>
+            {
+                ForceCollidableRuntimeActive(collider);
+                try { collider.updatePose(); } catch { }
+                try { collider.updateBroadphase(); } catch { }
+                try { collider.updateNotify(); } catch { }
+            });
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to bridge imported CH8 Em4400 damage/collision runtime: {ex.Message}", isVerbose: true);
+        }
+    }
+
     private static void TryEnsureCh8Em4400CommandActions(
-        EnemySpawnInfo spawnInfo,
+        via.GameObject owner,
         CH8Em4400ActionController action)
     {
         try
         {
-            if (spawnInfo.EnemyInstance == null)
-                return;
-
             var actionAddress = GetObjectAddress(action);
-            var commandController = action.myCommandActionController
-                ?? GetComponent<CH8CommandActionController>(spawnInfo.EnemyInstance, CH8CommandActionController.REFType);
+            var commandController = GetComponent<CH8CommandActionController>(owner, CH8CommandActionController.REFType);
             if (commandController == null)
                 return;
 
-            action.myCommandActionController = commandController;
             ForceDoomsRuntimeActive(commandController);
             ForceDoomsRuntimeActive(commandController.Commander);
             ForceDoomsRuntimeActive(commandController.Requester);
-            ForceDoomsRuntimeActive(action.myBasicAnimController);
-            ForceDoomsRuntimeActive(action.mySmoothAnim);
-            ForceDoomsRuntimeActive(action.myMotionManager);
+            ForceDoomsRuntimeActive(TryRead(() => action.myBasicAnimController));
+            ForceDoomsRuntimeActive(TryRead(() => action.mySmoothAnim));
+            ForceDoomsRuntimeActive(TryRead(() => action.myMotionManager));
 
             if (actionAddress != 0 && initializedCh8Em4400CommandActions.Contains(actionAddress))
             {
@@ -675,16 +1368,17 @@ public class REFPlugin
                 return;
             }
 
-            InitializeCh8CommandController(spawnInfo.EnemyInstance, action, commandController);
+            InitializeCh8CommandController(owner, action, commandController);
 
-            if (action.myBasicAnimController != null)
+            var basicAnimController = TryRead(() => action.myBasicAnimController);
+            if (basicAnimController != null)
             {
-                try { CH8Em4400ActionTag.registerToBasicAnimationController(action.myBasicAnimController); } catch { }
+                try { CH8Em4400ActionTag.registerToBasicAnimationController(basicAnimController); } catch { }
             }
 
-            if (action.myCommandRequester == null && commandController.Requester != null)
+            if (TryRead(() => action.myCommandRequester) == null && commandController.Requester != null)
             {
-                action.myCommandRequester = commandController.Requester;
+                TryWrite(() => action.myCommandRequester = commandController.Requester);
             }
 
             var actionList = commandController.ActionList;
@@ -711,9 +1405,9 @@ public class REFPlugin
                         if (commandAction == null || baseCommandAction == null)
                             continue;
 
-                        InitializeCh8CommandAction(spawnInfo.EnemyInstance, action, commandController, commandAction);
-                        TrySetupCh8Em4400CommandAction(instance, spawnInfo.EnemyInstance, action, commandController);
-                        InitializeCh8CommandAction(spawnInfo.EnemyInstance, action, commandController, commandAction);
+                        InitializeCh8CommandAction(owner, action, commandController, commandAction);
+                        TrySetupCh8Em4400CommandAction(instance, owner, action, commandController);
+                        InitializeCh8CommandAction(owner, action, commandController, commandAction);
                         SetCh8Em4400CommandActionLinks(instance, action);
 
                         actionList.Add(baseCommandAction);
@@ -731,21 +1425,21 @@ public class REFPlugin
                 commandController.regist(container);
             }
 
-            InitializeRegisteredCh8CommandActions(spawnInfo.EnemyInstance, action, commandController);
+            InitializeRegisteredCh8CommandActions(owner, action, commandController);
             commandController.IdleAction = commandController.findIdleAction()
                 ?? FindCommandActionById(commandController.ActionList, 0);
 
             if (!commandController.isStarted)
             {
                 commandController.doAwake();
-                InitializeCh8CommandController(spawnInfo.EnemyInstance, action, commandController);
-                InitializeRegisteredCh8CommandActions(spawnInfo.EnemyInstance, action, commandController);
+                InitializeCh8CommandController(owner, action, commandController);
+                InitializeRegisteredCh8CommandActions(owner, action, commandController);
                 commandController.IdleAction = commandController.findIdleAction()
                     ?? FindCommandActionById(commandController.ActionList, 0);
 
                 commandController.doStart();
-                InitializeCh8CommandController(spawnInfo.EnemyInstance, action, commandController);
-                InitializeRegisteredCh8CommandActions(spawnInfo.EnemyInstance, action, commandController);
+                InitializeCh8CommandController(owner, action, commandController);
+                InitializeRegisteredCh8CommandActions(owner, action, commandController);
                 commandController.IdleAction = commandController.findIdleAction()
                     ?? FindCommandActionById(commandController.ActionList, 0);
 
@@ -771,17 +1465,21 @@ public class REFPlugin
     {
         try
         {
-            if (commandController.CurrentAction == null && commandController.IdleAction != null)
-            {
-                commandController.doUpdate();
-                action.mySmoothAnim?.update();
-                action.myMotionManager?.update();
-            }
+            if (commandController.CurrentAction == null && commandController.IdleAction == null)
+                return;
+
+            commandController.doUpdate();
         }
         catch (Exception ex)
         {
             logger.Log($"Failed to advance imported CH8 Em4400 command controller: {ex.Message}", isVerbose: true);
         }
+    }
+
+    private static bool TryTickImportedCh8Em4400Instance(via.GameObject? enemyInstance)
+    {
+        return IsGameObjectRuntimeActive(enemyInstance) &&
+            TryBridgeImportedCh8Em4400Instance(enemyInstance);
     }
 
     private static void TrySetupCh8Em4400CommandAction(
@@ -806,8 +1504,8 @@ public class REFPlugin
         ManagedObject commandActionObject,
         CH8Em4400ActionController action)
     {
-        var status = action.myStatus;
-        var think = action.myThink;
+        var status = TryRead(() => action.myStatus);
+        var think = TryGetComponent<CH8Em4400Think>(action.GameObject, CH8Em4400Think.REFType);
 
         var ch8Base = commandActionObject.As<app.CH8Em4400.Action.CH8Base>();
         if (ch8Base != null)
@@ -818,6 +1516,9 @@ public class REFPlugin
             {
                 ch8Base.myThink = think;
             }
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Base.REFType, "<myActionController>k__BackingField", action);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Base.REFType, "<myStatus>k__BackingField", status);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Base.REFType, "<myThink>k__BackingField", think);
             return;
         }
 
@@ -830,6 +1531,9 @@ public class REFPlugin
             {
                 idle.myThink = think;
             }
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Idle.REFType, "myActionController", action);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Idle.REFType, "myStatus", status);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Idle.REFType, "myThink", think);
             return;
         }
 
@@ -842,6 +1546,9 @@ public class REFPlugin
             {
                 damage.myThink = think;
             }
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Damage.REFType, "myActionController", action);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Damage.REFType, "myStatus", status);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Damage.REFType, "myThink", think);
             return;
         }
 
@@ -850,6 +1557,8 @@ public class REFPlugin
         {
             dead.myActionController = action;
             dead.myStatus = status;
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Dead.REFType, "myActionController", action);
+            TrySetFieldDataIfNull(commandActionObject, app.CH8Em4400.Action.CH8Dead.REFType, "myStatus", status);
         }
     }
 
@@ -877,7 +1586,7 @@ public class REFPlugin
         }
 
         var motionManager = commandController.MotionManager
-            ?? action.myMotionManager
+            ?? TryRead(() => action.myMotionManager)
             ?? GetComponent<MotionManager>(owner, MotionManager.REFType);
         if (motionManager != null)
         {
@@ -913,29 +1622,44 @@ public class REFPlugin
             return;
 
         var command = (CommandAction)commandAction;
+        var status = TryRead(() => action.myStatus);
+        var think = TryGetComponent<CH8Em4400Think>(owner, CH8Em4400Think.REFType);
         command.Owner = owner;
-        command.MotionMgr = commandController.MotionManager ?? action.myMotionManager;
+        command.MotionMgr = commandController.MotionManager ?? TryRead(() => action.myMotionManager);
         command.MotionFsm = command.MotionMgr?.MotionFsm;
         command.Commander = commandController.Commander;
-        command.BasicAnimController = action.myBasicAnimController;
-        command.SmoothAnim = action.mySmoothAnim;
+        command.BasicAnimController = TryRead(() => action.myBasicAnimController);
+        command.SmoothAnim = TryRead(() => action.mySmoothAnim);
         command.ActionController = commandController;
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "Owner", owner);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "MotionMgr", command.MotionMgr);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "MotionFsm", command.MotionFsm);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "Commander", command.Commander);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "BasicAnimController", command.BasicAnimController);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "SmoothAnim", command.SmoothAnim);
+        TrySetFieldDataIfNull(command, CommandAction.REFType, "ActionController", commandController);
 
-        if (action.myStatus is IObject statusObject)
+        if (status is IObject statusObject)
         {
             command.Status = statusObject.As<ICharacterStatus>();
             commandAction.EmStatus = statusObject.As<IEnemyStatus>();
+            TrySetFieldDataIfNull(command, CommandAction.REFType, "Status", statusObject.As<ICharacterStatus>());
+            TrySetFieldDataIfNull(commandAction, EnemyCommandActionBase.REFType, "EmStatus", statusObject.As<IEnemyStatus>());
         }
 
         commandAction.enemyActionController = action;
-        if (action.myThink != null)
+        if (think != null)
         {
-            commandAction.enemyThink = action.myThink;
+            commandAction.enemyThink = think;
         }
+        TrySetFieldDataIfNull(commandAction, EnemyCommandActionBase.REFType, "<enemyActionController>k__BackingField", action);
+        TrySetFieldDataIfNull(commandAction, EnemyCommandActionBase.REFType, "<enemyThink>k__BackingField", CastObject<EnemyThinkBase>(think));
 
-        if (action.myMotion != null)
+        var motion = TryRead(() => action.myMotion);
+        if (motion != null)
         {
-            commandAction.motion = action.myMotion;
+            commandAction.motion = motion;
+            TrySetFieldDataIfNull(commandAction, EnemyCommandActionBase.REFType, "<motion>k__BackingField", motion);
         }
     }
 
@@ -943,11 +1667,12 @@ public class REFPlugin
         CH8Em4400ActionController action,
         CommandActionController commandController)
     {
-        var motionEndFrame = action.myMotionManager?.getMotionEndFrame(0) ?? 0;
+        var motionManager = TryRead(() => action.myMotionManager);
+        var motionEndFrame = motionManager?.getMotionEndFrame(0) ?? 0;
         if (motionEndFrame > 0)
             return;
 
-        var bac = action.myBasicAnimController;
+        var bac = TryRead(() => action.myBasicAnimController);
         if (bac == null)
             return;
 
@@ -963,9 +1688,6 @@ public class REFPlugin
         }
 
         bac.request(CH8Em4400ActionTag.Idle, requestOption);
-        bac.update();
-        action.mySmoothAnim?.update();
-        action.myMotionManager?.update();
     }
 
     private static CommandAction? FindCommandActionById(REFrameworkNET.Collections.IList<CommandAction>? list, int id)
@@ -1042,10 +1764,38 @@ public class REFPlugin
     private static T? GetComponent<T>(via.GameObject? gameObject, TypeDefinition typeDefinition)
         where T : class
     {
-        var runtimeType = typeDefinition.GetRuntimeType().As<_System.Type>();
-        return runtimeType == null
-            ? null
-            : CastObject<T>(gameObject?.getComponent(runtimeType));
+        if (gameObject == null)
+            return null;
+
+        try
+        {
+            var components = gameObject.Components;
+            if (components != null)
+            {
+                foreach (var component in components)
+                {
+                    var typed = CastObject<T>(component);
+                    if (typed != null)
+                        return typed;
+                }
+            }
+        }
+        catch
+        {
+            // Imported DLC objects can fail typed component lookup while still exposing their raw component array.
+        }
+
+        try
+        {
+            var runtimeType = typeDefinition.GetRuntimeType().As<_System.Type>();
+            return runtimeType == null
+                ? null
+                : CastObject<T>(gameObject.getComponent(runtimeType));
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static T? GetOrCreateComponent<T>(via.GameObject? gameObject, TypeDefinition typeDefinition)
@@ -1108,7 +1858,37 @@ public class REFPlugin
         }
     }
 
-    private static bool TryPrepareImportedDlcEnemyGenerator(object? generatorObject)
+    private static bool TryTickImportedDlcEnemyInstanceList(object? listObject)
+    {
+        try
+        {
+            var tickedAny = false;
+            var count = GetObjectListCount(listObject);
+            for (var index = 0; index < count; index++)
+            {
+                var unit = GetListItem<EnemyPool.AssociateUnit>(listObject, index);
+                tickedAny |= TryTickImportedCh8Em4400Instance(unit?.instanceObject);
+            }
+
+            return tickedAny;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryTickImportedDlcEnemyInstances(EnemyPool? pool)
+    {
+        if (pool == null)
+            return false;
+
+        return
+            TryTickImportedDlcEnemyInstanceList(pool.Instancies) |
+            TryTickImportedDlcEnemyInstanceList(pool.ExternalInstancies);
+    }
+
+    private static bool TryPrepareImportedDlcEnemyGenerator(object? generatorObject, bool tickInstances = false)
     {
         if (!IsNonDlcChapterActive())
             return false;
@@ -1131,7 +1911,9 @@ public class REFPlugin
             TryPrepareImportedDlcEnemySpawnInfoList(pool?.ExternalSpawnInfos) |
             TryPrepareImportedDlcEnemySpawnInfoList(pool?.ExternalForceSpawnInfos);
 
-        if (!isImportedGenerator && !hasDlcSpawnInfo)
+        var hasDlcInstance = tickInstances && TryTickImportedDlcEnemyInstances(pool);
+
+        if (!isImportedGenerator && !hasDlcSpawnInfo && !hasDlcInstance)
             return false;
 
         ForceDoomsRuntimeActive(generator);
@@ -1156,7 +1938,7 @@ public class REFPlugin
         return true;
     }
 
-    private static void TryPrepareImportedDlcEnemyGenerators(object? managerObject)
+    private static void TryPrepareImportedDlcEnemyGenerators(object? managerObject, bool tickInstances = false)
     {
         if (!IsNonDlcChapterActive())
             return;
@@ -1165,7 +1947,7 @@ public class REFPlugin
         var count = GetObjectListCount(generators);
         for (var index = 0; index < count; index++)
         {
-            TryPrepareImportedDlcEnemyGenerator(GetObjectListItem(generators, index));
+            TryPrepareImportedDlcEnemyGenerator(GetObjectListItem(generators, index), tickInstances);
         }
     }
 
@@ -1285,7 +2067,7 @@ public class REFPlugin
     [MethodHook(typeof(EnemyGeneratorManager), nameof(EnemyGeneratorManager.doUpdate), MethodHookType.Pre)]
     private static PreHookResult EnemyGeneratorManager_doUpdate_Pre(Span<ulong> args)
     {
-        TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]));
+        TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]), tickInstances: false);
         return PreHookResult.Continue;
     }
 
