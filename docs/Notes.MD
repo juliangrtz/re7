@@ -216,6 +216,15 @@ Files where inventory size is changed:
 - em8100: Jack Eyes Boss
 - em8900: Evie Final Form
 
+### Not a Hero IDs
+
+- em4210: fat headless molded?
+- em4400: mama molded
+- em4450: little crawler
+- em4460: little crawler
+- em4500: lucas mutated
+- em4600: fumer
+
 ### IMPORTANT WHEN RANDOMIZING
 
 - in the FSM, the UIDs are **not** arbitrary. they are actually state IDs hard-coded in .fsm.16 files!
