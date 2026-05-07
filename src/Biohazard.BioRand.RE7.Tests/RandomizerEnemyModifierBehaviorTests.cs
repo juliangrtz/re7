@@ -19,6 +19,8 @@ public class RandomizerEnemyModifierBehaviorTests
     private const string Ch8Em4600MeshPath = "CH8/Character/Enemy/em4600/em4600.mesh";
     private const string Ch8Em4600MaterialPath = "CH8/Character/Enemy/em4600/em4600.mdf2";
     private const string Ch8Em4400PrefabPath = "CH8/Prefab/Character/Enemy/Em4400/Em4400.pfb";
+    private const string Ch8Em4400DirectivesHolderPath = "CH8/Prefab/Character/Enemy/Em4400/parameter/directives/Em4400DirectivesHolder.user";
+    private const string Ch8Em4400ReddishDirectivesHolderPath = "CH8/Prefab/Character/Enemy/Em4400/parameter/directives/Reddish/CH8ReddishEm4400DirectivesHolder.user";
     private const string Ch8Em4600MeshPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mesh.220128762";
     private const string Ch8Em4600MaterialPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mdf2.21";
     private const string Ch8Em4600DeadBodyPrefabPakPath = "natives/stm/ch8/prefab/character/enemy/em4600/nomove/em4600deadbody.pfb.17";
@@ -116,6 +118,18 @@ public class RandomizerEnemyModifierBehaviorTests
             Assert.True(templateService.HasEnemyTemplate(alias), $"Missing EnemyTemplate_{alias}.");
             Assert.True(templateService.HasEnemySpawnInfo(alias), $"Missing EnemySpawnInfo_{alias}.");
         }
+    }
+
+    [Fact]
+    public void TemplateService_Em4400TemplateKeepsNotAHeroDirectiveHolders()
+    {
+        using var result = RandomizerTest.RunState();
+        var template = result.Randomizer.TemplateService.GetEnemyTemplate("Em4400");
+        var think = template.FindComponent("app.CH8Em4400Think");
+
+        Assert.NotNull(think);
+        AssertUserDataPath(think, "DirectivesHolder", Ch8Em4400DirectivesHolderPath);
+        AssertUserDataArrayPath(think, "OtherDirectivesHolder", Ch8Em4400ReddishDirectivesHolderPath);
     }
 
     [Fact]
@@ -273,6 +287,20 @@ public class RandomizerEnemyModifierBehaviorTests
                 matchingGenerators++;
                 var poolObject = gameObject.Children.Single(child =>
                     EnemyGenerationComponents.FindPoolNode(child) != null);
+                var poolInstances = poolObject.Children
+                    .Where(child =>
+                        child.Name.Equals("Em4400", StringComparison.OrdinalIgnoreCase) &&
+                        child.Prefab?.Equals(Ch8Em4400PrefabPath, StringComparison.OrdinalIgnoreCase) == true &&
+                        GetGameObjectTag(child).Equals("Enemy", StringComparison.OrdinalIgnoreCase))
+                    .ToArray();
+                Assert.NotEmpty(poolInstances);
+                foreach (var poolInstance in poolInstances)
+                {
+                    var think = poolInstance.FindComponent("app.CH8Em4400Think");
+                    Assert.NotNull(think);
+                    AssertUserDataPath(think, "DirectivesHolder", Ch8Em4400DirectivesHolderPath);
+                    AssertUserDataArrayPath(think, "OtherDirectivesHolder", Ch8Em4400ReddishDirectivesHolderPath);
+                }
                 Assert.Contains(poolObject.Children, child =>
                     child.Name.Equals("Em4400", StringComparison.OrdinalIgnoreCase) &&
                     child.Prefab?.Equals(Ch8Em4400PrefabPath, StringComparison.OrdinalIgnoreCase) == true &&
@@ -598,6 +626,23 @@ public class RandomizerEnemyModifierBehaviorTests
     {
         Assert.NotEqual(-1, node.Type.FindFieldIndex(fieldName));
         Assert.False(node[fieldName] is RszNullNode, $"Expected '{node.Type.Name}.{fieldName}' to remain non-null.");
+    }
+
+    private static void AssertUserDataPath(RszObjectNode node, string fieldName, string expectedPath)
+    {
+        Assert.NotEqual(-1, node.Type.FindFieldIndex(fieldName));
+        var userData = Assert.IsType<RszUserDataNode>(node[fieldName]);
+        Assert.False(userData.IsEmpty, $"Expected '{node.Type.Name}.{fieldName}' to keep a userdata reference.");
+        Assert.Equal(expectedPath, userData.Path);
+    }
+
+    private static void AssertUserDataArrayPath(RszObjectNode node, string fieldName, string expectedPath)
+    {
+        Assert.NotEqual(-1, node.Type.FindFieldIndex(fieldName));
+        var array = Assert.IsType<RszArrayNode>(node[fieldName]);
+        var userData = Assert.Single(array.Children.OfType<RszUserDataNode>());
+        Assert.False(userData.IsEmpty, $"Expected '{node.Type.Name}.{fieldName}' to keep a userdata reference.");
+        Assert.Equal(expectedPath, userData.Path);
     }
 
     private static bool IsFolderStandby(RszScene scene, string folderName)

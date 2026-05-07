@@ -39,6 +39,9 @@ public class REFPlugin
     private static readonly HashSet<ulong> initializedCh8Em4400CommandActions = [];
     private static readonly HashSet<(ulong UpdateController, ulong Target)> registeredCh8EnemyUpdateTargets = [];
     private static readonly List<ManagedObject> globalizedDlcCommandActions = [];
+    private static readonly List<ManagedObject> globalizedDlcRuntimeObjects = [];
+    private static readonly HashSet<ulong> restoredCh8Em4400NotAHeroRuntimeData = [];
+    private static readonly HashSet<ulong> failedCh8Em4400NotAHeroRuntimeDataRestore = [];
     [ThreadStatic] private static EnemySpawnInfo? pendingDlcSpawnInfo;
     [ThreadStatic] private static EnemySpawnInfo? pendingDlcSetupInfo;
     [ThreadStatic] private static bool isCompletingImportedDlcEnemySetup;
@@ -260,6 +263,9 @@ public class REFPlugin
         initializedCh8Em4400CommandActions.Clear();
         registeredCh8EnemyUpdateTargets.Clear();
         globalizedDlcCommandActions.Clear();
+        globalizedDlcRuntimeObjects.Clear();
+        restoredCh8Em4400NotAHeroRuntimeData.Clear();
+        failedCh8Em4400NotAHeroRuntimeDataRestore.Clear();
         importedDlcEnemyRuntimeScanFrame = 0;
         logger.Log("Unloaded.");
     }
@@ -550,6 +556,35 @@ public class REFPlugin
         {
             // Some inherited CH8 members are present in the generated TDB but absent on campaign-runtime objects.
         }
+    }
+
+    private static bool TryReadBoolMethod(object? target, string methodName, out bool value)
+    {
+        value = false;
+        var objectValue = target as IObject;
+        if (objectValue == null)
+            return false;
+
+        try
+        {
+            var result = objectValue.Call(methodName);
+            if (result == null)
+                return false;
+
+            value = Convert.ToBoolean(result);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool IsDoomsBehaviorStarted(object? target)
+    {
+        return
+            (TryReadBoolMethod(target, "get_Started", out var started) && started) ||
+            (TryReadBoolMethod(target, "get_isStarted", out var isStarted) && isStarted);
     }
 
     private static bool TrySetObjectField(object? target, string fieldName, object? value)
@@ -850,6 +885,12 @@ public class REFPlugin
                 bridgedCh8Em4400Instances.Contains(instanceAddress) &&
                 IsImportedCh8Em4400BridgeComplete(action))
             {
+                var existingCommandController = TryRead(() => action.myCommandActionController)
+                    ?? GetComponent<CH8CommandActionController>(enemyInstance, CH8CommandActionController.REFType);
+                var existingThink = TryRead(() => action.myThink)
+                    ?? TryGetComponent<CH8Em4400Think>(enemyInstance, CH8Em4400Think.REFType);
+                TryNormalizeImportedCh8Em4400ActionStartState(action, existingCommandController);
+                TryRestoreImportedCh8Em4400NotAHeroRuntimeData(action, existingThink);
                 TryRecoverImportedCh8Em4400CurrentAction(action);
                 return true;
             }
@@ -930,6 +971,9 @@ public class REFPlugin
             TryWrite(() => action.hearingSensor ??= hearingSensor);
             TryWrite(() => action.playerStatus ??= GetPlayerStatus());
 
+            TryNormalizeImportedCh8Em4400ActionStartState(action, commandController);
+            TryRestoreImportedCh8Em4400NotAHeroRuntimeData(action, think);
+
             TrySetFieldDataIfNull(action, CH8Em4400ActionController.REFType, "<myStatus>k__BackingField", status);
             TrySetFieldDataIfNull(action, CH8Em4400ActionController.REFType, "<myThink>k__BackingField", think);
             TrySetFieldDataIfNull(action, EnemyActionController.REFType, "<enemyStatus>k__BackingField", CastObject<EnemyStatus>(status));
@@ -972,6 +1016,7 @@ public class REFPlugin
                     commandRequester,
                     basicAnimController,
                     navigationSurface);
+                TryRestoreImportedCh8Em4400NotAHeroRuntimeData(action, think);
             }
 
             if (instanceAddress != 0 && IsImportedCh8Em4400BridgeComplete(action))
@@ -1024,6 +1069,30 @@ public class REFPlugin
         catch (Exception ex)
         {
             logger.Log($"Failed to normalize imported DLC enemy action state: {ex.Message}", isVerbose: true);
+        }
+    }
+
+    private static void TryNormalizeImportedCh8Em4400ActionStartState(
+        CH8Em4400ActionController action,
+        CommandActionController? commandController)
+    {
+        try
+        {
+            // Campaign-imported Em4400 can be engine-started while the CH8
+            // DoomsBehavior flag remains false. Native CH8 has both started
+            // once the command actions are available.
+            if (GetCommandActionCount(commandController) > 0 &&
+                TryReadBoolMethod(action, "get_Started", out var started) &&
+                started &&
+                (!TryReadBoolMethod(action, "get_isStarted", out var isStarted) || !isStarted))
+            {
+                TryWrite(() => action.isStarted = true);
+                TrySetObjectField(action, "<isStarted>k__BackingField", true);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to normalize imported CH8 Em4400 action start state: {ex.Message}", isVerbose: true);
         }
     }
 
@@ -1214,6 +1283,476 @@ public class REFPlugin
         }
     }
 
+    private static void TryRestoreImportedCh8Em4400NotAHeroRuntimeData(
+        CH8Em4400ActionController action,
+        CH8Em4400Think? think)
+    {
+        try
+        {
+            var restored = TryRestoreImportedCh8Em4400ActionResources(action);
+            if (think != null)
+            {
+                restored |= TryRestoreImportedCh8Em4400BattleDirective(think);
+            }
+
+            var address = GetObjectAddress(action);
+            if (restored && address != 0 && restoredCh8Em4400NotAHeroRuntimeData.Add(address))
+            {
+                logger.Log("Restored imported CH8 Em4400 Not a Hero runtime directive/resource data.");
+            }
+            else if (!restored &&
+                address != 0 &&
+                IsCh8Em4400NotAHeroRuntimeDataMissing(action, think) &&
+                failedCh8Em4400NotAHeroRuntimeDataRestore.Add(address))
+            {
+                logger.Log("Imported CH8 Em4400 Not a Hero runtime directive/resource data is still missing after restore attempt.");
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to restore imported CH8 Em4400 Not a Hero runtime data: {ex.Message}");
+        }
+    }
+
+    private static bool IsCh8Em4400NotAHeroRuntimeDataMissing(
+        CH8Em4400ActionController action,
+        CH8Em4400Think? think)
+    {
+        try
+        {
+            return TryRead(() => action.SplashAttackPrefab) == null ||
+                TryRead(() => action.ExplosionAttackPrefab) == null ||
+                TryRead(() => action.explosionVectorList) == null ||
+                think == null ||
+                TryRead(() => think.DirectivesHolder) == null ||
+                TryRead(() => think.CurrentBattleDirective) == null ||
+                TryRead(() => think.battleDirective?.basic) == null;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
+    private static bool TryRestoreImportedCh8Em4400BattleDirective(CH8Em4400Think think)
+    {
+        try
+        {
+            var directive = TryRead(() => think.battleDirective)
+                ?? CreateRuntimeObject<CH8Em4400BattleDirective>(CH8Em4400BattleDirective.REFType);
+            if (directive == null)
+                return false;
+
+            var restored = PopulateCh8Em4400BattleDirectiveDefaults(directive);
+            if (restored || TryRead(() => think.CurrentBattleDirective) == null)
+            {
+                TryWrite(() => think.CurrentBattleDirective = directive);
+                TrySetObjectField(think, "CurrentBattleDirective", directive);
+            }
+
+            if (TryRead(() => think.DirectivesHolder) == null)
+            {
+                var holder = CreateCh8Em4400DirectivesHolder(directive);
+                if (holder != null)
+                {
+                    TryWrite(() => think.DirectivesHolder = holder);
+                    TrySetObjectField(think, "DirectivesHolder", holder);
+                    restored = true;
+                }
+            }
+
+            TryWrite(() => directive.onLoad());
+            return restored;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to restore imported CH8 Em4400 battle directive: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static EnemyBattleDirectivesHolder? CreateCh8Em4400DirectivesHolder(CH8Em4400BattleDirective directive)
+    {
+        var holder = CreateRuntimeObject<CH8Em4400DirectivesHolder>(CH8Em4400DirectivesHolder.REFType);
+        var ch8Holder = CreateRuntimeObject<CH8EnemyDirectivesHolder>(CH8EnemyDirectivesHolder.REFType);
+        if (holder == null || ch8Holder == null)
+            return null;
+
+        TryWrite(() => ch8Holder.defaultDirective = directive);
+
+        var units = CreateRuntimeObject<CH8EnemyDirectiveUnit_Array1D>(CH8EnemyDirectiveUnit_Array1D.REFType);
+        if (units != null)
+        {
+            TryWrite(() => ch8Holder.Units = (REFrameworkNET.Collections.IList<CH8EnemyDirectiveUnit>)units);
+        }
+
+        TryWrite(() => holder.holder = ch8Holder);
+        TryWrite(() => holder.onLoad());
+        return holder;
+    }
+
+    private static bool PopulateCh8Em4400BattleDirectiveDefaults(CH8Em4400BattleDirective directive)
+    {
+        var restored = false;
+
+        if (TryRead(() => directive.basic) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Basic>(CH8Em4400BattleDirective.Basic.REFType) is { } basic)
+        {
+            TryWrite(() => basic.isLoverBandRally = true);
+            TryWrite(() => basic.loverBandRangeForRootTranslate = CreateVec2(1.75f, 2.5f));
+            TryWrite(() => basic.loverBandRangeCrawlForRootTranslate = CreateVec2(2.0f, 2.5f));
+            TryWrite(() => basic.leaveElevatorDistance = 3.0f);
+            TryWrite(() => basic.range = 2.0f);
+            TryWrite(() => basic.fastStandupRange = 4.0f);
+            TryWrite(() => basic.returnAttackRightTimeLimit = 0.0f);
+            TryWrite(() => basic.isUseCounterSplash = true);
+            TryWrite(() => basic.appearCancelRange = -1.0f);
+            TryWrite(() => basic.resumeCancelRange = -1.0f);
+            TryWrite(() => basic.landingCancelRange = -1.0f);
+            TryWrite(() => directive.basic = basic);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.movement) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Movement>(CH8Em4400BattleDirective.Movement.REFType) is { } movement)
+        {
+            TryWrite(() => movement.switchIntervalTime = 2.0f);
+            TryWrite(() => movement.range = CreateVec2(0.0f, 3.0f));
+            TryWrite(() => movement.canDamageCancelMove = false);
+            TryWrite(() => movement.canLostPartsCancelMove = false);
+            TryWrite(() => movement.cancelMoveRange = CreateVec2(4.0f, 10.0f));
+            TryWrite(() => movement.cancelMoveHomingSpeed = 200.0f);
+            TryWrite(() => movement.canIntervalWait = false);
+            TryWrite(() => movement.naviCircleValueForStand = 200.0f);
+            TryWrite(() => movement.naviCircleValueForCrawl = 50.0f);
+            TryWrite(() => movement.wanderSpeed = 1.0f);
+            TryWrite(() => directive.movement = movement);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.rush) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Rush>(CH8Em4400BattleDirective.Rush.REFType) is { } rush)
+        {
+            ConfigureCh8AttackDirective(rush, true, 4.0f, true, 90.0f, 90.0f, 5.0f, 50.0f, -3.0f, 3.0f, 2.0f, 4.0f);
+            TryWrite(() => rush.continueTime = 9.0f);
+            TryWrite(() => rush.rushIntervalTime = 10.0f);
+            TryWrite(() => rush.homingAngleAtFirst = 60.0f);
+            TryWrite(() => rush.isVrNoBlow = true);
+            TryWrite(() => directive.rush = rush);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.splash) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Splash>(CH8Em4400BattleDirective.Splash.REFType) is { } splash)
+        {
+            ConfigureCh8AttackDirective(splash, true, 1.0f, false, 90.0f, 90.0f, 0.0f, 4.99f, -2.0f, 2.0f, 5.0f, 4.0f);
+            TryWrite(() => directive.splash = splash);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.breath) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Breath>(CH8Em4400BattleDirective.Breath.REFType) is { } breath)
+        {
+            ConfigureCh8AttackDirective(breath, false, 1.0f, false, 200.0f, 180.0f, 4.0f, 7.0f, -5.0f, 1.0f, 3.0f, 4.0f);
+            TryWrite(() => breath.horizontalRange = 6.0f);
+            TryWrite(() => breath.horizontalAngleRate = 0.8f);
+            TryWrite(() => breath.forceHorizontalRange = CreateVec2(5.0f, 8.0f));
+            TryWrite(() => breath.forceHorizontalCount = 60);
+            TryWrite(() => breath.isUseWalkingBreath = true);
+            TryWrite(() => breath.walkRange = 6.0f);
+            TryWrite(() => breath.walkHeight = 1.0f);
+            TryWrite(() => breath.verticalRange = 0.0f);
+            TryWrite(() => directive.breath = breath);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.breathSimple) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.BreathSimple>(CH8Em4400BattleDirective.BreathSimple.REFType) is { } breathSimple)
+        {
+            ConfigureCh8AttackDirective(breathSimple, false, 2.0f, false, 200.0f, 90.0f, 0.0f, 3.9f, -1.0f, 1.0f, 2.0f, 4.0f);
+            TryWrite(() => breathSimple.burstMaxForAnger = 3);
+            TryWrite(() => breathSimple.burstMaxForNormal = 2);
+            TryWrite(() => breathSimple.homingAngleForCrawl = 50.0f);
+            TryWrite(() => directive.breathSimple = breathSimple);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.babySpawndBreath) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.BabySpawndBreath>(CH8Em4400BattleDirective.BabySpawndBreath.REFType) is { } babySpawndBreath)
+        {
+            TryWrite(() => babySpawndBreath.babySum = 0);
+            TryWrite(() => babySpawndBreath.delayTime = 0.15f);
+            TryWrite(() => directive.babySpawndBreath = babySpawndBreath);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.breathForce) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.BreathForce>(CH8Em4400BattleDirective.BreathForce.REFType) is { } breathForce)
+        {
+            ConfigureCh8AttackDirective(breathForce, false, 1.0f, true, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f);
+            TryWrite(() => directive.breathForce = breathForce);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.mountTry) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.MountTry>(CH8Em4400BattleDirective.MountTry.REFType) is { } mountTry)
+        {
+            ConfigureCh8AttackDirective(mountTry, true, 1.0f, true, 200.0f, 160.0f, 0.0f, 3.0f, -1.0f, 1.0f, 5.0f, 4.0f);
+            TryWrite(() => mountTry.limitRange = CreateVec2(0.0f, 4.0f));
+            TryWrite(() => mountTry.stayTime = 4.0f);
+            TryWrite(() => mountTry.grappleIntervalTime = 20.0f);
+            TryWrite(() => directive.mountTry = mountTry);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.grapple) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Grapple>(CH8Em4400BattleDirective.Grapple.REFType) is { } grapple)
+        {
+            TryWrite(() => grapple.timeLimitNormalGrapple = 10.0f);
+            TryWrite(() => grapple.timeLimitMountGrapple = 10.0f);
+            TryWrite(() => grapple.intervalLoopMountGrapple = 3.0f);
+            TryWrite(() => directive.grapple = grapple);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.anger) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Anger>(CH8Em4400BattleDirective.Anger.REFType) is { } anger)
+        {
+            TryWrite(() => anger.isAlwaysAnger = false);
+            var units = CreateRuntimeObject<CH8Em4400BattleDirective.Anger.Unit_Array1D>(CH8Em4400BattleDirective.Anger.Unit_Array1D.REFType);
+            if (units != null)
+            {
+                TryWrite(() => anger.units = (REFrameworkNET.Collections.IList<CH8Em4400BattleDirective.Anger.Unit>)units);
+            }
+            TryWrite(() => directive.anger = anger);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.cancelAttack) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.CancelAttack>(CH8Em4400BattleDirective.CancelAttack.REFType) is { } cancelAttack)
+        {
+            ConfigureCh8AttackDirective(cancelAttack, true, 1.0f, true, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 4.0f);
+            TryWrite(() => cancelAttack.canLostPartsCancelAttack = false);
+            TryWrite(() => directive.cancelAttack = cancelAttack);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.generate) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Generate>(CH8Em4400BattleDirective.Generate.REFType) is { } generate)
+        {
+            TryWrite(() => generate.isUse = false);
+            TryWrite(() => generate.priorityWeight = 1.0f);
+            TryWrite(() => generate.distance = 0.0f);
+            TryWrite(() => generate.angle = 120.0f);
+            TryWrite(() => generate.Time = 3.0f);
+            TryWrite(() => generate.MaxCount = 10.0f);
+            TryWrite(() => generate.Interval = -1.5f);
+            TryWrite(() => generate.Head = true);
+            TryWrite(() => generate.Chest = true);
+            TryWrite(() => generate.Stomach = true);
+            TryWrite(() => generate.Thigh = true);
+            TryWrite(() => generate.Random = true);
+            TryWrite(() => generate.cancelMin = 0.06f);
+            TryWrite(() => generate.cancelMax = 0.14f);
+            TryWrite(() => generate.durableValue = 500.0f);
+            TryWrite(() => generate.probability = 0.0f);
+            TryWrite(() => generate.intervalTime = 15.0f);
+            TryWrite(() => generate.cancelCount = 4);
+            TryWrite(() => generate.multiple = 2.0f);
+            TryWrite(() => generate.stunRate = 5.0f);
+            TryWrite(() => directive.generate = generate);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.escape) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Escape>(CH8Em4400BattleDirective.Escape.REFType) is { } escape)
+        {
+            TryWrite(() => escape.isUse = false);
+            TryWrite(() => escape.priorityWeight = 1.0f);
+            TryWrite(() => escape.distanceIn = 0.0f);
+            TryWrite(() => escape.distanceOver = 0.0f);
+            TryWrite(() => escape.speedD = 0.0f);
+            TryWrite(() => escape.front = 0.0f);
+            TryWrite(() => escape.offset = 0.0f);
+            TryWrite(() => escape.time = 0.0f);
+            TryWrite(() => escape.bias = 0.0f);
+            TryWrite(() => escape.intervalTime = 0.0f);
+            TryWrite(() => escape.validDistance = 0.0f);
+            TryWrite(() => escape.back = 0.0f);
+            TryWrite(() => escape.spawnCount = 0);
+            TryWrite(() => directive.escape = escape);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.kneel) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.Kneel>(CH8Em4400BattleDirective.Kneel.REFType) is { } kneel)
+        {
+            TryWrite(() => kneel.stunRate = 100.0f);
+            TryWrite(() => kneel.stunStomachRate = 60.0f);
+            TryWrite(() => kneel.startFrame = 100.0f);
+            TryWrite(() => kneel.activeTime = 10.0f);
+            TryWrite(() => kneel.distance = 5.0f);
+            TryWrite(() => kneel.radian = 45.0f);
+            TryWrite(() => kneel.fromPlayerRadian = 0.0f);
+            TryWrite(() => kneel.damage = 500.0f);
+            TryWrite(() => directive.kneel = kneel);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.specialBulletDamageRate) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.SpecialBulletRate>(CH8Em4400BattleDirective.SpecialBulletRate.REFType) is { } specialBulletRate)
+        {
+            TryWrite(() => specialBulletRate.damageRate = 1.0f);
+            TryWrite(() => specialBulletRate.stunRate = 1.0f);
+            TryWrite(() => directive.specialBulletDamageRate = specialBulletRate);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.crankHearingSensor) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.CrankHearingSensor>(CH8Em4400BattleDirective.CrankHearingSensor.REFType) is { } crankHearingSensor)
+        {
+            TryWrite(() => crankHearingSensor.loopingSeDistance = 5.0f);
+            TryWrite(() => crankHearingSensor.loopingSlipSeDistance = 5.0f);
+            TryWrite(() => crankHearingSensor.attackInterval = 1.5f);
+            TryWrite(() => directive.crankHearingSensor = crankHearingSensor);
+            restored = true;
+        }
+
+        if (TryRead(() => directive.vrSetting) == null &&
+            CreateRuntimeObject<CH8Em4400BattleDirective.VrSetting>(CH8Em4400BattleDirective.VrSetting.REFType) is { } vrSetting)
+        {
+            TryWrite(() => vrSetting.splashSpeed = 0.8f);
+            TryWrite(() => directive.vrSetting = vrSetting);
+            restored = true;
+        }
+
+        return restored;
+    }
+
+    private static void ConfigureCh8AttackDirective(
+        CH8Em4400BattleDirective.AttackCH8Base directive,
+        bool isUse,
+        float priorityWeight,
+        bool isUseCancelSequence,
+        float homingSpeed,
+        float angle,
+        float rangeOver,
+        float rangeIn,
+        float heightLow,
+        float heightHigh,
+        float attackIntervalTime,
+        float nearPlayerRange)
+    {
+        TryWrite(() => directive.isUse = isUse);
+        TryWrite(() => directive.priorityWeight = priorityWeight);
+        TryWrite(() => directive.isUseCancelSequence = isUseCancelSequence);
+        TryWrite(() => directive.homingSpeed = homingSpeed);
+        TryWrite(() => directive.angle = angle);
+        TryWrite(() => directive.rangeOverIn = CreateVec2(rangeOver, rangeIn));
+        TryWrite(() => directive.heightLowHigh = CreateVec2(heightLow, heightHigh));
+        TryWrite(() => directive.attackIntervalTime = attackIntervalTime);
+        TryWrite(() => directive.nearPlayerRange = nearPlayerRange);
+    }
+
+    private static bool TryRestoreImportedCh8Em4400ActionResources(CH8Em4400ActionController action)
+    {
+        var restored = false;
+
+        if (TryRead(() => action.SplashAttackPrefab) == null)
+        {
+            var prefab = CreatePrefab("CH8/Prefab/Character/Enemy/Em4400/Em4400SplashAttack.pfb");
+            if (prefab != null)
+            {
+                TryWrite(() => action.SplashAttackPrefab = prefab);
+                TrySetObjectField(action, "SplashAttackPrefab", prefab);
+                restored = true;
+            }
+        }
+
+        if (TryRead(() => action.ExplosionAttackPrefab) == null)
+        {
+            var prefab = CreatePrefab("CH8/Prefab/Character/Enemy/Em4200/Em4200Explosion.pfb");
+            if (prefab != null)
+            {
+                TryWrite(() => action.ExplosionAttackPrefab = prefab);
+                TrySetObjectField(action, "ExplosionAttackPrefab", prefab);
+                restored = true;
+            }
+        }
+
+        if (TryRead(() => action.explosionVectorList) == null)
+        {
+            var vectors = CreateRuntimeObject<via.vec3_Array1D>(via.vec3_Array1D.REFType);
+            if (vectors != null)
+            {
+                TryWrite(() => vectors.Add(CreateVec3(0.0f, 0.4472136f, -0.8944272f)));
+                TryWrite(() => vectors.Add(CreateVec3(0.0f, 1.0f, 0.0f)));
+                TryWrite(() => vectors.Add(CreateVec3(-0.7071068f, 0.7071068f, 0.0f)));
+                TryWrite(() => vectors.Add(CreateVec3(0.7071068f, 0.7071068f, 0.0f)));
+                TryWrite(() => vectors.Add(CreateVec3(0.5773503f, 0.5773503f, 0.5773503f)));
+                TryWrite(() => vectors.Add(CreateVec3(-0.5773503f, 0.5773503f, 0.5773503f)));
+                TryWrite(() => action.explosionVectorList = (REFrameworkNET.Collections.IList<via.vec3>)vectors);
+                restored = true;
+            }
+        }
+
+        return restored;
+    }
+
+    private static via.Prefab? CreatePrefab(string path)
+    {
+        var prefab = CreateRuntimeObject<via.Prefab>(via.Prefab.REFType);
+        if (prefab == null)
+            return null;
+
+        TryWrite(() => prefab.Path = path);
+        TryWrite(() => prefab.Standby = true);
+        return prefab;
+    }
+
+    private static via.vec2 CreateVec2(float x, float y)
+    {
+        var value = CreateRuntimeObject<via.vec2>(via.vec2.REFType);
+        if (value == null)
+            return via.vec2.Zero;
+
+        TryWrite(() => value.x = x);
+        TryWrite(() => value.y = y);
+        return value;
+    }
+
+    private static via.vec3 CreateVec3(float x, float y, float z)
+    {
+        var value = CreateRuntimeObject<via.vec3>(via.vec3.REFType);
+        if (value == null)
+            return via.vec3.Zero;
+
+        TryWrite(() => value.x = x);
+        TryWrite(() => value.y = y);
+        TryWrite(() => value.z = z);
+        return value;
+    }
+
+    private static T? CreateRuntimeObject<T>(TypeDefinition typeDefinition)
+        where T : class
+    {
+        try
+        {
+            var instance = typeDefinition.CreateInstance(0);
+            if (instance == null)
+                return null;
+
+            instance.Globalize();
+            globalizedDlcRuntimeObjects.Add(instance);
+            return instance.As<T>();
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to create runtime object '{typeDefinition.GetFullName()}': {ex.Message}", isVerbose: true);
+            return null;
+        }
+    }
+
     private static void TryEnsureCh8Em4400UpdateController(
         via.GameObject owner,
         CH8Em4400ActionController action,
@@ -1366,8 +1905,11 @@ public class REFPlugin
 
             if (actionAddress != 0 && initializedCh8Em4400CommandActions.Contains(actionAddress))
             {
-                if (GetCommandActionCount(commandController) > 0 && IsImportedCh8Em4400BridgeComplete(action))
+                if (IsExpectedCh8Em4400CommandRegistration(action, commandController) &&
+                    IsImportedCh8Em4400BridgeComplete(action))
+                {
                     return true;
+                }
 
                 initializedCh8Em4400CommandActions.Remove(actionAddress);
             }
@@ -1389,44 +1931,62 @@ public class REFPlugin
             if (actionList == null)
                 return false;
 
-            var beforeActionCount = actionList.Count;
-            if (beforeActionCount == 0)
+            var createdCommandActions = new List<(ManagedObject Instance, EnemyCommandActionBase EnemyAction, CommandAction CommandAction)>();
+            var containerObject = action.MyCommandActionContainer;
+            var container = CastObject<CommandActionContainerBase>(containerObject);
+            var containerCount = GetCommandActionContainerCount(action);
+            if (containerCount == 0)
             {
                 foreach (var typeName in Ch8Em4400CommandActionTypeNames)
                 {
-                    try
-                    {
-                        var type = TDB.Get().FindType(typeName);
-                        var instance = type?.CreateInstance(0);
-                        if (instance == null)
-                            continue;
+                    if (!TryCreateCh8Em4400CommandAction(typeName, out var instance, out var enemyAction, out var commandAction) ||
+                        instance == null ||
+                        enemyAction == null ||
+                        commandAction == null)
+                        continue;
 
-                        instance.Globalize();
-                        globalizedDlcCommandActions.Add(instance);
-
-                        var commandAction = instance.As<EnemyCommandActionBase>();
-                        var baseCommandAction = instance.As<CommandAction>();
-                        if (commandAction == null || baseCommandAction == null)
-                            continue;
-
-                        InitializeCh8CommandAction(owner, action, commandController, commandAction);
-                        TrySetupCh8Em4400CommandAction(instance, owner, action, commandController);
-                        InitializeCh8CommandAction(owner, action, commandController, commandAction);
-                        SetCh8Em4400CommandActionLinks(instance, action);
-
-                        actionList.Add(baseCommandAction);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Log($"Failed to add imported CH8 Em4400 command action '{typeName}': {ex.Message}", isVerbose: true);
-                    }
+                    createdCommandActions.Add((instance, enemyAction, commandAction));
+                    TryAddCh8Em4400CommandActionToContainer(containerObject, enemyAction);
                 }
             }
 
-            var container = CastObject<CommandActionContainerBase>(action.MyCommandActionContainer);
-            if (actionList.Count == 0 && container != null)
+            containerCount = GetCommandActionContainerCount(action);
+            var attemptedRegist = false;
+            if (actionList.Count == 0 &&
+                containerCount > 0 &&
+                container != null &&
+                IsDoomsBehaviorStarted(commandController))
             {
+                attemptedRegist = true;
                 commandController.regist(container);
+            }
+
+            if (actionList.Count == 0 && (containerCount == 0 || attemptedRegist))
+            {
+                if (createdCommandActions.Count == 0)
+                {
+                    foreach (var typeName in Ch8Em4400CommandActionTypeNames)
+                    {
+                        if (!TryCreateCh8Em4400CommandAction(typeName, out var instance, out var enemyAction, out var commandAction) ||
+                            instance == null ||
+                            enemyAction == null ||
+                            commandAction == null)
+                            continue;
+
+                        createdCommandActions.Add((instance, enemyAction, commandAction));
+                    }
+                }
+
+                foreach (var created in createdCommandActions)
+                {
+                    AddCh8Em4400CommandActionDirectly(
+                        owner,
+                        action,
+                        commandController,
+                        created.Instance,
+                        created.EnemyAction,
+                        created.CommandAction);
+                }
             }
 
             InitializeRegisteredCh8CommandActions(owner, action, commandController);
@@ -1434,7 +1994,7 @@ public class REFPlugin
                 ?? FindCommandActionById(commandController.ActionList, 0);
 
             TryRequestCh8Em4400IdleAnimation(action, commandController);
-            var isReady = GetCommandActionCount(commandController) > 0;
+            var isReady = IsExpectedCh8Em4400CommandRegistration(action, commandController);
             if (isReady && actionAddress != 0)
             {
                 initializedCh8Em4400CommandActions.Add(actionAddress);
@@ -1447,6 +2007,80 @@ public class REFPlugin
             logger.Log($"Failed to initialize imported CH8 Em4400 command actions: {ex.Message}", isVerbose: true);
             return false;
         }
+    }
+
+    private static bool IsExpectedCh8Em4400CommandRegistration(
+        CH8Em4400ActionController? action,
+        CommandActionController? commandController)
+    {
+        return
+            GetCommandActionContainerCount(action) == Ch8Em4400CommandActionTypeNames.Length &&
+            GetCommandActionCount(commandController) == Ch8Em4400CommandActionTypeNames.Length;
+    }
+
+    private static bool TryCreateCh8Em4400CommandAction(
+        string typeName,
+        out ManagedObject? instance,
+        out EnemyCommandActionBase? enemyAction,
+        out CommandAction? commandAction)
+    {
+        instance = null;
+        enemyAction = null;
+        commandAction = null;
+
+        try
+        {
+            var type = TDB.Get().FindType(typeName);
+            instance = type?.CreateInstance(0);
+            if (instance == null)
+                return false;
+
+            instance.Globalize();
+            globalizedDlcCommandActions.Add(instance);
+
+            enemyAction = instance.As<EnemyCommandActionBase>();
+            commandAction = instance.As<CommandAction>();
+            return enemyAction != null && commandAction != null;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to create imported CH8 Em4400 command action '{typeName}': {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static bool TryAddCh8Em4400CommandActionToContainer(
+        object? containerObject,
+        EnemyCommandActionBase commandAction)
+    {
+        try
+        {
+            if (containerObject is not IObject container)
+                return false;
+
+            container.Call("add", commandAction);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to add imported CH8 Em4400 command action to native container: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static void AddCh8Em4400CommandActionDirectly(
+        via.GameObject owner,
+        CH8Em4400ActionController action,
+        CommandActionController commandController,
+        ManagedObject instance,
+        EnemyCommandActionBase enemyAction,
+        CommandAction commandAction)
+    {
+        InitializeCh8CommandAction(owner, action, commandController, enemyAction);
+        TrySetupCh8Em4400CommandAction(instance, owner, action, commandController);
+        InitializeCh8CommandAction(owner, action, commandController, enemyAction);
+        SetCh8Em4400CommandActionLinks(instance, action);
+        commandController.ActionList?.Add(commandAction);
     }
 
     private static void TryAdvanceCh8Em4400CommandController(
@@ -1817,14 +2451,15 @@ public class REFPlugin
             var container = CastObject<CommandActionContainerBase>(action.MyCommandActionContainer);
             if (GetCommandActionCount(commandController) == 0 &&
                 GetCommandActionContainerCount(action) > 0 &&
-                container != null)
+                container != null &&
+                IsDoomsBehaviorStarted(commandController))
             {
                 commandController.regist(container);
             }
 
             var actionCount = GetCommandActionCount(commandController);
             var containerCount = GetCommandActionContainerCount(action);
-            if (actionCount > 0)
+            if (IsExpectedCh8Em4400CommandRegistration(action, commandController))
             {
                 logger.Log(
                     $"Completed native imported CH8 Em4400 command registration rescue: container={containerCount}, actions={actionCount}.",
@@ -1836,7 +2471,7 @@ public class REFPlugin
             if (owner != null && TryEnsureCh8Em4400CommandActions(owner, action))
             {
                 logger.Log(
-                    $"Completed managed imported CH8 Em4400 command registration fallback: container={containerCount}, actions={GetCommandActionCount(commandController)}.",
+                    $"Completed managed imported CH8 Em4400 command registration fallback: container={GetCommandActionContainerCount(action)}, actions={GetCommandActionCount(commandController)}.",
                     isVerbose: true);
                 return true;
             }
@@ -1863,7 +2498,7 @@ public class REFPlugin
 
         var actionCount = GetCommandActionCount(commandController);
         var containerCount = GetCommandActionContainerCount(action);
-        if (actionCount > 0)
+        if (IsExpectedCh8Em4400CommandRegistration(action, commandController))
             return true;
 
         if (TryRunImportedCh8Em4400NativeCommandRegistration(spawnInfo.EnemyInstance, action, commandController))
@@ -2209,6 +2844,13 @@ public class REFPlugin
 
     [MethodHook(typeof(app.CH8Em4400.Action.CH8Rush), nameof(app.CH8Em4400.Action.CH8Rush.lateProcess), MethodHookType.Pre)]
     private static PreHookResult CH8Em4400_CH8Rush_lateProcess_Pre(Span<ulong> args)
+    {
+        TryRecoverImportedCh8Em4400CommandActionStall(CastObject<CommandAction>(ManagedObject.ToManagedObject(args[1])));
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(app.CH8Em4400.Action.CH8Splash), nameof(app.CH8Em4400.Action.CH8Splash.lateProcess), MethodHookType.Pre)]
+    private static PreHookResult CH8Em4400_CH8Splash_lateProcess_Pre(Span<ulong> args)
     {
         TryRecoverImportedCh8Em4400CommandActionStall(CastObject<CommandAction>(ManagedObject.ToManagedObject(args[1])));
         return PreHookResult.Continue;
