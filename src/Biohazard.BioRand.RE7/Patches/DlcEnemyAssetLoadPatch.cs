@@ -10,20 +10,22 @@ namespace Biohazard.BioRand.RE7.Patches;
 
 internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
 {
-    private static readonly string DlcActiveRootScenePath = PakPath.SceneFile("scenes/dlc/dlc_active_root.scn");
-    private static readonly string DlcChapter8ScenePath = PakPath.SceneFile("scenes/dlc/dlc_chapter8.scn");
-    private static readonly string DlcChapter9ScenePath = PakPath.SceneFile("scenes/dlc/dlc_chapter9.scn");
     private static readonly string Ch8ChapterScenePath = PakPath.SceneFile("ch8/scenes/chapter8.scn");
     private static readonly string Ch8GameScenePath = PakPath.SceneFile("ch8/scenes/ch8_game.scn");
+    private static readonly string Ch8EnemyScenePath = PakPath.SceneFile("ch8/scenes/chapter/chapter8/enemy_c08.scn");
+    private static readonly string Ch8MotherScenePath = PakPath.SceneFile("ch8/scenes/chapter/chapter8/mother_c08.scn");
     private static readonly string Ch9ChapterScenePath = PakPath.SceneFile("ch9/scenes/chapter/chapter9.scn");
     private static readonly string Ch9InGameScenePath = PakPath.SceneFile("ch9/scenes/chapter/c09_ingame.scn");
     private static readonly string Ch9EnemyScenePath = PakPath.SceneFile("ch9/scenes/chapter/enemy_c09.scn");
     private static readonly string Ch9VfxScenePath = PakPath.SceneFile("ch9/vfx/vfx_scene/vfx_c09.scn");
     private static readonly string TemplateScenePath = $"template.scn.{FileVersions.SceneFileVersion}";
-    private static readonly string[] DlcEnemyAssetScenePaths =
+    private static readonly string[] Ch8DlcEnemyAssetScenePaths =
     [
-        PakPath.SceneFile("ch8/scenes/chapter/chapter8/enemy_c08.scn"),
-        PakPath.SceneFile("ch8/scenes/chapter/chapter8/mother_c08.scn"),
+        Ch8EnemyScenePath,
+        Ch8MotherScenePath,
+    ];
+    private static readonly string[] Ch9DlcEnemyAssetScenePaths =
+    [
         PakPath.SceneFile("ch9/scenes/chapter/enemy/chapter9_1/enemy_c09_1.scn"),
         PakPath.SceneFile("ch9/scenes/chapter/enemy/chapter9_2/enemy_c09_2.scn"),
         PakPath.SceneFile("ch9/scenes/chapter/enemy/chapter9_3/enemy_c09_3.scn"),
@@ -38,25 +40,32 @@ internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
 
     public void Apply()
     {
-        ApplyChapterRoots();
-        ApplyNotAHeroEnemyFolders();
-        ApplyEndOfZoeEnemyFolders();
-        CopyDlcEnemyAssetFiles();
-    }
+        var activeDlcEnemies = GetActiveDlcEnemies();
+        if (activeDlcEnemies.IsDefaultOrEmpty)
+        {
+            return;
+        }
 
-    private void ApplyChapterRoots()
-    {
-        SetFoldersStandby(DlcActiveRootScenePath, "DLC_Chapter8", "DLC_Chapter9");
-        SetFoldersStandby(DlcChapter8ScenePath, "Chapter8");
-        SetFoldersStandby(DlcChapter9ScenePath, "Chapter9");
+        if (activeDlcEnemies.Any(enemy => enemy.Dlc == DlcType.NotAHero))
+        {
+            ApplyNotAHeroEnemyFolders();
+        }
+
+        if (activeDlcEnemies.Any(enemy => enemy.Dlc == DlcType.EndOfZoe))
+        {
+            ApplyEndOfZoeEnemyFolders();
+        }
+
+        CopyDlcEnemyAssetFiles(activeDlcEnemies);
     }
 
     private void ApplyNotAHeroEnemyFolders()
     {
         SetFoldersStandby(Ch8ChapterScenePath, "CH8_Game");
-        SetFoldersStandby(Ch8GameScenePath, "Enemy_c08", "Mother_c08");
+        SetFoldersStandby(Ch8GameScenePath, "Enemy_c08");
+        SetFoldersStandby(Ch8EnemyScenePath, "c08_AIMap");
+        SetFoldersStandby(Ch8EnemyScenePath, false, "c08_MotherLoder");
         SetSceneFolderControlsDefaultStandby(Ch8ChapterScenePath, "Chapter8_Game");
-        SetSceneFolderControlsDefaultStandby(Ch8GameScenePath, "Mother");
     }
 
     private void ApplyEndOfZoeEnemyFolders()
@@ -72,16 +81,19 @@ internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
     }
 
     private void SetFoldersStandby(string path, params string[] folderNames)
+        => SetFoldersStandby(path, standby: true, folderNames);
+
+    private void SetFoldersStandby(string path, bool standby, params string[] folderNames)
     {
         var names = folderNames.ToHashSet(StringComparer.OrdinalIgnoreCase);
-        context.ModifyScnFile(path, scene => (RszScene)SetFoldersStandby(scene, names));
+        context.ModifyScnFile(path, scene => (RszScene)SetFoldersStandby(scene, names, standby));
     }
 
-    private static IRszSceneNode SetFoldersStandby(IRszSceneNode node, HashSet<string> folderNames)
+    private static IRszSceneNode SetFoldersStandby(IRszSceneNode node, HashSet<string> folderNames, bool standby)
     {
         if (node is RszFolder folder && folderNames.Contains(folder.Name))
         {
-            node = new RszFolder(folder.Settings.Set("Standby", true), folder.Children);
+            node = new RszFolder(folder.Settings.Set("Standby", standby), folder.Children);
         }
 
         if (node.Children.IsDefaultOrEmpty)
@@ -90,7 +102,7 @@ internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
         }
 
         var children = node.Children
-            .Select(child => SetFoldersStandby(child, folderNames))
+            .Select(child => SetFoldersStandby(child, folderNames, standby))
             .ToImmutableArray();
         return node.WithChildren(children);
     }
@@ -112,22 +124,17 @@ internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
         }));
     }
 
-    private void CopyDlcEnemyAssetFiles()
+    private void CopyDlcEnemyAssetFiles(ImmutableArray<IEnemyDefinition> activeDlcEnemies)
     {
-        if (!ShouldCopyDlcEnemyAssetFiles())
-        {
-            return;
-        }
-
         var pending = new Queue<string>();
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var path in DlcEnemyAssetScenePaths)
+        foreach (var path in GetDlcEnemyAssetScenePaths(activeDlcEnemies))
         {
             pending.Enqueue(path);
         }
 
-        foreach (var reference in GetTemplateDlcEnemyDependencyReferences())
+        foreach (var reference in GetTemplateDlcEnemyDependencyReferences(activeDlcEnemies))
         {
             if (TryResolvePakPath(reference, out var path))
             {
@@ -159,27 +166,46 @@ internal class DlcEnemyAssetLoadPatch(IPatchContext context) : IPatch
         }
     }
 
-    private bool ShouldCopyDlcEnemyAssetFiles()
+    private ImmutableArray<IEnemyDefinition> GetActiveDlcEnemies()
     {
-        if (context.GetConfigOption("extra-enemy-amount", 0.0) > 0.0)
+        if (!context.GetConfigOption<bool>("random-enemies") &&
+            context.GetConfigOption("extra-enemy-amount", 0.0) <= 0.0)
         {
-            return true;
+            return [];
         }
 
-        return context.GetConfigOption<bool>("random-enemies") &&
-               EnemyDefinitions.Instance.All
-                   .Where(enemy => enemy.IsDlc)
-                   .Any(enemy => context.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}") != 0.0);
+        return EnemyDefinitions.Instance.All
+            .Where(enemy => enemy.IsDlc)
+            .Where(enemy => context.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}") != 0.0)
+            .ToImmutableArray();
     }
 
-    private IEnumerable<string> GetTemplateDlcEnemyDependencyReferences()
+    private static IEnumerable<string> GetDlcEnemyAssetScenePaths(ImmutableArray<IEnemyDefinition> activeDlcEnemies)
+    {
+        if (activeDlcEnemies.Any(enemy => enemy.Dlc == DlcType.NotAHero))
+        {
+            foreach (var path in Ch8DlcEnemyAssetScenePaths)
+            {
+                yield return path;
+            }
+        }
+
+        if (activeDlcEnemies.Any(enemy => enemy.Dlc == DlcType.EndOfZoe))
+        {
+            foreach (var path in Ch9DlcEnemyAssetScenePaths)
+            {
+                yield return path;
+            }
+        }
+    }
+
+    private IEnumerable<string> GetTemplateDlcEnemyDependencyReferences(ImmutableArray<IEnemyDefinition> activeDlcEnemies)
     {
         var templateScene = new ScnFile(
                 FileVersions.SceneFileVersion,
                 context.GetSupplementFile(TemplateScenePath))
             .ReadScene(context.TypeRepository);
-        var aliases = EnemyDefinitions.Instance.All
-            .Where(enemy => enemy.IsDlc)
+        var aliases = activeDlcEnemies
             .Select(enemy => enemy.EnemyAlias)
             .Distinct(StringComparer.OrdinalIgnoreCase);
 

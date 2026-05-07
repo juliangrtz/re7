@@ -268,13 +268,13 @@ internal class EnemyMultiplierModifier : Modifier
         gameObject.Visit(node =>
         {
             if (node is not RszObjectNode objectNode ||
-                !IsEnemyGenerateAction(objectNode) ||
-                !IsEnemyGenerateEnabled(objectNode))
+                !EnemyGenerateActionComponents.IsSingleEnemyGenerateAction(objectNode) ||
+                !EnemyGenerateActionComponents.IsEnabled(objectNode))
             {
                 return;
             }
 
-            var spawnInfoGuid = GetEnemyGenerateSpawnInfo(objectNode);
+            var spawnInfoGuid = EnemyGenerateActionComponents.GetSpawnInfo(objectNode);
             if (spawnInfoGuid != Guid.Empty)
                 result.Add(spawnInfoGuid);
         });
@@ -449,10 +449,10 @@ internal class EnemyMultiplierModifier : Modifier
         return generationGameObject.Visit(node =>
         {
             if (node is RszObjectNode objectNode &&
-                IsEnemyGenerateAction(objectNode) &&
-                spawnInfoGuids.Contains(GetEnemyGenerateSpawnInfo(objectNode)))
+                EnemyGenerateActionComponents.IsSingleEnemyGenerateAction(objectNode) &&
+                spawnInfoGuids.Contains(EnemyGenerateActionComponents.GetSpawnInfo(objectNode)))
             {
-                return DisableEnemyGenerateAction(objectNode);
+                return EnemyGenerateActionComponents.Disable(objectNode);
             }
 
             return node;
@@ -465,37 +465,19 @@ internal class EnemyMultiplierModifier : Modifier
     {
         return generationGameObject.Visit(node =>
         {
-            if (node is not RszObjectNode objectNode || !IsEnemyGenerateAction(objectNode))
+            if (node is not RszObjectNode objectNode ||
+                !EnemyGenerateActionComponents.IsSingleEnemyGenerateAction(objectNode))
                 return node;
 
-            var spawnInfoGuid = GetEnemyGenerateSpawnInfo(objectNode);
+            var spawnInfoGuid = EnemyGenerateActionComponents.GetSpawnInfo(objectNode);
             if (spawnInfoMap.TryGetValue(spawnInfoGuid, out var newSpawnInfoGuid))
             {
-                return objectNode
-                    .SetField("v0_Enabled", true)
-                    .SetField("SpawnInfo", newSpawnInfoGuid);
+                return EnemyGenerateActionComponents.EnableForSpawnInfo(objectNode, newSpawnInfoGuid);
             }
 
-            return DisableEnemyGenerateAction(objectNode);
+            return EnemyGenerateActionComponents.Disable(objectNode);
         });
     }
-
-    private static RszObjectNode DisableEnemyGenerateAction(RszObjectNode objectNode)
-        => objectNode
-            .SetField("v0_Enabled", false)
-            .SetField("SpawnInfo", Guid.Empty);
-
-    private static bool IsEnemyGenerateAction(RszObjectNode objectNode)
-        => objectNode.Type.Name == "app.fsm.EnemyGenerate";
-
-    private static bool IsEnemyGenerateEnabled(RszObjectNode objectNode)
-        => objectNode.Type.FindFieldIndex("v0_Enabled") == -1 ||
-           RszSerializer.Deserialize<bool>(objectNode["v0_Enabled"]);
-
-    private static Guid GetEnemyGenerateSpawnInfo(RszObjectNode objectNode)
-        => objectNode.Type.FindFieldIndex("SpawnInfo") == -1
-            ? Guid.Empty
-            : RszSerializer.Deserialize<Guid>(objectNode["SpawnInfo"]);
 
     private static bool IsGenerationGameObject(RszGameObject gameObject)
         => gameObject.FindComponent("via.fsm.Fsm") != null &&

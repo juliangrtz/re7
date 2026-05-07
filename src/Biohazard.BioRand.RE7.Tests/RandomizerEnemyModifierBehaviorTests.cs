@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Enemies;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.BioRand;
@@ -14,8 +15,10 @@ public class RandomizerEnemyModifierBehaviorTests
     private static readonly string DlcChapter9ScenePath = PakPath.SceneFile("scenes/dlc/dlc_chapter9.scn");
     private static readonly string Ch8ChapterScenePath = PakPath.SceneFile("ch8/scenes/chapter8.scn");
     private static readonly string Ch8GameScenePath = PakPath.SceneFile("ch8/scenes/ch8_game.scn");
+    private static readonly string Ch8EnemyScenePath = PakPath.SceneFile("ch8/scenes/chapter/chapter8/enemy_c08.scn");
     private const string Ch8Em4600MeshPath = "CH8/Character/Enemy/em4600/em4600.mesh";
     private const string Ch8Em4600MaterialPath = "CH8/Character/Enemy/em4600/em4600.mdf2";
+    private const string Ch8Em4400PrefabPath = "CH8/Prefab/Character/Enemy/Em4400/Em4400.pfb";
     private const string Ch8Em4600MeshPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mesh.220128762";
     private const string Ch8Em4600MaterialPakPath = "natives/stm/ch8/character/enemy/em4600/em4600.mdf2.21";
     private const string Ch8Em4600DeadBodyPrefabPakPath = "natives/stm/ch8/prefab/character/enemy/em4600/nomove/em4600deadbody.pfb.17";
@@ -90,17 +93,6 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void DefaultConfiguration_DlcEnemyRatiosAreOptIn()
-    {
-        var configuration = RandomizerExecutor.DefaultConfiguration;
-        foreach (var enemy in EnemyDefinitions.Instance.All.Where(enemy => enemy.IsDlc))
-        {
-            var ratio = Convert.ToDouble(configuration[$"enemy-ratio-{enemy.Id.ToLowerInvariant()}"]);
-            Assert.Equal(0.0, ratio);
-        }
-    }
-
-    [Fact]
     public void TemplateService_ContainsDlcEnemyTemplatesImportedFromCh8Ch9()
     {
         using var result = RandomizerTest.RunState();
@@ -127,18 +119,22 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void DlcEnemySupport_StandbysDlcEnemyAssetSceneChains()
+    public void DlcEnemySupport_StandbysSelectedSupportSceneChainsWithoutActivatingDlcRoots()
     {
-        using var result = RandomizerTest.RunState();
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4400", "EndOfZoeEm7700"]);
+        });
 
-        Assert.True(result.WasFileModified(DlcActiveRootScenePath));
-        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcActiveRootScenePath), "DLC_Chapter8"));
-        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcActiveRootScenePath), "DLC_Chapter9"));
-        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcChapter8ScenePath), "Chapter8"));
-        Assert.True(IsFolderStandby(result.ReadAfterScene(DlcChapter9ScenePath), "Chapter9"));
+        Assert.False(result.WasFileModified(DlcActiveRootScenePath));
+        Assert.False(result.WasFileModified(DlcChapter8ScenePath));
+        Assert.False(result.WasFileModified(DlcChapter9ScenePath));
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8ChapterScenePath), "CH8_Game"));
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8GameScenePath), "Enemy_c08"));
-        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8GameScenePath), "Mother_c08"));
+        Assert.True(IsFolderStandby(result.ReadAfterScene(Ch8EnemyScenePath), "c08_AIMap"));
+        Assert.False(IsFolderStandby(result.ReadAfterScene(Ch8GameScenePath), "Mother_c08"));
+        Assert.False(IsFolderStandby(result.ReadAfterScene(Ch8EnemyScenePath), "c08_MotherLoder"));
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9ChapterScenePath), "c09_InGame"));
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9InGameScenePath), "Enemy_c09"));
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9InGameScenePath), "VFX_c09"));
@@ -152,6 +148,25 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.True(IsFolderStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_4"));
         Assert.True(IsSceneFolderControlDefaultStandby(result.ReadAfterScene(Ch9EnemyScenePath), "Enemy_c09_1"));
         Assert.True(IsSceneFolderControlDefaultStandby(result.ReadAfterScene(Ch9VfxScenePath), "VFX_c09_1"));
+    }
+
+    [Fact]
+    public void DlcEnemySupport_IncludesREFrameworkPlugin_WhenDlcEnemiesAreEnabled()
+    {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
+        {
+            config["random-enemies"] = true;
+            config["random-enemy-drops"] = false;
+            config["allow-dlc-items"] = false;
+            config["recipes-add-new"] = false;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4400"]);
+        });
+
+        var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0xD1CE7);
+        using var zipDisposable = zip;
+
+        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
     }
 
     [Fact]
@@ -234,7 +249,83 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_NotAHeroReplacementsRemainMultipliableAfterCh8Promotion()
+    public void RandomizeEnemies_NotAHeroReplacementsAddMatchingPoolInstances()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4400"]);
+        });
+
+        var matchingGenerators = 0;
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
+            {
+                var generator = EnemyGenerationComponents.FindGeneratorNode(gameObject);
+                if (generator == null || !ContainsSpawnInfoAlias(gameObject, "Em4400"))
+                {
+                    return;
+                }
+
+                matchingGenerators++;
+                var poolObject = gameObject.Children.Single(child =>
+                    EnemyGenerationComponents.FindPoolNode(child) != null);
+                Assert.Contains(poolObject.Children, child =>
+                    child.Name.Equals("Em4400", StringComparison.OrdinalIgnoreCase) &&
+                    child.Prefab?.Equals(Ch8Em4400PrefabPath, StringComparison.OrdinalIgnoreCase) == true &&
+                    GetGameObjectTag(child).Equals("Enemy", StringComparison.OrdinalIgnoreCase));
+            });
+        }
+
+        Assert.True(matchingGenerators > 0, "Expected at least one Em4400 generator replacement.");
+    }
+
+    [Fact]
+    public void RandomizeEnemies_NotAHeroReplacementsKeepBaseEnemyGenerateActions()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4400"]);
+        });
+
+        var baseGenerateActions = 0;
+        var ch8GenerateActions = 0;
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            var scene = result.ReadAfterScene(path);
+            var ch8SpawnInfoGuids = GetSpawnInfoGameObjects(scene, "Em4400")
+                .Select(spawnInfo => spawnInfo.Guid)
+                .ToHashSet();
+            if (ch8SpawnInfoGuids.Count == 0)
+            {
+                continue;
+            }
+
+            foreach (var action in GetEnemyGenerateActions(scene, ch8SpawnInfoGuids))
+            {
+                if (action.Type.Name == EnemyGenerateActionComponents.Ch8EnemyGenerateType)
+                {
+                    ch8GenerateActions++;
+                }
+                else if (action.Type.Name == EnemyGenerateActionComponents.EnemyGenerateType)
+                {
+                    baseGenerateActions++;
+                }
+            }
+        }
+
+        Assert.True(baseGenerateActions > 0, "Expected at least one base enemy generate action to reference an Em4400 spawn info.");
+        Assert.Equal(0, ch8GenerateActions);
+    }
+
+    [Fact]
+    public void RandomizeEnemies_NotAHeroReplacementsRemainMultipliableWithCh8GeneratorComponents()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -278,6 +369,32 @@ public class RandomizerEnemyModifierBehaviorTests
             Assert.Equal(
                 expectedSpawnInfoType,
                 EnemySpawnInfoComponents.FindSpawnInfoNode(spawnInfoGameObject)?.Type.Name);
+        }
+    }
+
+    [Fact]
+    public void RandomizeEnemies_DlcEnemyReplacementsKeepSetupCriticalParameters()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["NotAHeroEm4600"]);
+        });
+
+        var spawnInfos = GetChangedScenePaths(result)
+            .SelectMany(path => GetSpawnInfoGameObjects(result.ReadAfterScene(path), "Em4600"))
+            .Select(EnemySpawnInfoComponents.FindSpawnInfoNode)
+            .OfType<RszObjectNode>()
+            .ToArray();
+
+        Assert.NotEmpty(spawnInfos);
+        foreach (var spawnInfo in spawnInfos)
+        {
+            AssertNonNullField(spawnInfo, "MapParameter");
+            AssertNonNullField(spawnInfo, "HealthParameter");
+            AssertNonNullField(spawnInfo, "spawnNeedArea");
         }
     }
 
@@ -437,6 +554,33 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
+    private static string GetGameObjectTag(RszGameObject gameObject)
+    {
+        Assert.NotEqual(-1, gameObject.Settings.Type.FindFieldIndex("Tag"));
+        return ((RszStringNode)gameObject.Settings["Tag"]).Value;
+    }
+
+    private static List<RszObjectNode> GetEnemyGenerateActions(RszScene scene, HashSet<Guid> spawnInfoGuids)
+    {
+        var result = new List<RszObjectNode>();
+        scene.VisitGameObjects(gameObject =>
+        {
+            foreach (var component in gameObject.Components)
+            {
+                component.Visit(node =>
+                {
+                    if (node is RszObjectNode objectNode &&
+                        EnemyGenerateActionComponents.IsSingleEnemyGenerateAction(objectNode) &&
+                        spawnInfoGuids.Contains(EnemyGenerateActionComponents.GetSpawnInfo(objectNode)))
+                    {
+                        result.Add(objectNode);
+                    }
+                });
+            }
+        });
+        return result;
+    }
+
     private static List<RszGameObject> GetSpawnInfoGameObjects(RszScene scene, string alias)
     {
         var result = new List<RszGameObject>();
@@ -448,6 +592,12 @@ public class RandomizerEnemyModifierBehaviorTests
             }
         });
         return result;
+    }
+
+    private static void AssertNonNullField(RszObjectNode node, string fieldName)
+    {
+        Assert.NotEqual(-1, node.Type.FindFieldIndex(fieldName));
+        Assert.False(node[fieldName] is RszNullNode, $"Expected '{node.Type.Name}.{fieldName}' to remain non-null.");
     }
 
     private static bool IsFolderStandby(RszScene scene, string folderName)

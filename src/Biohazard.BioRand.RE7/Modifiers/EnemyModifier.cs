@@ -238,8 +238,11 @@ internal class EnemyModifier : Modifier
             template = template.AddOrUpdateComponent(templateTransform);
         }
 
-        return template.WithName(enemyId);
+        return WithGameObjectTag(template.WithName(enemyId), "Enemy");
     }
+
+    private static RszGameObject WithGameObjectTag(RszGameObject gameObject, string tag)
+        => gameObject.WithSettings(gameObject.Settings.Set("Tag", tag));
 
     private RszGameObject GetOrCreateSpawnInfoTemplate(
         Randomizer randomizer,
@@ -292,7 +295,7 @@ internal class EnemyModifier : Modifier
                 var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
                 var templateSpawnInfo = EnemySpawnInfoComponents.FindSpawnInfo(spawnInfoTemplate);
                 var assignedHealth = healthResolver.GetHealth(newEnemy, templateSpawnInfo?.HealthParameter?.Health);
-                var newSpawnInfoNode = CopyCommonFields(originalSpawnInfoNode, spawnInfoTemplateNode)
+                var newSpawnInfoNode = CopySharedSerializedSpawnInfoFields(originalSpawnInfoNode, spawnInfoTemplateNode)
                     .Set("UnitAlias", enemyId)
                     .Set("HealthParameter.Health", assignedHealth);
 
@@ -413,14 +416,20 @@ internal class EnemyModifier : Modifier
             .ToImmutableArray());
     }
 
-    private static RszObjectNode CopyCommonFields(RszObjectNode source, RszObjectNode target)
+    private static RszObjectNode CopySharedSerializedSpawnInfoFields(RszObjectNode source, RszObjectNode target)
     {
         var result = target;
         foreach (var targetField in target.Type.Fields)
         {
             if (source.Type.FindFieldIndex(targetField.Name) is var sourceIndex && sourceIndex != -1)
             {
-                result = result.SetField(targetField.Name, source.Children[sourceIndex]);
+                var sourceNode = source.Children[sourceIndex];
+                if (sourceNode is RszNullNode)
+                {
+                    continue;
+                }
+
+                result = result.SetField(targetField.Name, sourceNode);
             }
         }
 

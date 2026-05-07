@@ -1,3 +1,4 @@
+using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
@@ -36,9 +37,23 @@ internal class Randomizer : IDisposable
     private bool IsREFrameworkRequired()
         => GetConfigOption<bool>("random-enemy-drops")
                                         || GetConfigOption<bool>("allow-dlc-items")
+                                        || IsDlcEnemyIntegrationRequired()
                                         || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
                                         || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
                                         || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
+
+    private bool IsDlcEnemyIntegrationRequired()
+    {
+        if (!GetConfigOption<bool>("random-enemies") &&
+            GetConfigOption("extra-enemy-amount", 0.0) <= 0.0)
+        {
+            return false;
+        }
+
+        return EnemyDefinitions.Instance.All
+            .Where(enemy => enemy.IsDlc)
+            .Any(enemy => GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}") != 0.0);
+    }
 
     public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
     {
