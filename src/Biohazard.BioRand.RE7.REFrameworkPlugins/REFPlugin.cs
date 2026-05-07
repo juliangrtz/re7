@@ -22,6 +22,7 @@ public class REFPlugin
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
     private const int ImportedDlcEnemyRuntimeScanIntervalFrames = 30;
+    private const float ImportedCh8Em4400ActionRecoveryMinActiveSeconds = 3.0f;
 
     private static bool IsInitialized = false;
     private static int importedDlcEnemyRuntimeScanFrame = 0;
@@ -71,8 +72,6 @@ public class REFPlugin
         "app.CH8Em4400.Action.CH8Kneel",
         "app.CH8Em4400.Action.CH8SuspendWalk",
         "app.CH8Em4400.Action.CH8AppearDamage",
-        "app.CH8Em4400.Action.CH8Damage",
-        "app.CH8Em4400.Action.CH8Dead",
         "app.CH8Em4400.Action.CH8Idle",
         "app.CH8Em4400.Action.CH8Move",
     ];
@@ -851,6 +850,7 @@ public class REFPlugin
                 bridgedCh8Em4400Instances.Contains(instanceAddress) &&
                 IsImportedCh8Em4400BridgeComplete(action))
             {
+                TryRecoverImportedCh8Em4400CurrentAction(action);
                 return true;
             }
 
@@ -979,6 +979,7 @@ public class REFPlugin
                 bridgedCh8Em4400Instances.Add(instanceAddress);
             }
 
+            TryRecoverImportedCh8Em4400CommandActionStall(TryRead(() => commandController?.CurrentAction));
             return true;
         }
         catch (Exception ex)
@@ -1465,10 +1466,88 @@ public class REFPlugin
         }
     }
 
+    private static bool TryRecoverImportedCh8Em4400CommandActionStall(CommandAction? commandAction)
+    {
+        if (commandAction == null || !IsNonDlcChapterActive())
+            return false;
+
+        try
+        {
+            var typeName = GetRuntimeTypeName(commandAction);
+            if (typeName == null || !typeName.StartsWith("app.CH8Em4400.Action.", StringComparison.Ordinal))
+                return false;
+
+            if (!commandAction.isActive ||
+                commandAction.isActionEnd ||
+                commandAction.isSatisfy ||
+                commandAction.currentProcess != CommandAction.ProcessType.Active ||
+                commandAction.activeTimer < ImportedCh8Em4400ActionRecoveryMinActiveSeconds)
+            {
+                return false;
+            }
+
+            var enemyCommandAction = CastObject<EnemyCommandActionBase>(commandAction);
+            var action = CastObject<CH8Em4400ActionController>(TryRead(() => enemyCommandAction?.enemyActionController));
+            if (action == null || !IsImportedCh8Em4400BridgeComplete(action))
+                return false;
+
+            var commandController = TryRead(() => commandAction.ActionController)
+                ?? TryRead(() => action.myCommandActionController);
+            if (commandController == null ||
+                commandController.currentActionNo != commandAction.ID ||
+                GetCommandActionCount(commandController) != Ch8Em4400CommandActionTypeNames.Length ||
+                GetObjectAddress(commandController.CurrentAction) != GetObjectAddress(commandAction))
+            {
+                return false;
+            }
+
+            var owner = TryRead(() => commandAction.Owner) ?? TryRead(() => action.GameObject);
+            if (!IsGameObjectRuntimeActive(owner))
+                return false;
+
+            var smoothAnimator = TryRead(() => commandAction.SmoothAnim) ?? TryRead(() => action.mySmoothAnim);
+            if (smoothAnimator == null ||
+                smoothAnimator.CurrentState != SmoothAnimator.State.EndTransition ||
+                smoothAnimator.hasRequest ||
+                smoothAnimator.isExecuting ||
+                !smoothAnimator.isEndExecuting)
+            {
+                return false;
+            }
+
+            if (TrySetObjectField(commandAction, "IsActionEnd", true))
+                return true;
+
+            TryWrite(() => commandAction.IsActionEnd = true);
+            TryWrite(() => commandAction.isActionEnd = true);
+            return commandAction.isActionEnd;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Failed to recover imported CH8 Em4400 command action stall: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static bool TryRecoverImportedCh8Em4400CurrentAction(CH8Em4400ActionController? action)
+    {
+        if (action == null)
+            return false;
+
+        var commandController = TryRead(() => action.myCommandActionController)
+            ?? GetComponent<CH8CommandActionController>(TryRead(() => action.GameObject), CH8CommandActionController.REFType);
+        return TryRecoverImportedCh8Em4400CommandActionStall(TryRead(() => commandController?.CurrentAction));
+    }
+
     private static bool TryTickImportedCh8Em4400Instance(via.GameObject? enemyInstance)
     {
-        return IsGameObjectRuntimeActive(enemyInstance) &&
-            TryBridgeImportedCh8Em4400Instance(enemyInstance);
+        if (!IsGameObjectRuntimeActive(enemyInstance))
+            return false;
+
+        var action = GetComponent<CH8Em4400ActionController>(enemyInstance, CH8Em4400ActionController.REFType);
+        var bridged = TryBridgeImportedCh8Em4400Instance(enemyInstance, action);
+        TryRecoverImportedCh8Em4400CurrentAction(action);
+        return bridged;
     }
 
     private static void TrySetupCh8Em4400CommandAction(
@@ -2011,7 +2090,9 @@ public class REFPlugin
             TryPrepareImportedDlcEnemySpawnInfoList(pool?.ExternalSpawnInfos) |
             TryPrepareImportedDlcEnemySpawnInfoList(pool?.ExternalForceSpawnInfos);
 
-        var hasDlcInstance = tickInstances && TryTickImportedDlcEnemyInstances(pool);
+        var hasDlcInstance = tickInstances &&
+            (isImportedGenerator || hasDlcSpawnInfo) &&
+            TryTickImportedDlcEnemyInstances(pool);
 
         if (!isImportedGenerator && !hasDlcSpawnInfo && !hasDlcInstance)
             return false;
@@ -2126,6 +2207,13 @@ public class REFPlugin
         }
     }
 
+    [MethodHook(typeof(app.CH8Em4400.Action.CH8Rush), nameof(app.CH8Em4400.Action.CH8Rush.lateProcess), MethodHookType.Pre)]
+    private static PreHookResult CH8Em4400_CH8Rush_lateProcess_Pre(Span<ulong> args)
+    {
+        TryRecoverImportedCh8Em4400CommandActionStall(CastObject<CommandAction>(ManagedObject.ToManagedObject(args[1])));
+        return PreHookResult.Continue;
+    }
+
     [MethodHook(typeof(EnemySpawnInfo), nameof(EnemySpawnInfo.setupInstance), MethodHookType.Pre)]
     private static PreHookResult EnemySpawnInfo_setupInstance_Pre(Span<ulong> args)
     {
@@ -2178,7 +2266,7 @@ public class REFPlugin
     {
         if (ShouldRunImportedDlcEnemyRuntimeScan())
         {
-            TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]), tickInstances: false);
+            TryPrepareImportedDlcEnemyGenerators(ManagedObject.ToManagedObject(args[1]), tickInstances: true);
         }
 
         return PreHookResult.Continue;
