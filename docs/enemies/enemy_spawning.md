@@ -120,6 +120,46 @@ Important CH8 alias quirks:
 - `Em4460` is Mama Mold. It has a normal generator-style source and also appears in a wrapper-style object with nested `Em4450` spawn info.
 - `Em4500` is Mutated Lucas, the Not a Hero final boss. Treat it as a special-case/boss enemy, not a safe baseline integration target.
 
+## Em4400 runtime integration pitfalls
+
+The campaign `Em4400` integration showed that a DLC enemy can be scene-valid and still be runtime-invalid. The enemy can have the mesh, prefab, `Enemy` tag, CH8 generator/pool/spawn-info classes, update/draw enabled, a full component stack, loaded directive resources, a target, and sane spawn-info flags, while still T-posing, idling forever, freezing in actions, or attacking inconsistently. Future DLC work should treat "visible and animated" as only the first runtime gate.
+
+The false leads from the `Em4400` work are important:
+
+- A T-posed `Em4400` was not missing its mesh/material/prefab assets.
+- `CH8/Prefab/Character/Enemy/Em4400/parameter/directives/Em4400DirectivesHolder.user` and `CH8Em4400BattleDirective_0.user` were present in the live `CH8Em4400Think`; REFramework summary/inspect views can display object fields as `null` even when direct field reads and property getters return valid objects.
+- Adding a chapter-specific AI map did not fix the passive behavior. Absence of the CH8 blackboard in campaign is real, but it was not the immediate cause of the observed stale Em4400 state.
+- `CH8Em4400ActionController.myUpdateController = null` and no `app.CH8EnemyUpdateController` on the enemy object matched a healthy Not a Hero instance and should not be treated as a defect.
+- A live `Discovery -> Follow` goal chain can exist while the enemy still behaves passively; passive behavior does not automatically mean the think graph failed to build.
+
+The decisive T-pose cause was native command-action registration, not scene data. `MyCommandActionContainer` and `CH8CommandActionController.ActionList` are not serialized on the CH8 scene template. IDA showed the real Not a Hero path:
+
+- `app.CH8Em4400ActionController::doAwake149958` creates/inserts the Em4400 command actions into `MyCommandActionContainer`.
+- `app.CommandActionController::regist45234` enumerates `container.actions`, calls each action's native `setup(owner, commandController)`, then appends it to `ActionList`.
+- Healthy Not a Hero `Em4400` has exactly 29 command actions. Treat `MyCommandActionContainer.get_count() == 29` and `ActionList.Count == 29` as hard parity gates.
+
+The managed fallback must mimic that native split. Populate the existing `MyCommandActionContainer` with the known healthy 29 Em4400 action classes, then let `regist(container)` fill `ActionList` only when the command controller is already started and `ActionList` is still empty. Do not add directly to `ActionList` except as a last-resort fallback after native/container registration has demonstrably failed. Also do not accept partial or duplicated states:
+
+- `container = 0`, `ActionList = 0`: T-pose/no current action.
+- `container = 0`, `ActionList = 29`: animated but still not Not a Hero parity.
+- `container = 29`, `ActionList = 58`: exact double registration; it looked more active at first but left the enemy passive/stale.
+- `container = 29`, `ActionList = 29`: expected command-registration parity.
+
+Do not call CH8 command-controller lifecycle/update methods from the managed plugin in campaign scenes. A one-shot `CH8CommandActionController.doUpdate()` helped in one probe, then crashed in later testing. Likewise, do not broad-write object references with guessed backing field names or `TypeDefinition.GetField(...).SetDataBoxed(...)`; those builds corrupted or crashed the REFramework runtime. Use exact TDB field knowledge for analysis, but keep live writes narrow and validated.
+
+After command registration was fixed, `Em4400` could still freeze in terminal `CH8Rush`/`CH8Splash` states. The safe recovery was a narrow action-stall check: non-DLC chapter, current action is `app.CH8Em4400.Action.*`, complete 29-action registration, current-action address matches the command controller, action is active/non-satisfying/non-ended, owner is active, and `SmoothAnimator` has completed transition with no pending request. Only in that state should the plugin mark the current action ended; do not tick the controller.
+
+Runtime validation for future DLC enemies should use a source-DLC parity table instead of relying on visual behavior. At minimum compare:
+
+1. Spawn-info state: requested operation, spawned/alive/appeared/completed flags, enemy instance binding, and transform warp.
+2. Pool/generator state: active flags, pause flags, pool instance lists, and `Enemy` tags on direct pool children.
+3. Component graph: action, think, status, order, damage, strike, sensors, motion, navigation, and target references.
+4. Resource/directive state: direct field reads and property getters, not only broad inspect summaries.
+5. Command state: native container count, action-list count, current action number/type, idle action, request list, and action timers.
+6. Think/goal state: active root/basic/sub goals, target distance, evaluator/goal lists, and whether the think layer is issuing movement or attack requests.
+
+Bosses and scripted DLC content should be assumed to need their own runtime parity pass. Normal CH8 molded variants may share enough infrastructure to be cheaper, but anything with boss phases, arena scripts, DLC managers, UI hooks, blackboards, or custom command-action containers can repeat the `Em4400` failure pattern.
+
 ## Scene limit mapping
 
 `app.fsm.EnemyGenerate::start357603` resolves its target `EnemySpawnInfo` by GUID first. It can fall back to
