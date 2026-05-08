@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.REFra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntelOrca.Biohazard.REE", "src\reeutils\src\IntelOrca.Biohazard.REE\IntelOrca.Biohazard.REE.csproj", "{FA96144B-B3DC-4E50-C4F2-BD7C6771F388}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Biohazard.BioRand.RE7.Benchmarks", "src\Biohazard.BioRand.RE7.Benchmarks\Biohazard.BioRand.RE7.Benchmarks.csproj", "{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{FA96144B-B3DC-4E50-C4F2-BD7C6771F388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA96144B-B3DC-4E50-C4F2-BD7C6771F388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA96144B-B3DC-4E50-C4F2-BD7C6771F388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{F39039EE-DA05-4396-A844-998D0B6A4E41} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{2375B9DD-33A3-453C-B1F3-EC9275A84944} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 		{FA96144B-B3DC-4E50-C4F2-BD7C6771F388} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
+		{13805E2E-E45E-4BDA-9A56-9C5E70D76FEF} = {C63AE2CF-8873-4DD8-9E14-01E099F90870}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5780D5E9-A2CD-4CCE-AF3A-F785EC19D2AB}
