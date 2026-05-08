@@ -131,9 +131,11 @@ internal class ItemModifier : Modifier
                         }
                     }
 
-                    newGameObject.Settings = newGameObject.Settings
-                        .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
-                        .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"));
+                    newGameObject = newGameObject.WithSettings(
+                        newGameObject.Settings
+                            .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
+                            .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"))
+                    );
 
                     scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject, keepChildren: false);
                 }

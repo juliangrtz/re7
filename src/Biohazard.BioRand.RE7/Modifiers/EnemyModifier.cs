@@ -434,13 +434,15 @@ internal class EnemyModifier : Modifier
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
-                originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components
+                originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
+                    originalSpawnInfoGameObject.Components
                     .Remove(originalSpawnOptions)
-                    .Add(newSpawnOptions);
+                    .Add(newSpawnOptions));
                 if (dlcSpawnOptions != null)
                 {
                     originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
-                    originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions);
+                    originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
+                        originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions));
                 }
 
                 var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
@@ -511,7 +513,7 @@ internal class EnemyModifier : Modifier
             }
         }
 
-        poolObject.Children = newChildren.ToImmutableArray();
+        poolObject = poolObject.WithChildren(newChildren.ToImmutableArray());
 
         poolObject = poolObject.AddOrUpdateComponent(poolComponent);
 
