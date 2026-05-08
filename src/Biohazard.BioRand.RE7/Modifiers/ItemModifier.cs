@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.Services;
 using Biohazard.BioRand.RE7.Extensions;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -20,7 +21,6 @@ internal class ItemModifier : Modifier
         var rng = context.Rng;
         var itemRandomizer = randomizer.ItemRandomizer;
         var itemPlacementService = randomizer.ItemPlacementService;
-        var areaService = randomizer.AreaService;
         var templateService = randomizer.TemplateService;
         var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes")
             || MadhouseSaveModifier.IsEnabled(randomizer);
@@ -29,46 +29,8 @@ internal class ItemModifier : Modifier
         var randomItemSettings = context.RandomItemSettings;
         var templateInstanceRng = randomizer.GetRng("modifier/static-items/template-instances");
 
-        var candidates = new List<ItemReplacementCandidate>();
-        foreach (var area in areaService.Areas)
-        {
-            foreach (var itemGameObject in area.Items)
-            {
-                foreach (var placement in itemPlacementService.FromSceneGuid(area.Path, itemGameObject.Guid))
-                {
-                    if (placement.Dlc != null
-                        || placement.IsExtra
-                        || !placement.Enabled
-                        || placement.Tags.Contains(ItemPlacement.ExcludeTag)
-                        || _birdCageGuids.Contains(placement.Guid))
-                    {
-                        continue;
-                    }
-
-                    var definition = _itemDefinitions.FromId(placement.Id);
-                    if (definition == null || !itemRandomizer.IsItemAllowed(definition))
-                        continue;
-
-                    if (!replaceMadhouseTapes && definition.Id == "SaveTape")
-                    {
-                        logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {placement.SceneFile}");
-                        logger.LogLine($"GUID: {placement.Guid}");
-                        continue;
-                    }
-
-                    if (!replaceWeapons && definition.IsWeapon)
-                    {
-                        logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {placement.SceneFile}");
-                        logger.LogLine($"GUID: {placement.Guid}");
-                        continue;
-                    }
-
-                    candidates.Add(new ItemReplacementCandidate(area.Path, definition, placement));
-                }
-            }
-        }
-
-        candidates = candidates
+        var candidates = GetIndexedItemPlacements(randomizer, itemPlacementService)
+            .SelectMany(placement => CreateCandidate(logger, itemRandomizer, placement, replaceMadhouseTapes, replaceWeapons))
             .DistinctBy(candidate => candidate.Key)
             .ToList();
         if (candidates.Count == 0)
@@ -88,11 +50,17 @@ internal class ItemModifier : Modifier
 
             randomizer.FileRepository.ModifyScnFile(areaGroup.Key, scene =>
             {
+                var targetGuids = itemsToReplace
+                    .Select(candidate => candidate.Placement.Guid)
+                    .ToHashSet();
+                var originalGameObjects = FindGameObjectsByGuid(scene, targetGuids);
+                var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
+
                 foreach (var candidate in itemsToReplace)
                 {
                     var definition = candidate.Definition;
                     var placement = candidate.Placement;
-                    var originalGameObject = scene.FindGameObject(placement.Guid)!;
+                    var originalGameObject = originalGameObjects[placement.Guid];
                     var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = replacements[candidate.Key];
@@ -137,14 +105,131 @@ internal class ItemModifier : Modifier
                             .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"))
                     );
 
-                    scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject, keepChildren: false);
+                    replacementGameObjects[originalGameObject.Guid] = newGameObject.WithGuid(originalGameObject.Guid);
                 }
 
-                return scene;
+                return ReplaceGameObjects(scene, replacementGameObjects);
             });
 
             logger.Pop();
         }
+    }
+
+    private static Dictionary<Guid, RszGameObject> FindGameObjectsByGuid(RszScene scene, HashSet<Guid> targetGuids)
+    {
+        var result = new Dictionary<Guid, RszGameObject>();
+        if (targetGuids.Count == 0)
+            return result;
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (targetGuids.Remove(gameObject.Guid))
+            {
+                result[gameObject.Guid] = gameObject;
+            }
+        });
+
+        return result;
+    }
+
+    private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)
+        where T : IRszSceneNode
+    {
+        if (node.Children.IsDefaultOrEmpty)
+            return node;
+
+        var children = node.Children.ToBuilder();
+        for (var i = 0; i < children.Count; i++)
+        {
+            if (children[i] is RszGameObject oldGameObject && replacements.TryGetValue(oldGameObject.Guid, out var replacement))
+            {
+                children[i] = replacement.WithGuid(oldGameObject.Guid);
+            }
+            else
+            {
+                children[i] = ReplaceGameObjects(children[i], replacements);
+            }
+        }
+
+        return (T)node.WithChildren(children.ToImmutable());
+    }
+
+    private static IEnumerable<ItemPlacement> GetIndexedItemPlacements(Randomizer randomizer, ItemPlacementService itemPlacementService)
+    {
+        var targetRepository = AreaSceneTargetRepository.Default;
+        if (targetRepository.All.Count == 0)
+        {
+            foreach (var area in randomizer.AreaService.Areas)
+            {
+                foreach (var itemGameObject in area.Items)
+                {
+                    foreach (var placement in itemPlacementService.FromSceneGuid(area.Path, itemGameObject.Guid))
+                    {
+                        yield return placement;
+                    }
+                }
+            }
+
+            yield break;
+        }
+
+        var eligibleScenePaths = AreaDefinitionRepository.Default.All
+            .Where(area => area.Dlc == null)
+            .Select(area => area.Path)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        foreach (var targets in targetRepository.All)
+        {
+            if (!eligibleScenePaths.Contains(targets.Path))
+                continue;
+
+            foreach (var itemGuid in targets.GetItemGuids())
+            {
+                if (!itemPlacementService.HasItem(itemGuid))
+                    continue;
+
+                foreach (var placement in itemPlacementService.FromSceneGuid(targets.Path, itemGuid))
+                {
+                    yield return placement;
+                }
+            }
+        }
+    }
+
+    private static IEnumerable<ItemReplacementCandidate> CreateCandidate(
+        RandomizerLogger logger,
+        ItemRandomizer itemRandomizer,
+        ItemPlacement placement,
+        bool replaceMadhouseTapes,
+        bool replaceWeapons)
+    {
+        if (placement.Dlc != null
+            || placement.IsExtra
+            || !placement.Enabled
+            || placement.Tags.Contains(ItemPlacement.ExcludeTag)
+            || _birdCageGuids.Contains(placement.Guid))
+        {
+            yield break;
+        }
+
+        var definition = _itemDefinitions.FromId(placement.Id);
+        if (definition == null || !itemRandomizer.IsItemAllowed(definition))
+            yield break;
+
+        if (!replaceMadhouseTapes && definition.Id == "SaveTape")
+        {
+            logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {placement.SceneFile}");
+            logger.LogLine($"GUID: {placement.Guid}");
+            yield break;
+        }
+
+        if (!replaceWeapons && definition.IsWeapon)
+        {
+            logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {placement.SceneFile}");
+            logger.LogLine($"GUID: {placement.Guid}");
+            yield break;
+        }
+
+        yield return new ItemReplacementCandidate(placement.SceneFile, definition, placement);
     }
 
     private static Dictionary<ReplacementKey, Item> CreateReplacementMap(

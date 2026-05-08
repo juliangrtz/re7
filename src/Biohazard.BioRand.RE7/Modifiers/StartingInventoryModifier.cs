@@ -136,7 +136,8 @@ internal class StartingInventoryModifier : Modifier
         MainCampaignCharacter character,
         bool randomizeInventory,
         bool giveRandomSkills,
-        List<StartingWeaponCategory> weapons
+        List<StartingWeaponCategory> weapons,
+        IReadOnlyList<StartingInventoryItem> debugItems
     )
     {
         var giveAmmo = randomizer.GetConfigOption<bool>("random-starting-inventory-give-ammo");
@@ -198,15 +199,10 @@ internal class StartingInventoryModifier : Modifier
 #endif
             if (randomizeInventory)
             {
-                var debugItems = Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
-                    .Where(x => x.Quantity > 0)
-                    .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity })
-                    .ToArray();
-
-                if (debugItems.Any())
+                if (debugItems.Count > 0)
                 {
                     logger.LogLine($"Adding debug items: {string.Join(", ", debugItems.Select(x => $"{x.Num}x {x.ItemDataID}"))}");
-                    root._AddItems.AddRange(debugItems);
+                    root._AddItems.AddRange(debugItems.Select(CloneInventoryItem));
                 }
             }
 #if !DEBUG
@@ -227,6 +223,15 @@ internal class StartingInventoryModifier : Modifier
             return root;
         });
         logger.Pop();
+    }
+
+    private static StartingInventoryItem CloneInventoryItem(StartingInventoryItem item)
+    {
+        return new StartingInventoryItem()
+        {
+            ItemDataID = item.ItemDataID,
+            Num = item.Num,
+        };
     }
 
     private static List<string> PickRandomStartingSkills(Rng rng)
@@ -261,6 +266,9 @@ internal class StartingInventoryModifier : Modifier
         }
 
         var rng = randomizer.GetRng(RandomizerKey);
+        var debugItems = randomizeEthansInventory || randomizeMiasInventory
+            ? LoadDebugStartItems(randomizer)
+            : [];
 
         // Starter weapons
         var categories = Enum.GetValues<StartingWeaponCategory>();
@@ -312,7 +320,23 @@ internal class StartingInventoryModifier : Modifier
                 character,
                 shouldRandomizeInventory,
                 shouldGiveRandomSkills,
-                configuredCategories);
+                configuredCategories,
+                debugItems);
         }
+    }
+
+    private static IReadOnlyList<StartingInventoryItem> LoadDebugStartItems(Randomizer randomizer)
+    {
+#if !DEBUG
+        if (!randomizer.UserTags.Contains("re7:debugstartitems"))
+        {
+            return [];
+        }
+#endif
+
+        return Csv.Deserialize<DebugStartItem>(randomizer.DynamicData.GetData(DynamicDataName.DebugStartItems)!)
+            .Where(x => x.Quantity > 0)
+            .Select(x => new StartingInventoryItem() { ItemDataID = x.ItemId, Num = x.Quantity })
+            .ToArray();
     }
 }

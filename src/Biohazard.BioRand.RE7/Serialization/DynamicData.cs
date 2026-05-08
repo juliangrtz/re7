@@ -1,6 +1,8 @@
 ﻿using System.Collections.Immutable;
+using System.Collections.Concurrent;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
@@ -36,8 +38,10 @@ public sealed class DynamicData(bool download)
         [DynamicDataName.BirthdaySkills] = ("birthday_skills.csv", 1933511558),
     }.ToImmutableDictionary();
 
-    private readonly Dictionary<DynamicDataName, byte[]> _map = [];
-    private readonly Lock _sync = new();
+    private static readonly HttpClient s_httpClient = new();
+    private readonly ConcurrentDictionary<DynamicDataName, Lazy<byte[]?>> _map = [];
+
+    public bool DownloadEnabled => download;
 
     public static string? GetFileName(DynamicDataName name)
     {
@@ -50,37 +54,39 @@ public sealed class DynamicData(bool download)
 
     public byte[]? GetData(DynamicDataName name)
     {
-        lock (_sync)
-        {
-            if (!_map.TryGetValue(name, out var data))
-            {
-                var (fileName, gid) = g_map[name];
-                if (download && gid.HasValue)
-                {
-                    var downloadUrl = string.Format(GoogleSheetUrl, gid.Value);
-                    data = Download(downloadUrl);
-                }
-                else
-                {
-                    data = EmbeddedData.GetFile(fileName);
-                }
-                _map[name] = data;
-            }
-            return data;
-        }
+        return _map.GetOrAdd(
+            name,
+            key => new Lazy<byte[]?>(() => LoadData(key), LazyThreadSafetyMode.ExecutionAndPublication)
+        ).Value;
+    }
+
+    public void PrefetchAll()
+    {
+        if (!download)
+            return;
+
+        Parallel.ForEach(g_map.Keys, name => _ = GetData(name));
     }
 
     internal void SetData(DynamicDataName name, byte[] data)
     {
-        lock (_sync)
+        _map[name] = new Lazy<byte[]?>(() => data, LazyThreadSafetyMode.ExecutionAndPublication);
+    }
+
+    private byte[]? LoadData(DynamicDataName name)
+    {
+        var (fileName, gid) = g_map[name];
+        if (download && gid.HasValue)
         {
-            _map[name] = data;
+            var downloadUrl = string.Format(GoogleSheetUrl, gid.Value);
+            return Download(downloadUrl);
         }
+
+        return EmbeddedData.GetFile(fileName);
     }
 
     private static byte[] Download(string url)
     {
-        using var httpClient = new HttpClient();
-        return httpClient.GetByteArrayAsync(url).Result;
+        return s_httpClient.GetByteArrayAsync(url).GetAwaiter().GetResult();
     }
 }

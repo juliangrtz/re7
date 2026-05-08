@@ -86,7 +86,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         foreach (var skill in birthdaySkills)
         {
             CopyRequiredFile(GetSkillItemPrefabPath(skill), $"Birthday skill '{skill.ItemDataID}' item prefab");
-            CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill), birthdaySkillValues[skill.ItemDataID]);
+            CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill, birthdaySkillValues[skill.ItemDataID]), birthdaySkillValues[skill.ItemDataID]);
         }
     }
 
@@ -205,10 +205,10 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             return scene.WithChildren(children.ToImmutableArray());
         });
 
+        var itemResourceTemplate = context.GetScnFile(_itemResourceTemplateScenePath);
         foreach (var skill in birthdaySkills)
         {
-            var template = context.GetScnFile(_itemResourceTemplateScenePath)
-                .ToBuilder(context.TypeRepository);
+            var template = itemResourceTemplate.ToBuilder(context.TypeRepository);
             template.Scene = template.Scene.VisitComponents((_, component) =>
                 component.Type.Name != "app.ItemResource"
                     ? component
@@ -222,10 +222,10 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
 
     private void ApplyDropPrefabs(IReadOnlyList<app.ItemData> birthdaySkills)
     {
+        var dropPrefabTemplate = context.GetPfbFile(_skillDropPrefabTemplatePath);
         foreach (var skill in birthdaySkills)
         {
-            var template = context.GetPfbFile(_skillDropPrefabTemplatePath)
-                .ToBuilder(context.TypeRepository);
+            var template = dropPrefabTemplate.ToBuilder(context.TypeRepository);
 
             template.Scene = template.Scene
                 .VisitGameObjects(gameObject => gameObject.Name switch
@@ -253,8 +253,13 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         }
     }
 
-    private string GetPassiveSkillUserPath(app.ItemData skill)
+    private string GetPassiveSkillUserPath(app.ItemData skill, BirthdaySkillValueRow values)
     {
+        if (!string.IsNullOrWhiteSpace(values.PassiveSkillUserPath))
+        {
+            return PakPath.UserFile(NormalizeUserFilePath(values.PassiveSkillUserPath));
+        }
+
         var itemPrefab = context.GetPfbFile(GetSkillItemPrefabPath(skill))
             .ReadScene(context.TypeRepository);
         var passiveSkillComponent = itemPrefab.GetGameObjects()

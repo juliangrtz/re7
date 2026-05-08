@@ -48,6 +48,7 @@ internal class KeyItemLocationModifier : Modifier
             .ToList();
 
         var relocationPlans = new List<KeyItemRelocationPlan>();
+        var sourceSceneCache = new Dictionary<string, RszScene>(StringComparer.OrdinalIgnoreCase);
         foreach (var newLocation in newLocations)
         {
             var sourcePlacements = itemService.FromId(newLocation.Id)
@@ -62,8 +63,13 @@ internal class KeyItemLocationModifier : Modifier
                 continue;
             }
 
-            var sourceScene = randomizer.FileRepository.GetScnFile(newLocation.OriginalScnFile)
-                .ReadScene(randomizer.FileRepository.TypeRepository);
+            if (!sourceSceneCache.TryGetValue(newLocation.OriginalScnFile, out var sourceScene))
+            {
+                sourceScene = randomizer.FileRepository.GetScnFile(newLocation.OriginalScnFile)
+                    .ReadScene(randomizer.FileRepository.TypeRepository);
+                sourceSceneCache[newLocation.OriginalScnFile] = sourceScene;
+            }
+
             var sourcePlacementGuids = sourcePlacements
                 .Select(placement => placement.Guid)
                 .ToHashSet();

@@ -110,7 +110,6 @@ internal class RecipeModifier : Modifier
             .Where(r => r.Pool == RecipePool.AlwaysEnabled)
             .Select(r => CreateRecipe(r, rng))
             .ToList();
-        AddRecipes(randomizer, alwaysAdded, clear: false);
 
         var addedRecipes = new List<Recipe>();
         var minRecipeAmount = randomizer.GetConfigOption<int>("recipes-new-min");
@@ -143,7 +142,7 @@ internal class RecipeModifier : Modifier
         }
 
         addedRecipes.AddRange(toBeAdded);
-        AddRecipes(randomizer, addedRecipes, clear: false);
+        AddRecipes(randomizer, addedRecipes.Concat(alwaysAdded).ToList(), clear: false);
 
         // Rebuild dictionarycombinedata.user.2
         // This file holds the result item IDs of the items that are displayed in the combine GUI.

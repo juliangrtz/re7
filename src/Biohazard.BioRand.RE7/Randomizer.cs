@@ -50,13 +50,7 @@ internal class Randomizer : IDisposable
         _inputGamePath = inputGamePath;
         Reporter = reporter;
 
-        var download = Input.Configuration.GetValueOrDefault<bool>("debug-download-data");
-        if (download)
-        {
-            Console.WriteLine("Downloading latest spreadsheet data from Google Sheets...");
-        }
-
-        DynamicData = new DynamicData(download);
+        DynamicData = new DynamicData(Input.Configuration.GetValueOrDefault<bool>("debug-download-data"));
     }
 
     public void Dispose()
@@ -121,6 +115,11 @@ internal class Randomizer : IDisposable
             l.LogVersion();
             l.LogLine($"Seed = {input.Seed}");
             l.LogHr();
+        }
+
+        if (DynamicData.DownloadEnabled)
+        {
+            Reporter.RunTask("Downloading latest spreadsheet data from Google Sheets", DynamicData.PrefetchAll);
         }
 
         // Patches
