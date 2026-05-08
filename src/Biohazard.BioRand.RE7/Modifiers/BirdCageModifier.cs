@@ -108,7 +108,7 @@ internal class BirdCageModifier : Modifier
             var itemId = replacement.ItemId.ToString();
             _selectedItemIds.Add(itemId);
             itemRandomizer.MarkItemPlaced(itemId);
-            return (replacement.ItemId, rng.Next(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
+            return (replacement.ItemId, rng.NextInclusive(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
         }
 
         private static bool IsAlreadyPlacedWeapon(BirdCageReplacement replacement, ItemRandomizer itemRandomizer)
@@ -123,6 +123,7 @@ internal class BirdCageModifier : Modifier
         var (Id, Quantity, Coins, ValidItemIDs) = replacementPicker.GetReplacement(category, rng, itemRandomizer);
         birdCage.Item.ItemDataID = Id.ToString();
         birdCage.Item.ItemStackNum = Quantity;
+        birdCage.Item.SaveGUID = rng.NextGuid(); // IMPORTANT!
         birdCage.CoinCounter.CoinMax = Coins;
 
         if (!ValidItemIDs.SequenceEqual(_defaultInsertItems))
@@ -248,7 +249,6 @@ internal class BirdCage
             .AddOrUpdateComponent(ItemSelectReaction)
             .AddOrUpdateComponent(CoinCounter);
 
-        Item.SaveGUID = Guid.NewGuid(); // IMPORTANT!
         var newItemHolder = itemHolder
             .AddOrUpdateComponent(Item);
 

@@ -269,7 +269,7 @@ internal class EnemyModifier : Modifier
         return selectedEntries.ToImmutable();
     }
 
-    private static void RandomizeScale(via.Transform transform, ScaleOptions scaleOptions, Rng rng)
+    private static void RandomizeScale(GeneratedViaTransform transform, ScaleOptions scaleOptions, Rng rng)
     {
         var unusualScaleChance = GetScaleProbabilityPercent(scaleOptions.Probability);
         if (!rng.NextProbability(unusualScaleChance))
@@ -284,7 +284,7 @@ internal class EnemyModifier : Modifier
     private RszGameObject GetOrCreateEnemyTemplate(
         Randomizer randomizer,
         string enemyId,
-        via.Transform transform,
+        GeneratedViaTransform transform,
         bool updateTransform,
         bool randomizeScale,
         ScaleOptions scaleOptions,
@@ -309,7 +309,7 @@ internal class EnemyModifier : Modifier
         {
             var templateTransform = updateTransform
                 ? transform
-                : template.FindComponent<via.Transform>()!;
+                : template.FindComponent<GeneratedViaTransform>()!;
 
             if (randomizeScale)
             {
@@ -356,7 +356,7 @@ internal class EnemyModifier : Modifier
             return [];
 
         var instances = new List<RszGameObject>(nestedSpawnAliases.Count);
-        var transform = new via.Transform()
+        var transform = new GeneratedViaTransform()
         {
             Position = Vector3.Zero,
             Rotation = Quaternion.Identity,
@@ -423,7 +423,7 @@ internal class EnemyModifier : Modifier
             var enemyId = newEnemy.EnemyId.ToString();
 
             var originalSpawnInfoGameObject = scene.FindGameObject(spawnGuid)!;
-            var originalTransform = originalSpawnInfoGameObject.FindComponent<via.Transform>()!;
+            var originalTransform = originalSpawnInfoGameObject.FindComponent<GeneratedViaTransform>()!;
             var originalSpawnInfoComponent = originalSpawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
 
             if (newEnemy.UsesEnemyGenerator)
@@ -434,13 +434,15 @@ internal class EnemyModifier : Modifier
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
-                originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components
+                originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
+                    originalSpawnInfoGameObject.Components
                     .Remove(originalSpawnOptions)
-                    .Add(newSpawnOptions);
+                    .Add(newSpawnOptions));
                 if (dlcSpawnOptions != null)
                 {
                     originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
-                    originalSpawnInfoGameObject.Components = originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions);
+                    originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
+                        originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions));
                 }
 
                 var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
@@ -511,7 +513,7 @@ internal class EnemyModifier : Modifier
             }
         }
 
-        poolObject.Children = newChildren.ToImmutableArray();
+        poolObject = poolObject.WithChildren(newChildren.ToImmutableArray());
 
         poolObject = poolObject.AddOrUpdateComponent(poolComponent);
 
@@ -707,7 +709,7 @@ internal class EnemyModifier : Modifier
         var spawnInfo = GetOrCreateSpawnInfoTemplate(randomizer, enemyId, rng)
             .WithName(enemyId);
 
-        var transform = spawnInfo.FindComponent<via.Transform>()!;
+        var transform = spawnInfo.FindComponent<GeneratedViaTransform>()!;
         transform.Position = GetPlacementPosition(request.Placement);
         transform.Rotation = GetPlacementRotation(request.Placement);
         transform.Scale = Vector3.One;
@@ -772,7 +774,7 @@ internal class EnemyModifier : Modifier
         Rng rng)
     {
         var enemyId = request.Enemy.EnemyId.ToString();
-        var transform = new via.Transform()
+        var transform = new GeneratedViaTransform()
         {
             Position = Vector3.Zero,
             Rotation = Quaternion.Identity,

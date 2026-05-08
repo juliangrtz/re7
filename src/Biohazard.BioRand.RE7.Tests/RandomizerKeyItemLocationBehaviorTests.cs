@@ -51,7 +51,7 @@ public class RandomizerKeyItemLocationBehaviorTests
         Assert.Equal("ChainCutter", relocatedItem!.ItemDataID);
         Assert.Equal(expectedPlacement.SaveGuid, relocatedItem.SaveGUID);
 
-        var relocatedTransform = relocatedGameObject.FindComponent<via.Transform>();
+        var relocatedTransform = relocatedGameObject.FindComponent<GeneratedViaTransform>();
         Assert.NotNull(relocatedTransform);
         Assert.True(
             PositionMatches(relocatedTransform!, 16.46f, -6.581f, 23.8f)
@@ -64,7 +64,7 @@ public class RandomizerKeyItemLocationBehaviorTests
         Assert.True(relocatedScene.GetGameObjects().Count() > beforeRelocatedScene.GetGameObjects().Count());
     }
 
-    private static bool PositionMatches(via.Transform transform, float x, float y, float z)
+    private static bool PositionMatches(GeneratedViaTransform transform, float x, float y, float z)
     {
         const float tolerance = 0.001f;
         return Math.Abs(transform.Position.X - x) <= tolerance

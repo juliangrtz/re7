@@ -58,6 +58,9 @@ General lessons:
 - Bringing a DLC object into the main game usually requires the full runtime component chain and asset load chain. A prefab, mesh, or enum ID alone is rarely enough.
 - `natives/stm/scenes/master.scn.20` and `natives/stm/scenes/dlc/dlc_active_root.scn.20` are important DLC scene roots. Standby/default-standby state on the DLC folder chain can decide whether referenced DLC scenes and assets are actually mounted.
 - If a DLC asset still does not appear after scene data looks correct, compare what the DLC mode loads from the main menu rather than only inspecting the final object prefab.
+- Live REFramework MCP is configured through `C:\Users\Julian\.codex\config.toml` and runs `F:\RE_Modding\re-engine-mcp-master\mcp-server` against `http://localhost:8899`.
+- Confirmed live MCP probes on 2026-05-06: `reframework_get_tdb` returned 78687 types, 507723 methods, 147762 fields, and 103892 properties; `reframework_get_camera` returned FOV 81, near clip 0.05, far clip 1000; `reframework_get_singletons` exposed relevant managers including `app.DLCContentManager`, `app.DLCContentSceneManager`, `app.EnemyGeneratorManager`, `app.InventoryManager`, `app.ItemManager`, `app.ItemResourceManager`, `app.ObjectManager`, `via.ResourceManager`, and `via.SceneManager`.
+- `reframework_get_inventory` is a thin MCP wrapper over `GET /api/inventory` and still returned a generic invocation error after retrying in a loaded gameplay state. Treat that endpoint as needing WebAPI/plugin investigation before using it for RE7 inventory research.
 
 Birthday skills:
 

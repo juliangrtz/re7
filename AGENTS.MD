@@ -18,6 +18,7 @@ Important projects and directories:
 - `src/reeutils/` - git submodule for RE Engine tooling. Do not edit it casually; call out any intentional submodule changes.
 - `docs/` - active reverse-engineering notes and roadmap. Read `docs/Notes.MD` before changing item, enemy, inventory, recipe, chapter, or DLC logic.
 - `.analysis/re7_src/` - locally generated REFramework.NET C# type database. Prefer it for DLC class names, inheritance, fields, and enums before spending time in IDA.
+- Live REFramework MCP can be available as `mcp__reframework__` when RE7 is running with the REFramework HTTP API at `http://localhost:8899`; local server project is `F:\RE_Modding\re-engine-mcp-master\mcp-server`.
 - `assets/`, `reframework/`, `reversing/`, `dumps/` - mod assets and research material. `dumps/` and local output folders are not normal source changes.
 
 ## Before Editing
@@ -27,6 +28,7 @@ Important projects and directories:
 - Prefer focused edits. This code touches game binaries and softlock-prone state; avoid broad refactors unless the task asks for them.
 - Keep generated/game-data churn deliberate. Large diffs in `_Data`, `GeneratedEnums.cs`, `GeneratedTypes.cs`, or binary assets need a clear reason.
 - For DLC work, check `docs/Notes.MD`, `docs/enemies/enemy_spawning.md`, `docs/enemies/spawnInfoOptions.md`, and the relevant `.analysis/*-findings.md` note before editing.
+- For live runtime checks through REFramework MCP, start with read-only probes (`reframework_get_tdb`, `reframework_get_singletons`, `reframework_get_camera`). Mutating tools such as position/health setters affect the live game and need explicit intent.
 
 ## Build And Test
 
@@ -124,6 +126,7 @@ Softlock prevention beats chaos.
 - Treat boss DLC enemies as special cases until runtime-proven. `Em4500` is Mutated Lucas, the Not a Hero final boss, and should not be used as the representative CH8 test enemy.
 - DLC asset loading needs scene-root activation plus dependency closure copying. Do not assume that adding a prefab or mesh reference alone mounts the DLC scene folders or their dependent resources.
 - Birthday passive skills need the inventory prefab/passive userdata chain plus REFramework runtime handling; `skl###no` entries are locked/dummy Birthday variants and should not be injected as usable main-game skills.
+- REFramework MCP singleton addresses are session-specific. Record type names and observed availability, not raw addresses as durable evidence.
 
 ## Artifacts, Secrets, And Repo Hygiene
 

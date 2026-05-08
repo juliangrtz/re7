@@ -398,7 +398,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         => gameObjects
             .Select(gameObject =>
             {
-                var position = gameObject.FindComponent<via.Transform>()!.Position;
+                var position = gameObject.FindComponent<GeneratedViaTransform>()!.Position;
                 return (position.X, position.Y, position.Z);
             })
             .ToList();
@@ -525,7 +525,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
 
     private static (float X, float Y, float Z) GetPosition(RszGameObject gameObject)
     {
-        var position = gameObject.FindComponent<via.Transform>()!.Position;
+        var position = gameObject.FindComponent<GeneratedViaTransform>()!.Position;
         return (position.X, position.Y, position.Z);
     }
 
@@ -538,7 +538,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         float expectedHealth)
     {
         var gameObject = Assert.Single(spawnInfos, gameObject => GetSpawnInfo(gameObject).UnitAlias == expectedAlias);
-        var transform = gameObject.FindComponent<via.Transform>()!;
+        var transform = gameObject.FindComponent<GeneratedViaTransform>()!;
         var spawnInfo = GetSpawnInfo(gameObject);
         var componentNames = string.Join(", ", gameObject.Components.Select(component => component.Type.Name));
 

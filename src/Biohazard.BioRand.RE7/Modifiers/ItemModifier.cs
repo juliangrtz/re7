@@ -93,7 +93,7 @@ internal class ItemModifier : Modifier
                     var definition = candidate.Definition;
                     var placement = candidate.Placement;
                     var originalGameObject = scene.FindGameObject(placement.Guid)!;
-                    var originalTransform = originalGameObject.FindComponent<via.Transform>();
+                    var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = replacements[candidate.Key];
 
@@ -107,7 +107,7 @@ internal class ItemModifier : Modifier
                     logger.LogLine($"GUID: {originalGameObject.Guid}");
                     logger.LogLine($"Scene: {placement.SceneFile}");
 
-                    itemComponent.SaveGUID = Guid.NewGuid(); // IMPORTANT!
+                    itemComponent.SaveGUID = rng.NextGuid(); // IMPORTANT!
                     itemComponent.ItemDataID = drop.Id;
                     itemComponent.ItemStackNum = drop.CountNormal;
                     itemComponent._IsOverwriteDifficultItemNumSetting = true;
@@ -131,9 +131,11 @@ internal class ItemModifier : Modifier
                         }
                     }
 
-                    newGameObject.Settings = newGameObject.Settings
-                        .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
-                        .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"));
+                    newGameObject = newGameObject.WithSettings(
+                        newGameObject.Settings
+                            .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
+                            .Set("Draw", originalGameObject.Settings.Get<bool>("Draw"))
+                    );
 
                     scene = scene.ReplaceGameObject(originalGameObject.Guid, newGameObject, keepChildren: false);
                 }

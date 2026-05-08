@@ -67,6 +67,8 @@ No `app.CH9EnemyGenerator` or `app.CH9EnemyPool` type was found in the current T
 
 `app.EnemySpawnInfoOptionDLC` exists and `app.EnemySpawnInfo` exposes DLC-option-like state, but real DLC spawn infos do not universally include it. Prefer copying the real imported DLC spawn-info object shape for the target alias and copying only shared campaign fields from the original main-game spawn info.
 
+Live REFramework MCP singleton probing confirmed `app.EnemyGeneratorManager` is available in the running game. Use that runtime object, plus `app.DLCContentSceneManager`, `via.ResourceManager`, and `via.SceneManager`, when serialized DLC scene output looks correct but enemies or assets still do not appear.
+
 Important CH8 alias quirks:
 
 - `Em4210` is Fat Headless Molded. Its `UnitAlias` is `Em4210`, but its component/option stack is based on `CH8Em4200`.

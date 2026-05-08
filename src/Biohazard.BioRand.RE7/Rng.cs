@@ -45,6 +45,15 @@ public sealed class Rng
         return Next(0, 100) < percent;
     }
 
+    public bool NextProbability(double probability)
+    {
+        if (probability <= 0)
+            return false;
+        if (probability >= 1)
+            return true;
+        return NextDouble() < probability;
+    }
+
     public bool CoinToss()
         => NextProbability(50);
 
@@ -53,6 +62,13 @@ public sealed class Rng
         if (max <= min)
             return min;
         return _random.Next(min, max);
+    }
+
+    public int NextInclusive(int min, int max)
+    {
+        if (max <= min)
+            return min;
+        return (int)_random.NextInt64(min, (long)max + 1);
     }
 
     public int Next()

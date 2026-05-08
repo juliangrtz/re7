@@ -5,7 +5,6 @@ namespace Biohazard.BioRand.RE7.Inventory;
 public enum StartingWeaponCategory
 {
     Bladed,
-    Chainsaw,
     CircularSaw,
     Handgun,
     MachineGun,
@@ -22,7 +21,6 @@ internal static class StartingWeaponCategoryExtensions
         => category switch
         {
             StartingWeaponCategory.Bladed => "Edged/Bladed",
-            StartingWeaponCategory.Chainsaw => "Chainsaw",
             StartingWeaponCategory.CircularSaw => "Circular Saw",
             StartingWeaponCategory.Handgun => "Handgun",
             StartingWeaponCategory.MachineGun => "P19 Machine Gun",
@@ -37,8 +35,7 @@ internal static class StartingWeaponCategoryExtensions
     public static List<ItemID> GetItemIds(this StartingWeaponCategory category)
         => category switch
         {
-            StartingWeaponCategory.Bladed => [ItemID.HandAxe, ItemID.Knife, ItemID.MiaKnife],
-            StartingWeaponCategory.Chainsaw => [ItemID.ChainSaw],
+            StartingWeaponCategory.Bladed => [/*ItemID.HandAxe, */ ItemID.Knife, ItemID.MiaKnife],
             StartingWeaponCategory.CircularSaw => [ItemID.CircularSaw],
             StartingWeaponCategory.Handgun => [
                 ItemID.Handgun_G17, ItemID.Handgun_M19, ItemID.Handgun_MPM,

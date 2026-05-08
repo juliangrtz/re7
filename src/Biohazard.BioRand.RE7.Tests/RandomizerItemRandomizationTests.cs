@@ -393,7 +393,7 @@ public class RandomizerItemRandomizationTests
         var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
         var newItem = Assert.Single(newChildren, child => child.FindComponent<app.Item>() != null);
         var item = newItem.FindComponent<app.Item>()!;
-        var transform = newItem.FindComponent<via.Transform>()!;
+        var transform = newItem.FindComponent<GeneratedViaTransform>()!;
 
         Assert.True(result.WasFileModified(placement.SceneFile));
         Assert.Equal(beforeDynamic.Children.Count() + 1, afterDynamic.Children.Count());
@@ -433,10 +433,10 @@ public class RandomizerItemRandomizationTests
         var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
         var newChild = Assert.Single(newChildren, child =>
         {
-            var transform = child.FindComponent<via.Transform>();
+            var transform = child.FindComponent<GeneratedViaTransform>();
             return transform != null && TransformMatchesPlacement(transform, placement);
         });
-        var transform = newChild.FindComponent<via.Transform>()!;
+        var transform = newChild.FindComponent<GeneratedViaTransform>()!;
         var destruct = newChild.FindComponent<app.ItemDropDestruct>();
 
         Assert.True(result.WasFileModified(placement.SceneFile));
@@ -445,6 +445,66 @@ public class RandomizerItemRandomizationTests
         Assert.NotNull(destruct);
         Assert.True(destruct!.Enabled);
         AssertPositionMatchesPlacement(transform, placement);
+    }
+
+    [Fact]
+    public void AdditionalWoodenCrates_FakeProbability_UsesFractionalConfigValue()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            config["additional-wooden-crates"] = true;
+            config["additional-wooden-crates-fakes"] = true;
+            config["additional-wooden-crates-fakes-pct-min"] = 1.0;
+            config["additional-wooden-crates-fakes-pct-max"] = 1.0;
+            ConfigureSingleDrop(config, ForcedDropId);
+        });
+
+        var placement = result.ItemPlacementService.ItemPlacements.First(x =>
+            x.Enabled &&
+            x.IsExtra &&
+            !string.IsNullOrEmpty(x.SceneFile) &&
+            x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag) &&
+            !x.Tags.Contains(ExtraPlacementModifier.NotFakeCrateTag));
+
+        var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
+        var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
+        var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+        var newChild = Assert.Single(newChildren, child =>
+        {
+            var transform = child.FindComponent<GeneratedViaTransform>();
+            return transform != null && TransformMatchesPlacement(transform, placement);
+        });
+
+        Assert.Equal("ItemBox_Fake", newChild.Name);
+    }
+
+    [Fact]
+    public void ExtraPlacements_SameSeed_ProducesStableChangedFiles()
+    {
+        static void Configure(RandomizerConfiguration config)
+        {
+            config["random-items"] = true;
+            config["additional-items"] = true;
+            config["additional-wooden-crates"] = true;
+            config["additional-wooden-crates-fakes"] = true;
+            config["additional-wooden-crates-fakes-pct-min"] = 1.0;
+            config["additional-wooden-crates-fakes-pct-max"] = 1.0;
+            ConfigureSingleDrop(config, ForcedDropId);
+        }
+
+        using var first = RandomizerTest.RunState(Configure);
+        using var second = RandomizerTest.RunState(Configure);
+
+        Assert.Equal(first.ChangedFiles.Keys.Order(StringComparer.OrdinalIgnoreCase), second.ChangedFiles.Keys.Order(StringComparer.OrdinalIgnoreCase));
+        foreach (var path in first.ChangedFiles.Keys)
+        {
+            Assert.Equal(first.ChangedFiles[path], second.ChangedFiles[path]);
+        }
+
+        Assert.Equal(
+            first.Randomizer.FileRepository.GetOutputPakFile().ToByteArray(),
+            second.Randomizer.FileRepository.GetOutputPakFile().ToByteArray());
     }
 
     [Fact]
@@ -475,10 +535,10 @@ public class RandomizerItemRandomizationTests
             {
                 var newChild = Assert.Single(newChildren, child =>
                 {
-                    var transform = child.FindComponent<via.Transform>();
+                    var transform = child.FindComponent<GeneratedViaTransform>();
                     return transform != null && TransformMatchesPlacement(transform, placement);
                 });
-                AssertPositionMatchesPlacement(newChild.FindComponent<via.Transform>()!, placement);
+                AssertPositionMatchesPlacement(newChild.FindComponent<GeneratedViaTransform>()!, placement);
             }
         }
     }
@@ -682,12 +742,12 @@ public class RandomizerItemRandomizationTests
         return result;
     }
 
-    private static void AssertPositionMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    private static void AssertPositionMatchesPlacement(GeneratedViaTransform transform, ItemPlacement placement)
     {
         Assert.True(TransformMatchesPlacement(transform, placement));
     }
 
-    private static bool TransformMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    private static bool TransformMatchesPlacement(GeneratedViaTransform transform, ItemPlacement placement)
     {
         const float tolerance = 0.001f;
         return Math.Abs(transform.Position.X - placement.PosX) <= tolerance

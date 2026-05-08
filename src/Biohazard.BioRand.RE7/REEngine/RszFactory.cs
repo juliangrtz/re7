@@ -29,19 +29,4 @@ internal static class RszFactory
             .Set("Rotation", rotation ?? Quaternion.Identity)
             .Set("Scale", scale ?? Vector3.One);
     }
-
-    public static RszGameObject CreateSpawnController(string name)
-    {
-        var transform = CreateTransform();
-        var characterSpawnControllerComponent = Repository
-            .Create("chainsaw.CharacterSpawnController")
-                .Set("Enabled", true)
-                .Set("_DifficutyParam", 63U)
-                .Set("_GUID", Guid.NewGuid());
-
-        return CreateGameObject(
-            name,
-            "_Chainsaw/AppSystem/Prefab/CharacterSpawnController.pfb",
-            [transform, characterSpawnControllerComponent]);
-    }
 }

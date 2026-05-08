@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
@@ -81,7 +82,7 @@ internal class KeyItemLocationModifier : Modifier
 
             relocationPlans.Add(new KeyItemRelocationPlan(
                 newLocation,
-                CloneSourceGameObject(sourceGameObject, newLocation),
+                CloneSourceGameObject(sourceGameObject, newLocation, rng),
                 sourcePlacementGuids));
         }
 
@@ -133,9 +134,9 @@ internal class KeyItemLocationModifier : Modifier
         }
     }
 
-    private static RszGameObject CloneSourceGameObject(RszGameObject sourceGameObject, KeyItemLocation location)
+    private static RszGameObject CloneSourceGameObject(RszGameObject sourceGameObject, KeyItemLocation location, Rng rng)
     {
-        var clone = sourceGameObject.Clone();
+        var clone = sourceGameObject.CloneWithNewGuids(rng);
         var clonedRootGuid = clone.Guid;
         clone = clone.WithGuid(sourceGameObject.Guid);
         clone = clone.WithSettings(clone.Settings
@@ -147,7 +148,7 @@ internal class KeyItemLocationModifier : Modifier
             [clonedRootGuid] = sourceGameObject.Guid
         });
 
-        var transform = clone.FindComponent<via.Transform>()
+        var transform = clone.FindComponent<GeneratedViaTransform>()
             ?? throw new Exception($"Failed to relocate {location.Id}: missing via.Transform component!");
         transform.Position = new Vector3(location.NewX, location.NewY, location.NewZ);
         return clone.AddOrUpdateComponent(transform);

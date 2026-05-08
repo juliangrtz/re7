@@ -147,7 +147,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         if (dlc != null)
             return;
 
-        var transform = go.FindComponent<via.Transform>()!;
+        var transform = go.FindComponent<GeneratedViaTransform>()!;
         var chapter = GetChapterFromPath(path);
 
         var name = go.Name.Contains("blade", StringComparison.OrdinalIgnoreCase)
