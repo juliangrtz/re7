@@ -78,10 +78,10 @@ dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.D
 
 DataGen writes to `GeneratedFiles/`; generators with `CopyToDataDirectory => true` also overwrite files in `src/Biohazard.BioRand.RE7/_Data/`.
 
-When changing configuration defaults:
+When adding or changing configuration options:
 
-- Update `RandomizerConfigurationDefinition.cs`.
-- Regenerate `default-profile.json` with the `config` generator when defaults should change.
+- Update `RandomizerConfigurationDefinition.cs`; this is the source of truth for config IDs, labels, descriptions, types, and baseline defaults.
+- Do not only edit `default-profile.json`. It is loaded back over the definition and should be regenerated with the `config` generator when defaults should change.
 - Add/adjust tests for the affected option.
 
 Dynamic CSV data can also be refreshed by the CLI `update` command from Google Sheets. Do not silently refresh remote data as part of an unrelated change.

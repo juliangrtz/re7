@@ -1,5 +1,5 @@
 using System.Text;
-using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 
@@ -8,16 +8,77 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerKeyItemLocationBehaviorTests
 {
-    [Fact]
-    public void KeyItemLocation_WithMultipleCandidateLocations_RelocatesSingleChainCutter()
-    {
-        var expectedGuid = new Guid("1a17da81-3f83-47a1-ac82-ead889f829fc");
-        var keyItemsCsv = """
-        Enabled,OriginalScnFile,KeyItemGuid,NewScnFile,Id,NewX,NewY,NewZ,Comment
-        TRUE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1a17da81-3f83-47a1-ac82-ead889f829fc,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,16.46,-6.581,23.8,Alternative Bolt Cutter Location 1
-        TRUE,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1a17da81-3f83-47a1-ac82-ead889f829fc,natives/stm/environment/scene/chapter1/c01_b1c.scn.20,ChainCutter,13.443,-6,23.605,Alternative Bolt Cutter Location 2
-        """;
+    private static readonly IReadOnlyDictionary<string, ExpectedKeyItemRule> ExpectedRules =
+        new Dictionary<string, ExpectedKeyItemRule>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["3CrestKeyB"] = new(3, ExpectedScope.Chapter3MainHouse),
+            ["3CrestKeyA"] = new(3, ExpectedScope.Chapter3MainHouse),
+            ["Battery"] = new(3, ExpectedScope.Chapter3PreLucas),
+            ["MorgueKey"] = new(3, ExpectedScope.Chapter3PreLucas),
+            ["MasterKey"] = new(3, ExpectedScope.Chapter3PreLucas),
+            ["TalismanKey"] = new(3, ExpectedScope.Chapter3PreLucas),
+            ["EthanCarKey"] = new(3, ExpectedScope.Chapter3MainHouse),
+            ["SilhouettePazzlePiece"] = new(3, ExpectedScope.Chapter3MainHouse),
+            ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
+            ["FuseCh4"] = new(4, ExpectedScope.MiaPresentShip),
+            ["EvOpener"] = new(4, ExpectedScope.MiaPresentShip),
+            ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
+            ["SerumTypeE"] = new(4, ExpectedScope.EthanLateGame),
+        };
 
+    [Fact]
+    public void KeyItemLocations_RandomizesSupportedKeyItemsIntoChapterScopedNormalPlacements()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        });
+
+        var randomizedKeyItems = GetChangedPlacements(result)
+            .Where(change => ExpectedRules.ContainsKey(change.AfterId))
+            .ToList();
+
+        Assert.Equal(ExpectedRules.Count, randomizedKeyItems.Count);
+        Assert.Equal(
+            ExpectedRules.Keys.Order(StringComparer.OrdinalIgnoreCase),
+            randomizedKeyItems.Select(change => change.AfterId).Order(StringComparer.OrdinalIgnoreCase));
+
+        foreach (var change in randomizedKeyItems)
+        {
+            var rule = ExpectedRules[change.AfterId];
+            Assert.Equal(rule.Chapter, change.Placement.Chapter);
+            Assert.True(ScopeMatches(rule.Scope, change.Placement), $"{change.AfterId} was placed in unexpected scene {change.Placement.SceneFile}.");
+        }
+
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "3CrestKeyB" && change.Placement.Chapter == 4);
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SerumTypeE" && change.Placement.SceneFile.Contains("/chapter4/lastbattle", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void KeyItemLocations_ReplacesOriginalSupportedKeyItemPickupsWithFillers()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        });
+
+        foreach (var placement in result.ItemPlacementService.MainGamePlacements
+            .Where(placement =>
+                !string.IsNullOrWhiteSpace(placement.Id) &&
+                ExpectedRules.ContainsKey(placement.Id) &&
+                placement.Enabled &&
+                !placement.IsExtra)
+            .DistinctBy(placement => (placement.SceneFile, placement.Guid)))
+        {
+            var afterItem = GetItem(result.ReadAfterScene(placement.SceneFile), placement.Guid);
+            Assert.NotEqual(placement.Id, afterItem.ItemDataID);
+            Assert.DoesNotContain(afterItem.ItemDataID, ExpectedRules.Keys);
+        }
+    }
+
+    [Fact]
+    public void KeyItemLocations_DoesNotReadLegacyKeyItemsCsv()
+    {
         using var result = RandomizerTest.RunState(
             config =>
             {
@@ -25,50 +86,87 @@ public class RandomizerKeyItemLocationBehaviorTests
             },
             prepareRandomizer: randomizer =>
             {
-                randomizer.DynamicData.SetData(DynamicDataName.KeyItems, Encoding.UTF8.GetBytes(keyItemsCsv));
+                randomizer.DynamicData.SetData(
+                    DynamicDataName.KeyItems,
+                    Encoding.UTF8.GetBytes("this,is,not,the,legacy,schema\r\n"));
             });
 
-        var placements = result.ItemPlacementService.FromId("ChainCutter")
-            .Where(x => x.SceneFile == "natives/stm/environment/scene/chapter1/c01_b1f.scn.20")
-            .ToArray();
-        var originalScene = result.ReadAfterScene("natives/stm/environment/scene/chapter1/c01_b1f.scn.20");
-        var beforeRelocatedScene = result.ReadBeforeScene("natives/stm/environment/scene/chapter1/c01_b1c.scn.20");
-        var relocatedScene = result.ReadAfterScene("natives/stm/environment/scene/chapter1/c01_b1c.scn.20");
-        var expectedPlacement = Assert.Single(placements, placement => placement.Guid == expectedGuid);
-
-        Assert.All(placements, placement => Assert.Null(originalScene.FindGameObject(placement.Guid)));
-        var relocatedGameObjects = placements
-            .Select(placement => (Placement: placement, GameObject: relocatedScene.FindGameObject(placement.Guid)))
-            .Where(x => x.GameObject != null)
-            .ToArray();
-
-        var relocated = Assert.Single(relocatedGameObjects);
-        var relocatedGameObject = Assert.IsType<RszGameObject>(relocated.GameObject);
-        Assert.Equal(expectedGuid, relocatedGameObject.Guid);
-
-        var relocatedItem = relocatedGameObject.FindComponent<app.Item>();
-        Assert.NotNull(relocatedItem);
-        Assert.Equal("ChainCutter", relocatedItem!.ItemDataID);
-        Assert.Equal(expectedPlacement.SaveGuid, relocatedItem.SaveGUID);
-
-        var relocatedTransform = relocatedGameObject.FindComponent<GeneratedViaTransform>();
-        Assert.NotNull(relocatedTransform);
-        Assert.True(
-            PositionMatches(relocatedTransform!, 16.46f, -6.581f, 23.8f)
-            || PositionMatches(relocatedTransform!, 13.443f, -6f, 23.605f));
-
-        var dynamicParent = Assert.IsType<RszGameObject>(
-            relocatedScene.FindGameObject(gameObject => gameObject.Name.EndsWith("_dynamic")));
-        Assert.Contains(dynamicParent.Children, child => child.Guid == relocatedGameObject.Guid);
-        Assert.True(result.WasFileModified("natives/stm/environment/scene/chapter1/c01_b1c.scn.20"));
-        Assert.True(relocatedScene.GetGameObjects().Count() > beforeRelocatedScene.GetGameObjects().Count());
+        Assert.Contains("[KEY ITEM]", result.ProcessLog);
     }
 
-    private static bool PositionMatches(GeneratedViaTransform transform, float x, float y, float z)
+    private static IEnumerable<ChangedItemPlacement> GetChangedPlacements(RandomizerRunResult result)
     {
-        const float tolerance = 0.001f;
-        return Math.Abs(transform.Position.X - x) <= tolerance
-            && Math.Abs(transform.Position.Y - y) <= tolerance
-            && Math.Abs(transform.Position.Z - z) <= tolerance;
+        foreach (var placement in result.ItemPlacementService.MainGamePlacements
+            .Where(placement => placement.Enabled && !placement.IsExtra)
+            .DistinctBy(placement => (placement.SceneFile, placement.Guid)))
+        {
+            if (!result.WasFileModified(placement.SceneFile))
+                continue;
+
+            var beforeItem = GetItemOrNull(result.ReadBeforeScene(placement.SceneFile), placement.Guid);
+            var afterItem = GetItemOrNull(result.ReadAfterScene(placement.SceneFile), placement.Guid);
+            if (beforeItem == null || afterItem == null || beforeItem.ItemDataID == afterItem.ItemDataID)
+                continue;
+
+            yield return new ChangedItemPlacement(placement, beforeItem.ItemDataID, afterItem.ItemDataID);
+        }
     }
+
+    private static app.Item GetItem(RszScene scene, Guid guid)
+    {
+        var item = GetItemOrNull(scene, guid);
+        Assert.NotNull(item);
+        return item!;
+    }
+
+    private static app.Item? GetItemOrNull(RszScene scene, Guid guid)
+        => scene.FindGameObject(guid)?.FindComponent<app.Item>();
+
+    private static bool ScopeMatches(ExpectedScope scope, ItemPlacement placement)
+        => scope switch
+        {
+            ExpectedScope.Chapter3MainHouse => IsChapter3MainHouseScene(placement.SceneFile),
+            ExpectedScope.Chapter3PreLucas => IsChapter3PreLucasScene(placement.SceneFile),
+            ExpectedScope.MiaPresentShip => IsMiaPresentShipScene(placement.SceneFile),
+            ExpectedScope.EthanLateGame => IsEthanLateGameScene(placement.SceneFile),
+            _ => true,
+        };
+
+    private static bool IsMiaPresentShipScene(string sceneFile)
+        => sceneFile.Contains("/chapter4/ship", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter4/c04_ship", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsChapter3MainHouseScene(string sceneFile)
+        => sceneFile.Contains("/chapter3/mainhouse", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_mainhouse", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsChapter3PreLucasScene(string sceneFile)
+        => IsChapter3MainHouseScene(sceneFile)
+            || sceneFile.Contains("/scene/chapter3/c03_rightarea", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_soft_1", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_oldhouse", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_gh", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/chapter3/oldhouse", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/chapter3/gardenarea", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_gardenarea", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter3/c03_trailerhouse", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsEthanLateGameScene(string sceneFile)
+        => sceneFile.Contains("/chapter4/saltdome", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter4/c04_cottage", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/scene/chapter4/c04_mainhouse", StringComparison.OrdinalIgnoreCase)
+            || sceneFile.Contains("/animation/ingame/c04/", StringComparison.OrdinalIgnoreCase);
+
+    private enum ExpectedScope
+    {
+        Any,
+        Chapter3MainHouse,
+        Chapter3PreLucas,
+        MiaPresentShip,
+        EthanLateGame,
+    }
+
+    private sealed record ExpectedKeyItemRule(int Chapter, ExpectedScope Scope);
+
+    private sealed record ChangedItemPlacement(ItemPlacement Placement, string BeforeId, string AfterId);
 }

@@ -10,6 +10,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class ItemModifier : Modifier
 {
     private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private readonly static AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
     private readonly static HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -46,7 +47,7 @@ internal class ItemModifier : Modifier
             if (itemsToReplace.Count == 0)
                 continue;
 
-            logger.Push(areaGroup.Key);
+            logger.Push(FormatScenePath(areaGroup.Key));
 
             randomizer.FileRepository.ModifyScnFile(areaGroup.Key, scene =>
             {
@@ -73,7 +74,7 @@ internal class ItemModifier : Modifier
                     logger.LogLine($"Replacing {quantity}x {replaceeName} at {placement.Position} with " +
                         $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}...");
                     logger.LogLine($"GUID: {originalGameObject.Guid}");
-                    logger.LogLine($"Scene: {placement.SceneFile}");
+                    logger.LogLine($"Scene: {FormatScenePath(placement.SceneFile)}");
 
                     itemComponent.SaveGUID = rng.NextGuid(); // IMPORTANT!
                     itemComponent.ItemDataID = drop.Id;
@@ -217,20 +218,23 @@ internal class ItemModifier : Modifier
 
         if (!replaceMadhouseTapes && definition.Id == "SaveTape")
         {
-            logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {placement.SceneFile}");
+            logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
             logger.LogLine($"GUID: {placement.Guid}");
             yield break;
         }
 
         if (!replaceWeapons && definition.IsWeapon)
         {
-            logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {placement.SceneFile}");
+            logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
             logger.LogLine($"GUID: {placement.Guid}");
             yield break;
         }
 
         yield return new ItemReplacementCandidate(placement.SceneFile, definition, placement);
     }
+
+    private static string FormatScenePath(string path)
+        => _areaDefinitions.FormatScenePath(path);
 
     private static Dictionary<ReplacementKey, Item> CreateReplacementMap(
         IReadOnlyList<ItemReplacementCandidate> candidates,

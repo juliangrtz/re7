@@ -33,7 +33,6 @@ public sealed class DynamicData(bool download)
         [DynamicDataName.EnemyLimits] = ("enemy_limits.csv", 1254028764),
         [DynamicDataName.Messages] = ("messages.csv", 1050646915),
         [DynamicDataName.BirdCages] = ("bird_cages.csv", 1920824337),
-        [DynamicDataName.KeyItems] = ("key_items.csv", 91603961),
         [DynamicDataName.DebugStartItems] = ("debug_start_items.csv", 639198893),
         [DynamicDataName.BirthdaySkills] = ("birthday_skills.csv", 1933511558),
     }.ToImmutableDictionary();
