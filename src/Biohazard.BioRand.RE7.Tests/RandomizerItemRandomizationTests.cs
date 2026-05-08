@@ -393,7 +393,7 @@ public class RandomizerItemRandomizationTests
         var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
         var newItem = Assert.Single(newChildren, child => child.FindComponent<app.Item>() != null);
         var item = newItem.FindComponent<app.Item>()!;
-        var transform = newItem.FindComponent<via.Transform>()!;
+        var transform = newItem.FindComponent<GeneratedViaTransform>()!;
 
         Assert.True(result.WasFileModified(placement.SceneFile));
         Assert.Equal(beforeDynamic.Children.Count() + 1, afterDynamic.Children.Count());
@@ -433,10 +433,10 @@ public class RandomizerItemRandomizationTests
         var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
         var newChild = Assert.Single(newChildren, child =>
         {
-            var transform = child.FindComponent<via.Transform>();
+            var transform = child.FindComponent<GeneratedViaTransform>();
             return transform != null && TransformMatchesPlacement(transform, placement);
         });
-        var transform = newChild.FindComponent<via.Transform>()!;
+        var transform = newChild.FindComponent<GeneratedViaTransform>()!;
         var destruct = newChild.FindComponent<app.ItemDropDestruct>();
 
         Assert.True(result.WasFileModified(placement.SceneFile));
@@ -472,7 +472,7 @@ public class RandomizerItemRandomizationTests
         var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
         var newChild = Assert.Single(newChildren, child =>
         {
-            var transform = child.FindComponent<via.Transform>();
+            var transform = child.FindComponent<GeneratedViaTransform>();
             return transform != null && TransformMatchesPlacement(transform, placement);
         });
 
@@ -535,10 +535,10 @@ public class RandomizerItemRandomizationTests
             {
                 var newChild = Assert.Single(newChildren, child =>
                 {
-                    var transform = child.FindComponent<via.Transform>();
+                    var transform = child.FindComponent<GeneratedViaTransform>();
                     return transform != null && TransformMatchesPlacement(transform, placement);
                 });
-                AssertPositionMatchesPlacement(newChild.FindComponent<via.Transform>()!, placement);
+                AssertPositionMatchesPlacement(newChild.FindComponent<GeneratedViaTransform>()!, placement);
             }
         }
     }
@@ -742,12 +742,12 @@ public class RandomizerItemRandomizationTests
         return result;
     }
 
-    private static void AssertPositionMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    private static void AssertPositionMatchesPlacement(GeneratedViaTransform transform, ItemPlacement placement)
     {
         Assert.True(TransformMatchesPlacement(transform, placement));
     }
 
-    private static bool TransformMatchesPlacement(via.Transform transform, ItemPlacement placement)
+    private static bool TransformMatchesPlacement(GeneratedViaTransform transform, ItemPlacement placement)
     {
         const float tolerance = 0.001f;
         return Math.Abs(transform.Position.X - placement.PosX) <= tolerance

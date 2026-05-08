@@ -148,7 +148,7 @@ internal class KeyItemLocationModifier : Modifier
             [clonedRootGuid] = sourceGameObject.Guid
         });
 
-        var transform = clone.FindComponent<via.Transform>()
+        var transform = clone.FindComponent<GeneratedViaTransform>()
             ?? throw new Exception($"Failed to relocate {location.Id}: missing via.Transform component!");
         transform.Position = new Vector3(location.NewX, location.NewY, location.NewZ);
         return clone.AddOrUpdateComponent(transform);

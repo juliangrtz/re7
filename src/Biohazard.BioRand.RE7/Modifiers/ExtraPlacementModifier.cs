@@ -79,7 +79,7 @@ internal class ExtraPlacementModifier : Modifier
             template = template.AddOrUpdateComponent(itemDropDestruct);
         }
 
-        var transform = template.FindComponent<via.Transform>()!;
+        var transform = template.FindComponent<GeneratedViaTransform>()!;
         transform.Position = placement.Position;
         transform.Scale = Vector3.One;
         template = template.AddOrUpdateComponent(transform);
@@ -114,7 +114,7 @@ internal class ExtraPlacementModifier : Modifier
             template = template.AddOrUpdateChild(interactGameObject);
         }
 
-        var transform = template.FindComponent<via.Transform>()!;
+        var transform = template.FindComponent<GeneratedViaTransform>()!;
         transform.Position = placement.Position;
         transform.Rotation = placement.Rotation;
         transform.Scale = Vector3.One;
@@ -209,7 +209,7 @@ internal class ExtraPlacementModifier : Modifier
         item.Enabled = true;
         template = template.AddOrUpdateComponent(item);
 
-        var transform = template.FindComponent<via.Transform>()!;
+        var transform = template.FindComponent<GeneratedViaTransform>()!;
         transform.Position = placement.Position;
         transform.Rotation = placement.Rotation;
         template = template.AddOrUpdateComponent(transform);

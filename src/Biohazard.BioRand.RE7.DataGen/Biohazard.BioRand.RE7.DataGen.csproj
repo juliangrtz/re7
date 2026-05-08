@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj" />
+    <ProjectReference Include="..\Biohazard.BioRand.RE7\Biohazard.BioRand.RE7.csproj" Aliases="global,BioRandRE7" />
   </ItemGroup>
 
   <ItemGroup>

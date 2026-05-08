@@ -93,7 +93,7 @@ internal class ItemModifier : Modifier
                     var definition = candidate.Definition;
                     var placement = candidate.Placement;
                     var originalGameObject = scene.FindGameObject(placement.Guid)!;
-                    var originalTransform = originalGameObject.FindComponent<via.Transform>();
+                    var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = replacements[candidate.Key];
 

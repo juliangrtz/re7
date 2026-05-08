@@ -35,7 +35,7 @@ internal class ItemPlacementGenerator : IFileGenerator
 
             if (itemComponent != null)
             {
-                var transformComponent = gameObject.FindComponent<via.Transform>()!;
+                var transformComponent = gameObject.FindComponent<GeneratedViaTransform>()!;
                 var mesh = gameObject.FindComponent("via.render.Mesh");
                 var dlc = DlcTypeExtensions.FromPakFileName(path);
                 var chapter = dlc == null ? GetChapterFromPath(path) : DlcTypeExtensions.ToChapter(dlc.Value);

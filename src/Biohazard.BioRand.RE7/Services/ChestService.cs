@@ -29,7 +29,7 @@ internal class ChestService(Randomizer randomizer)
             return scene;
         }
 
-        var transform = new via.Transform()
+        var transform = new GeneratedViaTransform()
         {
             Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
             Rotation = new Quaternion(placement.RotX, placement.RotY, placement.RotZ, placement.RotW),
