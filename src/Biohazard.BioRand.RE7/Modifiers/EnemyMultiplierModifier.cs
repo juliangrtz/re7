@@ -42,24 +42,46 @@ internal class EnemyMultiplierModifier : Modifier
 
         var enemyLimitService = randomizer.EnemySceneLimitService;
         var rng = randomizer.GetRng(RandomizerKey);
-        foreach (var area in randomizer.AreaService.Areas)
+        foreach (var scenePath in GetCandidateScenePaths(randomizer))
         {
-            var scnFile = randomizer.FileRepository.GetScnFile(area.Path).ToBuilder(randomizer.FileRepository.TypeRepository);
+            var scnFile = randomizer.FileRepository.GetScnFile(scenePath).ToBuilder(randomizer.FileRepository.TypeRepository);
             var updatedScene = ProcessScene(
                 scnFile.Scene,
                 randomizer,
                 logger,
-                area.Path,
+                scenePath,
                 multiplier,
                 rng,
-                enemyLimitService.GetMaxEnemiesForScene(area.Path),
+                enemyLimitService.GetMaxEnemiesForScene(scenePath),
                 enemyLimitService);
             if (!ReferenceEquals(updatedScene, scnFile.Scene))
             {
                 scnFile.Scene = updatedScene;
-                randomizer.FileRepository.SetScnFile(area.Path, scnFile.AddMissingResources().Build());
+                randomizer.FileRepository.SetScnFile(scenePath, scnFile.AddMissingResources().Build());
             }
         }
+    }
+
+    private static IEnumerable<string> GetCandidateScenePaths(Randomizer randomizer)
+    {
+        var targetRepository = AreaSceneTargetRepository.Default;
+        if (targetRepository.All.Count == 0)
+        {
+            return randomizer.AreaService.Areas.Select(area => area.Path);
+        }
+
+        var areaPaths = AreaDefinitionRepository.Default.All
+            .Where(area => area.Dlc == null)
+            .Select(area => area.Path)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        return targetRepository.All
+            .Where(targets =>
+                targets.GetEnemySpawnInfoGuids().Count != 0 ||
+                targets.GetEnemyGenerateGuids().Count != 0)
+            .Select(targets => targets.Path)
+            .Where(areaPaths.Contains)
+            .OrderBy(path => path, StringComparer.Ordinal)
+            .ToList();
     }
 
     internal static RszScene ProcessScene(

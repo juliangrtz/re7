@@ -6,7 +6,9 @@ internal class AreaService(Randomizer randomizer)
 {
     private readonly Dictionary<Guid, Area> _guidToArea = [];
     private ImmutableArray<Area> _areas = [];
+    private ImmutableArray<Area> _enemyAreas = [];
     private bool _isLoaded;
+    private bool _areEnemyAreasLoaded;
 
     public ImmutableArray<Area> Areas
     {
@@ -21,6 +23,15 @@ internal class AreaService(Randomizer randomizer)
     public Randomizer Randomizer { get; } = randomizer;
 
     public void LoadAreas() => EnsureLoaded();
+
+    public ImmutableArray<Area> EnemyAreas
+    {
+        get
+        {
+            EnsureEnemyAreasLoaded();
+            return _enemyAreas;
+        }
+    }
 
     private void EnsureLoaded()
     {
@@ -47,6 +58,41 @@ internal class AreaService(Randomizer randomizer)
         {
             area.MapGameObjectGuids(_guidToArea);
         }
+    }
+
+    private void EnsureEnemyAreasLoaded()
+    {
+        if (_areEnemyAreasLoaded)
+            return;
+
+        LoadEnemyAreasCore();
+        _areEnemyAreasLoaded = true;
+    }
+
+    private void LoadEnemyAreasCore()
+    {
+        var targetRepository = AreaSceneTargetRepository.Default;
+        if (targetRepository.All.Count == 0)
+        {
+            EnsureLoaded();
+            _enemyAreas = Areas
+                .Where(area => area.EnemyGenerators.Length != 0)
+                .ToImmutableArray();
+            return;
+        }
+
+        var definitionsByPath = AreaDefinitionRepository.Default.All
+            .Where(area => area.Dlc == null)
+            .ToDictionary(area => area.Path, StringComparer.OrdinalIgnoreCase);
+        _enemyAreas = targetRepository.All
+            .Where(targets => targets.GetEnemyGeneratorGuids().Count != 0)
+            .Select(targets => definitionsByPath.GetValueOrDefault(targets.Path))
+            .Where(definition => definition != null)
+            .AsParallel()
+            .Select(definition => new Area(Randomizer, definition!, AreaScanMode.IndexedTargets))
+            .Where(area => area.EnemyGenerators.Length != 0)
+            .OrderBy(area => area.Path)
+            .ToImmutableArray();
     }
 
     public Area? FindAreaContainingGameObject(Guid guid)

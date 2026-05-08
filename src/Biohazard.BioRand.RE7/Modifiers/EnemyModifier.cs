@@ -570,14 +570,14 @@ internal class EnemyModifier : Modifier
 
         if (generatorChanges.Count > 0)
         {
-            randomizer.FileRepository.ModifyScnFile(area.Path, scene =>
+            var scene = area.Scene;
+            foreach (var (generator, replacements) in generatorChanges)
             {
-                foreach (var (generator, replacements) in generatorChanges)
-                {
-                    scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements, options, rng, healthResolver);
-                }
-                return scene;
-            });
+                scene = ProcessGeneratorScene(scene, randomizer, logger, generator, replacements, options, rng, healthResolver);
+            }
+
+            area.Scene = scene;
+            randomizer.FileRepository.SetScnFile(area.Path, area.ScnFile.AddMissingResources().Build());
         }
 
         logger.Pop();
@@ -661,8 +661,10 @@ internal class EnemyModifier : Modifier
             logger.LogLine(string.Join(", ", enemyPool.Select(entry => entry.Enemy.Name)));
         }
 
-        var areaService = randomizer.AreaService;
-        areaService.Areas.ToList().ForEach(area => ProcessArea(area, randomizer, logger, enemyPool, options, rng, healthResolver));
+        foreach (var area in randomizer.AreaService.EnemyAreas)
+        {
+            ProcessArea(area, randomizer, logger, enemyPool, options, rng, healthResolver);
+        }
     }
 
     private static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng)

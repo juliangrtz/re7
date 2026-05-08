@@ -596,7 +596,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = "random-key-item-locations",
             Label = "Random Key Item Locations",
-            Description = "Whether to randomize some of the key item locations.",
+            Description = "Whether to randomize supported key items into normal item placements.",
             Type = "switch",
             Default = false
         });

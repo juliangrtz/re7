@@ -1,30 +1,45 @@
-﻿using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.Extensions;
-using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Services;
+using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
-using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class KeyItemLocationModifier : Modifier
 {
     private const string RandomizerKey = "modifier/key-item-locations";
+    private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
+
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private readonly List<ItemDefinition> keyItems =
-        _itemDefinitions
-        .Items
-        .Where(x => x.IsStoryProgressionItem && !x.IsDlcItem)
-        .ToList();
+    private static readonly AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
+    private static readonly HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
+    private static readonly ImmutableArray<KeyItemRule> _supportedKeyItems =
+    [
+        new("3CrestKeyB", 3, KeyItemPlacementScope.Chapter3MainHouse), // White Dog's Head
+        new("3CrestKeyA", 3, KeyItemPlacementScope.Chapter3MainHouse), // Blue Dog's Head
+        new("Battery", 3, KeyItemPlacementScope.Chapter3PreLucas),
+        new("MorgueKey", 3, KeyItemPlacementScope.Chapter3PreLucas), // Scorpion Key
+        new("MasterKey", 3, KeyItemPlacementScope.Chapter3PreLucas), // Snake Key
+        new("TalismanKey", 3, KeyItemPlacementScope.Chapter3PreLucas), // Crow Key
+        new("EthanCarKey", 3, KeyItemPlacementScope.Chapter3MainHouse),
+        new("SilhouettePazzlePiece", 3, KeyItemPlacementScope.Chapter3MainHouse), // Wooden Statuette
+        new("EvCable", 4, KeyItemPlacementScope.MiaPresentShip), // Power Cable
+        new("FuseCh4", 4, KeyItemPlacementScope.MiaPresentShip), // General Purpose Fuse
+        new("EvOpener", 4, KeyItemPlacementScope.MiaPresentShip), // Lug Wrench
+        new("SpareKey", 4, KeyItemPlacementScope.MiaPresentShip, Count: 4), // Corrosive
+        new("SerumTypeE", 4, KeyItemPlacementScope.EthanLateGame), // E-Necrotoxin
+    ];
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger)
     {
-        foreach (var item in keyItems)
+        foreach (var rule in _supportedKeyItems)
         {
-            var placements = randomizer.ItemPlacementService.FromId(item.Id);
-            foreach (var placement in placements.Where(x => x.Enabled && !x.IsExtra))
+            var item = _itemDefinitions.FromId(rule.Id)!;
+            var placements = randomizer.ItemPlacementService.FromId(rule.Id);
+            foreach (var placement in placements.Where(x => x.Enabled && !x.IsExtra && x.Dlc == null))
             {
-                logger.LogLine($"{item.Name} in {placement.SceneFile}, X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
+                logger.LogLine($"{item.Name} in {FormatScenePath(placement.SceneFile)}, X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
                 logger.LogLine($"GUID: {placement.Guid}");
             }
         }
@@ -36,158 +51,335 @@ internal class KeyItemLocationModifier : Modifier
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
-        var itemService = randomizer.ItemPlacementService;
-        var csv = randomizer.DynamicData.GetData(DynamicDataName.KeyItems) ?? throw new Exception("Unable to get key item data");
-        var keyItems = Csv.Deserialize<KeyItemLocation>(csv)
-            .Where(k => k.Enabled && !string.IsNullOrWhiteSpace(k.Id))
-            .ToImmutableList();
-
-        var newLocations = keyItems
-            .GroupBy(k => k.Id)
-            .Select(group => rng.Next(group))
+        var itemPlacementService = randomizer.ItemPlacementService;
+        var itemRandomizer = randomizer.ItemRandomizer;
+        var randomItemSettings = randomizer.StaticItemRandomizationService.RandomItemSettings;
+        var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
+        var availableTargets = GetEligibleTargetPlacements(randomizer, itemPlacementService)
+            .DistinctBy(target => target.Key)
             .ToList();
+        var replacementPlans = new Dictionary<ReplacementKey, ReplacementPlan>();
 
-        var relocationPlans = new List<KeyItemRelocationPlan>();
-        foreach (var newLocation in newLocations)
+        foreach (var rule in _supportedKeyItems)
         {
-            var sourcePlacements = itemService.FromId(newLocation.Id)
-                .Where(placement =>
-                    placement.Enabled &&
-                    !placement.IsExtra &&
-                    string.Equals(placement.SceneFile, newLocation.OriginalScnFile, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-            if (sourcePlacements.Count == 0)
+            var candidates = availableTargets
+                .Where(rule.CanPlaceAt)
+                .ToArray();
+            if (candidates.Length == 0)
             {
-                logger.LogLine($"Skipped relocating {newLocation.Id}: no source placements found in {newLocation.OriginalScnFile}.");
+                logger.LogLine($"Skipped key item {_itemDefinitions.GetName(rule.Id)}: no eligible chapter {rule.Chapter} placement matched {rule.Scope}.");
                 continue;
             }
 
-            var sourceScene = randomizer.FileRepository.GetScnFile(newLocation.OriginalScnFile)
-                .ReadScene(randomizer.FileRepository.TypeRepository);
-            var sourcePlacementGuids = sourcePlacements
-                .Select(placement => placement.Guid)
-                .ToHashSet();
-            if (!Guid.TryParse(newLocation.KeyItemGuid, out var sourceGuid))
-            {
-                logger.LogLine($"Skipped relocating {newLocation.Id}: invalid source GUID \"{newLocation.KeyItemGuid}\".");
-                continue;
-            }
-
-            var sourceGameObject = sourceScene.FindGameObject(sourceGuid);
-            if (sourceGameObject == null)
-            {
-                logger.LogLine($"Skipped relocating {newLocation.Id}: failed to resolve source object in {newLocation.OriginalScnFile}.");
-                continue;
-            }
-
-            relocationPlans.Add(new KeyItemRelocationPlan(
-                newLocation,
-                CloneSourceGameObject(sourceGameObject, newLocation, rng),
-                sourcePlacementGuids));
+            var target = rng.Next(candidates);
+            availableTargets.Remove(target);
+            replacementPlans[target.Key] = ReplacementPlan.KeyItem(target.Placement, rule);
         }
 
-        foreach (var sceneGroup in keyItems.GroupBy(keyItem => keyItem.OriginalScnFile, StringComparer.OrdinalIgnoreCase))
+        foreach (var placement in GetOriginalSupportedKeyItemPlacements(itemPlacementService))
         {
-            var guidsToRemove = relocationPlans
-                .Where(plan => string.Equals(plan.Location.OriginalScnFile, sceneGroup.Key, StringComparison.OrdinalIgnoreCase))
-                .SelectMany(plan => plan.SourceGuidsToRemove)
-                .ToHashSet();
-
-            if (guidsToRemove.Count == 0)
+            var key = new ReplacementKey(placement.SceneFile, placement.Guid);
+            if (replacementPlans.ContainsKey(key))
                 continue;
 
+            replacementPlans[key] = ReplacementPlan.Filler(
+                placement,
+                itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings));
+        }
+
+        foreach (var sceneGroup in replacementPlans.Values.GroupBy(plan => plan.Placement.SceneFile, StringComparer.OrdinalIgnoreCase))
+        {
+            logger.Push(FormatScenePath(sceneGroup.Key));
             randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
             {
-                foreach (var guid in guidsToRemove)
+                var plans = sceneGroup.ToList();
+                var targetGuids = plans
+                    .Select(plan => plan.Placement.Guid)
+                    .ToHashSet();
+                var originalGameObjects = FindGameObjectsByGuid(scene, targetGuids);
+                var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
+
+                foreach (var plan in plans)
                 {
-                    scene = scene.RemoveGameObject(guid);
-                    //var originalKeyItem = scene.FindGameObject(guid)!;
-                    //originalKeyItem = originalKeyItem.WithSettings(originalKeyItem.Settings
-                    //    .Set("Update", false)
-                    //    .Set("Draw", false)
-                    //);
-                    //scene = scene.UpdateGameObject(originalKeyItem);
-                }
-                return scene;
-            });
-        }
+                    if (!originalGameObjects.TryGetValue(plan.Placement.Guid, out var originalGameObject))
+                    {
+                        logger.LogLine($"Skipped replacing {plan.Placement.Id} in {FormatScenePath(plan.Placement.SceneFile)}: GameObject {plan.Placement.Guid} was not found.");
+                        continue;
+                    }
 
-        foreach (var sceneGroup in relocationPlans.GroupBy(plan => plan.Location.NewScnFile, StringComparer.OrdinalIgnoreCase))
-        {
-            randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
-            {
-                var parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
-                    ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
+                    var replacement = CreateReplacementGameObject(
+                        randomizer,
+                        logger,
+                        rng,
+                        randomItemSettings,
+                        plan,
+                        originalGameObject,
+                        preserveItemModels);
 
-                foreach (var relocationPlan in sceneGroup)
-                {
-                    parentGameObject = parentGameObject.AddOrUpdateChild(relocationPlan.GameObject);
+                    replacementGameObjects[plan.Placement.Guid] = replacement;
                 }
 
-                return scene.UpdateGameObject(parentGameObject);
+                return ReplaceGameObjects(scene, replacementGameObjects);
             });
-        }
-
-        foreach (var newLocation in newLocations)
-        {
-            logger.LogLine($"Chose new location for {newLocation.Id} in scene {newLocation.NewScnFile}: X={newLocation.NewX}, Y={newLocation.NewY}, Z={newLocation.NewZ}");
+            logger.Pop();
         }
     }
 
-    private static RszGameObject CloneSourceGameObject(RszGameObject sourceGameObject, KeyItemLocation location, Rng rng)
+    private static IEnumerable<ItemReplacementTarget> GetEligibleTargetPlacements(
+        Randomizer randomizer,
+        ItemPlacementService itemPlacementService)
     {
-        var clone = sourceGameObject.CloneWithNewGuids(rng);
-        var clonedRootGuid = clone.Guid;
-        clone = clone.WithGuid(sourceGameObject.Guid);
-        clone = clone.WithSettings(clone.Settings
-            .Set("Update", true)
-            .Set("Draw", true)
-        );
-        clone = ReplaceGameObjectRefs(clone, new Dictionary<Guid, Guid>
+        var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes")
+            || MadhouseSaveModifier.IsEnabled(randomizer);
+        var replaceWeapons = randomizer.GetConfigOption<bool>("replace-weapons");
+        var eligibleScenePaths = AreaDefinitionRepository.Default.All
+            .Where(area => area.Dlc == null)
+            .Select(area => area.Path)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var placement in itemPlacementService.MainGamePlacements)
         {
-            [clonedRootGuid] = sourceGameObject.Guid
+            if (!eligibleScenePaths.Contains(placement.SceneFile)
+                || placement.IsExtra
+                || !placement.Enabled
+                || string.IsNullOrWhiteSpace(placement.Id)
+                || placement.Difficulty != null
+                || placement.Tags.Contains(ItemPlacement.ExcludeTag)
+                || _birdCageGuids.Contains(placement.Guid))
+            {
+                continue;
+            }
+
+            var definition = _itemDefinitions.FromId(placement.Id);
+            if (definition == null
+                || !randomizer.ItemRandomizer.IsItemAllowed(definition))
+            {
+                continue;
+            }
+
+            if (!replaceMadhouseTapes && definition.Id == "SaveTape")
+                continue;
+
+            if (!replaceWeapons && definition.IsWeapon)
+                continue;
+
+            yield return new ItemReplacementTarget(placement, definition);
+        }
+    }
+
+    private static IEnumerable<ItemPlacement> GetOriginalSupportedKeyItemPlacements(ItemPlacementService itemPlacementService)
+    {
+        var supportedIds = _supportedKeyItems
+            .Select(rule => rule.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        return itemPlacementService.MainGamePlacements
+            .Where(placement =>
+                supportedIds.Contains(placement.Id) &&
+                placement.Enabled &&
+                !placement.IsExtra)
+            .DistinctBy(placement => new ReplacementKey(placement.SceneFile, placement.Guid));
+    }
+
+    private static RszGameObject CreateReplacementGameObject(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        Rng rng,
+        RandomItemSettings randomItemSettings,
+        ReplacementPlan plan,
+        RszGameObject originalGameObject,
+        bool preserveItemModels)
+    {
+        var originalItem = originalGameObject.FindComponent<app.Item>()
+            ?? throw new Exception($"Item placement {plan.Placement.Guid} in {plan.Placement.SceneFile} does not have an app.Item component.");
+        var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
+        var drop = plan.Drop;
+        var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
+        var template = TryGetItemTemplate(randomizer, logger, templateItemId, originalGameObject);
+        var replacement = template.CloneWithNewGuids(
+            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.Placement.Guid, templateItemId),
+            originalGameObject.Guid);
+        var item = replacement.FindComponent<app.Item>() ?? originalItem;
+
+        item.SaveGUID = rng.NextGuid();
+        item.ItemDataID = drop.Id;
+        item.ItemStackNum = drop.CountNormal;
+        item._IsOverwriteDifficultItemNumSetting = true;
+        item._DifficultItemNumSetting.EasyNum = drop.CountEasy;
+        item._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
+        item.Enabled = true;
+        replacement = replacement.AddOrUpdateComponent(item);
+
+        if (originalTransform != null)
+        {
+            replacement = replacement.AddOrUpdateComponent(originalTransform);
+        }
+
+        if (preserveItemModels)
+        {
+            var mesh = originalGameObject.FindComponent("via.render.Mesh");
+            if (mesh != null)
+            {
+                replacement = replacement.AddOrUpdateComponent(mesh);
+            }
+        }
+
+        replacement = replacement.WithSettings(
+            replacement.Settings
+                .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
+                .Set("Draw", originalGameObject.Settings.Get<bool>("Draw")));
+
+        LogReplacement(logger, plan, originalItem, drop);
+        return replacement.WithGuid(originalGameObject.Guid);
+    }
+
+    private static RszGameObject TryGetItemTemplate(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        string templateItemId,
+        RszGameObject originalGameObject)
+    {
+        try
+        {
+            return randomizer.TemplateService.GetItemTemplate(templateItemId);
+        }
+        catch (Exception ex)
+        {
+            logger.LogLine($"Template {templateItemId} was not found; preserving original pickup object shape. {ex.Message}");
+            return originalGameObject;
+        }
+    }
+
+    private static void LogReplacement(
+        RandomizerLogger logger,
+        ReplacementPlan plan,
+        app.Item originalItem,
+        Item drop)
+    {
+        var replaceeName = _itemDefinitions.GetName(originalItem.ItemDataID);
+        var replacerName = _itemDefinitions.GetName(drop.Id);
+        var prefix = plan.Kind == ReplacementKind.KeyItem ? "[KEY ITEM]" : "[KEY ITEM FILLER]";
+        logger.LogLine($"{prefix} Replacing {replaceeName} at {plan.Placement.Position} with " +
+            $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}.");
+        logger.LogLine($"GUID: {plan.Placement.Guid}");
+    }
+
+    private static string FormatScenePath(string path)
+        => _areaDefinitions.FormatScenePath(path);
+
+    private static Dictionary<Guid, RszGameObject> FindGameObjectsByGuid(RszScene scene, HashSet<Guid> targetGuids)
+    {
+        var result = new Dictionary<Guid, RszGameObject>();
+        if (targetGuids.Count == 0)
+            return result;
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (targetGuids.Remove(gameObject.Guid))
+            {
+                result[gameObject.Guid] = gameObject;
+            }
         });
 
-        var transform = clone.FindComponent<GeneratedViaTransform>()
-            ?? throw new Exception($"Failed to relocate {location.Id}: missing via.Transform component!");
-        transform.Position = new Vector3(location.NewX, location.NewY, location.NewZ);
-        return clone.AddOrUpdateComponent(transform);
+        return result;
     }
 
-    private static RszGameObject ReplaceGameObjectRefs(
-        RszGameObject gameObject,
-        Dictionary<Guid, Guid> guidMap)
+    private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)
+        where T : IRszSceneNode
     {
-        return gameObject.Visit(node =>
-        {
-            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
-            {
-                var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                if (guidMap.TryGetValue(refGuid, out var newGuid))
-                {
-                    return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
-                }
-            }
-
+        if (node.Children.IsDefaultOrEmpty)
             return node;
-        });
+
+        var children = node.Children.ToBuilder();
+        for (var i = 0; i < children.Count; i++)
+        {
+            if (children[i] is RszGameObject oldGameObject && replacements.TryGetValue(oldGameObject.Guid, out var replacement))
+            {
+                children[i] = replacement.WithGuid(oldGameObject.Guid);
+            }
+            else
+            {
+                children[i] = ReplaceGameObjects(children[i], replacements);
+            }
+        }
+
+        return (T)node.WithChildren(children.ToImmutable());
     }
 
-    internal class KeyItemLocation
+    private static bool IsMiaPresentShipScene(ItemPlacement placement)
+        => placement.SceneFile.Contains("/chapter4/ship", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter4/c04_ship", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsChapter3MainHouseScene(ItemPlacement placement)
+        => placement.SceneFile.Contains("/chapter3/mainhouse", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_mainhouse", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsChapter3PreLucasScene(ItemPlacement placement)
+        => IsChapter3MainHouseScene(placement)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_rightarea", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_soft_1", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_oldhouse", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_gh", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/chapter3/oldhouse", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/chapter3/gardenarea", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_gardenarea", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter3/c03_trailerhouse", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsEthanLateGameScene(ItemPlacement placement)
+        => placement.SceneFile.Contains("/chapter4/saltdome", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter4/c04_cottage", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/scene/chapter4/c04_mainhouse", StringComparison.OrdinalIgnoreCase)
+            || placement.SceneFile.Contains("/animation/ingame/c04/", StringComparison.OrdinalIgnoreCase);
+
+    private enum KeyItemPlacementScope
     {
-        public bool Enabled { get; init; }
-        public string OriginalScnFile { get; init; } = "";
-        public string KeyItemGuid { get; init; } = "";
-        public string NewScnFile { get; init; } = "";
-        public string Id { get; init; } = "";
-        public float NewX { get; init; }
-        public float NewY { get; init; }
-        public float NewZ { get; init; }
-        public string Comment { get; init; } = "";
+        Any,
+        Chapter3MainHouse,
+        Chapter3PreLucas,
+        MiaPresentShip,
+        EthanLateGame,
     }
 
-    private sealed record KeyItemRelocationPlan(
-        KeyItemLocation Location,
-        RszGameObject GameObject,
-        IReadOnlySet<Guid> SourceGuidsToRemove);
+    private enum ReplacementKind
+    {
+        KeyItem,
+        Filler,
+    }
+
+    private sealed record KeyItemRule(
+        string Id,
+        int Chapter,
+        KeyItemPlacementScope Scope,
+        int Count = 1)
+    {
+        public bool CanPlaceAt(ItemReplacementTarget target)
+            => target.Placement.Chapter == Chapter
+                && Scope switch
+                {
+                    KeyItemPlacementScope.Chapter3MainHouse => IsChapter3MainHouseScene(target.Placement),
+                    KeyItemPlacementScope.Chapter3PreLucas => IsChapter3PreLucasScene(target.Placement),
+                    KeyItemPlacementScope.MiaPresentShip => IsMiaPresentShipScene(target.Placement),
+                    KeyItemPlacementScope.EthanLateGame => IsEthanLateGameScene(target.Placement),
+                    _ => true,
+                };
+    }
+
+    private readonly record struct ReplacementKey(string SceneFile, Guid Guid);
+
+    private sealed record ItemReplacementTarget(ItemPlacement Placement, ItemDefinition Definition)
+    {
+        public ReplacementKey Key => new(Placement.SceneFile, Placement.Guid);
+    }
+
+    private sealed record ReplacementPlan(
+        ReplacementKind Kind,
+        ItemPlacement Placement,
+        Item Drop)
+    {
+        public static ReplacementPlan KeyItem(ItemPlacement placement, KeyItemRule rule)
+            => new(ReplacementKind.KeyItem, placement, new Item(rule.Id, rule.Count));
+
+        public static ReplacementPlan Filler(ItemPlacement placement, Item drop)
+            => new(ReplacementKind.Filler, placement, drop);
+    }
 }

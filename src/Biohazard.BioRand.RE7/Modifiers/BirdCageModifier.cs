@@ -42,7 +42,7 @@ internal class BirdCageModifier : Modifier
         new Guid("79dc7b86-d066-058b-3037-204aa7216c9b"),
     ];
 
-    private static Guid MadhouseScorpionKeyBirdCageGuid = new Guid("c5f2b3fd-0732-468a-b8d6-017a8f1f20f2");
+    private static readonly Guid MadhouseScorpionKeyBirdCageGuid = new Guid("c5f2b3fd-0732-468a-b8d6-017a8f1f20f2");
 
     private readonly Regex _birdCageRegex = new Regex("^sm.*CoinBox((?!Interact).)*$", RegexOptions.Compiled);
     private readonly static ItemDefinitionRepository _items = ItemDefinitionRepository.Default;
@@ -159,14 +159,13 @@ internal class BirdCageModifier : Modifier
         {
             logger.Push(file);
             var path = PakPath.SceneFile(file);
-            var content = randomizer.FileRepository.GetFile(path);
-            var scnFile = new ScnFile(FileVersions.SceneFileVersion, content)
-                            .ReadScene(randomizer.FileRepository.TypeRepository);
+            var scnFile = randomizer.FileRepository.GetScnFile(path)
+                .ToBuilder(randomizer.FileRepository.TypeRepository);
             var changedBirdCages = new List<BirdCage>();
 
-            scnFile.VisitGameObjects(gameObject =>
+            scnFile.Scene.VisitGameObjects(gameObject =>
             {
-                if (_birdCageRegex.IsMatch(gameObject.Name))
+                if (IsBirdCage(gameObject))
                 {
                     if (gameObject.Guid == MadhouseScorpionKeyBirdCageGuid)
                         return; // Don't randomize scorpion key on Madhouse
@@ -193,18 +192,26 @@ internal class BirdCageModifier : Modifier
 
             if (changedBirdCages.Count > 0)
             {
-                randomizer.FileRepository.ModifyScnFile(path, scene =>
+                var scene = scnFile.Scene;
+                foreach (var birdCage in changedBirdCages)
                 {
-                    foreach (var birdCage in changedBirdCages)
-                    {
-                        scene = birdCage.ApplyToScene(scene, randomizer);
-                    }
-                    return scene;
-                });
+                    scene = birdCage.ApplyToScene(scene, randomizer);
+                }
+
+                scnFile.Scene = scene;
+                randomizer.FileRepository.SetScnFile(path, scnFile.AddMissingResources().Build());
             }
 
             logger.Pop();
         }
+    }
+
+    private bool IsBirdCage(RszGameObject gameObject)
+    {
+        return gameObject.Name.StartsWith("sm", StringComparison.OrdinalIgnoreCase)
+            && gameObject.Name.Contains("CoinBox", StringComparison.OrdinalIgnoreCase)
+            && !gameObject.Name.Contains("Interact", StringComparison.OrdinalIgnoreCase)
+            && _birdCageRegex.IsMatch(gameObject.Name);
     }
 }
 

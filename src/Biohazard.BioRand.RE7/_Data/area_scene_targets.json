@@ -1,0 +1,4145 @@
+[
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_labopassage03.scn.20",
+    "ItemGuids": [
+      "dd812d9e-0e1d-4fa6-a34f-4c9ea6db4d60",
+      "7ef63140-1a76-496e-be45-de9cfe8ff367"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_labopassage05.scn.20",
+    "ItemGuids": [
+      "7999f328-732d-432d-894e-2481c168a3c3"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_mine01.scn.20",
+    "ItemGuids": [
+      "dafa4988-0741-0956-0ccc-b13c7e0ab755",
+      "b63aa4a8-b6e7-07ae-002c-3f8eb597a3d1"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_miningdome01.scn.20",
+    "ItemGuids": [
+      "784a0614-fd4f-003d-15ab-abc66662abcf",
+      "426c5337-3d6b-4cdb-8098-40ab96802a3c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_miningpassage04.scn.20",
+    "ItemGuids": [
+      "0f811316-db71-4fb5-bd6c-6a47df6d5d47"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_storagefuseroom01.scn.20",
+    "ItemGuids": [
+      "fa8422b1-4410-4c66-91bc-b806f1c4b819"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/environment/scene/chapter8/c08_train03.scn.20",
+    "ItemGuids": [
+      "d49460a7-0c3f-03fd-19a0-5be196b057ff",
+      "799ed90d-5b0d-0811-221c-cad15be8638c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/casual.scn.20",
+    "ItemGuids": [
+      "6fae7344-ea05-42a0-aba5-b95b74737b97",
+      "8cea93fd-a49d-4f6c-ac65-b2c89589a5ce",
+      "d171ded6-d8fe-4703-9f09-b2da95dfb148"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/hard.scn.20",
+    "ItemGuids": [
+      "eb237c07-9be0-4492-9ed4-401833476834",
+      "eb28b46d-343f-4f32-befc-0c04c29b0287",
+      "6a10c86a-21ca-4053-9428-b4b51a0d6b93",
+      "f09121ce-6df5-4fc1-b138-59c6ab34e0f9",
+      "7e19e2b7-51a1-4981-a894-1c49c91d2ffb",
+      "60474752-bb90-4847-84f9-13e0edb24285",
+      "73cda6ab-d49b-4664-9ab8-2bf0ee01887b"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_bossroom01/normal.scn.20",
+    "ItemGuids": [
+      "8c48c8be-b70d-4c8b-b83e-0f456ece3734",
+      "1a6fbfc2-f4fa-44a9-9130-3fff0c5958d1",
+      "57eae17c-924d-4957-b9ca-cc7c126941f7",
+      "aacb3174-1e17-4efa-95ab-d228105a2efe",
+      "3466a7ef-aafc-4123-80a3-3da0e83a75f2"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_cave03/normal.scn.20",
+    "ItemGuids": [
+      "be6b9542-6b82-40b1-98c2-506ea38f8364"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/hard.scn.20",
+    "ItemGuids": [
+      "b3161920-e7f5-4ad4-9cd9-852068d18233",
+      "8028dd05-71c0-4b08-be36-06a4e1441d62",
+      "6dd7363b-178d-4082-8bfc-58fcc8c4b38b",
+      "01ec4e87-546d-46a8-a041-ce6305c44869"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_cavepassage05/normal.scn.20",
+    "ItemGuids": [
+      "16696e07-6ed3-4cc0-9811-1e71ae1aca31"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/hard.scn.20",
+    "ItemGuids": [
+      "0e16eb83-8d82-49f0-bdd4-6d517a6bdbee",
+      "7691a0f9-f3d1-4817-96c2-5cc32b66b7fe"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo01/normal.scn.20",
+    "ItemGuids": [
+      "f746c50a-d532-4065-a78f-e19b4adc73b4",
+      "9e5b3c93-4e44-4fd3-9e56-9caa62942707",
+      "3d96d30c-5303-4e1a-badd-61f3e383539f"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/hard.scn.20",
+    "ItemGuids": [
+      "e74423bc-a755-4825-9e03-413a6fdccbc2",
+      "047d379b-6ff3-4541-ba8d-305beac17179",
+      "e1005fcd-9253-4749-bcf3-4ce45929a0bf",
+      "d5237b2e-4ae0-435b-afbb-fc0f94adea37"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labo02/normal.scn.20",
+    "ItemGuids": [
+      "86a1282a-e8bb-43a0-a65e-54ce9c6e9d5a",
+      "70f9f2bd-a719-4a69-b767-d7d0cb2f0fc7",
+      "c41f1fee-ed6c-4051-99c4-8924461066ce",
+      "ee5f45da-d9d3-4a34-b37b-be3d3821096c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/hard.scn.20",
+    "ItemGuids": [
+      "8ee6a8cb-7265-461b-a8e0-cc37d824457a",
+      "01362774-8d8a-425a-9d8e-e4c8f5a1f02c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_labopassage03/normal.scn.20",
+    "ItemGuids": [
+      "28f9c872-1c22-4bc1-a9a4-10fa9d6073c5",
+      "27eaf0e4-67d8-4adc-a32e-e5d9479376f5"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/hard.scn.20",
+    "ItemGuids": [
+      "6ed6f487-a361-474f-879b-4c8d021bc938",
+      "138a3d0a-c841-4eb6-ad1d-878f51fb7534",
+      "30c32d96-3609-4a48-91c5-a7eb64c24183"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_mine01/normal.scn.20",
+    "ItemGuids": [
+      "19252d54-361a-4874-8827-1e678dff1dc4",
+      "ce0cd7d0-42bc-4b80-a570-41f7d179f911",
+      "41319d84-dd1c-4292-9a69-501b4ac412fa",
+      "adbd2259-9334-46aa-ac3e-0406b36c8ecb",
+      "2aed110d-5003-4f0f-88f4-ecbf1452a108"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/hard.scn.20",
+    "ItemGuids": [
+      "416e7d3e-4dae-41a2-acc4-729b3f46c780",
+      "ea5e69fa-1eda-4076-8a51-aef39d312e8f",
+      "beb60cb9-4c57-43b0-a4ec-742550d44630"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningcollapse01/normal.scn.20",
+    "ItemGuids": [
+      "2583d9e2-0d6b-4f4a-a0d1-214190bdb202",
+      "c3a6cbf4-435c-4070-9d5b-eb072edad6d5",
+      "41411823-dbca-4865-b16b-514a98e94acc",
+      "79b124cf-3734-4a96-8294-7ed2eead6975",
+      "dc8c123a-7553-498c-b2d2-7d503ba7376f"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/hard.scn.20",
+    "ItemGuids": [
+      "75fe8ce9-f8e2-440d-a8dd-0e7308bc8c67",
+      "8693a109-b31a-4c67-95dc-599ec276d4ec"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningdome01/normal.scn.20",
+    "ItemGuids": [
+      "af09283f-ab76-4c82-9c17-06caa8d832a5",
+      "67fe4253-fbe2-407b-b68e-7a3e87c1429c",
+      "a2e8875b-fad6-4d0c-9e02-cde4111a3881",
+      "6d2b923d-2952-4293-abdb-deae11846ce8",
+      "22f612b9-374b-405d-b0fe-f61315e09c49",
+      "751175c9-f895-471d-b14d-c5ac937ced46"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage01/normal.scn.20",
+    "ItemGuids": [
+      "3b74b6a0-b397-4550-b245-bb492b1259bf",
+      "58373273-7f80-4443-9fbf-399523ca7009"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/hard.scn.20",
+    "ItemGuids": [
+      "b707e7c3-aff6-4ff8-964e-b67c56fd60b1",
+      "bcbd87a1-7ed6-4b5d-a992-795165c937cd"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage04/normal.scn.20",
+    "ItemGuids": [
+      "50a28b6a-9de7-4998-a80f-304802027e1f"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/hard.scn.20",
+    "ItemGuids": [
+      "bc4e7282-79f3-41ec-a914-783ad103839e",
+      "1ff634c8-3dfa-4613-99d8-a34ef89878d7",
+      "904311b4-2733-4e0e-be88-773592908cbb"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningpassage06/normal.scn.20",
+    "ItemGuids": [
+      "6fed4952-3580-4f4d-93f5-14e3fb931e97",
+      "cfdad35d-87ef-4ce1-808d-679a90ec23f9"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/hard.scn.20",
+    "ItemGuids": [
+      "591e9a17-e2c8-4ee7-bcba-9723e9b759f7",
+      "bb5fd153-6286-439f-be81-e8fb939a2b0b",
+      "87fabdc6-b833-444a-a1e5-60df6ac212cf",
+      "87687934-68b4-4051-8c4b-bf6f97ccbb74",
+      "60071335-dec6-48ba-b812-8bdd6d66e2b6"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_miningtunnel01/normal.scn.20",
+    "ItemGuids": [
+      "dc73d60e-f4cb-42c4-a171-55943f3f4db7",
+      "0e94bc95-de0e-42ea-bae5-3179826a28a5",
+      "07ee10d6-e0b1-4649-af1c-43e1ea96a431",
+      "6bda04a1-d5ec-4d07-9bbb-1ce083ae1577",
+      "ae4b35e2-ea63-41b4-b874-ec47c91af496"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/hard.scn.20",
+    "ItemGuids": [
+      "932b4078-b477-4331-9850-5fe0c2a98d17",
+      "03eb9b93-380b-4114-af09-6eaf6652a8f6"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_center/normal.scn.20",
+    "ItemGuids": [
+      "ee7ca987-6384-4ad3-b0e9-94c5d1e3f81d",
+      "f3876f48-d32e-43ca-84a1-1ba7b9c5d6a8",
+      "a55f30fe-faa1-4baa-ba77-aa979a61b441"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/hard.scn.20",
+    "ItemGuids": [
+      "fc72e7c8-65ce-44bf-abb7-4b1a61d96f63",
+      "bb079dbb-1939-44e5-8d1b-856903dd51c7",
+      "7999eaf7-a509-440a-8e0f-cce0b8b5999c",
+      "544075b1-1da5-479d-a074-57a9e5300cfe",
+      "ccf6c548-0d58-4dad-b2d4-0a314acaa044"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_shieldmachine_entra/normal.scn.20",
+    "ItemGuids": [
+      "5dbf08e0-7c3b-437d-b42e-ec158a8c2411",
+      "2035c81a-c654-48f9-ab7f-4f49ce49b3cd",
+      "94375bbb-8184-4c34-a85f-e84f90bf4c63",
+      "62513ca1-7a3d-4b88-aece-2ef86fc05446",
+      "60976dd9-d064-4345-99d7-23f63929dd9c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/hard.scn.20",
+    "ItemGuids": [
+      "795020db-cf1a-4c1d-aa2f-03a30ef8ffd2",
+      "7596e826-5454-433f-a2c3-cd7e8c2aca15",
+      "d97d85bb-b028-4f2f-a15c-ec60be0307d7"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage01/normal.scn.20",
+    "ItemGuids": [
+      "0cf58d26-b772-40d6-a0c3-8d949c5ea059",
+      "97ef64c4-5abe-47b3-b324-d4037d95d2e6",
+      "e298eb53-93d9-4704-bfb0-2157e1dcfbcd",
+      "1c71fabc-cd79-444d-a0de-236ad312dba1",
+      "01d3028a-7ec5-4661-95d9-db1f3bf9bf94"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage02/hard.scn.20",
+    "ItemGuids": [
+      "a51c597e-d1b7-4eb0-8573-b24351e0f894"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage03/hard.scn.20",
+    "ItemGuids": [
+      "688222f0-f394-427c-85db-2d059a9e46f9",
+      "754cb047-8f57-4eff-a935-14569a352537"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/hard.scn.20",
+    "ItemGuids": [
+      "ff6934be-dce4-4838-8592-cfdd7ead6e2e"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage04/normal.scn.20",
+    "ItemGuids": [
+      "39ffeb90-e309-4be4-b134-49b7a8b9aac3",
+      "7653a89f-72ef-4d15-ad6d-84ac6ff88557",
+      "8639c99a-dc94-4a17-a49d-248606907e0b",
+      "07955794-c861-4535-9378-448fddf6dbd6"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/casual.scn.20",
+    "ItemGuids": [
+      "5cceca6d-3905-47a6-89c9-8f38710ae2ec"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/hard.scn.20",
+    "ItemGuids": [
+      "8f57a946-cd5a-408d-9da2-e18ff1e9f81b",
+      "bed86eb9-45b3-4f6f-adee-b4c5ca669467"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage05/normal.scn.20",
+    "ItemGuids": [
+      "69279e61-3e14-4fb9-ab5f-5bf5e1f2c3b9",
+      "708e807d-c5cf-449c-80d8-a537822f0648",
+      "17c07bcb-5197-4113-86c5-632bc5758f4c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/hard.scn.20",
+    "ItemGuids": [
+      "af584406-db22-47e6-ae57-2937df8ae215"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storage06/normal.scn.20",
+    "ItemGuids": [
+      "ed6f8744-393c-4273-8613-f7b7bde96cab"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/hard.scn.20",
+    "ItemGuids": [
+      "8fd517dd-1c33-4972-b236-ecf164532413",
+      "e99c8984-90af-495c-8655-bae72d2c6825",
+      "83afb5a4-8be1-4951-ac07-c71335ddb415"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_storagefuseroom01/normal.scn.20",
+    "ItemGuids": [
+      "307a28ce-0bec-4dc4-a277-f3ae8bb4d552",
+      "a83091fa-8beb-41f2-a5b2-e9342feda4bf",
+      "d68c14a4-9750-43a8-8aff-72a4cbc053de",
+      "aa9dee18-3b57-4057-b09f-9dbcbe36c7c4"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_train01/hard.scn.20",
+    "ItemGuids": [
+      "657c34ee-070b-469b-895f-817a2a8ad420"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/hard.scn.20",
+    "ItemGuids": [
+      "1f7e8b4c-dc80-4fe0-bcf5-f28455ada79c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_train02/normal.scn.20",
+    "ItemGuids": [
+      "97727c84-17c9-453a-b705-8dab10819282"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/hard.scn.20",
+    "ItemGuids": [
+      "ddade19a-3f93-4eac-9684-d15b7dd954ff",
+      "b3593149-eefe-40d6-a972-d95751af9318",
+      "b8c75e99-7dc8-43d4-955b-d0ca1b91b28a"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_train03/normal.scn.20",
+    "ItemGuids": [
+      "0dbff6ca-8b22-421e-b287-6bd0da724b5b",
+      "e8d76c6c-4171-4dd9-9ddc-ffdbb88dba91",
+      "60290da1-baef-47e4-87c2-5c0116c5b77d"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/hard.scn.20",
+    "ItemGuids": [
+      "397fbd22-3151-4631-8893-2e882c566ad6",
+      "d1db3f4a-f3c3-4b5f-96d7-209754e20bf8",
+      "034a5aad-823a-457d-a759-f6e3e50c8c65"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_traincollapse01/normal.scn.20",
+    "ItemGuids": [
+      "4871f756-b9bd-4f4d-927c-ab8f3a75827a"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/hard.scn.20",
+    "ItemGuids": [
+      "9c4f5a12-cddd-4cd6-887e-566777fde193"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage01/normal.scn.20",
+    "ItemGuids": [
+      "0ff8d245-19eb-4d17-9d12-7b0853399d25"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage03/hard.scn.20",
+    "ItemGuids": [
+      "19112b55-b351-46d4-bbc5-d2692d79368d",
+      "023b8794-53d5-417f-a785-8b32eeb06d3b"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/leveldesign/itemset/chapter8/c08_trainpassage05/normal.scn.20",
+    "ItemGuids": [
+      "6aad3206-f5bf-4089-8ac4-d2ddde087af9"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/scenes/chapter/chapter8/c08_enemyfsmforhard.scn.20",
+    "EnemyGenerateGuids": [
+      "aecde9a8-ed01-48d7-bbbf-ec8bf1d91db1",
+      "19536aad-7bae-4617-b57b-1e32a9438638",
+      "290c7aad-050d-400d-a9c3-7bd2161130e2",
+      "d0e38fc8-314d-46dc-88b7-4135b4a5b890",
+      "99d58890-6868-4e0f-aa78-b619d206dc71",
+      "07c6d9f0-bc1f-43c3-a5ea-f81b583cd284",
+      "14b6f32c-18ba-4eb2-bad1-5773bbfa45f3",
+      "5b390449-9b7c-4a60-9f93-1806687a84de",
+      "206ad05f-50ce-4ae1-8c62-0be915d4ac35",
+      "5663a6e7-1ffc-4e49-90c4-fbd72dabbef1",
+      "c6371f27-f276-4f5c-baba-c095fe5edc65",
+      "b46bd752-dbd9-45c9-9824-10263b18e93b",
+      "34b3186b-f8bd-475f-a34e-1c0ec6be3ba6",
+      "811ff110-e1e4-4dee-81d0-f0a05c1dc026",
+      "aaa6adaa-7503-4067-804f-d2cfbd53b291",
+      "7690a8f0-0763-42b7-9f75-9fd1013c05b2",
+      "297cf0a7-8556-4a4e-befe-d85a59a90d49",
+      "d851cf75-91b2-4395-9a16-34820018d30b",
+      "0c0152d5-bfe8-4223-8bcd-6d04e64ab462"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/scenes/chapter/chapter8/enemy_c08.scn.20",
+    "EnemyGenerateGuids": [
+      "04ee0ef5-5f86-4cda-b61c-5f134360154f",
+      "a97cf2e8-76aa-4ad6-896f-702d8df2d024",
+      "fe616aa1-d5fb-4d5f-9eac-ec5269745bf5",
+      "536af922-fbf1-47fb-92fc-e47c4b761d2d",
+      "1520d6d9-e160-459b-b499-1ae3fa48447a",
+      "36b9ef13-97ef-4227-9e93-197e808476d9",
+      "b4b904f6-44f3-478d-b390-6373efe6cf61",
+      "c401b98d-b2b8-4edf-839c-ba14b0d3a80c",
+      "8b012a1a-fba0-4f90-b735-1bd7a8828c3c",
+      "3baef9b6-c44d-4bb0-b818-6c9b5598fb08",
+      "ebc59d48-f27c-4725-a81e-744dcafea886",
+      "4b58ec3a-663c-40ab-bede-644356e6e10b",
+      "561c2218-136d-49ec-9399-3331dc5ad8e8",
+      "8f374ece-7852-4731-b97a-8f7b4679c894",
+      "9f0d7cf7-e875-48ae-a8c9-731bfc8db9d1",
+      "03311321-3dd6-40f4-96bf-d785f084c5c8",
+      "494f4957-1152-4487-888b-9f412731b90f",
+      "8a9db56f-ad66-4d5f-8bdf-5ea3b47287b4",
+      "481463b9-6410-4cad-9bfc-44e2a323050b",
+      "d9852c37-794d-4bad-9010-fa8e97aa85e7",
+      "7b32ab20-994e-4bda-88ee-898dd366e4c1",
+      "e47be293-534a-4171-b554-5d9bfa8bc326",
+      "c97d852b-f861-4285-9dac-c1037a133408",
+      "e116db77-413a-425d-9aba-910f2313b76d",
+      "e4826c53-3bee-409e-bc21-e78e49aa89e8",
+      "376ef8d6-b874-4ea7-92eb-bedb7454c512",
+      "26456468-535a-4512-8f8d-1b62a0a08b88",
+      "18a453ac-0a64-454f-a6a2-35ced0614276",
+      "46e9c135-f4f2-47b9-8599-6c24fd096498",
+      "1e790f8a-5f18-4a82-afeb-0f760a4bfdc1",
+      "8528e7de-8e3f-490e-81f5-dcd98c0ed2f9",
+      "bab0505e-4495-4a91-a048-572263ff33eb",
+      "c3c19115-8f60-483d-92b1-1de6a9d0a9de",
+      "554ec2e2-fa33-42ca-aeda-5c047a3b30f4",
+      "f201c01d-0b52-4ad0-bf0f-9cac9271355c",
+      "036ab499-8870-463a-a731-d17b22996647",
+      "8785cbe1-d7ef-4ce9-a1d8-c99e2b302c6b",
+      "dc32677e-19ad-45d7-9ec3-6664289b2155",
+      "615e7aa7-bef1-4333-b227-0a7a9526fd4a",
+      "e7452fbd-aff9-43c6-9518-1b21ff584469",
+      "05ebae22-62b6-4f1e-9cd6-964d2575f9ff",
+      "7541961e-e4bd-455b-8ba1-a878275c2d3a"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/scenes/chapter/chapter8/newenemyfsm.scn.20",
+    "EnemyGenerateGuids": [
+      "370b9a6d-6595-4787-b212-73e7c8f3f593",
+      "a4e4d517-b733-4afb-b72d-1c5276e87d3e",
+      "ac2b1bd5-7b6b-4450-92ab-569ace9e028b",
+      "33b8d14a-2879-4a4d-99e2-ef77a68f6baa",
+      "c90a5ab5-1e69-4a57-aa80-696eca3e6d4c",
+      "d7ffded8-c6dc-4eaa-ab25-2a9a5f05d843",
+      "f9314032-fd8d-4833-ad7b-d34bfc9a100e",
+      "b2b470c8-832a-4b87-bd92-694769150b02",
+      "14bfff09-dc98-4d1d-ac0e-400b93ddf334",
+      "5762e458-6f8a-4d5b-adf7-58405f1c0dce",
+      "3a59b72c-2a75-408e-964b-1d768999c302",
+      "a17659a5-0263-4742-a92b-3e1fb65b4c3f",
+      "e0659128-866a-4b79-a2fa-acc1213c6401",
+      "8c5d4a1d-9bc8-4fe1-a9f5-f39451734958"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/scenes/itemset_resident.scn.20",
+    "ItemGuids": [
+      "f6ecd62b-70af-49c3-82d9-b247b4041856",
+      "50accc63-d6bd-47ad-a1f5-7e9ab17b2726",
+      "6b8e0fdf-47fa-4b6b-995a-5ceacf1cf486",
+      "9bb5702d-9f66-457a-9652-b0a99dc559e8",
+      "2303b869-56ed-4f0b-818b-0f6025ef2be0",
+      "7f06d921-95fe-4491-931d-3daba88f3f23",
+      "4be27f48-847d-475c-8920-15e2b57521b0",
+      "698ec2ac-c015-450e-a9cf-0abf261c0d7b",
+      "ecd5a353-cdbd-49bb-8a03-9b3da97dd2b7",
+      "bea84681-12ce-4156-939f-60828f80aa7c",
+      "19b8e5dd-5b4f-40ff-8b65-1dafa8ece619"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch8/scenes/residentweapons.scn.20",
+    "ItemGuids": [
+      "5fea4392-76c3-4ba8-be89-4aa3251b3542",
+      "901b25b2-7a74-4dd5-838a-1ce509f9c9b0",
+      "e1ffa6c0-8fd4-4057-aedd-1ceea01c49de",
+      "87a7cfa3-9a83-441a-b490-810d0fd4a690",
+      "045090d9-e2ec-4795-85d3-41305defec59",
+      "4dcf49e8-5b3e-49cc-af56-34445b2f0f5d",
+      "3c575da2-2afa-4dd4-b618-6a7680ce535b",
+      "3bc16035-e8dd-4c95-8589-9f7d28833846",
+      "d02f5652-3021-461c-b81d-cda33852e87f",
+      "31a6a75b-bd5c-4ba4-8f00-56e592ea7475",
+      "6d2717f8-216e-4be9-a98e-15d0de5ef342",
+      "6d2ccb5b-f010-475b-a7fb-4976f7140071",
+      "13a8f9df-d5ed-40c8-b6bd-1c15b2f5b3d6",
+      "c02ada2b-e4a2-4400-af48-27b5b70afbe2",
+      "ff68336d-af7a-46e0-bb9e-ab52ff841eb3",
+      "d89e9095-b36a-4c97-bcaf-f3f608ab2418",
+      "dcb524f7-c82d-46ea-b761-d2616748f1ad",
+      "45b460ef-9579-4d19-87d8-de1f814d592d",
+      "cf6cf30a-9435-4d4b-bc4a-1b48a97c4eaf",
+      "06326c2c-e484-4c7c-9189-e2be988dc791",
+      "a107e185-8bed-4e84-a3cb-40011caa02aa",
+      "b1cffa90-7f81-4590-9913-259990dab55c",
+      "62885080-8612-449a-9c5d-ac94e0535b61",
+      "a24fd315-37e0-45e2-bd3f-1f927b796d46",
+      "aabcb4fb-320e-4c40-80c3-54c27e2de6aa",
+      "5dc89fe8-b7b4-4f4b-85a6-3e5aa47a0140",
+      "16d3f1dc-44e7-45ad-bb94-ff618ef08db2",
+      "0abd959f-2157-49df-8380-c0cf8bbc4d4b",
+      "74cf88f5-0fbb-41ba-9cfb-134fc8d05679",
+      "713b1a1b-5dc4-4f72-94c0-0f78312b709f",
+      "e8abf9bd-7c40-49d9-8296-610b5a922bf2",
+      "15874964-2393-4e0a-8f3b-84035b7f19ac",
+      "87e805f3-a0ca-49cc-8103-495a4284c9ec",
+      "68b31933-e923-4dfb-89e5-31662e150d90"
+    ],
+    "WeaponGuids": [
+      "5fea4392-76c3-4ba8-be89-4aa3251b3542"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/environment/scene/chapter9/c09_bakerroadground.scn.20",
+    "ItemGuids": [
+      "80135ca3-1b68-0c1d-0e46-8765d7f10b2d",
+      "2b2ed038-b4b9-07cc-3d50-c210b0412ad2"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/environment/scene/chapter9/c09_gardenarea1.scn.20",
+    "ItemGuids": [
+      "59d41b3d-3c41-469a-8c74-92c641a2a934"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/environment/scene/chapter9/c09_steamboat1fasset01.scn.20",
+    "ItemGuids": [
+      "1cd49220-8708-4e37-be21-2074c69cd819"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/bakerroad.scn.20",
+    "ItemGuids": [
+      "05a01b54-6c4b-40bd-ba69-43c7af42687c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/bakerroad/hard.scn.20",
+    "ItemGuids": [
+      "33a4fbd2-14f2-450e-99ff-3434789696a7"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea/camparea.scn.20",
+    "ItemGuids": [
+      "fc3aa772-1fcc-4529-9595-0ecc93a3a5a7",
+      "a251bc98-2443-41f6-b402-ed5a9daeaf22",
+      "190c61bd-3469-424f-97de-44092d2c8f4d"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea/hard.scn.20",
+    "ItemGuids": [
+      "89314c51-5649-4f89-945c-1f66b107fe9b",
+      "9d4a4c6f-17ff-448b-847f-d0d7de5223dc",
+      "0ed08413-76bb-42b8-b682-4c4700fe0ff3",
+      "8f9729a2-909c-472a-b323-18a0cbd94401",
+      "c2114fc5-4062-4563-8402-33024e1d33c7",
+      "ea1e84d5-1c0f-4492-b496-f089c50ab8fb",
+      "86235cae-3f2d-4c53-8512-3c548a6b7d19"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea/normal.scn.20",
+    "ItemGuids": [
+      "3bca953f-c2b1-4b0f-a5f9-57ed8a095600",
+      "95a47bd9-a7ba-4f65-a251-02cb6b9559ad",
+      "90aaf4b8-5fa9-4026-9b42-50c6818ec2f1",
+      "1c5997c8-d67f-485e-89de-b807d2b0698f"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/hard.scn.20",
+    "ItemGuids": [
+      "d49bc475-0876-4308-9618-65b6021a0b3a",
+      "e919fe02-4b1f-4de0-ad2c-b040581a0213",
+      "ef39dc97-ae03-4d74-b346-5c83f9bdfec5",
+      "49b04537-5dc2-4f9c-a7c5-0d8704e582f1",
+      "15be35a6-ddbb-46f0-85bd-3313f9be38ea",
+      "f99699a3-90f0-4ea9-8be3-a370631b8c38",
+      "f11eb6ee-683c-4b80-9c24-de3362d02cb9",
+      "ccaa791c-5a02-412e-97f9-45fbd89a56a3",
+      "32cf762b-e324-47f7-8021-4f8fde28205a",
+      "82011ce2-2a48-45c8-bb1b-cd4de8541568",
+      "89a44f6a-e9d8-47e1-ac8b-98f2697cdf90",
+      "f50f6a13-6fda-43a5-ab18-150d7ed902f4"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/camparea_ground/normal.scn.20",
+    "ItemGuids": [
+      "157d44b1-c2b0-4411-bf01-8714c28981d2",
+      "85ede887-72af-4a9c-a393-2c9235075cad",
+      "232497e4-a21c-4b74-ada6-cb21cc51c85f",
+      "fe5cb5cb-3a97-49f4-bff8-a3026ea634cb",
+      "61e053bf-b6c7-4be5-b099-c08065901214",
+      "64f6e6a3-ff6b-4ea0-bf91-81b5c8b7d123"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/church/hard.scn.20",
+    "ItemGuids": [
+      "9f6c0a34-6b31-4d45-aeaf-9bb9bdfeba34",
+      "39fe82b8-8886-40dd-b24b-3fa46ad14d2e",
+      "fffbb6ce-491d-46ac-a95d-768d2855398c",
+      "32c7123e-1477-4c4b-b4db-5fe63511d466",
+      "3646bfa2-2dca-46ff-a3e2-1217823946de",
+      "5a0011dd-f0ce-42f3-a330-52451166adb3",
+      "a98be2ce-2c7b-4100-b8fc-b7737d82c2c9",
+      "35eaac62-0d67-493f-a21f-312fb0415a3c",
+      "152f2784-8bf2-486a-8acc-4b12ec553d50",
+      "85299e1b-3a74-4183-93c5-c989f5e427f6",
+      "30941d35-341a-4a83-aff4-f512e7e46046",
+      "5185c8ee-d1e2-40a0-906a-f42c0449e7cc",
+      "210715cb-8514-495b-947c-45532a3c132e",
+      "354f913a-859e-4dfd-934c-1cb2018b751d",
+      "71797d46-8fb3-47fa-b97d-a2e205c22fb0",
+      "e82c3a34-119e-4441-a16e-78047537f132",
+      "62fd0660-3cd1-4ce7-bec0-af010e3e3f2a",
+      "2e08f272-ccaf-44c3-a09a-84d1ca7b0bbc",
+      "4dcaaa32-66c4-4963-a38e-269a45af9e69"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/church/normal.scn.20",
+    "ItemGuids": [
+      "ec2a9727-2cc5-4535-b6d7-74ea80791f9c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/climbinghut.scn.20",
+    "ItemGuids": [
+      "431022e7-fc0f-438e-b0ae-5f2ae2a587c2",
+      "90330227-3342-460a-a8ef-58e604f92ce4"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/hard.scn.20",
+    "ItemGuids": [
+      "447e6fba-61c8-4d44-a820-573bc9483730",
+      "0a30f908-e3c6-4df0-b1fd-9d6b2269831f",
+      "6fdbe35f-ae5c-4906-8747-ad17f57e4713",
+      "091473bd-cbce-4372-8791-dd8d7a1d87bc",
+      "76f6938a-609b-4101-9474-c343f69f47fe",
+      "fea11a08-a4fb-4e4b-bedf-78a2dec2a102",
+      "7a8473eb-2420-4e45-81c4-164dd3f723a4",
+      "72c996ac-e041-4201-83ce-e2598f847694",
+      "db0e76ec-287a-4873-be02-8d6afa18d4a5",
+      "1eb461f6-8bdc-40bb-a1aa-d41ce6eabe19",
+      "41f2f482-8498-424b-a426-87532ba6a941",
+      "3a2e9351-4fab-4a57-a6ff-b8e3bdfa89ee",
+      "e6d832b6-e2fa-43cb-a090-5a6fd09a71f3",
+      "c4eabcbb-55ff-4f61-b04c-1cf5e2bfc87f",
+      "b7386d8f-9e78-48cd-9164-b008a16a9129"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/climbinghut/normal.scn.20",
+    "ItemGuids": [
+      "7d5f791e-0db4-4c7c-aafb-57e0a69b7edc",
+      "1df2def2-2bfb-4bea-a5bb-cb3d6174f857",
+      "bef392d5-9700-41e0-a2c5-164c14df2d4e",
+      "1ae03808-88ea-4d50-93d7-f25702be14df",
+      "d00dc8d8-ced4-4be6-9133-2b3b178bae70",
+      "0397954a-81d0-4990-b280-ca4259ea4799",
+      "21c978cb-510a-4184-936f-2572bf69da3a",
+      "62d9573e-9079-45d7-b498-494cb4b14efa",
+      "f538071c-caee-4804-a3f1-cdf478d3cff1",
+      "7ef7f40b-c701-4b36-a5f4-9abb25745c2a",
+      "bafd32de-873b-4a55-b6de-0c4702c06dd0",
+      "53592c14-9d64-4d7f-8448-20411c2443b1",
+      "cb9b94ce-40df-4a36-9b5a-adf91d5b1cbe",
+      "ceebfb3f-c8ec-495e-81f9-9267c4552576",
+      "c0b6362d-dbf0-482f-b3c0-d427a866ef71",
+      "ae5ca16e-eb0d-45d4-bf50-b0c10fb647b1",
+      "409304a2-043c-493a-b5ac-3d8c33b7fff9",
+      "822a9de4-ffcb-457d-8da2-f356ceb87dce",
+      "fe9e34da-cbb5-49d0-be5e-e78cefb0d7ad",
+      "aeae4727-9e4a-4cbd-a682-d2aa245ed1f8",
+      "7e7ac5d8-1b56-4ab7-9cce-421bf446f349",
+      "1b9de84c-ac2a-4baf-ba0a-8fae6ec8d246"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/gardenarea.scn.20",
+    "ItemGuids": [
+      "4bbb99ba-4bd5-492f-9158-67759f008206",
+      "29c9d239-f55c-4400-8dba-3a184058b6d7",
+      "aefd4d68-9c6d-41d9-9a0c-d30898023f41",
+      "d18d20b2-8dd5-4fa9-8c68-0bee62bf8eb4"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/gardenarea/hard.scn.20",
+    "ItemGuids": [
+      "cc40e717-d914-4e1b-bee3-438616fe63f1"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/hard.scn.20",
+    "ItemGuids": [
+      "f25e14ce-62bf-4cdd-9d8b-42cfa27c24aa",
+      "2b33d1fe-cfd5-46c8-8ef8-34853b268165",
+      "a286eed4-bc12-4f7e-b47f-a7b1205e3f8d"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/joehousearea.scn.20",
+    "ItemGuids": [
+      "3a100d6f-c595-427d-8f37-13308a23e8be",
+      "72d4754c-1291-4270-a658-23e56c3b0e5e"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/joehousearea/normal.scn.20",
+    "ItemGuids": [
+      "829808fc-e118-4363-ac2f-0d06d24ae88a",
+      "ba601f66-b838-416a-8df1-4ea73c00df41",
+      "4c27650d-5ac9-42c5-9aed-7ab25e5a7c04"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/mainhouse/mainhouse.scn.20",
+    "ItemGuids": [
+      "4f6d7d8b-21ea-4969-847f-0693fee9370b",
+      "153a58f3-0510-48a8-8328-76fc26387c2f"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/hard.scn.20",
+    "ItemGuids": [
+      "6805e79c-78f0-4340-9ca5-23e81a7c7d2a",
+      "3772c143-0693-4cc6-bea6-3f4e750852c6",
+      "70160817-bfd2-43a8-97e0-2fa156feefbe",
+      "632efca8-0e1e-4d4d-ba6d-a71ed01b3d3d",
+      "7fa8541b-384a-44a5-b5d7-8c9d4a90856f",
+      "99d337e8-4e9b-487d-975d-da97083905f3",
+      "a88b5a4f-f6c8-4ff6-b1e4-72400129d481",
+      "7a838307-526f-49cd-9165-ac46b6e0a06e",
+      "e8cdea3c-a144-4dbf-a423-64e89dadaed4"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/moldswamp/normal.scn.20",
+    "ItemGuids": [
+      "3e61b96d-baef-4dcd-a75a-ab25f74e9b80",
+      "56574a83-0d5c-4f08-b4f8-477daead6e81",
+      "85dda1c7-3cca-49b9-af2e-300529d1cd9f",
+      "6c4f5410-bbd6-430f-95d0-20a892f056ae",
+      "e0718bcf-b2d9-4395-94a5-4f6cf5763ae5",
+      "a8e5d839-5c86-46fc-84fd-03176a603afc",
+      "2df11947-fe97-4b4e-a785-af1aad30af54",
+      "4170966c-eb63-4a39-909a-268f342bb549"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/hard.scn.20",
+    "ItemGuids": [
+      "a27d6841-374a-49da-855d-6a2a2cedad19",
+      "9f1031bb-48b2-4c4e-88ea-6af40a2aac2c",
+      "ce398bc9-2b8b-4707-b9d6-911a05bad9e2",
+      "bd7c3c3b-7d92-4ea5-806f-ef156cc6533c"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/oldhouse/oldhouse.scn.20",
+    "ItemGuids": [
+      "5889b738-28e4-4c43-9c35-8acbacdd0429",
+      "3981c523-5248-4523-a9b3-84baa7707f4e",
+      "70b9bf29-e9f9-480a-835b-6dc7501d9ac8"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/hard.scn.20",
+    "ItemGuids": [
+      "8c291fa0-7c8d-4aad-b16f-cb7b211945ed",
+      "abdde492-0f0b-4bb3-83b9-0d8fb2473a72",
+      "5e89b67f-6b62-4580-b5e8-d4bcd933c99c",
+      "aeb5d974-b949-45c9-b626-4d0856c5da4d",
+      "ca450009-4c6a-417a-90db-2f8b619ee80d",
+      "88d2ea1e-ca78-4aeb-b39b-0b6c0f196fc1",
+      "6401501e-ab61-4449-8a72-9b2e1e734429",
+      "b3010eb4-a61f-4e26-a3eb-1aba133c4b95",
+      "b39948c3-ba14-4d1c-9a80-c397a0b12119",
+      "f46bbb2a-3e2c-46af-bfd3-1549e77515d6",
+      "3a951301-ffc2-4523-a3c9-d18f591fd38e",
+      "fecae320-52a3-448f-93ab-1ea3dbee0c36",
+      "d2b81745-78ef-4332-9aa8-f8a6b0fe0e02",
+      "88165797-c554-4fe6-a515-8441900e851b"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/normal.scn.20",
+    "ItemGuids": [
+      "8afee19e-8421-452a-986c-7570aac75e47",
+      "46487ffa-3e80-4cc8-84ba-62ff30f4afff",
+      "eb9a6fe7-0f63-42b8-91db-c17d17120cf3",
+      "33677b53-b44d-4095-a838-07d3e73b0592",
+      "23cf9a06-9c14-4ef6-be7e-4b6230aa60e7",
+      "d9601367-7f1c-4112-86f1-7333c94d411b",
+      "815d8a24-79dc-4f15-956f-0ff8a0e19415",
+      "99e43d36-9a8e-4133-aae2-cdeb041fb723",
+      "c2880c74-12f1-4ab6-abff-053271a32033",
+      "e7da50cd-db0d-478d-99da-e4fcbabeacdf",
+      "2e66d9a9-8b92-4325-a16c-3125ee0ef601",
+      "6d655a6a-dfae-4c1e-bd87-f1a3c3d1381d",
+      "03361e6f-ce72-4140-8909-11e667962028",
+      "2cd9c1de-b8b2-4bc1-8c14-f6528b950346"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/leveldesign/itemset/chapter9/steamboat/steamboat.scn.20",
+    "ItemGuids": [
+      "604ce5fd-c0a1-443e-8737-ce11fe9b3437",
+      "cf493812-5e22-4bbf-b08b-514989fc5716",
+      "36bf66a0-0b51-41cc-b034-80eb7d74b4ab"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/c09_1_levelprop.scn.20",
+    "ItemGuids": [
+      "a31b0b2d-ed10-07cc-1384-cdd97d58f408"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/c09_itemresources.scn.20",
+    "ItemGuids": [
+      "bc32bd01-fea6-4b08-a105-d4b2b7fb1678",
+      "0bd18aae-92c7-406b-a9e5-654718203af8",
+      "59657e8e-a2a3-47df-a25c-ae4e421e1a3b",
+      "7215d257-4141-4c16-b4d1-7a0076ec9f90",
+      "cbda8e4a-c95e-4d7c-8b13-e7c5ae0c4a72",
+      "68b0bfc5-c172-4fbf-b731-5eb1efedeb27",
+      "62c78e6f-7bac-4072-8636-bd196dada11c",
+      "dd71ec06-4393-4e52-a19f-21ec82025015",
+      "7eccda29-ef35-4d64-85e3-6ee29a6b8d0b",
+      "1c19ca72-0b73-4c28-9ed9-659856475cb8",
+      "d7fa3dbb-6241-4044-bd23-8db78c125e3c",
+      "f113a4dc-60cc-40ed-9f66-367334b4c303",
+      "0259dbb0-ac54-4982-99a1-22e1b58b446d",
+      "fbbd9f92-022f-4274-ba85-234738893977"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_1/joehousearea/c09_1_enemyset_joehousearea.scn.20",
+    "EnemyGeneratorGuids": [
+      "2f115be5-6b0e-448d-b93f-172512fb2b12"
+    ],
+    "EnemyGenerateGuids": [
+      "db4dee40-5ece-4fb3-b8ed-4258611bde9f",
+      "df033c72-8960-428d-ae80-e976fa2b905a",
+      "d11fc07b-b179-47a4-a32f-298bd581e844"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_1/joehousearea/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "0be11652-578d-4caa-b1af-69e66d51efc1"
+    ],
+    "EnemyGenerateGuids": [
+      "b164b40b-e9af-47e7-b239-bef0b22571cb",
+      "c615c176-6627-427a-ab89-e435fda275af",
+      "2966655f-8969-4105-a936-8dcd890fe3cc",
+      "9aff156c-bb7c-458e-823b-435cf8fd0cbc",
+      "9c9b8bae-d5fe-4cb1-a6e1-bdb3841b6fad",
+      "d9147a9f-3c65-483c-979c-b89133e2f448"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/c09_2_enemyset_camparea.scn.20",
+    "EnemyGeneratorGuids": [
+      "a3bb41fc-f07b-4e7e-a294-99e9c5ef9e47"
+    ],
+    "EnemyGenerateGuids": [
+      "89a5ddbf-2a0b-45b9-b8ee-c850695db83c",
+      "98ea785c-2b01-457d-b689-3a43d434d918",
+      "ed45889b-0c96-4b9d-b14d-e80169c7baed",
+      "54f530e2-2a1f-4e21-9b6f-9a0a380b4999",
+      "41894bb8-e9c6-4f07-a91c-010c5a5c7cd7",
+      "f5516750-bec8-49e2-b8af-3ca1b8024545",
+      "741f2c89-9913-4701-9165-769d7d7ab8a6",
+      "062c026b-3556-4c8c-b58c-cb50a9dd7842"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/camparea/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "800116dd-9d4e-40c3-bcee-9ba114a3fba8"
+    ],
+    "EnemyGenerateGuids": [
+      "7c3639fc-f5e3-4923-871f-be1e41bbd8f5",
+      "af8d12f9-779a-4e15-801e-c43e12973e0b",
+      "69eaf3b4-2a09-4c9e-9298-e3a6f5c5e7b0",
+      "d091e5af-4246-4211-8e7b-bd44b88831cb"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/c09_2_enemyset_campareaground.scn.20",
+    "EnemyGeneratorGuids": [
+      "17a8af5a-7199-4a34-904c-f38d2451a30e"
+    ],
+    "EnemyGenerateGuids": [
+      "96530506-1031-4d26-b674-8dae5da89fad",
+      "e2bf03a4-b233-4a33-a433-2d58bd6c397f",
+      "e888c9fd-55fc-4e34-845f-89b25774c314",
+      "8fc49aab-254e-4501-960e-e4ff1bba1eba",
+      "6acf5f2d-1d2c-41bc-a8c4-861bb1bed326",
+      "1021e2c0-76a5-4085-8be3-b380206b1244",
+      "f8afcbf2-a1b8-42c8-a427-3f35b7eb37e0",
+      "e117f6e5-df42-48d7-b4ae-774a18af8688"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/campareaground/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "d6ea9c9f-8aa0-4a25-b939-6c770bc9bdee"
+    ],
+    "EnemyGenerateGuids": [
+      "157b383b-3e0b-4dde-96cc-6c8d2692e6ee",
+      "becad5da-d88a-47ad-8a60-b3d088fdf15f",
+      "c3355825-6e4c-4444-a1e3-8df1e02f2b2e",
+      "2fd97a3c-3622-4876-a7ec-d73486a87496"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/c09_2_enemyset_steamboat.scn.20",
+    "EnemyGeneratorGuids": [
+      "2bef8b85-17a4-47a5-b215-9c8e000c8f00"
+    ],
+    "EnemyGenerateGuids": [
+      "dc6bea08-b9f0-4d42-b526-1538d1377882",
+      "7576a303-07a0-4a93-b567-df005fb9453a",
+      "415ae9f4-9792-45d9-a705-2fe2aa923478",
+      "2f9e642b-deb0-4152-bcf1-59406d741436",
+      "aa6b90c5-89a9-4b2f-919d-7d73b620bd42"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_2/steamboat/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "fae154b8-c6e9-4160-ae60-79317617374d"
+    ],
+    "EnemyGenerateGuids": [
+      "df8e8cf7-092a-4653-b9fb-f98cb2a08054",
+      "76c41dbe-3921-4437-a3ad-b14a925edcc6",
+      "77e678e7-cf7f-4772-813f-ce36f25dc49a",
+      "4b11d938-bf1b-4248-9bc2-bcd7611744ed",
+      "7edf67b3-9d18-4586-8ee1-a89122a692c0",
+      "6c207a27-c365-4d86-9c86-8b9e62486b03",
+      "aa007e34-b7c0-49b6-94fa-5d1b9b042c09",
+      "0e5afe9c-2c40-403b-bfdd-96b936fa5519",
+      "dd238475-7a74-415a-afd4-5a9c4ac830d8",
+      "b0b94c6d-d5aa-4499-82a0-aebfd5a3114f",
+      "8713bc18-fa54-49da-93e6-990c895b60f8",
+      "e0105946-5cb0-4401-87ce-1f5f3dd854f1",
+      "a6a8e8e1-8f49-4212-801c-b11a2a922d94",
+      "67b2241b-e49a-490c-ac85-17f22d9176c1",
+      "e6bd3746-51b6-4259-89d2-5580481f8da9",
+      "c55f5cda-b76c-4df0-aa4e-bba211efe5d0",
+      "c035e81e-e576-4bfc-901b-aca21b665bce"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/c09_3_enemyset_church.scn.20",
+    "EnemyGeneratorGuids": [
+      "487c6b3f-b730-40ef-ab3b-8b583e402b0a"
+    ],
+    "EnemyGenerateGuids": [
+      "3b3c565b-4618-4367-abe1-056bfb740d89"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/church/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "7b1ab929-8cce-4983-82f8-0e1cc1da25a2"
+    ],
+    "EnemyGenerateGuids": [
+      "395d227a-b6fd-41de-9d2c-07e2d824cb3b",
+      "dda87b10-1ddb-4f9a-95c4-cb083b2870db"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/c09_3_enemyset_climbhut.scn.20",
+    "EnemyGeneratorGuids": [
+      "db4074fc-a137-44de-b539-97d06780afe7"
+    ],
+    "EnemyGenerateGuids": [
+      "07502690-748d-4719-b28a-7e4873a501c7",
+      "52da6bfa-b287-401c-991a-9e4e0bb97b98",
+      "7f57c8c4-f2d8-42f8-b8c5-5ba542ea558c",
+      "891d799d-7e83-4f41-9fc8-64e742cc4d0e",
+      "870f59c8-a24a-4c81-a9de-3ca5509fe32f",
+      "a126a100-5acc-4914-9e6c-e27db086baef",
+      "333fe667-2c5d-4bc9-9068-df5a06387fc4",
+      "0f4f37cd-d44e-47e6-b3ff-aadc6aa0157c",
+      "cbef433d-65c5-49a1-a2e3-ba146e119e2b",
+      "aa9481f6-5b04-4513-8dcc-b2ae10b3a540",
+      "04f4dbba-8c8a-4bc4-bef1-949d87793ae8",
+      "7428f3b8-a4ea-4682-a3b2-8b257139c455",
+      "10d5ecf2-7577-49f3-add6-79ddbfb51982",
+      "2f720f85-31c6-40f4-a43e-a960763fe426",
+      "d75d92b9-745c-48d1-9a92-1ebfecc9b47a",
+      "e16be028-b9ca-40cd-867e-f3d380106bfd"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/climbhut/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "70ed4b68-6fe6-4d62-8df9-d9bfdd62f076"
+    ],
+    "EnemyGenerateGuids": [
+      "a131b400-f41d-4f4a-bd9d-2f2112f03b55",
+      "dc844f17-6217-4c96-b3f1-a838dd8935c9",
+      "4b4482a6-6c6b-4bd7-8938-4f39147f4eb2",
+      "25df55e0-c36c-4b18-8041-ae7032a4351c",
+      "c6327d15-9250-42f0-9d45-763ea7964490",
+      "38c48bd1-bb9e-419d-a27d-864d9be19bfc",
+      "d9e7de59-4f1f-4b70-bf7c-6da3fbde7e14"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/c09_3_enemyset_moldswamp.scn.20",
+    "EnemyGeneratorGuids": [
+      "a5f33aaf-a49b-48a6-98e6-4670705791fd"
+    ],
+    "EnemyGenerateGuids": [
+      "8712f57b-e003-4d9d-b251-f7d9f962827f",
+      "2a2d19f7-6502-4804-8710-8a45c6108ac3",
+      "5471b9da-ba9d-4d2c-912e-530e05d81a59",
+      "c484cb3d-0f7a-49ff-9d29-cf386c6c0057",
+      "32de47e3-c6f2-4a65-bf62-81ab530919c0",
+      "8c9325a1-2e8b-4d02-b456-29dd796ac333",
+      "a8cb4334-12c3-4313-b1c6-7bd3c636f585",
+      "8c94a02d-cea9-4f61-83f6-267f1020bbd3",
+      "9cefb89a-0383-4dba-a738-d26cfe69e4af"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_3/moldswamp/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "6f907b3d-9ca1-476f-88a0-b183d5994047"
+    ],
+    "EnemyGenerateGuids": [
+      "c199537d-b955-4941-b53b-4c6510555e49",
+      "24e8050c-b925-47d8-9c78-773e9ec63c24",
+      "ab51967d-851c-42a1-a52e-98eb7acc2951"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/c09_24_enemyset_bakerroad.scn.20",
+    "EnemyGeneratorGuids": [
+      "d0d3df8f-59b2-4067-8453-2993320c265d"
+    ],
+    "EnemyGenerateGuids": [
+      "0052a65e-16ad-4069-9b7e-abecd9175fec",
+      "853c6aba-c72e-4c88-8dc7-e751727fda72",
+      "f19e9e75-e8e8-4076-97d2-4a0c784b04c4",
+      "5979b6ce-ebcb-4d38-be4b-6f4bb776877d",
+      "31395ae7-2afb-4b88-b189-94a2551b7197",
+      "6d677795-b026-4ca1-9d34-fe873d4cb273",
+      "d75cbfb1-ac9e-4f77-aec8-606c6081ca83"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/bakerroad/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "6bd37af9-706f-4e4a-ad04-5c48a29912af"
+    ],
+    "EnemyGenerateGuids": [
+      "c46be848-27f8-4c20-a20f-a22344c8f2b7",
+      "545aa3ca-2b29-4d62-9201-241a8c8ea282",
+      "d64f2c1f-646e-40c4-bcc3-d1914252c010"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/oldhouse/c09_4_enemyset_oldhouse.scn.20",
+    "EnemyGeneratorGuids": [
+      "fa0429ea-78ea-46d7-8cc2-d96d1b57c6c1"
+    ],
+    "EnemyGenerateGuids": [
+      "90964191-6988-43f3-9dd5-729b6d101b01",
+      "c563b4fd-7bf2-4b93-88c4-bc863714388f",
+      "3b217f3f-d817-4361-a205-be50a6816e69",
+      "bcdc4260-7fc2-489e-986d-400b06e45a13"
+    ]
+  },
+  {
+    "Path": "natives/stm/ch9/scenes/chapter/enemy/chapter9_4/oldhouse/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "91fff9d7-05d4-49f3-a306-6d2bb181c3c9"
+    ],
+    "EnemyGenerateGuids": [
+      "08b4409d-c6d1-428a-869d-f2c51094db46",
+      "eaff9e93-2fa8-4fcc-894e-69648d27a355",
+      "ba921abc-9ac8-402b-b052-306b497eb35f"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_2f.scn.20",
+    "ItemGuids": [
+      "63ebd00b-3ef7-4613-a81d-746d7bb80b83"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_3f.scn.20",
+    "ItemGuids": [
+      "8ee4e551-59e4-46ed-968c-afa303373243",
+      "992b27d9-6def-40a9-916f-0682cc997f5b",
+      "3bf47752-958f-4c78-ba12-409fd2667e9f",
+      "b09f6174-47f2-4851-acc3-3106d0902bfa",
+      "dacc5045-1fea-4f8c-a0ab-7f6eec0bc69e"
+    ],
+    "WeaponGuids": [
+      "b09f6174-47f2-4851-acc3-3106d0902bfa"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_b1f.scn.20",
+    "ItemGuids": [
+      "8bc66e64-5444-4fc1-9dff-22492ba794e8",
+      "1a17da81-3f83-47a1-ac82-ead889f829fc"
+    ],
+    "WeaponGuids": [
+      "8bc66e64-5444-4fc1-9dff-22492ba794e8",
+      "1a17da81-3f83-47a1-ac82-ead889f829fc"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_bathroom01.scn.20",
+    "ItemGuids": [
+      "54075834-9cc5-4dd1-a2e4-3484edadda93"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_corridor01.scn.20",
+    "ItemGuids": [
+      "b116eb16-c4c5-4d43-8901-044ec9dccbcf",
+      "12d42d0d-fd9b-404f-91d8-53d56f6f57e6"
+    ],
+    "WeaponGuids": [
+      "12d42d0d-fd9b-404f-91d8-53d56f6f57e6"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_corridor02.scn.20",
+    "ItemGuids": [
+      "13d8e6d2-5b92-48be-8c4c-49e7a331e27a"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_kitchen01.scn.20",
+    "ItemGuids": [
+      "81135149-1f08-4801-ad60-21490a31bd28"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_outside02.scn.20",
+    "ItemGuids": [
+      "e2900de5-fd45-4d57-9ebd-495d68b02fb7"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_outside11.scn.20",
+    "ItemGuids": [
+      "ee3242fe-55a4-450c-b8ca-0a8ab3c39546"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter1/c01_storeroom01.scn.20",
+    "ItemGuids": [
+      "fc627708-6cf7-4bd0-bfcd-2ddaf3e9cac6"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_cowroom02.scn.20",
+    "ItemGuids": [
+      "d9cf982f-b55e-4912-a713-c2d96c1c9b2b",
+      "8dd4de90-27d6-4f06-8bf3-f61b03064d75"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_cowshed01.scn.20",
+    "ItemGuids": [
+      "3e3778e9-b321-4141-8c90-9cb7b4c0e6c8"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_gardenarea1.scn.20",
+    "ItemGuids": [
+      "0a716f0e-2d4a-45b8-b293-1b84fbfff3c0"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20",
+    "ItemGuids": [
+      "0944c68d-50a1-4207-b645-796a353aab95",
+      "d5c20bd7-969c-43e0-b506-bb954421eb42"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20",
+    "ItemGuids": [
+      "acb20802-02e5-4901-a6a8-70a3a39a6b72",
+      "8b233067-d1dc-44f8-a7d9-1f2319c55746"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20",
+    "ItemGuids": [
+      "c55742d9-eb59-48fb-8dab-05361bc455b6",
+      "af78cd5c-b090-4557-bd9c-2f6a0d74b0c0"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_leftarea1fmonitorroom.scn.20",
+    "ItemGuids": [
+      "89e0718a-9f23-0ba7-2ec6-0affca6c028b"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom1.scn.20",
+    "ItemGuids": [
+      "eb411316-be6e-4fe5-9cc1-0b9fa4a29022",
+      "157473b3-36e1-4e21-9e4b-865ebe602183",
+      "100cc9be-c71a-07c9-0769-f1272c92b1ae",
+      "f0d21d43-69db-46df-9f30-57600bb4ae2b",
+      "dd9e687b-cd79-0e4b-33dc-cb74f3e5b824",
+      "22e2ed72-39f0-4572-a5e4-b27a5c0c2649",
+      "d78e1ba2-c314-4fcc-bda9-ddc8cf50dea7",
+      "4cd1b779-73b0-4f97-b2d4-1b30495654ff",
+      "05606c7e-3669-497e-8196-561faefb95e5",
+      "85a7581e-ac80-0ab4-1e26-c91c20c112a9",
+      "2204eb8d-aec1-4180-8b5d-989201837297"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom2.scn.20",
+    "ItemGuids": [
+      "fc2b81b4-040e-4c2a-b119-4a83a0fcd17f",
+      "19c37dea-5cdf-4db6-9bd4-05aad944e28c"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20",
+    "ItemGuids": [
+      "5e6490f0-17f6-0ba5-1fdb-5d70e2ac3b2b"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse1fgarage.scn.20",
+    "ItemGuids": [
+      "3463277a-19ba-062b-2b8d-7d1f666496a2"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse1fgaragehallway.scn.20",
+    "ItemGuids": [
+      "70389707-ef4d-0a5e-0cc1-56dd7f2d4e75"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20",
+    "ItemGuids": [
+      "3e6a9272-9495-44b5-963e-299206d95e16",
+      "0da28012-ad6a-0da5-1f0a-cacd2c677ed3"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20",
+    "ItemGuids": [
+      "db2c61d1-8c07-419e-b5a5-2ddc10e9d406",
+      "f51cc27b-07ea-42e8-908b-a0c21e3ff800"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse2fbath.scn.20",
+    "ItemGuids": [
+      "71417782-8c02-4be1-88d2-735fc79e7940"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20",
+    "ItemGuids": [
+      "31aa60d9-4317-4139-973d-7c3d09fc426d",
+      "ccf47d14-a937-43c4-9b87-f35b07d14034"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20",
+    "ItemGuids": [
+      "a5594b78-dd67-47f9-b730-cc618d6d82c6",
+      "65a64069-d77d-0f46-31f9-f16439d0218e",
+      "73fce2c5-6b93-047d-24be-ced1b2904df2",
+      "46573881-af8d-045c-2145-946ddc5c01c9",
+      "ccd5a2ee-49f5-485b-97a8-42cf8282da07",
+      "7a0710fd-6939-02b3-1a5b-229ce8cf7e77"
+    ],
+    "WeaponGuids": [
+      "a5594b78-dd67-47f9-b730-cc618d6d82c6",
+      "73fce2c5-6b93-047d-24be-ced1b2904df2"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_oldhouse1fkitchen01.scn.20",
+    "ItemGuids": [
+      "e0c1712e-c7a5-481f-a593-8dae6beed197",
+      "fc898db5-7468-4db8-b8cf-ceaf08bf48c2"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20",
+    "ItemGuids": [
+      "887e0b13-658a-441b-9210-726205b76601",
+      "400c0d7e-f8cd-43d0-9c3e-c1ccfa2c0704"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_oldhouse1fstairs01.scn.20",
+    "ItemGuids": [
+      "1c01c49f-81fa-0d1c-2312-fd50eafe79a3"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_oldhouse1funderfloor01.scn.20",
+    "ItemGuids": [
+      "a3f59645-063b-41a5-a86a-6e5b8c507a88"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway03.scn.20",
+    "ItemGuids": [
+      "d953ba71-3207-40c6-a08f-199de92bc071"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_rightarea1fparlor.scn.20",
+    "ItemGuids": [
+      "b1548f47-609a-0190-3976-50b2aeafd6b6"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20",
+    "ItemGuids": [
+      "bce3cf35-0d12-4a81-9ddd-564df7f2b84e",
+      "301caf06-67b8-0645-11a1-faadce741e7d",
+      "27476d35-c9cf-0c1a-3d73-bef30c2a5b2e",
+      "1a00180f-de3a-06ac-217f-e80eaff24aa2"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_rightareab1fmorgue.scn.20",
+    "ItemGuids": [
+      "62f86528-44f6-0adf-0a70-bdf505111bb7"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_rightareab1fstoreroom.scn.20",
+    "ItemGuids": [
+      "751cff95-a933-48ad-8ffa-6f96e25f8959",
+      "24512acb-965b-462c-941e-375f9d62bd5e",
+      "96da0bd0-1a8b-4c35-bc02-695da693e8d4"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter3/c03_trailerhouse.scn.20",
+    "ItemGuids": [
+      "87007bf8-48b7-052c-1065-2fcb385ee0a4",
+      "7bd613f5-b8fb-01bc-0cac-80f3c19b60cc",
+      "7ee83c9f-e776-0e37-0030-ef6c7b7928a0"
+    ],
+    "WeaponGuids": [
+      "87007bf8-48b7-052c-1065-2fcb385ee0a4"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_cottage.scn.20",
+    "ItemGuids": [
+      "59cba3ca-5e50-48e8-b1ed-c3801bb964d3",
+      "eb642b44-ea23-42c5-9308-eb8791401d0f",
+      "eba4e638-5fb3-47ac-a561-5a8a87163ce4"
+    ],
+    "WeaponGuids": [
+      "59cba3ca-5e50-48e8-b1ed-c3801bb964d3"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_mainhouse1flivingjack.scn.20",
+    "ItemGuids": [
+      "3e6a9272-9495-44b5-963e-299206d95e16"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship1fcorridor.scn.20",
+    "ItemGuids": [
+      "6916a1b0-827c-4ed6-83ca-c647fc1ce2f1"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship1flaundry.scn.20",
+    "ItemGuids": [
+      "ef273434-021f-0f2d-34dd-7bd46e71e256"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship1foffice.scn.20",
+    "ItemGuids": [
+      "23ffe0b9-43d3-4091-9588-bc45740c0b43"
+    ],
+    "WeaponGuids": [
+      "23ffe0b9-43d3-4091-9588-bc45740c0b43"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship2fcabinapast.scn.20",
+    "ItemGuids": [
+      "b758af84-ffd4-43dc-8ef5-5a2fddf956cf",
+      "296d68f6-93de-4d14-939b-4b49dbefaae2"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship2fcorridorcpast.scn.20",
+    "ItemGuids": [
+      "61c1aec4-6634-4bf7-a257-9ad4bce5e562",
+      "ab762fbe-df51-4129-a347-1c0c067b0204"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20",
+    "ItemGuids": [
+      "77468bde-b24f-0949-0741-de56355592c7",
+      "f2a6c628-621b-40c9-aba7-4ff07ddaddff",
+      "5fcf24e4-526b-4a7e-ab3d-b7357b2ac243",
+      "aeb30396-40c7-4272-90b0-161f2440fe08"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship2freceptionroompast.scn.20",
+    "ItemGuids": [
+      "f2a6c628-621b-40c9-aba7-4ff07ddaddff",
+      "5fcf24e4-526b-4a7e-ab3d-b7357b2ac243",
+      "aeb30396-40c7-4272-90b0-161f2440fe08"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20",
+    "ItemGuids": [
+      "ba174dbf-64e9-0e76-187a-801520648246"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_ship4fcabina.scn.20",
+    "ItemGuids": [
+      "3544dc6e-369d-0794-1626-4c3f4254ec71",
+      "e15309d2-5d73-0b00-1be8-6dcd3f6fccbf"
+    ],
+    "WeaponGuids": [
+      "e15309d2-5d73-0b00-1be8-6dcd3f6fccbf"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter4/c04_shipb2corridor03.scn.20",
+    "ItemGuids": [
+      "35808a92-fe9c-4733-8966-89876d114ebd"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_gimmickobject_reset_7_1.scn.20",
+    "ItemGuids": [
+      "9d973552-9b6a-08af-2d3d-05f583965226",
+      "743873bf-ddf8-053b-388a-cd2c1d7e9371",
+      "9f2e850a-6d67-00a8-1d4e-f33c88e02d2e",
+      "2052ab8b-f08d-0842-3aca-1bd12fe0d586",
+      "958f8429-3729-0a00-13bb-50e12d17f141",
+      "a7f4d0f1-aa1b-01e6-268c-efa4c97fec20",
+      "f5fb0a3e-e6ef-003c-3a68-b3b254db6744",
+      "f1f8a819-7b81-060e-3c08-d1e5c1041c4f",
+      "8c378471-f7f8-0a6c-3058-40d02b4369af",
+      "9fac38c8-beb5-0e2d-2727-7bbe7b43de60",
+      "cda3e207-f241-0ff7-3bc3-27a8e6e75504",
+      "c9a04020-6f2f-09c5-3da3-45ff73382e0f",
+      "b46f6c48-e356-05a7-31f3-d4ca997f5bef",
+      "d04372eb-7273-0f72-14bc-33ba5110f1dc",
+      "99b2f77e-21a7-0766-2cb2-6d7246f9d8f7",
+      "f8622ead-36b4-023f-3fae-a1ecc94a896d",
+      "12589f50-6229-09af-1460-48cc51bbe988",
+      "16a66e50-a813-00cf-151b-4676e3c31160",
+      "4ffd7787-70ed-03ea-23b9-e5711ea596bb",
+      "4f57ba31-fc9b-4e8e-a64e-16f4496ccb3a",
+      "70334801-ed85-4a12-9b14-01ea376b22a5",
+      "d2486b1f-ab5c-4ed7-837c-cc219cf6859c",
+      "2c85cec0-a763-0961-15ff-223cba52e66b",
+      "26f9d915-5fea-0a41-1fee-95a7682fe0a5",
+      "4bc8c3dc-f444-03f0-2265-6baf5b9a43f5",
+      "5154d84c-360e-0caf-10d7-dd1736191da8",
+      "3a490252-5190-494e-a9a7-406bbb0b90b7",
+      "46b3d5ae-074c-0857-09c7-f2c826e89510"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fgarage_7_4.scn.20",
+    "ItemGuids": [
+      "e8a7bdde-7490-0d9c-08a0-a6019a72e3fb"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fliving_7_4.scn.20",
+    "ItemGuids": [
+      "3e6a9272-9495-44b5-963e-299206d95e16"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fpantry_7_4.scn.20",
+    "ItemGuids": [
+      "205f6c96-53bd-022e-358c-a4f188320d49",
+      "634f4123-3971-4fb0-8ae2-a96136022466"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse1fwash_7_4.scn.20",
+    "ItemGuids": [
+      "d461d56b-75a3-4904-a979-61541482e373"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fbedroom_7_1.scn.20",
+    "ItemGuids": [
+      "36e56e29-a4df-41ab-a6c7-4452af6c5186",
+      "17c1507d-cfea-4ac3-924b-3d58994979f2",
+      "d8f706f3-4f9a-439b-a8f1-b7e73750a096",
+      "4e8fa20a-c47a-487b-be12-693701d9a2ac",
+      "e87d77bf-f1f5-01c5-029f-60cddcce3c6e",
+      "cb8b7e84-4280-4976-80e1-3c4312bc683d"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fgrandma_7_4.scn.20",
+    "ItemGuids": [
+      "04e5169a-ef2a-00a5-39ea-23dcf293b6a0"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fkids02_7_4.scn.20",
+    "ItemGuids": [
+      "31aa60d9-4317-4139-973d-7c3d09fc426d"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fkids_7_4.scn.20",
+    "ItemGuids": [
+      "ac85be79-c6d5-4c7a-a5df-1ba989e06531"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhouse2fstoreroom_7_1.scn.20",
+    "ItemGuids": [
+      "0ed3ad3c-3485-01f9-38be-f143f3bc5ec7"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhousehall_7_4.scn.20",
+    "ItemGuids": [
+      "ccd5a2ee-49f5-485b-97a8-42cf8282da07"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace1f_7_4.scn.20",
+    "ItemGuids": [
+      "7433e7fb-9c38-456a-8d84-9eca8de8ebf9"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_mainhousoutsideterrace2f_7_4.scn.20",
+    "ItemGuids": [
+      "1c0f41c3-2187-409d-936d-a64a3442a367"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_rightareab1ffreezer_7_3.scn.20",
+    "ItemGuids": [
+      "93822a85-a733-4912-bb1d-3f329be5d7b5"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/chapter7/c07_rightareab1fmorgue_7_3.scn.20",
+    "ItemGuids": [
+      "06e57d0a-5b5c-4a37-b6ad-c3abbdb0ac04"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/ff000/c01_corridor01.scn.20",
+    "ItemGuids": [
+      "19103e0b-1c90-4843-bb7d-88c105614d28"
+    ],
+    "WeaponGuids": [
+      "19103e0b-1c90-4843-bb7d-88c105614d28"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/ff000/c01_outside11.scn.20",
+    "ItemGuids": [
+      "b8bdd9a6-6318-4870-80ca-628de98e3fc3"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/ff030/c03_oldhouse1funderfloor01.scn.20",
+    "ItemGuids": [
+      "585fb172-f85e-49ee-a1f2-b614c81385cd"
+    ]
+  },
+  {
+    "Path": "natives/stm/environment/scene/ff050/c04_shipelevator_ff.scn.20",
+    "ItemGuids": [
+      "3c91fc30-b751-4d11-9b5d-c4768984fca1",
+      "f3ddfe13-e0b6-4233-bd1b-6f7528c37352"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter1/hard.scn.20",
+    "ItemGuids": [
+      "a5af3de4-3b35-4ce0-8e82-b71e2411fe55",
+      "27420368-c3e9-4d90-8d84-20dc05c24831",
+      "7a739431-058b-4092-83ef-c998ff65f741",
+      "c3c19064-7b8a-4190-8ad3-98b284a0e947"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/boatshed/boatshed.scn.20",
+    "ItemGuids": [
+      "eeb6a998-cf2f-48bc-bcb9-21385d806c54",
+      "db624b52-0f74-4898-b298-4d5340c53a8e"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/boatshed/hard.scn.20",
+    "ItemGuids": [
+      "3bb44b16-07c3-4548-8f45-e0ac2900f351",
+      "a1592f14-9b2d-432f-9a67-97a8418a6909",
+      "fff2a34e-44cc-446b-8f0a-43147db2f21e",
+      "6f853f50-2a78-4bd2-bcf1-478aa95f357c",
+      "a6228a49-b25d-4932-82d7-415f031584d6",
+      "012da678-ee94-44ed-981a-64733532db60",
+      "879eca79-24ac-40db-b97e-a8be31785ef7",
+      "4cba0daf-0e19-4309-a78b-b542bea3c9f6",
+      "e4b621b7-915f-4a9a-9414-100a303df290",
+      "9a21632c-11af-4539-b728-2f11a93f7706",
+      "e6f9b6ba-ec87-4063-84f1-91e67ce49fbd",
+      "8c11fc25-21e7-45e6-8b32-06f145e36a3e",
+      "661787f3-85be-4873-b10b-2d11ac9aa8e9",
+      "5b7b6785-62b5-4d33-8af0-d99b645b52b5",
+      "ba3ada93-af85-4991-8752-1fc26bd2c773",
+      "f0b8f942-6fd8-4274-b6ae-4a785cb316f9",
+      "c6046089-1cba-48ef-b713-11b62e72a203"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/boatshed/normal.scn.20",
+    "ItemGuids": [
+      "ea7f4660-105d-4c71-baf0-1ed7d980a9a3",
+      "f585c33f-a7e4-406b-874f-a36cbda8315c",
+      "e6f3ceb2-d13f-4822-b05c-da4e228a8576",
+      "116c12a4-f0e9-4d94-bf55-84017bfafa5f",
+      "5d58e5ba-dd7e-43e5-92ea-f0b5ae25f534",
+      "7ef6a1f5-f036-47aa-8f8b-ed92efd63c3d",
+      "69c5c1aa-df07-453a-9dbc-35e65fd9da6f",
+      "b67e9473-ffa7-4ff0-9774-d62e6d1e000f",
+      "d87a3550-4429-407f-9eba-94dfef13583d",
+      "778362f0-8883-44e6-a1b4-608770987bdd",
+      "4f94a4b8-2bcd-41ee-88ee-b222644905e6",
+      "759239c3-9828-4bb9-b53c-708db0398472",
+      "305d4a94-426a-4cf9-a4c0-907819d63fd7",
+      "d55adad7-3abf-4852-a63b-5646b17cabe0",
+      "bd69390f-983d-4efa-9fb6-4d0051a5d345",
+      "0b378de0-43e3-4817-b82b-69462705dabc",
+      "62d90ad3-ae20-4220-afb6-dfd94f78bc01",
+      "3e31aa21-8bec-46a3-91b7-95e3fe9ad6e1"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/cowshed/hard.scn.20",
+    "ItemGuids": [
+      "bc3c9218-7fda-4f0a-acaf-5912517d24c9",
+      "fc6a1ad8-30a6-46ea-9eb3-b7ac4add3e92",
+      "83760ac0-68bd-4a4b-9253-4860b9228c3a",
+      "47bbcdec-12b0-4acf-ac7f-295537dfd417",
+      "87366ea1-db58-457f-92ac-e4d343bc8a5c",
+      "e69660b7-1415-4352-b340-70a633a539a0",
+      "ca1c98c8-ba16-4bc1-9c57-a3b2952f9810",
+      "5b567aa3-c913-4e9e-b118-bca0f2db2914",
+      "f9913a2c-742c-43dc-8724-768a90ea8335",
+      "d504d891-ae0a-440c-b83e-92f07eae1687",
+      "fc169148-3189-416b-9856-a625719af0c9",
+      "7ade7f65-1bf7-4bb0-918e-a47b9f59307d",
+      "4290a72b-6d4b-41eb-9356-819b538c154d",
+      "7c3bd7f9-5639-4237-8e79-8bd3f25b036c",
+      "587b943f-17cd-438f-94f4-a0a127a31fe8",
+      "c0da55c5-ced4-49d5-85cc-2ccff55dd569",
+      "24d30e1f-1618-4a48-94f7-5916c3de5e6b"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/cowshed/normal.scn.20",
+    "ItemGuids": [
+      "f5cf6a76-94c5-4b67-88c3-e3c1f6433ba2",
+      "7b02e28d-79a4-492c-a3af-53dbf4a8f50a",
+      "734eb62d-d18b-4379-8f55-cf2833178e40",
+      "0144e2ee-7f10-45a5-bb01-5946a86fc537",
+      "43912766-6d20-4efc-beee-9c9a37eca76e",
+      "23ebf39f-5b58-49b0-9512-95d44419d6e2",
+      "2a523e48-d97c-48fd-9612-144f9056f8b0",
+      "592fae42-44ac-4718-87c3-1b45627c382c",
+      "66858894-94f7-475c-935e-8e2b927a1033",
+      "16a890f9-7736-4556-aaf7-3b3b2acd64c9",
+      "ad8b6e1b-0778-4589-9295-b32f52178615"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/gardenarea/gardenarea.scn.20",
+    "ItemGuids": [
+      "abb03a3a-a10b-4dca-9385-6274ca2e004a",
+      "054b4ac0-0785-4cd8-8930-a5ff5ed09542"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/gardenarea/hard.scn.20",
+    "ItemGuids": [
+      "ac4dc3f8-5829-48e1-8dc4-933c07c03c13",
+      "e22bb405-ba0d-4d65-8c43-a500c2d632d4",
+      "90bcd1b9-4b0a-4344-b00c-6a3134b51195",
+      "7b0015c4-64fc-4a0b-b846-df59b62f79ac",
+      "f2e76e00-bef5-4463-a0cd-ea9cef7c3402",
+      "2e187bee-76eb-413b-9ffc-48dd9efb57c6",
+      "d011e131-bec1-46e6-add5-6e543227905c",
+      "7fc32481-665d-43c1-9c7b-f4dc9b7ab945",
+      "6914d484-e6d5-47f4-b11c-1ef60880b3f7"
+    ],
+    "WeaponGuids": [
+      "ac4dc3f8-5829-48e1-8dc4-933c07c03c13"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/gardenarea/normal.scn.20",
+    "ItemGuids": [
+      "85b1035e-52ae-4c4a-9eb1-4a422a76dee3",
+      "ff53be36-285d-431b-9db1-0dbe2d91e047",
+      "64eceb44-8697-4545-9606-90834dc4d517",
+      "16491efa-f219-4335-88f1-be58c2f2fdae",
+      "eade4d4f-b3cc-4e2f-b2e8-b468e12e3fa5",
+      "3ee7a9ad-cd3e-4b66-a955-82488e34d3e5",
+      "21182198-f9d3-4d81-bef7-22c90fb819c4",
+      "00dfb1af-1faf-45a9-afd5-6adddda764c2",
+      "d92066eb-122a-46dc-b882-d9b48a20077e",
+      "6adb8a5f-3fd7-41a4-9528-f6e193dc086e"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/greenhouse/hard.scn.20",
+    "ItemGuids": [
+      "ccd62cb7-3f3a-4a3d-8036-d684288e19da",
+      "06edfa65-f645-4936-a85a-4b946b4f30fa",
+      "76ed21f7-cfa9-4af4-b584-0098dcc1a43c",
+      "49d13887-beda-46ec-a68c-404a3614da2f",
+      "074f2de6-2b87-4271-8966-22729049ea8a",
+      "8eae1586-19ac-47a6-b106-4e106091dae7",
+      "672ae945-c460-4d29-9af2-a1dcd7e119ae",
+      "7c2a97bd-70fa-40c4-b6af-fb2551da24ea",
+      "b583d0c3-9be0-4629-94fd-642fd90e8475",
+      "d704d4e0-f15c-488f-9ddc-b4d85d5ec05b",
+      "ba7f81be-faed-4390-bc1a-d604d2f88d14",
+      "f6159801-b168-4f17-b2ed-c35c2bff37e4",
+      "f144cf25-a0a5-4362-bf7f-fec9dc772c61",
+      "0c9e9b8e-c8cc-4fe6-a3dd-4adc8e4a2aa0",
+      "f50ea764-9cab-495b-9454-229aa6d49a00",
+      "7574689a-e047-4fa9-b100-b4c515b0807b",
+      "f13bd205-8452-410f-b6d2-7036cfe6c1f4",
+      "3cd1c2fe-4551-46b4-9cdc-0998b5cc8ff9",
+      "b56ce35c-9626-4120-afde-3ffcebb4fa2a",
+      "3b2f09c9-e1f3-4758-aa45-98c646dda129",
+      "9e6d08ac-fb0e-411b-b6dd-c9eaf9f54d90",
+      "4763a26b-663e-475b-9f5d-73c37f597a83",
+      "38f11178-6065-45c2-8754-453ae5ffe43b",
+      "c947a093-81a1-4f02-93bb-8e34e315bcab"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/greenhouse/normal.scn.20",
+    "ItemGuids": [
+      "1079754b-cfa0-4909-8899-88595e3a83b8",
+      "7db248c8-80f2-4c34-8e17-89ca5372b715",
+      "6d5af7e2-2b7c-445a-ba56-5c1910c7ce03",
+      "129ea5a3-6531-4dea-9969-2d3eb9f97d4e",
+      "3048e44e-b24e-4c76-bcd0-2b960e19a766",
+      "fc87eeb5-44f2-40ce-a725-4cfc84e36b6f",
+      "962ebe59-0df3-4d0a-8fa0-22647220670e",
+      "6929657c-2bd1-4039-8764-a729db8a2e0b",
+      "9491c5ba-7ef3-4f22-96b4-1324f1d30c2f",
+      "b8759e89-275f-476b-9d3a-15b7b232f029",
+      "33b6c785-c4ea-4b3e-82ed-8e9d19316b25",
+      "86810bcd-349f-46ff-a905-0931928b2c93"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/lucasarea/hard.scn.20",
+    "ItemGuids": [
+      "a84605fa-5772-4bc6-92fb-f59e5880b6b6",
+      "5fef04d8-2438-44a6-b6ed-d804a52d1774",
+      "d01fda20-5403-4a46-8859-32f96b68cff8",
+      "3230d2cc-0af9-48e0-ad90-8e356df76393",
+      "8673f942-32b4-4d69-9ba3-7792721f200b",
+      "e028290c-5c22-40b7-b821-c6c53f2973c4",
+      "a39c553e-713f-4376-87a6-36a9725fab74",
+      "d955f5ab-aff9-41b5-8ebe-60166bffee58",
+      "176b05a2-c4eb-4549-abc8-bd4c9647e5bf",
+      "e56aa82a-2217-444b-9cf2-5ddf169a8a50",
+      "6f3733d4-5602-4352-add6-8956c6aa6c54",
+      "9987ec05-2402-4b84-beac-054432d4637d",
+      "07bfd4e4-b8c8-42bc-bf39-297c38a66d26",
+      "4b6ef5a9-cfb5-43c3-bdd9-7d3071343af6",
+      "a833f002-0c5f-4943-bc21-6df843d16b84"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/lucasarea/normal.scn.20",
+    "ItemGuids": [
+      "b9ff97a2-0964-4038-9e28-f2ecdcd888ea",
+      "6ee75eea-600b-409c-b457-b7d8b9639d76",
+      "6b89bc84-b9ed-488a-bae9-68a687ae27cc"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/hard.scn.20",
+    "ItemGuids": [
+      "2ceb8b02-3d68-4559-b561-e7d21150c9f4",
+      "77dd84ed-c44d-40f5-bcbe-2e1ce3eefd05",
+      "a7d0ed81-5db9-4ba6-944a-8c3f8c283eae",
+      "0ceac666-7809-4c4c-80d3-2b285dc59ecd",
+      "c64e80a9-d6b6-4f87-a030-37bb4a46a03f",
+      "f46a95fc-e677-4994-ade9-26da22ceeda6",
+      "f0d85473-57ae-48b6-a30d-86502e3c69ea",
+      "7e36291a-3b98-4678-a75a-cadbfaa30e66",
+      "ccdffbef-9ace-4ea0-b009-644f2bb45e5d",
+      "3b580821-f20e-4c20-b83b-0ea1c683763c",
+      "7b4199d9-2978-4f40-ad89-8b6c3810d19c",
+      "c21561bb-2aca-44fd-84b5-15e067916284",
+      "e28e076a-dc49-45ef-a187-5ca3678c1849",
+      "8c29cd92-f882-418c-b469-170b6406d585",
+      "8ce062b4-eccf-4911-a3cd-d91cbfaef199",
+      "9ba2be56-cff7-43cc-8949-d3067836a76b",
+      "ee25de3c-23b0-4c8b-bba1-622fcaa2c3d4",
+      "dafbb82e-9755-4985-88fe-c9fded7ede80",
+      "fac163af-e058-4d95-bfec-5c48424177b7",
+      "bcbda1d2-5d25-4349-869c-df0a55dbe448",
+      "3f494424-797a-4bc0-bb1a-c84a460772b4",
+      "e5cd4275-90eb-49a4-9dd2-134ebfcb89b9",
+      "61d997d9-3ef6-4dd5-921f-f291d5bd8d54",
+      "61783ee5-1e2a-037a-34a5-e2e453f2b005",
+      "346c7dd2-7dca-4fe4-b4c3-de1d85288d1a",
+      "032bff85-10d5-4f7d-946a-ec533c13d9cc",
+      "e710f229-b6e3-4046-86ba-79c49a3ee678",
+      "f1d30577-352a-4fc9-bb27-9c431aebaac7",
+      "22447ac1-1973-4280-9415-495631786e6e",
+      "460b7e49-18be-4d04-b7a7-3dc46debc05e",
+      "9b1d89bd-ac78-4e89-a838-854c6ad5a133",
+      "95827142-1420-035a-16a9-5229f51b35f7",
+      "5b765647-a6fb-4d2a-b95f-45cc6c23d21e",
+      "b892dfc3-41e4-4841-a97f-db3f05b19f28",
+      "7a7650a0-db24-438f-b9d0-5a5d5ada34d6",
+      "c9c4db8f-44a0-47c0-a79b-15b37c7b858f"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn.20",
+    "ItemGuids": [
+      "259164c6-6f39-4f38-ac16-d08f2caf372e",
+      "eb1d6699-f1f9-4a02-b464-b54980725d43",
+      "077f9206-19e7-4937-994b-cd13a80dabd4",
+      "1d378167-6612-4ef4-8cbc-55c532bc0c28",
+      "2d30756a-ab65-0659-0f39-30259bc402aa"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/normal.scn.20",
+    "ItemGuids": [
+      "941614cf-daa0-4b4c-bcc6-3ac81b2d4e72",
+      "5dd09d11-ed4c-4c67-9308-23bdf4ca1f54",
+      "9e1030b2-ee00-4254-a1fd-1f18487ad50e",
+      "2322b3ce-9450-4f9a-8210-6cef6b8a8f2f",
+      "bbc891cd-04b6-46bf-ba53-d7744bad4b7a",
+      "fa3d7932-638c-42f7-ad32-f7ca0096f1c0",
+      "da018c16-9c19-4409-a316-400b1dc9bc16",
+      "a651cec2-4354-481f-a438-0a1c85ec7d8b",
+      "5ea9b13b-956d-44c1-bf78-eda3b4ec544b",
+      "5c4b8abc-2894-4589-b6cb-97a38f71e9c9",
+      "70b5f820-e1e8-4820-9b25-1bc7f3c3f5a3",
+      "831ee340-66bd-45a8-918b-60c894b20344",
+      "c8215b1f-b6a1-4f53-af99-00c3028be550",
+      "d406d766-ced5-484f-9f46-5092dae1f367",
+      "f9c9af9e-715a-414d-abfa-220499ce0bf1",
+      "a09f8b9a-1c31-4812-8e34-69d103e998b2",
+      "ea6086fa-a847-4dd0-86d0-effd55fade49",
+      "3d01a03e-09e5-4c25-a11a-cab1c0afff04",
+      "f3ce63cd-3db3-4dfa-a9a9-1c4beecf6602",
+      "dc92fab3-24ce-4f8e-9f7f-c54ba3d2918a",
+      "733170df-a2c3-4093-bfd7-81df84e3c903",
+      "48cfd500-3c51-44db-aa06-6fdcbfbe40b3",
+      "6db0f7a3-a7cb-4474-8af0-e58e4ae88d89",
+      "d853a9c3-7eac-4eea-bcac-b14a09962a07",
+      "3f8bea82-d7c0-4868-babc-f3de7266e2e2",
+      "f11c8a01-2f89-4d4b-a425-ddb6f3549ab2",
+      "52072bc0-b890-4241-a91c-6ea25100477c",
+      "0872286a-e469-45cd-acfb-33404c890809",
+      "188976bb-3564-0c3e-2263-851591d2642d",
+      "1727da53-2ce2-4229-934a-1bf98d3f26f8",
+      "a1c16bbd-39a1-4d41-9cbe-bd8748b27acc",
+      "0a9fec5f-e71a-473f-8ec7-c574fc650563",
+      "a863bd37-c7df-42ff-ac40-70330b9a5df1",
+      "53561349-94b4-4407-bde5-fd7abd209ce0",
+      "7a8bd140-8203-44cc-a260-5c406b52b033",
+      "f9dc7439-d9bd-4184-8a02-75757863af58"
+    ],
+    "WeaponGuids": [
+      "a1c16bbd-39a1-4d41-9cbe-bd8748b27acc"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/hard.scn.20",
+    "ItemGuids": [
+      "d2e8b737-be21-4216-afa7-696070259b76",
+      "b5a22513-bf0b-4f1b-88bc-dce5340447b8",
+      "535fc571-b607-44c7-8089-f1b82378bf15",
+      "e407097d-8b1f-4b5f-bf51-adab698170c1",
+      "c4045af8-8512-4d4c-8b14-ac60834b0293",
+      "4fcc3365-45cb-0da5-3cd2-544fd3319b14",
+      "f244e480-71ce-0179-3f29-f5aef5d572b7",
+      "473357f4-4397-03f0-3666-e22b9480bcd7"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_hall/normal.scn.20",
+    "ItemGuids": [
+      "a793552b-6104-41cf-babe-f646131a55f5",
+      "c514fd47-209e-4331-bdce-179685a0f0ce",
+      "ee59038c-1a87-4cec-b985-d30b92bab304",
+      "0f3a3b8f-2729-4460-834c-ad0f16715bc4",
+      "aa86f25a-e2f1-09b3-3bdc-c64fd6fb793c"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/hard.scn.20",
+    "ItemGuids": [
+      "4e290141-9f73-4029-8a6a-a6ff9ecc416a",
+      "fb57ffae-83dc-4359-9297-42791f7713e7",
+      "fe9fd041-68e8-4c06-b0f8-159b9574c5b9",
+      "1115a66b-5a42-45ce-be2a-ffa581e40b2c",
+      "ef07ecb3-5b97-459a-986a-533c20ecd2ee",
+      "c26d9ebb-16e9-49f4-9e94-039e7d354485",
+      "17dcbd91-f8d6-4054-91bc-b6372b40f23f",
+      "3c32df73-0938-4ebe-9e45-e850b3d78e1c",
+      "14a2665a-4a5e-4e0e-8f24-41225eb47913",
+      "54c7a657-2d7e-448d-b767-c04fdf4ec3bc",
+      "323c9f2e-4660-4650-8f21-4fdecdecace0",
+      "1ce1b7fe-0794-424a-bf42-27937792c293",
+      "c8550969-2f53-482c-89b9-ebb6fcc4ab69",
+      "7d15906d-5a2a-4b83-9b5a-eb83fb0975ea",
+      "812107b6-0ca4-415c-a36b-473da2d8bff0",
+      "0bb219b9-cf23-4857-851f-10b19d8e575c",
+      "4d23aa8a-f302-4bef-b716-8e80932d9558",
+      "fb620484-cedc-037b-389e-ed7dfbb271ce",
+      "831094ef-1e4b-0667-1170-0c064fbb70b5",
+      "bb19fba3-25e0-42fb-ba4b-d7377f417ff6",
+      "872b4180-a7f9-4915-97ba-22871204c66c",
+      "9b9fde8f-29bc-4e33-beff-bb05cf4e5d24",
+      "631067b6-cf80-4fcf-8728-d1c46a06d701"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn.20",
+    "ItemGuids": [
+      "3cd7748b-9052-4868-8964-098ab2967dd4",
+      "5169beac-ddb1-44d3-8a22-b4c45466af30",
+      "401dbfaa-3469-0702-1c9a-d74a7d185216",
+      "665a86ed-7e9c-4b56-a889-4377fa1d3f47",
+      "85bdfdb6-206e-472e-aeed-8f85a7872535",
+      "896dd0bb-f3ee-41bf-b4a0-0b28e99da94c",
+      "4158abe4-f771-4672-9a97-21c10ca5cc52",
+      "19b1a01b-f516-4452-8f2b-7485b26172e5"
+    ],
+    "WeaponGuids": [
+      "85bdfdb6-206e-472e-aeed-8f85a7872535"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/normal.scn.20",
+    "ItemGuids": [
+      "a8f6f110-b7b3-4c92-870b-49189c82ae9d",
+      "0154c27d-fab2-4c00-b2d9-768f15a1d8b6",
+      "42bca8a2-d3cf-42e5-b48f-97da7dcf071e",
+      "e136fe81-4046-4681-9d65-d617da3f6e55",
+      "99440ebd-b4f2-4d6f-8c39-a9630179c403",
+      "7c48e6be-29cc-4a87-a4d2-3188d23e98b2",
+      "cc877c51-eecb-45ae-b069-44d74c826651",
+      "aef0420c-cab8-4d1d-9ad0-64f1a222a48c",
+      "93374375-bae8-45f3-b3aa-fae755039346",
+      "556878d0-a5d9-4b47-aefe-b12e7fce4c3b",
+      "7f4578cc-14fc-4b87-a675-2c40119a2068",
+      "ee1ddf5f-6a3e-4a53-b27d-ca2ac20dbbaa",
+      "5a47f1e6-b921-467c-95da-ea309c8c7760",
+      "ec7685e4-5015-4742-9bde-8a9d1a106cd8",
+      "e1c6e6e4-c009-4972-88b8-520ca5de8bda",
+      "c84ab3fe-79f1-0560-30cf-f6fc1fd11e35",
+      "5a2ab12f-e4c1-0e39-1774-68ef272db5e8",
+      "086b9dfe-ba99-4943-8773-7ca584e5ac10",
+      "2d3a977e-f4cc-4629-abac-ff5f23bb62f5",
+      "e84e52c4-fcf0-4493-ad6b-6a523e3ec415",
+      "4876b313-b86f-4875-81cf-24aa1527dccb",
+      "0a0118d9-2bd0-4a82-b59a-2ac9ade0dfa0"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/oldhouse/hard.scn.20",
+    "ItemGuids": [
+      "563baa80-4d7e-4437-be99-d970bfdaebdf",
+      "22f71784-5d65-4e78-84fe-fa2dfc0ae898",
+      "559dc41d-3d07-48a4-aebc-3dce1a73653d",
+      "69ae6ee2-542d-437d-a4ca-1d776234024f",
+      "87487ba4-9748-43c1-b3a6-de3666a67f3c",
+      "78eb78ec-b23b-41e2-b4a8-caa3b018db86",
+      "bee7d671-633b-4944-bad7-6d629a245cca",
+      "ce9a9d14-6f1d-4a9e-aa7e-82729eccc271",
+      "e67c1fa0-006c-4f17-860f-97048487bafa",
+      "f03f87a9-3d2f-4f07-9fed-d2fd07fd3988",
+      "a150ca9b-c505-4149-a357-87b188d909cd",
+      "b80d6f6f-005a-4a96-a5a7-e9e88b52efb7",
+      "8e98ced3-93c3-40b6-b703-3aa1aa60b78e",
+      "4ae3e0fc-19ca-4e2a-ab9a-ae422b064c75",
+      "9224c905-8e2c-4d6b-8eee-40c26ba468f0",
+      "9cefe459-dd21-41f9-b931-7a74de2a45a3",
+      "a2e84335-af9c-4aea-9a3a-0f8ccf8aeeae",
+      "d2c96e3a-715e-467f-8ee1-3604a35e8d65",
+      "f857ccf6-5323-4d23-a31a-c47195d0f761",
+      "321a2fdc-91c7-4198-9c9b-230b0f156206",
+      "8bd85959-f36d-45fa-b064-886f260e6385",
+      "60470dd7-6c0f-4873-b0ef-5935467d8290"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/oldhouse/normal.scn.20",
+    "ItemGuids": [
+      "b5787fd0-9b37-4e3d-adea-1a8fa82b200d",
+      "9685f19a-0a54-4473-baf4-de9d0aba4236",
+      "8d7faedd-9274-4ce5-85c2-244898acf0b3",
+      "6f38d073-d173-4672-8dc9-bddc332441e5",
+      "aa17f690-8061-4e89-8d36-9652c940901b",
+      "1487aba5-4403-4005-ab31-594e921fbd7f",
+      "a3c19cdc-e3c4-43a1-bcd7-8a6ac9e9ffcd",
+      "fda3f315-c1c9-484c-a1a2-3ac0158249f6",
+      "ae1742e1-17b1-41cd-80c9-a6e9c8c32381",
+      "5323bbb4-73e4-48b8-8303-ebffeaf50177",
+      "c3ca528d-7208-4bf9-bcaf-79bb5309deda",
+      "ddf438d2-fc69-4337-a653-74ff2eba4fb0",
+      "4f286575-08b7-4e3e-8e03-0e191cd888d7",
+      "173319b6-c7b3-4a0a-b1cf-215c45ecbe22",
+      "c6b245f0-1c74-00c2-1980-32153efdb527",
+      "cd059dbf-3016-4cda-a1f0-c1f1d078f7dd",
+      "43554621-991f-4e31-9ee4-50b29fc287c7",
+      "04b22ca5-1280-0c38-3a6e-d17d9520bbae"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter3/oldhouse/oldhouse.scn.20",
+    "ItemGuids": [
+      "fc87e1fd-5b23-4a95-82f7-08ada575374d",
+      "a4e3b917-4cfe-4b26-859d-e81d5ff86a01",
+      "41a59cb8-7613-4d4b-a530-58aebfe0e1c8",
+      "8b940901-8893-4091-a4ac-5a16b3de3a11",
+      "6d9874ee-67da-4779-8e2c-8c673efcafe4"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/lastbattle/lastbattle.scn.20",
+    "ItemGuids": [
+      "0ba34364-6ba1-4a1c-ae55-3ec5f8ac6fb9",
+      "b3daacfe-f5d0-481f-a65b-d8d158351f1e"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/hard.scn.20",
+    "ItemGuids": [
+      "948f8366-155c-4d2e-8919-bed6da495a74",
+      "84c8f6ef-69c3-48a6-bc59-122ac47cb2f7",
+      "c3cbd165-7e45-4fdd-ae96-221b346aa8eb",
+      "920cd6de-fb18-4107-8e08-085f730dfa1e",
+      "9085dc15-30a1-4a50-abb2-257a5e93df12",
+      "0ae7fc03-eaa4-429d-9bd7-818b1532d160",
+      "82041b37-d0df-4e7e-96c7-8537cd96a493",
+      "2a2fed9d-113c-441e-9533-35cae9ab50d5",
+      "a4e42e6b-ccf9-45fe-86db-a7a6d76db782",
+      "80cbda4a-4200-4763-a07c-40ba35d2b471",
+      "89bda1aa-a882-47e6-a508-5151318254d1",
+      "8b121169-b66b-4afd-92a0-5883dbe0a943",
+      "07b6c217-d875-4f8a-89eb-38a933214c13",
+      "ca0c5c7b-0236-4fdf-8051-87ded9e5df19",
+      "00917726-0263-486b-ae62-99b2a4ace806",
+      "aa738f64-ac8c-4680-b2a9-c4f3c8d31b05"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/normal.scn.20",
+    "ItemGuids": [
+      "3fd9b9ea-f929-4d3c-8c0c-60df0ae9cc42",
+      "ec4e0ca4-6abb-48b6-98e7-11fed0591068",
+      "c6467d1c-afb6-4538-8a06-f32f9e38bf3c",
+      "a8742451-a8af-4730-80bd-dd4c3f509e76",
+      "7e9c23f7-217f-494c-9d54-2077ad600e83",
+      "8f9e80d8-8f07-47dc-ad56-1450a9e0e325",
+      "a444d9b6-c25b-497e-ba81-6466fd0b5916",
+      "66999b9e-cc96-4929-9c2c-0e1b666c0fea",
+      "7ed31832-2f58-4b32-bee3-97c0f762d241",
+      "2a618693-2b0a-4757-993d-9e2bde8d2c5f",
+      "e094fbd2-f435-474f-8479-ca01a57cd096",
+      "91ea9e52-67c1-406f-af50-494e863b8f94",
+      "1873c448-575a-4cf7-a7c5-393335df0aa6"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/saltdomeb1f/saltdomeb1f.scn.20",
+    "ItemGuids": [
+      "151c1ecd-4484-02be-340c-43e607ca7b11",
+      "79ebe354-1e16-00cd-339a-cf642bbcf0d9",
+      "b19139c6-547d-0163-0801-5ad9f43015ae",
+      "8dbcca92-78c1-4143-917e-cdf7d0673897"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/hard.scn.20",
+    "ItemGuids": [
+      "82f2848f-8cf7-46bd-b7e1-e28f76196e14",
+      "bfc627d3-00ce-44d7-987b-b4093d63e5ce",
+      "2758b0ac-cb66-463d-95b9-0f00f168073a",
+      "2d1ded3b-e1b2-4c01-bb44-afc118234b42",
+      "6413212f-8d95-4dc1-8077-90bd7ed6768c",
+      "a7be7f82-632e-4962-96f4-85f2cf486de3",
+      "419b06aa-70af-4616-ae6f-d08d69fc7d6e",
+      "33e39994-8f45-49ad-8337-9a38f77694b8",
+      "8059c2f0-16f8-4b89-96aa-a91eb8f4f8c4",
+      "ad4b01d9-44a5-4573-b282-ebb5d740a753",
+      "b5cb2196-c71a-4931-b34f-2ce4d33167e4"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/saltdomeb2f/normal.scn.20",
+    "ItemGuids": [
+      "c00031d5-5f47-4854-9a9e-0ac1159d1098",
+      "d1befa53-9234-412f-86e5-ead33d48f2b1",
+      "861a4400-50ca-4041-ada4-3e08e833170a",
+      "7d0c002e-3828-4d5c-ad46-2fae31979518",
+      "26ea623a-fbc6-4a4a-b355-74f3f622eaab"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship1f/hard.scn.20",
+    "ItemGuids": [
+      "e6a49466-1edb-4e59-a808-2488e48a593a",
+      "13bc0f21-202c-4d35-b4ec-308a64654fd1",
+      "312c39f1-d5b4-4b67-b14c-035192817344",
+      "08e63b6c-89ee-4170-8481-edf36c5a9a0e",
+      "8f6def31-0cd9-4a72-ae08-f4e0e0b82f59",
+      "68241dc5-58ad-409c-a6c5-725eca1bdd3e",
+      "83e358ff-17b2-440a-bf7c-73b5d264ff75",
+      "1143d314-fde6-42d2-815f-a1068cd95585",
+      "82234144-5aa8-4a7e-a9a7-1b8d1067c1a3",
+      "3a789aa8-cf3e-4ccd-89f2-30867acb383b",
+      "6d070af5-3477-4b04-a314-fcf2c386600d",
+      "ffd3d555-f0fc-496b-bab2-cb956ea8d457"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship1f/normal.scn.20",
+    "ItemGuids": [
+      "9d09251c-c311-4822-811d-86f67043171e",
+      "bf548e1d-5b96-4129-bd95-f2a9f6413c83",
+      "5f1dcf86-4716-4f16-8405-1492ef1507b0",
+      "732ea581-0ce0-4067-a9c8-4a49ae4223b7",
+      "65c62a65-7d66-4c42-8142-51af63e74753",
+      "d0edaf40-8bd7-4d59-a186-4f557793a4a8",
+      "dd6eac4d-ec50-497a-8a2e-ada441cf7431",
+      "26398e8e-1517-45a3-8c2f-6d3d9df957d1",
+      "e175c1de-36ef-4706-bbb0-f6eee971fd50"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship1f/ship1f.scn.20",
+    "ItemGuids": [
+      "30e80d80-7fb0-461c-bbf5-3563b189ca73"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship2f/hard.scn.20",
+    "ItemGuids": [
+      "b9df8f1f-37d0-40e5-955a-485cc315ce44",
+      "f7649781-e57a-4f07-8dd7-af995438819f",
+      "a09e3a18-541f-4a38-8937-0833b5fe75aa",
+      "0f823856-8412-426e-8e94-b7c7000e53d5",
+      "d3fcadea-90dd-47fd-b908-a762286d7032",
+      "24d8ce61-b473-4fe7-a6bd-b430fc82472d",
+      "e3684c92-01fe-0bf4-39f1-13bf99b2f190",
+      "e24eb405-39eb-4f4f-8237-a03df5c08fd9",
+      "e3439bd6-7d40-4371-b2b3-cba01b432eaf",
+      "df6b14db-4408-4fe6-956d-cda1d0d9d292",
+      "4a20d883-d46b-46b8-8b07-9a37c23db908"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship2f/normal.scn.20",
+    "ItemGuids": [
+      "439c332b-5e62-43a7-89a9-7ca6b2848902",
+      "31954e14-1063-4f4a-9138-dc8247d2b7ff",
+      "4c91f1bd-2c63-4bc4-be9b-9fb1af32c523",
+      "bcb030ea-31be-4d71-b27e-5f3d3d12971e",
+      "a60a0616-8af5-4bac-8f45-dbb2d4a2ec75",
+      "01f1c23d-5ff9-4306-9a52-e82db526a676",
+      "ab586cd2-f520-40fe-983d-b5a4ffd399da"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship2f/ship2f.scn.20",
+    "ItemGuids": [
+      "36ba5fff-06e3-4719-bc42-199946338e33",
+      "284aa600-8e59-475a-82b4-d7cd353f70e9"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship3f/hard.scn.20",
+    "ItemGuids": [
+      "68b4501a-85bf-4e87-806f-4f10bac116e4",
+      "ff68ba46-e9bf-4814-a4f7-b6f38c2af19a",
+      "71876897-14cf-495c-b5a6-bdb5adf97f33",
+      "b68719a5-1cb8-45bb-b5af-47bd88531cd9",
+      "c362b520-562d-41a7-aa6d-0a79d38b182f",
+      "3e851c14-f5f9-448e-a1ce-a71ee63b7d04",
+      "899240d6-765b-4fb5-b8b5-2a24f7b0b85b",
+      "e9144384-35f1-4be3-80ca-818b2def501e"
+    ],
+    "WeaponGuids": [
+      "3e851c14-f5f9-448e-a1ce-a71ee63b7d04"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship3f/normal.scn.20",
+    "ItemGuids": [
+      "12b4cea7-4c89-4e6a-abdc-55b71a5d5c1c",
+      "7be866c0-98df-0745-29d8-8757625c3458",
+      "7d20bf5a-f0c7-46a4-a9cb-3708865dd8ff",
+      "2de1e383-59a4-4559-9df9-f7487699be0d",
+      "1b5bb0d4-21a1-47f7-bc66-27e605101293",
+      "5d4e7340-c74c-4a9c-b7b4-39510f5a0acd",
+      "465c8c4e-d712-4a0d-8e73-22ae4813e505",
+      "fe606062-0e31-4edf-ad33-62d27dc78357",
+      "635391ce-ba1e-4148-a92c-7e1abbd995fa",
+      "cf43d4bc-845e-4ac1-96f8-fa39cc4952e0"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship3f/ship3f.scn.20",
+    "ItemGuids": [
+      "29c31890-92cd-4b93-9f47-fb4601236dd2",
+      "d02c77ce-2be3-41bb-a367-9b42479bed19",
+      "e62f430f-962c-4731-9235-9b0d3005594b"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship4f/hard.scn.20",
+    "ItemGuids": [
+      "12b5b5a4-1f35-4712-9b0b-69df3021b1af",
+      "3ed70586-5b64-4e42-aa78-75bc8888e58c",
+      "2ba97ef9-e5f3-4a38-a1d9-995339ee0880",
+      "8589b442-83ae-4ef0-9ab3-cbc005258088"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship4f/normal.scn.20",
+    "ItemGuids": [
+      "cfbc1a75-4cc8-4cee-9faa-89b1f42327cb",
+      "03ed4c90-b901-4682-9122-86d0ac85ca14"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/ship4f/ship4f.scn.20",
+    "ItemGuids": [
+      "15114d15-56af-468e-ab53-154e305e0ad1"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipbf/hard.scn.20",
+    "ItemGuids": [
+      "7a08f343-696b-4bd0-b5fd-83669bdeae55",
+      "3419ed89-e20c-400c-8a6e-6744844692b4",
+      "8a5ec6b6-4e4c-46b5-b60a-886a2807a0a8",
+      "653a35db-7af7-47e8-a842-a3f9e9d627d7",
+      "36650333-bde0-444a-be9f-6f0c366e0a59",
+      "0e7fd36d-52b3-438e-98ae-315ae584e85b"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipbf/normal.scn.20",
+    "ItemGuids": [
+      "54537c55-e8d9-4e47-b15a-83727c171fd6",
+      "db966eb1-f1d9-4d48-a834-adae2193e286",
+      "894ecb68-6c4d-4016-b042-746341839fc2",
+      "91b09598-a99a-4eac-898f-c27ad4b10fc6",
+      "64ef9c82-9696-40d7-ab57-f4618f5c260a",
+      "9aad3d3e-4aff-4286-89ac-2c8848dff3b7",
+      "eed685cb-f7df-440f-a163-c648da3ef484",
+      "aae19568-03a9-4798-9f9e-eab10b569a96"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipbf/shipbf.scn.20",
+    "ItemGuids": [
+      "f71b02d6-6beb-4e10-a804-eb1c2d099af8",
+      "11212a91-6662-4d02-a00a-a2c8907d3c5d",
+      "a957e417-16b9-42fb-b1a3-707cb29815b4",
+      "46d27157-13f9-4f04-b5b3-e2575a88b6d0",
+      "1c981fe1-a2dd-44ed-8ae3-77620639412a",
+      "ff701036-6b69-4dca-af2a-19acbacf3672"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipoutside/hard.scn.20",
+    "ItemGuids": [
+      "d87a98e8-8eae-43b4-98e6-d6656619c377",
+      "7980e6f7-a45c-40e2-aa86-8063a281d79e",
+      "cffda277-35f1-4ecf-8979-977e3a0ee8cc",
+      "9fd7fc76-ada6-4ec9-b536-732f15875bb2",
+      "6e34e0cb-eaf8-4eec-bbc3-785ec2ea6393",
+      "15ff5954-2b12-4dd0-a4f0-10f534361f1b",
+      "c8666b52-d70c-450b-935a-b55923a5bb21",
+      "8bf9045f-4fe2-4545-a49d-ded4988c28c2",
+      "73297c81-9232-086a-2322-7f32bcbb0e68",
+      "79dc7b86-d066-058b-3037-204aa7216c9b",
+      "3ae79e80-4d73-4363-bb34-c126ceed21fd",
+      "30096582-9cce-49f4-91bd-4e7950841115"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipoutside/normal.scn.20",
+    "ItemGuids": [
+      "cbeb32bf-7fa4-49f5-8b6b-fbc5d6ad14f1",
+      "2c20d108-cc75-4618-8ec5-2380d19b59cb",
+      "9b485d4a-b544-4e19-95ef-59415634664d",
+      "c7ff2d0e-eda7-47d1-9cbc-c68fc4acc90a",
+      "468407cc-613e-4dcd-afc6-dd8150c70e20",
+      "31c4952b-29ee-46b4-b01b-9fcf1cdcceca",
+      "107fdca6-182e-4a72-be5b-cb0369cbff4e",
+      "c0d3f40a-e586-01e8-3871-6b9014c92457",
+      "3f08322b-b40e-471c-a9ca-30054dd78280",
+      "92dae1bd-ac0e-448e-962b-9aa7de2778ae",
+      "a5cd220c-0c85-4d09-bcb9-b60946553885",
+      "fa0c002d-a242-4711-bb46-b7b237ddb649"
+    ],
+    "WeaponGuids": [
+      "fa0c002d-a242-4711-bb46-b7b237ddb649"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/chapter4/shipoutside/shipoutside.scn.20",
+    "ItemGuids": [
+      "c4b29960-a74c-463d-9ad5-be8c6d153cc7"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/2f/2f.scn.20",
+    "ItemGuids": [
+      "fb4278bd-c075-417e-80db-bed19da46418",
+      "7a1b1f73-1fa7-4ea3-950c-0f9b15485e4f",
+      "d6bca868-078a-4303-b878-ea885e82eeb3",
+      "d9c15851-4a0b-4ffc-9efd-a013822bf1eb",
+      "3038ff52-1f31-46b3-924f-b5fb140407d6",
+      "7c18982b-f945-4c79-86a4-555f5f8bb292",
+      "1d9841af-505f-4a83-bf89-c1ab0aafd689",
+      "ae1d0e78-740b-42c5-bfa6-1b0b7d17c9f3",
+      "979787c7-071e-4705-b7e2-557d57e855d9"
+    ]
+  },
+  {
+    "Path": "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20",
+    "ItemGuids": [
+      "27b36025-1192-42be-b049-116c5b18c3c3",
+      "2c5c06d7-bcea-4df7-9a72-62657522dad6",
+      "802213a2-7a22-4d87-9b0f-af57c1bd4a71",
+      "9c5de4b4-5e99-4bbc-bf21-bd904789401a",
+      "dfa15efd-e270-4778-b0ed-192963e99a1e",
+      "d72ba3cb-c5dd-41c6-b290-163e7557616b",
+      "a0d0a2e9-dcbc-4b41-ac56-2f0356df9d12",
+      "e222fae9-3b83-4ed6-9371-eb193a47b599",
+      "80ef2928-5e60-4666-a5f5-5fda12fefba7",
+      "2f2d2867-24f4-44c9-b06b-cf31722b3a2e",
+      "c462a268-af3a-42ea-9370-75c7d423aa47",
+      "288c220b-0804-44ca-b202-fe41d6d16e88",
+      "246ed21e-33ea-4da4-a3bd-ab77caac2fe5",
+      "f175d9a5-e1db-4691-bd4e-b6e95159fa65",
+      "e3b64592-382a-4446-8753-ab6bf1eefeb8",
+      "431d5466-ed8e-47b3-be3b-0a38c8c1a2fe",
+      "6e1c8de3-5401-43a4-b17a-beeb0fd43e4d",
+      "8a0dceb5-e2bc-465c-8753-1707063af479",
+      "043f94c1-8b75-4871-97b4-cb3f58b52bf0"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_b1f/c01_b1f.scn.20",
+    "ItemGuids": [
+      "8bc66e64-5444-4fc1-9dff-22492ba794e8"
+    ],
+    "WeaponGuids": [
+      "8bc66e64-5444-4fc1-9dff-22492ba794e8"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage1/copyasset/c01_corridor02/c01_corridor02.scn.20",
+    "ItemGuids": [
+      "13d8e6d2-5b92-48be-8c4c-49e7a331e27a"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage1/stage1_seta.scn.20",
+    "ItemGuids": [
+      "a51b81ea-8cab-4a9c-b151-64b54d740590",
+      "810ceafd-1a62-4737-9814-058ab2834d0f",
+      "a0fcb529-a15d-4067-a354-0787ca0e6a5b",
+      "0abdd317-3d3d-4e0c-a88d-b4a7b393300a",
+      "8cd2eadc-6eb7-484a-832f-b5ad99eb7d3e",
+      "ce10799b-01c0-49d1-8d42-f1ac7e6fd7a4",
+      "b74ed383-86bf-4545-8f3b-192227b8ed36",
+      "bd23af1d-81d0-4e3d-87f6-02ecdee8496f",
+      "d6ccd10b-a9fb-4b37-989e-c91b64a30d6a",
+      "ee27e59c-6dd4-4074-bf2e-9e84bdd1eebe",
+      "a9444271-ea11-4102-b875-b3aa74c325ac",
+      "29508472-059c-4283-a068-d0b074fdcf96",
+      "20d9fb86-0360-4cb3-8dd7-9cbc57872008",
+      "be1dd7eb-b63e-4f35-98fb-49ca18fe07f4",
+      "c6103887-a283-455c-8cfe-acc0b962885f",
+      "38279520-9b59-4709-944f-ec46458fa30e",
+      "3bbb951a-0a6f-4116-a2f1-fd645282f02c",
+      "87f4da76-e605-4228-b468-cfaac303c1a3",
+      "d29515f5-8ac3-40ed-9aee-c2de6e34b706",
+      "312254a5-948e-4411-96b0-0aa81a68a367"
+    ],
+    "WeaponGuids": [
+      "312254a5-948e-4411-96b0-0aa81a68a367"
+    ],
+    "EnemyGeneratorGuids": [
+      "5f9668b5-41c2-4972-bcf6-e8bb523b15bf"
+    ],
+    "EnemySpawnInfoGuids": [
+      "4ef499df-ab4b-4a50-91fa-150fbf0fed57",
+      "f9f16aa4-6793-448a-85a2-295d9936ad0f",
+      "937cba67-2bee-48bc-a005-94c3e1ea6429",
+      "299133db-3c15-47e7-8290-b763c06a615f",
+      "73fb9003-1d53-4676-9d92-d933021d681a",
+      "90f502d1-eff5-4f7d-9792-648cc92390b0",
+      "64dbbce2-4a45-4e67-98ea-e0600bb88905",
+      "b505ff1a-7550-4579-ba0e-de283cae68e4",
+      "3c256d09-0c36-4a73-afc9-2844eb7ad8d6",
+      "9d23a7c6-8b2f-44fd-b531-71e0e92a1a53",
+      "84e17362-a08d-4935-b369-59c1ad5a79be",
+      "d294fee9-a701-44af-b74e-7f20ee01b8ee",
+      "fa5a956b-9dca-4997-9d54-17bd8fe80194",
+      "f6e7f6c6-47b1-4730-b68c-bf680f0d39b1",
+      "df89bfdd-7d4d-4e75-842e-e199f71d8fce",
+      "78cc530d-95d2-4366-b4e2-32e875b91180",
+      "27ded15f-d383-4afe-a3ac-daddc00c8031"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage1/stage1_setb.scn.20",
+    "ItemGuids": [
+      "b5e294e8-0ce8-4ddf-9cb9-5afab7a418b3",
+      "d323a651-0599-44d9-b2f3-4ff1e4fa9c76",
+      "a2b2eff5-e166-483a-af21-5c39f2a1ebfa",
+      "88224b9f-bf3a-410b-9bf5-cc9b56b0738d",
+      "d09fe457-d9b8-4726-ab1c-49ac69a507f6",
+      "347acd24-dfa0-41ed-a316-994623e956fe",
+      "fc2b1c07-e5a1-4b93-863c-1fa4b6148ce9",
+      "9fd0a47b-fd81-4718-a894-b14dddeda20c",
+      "b2abcade-e5d4-4f96-971e-29bfb6af7d25",
+      "e4724bb7-6f9a-450e-80d7-2d6d82f30e6e",
+      "9a1518ce-5296-4243-92c5-3a46bcfb28ac",
+      "e8d369d3-29a9-4b65-8f1c-b948b719586b",
+      "a3aa2127-fe79-4c90-9466-2e41590b897b",
+      "e25c9a8b-9c1a-4d85-8b34-42f1216e92a6",
+      "140b34fc-356b-4195-875e-01e17cfccfc7",
+      "b8de29a9-9d6f-4baf-8191-eea5326af0c0",
+      "8a93a09e-fd36-4c75-9990-80bf525eaab8",
+      "b98b1624-7434-46c0-a788-df67a3f65e0c",
+      "aa453783-1fc9-4321-9ddc-0e9f01239218",
+      "4dfe385b-728f-4e7a-804d-1261a7e69bce",
+      "381f5b3f-0571-4cf9-abea-4944647ba148",
+      "92e9b75b-0a12-4aae-9673-087d5c34d008",
+      "422172af-feab-4cb8-9bca-da0fc014ea1c",
+      "2fc2b736-5a69-4442-ac3e-32489bf4066d",
+      "f0418185-ef0e-4fc0-9147-5cb8e371c550",
+      "7756be0f-a1f5-4e79-b8ef-47458bd734e2",
+      "c006952b-7d04-4664-b3f1-3204ea5178b8",
+      "e00171cd-ed2f-45d8-bb05-dd77b53a0dfe",
+      "8557fd11-e63c-4ceb-9d67-1869df45ec0a",
+      "9f178282-ffb9-4415-93bd-86f685dbdcaa",
+      "eaccf90f-a165-43c4-b5d7-050a7e4dfc9c"
+    ],
+    "WeaponGuids": [
+      "7756be0f-a1f5-4e79-b8ef-47458bd734e2",
+      "c006952b-7d04-4664-b3f1-3204ea5178b8"
+    ],
+    "EnemyGeneratorGuids": [
+      "905d7acd-4cef-4a52-8f9b-6363135cb1cb",
+      "caeecd87-72ae-49c2-9c72-eb53258d1df8",
+      "e9d4c8ba-3014-4143-9bc9-1b906ff93474",
+      "8019c364-2a34-4e1d-91f4-e1cc6eee2118",
+      "bea811ed-6533-4d6a-8b97-9b3e0f7cc802",
+      "146f5b0c-33ac-4268-b57b-21665dcad6eb",
+      "853d6ebd-b089-4c3c-87fb-2b089442da38",
+      "7cbf0da8-4782-49b4-9c2b-408ca9adffe2"
+    ],
+    "EnemySpawnInfoGuids": [
+      "a26ab112-f0b9-4bca-b59f-1d8d81999d2c",
+      "4a005c76-fa9d-45cd-920d-c4b53d5dbeca",
+      "d997750d-4b27-4289-91c9-a9b226f5e2e6",
+      "dc8f62c2-b360-46f0-b990-7bbd3fed1f04",
+      "ecf84e49-7427-43a7-8089-24f699b1c4d0",
+      "4430397a-7bca-41a0-afb3-bd37c34d28e3",
+      "ba197b92-97c2-4e0d-a853-89992050dc50",
+      "5a56575c-d4d6-427b-b5bb-b04724618453",
+      "a623d012-26dc-469c-9b7e-5271e2de6bcd",
+      "f2569e34-06af-4163-847d-d4f50e660e5c",
+      "cca39bdc-7c51-4c78-9743-a4c153f279ec",
+      "daaa0b7a-5b99-494d-a174-094cf9933988",
+      "8eb27be1-8815-49ef-97d7-bb06a2ad1ea3",
+      "52f52708-894c-464b-888e-0c3097137b55",
+      "08201d61-9f11-4b34-b74f-f981a3fd8329",
+      "9159021f-d67f-4586-b5d1-f31b5b335ee0",
+      "aae9cf17-1252-4024-9c38-3761d1c15f42",
+      "f5bd5a01-a6c3-424d-bab2-1914d14cbc19",
+      "937c0cdf-b831-4ccb-879e-1a3bd0dc7ef8",
+      "e2a86684-eae0-42ea-b58b-64f39d71bb3b",
+      "69771151-f138-4472-a2e7-653803ab2839",
+      "0781e32a-31e0-46e7-80d5-fe08ed0342f3",
+      "e5299cd6-27cf-4a4b-8dcb-6a61ed16bbf8",
+      "bb7c98ba-ea20-4b39-b52c-de54fff24b50",
+      "337c3505-e0a1-4ba5-98cf-66a4791d4c49",
+      "0f4c3778-295c-4eee-b17e-e834731e1b0e",
+      "d1dd32ac-3a4b-426f-80bb-9c389cf66910"
+    ],
+    "EnemyGenerateGuids": [
+      "f05014c8-3646-4da9-bcc6-8f1da18f779a",
+      "c63f6b0e-e7dc-462e-86a4-1b25de8739bd"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom02/c03_cowroom02.scn.20",
+    "ItemGuids": [
+      "d9cf982f-b55e-4912-a713-c2d96c1c9b2b"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_cowroom05/c03_cowroom05.scn.20",
+    "ItemGuids": [
+      "ad8b6e1b-0778-4589-9295-b32f52178615"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fmonitorroom/c03_leftarea1fmonitorroom.scn.20",
+    "ItemGuids": [
+      "89e0718a-9f23-0ba7-2ec6-0affca6c028b"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/copyasset/c03_leftarea1fpuzzleroom1/c03_leftarea1fpuzzleroom1.scn.20",
+    "ItemGuids": [
+      "100cc9be-c71a-07c9-0769-f1272c92b1ae",
+      "f0d21d43-69db-46df-9f30-57600bb4ae2b",
+      "d78e1ba2-c314-4fcc-bda9-ddc8cf50dea7",
+      "a6fd613d-743d-4aa9-9931-5595a53213a6"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/stage2_seta.scn.20",
+    "ItemGuids": [
+      "27072d39-c483-4b07-9bd7-11b166bc6312",
+      "284b75bc-ec7f-4f70-b7fc-dac32583b15e",
+      "0e9ad3f4-7b78-43e6-80a8-b6482f9756ce",
+      "858ec749-aa35-44b7-905b-13c3a9531854",
+      "1181b72d-bfaf-4f62-a4b2-c481100ab1d4",
+      "4b89b509-c67a-4c7c-8908-bab5686d0f51",
+      "370e9af2-266c-45b5-a55d-45ca7a16beb5",
+      "3799fdf4-6834-46ea-997a-dd1593d498b0",
+      "80bb3590-4ded-4af5-9129-c028aa275811",
+      "4c55d2cf-7a58-4543-bc1a-3e662e890e51",
+      "27592a7b-8f7b-46a1-94c1-686f23eac2fc",
+      "b9d729b8-7714-4d66-876c-be75ca0d7bac",
+      "424ec55a-6665-436c-85b4-e2cc5b1b95cc",
+      "bf153af9-4c2e-4ef9-b7ac-e238b9217e9e",
+      "6ebd6c38-d673-413c-ae0e-87d80b6e78ea",
+      "9f373282-4749-4196-a1d5-0dbfbc4161ed",
+      "172ef869-0682-49ff-baa7-629957d98a48",
+      "95a6f298-59c3-4b79-9190-39fc16df1d2f",
+      "469e5557-76dd-4419-b9b2-147cff1465be",
+      "bd08915c-b6d1-4ade-a0f4-c3f8dde29bf2",
+      "0d6057a8-493c-4687-a209-6bbc562712b7",
+      "15d67b8c-d868-46ff-a751-546d5de8ac6c",
+      "4d62fce6-7ee9-4379-af34-0b1e33d000a9",
+      "7cd1eb75-efd8-4d4e-b273-31de8dc3c2b2",
+      "521d3bfe-1518-4bf9-a00c-e38fad085572",
+      "30aae507-9679-44a0-af2d-24bda1a5008d",
+      "a24d78f3-c08a-41d4-b8f7-9b94d79f1f53",
+      "583c4913-f8de-4b29-885b-ca6aea684083",
+      "715400f0-7066-44a5-a47c-c318f658a133",
+      "dc516b57-9273-4345-8ad5-dacea5d4943f"
+    ],
+    "WeaponGuids": [
+      "30aae507-9679-44a0-af2d-24bda1a5008d",
+      "dc516b57-9273-4345-8ad5-dacea5d4943f"
+    ],
+    "EnemyGeneratorGuids": [
+      "43c86f4c-6d12-489c-8fb8-d75d7bf2ccc4",
+      "ddc33218-0686-4ba1-8679-4932397d68fa",
+      "c298947d-1380-46e8-8b3f-b3202ecc55ba",
+      "c70c226c-ae97-43a5-b360-e25248adb2aa",
+      "1d04a8ca-6deb-46bb-a5f8-60e563055e4f"
+    ],
+    "EnemySpawnInfoGuids": [
+      "66d9bba3-90da-4565-8b62-00970df9db07",
+      "daa922bf-4499-4e16-9c7f-bd5311983ddd",
+      "82f5c73b-2835-4d75-9fd8-803bb3f2791b",
+      "ca9973d4-c034-4217-971a-bf3f887ea4c9",
+      "b4afb90b-74b0-4bcc-8a59-f9cc46c6ba54",
+      "60f900da-6393-4982-9e87-5b261192acf6",
+      "7b8edadb-3cfe-4da1-b82f-597ec44a3e9f",
+      "17fa57d8-1bdd-44d7-8056-0a5bf3371bcb",
+      "08e2ce90-25ef-4e55-b3fa-89861ec560ca",
+      "b101f184-6320-4711-b2f4-51e9cd45fe46",
+      "1e9b22b2-7867-4bab-8086-ad38d3a6f446",
+      "9a25a1d1-716d-4669-a99a-a77269c5dae0",
+      "d6e103d2-0a16-4671-bfc5-0ee5702f04b2",
+      "c6703ec3-12a5-41b6-86e8-b1acae5a2f45",
+      "e8448e2f-a98c-41d7-9b0a-b34b4e91b037",
+      "4c0b1362-a17a-4fa7-9d46-fc59ad6adf33",
+      "3bc6bdf8-c4b7-470d-a3e5-48240e22cba1",
+      "1502a1c9-53f6-4682-a1e3-949609acc0f6",
+      "1d767eef-99fa-40f1-9b07-8f79af4dd9d9",
+      "47ae23ad-66f7-4cc5-bc29-2b514447d680",
+      "44da17b8-dfa2-4d25-851b-d6b5dd6b0fbb",
+      "34d11c1c-20df-4ebe-a84c-62ed1c451a67",
+      "a7e239c6-fd9d-4b5f-b515-0e84841853f8"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage2/stage2_setb.scn.20",
+    "ItemGuids": [
+      "1e285f79-a9d6-42b7-98bd-7e07d78647ee",
+      "2edf2263-ce82-4219-adf0-0ef94048aeab",
+      "89e8e680-4e2a-4ab6-a591-c8af37ab326b",
+      "a2c7cf1f-ef43-4ca7-938f-63cad7b0c1ef",
+      "e4d2f892-35f0-44c8-bf72-d54d8e759c76",
+      "0a7aa1e2-9aeb-47dd-bf71-a1c689a94a16",
+      "ad2c7185-b463-466e-98ff-c4e8f4cb3b66",
+      "df289234-1976-42b6-a2bb-da0e2fa30211",
+      "85d44a05-b292-43fb-9870-7dab7100465c",
+      "6b078d9c-60f2-43b7-bb69-887c1d872c58",
+      "133e5e11-0629-4b81-9078-391736c385eb",
+      "db9b8c6f-b3b4-4c5e-9f07-62420d0dc461",
+      "1594e535-e3d8-4e78-8a82-ebefad167a1f",
+      "bdf90da6-51ee-4cf6-a1bf-ca6d9346642b",
+      "337aea15-da9d-45f0-810d-bce9731a8e41",
+      "a628bcf1-efe3-4e4f-bf97-8e1ab30473ce",
+      "47a90d95-cb07-4151-ab40-273a62ae4291",
+      "1a23e535-330a-4632-baa0-eb9563b34bb2",
+      "42f87605-41b4-414c-a5d3-a23825b985d3",
+      "2bccd036-5991-4d80-a586-a26def7bdfe7",
+      "49f99905-7347-44b2-aab1-74edc74017f5",
+      "0233fac8-d4ef-454f-a54d-613f5fb6387b",
+      "8e5add00-7dcf-45e0-b6ff-19f3446e4ab9",
+      "4d01a73e-76d9-45b3-854a-2d6d6e42f755",
+      "7db94d85-7a50-4809-a610-018fe6aa9344",
+      "c2528674-09a4-4a87-9549-cc4d24668f97",
+      "a63fca64-3305-469a-8f13-a3d5dee37c21",
+      "d165d75f-794b-4a89-96d1-34ef14ec7c4a",
+      "28bb74dd-72e0-4709-8c51-2178075e5dc2",
+      "e637eee8-cfe2-450d-9267-283f063a6e77",
+      "5298d5e4-58cb-4755-87c2-76bd1c65db23",
+      "1844d06d-4fc9-4824-b430-2fce974357fb",
+      "dca7c9f3-98d1-4eca-947e-766e92f191fd",
+      "67820bb0-f56d-49c2-9b2b-99cfd8127e54",
+      "c5d31b2e-63d2-4878-884e-1ec6980b3fbf",
+      "a1eee6cb-b6fc-4975-a270-01603845719c",
+      "1d12ea4f-1641-41b2-b178-72ddde4b07dd"
+    ],
+    "WeaponGuids": [
+      "5298d5e4-58cb-4755-87c2-76bd1c65db23",
+      "1844d06d-4fc9-4824-b430-2fce974357fb",
+      "1d12ea4f-1641-41b2-b178-72ddde4b07dd"
+    ],
+    "EnemyGeneratorGuids": [
+      "084a08e8-0e5f-412e-a246-64c463a70241",
+      "258e1da6-5f0c-431e-b599-b5dfd7c042f5",
+      "3fbba709-ff66-4953-afc5-24f7f153cfd0",
+      "f4feb095-e185-4d82-a38a-8daeeaf08c4b",
+      "98563754-0cd0-42c6-a5ab-78f6b3362575",
+      "a8395507-3fc6-4bcc-8f40-3941da4edd03",
+      "d8cc50ed-c530-464e-9bb8-a729bf8d579d"
+    ],
+    "EnemySpawnInfoGuids": [
+      "7c42652c-30aa-4d8e-ab2b-f028fb4d2998",
+      "cef3a8c7-be63-45e5-8684-af7277a90367",
+      "3e2092f8-87e1-402c-85e5-491763eeb04f",
+      "8ac7ea10-473b-4294-8c97-606754d7341a",
+      "6c383c78-3efe-4f1b-822d-c182ac0be6d6",
+      "d4b8a03a-8f67-4350-a838-29cefb7786e8",
+      "13f03e60-a2df-4353-ba90-fd7af8dc1776",
+      "869f672e-d473-40a5-b818-e3cf123d74b8",
+      "eb7878a6-81a3-40ab-8144-06aa33597280",
+      "15f9fc33-77a8-4a50-a993-d33ce81ac6c3",
+      "c53d3ff6-5e3c-470e-9ab9-bf91ca014b41",
+      "1acdd901-5348-43e9-babf-b88a1a47e51d",
+      "6220aaa5-5fc3-4f1e-8ab9-b07c4ca303e3",
+      "bb41bb4e-75dd-4a3a-a55a-67214a3f7164",
+      "5512f160-67be-4354-b46b-528626b6a1a9",
+      "76fcf7bb-94de-418b-abfb-5580e39d3cee",
+      "a55115f2-550c-4e7d-b0a3-7274c31a9a54",
+      "cf68d44f-8bcb-4060-8568-eaff24702683",
+      "5fd581f7-4f9b-4ae8-8ece-9898e14c7ef3",
+      "737b56d3-6922-4181-9778-5e4fe520d972",
+      "9c1439d3-5eec-43ce-9db0-c8419d2c07ea",
+      "1dd18b3e-15a6-4ded-8502-90a7cf6dda22",
+      "8e75abc0-91ff-40f4-9494-a501897c55e5",
+      "ac83fb43-9cdc-4a30-bad2-ea202a2d7a35"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fgarage/c03_mainhouse1fgarage.scn.20",
+    "ItemGuids": [
+      "3463277a-19ba-062b-2b8d-7d1f666496a2"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fldk/c03_mainhouse1fldk.scn.20",
+    "ItemGuids": [
+      "5d3fc5fd-4193-482a-837d-96bdaee90924"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse1fliving/c03_mainhouse1fliving.scn.20",
+    "ItemGuids": [
+      "3e6a9272-9495-44b5-963e-299206d95e16"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fbath/c03_mainhouse2fbath.scn.20",
+    "ItemGuids": [
+      "71417782-8c02-4be1-88d2-735fc79e7940"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_mainhouse2fkids02/c03_mainhouse2fkids02.scn.20",
+    "ItemGuids": [
+      "1324a10d-eccc-4594-9df4-a4b4c758bf88",
+      "ccf47d14-a937-43c4-9b87-f35b07d14034"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightarea1fparlor/c03_rightarea1fparlor.scn.20",
+    "ItemGuids": [
+      "b1548f47-609a-0190-3976-50b2aeafd6b6"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1ffreezer/c03_rightareab1ffreezer.scn.20",
+    "ItemGuids": [
+      "301caf06-67b8-0645-11a1-faadce741e7d"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fmorgue/c03_rightareab1fmorgue.scn.20",
+    "ItemGuids": [
+      "7c8038eb-4971-4fe9-88d3-12f1475e6cda"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/copyasset/c03_rightareab1fstoreroom/c03_rightareab1fstoreroom.scn.20",
+    "ItemGuids": [
+      "751cff95-a933-48ad-8ffa-6f96e25f8959",
+      "24512acb-965b-462c-941e-375f9d62bd5e",
+      "96da0bd0-1a8b-4c35-bc02-695da693e8d4"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/stage3_seta.scn.20",
+    "ItemGuids": [
+      "c5e4f73d-6ab1-4093-907f-68af35884136",
+      "cd0ec90e-7eb5-4611-9f9a-8abe1a4270b1",
+      "ac594ffa-1898-4ec4-9986-5d2c9bbb0fdb",
+      "6b45969e-6aed-42f5-83a7-45c7833450ed",
+      "8316157c-35be-4f14-8db9-de2c1799cef3",
+      "96510b25-8ae0-43d3-9ffe-342324840c01",
+      "418fd05e-0cd5-4d47-9e49-b442d16c5d0a",
+      "79826958-e6b7-4192-b322-7a69ae0eaf94",
+      "850a74aa-94e0-40ff-9e54-3b91d2dd5a23",
+      "f1538fca-fcda-4797-960f-0b010961db05",
+      "4fb13075-3a75-4afc-8eb5-cdaea7c332a1",
+      "37d9f596-0106-4aed-bc9f-9002745e8ad2",
+      "61cf9138-fb34-4945-aa6d-1a37532bff45",
+      "6014cdde-d3ef-4c7b-94d8-81d492bd3f4b",
+      "6a262bea-fb09-4e9f-a5a1-9aedca894aa5",
+      "14b54f57-ff95-4e5d-8307-4f7a2812864c",
+      "fe11517b-cbf3-408a-8309-dd5fb20d621f",
+      "598d20f8-dcd5-4f99-812a-09b69c511afa",
+      "57e9aa1b-cdc2-452c-b1eb-0f491f3a026a",
+      "153f1b25-5e72-4a63-aada-b4206c9a9563",
+      "01e0706d-3c0d-4809-ae3e-4ff787aa1526",
+      "e1c7caab-71f6-40b8-81ac-e5973d39d4dc",
+      "b3833e36-4d56-445e-bd82-e52088d5d058",
+      "791d6624-b59e-43fc-83d9-a27c1a845e6e",
+      "2d40fdf8-ea0a-448d-8831-294471b82999",
+      "973d9846-1641-4051-a8ca-e577d3e27340",
+      "cc08e5a4-566e-432b-93eb-6fd7c43ed29b",
+      "b5681d2f-29fd-48d2-b5ee-48ae77d46c52",
+      "b6ebf14b-a98d-442e-a7e1-bb49453ee9bd",
+      "f8583812-b090-4cd8-bc69-d4ab13362339",
+      "fc45d688-40fb-41bd-9880-2f46c5ba635d",
+      "014aeac4-d3d7-44f0-b7f6-f8806f50586e",
+      "c900e8f4-9066-482c-a3a2-208dc5e4495b",
+      "03599f91-9271-4fb3-87f3-bc9ac232022b",
+      "f328c3df-19c2-4f7c-9802-1ad7218cfbe0",
+      "c1c5accf-c701-47f8-834e-64e5aa77d5c8",
+      "68ecae52-6474-423f-b7f9-d502ce1681a9",
+      "02dced33-b6c2-4d1b-801f-c972747afb07",
+      "db565539-6399-479b-b4c0-a06863e04c8a",
+      "52fc47df-2c67-4f2a-992b-2bb2c9ec345b",
+      "d77a10de-a4fe-49a5-9052-7887d37dbccf",
+      "8c6f2075-1587-421a-822d-6d7e9ecd9f50",
+      "0ba00ca0-503c-4b0f-9177-09a52d079174",
+      "0cd678bb-1068-4ed6-bec0-02987e19f571",
+      "8e9b34d2-afbf-466e-b9ac-d21b150ab7ad",
+      "cfd9ff05-2e54-47cb-b0f9-bb6e31aaa9e8",
+      "c0356c7c-2f4c-41d6-a26e-453eebd08b92",
+      "2d1bf063-046e-4428-93e3-65b3a2a9d357",
+      "e97af351-c363-4f49-8070-f1049bb8ed9e",
+      "4d8af410-11ce-4cf3-92e8-b6d06a7ce1f5",
+      "c48414f5-7994-417f-b63f-811ff41faf3f",
+      "938473dc-fad6-410e-8c08-faef970c49f3"
+    ],
+    "WeaponGuids": [
+      "2d1bf063-046e-4428-93e3-65b3a2a9d357",
+      "e97af351-c363-4f49-8070-f1049bb8ed9e",
+      "4d8af410-11ce-4cf3-92e8-b6d06a7ce1f5",
+      "c48414f5-7994-417f-b63f-811ff41faf3f",
+      "938473dc-fad6-410e-8c08-faef970c49f3"
+    ],
+    "EnemyGeneratorGuids": [
+      "6794953f-4211-4a84-9c95-559ec9f9e417",
+      "b37c5b2a-224b-41d1-8016-90e194a3c1b6",
+      "5d64ad2d-33f5-4b11-9a81-bae5227d1bb5",
+      "90fa222f-9a19-4c17-bc88-3f24aacdb8e1",
+      "5390e19e-7542-486d-a2cc-630006e546dc"
+    ],
+    "EnemySpawnInfoGuids": [
+      "5e3391b3-e8ed-4c82-9e40-395c171d0c77",
+      "c06dedf6-645d-4311-a138-f7d2be98c07d",
+      "7bed79fe-309b-49aa-8b07-e6b3e8aa1e45",
+      "679e35f9-a623-45bd-833b-251bd93770b2",
+      "ec3ec60a-00f7-47cc-bd8f-2cbdbc542c72",
+      "500f0b58-9a20-4141-853c-900df5d2cf0c",
+      "51b5fbf3-8965-4c82-a549-634e10ce769e",
+      "58fb685e-1321-4bb1-8ae6-d310e542ee60",
+      "c29bbecd-d646-45fc-81b5-119f0ba74023",
+      "09a9156f-72c6-40ea-8608-f97442c6fb93",
+      "528b004a-6888-4301-adad-49998fc6831f",
+      "a6a2372c-7b24-413d-a709-34f41b10310a",
+      "9f77ab16-3706-4b8d-8a67-57820f7a665b",
+      "9ef4e1a6-3287-4373-a0d1-ce85896c87bc",
+      "642aa873-c30d-4ab6-8c79-2e654b2be19d",
+      "be783bcb-c5cd-4bdf-badb-40b22c4a23a9",
+      "3cbc686e-997c-4c47-8819-dc90512002d7",
+      "01d981ab-2bc9-4a24-9dc6-6f90c769cf84",
+      "505ce26e-1053-42f6-8d63-6c48c759109f",
+      "ee0198bd-00b0-4e17-906e-2b9155607130",
+      "5bd10711-5423-448f-b198-314e5e5e3f22",
+      "a1eddc12-32f7-0254-0a09-0f38a4124d38",
+      "535d8271-dab5-02cc-3df1-30a361349fc8",
+      "d008b451-aa91-0369-22f7-d2fc8a429a72",
+      "65fd2f84-9fe1-0d9c-3f28-890f8f073b4b",
+      "bb3b549f-afae-01a9-11ca-9a88d939bb94",
+      "365a041e-ed06-0f73-3803-d45dcc4c6bc1",
+      "18b4e8b0-cc20-0e39-2653-fceb8a0526f2",
+      "f9b4ab8e-7f13-0842-0724-07194ff3d1ac",
+      "35964373-2676-0818-350e-98747a966409",
+      "01fa1b80-5266-0d1e-2a63-dedc8ef3c94f",
+      "16b39796-5ff5-087b-16ce-f92a28275cb7",
+      "4f380cc7-53d1-0e6b-31cf-bff57cb42be8",
+      "ae56ff84-15fb-0d7b-1b25-83690c8e3103"
+    ],
+    "EnemyGenerateGuids": [
+      "84fcb446-6519-4712-a7c1-8c16434dcd92",
+      "9b62101a-4d4a-4c4d-8df1-fbc8cbc248c2",
+      "5c4abfd1-3122-4f75-b3ce-1551829e7e94"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/birthday/stage3/stage3_setb.scn.20",
+    "ItemGuids": [
+      "e180b465-38b3-4e17-bb35-5083b53ff069",
+      "aec07414-3870-4c10-a695-00f08da9e17f",
+      "0b82b1c1-32b5-4248-8cf7-e8e30ac40af7",
+      "6a262bea-fb09-4e9f-a5a1-9aedca894aa5",
+      "725305e2-020e-4d27-ac50-91c22aa01289",
+      "15b7a7b0-a453-441e-b75d-3169c96efc02",
+      "30df9797-4b1d-4215-a91f-9434cb7dec8b",
+      "2201450a-d658-4e27-911c-e8a15cfb1475",
+      "544afb87-f186-4f64-af8c-01fdb0c834c8",
+      "b92ac4ca-8b71-4eef-8ae5-7004e5fa8be7",
+      "5abdbdd1-ca14-4d4a-ad1a-b3e7a9360d70",
+      "f1538fca-fcda-4797-960f-0b010961db05",
+      "4fb13075-3a75-4afc-8eb5-cdaea7c332a1",
+      "37d9f596-0106-4aed-bc9f-9002745e8ad2",
+      "61cf9138-fb34-4945-aa6d-1a37532bff45",
+      "ede574d4-cedc-40c4-9ef7-3d0fc8bf078e",
+      "6014cdde-d3ef-4c7b-94d8-81d492bd3f4b",
+      "333b85d2-5c3c-4b8e-bbac-423c3d34c285",
+      "23dfad73-2ecc-4e7b-a35f-0a8875bb6068",
+      "e9c72e86-80e9-483b-8745-9d7717fdb348",
+      "c5edb8ce-5b7d-4f91-9ac0-2ad30aadb445",
+      "cd6b823e-82b1-4498-821e-edd076446f66",
+      "d14d76ce-f7aa-4b44-b3ca-5880412a21fc",
+      "a6b6c35c-630b-4e92-ba67-24d89f75d2dd",
+      "844dbd48-2611-4a2a-81f5-7179e6423d36",
+      "668ed9bd-1f6c-4f93-ad34-d851df9ceb1c",
+      "880c4536-2432-4013-916e-72e0d4fda681",
+      "5870fde4-81a5-4840-b1e0-b8431971ce3c",
+      "9b8f365d-a6e7-4b82-a4c2-a02d278edb8a",
+      "4c9fc2b6-be75-437a-83f2-a34d21eb3449",
+      "0b4d1650-a3e7-479e-ade2-36609e914670",
+      "7eb96aa2-1660-468e-a6b0-3ee4b8b2954e",
+      "b41a9f7b-6ba3-4709-9a48-7d21205c2cef",
+      "29e3652e-7cb0-46c9-8812-516c5e07da5d",
+      "29614343-e5d9-45f6-bc26-2f58a8b7d10f",
+      "7b851ad0-04d8-4a3c-94fe-d8406a8d298b",
+      "1959557f-98b4-4f94-8ae0-08017b3bca3e",
+      "122c2d7f-e2de-45b2-b55f-4acc5d3bd873",
+      "3443fb94-85dd-473a-853b-f173d798a24c",
+      "7b7732f3-898a-47af-b509-337a902189cf",
+      "95599d27-87e7-4781-a225-a97df8adbc20",
+      "1da2b6a2-212c-4d18-9a6f-378e69ad683b",
+      "d4332596-ce0c-45ff-9481-7e9aa214fd06",
+      "f315ce8b-acfa-43dc-b8ff-eef1f1498aea",
+      "6c019ecc-806f-420f-9bc9-846fbc021e77",
+      "39c4264c-912c-4a6c-ac76-d312b2006399",
+      "402d1f13-7fc5-425a-9d3c-ba2a5c6fdd33",
+      "ec0cef27-2863-4858-9fad-5213953e895b",
+      "80a7a38a-c371-4b0a-b178-7adff8e9ab0a",
+      "61cb0aa0-94d8-49f0-a205-f9309e17f786",
+      "dcad35e4-40b8-400c-91ee-3de6a5a650e0",
+      "1c701434-18cd-49d0-8885-d2557b162106",
+      "6aff1a32-5223-4920-affa-b47b92829cd7",
+      "a621566f-b9c5-40f7-9391-432d0c2acbe8",
+      "188ba47e-19f8-43e0-8320-4d8451d14f04",
+      "da849b29-b09f-409d-a53f-3928832e60ae",
+      "66654016-cdf1-4d46-a546-999219a247d4",
+      "2e1652b6-8563-4130-b71f-749d9ef16192",
+      "d0bc9177-fafc-45aa-8b42-f7873ec4ff82",
+      "50ad5946-e8e4-4cd0-b633-f7574b7a645a",
+      "3fa1d258-347e-4b17-9685-a6369a7f03a5",
+      "94175176-e715-410e-81fa-06b30c6e3a9e",
+      "63a565da-b9bd-4de3-8ad9-6afb3d889ca8",
+      "c77c9da8-533a-40c4-a5ab-c72f81e48b39",
+      "16b1820a-4c27-44cb-a692-5b997eef1825",
+      "51d650f3-c317-4625-bba5-ded06009f703",
+      "2870112e-57dc-43ab-a9c1-1e64caef6b87",
+      "4f8a18be-8347-4cd6-93a1-24dd652bf1f9",
+      "870fd637-64cb-4002-9cb4-f3056bfaf911",
+      "b654ff2f-3b00-4374-afe4-d7e31ba92aee",
+      "a884497d-fc96-42dd-be51-68e91b68fbd6",
+      "372df9cd-8675-4fbb-961f-26cb2284fcae",
+      "abdee8e0-2b25-4f86-bc18-44b1fff9fee6",
+      "7f2513f6-1925-45b5-b370-3984122a08bc",
+      "8886021f-18cb-4d31-9752-478a35549a32",
+      "602f0746-1da1-4052-b18d-9596b045948c",
+      "47ff1cc6-bac5-4b96-8a09-4aa126cbf70a",
+      "e633b66b-ba33-4b4e-b986-9ddfd76068e3",
+      "d5b4c865-7db4-466d-8260-6846f4418d6c",
+      "9d572462-f6a9-48e4-985f-c5c052e428e7",
+      "60b75bb1-dd6f-4868-b0ea-e31b89ea55e1",
+      "6c5e0bcf-812e-458f-bd77-08ecd24ab6d1",
+      "4716c354-0385-4e49-b792-12002320a839",
+      "49f8c18a-c0aa-4d9e-b0eb-1fd82bb63876",
+      "b8859026-6cf1-4ea6-b1bc-80220c7104bb"
+    ],
+    "WeaponGuids": [
+      "60b75bb1-dd6f-4868-b0ea-e31b89ea55e1",
+      "6c5e0bcf-812e-458f-bd77-08ecd24ab6d1",
+      "4716c354-0385-4e49-b792-12002320a839",
+      "49f8c18a-c0aa-4d9e-b0eb-1fd82bb63876",
+      "b8859026-6cf1-4ea6-b1bc-80220c7104bb"
+    ],
+    "EnemyGeneratorGuids": [
+      "d6996781-3d6a-409b-a7aa-17fa15cf7c46",
+      "21ad6640-5f57-460b-9499-d6c931e0a0af",
+      "0cacabae-5b63-409d-a9b5-760ae445a84d",
+      "6eff9afc-df77-4c7d-984a-53eb04e9fa50",
+      "d1e165cb-299d-4b5e-97ca-75b4ddca7194"
+    ],
+    "EnemySpawnInfoGuids": [
+      "a1c063cf-05b8-0bef-25bf-4eec8f71c26f",
+      "53703dac-edfa-0b77-1247-71774a57109f",
+      "d0250b8c-9dde-0ad2-0d41-9328a1211525",
+      "65d09059-a8ae-0427-109e-c8dba464b41c",
+      "bb16eb42-98e1-0812-3e7c-db5cf25a34c3",
+      "3677bbc3-da49-06c8-17b5-9589e72fe496",
+      "1899576d-fb6f-0782-09e5-bd3fa166a9a5",
+      "f9991453-485c-01f9-2892-46cd64905efb",
+      "35bbfcae-1139-01a3-1ab8-d9a051f5eb5e",
+      "01d7a45d-6529-04a5-05d5-9f08a5904618",
+      "169e284b-68ba-01c0-3978-b8fe0344d3e0",
+      "4f15b31a-649e-07d0-1e79-fe2157d7a4bf",
+      "ae7b4059-22b4-04c0-3493-c2bd27edbe54",
+      "f0a2a7f9-da96-49c4-849e-ae0daa2f059e",
+      "6517464b-64af-4612-9494-942c3a0ed3a5",
+      "db784ae0-f02b-4b4b-9094-7cdfb1b01f9d",
+      "5eb19e58-b6c0-468c-b18e-df8c9e6f787a",
+      "974b3f41-c90b-4f20-ba16-2fbe8b1eb507",
+      "4e6d4a43-c496-4d35-8078-d8d5c076069a",
+      "04ccd8ab-29dd-4694-91b8-b247ecc447ce",
+      "dcf8dd74-33f1-4a3a-a48a-340427f6f067",
+      "961ada0e-a049-495f-828e-466224ae040b",
+      "dfb91641-01ed-4271-929b-83f385a32407",
+      "98095a74-3480-439e-8b18-6ad3d5cfd46d",
+      "69caf8b0-d0e7-4a05-9d62-7608f227fba0",
+      "5f687e3d-a0fd-4e51-bce1-caa8d63c8d86",
+      "eae32b36-8a96-48c7-882e-8836c584b766",
+      "0d2e7bf9-8dbd-4d3e-b87e-70cccc37634f",
+      "d54ce407-6127-48ad-a660-72143f34d4a1",
+      "b18c9c1e-7588-40ad-a3ee-a323e3ad5957",
+      "55d5cb51-ec6a-46a2-a3c0-43a1ad339476",
+      "d823145e-ef4b-436f-956b-d996bf76f561",
+      "b4ae1837-487f-4e36-a46c-632f599a216b",
+      "1f773860-2755-43bc-b5e2-e63767a3ed2d",
+      "6a12084c-4487-4af4-8e87-8f16ce3edd22",
+      "52d4d468-9ea4-4747-ad73-98e0ca1c5b86",
+      "5b38e3ac-861d-4b90-8957-dc104217b4ce"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/c03_soft_1.scn.20",
+    "ItemGuids": [
+      "5d3fc5fd-4193-482a-837d-96bdaee90924"
+    ],
+    "WeaponGuids": [
+      "6102c38f-4a43-4aea-a229-df4ab97a4637"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_2/hard.scn.20",
+    "EnemyGeneratorGuids": [
+      "d9387005-e4f6-4383-b62b-bc567d3bf07b"
+    ],
+    "EnemySpawnInfoGuids": [
+      "c03a8783-4a91-4160-bea9-5f5f1ae4fd70",
+      "228fa685-69e2-4fc1-b021-5d2d9f1d27c5",
+      "9fbcc046-86e1-4439-b444-ce2dbb4a288c"
+    ],
+    "EnemyGenerateGuids": [
+      "a70af206-72ce-472a-92e1-cca166f7da39",
+      "f25ec0e0-343d-41cb-ad65-ca8bdbecdc4b",
+      "8be3175f-a2e4-45c2-bbf2-56ddcf16939f",
+      "99e07fae-9f6b-46aa-b26b-3d76367ed302",
+      "3fff8f0b-caf2-4846-858e-ae7eec9a74b6",
+      "afafa4bf-366b-48be-9f24-aeebe53a9ac8",
+      "82bd00fb-ae7f-40c7-8ab5-580f8396d128",
+      "8883ae5a-7f29-43a1-935c-7a95855aa42e",
+      "1cb9b248-6993-414f-815a-3b53ed43f6c0"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "d1f940e1-3f43-4e7c-aee0-f2f38c85a6cc"
+    ],
+    "EnemySpawnInfoGuids": [
+      "94226a54-6c79-439e-b3d7-6fe1b8290e30",
+      "ab693d2e-721d-4ab6-b492-dc7b39315b75",
+      "5e03cdf4-cee1-4020-97be-69e280a1d8f1",
+      "485db997-f200-4c47-b3d8-84c4fc823902",
+      "821b46ea-96e0-470a-8ab9-d2facda8e8e0",
+      "64d0f08e-bbae-4c1c-a445-a3a9052e8951",
+      "9905c8cd-ebdf-4d8d-9427-47723bf2dcbc",
+      "a6ac7bab-2f25-42f0-8595-efc2893cecf7",
+      "d22dec30-c5f4-41f5-bbf7-c21fba433d1e",
+      "82131704-7be9-4664-90e6-1c9a104601e0",
+      "63e96d11-f3d8-4a71-9a03-2d9e16562498",
+      "88de2eba-6f02-4690-9097-82bf878ce418",
+      "34253e84-163e-4179-8a83-cc67e4269698"
+    ],
+    "EnemyGenerateGuids": [
+      "dd5872f5-a301-4cf7-97e9-82be701b2697",
+      "fd1c9a35-006f-4aa2-bc2a-602e78067734",
+      "4b5d8099-0f88-499d-90db-29b90db158f0",
+      "c0318aaf-3822-4d64-b72d-a8d192f585bc",
+      "6912f0a9-05f7-4b02-8d78-a821392f6ac2",
+      "6a529f42-3714-4e2f-b7de-a1b3e05ea2e2",
+      "395d4d58-eeb4-4939-8647-13b3fe754610",
+      "527e0b0d-36d5-443b-9110-58347ede66c9",
+      "c112f818-c5dc-4a2b-b1ff-52e41d826090",
+      "76f7bf83-207e-4c43-a16a-68f86657565e",
+      "0292d306-b5e8-4ce5-9f13-795b4259bb29",
+      "e813fd69-5bce-44a1-9928-9fede50929cb",
+      "9ab803fe-ef59-4288-a017-4d3bcede670c"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_3/hard.scn.20",
+    "EnemyGenerateGuids": [
+      "95c39b0f-d964-4fbf-ac52-cb1c54ab2a83",
+      "6ae1354c-d68d-4763-a11d-f89ef06e70c8",
+      "d78aff3a-182c-4afd-8814-c917fb10ef55",
+      "4d8b074b-ee78-45ec-b13f-97b212927e44"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_3/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "6a0d77e9-521f-4eb2-9fd8-db103dfe39d8"
+    ],
+    "EnemySpawnInfoGuids": [
+      "faf29032-20ad-43b4-80ed-00503aebfbb6",
+      "b10d4dfd-7abd-4594-955c-25ab4d91bf17",
+      "7878e415-7569-4f32-b6c6-5ad5f61117ec",
+      "77822150-5b0a-4af2-baf7-5a4d4de9f3df",
+      "24aa22d9-2dd1-487c-8a0c-87dc7cf81c88",
+      "67ecd94d-878d-43e8-b9b6-20ee06496537",
+      "b5eecb32-ee38-42c8-b148-c606db106d13"
+    ],
+    "EnemyGenerateGuids": [
+      "41ff3f80-b663-4fff-af06-e64db9b40674",
+      "9b77b9de-1528-46a4-a2ea-eec79241bafa"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_4/hard.scn.20",
+    "EnemyGenerateGuids": [
+      "a49402bd-10f2-45a7-8503-ab1ae7294afd",
+      "99dc433f-db0c-45b1-b9b3-1c219ada83ca",
+      "42b8ab61-d576-4666-9ae4-caa07ef43fa6"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_4/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "29c21f7d-0766-428c-87af-5866ce031643",
+      "d810a891-cef2-4f8c-a7ab-709041d5132c",
+      "150c6ffe-37af-4e64-ae57-a997c9035137",
+      "1f2c86b6-c34a-4c7e-860a-0a66620fc16b"
+    ],
+    "EnemySpawnInfoGuids": [
+      "f0873263-24a2-4b98-84ea-b8cfbc8e0a6e",
+      "52f126ef-a794-4928-b126-58e3075cca27",
+      "a1f2994c-f0c5-48ca-b34b-236f9ea1120f",
+      "ab77d472-ddba-4f18-8a6a-d7cb1b166000",
+      "ed59ee59-404c-4491-9057-0b9c82b94b87",
+      "2cf68019-2c6f-42eb-9ad6-a1984bc5d4ce",
+      "86c01dcc-b12f-4363-afbe-ce6061ab9371",
+      "16badbfd-9d01-42e5-8355-9abe1a3283dc",
+      "eaefae98-79f3-45ff-87d9-d7b4da9b471a",
+      "4810a538-c94b-48d0-8cf6-38672cd7cfc6",
+      "b6e25790-40c8-4712-b0ee-3728e1968dd3",
+      "8299f033-5c16-4186-a042-8fdda42686c8",
+      "35fc534c-7674-411e-8c9a-5495e7135481",
+      "14355921-6323-450f-9dc3-9c7f270d7eb9",
+      "09defc29-a2c1-4a41-8c0e-456260c7945e",
+      "0d18dc3d-1952-422e-bab7-aaa965de09d0",
+      "3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5",
+      "bcb8cd4b-f060-448c-92d1-22d197444b82",
+      "be76fff6-c4ff-4a68-8ef8-f33c46c74b76",
+      "7b0cd325-6cdd-40da-8c31-aab810431116",
+      "255776fa-b9e9-4072-a301-8184f6d4d946",
+      "74e81ae0-7130-4b8c-9239-5c22518eaa8e",
+      "285c1d95-9f49-4c4f-976b-6951e8f08382",
+      "7f931e58-8105-443f-8766-d3e3fb0409a8",
+      "7ae3d438-f9cb-49da-9a60-00435b946a59"
+    ],
+    "EnemyGenerateGuids": [
+      "0fd69645-0926-4547-bb92-db97aa55c0d1",
+      "6c6ca1bd-397f-40c8-882e-d187561b11c7",
+      "a048443e-142a-4a77-a89d-fa51b8a4bbc2",
+      "564646bc-bafb-42cb-8029-eed46bc350f2",
+      "7eef3b39-f157-4281-86b5-52fe85d8eae8",
+      "38048ab8-200d-41d0-a328-f215bf98b7fc",
+      "b8db1975-44f4-4d5d-a6df-e9f59d8a3ce5",
+      "46ff6efa-951a-4eec-b2df-824a2fce1cec",
+      "59671e09-0ee0-4c00-a277-53bef66870d8",
+      "97bace99-f014-43cd-bf55-58ddfa794009",
+      "36089561-ace3-44fe-832d-a83550d54327",
+      "4bb03dbc-26ac-4137-9447-c08c91ef0b64",
+      "4b7fa405-d4e8-4e3d-9003-db32caefafc8",
+      "38775a32-43ed-445e-9edb-54fd66b9cc7a",
+      "e3e48a60-3708-4a7b-858f-ea3a257d356c",
+      "564be37f-e44c-44fa-891f-e09d28386a21",
+      "51367d79-caea-455e-84ad-dedfd34a97a8",
+      "5875fbf5-5dc6-4e34-bb20-f828936d033d",
+      "144a68b5-de6b-4e5e-9fdf-9e7c0dc0f51a"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/chapter3_5/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "b094f4ed-3f75-46fd-a095-ff451e4751d8"
+    ],
+    "EnemySpawnInfoGuids": [
+      "9afab59d-1748-49c2-b519-9d2a8bada82e",
+      "18178b0f-e811-4212-bfc2-750e7ba82638",
+      "a0b39a3c-41be-4cfa-9082-327199536bc9",
+      "9bb7c48c-30db-4054-a05b-0477db8de7bf",
+      "daf2e12b-ea2c-40e2-80b1-e5aacc7dedc7",
+      "1641a424-5762-43d4-bced-8d30024b7b99",
+      "b3ba5947-9637-4be2-9e03-0b653c1aa946",
+      "a1ce5387-13bc-46ce-930e-462a6dd72942"
+    ],
+    "EnemyGenerateGuids": [
+      "6af094e1-f9a7-4c0f-a023-88d3ae5d879e",
+      "e55dc0ff-d4d6-4626-977b-68021e32e285",
+      "580cb2c3-1dc2-41ee-9a17-e65071788db0",
+      "a8a0ea87-8a65-450e-988b-1dd4eb54193f",
+      "b12a8151-c70e-4765-97c7-375cc816ec83",
+      "609f1400-50f2-416f-a013-dcf909979fe3"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20",
+    "ItemGuids": [
+      "c179511b-34ad-478e-a7ea-d0a85c5de3e5"
+    ],
+    "EnemyGeneratorGuids": [
+      "fa05fa6a-6018-4c0e-982c-607a963957b7"
+    ],
+    "EnemySpawnInfoGuids": [
+      "16909345-5699-477b-ba39-6bf9086c675e",
+      "c74fc58d-1550-4483-a348-0469d8ad0383",
+      "78dac432-92ef-442a-8d4b-38044742d8bc",
+      "9ee731cf-943b-46d6-98d6-dfbd6d8a5bef",
+      "297ac82e-ecf2-437c-bea2-d4b571d25f60",
+      "c5aaf736-d71d-44cc-b71a-2ef9b6e75a09",
+      "c0789eb6-7909-4095-9d37-6af0bcbca383",
+      "f5549928-f174-4e92-8bd7-65faa2efb6b1",
+      "6b186982-c83c-426c-99db-f01369f3fe38",
+      "3c15a7fb-394f-4b23-9d42-98cc8065c9b5",
+      "2f989baf-22b0-4cf5-b804-a50ffc8530ba",
+      "6df79259-59c7-435c-9bc0-c2a428921a20",
+      "ce982657-ff66-4390-8bb0-8b13716d667f",
+      "91c77b83-3061-4ccb-9cb8-89a1cdcda7a6",
+      "1f812956-aba3-4dfb-94c2-970e8b12aa0d",
+      "7e40793c-1753-43f2-b517-4e9b06399752",
+      "f93e45d5-b9e7-482f-abc7-a88750ed5e1b",
+      "3c7e0ed9-a9ed-4762-9f9b-a79aa9107f06",
+      "c26c40cb-6759-4b6d-838b-f0a5a1de8abd",
+      "67d48087-37c7-48c2-b3f5-d20b538bd0f9",
+      "d484bae0-a8bf-4633-a917-d0aade800111",
+      "28c36110-42dd-4a12-b6ed-389c1d97c779",
+      "5c42dd83-9637-42aa-98f0-c4a48932a897",
+      "5cdc1740-e24a-432c-b791-70165b96c3bf",
+      "a52c3b37-f5c8-434f-bfc2-4ef396ba5799",
+      "dda906a6-6383-4b73-99fe-ace2631c9093",
+      "3d4fedf2-06ce-4494-b34e-1e62bdcbbf65",
+      "37095e6e-ac74-49fc-9302-cd6d02869dcb",
+      "ebaaf77d-c4c1-4eb3-b1c2-1851ab7ddbc9",
+      "6cd1889a-6dc4-4736-9fbd-4ce929bcbdb5",
+      "430e72c8-405d-40c7-a7fa-b50019d2cef1",
+      "97f12388-1b7e-4f61-aa09-3bc9eb2cb342",
+      "25375738-067f-4d62-bf1c-b0a0f803adcb",
+      "26e24322-fcce-4e14-a0f0-d37596ac9098",
+      "53791495-ec18-4b8a-9aca-fadd171d711a",
+      "65b72875-effa-4e53-a6bc-d722eb1ac6d6",
+      "3926f1f5-4d23-4b14-9b90-dc29beb8daeb",
+      "a13033af-c5d6-4b2f-97aa-d5a0e7f30675",
+      "a4632904-5d71-4406-8ed6-e28d1a754831",
+      "e928baa7-572e-4a7e-9034-9d8f5b6b4bc2",
+      "9d7dc0f7-2a3e-4196-a7e6-32a4c750765f",
+      "4240efa4-cbd6-49cb-aa53-47e4f6e7b8cb",
+      "b1a8a770-5814-4f36-8664-e7a4845aa744",
+      "c8bb40ce-2e50-4288-8be0-97efffd7307b",
+      "e3d22f90-1cf6-4036-90ff-1e611cda709d",
+      "09c1b9de-2c48-45d6-8e2f-27400dbfbf24",
+      "f2806b2e-7e30-4f71-b3bf-9e2fef2f5934",
+      "5857221d-dd00-48b9-9e8b-60969cc43f28",
+      "0eccd1b5-f97b-401c-b290-8baac40c051c",
+      "e5332f4b-1f2b-4529-aff9-339f45d0e943",
+      "92a85e6e-b31d-4b60-bdf2-048fc55e61af",
+      "35c16d50-ec4c-44a6-bd10-73ac3297f4e0",
+      "45f4ac98-271e-4685-9409-71a95cd779ff",
+      "0e907d47-1efa-4c5e-b3cf-17fd3d265df4",
+      "5984b452-284f-4f13-bbd1-14ccde93e537",
+      "fc50cb86-62c3-4a85-b8ce-5e403c7d0de7",
+      "d23b4431-fdf7-4d13-8b36-fc6df49c8890",
+      "1dc622b4-3af2-4486-adda-7776a4df03d8",
+      "82a947ca-9611-4a37-b2f8-039e6647278b",
+      "c618297c-4b6d-4aa3-baaf-9ad9a2dcb770",
+      "cb4dc900-1126-4fa9-b5cc-f11870c33976",
+      "b48f76ca-d41b-422c-bbe1-613bf4d3d678",
+      "460f9946-59b2-4ca3-a13b-b874186af46f",
+      "1c103d51-be61-487a-a881-f65c6e9b420d",
+      "03057eb4-1c2b-46bf-b2de-b684b6333554",
+      "b030684c-bbcf-46c8-a6f4-8823c159575c",
+      "7644c4bc-cd33-4d2e-9c25-cac206c17752",
+      "a8bd1dad-24c5-4db7-bfad-75ceb49888c4",
+      "1f229853-6699-4a2e-bb39-411fe5278a26",
+      "3a4033a8-d141-4f48-90ab-a3fb4e6c101e",
+      "9bb7a2c7-03f0-4736-bd5d-769edfde38d0",
+      "c06f5f21-e13e-445b-9f8d-4c258b64caa2",
+      "1f0d3105-ebdb-4216-9ed1-4080fe0b605b",
+      "39a3df6e-6488-41bf-ace1-fd8257c95df7",
+      "b811bdfb-b085-4d2d-82bd-88431e9a9900",
+      "7fbcaa02-3a9a-42d7-86f7-8e59e415f89d",
+      "9a6390d2-b52b-4318-84c1-ecc339542663",
+      "18da3299-7a1b-482c-ab28-3afebf09b287",
+      "40def3e8-224f-4cf2-b539-3c103ca5a5b5",
+      "06e7cb5c-0239-442a-85e5-babc651055d3",
+      "40465fdd-fc7c-4517-890c-1ede47eec682",
+      "bcf9b2c2-a06d-4184-a0c6-32fb3dc8b3cc",
+      "d3f157fa-68b6-0270-1678-e3ab4e066613",
+      "21410999-80f4-02e8-2180-dc308b20b4e3",
+      "a2143fb9-f0d0-034d-3e86-3e6f6056b159",
+      "17e1a46c-c5a0-0db8-2359-659c65131060",
+      "c927df77-f5ef-018d-0dbb-761b332d90bf",
+      "44468ff6-b747-0f57-2472-38ce265840ea",
+      "6aa86358-9661-0e1d-3a22-107860110dd9",
+      "8ba82066-2552-0866-1b55-eb8aa5e7fa87",
+      "478ac89b-7c37-083c-297f-74e790824f22",
+      "73e69068-0827-0d3a-3612-324f64e7e264",
+      "64af1c7e-05b4-085f-0abf-15b9c233779c",
+      "3d24872f-0990-0e4f-2dbe-536696a000c3",
+      "dc4a746c-4fba-0d5f-0754-6ffae69a1a28",
+      "a799f77a-eee4-0d54-1178-239a12570289",
+      "74cf094f-0734-0a59-13c9-670977385590",
+      "ddc9c300-dd8d-037a-2c6d-a016c42ea928",
+      "bbf704a4-a65f-0dbd-170b-1deb3bb58293"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter4/c04_shipelevator.scn.20",
+    "ItemGuids": [
+      "8163dcdc-ef37-4216-98ce-761fc37e671b",
+      "4e2fdeff-b8d0-4d34-be88-dd1c6239e8e8"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter4/chapter4_1/hard.scn.20",
+    "EnemyGenerateGuids": [
+      "c26d4666-e929-4239-aa76-bb77e87c0eef",
+      "14bc9cee-2332-4997-a043-be33abfd4a76"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter4/chapter4_1/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "4c732105-5922-4ed5-981e-d15f2f172d05"
+    ],
+    "EnemySpawnInfoGuids": [
+      "11f37531-2ebd-4f2c-8e01-1b32aa2bf320",
+      "11616c21-7622-4e46-a744-82683b56d559",
+      "b706d2ef-a2a4-4204-a0c5-0df7dbba9536",
+      "6b281a46-7972-4c6c-96dc-4013feb01f26",
+      "62684285-e2a0-45e8-81f5-c724decbc64e",
+      "4a24d991-406a-4b2b-a9d2-656c1e50a67e",
+      "e9733346-07db-4b13-b1cc-03797fa1a6cd",
+      "f79e43be-1621-4daa-9943-43d20927be13",
+      "393353e4-c2d2-4243-9388-d77a5ed0e41c",
+      "c83620d5-da23-42eb-be38-cff106119428",
+      "bf875e02-271a-4c03-9783-2e4d4ffdfed9",
+      "96ecbab6-bea2-4a56-bd54-61f75ba3060e",
+      "28e5f665-dbf0-4762-821a-41c19d38fd24",
+      "1616fdac-3135-4709-ba94-1e3707cb792f",
+      "ea99c8a8-4054-4b5f-9d7e-6b82f1dd20ef",
+      "ce6ff2e7-97fc-4756-9d3a-d938b59547f8",
+      "251d92f1-3d22-4a3e-82f4-624efb7cdd4e",
+      "ebbb3c6e-89e7-445c-914b-9c73362c5c73",
+      "e0b056a2-5ec7-43b4-b91f-8fef2cc42a0e",
+      "1ca25884-8d21-4e74-9ee4-d5e7f80edd7c",
+      "5911cb64-972b-4e28-a0ed-83f8af2c69bc",
+      "293ae6b3-299c-48dc-87f6-50cc07993303",
+      "2014ba7a-94ae-4df0-937b-5d118e02aa98",
+      "157a1237-f9ff-4cf3-8979-defddcbbaaf1"
+    ],
+    "EnemyGenerateGuids": [
+      "f1155a02-7cd7-44e5-a07e-0b7573066338",
+      "a9e6ecf2-a6e0-4a56-8874-f7fbd5fea564",
+      "2be37b06-d786-4711-9ef3-7c96786f5872",
+      "9995cf56-68ca-4f78-b7bd-d3cff1147d2e",
+      "d9c2d945-99f9-42a0-924c-91fa78c23f77",
+      "4593c35a-e934-442e-bd3b-b851f8d924d5",
+      "1f7ec046-e30a-40a7-9539-1927b8080cca",
+      "6c348ad8-5dfa-481c-aa29-65ed00761aff",
+      "9da71dab-39ac-475a-8641-fbf2149152b7",
+      "4c7e2c97-92dd-4015-bb35-b39f57cdf743",
+      "ed9f8e3a-04ad-460a-b45c-418c0bb30317",
+      "b28e1098-d18f-4703-9142-4ae874b58535",
+      "b529fcdf-edee-429c-aee8-88fae388484b",
+      "5602fb07-8578-45ad-9c8c-55b67c9f279b",
+      "2249bcd6-4fb5-4477-b786-012861b430d1",
+      "dd8fdc7b-2f38-411d-a0be-b60a635e796c",
+      "2110e137-2e76-42c9-be17-5c553152732e",
+      "34b85dab-edd0-4911-8d5a-95425d5eaa7d",
+      "9ed4b633-173c-41b2-9f66-d5fa08dff646",
+      "28048a93-bb76-4f54-b813-93aba02e9115",
+      "cfbf047f-1c5c-4471-82ef-7cda8bcd4e07"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20",
+    "EnemyGenerateGuids": [
+      "244059fd-9f38-445d-aab6-7656a6605b0d",
+      "3a0c232f-d9b5-4de4-86a7-9d6d2123e240"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20",
+    "EnemyGeneratorGuids": [
+      "25d778de-1f3a-49d5-89e5-9ba5fb39f6ca"
+    ],
+    "EnemySpawnInfoGuids": [
+      "81fd6289-76bb-4d63-a2cf-1eef7a2d6d11",
+      "7111bc8d-72e3-47b3-bf4b-60299e2d307a",
+      "d39e01b8-b823-41b6-b261-e6ba3266a9c7",
+      "271a1a36-6eaf-46ff-aa4c-fb155309b896",
+      "7ac5afb4-f915-4e46-bdea-f2e55ee45dfe",
+      "cfcb2991-5973-4181-a5a0-19e6c98a036f",
+      "a02d09c4-8c4d-4f05-b296-f4a2a6f272b3",
+      "f0395f7b-2725-4971-aaee-91f34c548b92",
+      "591687c0-29ac-41fe-864a-8f854f811f8a",
+      "ea114731-d23e-4ff8-9176-7167cc9116a6",
+      "c6252055-1570-4a58-8b51-5d6c7493cfaf",
+      "0bba4aef-50fb-403e-be52-7401d62256fb",
+      "1f6f1701-39e4-4a96-acc3-7f8b7857141a",
+      "7ce042a1-4fc8-4ff6-8e29-07652b56e066",
+      "53b388f0-1ab2-4dac-a108-09ebe4d0f736",
+      "03b5f790-de79-4ae6-90fc-d24fcd6c4328",
+      "f3ed73b6-ea8b-4c22-9559-64c378b85543",
+      "79ac0389-ccb7-43a7-a342-b76933003e5c",
+      "f175e7b3-5e65-44fc-b373-ba43edac175e",
+      "b87a3dac-b714-4422-b8f1-93c52d5fe764",
+      "9b61f8f7-9245-4f27-9d4e-e48c42da3eb0",
+      "0928d21c-c725-4a58-8343-ab89c67f1487",
+      "591108aa-a595-4ae0-a3eb-07dddd6af697",
+      "ea2ed40e-2caa-4abb-a508-edc1dbf220c9",
+      "471efcf9-1ad7-46c7-8c75-6ef1f95c6326",
+      "4aa02ea7-ec26-48fe-9ebe-d8c2249c12a1",
+      "ad590fab-0a23-47cf-969b-6f019d0a2ed3",
+      "a8f3eb03-981d-4a84-8cf4-0d211eb9b9da",
+      "0412e18d-fe6a-4799-ab9c-693cf536e3ed"
+    ],
+    "EnemyGenerateGuids": [
+      "e10f1e00-0699-4bab-96c7-6ea56171d08d",
+      "dc1dd466-aa9d-44ee-a442-35d1dc1c063e",
+      "b48609f1-08e0-4a0e-bff5-976c98c078bb",
+      "c85e819a-bb25-4788-a718-57582fde392b",
+      "7be96eb5-544e-49ae-a311-43b2972f9634",
+      "ea944015-c536-438a-8992-5dd1ca028d43",
+      "570795c4-bb17-45c9-b666-bc6552504c83",
+      "5cfda2b6-d4a4-4584-a3e0-903fb1b9bade",
+      "8b6cf9b3-b6e9-440a-b40d-e2fb49efb4f9",
+      "b1a9a3b1-28cb-4599-a1ff-cbc31712fd82",
+      "affdd7b9-268e-45b7-8f59-9d53965eb6ae",
+      "f7686c87-e713-4be7-a36e-45de8c915fbb"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/c07_3_itemset.scn.20",
+    "ItemGuids": [
+      "61ef8326-730b-0c32-2cec-0edf38fc6eb6",
+      "bbb4c103-a0a0-01e5-18c3-4ffdcc65a8af",
+      "b407dca4-29ac-0a00-24e9-513327f3b182",
+      "7b9852d1-e70d-0a0b-1d7f-548137bf2775",
+      "c54700e2-bda5-0407-1b2d-defd49f9784f",
+      "dc8bac8d-eb67-01dc-1620-a632f866cdf9",
+      "934f75c7-f9fd-0063-3336-431a4762bd65",
+      "37b8c9d3-df9b-06dc-3fec-68e8cc4ad066",
+      "ba2c4c42-624f-011d-11c8-21c02cd577d6",
+      "94e0411a-f133-087e-203c-5e7c49156856",
+      "fed0d1cb-ecb1-020f-07ac-9a301a91f633",
+      "9532e9d0-89e9-0ec4-2f92-f51c96dfe639",
+      "c421a874-8f05-079b-20b5-40c0dca863ee",
+      "a1fff6cd-66b2-0720-234b-c92178c78b79",
+      "98e1a69c-8fa6-0017-3dda-f2544d6d3817",
+      "926701f0-891c-01b8-0a49-7507137ded36",
+      "5c4fbbee-7e56-0732-0825-f36228b0b2bc",
+      "76c85fd3-960f-06dc-22bb-71ed43a2a802",
+      "1d3cef44-bcaa-07e5-226c-1e5adf39c455",
+      "d7eee5fa-ec21-0faa-32d8-1e824c9c9ce8",
+      "19650212-6631-0934-30f2-d9fe901db12d",
+      "d73d0ff6-50ed-0d7c-3abd-91ae12f6fd1d",
+      "5bb20a34-e540-0bac-2773-07bbdf10c127",
+      "f2c6d62c-e002-0055-11e1-1c0321675a45",
+      "3c9edbc8-d6de-041d-1bae-5453a38c1675",
+      "b011de0a-6373-02cd-0660-c2466e6a2a4f",
+      "aab8384b-11b0-0d16-3f1b-046d732f7dda",
+      "64e035af-276c-095e-3554-4c3df1c431ea",
+      "e86f306d-92c1-0f8e-289a-da283c220dd0"
+    ],
+    "WeaponGuids": [
+      "7a6ba032-5c69-4020-86ce-a408313692e6",
+      "1356ec80-de77-413c-b84e-fe630a735d11",
+      "3ebbd627-2385-4865-919c-7a6f73854515",
+      "91c8740c-da5a-4941-a7dd-61f5804c798e",
+      "f8f538be-5844-485d-995d-3b9ebb09b679",
+      "d5180219-a5b6-4104-b08f-bf92c2ffae7d",
+      "c9b69a6b-2be8-4402-8927-799bd2045e11",
+      "a08bd6d9-a9f6-451e-b7a7-23f0e94191e6",
+      "8d66ec7e-5404-4c47-9e75-a7fc90b789e2"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm_normalmode.scn.20",
+    "EnemyGenerateGuids": [
+      "6c5d368d-e656-47ac-ab59-b80004f5c278",
+      "f98fccb4-45eb-4b2b-bd55-a7bfce25b5de",
+      "6ad17041-d6be-45af-9f3d-a5a5804e0f95",
+      "e1abd74b-163c-4c7a-a729-312f6bc41f4e",
+      "7753e150-c6a8-42ca-96c6-ff353b0e4e73",
+      "ffe73ad8-0c6b-495b-ab11-71253144db62",
+      "f555730a-ed55-4460-8b8e-babee10dfde5",
+      "3fa88a11-b58c-4741-a60b-9fe8e79e3db8",
+      "cfd34daf-c4ab-4af6-9237-a459f04fdeb4",
+      "ce490eea-6d48-4e5f-8833-5090ec02c038",
+      "8a251db7-f60c-4c4d-870f-ebc3e356eaec",
+      "2fe5bcad-8774-494f-8ed9-85a16e1dbb6c",
+      "c40fa592-fd05-4762-a1f2-80a5f1668981",
+      "a913e23e-2c58-4aad-8667-533bbc9d79fc",
+      "6487eff7-0939-4fc5-8b60-dd2c3b4298de",
+      "14aa93c2-52e1-4ec4-b50b-6fbd78ae118a",
+      "64f210ca-4383-4ec8-b923-24d896811933",
+      "adba7d9b-b276-4041-92f4-c2994ccb450e",
+      "a5f1f97e-b1b4-43c7-8257-5e6cc5084e7a",
+      "07b5b23f-8b8f-458a-ba7b-0fd71c71b644",
+      "9a1d28d5-6491-4095-b655-a4df317449bd",
+      "d9338537-683b-4d87-8aaf-f8ea661647ce",
+      "99544ca6-751f-47fd-8456-ab97422fdad5",
+      "e7f8693c-7661-45a6-8ad2-396ee6d0ae21",
+      "0fbe5dfe-2206-45e3-8bc4-29ed874bcda7",
+      "74f1e575-9995-4331-8c3f-10e78e0628e5",
+      "343348ae-6cac-4d7c-aacd-0e605a63789e",
+      "ea2dceac-ea66-4065-ae05-014daf67aaef",
+      "d9ba6260-1fba-4b80-a9c1-adef1740be2b",
+      "55db7aab-64b0-4cbf-a2f9-9b8aece13d2a",
+      "ae08ac3c-5e82-40cb-a4bc-74b46c8f5425",
+      "8b5c9278-1812-4360-9a7c-7a0c80bc80f2",
+      "bfeb7659-11c7-4b6c-9bd9-0e1e0c5493c0",
+      "ced857a6-9b42-4091-827a-4d99d0b3dc29",
+      "dafed4c8-c25e-41ca-ac08-ddbaf3a238a7",
+      "b164ac82-0227-419f-9c00-73649f1cc46b",
+      "2c129973-b349-4ac8-a73d-07245581f562",
+      "e5f23d87-fb03-4869-bc98-1d828c5aab8e",
+      "446f2feb-29fc-4959-9a68-b01851e556e5",
+      "da4a6a20-1255-42a5-ac16-3f1877336106",
+      "6d5c61ea-5e6e-439c-9cb0-911acd423cec",
+      "03b97256-b694-4baa-9bde-8fe4a851a288",
+      "e024b84a-0869-42d5-b76a-41b5af442e14",
+      "d0c1ea08-7150-40b5-af53-67652f05793f",
+      "cd4c554e-0b57-476e-9406-6912a4f8c6e7",
+      "5129a04d-71a0-4f23-aae5-6a42bdb353e4",
+      "08a5fbc7-fa75-45b4-b957-576031abc9f2",
+      "72bae47a-0eb4-449f-bf66-a60a70a46ad7",
+      "3f95ba72-ae80-4d7e-aeaf-eb717775da6a",
+      "51434ec8-a037-4c9b-b722-970a21caffde",
+      "7382c1df-8796-4675-9312-ee1dce1cf619",
+      "7c98e070-f8b0-4ad3-952a-7eb2d23f878a",
+      "96be1c47-e07b-420b-8ced-e8fb6f5dabda",
+      "c2227ff7-f0a7-47ce-9732-46d2246354a1",
+      "b5773e77-f5aa-4684-bcc9-2c44f3a6c95f",
+      "8c064eba-639e-4457-9496-0752a6fa446a",
+      "e51c1347-40c1-4105-ad4a-21963d3313ce",
+      "6ecc3efa-a69a-4df8-a415-858915e85b88",
+      "c8239b9a-7cbf-4610-b8bd-89c088f0e0fa",
+      "baf7e014-e66f-49c2-aab0-39a001d2e90a",
+      "188752d7-c53e-4666-8c3b-615c45db85d5",
+      "a76a8629-daf3-4936-af9a-d3dc5142dc3c",
+      "a3c0f193-4013-4b3b-a27a-0744e67d0a40",
+      "f96caaad-d790-461b-a408-352fd9d0379e",
+      "35e26815-4f36-45ac-96ca-347e18db0350",
+      "298408c7-1e28-4031-bec1-92a788a59e14",
+      "81079542-abd3-4d87-b826-32322011ff26",
+      "9c395d7e-562a-4450-98f0-91e0792cc343",
+      "d5bfee02-dbc3-4f53-86ce-9293005c6eb9",
+      "495cb636-50f6-4441-beab-c6e22481271f",
+      "afb243dc-bbaa-4e38-8e5f-b23194a12bdc",
+      "5f195fc9-a13d-4e2c-8526-accf71693a2f"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/enemyfsm_survivalmode.scn.20",
+    "EnemyGenerateGuids": [
+      "d9c3c210-2a32-4c81-b3a6-520eb9f03e90",
+      "470655d8-d5af-442c-b2d1-f07feb86ddfb",
+      "582eb4c9-4524-40d4-b9a9-c4283ff12e05",
+      "c1fca395-26f0-419f-a563-cbce83bc8999",
+      "24d4ef55-72fa-4b5c-a1e2-11810b4acd0d",
+      "d432d770-84c1-40fd-8b78-ccad8758cd9c",
+      "4f96f216-2246-4cb4-8912-90cb87ae2cb0",
+      "6772e422-5c45-4480-8f66-858c9a2692fe",
+      "b8b24165-a09b-41c3-8b4b-95d0d5ca89a3",
+      "d1fb86c1-33de-4be6-901a-8bfedbaa4f2f",
+      "3a9a2db3-d588-4904-b554-c712b6bfbc6c",
+      "fc172862-ffc4-43e4-9e4d-9708741eb9b7",
+      "36a9432e-56b4-4af0-9ccc-f73549cbdc37",
+      "02857948-b1f9-49ff-8766-6af7bd5dc3eb",
+      "6533c7ff-f6e6-4c91-a902-8db500e826a9",
+      "419fa7aa-7596-4f0c-a172-e2a917e8630f",
+      "38a57984-f233-4652-b658-605c3c6ff3fd",
+      "434f1633-9951-42fd-a468-206a2b5c4478",
+      "c89346ef-6016-4e4e-84b1-21d8a3a6bd02",
+      "2a99334f-de30-40e3-81ed-7b83264d46f2",
+      "8288551b-37a8-4070-b6ee-38af2a2a7536",
+      "e01df7ed-732d-427c-901b-ffeef46a8303",
+      "0a0ad33e-f9fc-416c-bc33-c838d1604cc9",
+      "4a47d127-7c69-4ece-8e7d-985351ab1cf3",
+      "096bdf03-3582-47ce-95b4-5d4d9dd47895",
+      "17a74cb4-fe79-48f5-a762-d7bd195b8b4f",
+      "aee4a776-9b13-4187-bc1c-12443c556ed8",
+      "4dc21754-1479-46ed-bf7e-9124cbdcc2e9",
+      "b1523648-1b9f-4ff7-8937-428640caffc1",
+      "8b0f34f2-f0de-44d5-a2c8-b9370161192c",
+      "a0d4b0ee-c636-4b03-bc40-89aa8c6ef80b",
+      "0cf2f6dd-5174-41fa-8da1-ed968f4724cd",
+      "6d949ee9-01da-43d4-b2a3-431c144f2704",
+      "7fad3548-bd7a-4cf3-bf03-dfa4cd75af8a",
+      "87daebd3-b7c5-4198-ba5f-fb7e25c73642",
+      "163bce22-9ed2-44c3-ab88-024076db2ca4",
+      "fb2128c4-fd5b-49b2-bd4d-ab072d698539",
+      "61078e6a-0017-4597-8461-f60f8fba5122",
+      "61e430c8-74cf-455f-b1e0-beab0d96af5f",
+      "1f5d5932-3934-44d8-92d7-98900f9e2847",
+      "1d660760-da23-49f2-9dc4-cb746f337402",
+      "857cc7ea-1cb2-495d-a78f-83c868498f02",
+      "4b61afd1-d551-4f83-baa3-3e71e4588c0b",
+      "0e469946-d587-4336-b17b-a262fba8dae8",
+      "8ca09ec3-58fd-4a44-b5d8-2f5bc0a1e6dd",
+      "2c0c38cb-8f30-4c27-9aa9-56b510ff2c02",
+      "816f232a-8f1b-4254-bc7b-3c502fa69782",
+      "c8ce38ea-262b-4c72-8d59-56944524cd97",
+      "0885a539-e1e9-43b5-8814-8d44cf32f100",
+      "942207ad-5e55-4423-8bd9-f3dfde261009",
+      "f2b0a06d-04c1-4ac9-88ad-89cd76a7c4c3",
+      "102da245-9d75-4ee5-823b-713b830ec904",
+      "e666861e-4182-4d1e-9541-085168bd2649",
+      "8133d33d-324d-4914-bd31-9d2e02a58845",
+      "522d44db-8d83-46c6-9c60-e0bee66a3c39",
+      "b8c80bed-9c48-48a2-8959-12346aeb61e7",
+      "56fa0ddd-7171-4fd0-ad1c-bebfa4a7d16a",
+      "3dfb732b-f2b9-49fb-ae27-2db5b668b0c8",
+      "37d9e25a-74a1-4a78-b569-3f47bc4e9b1f",
+      "e8d1335d-9acf-4459-8aab-822e51f26c13",
+      "b5c33ef2-26e3-49c5-988c-f42988b14b15",
+      "c92bdb49-6e18-4b2c-8d5d-c965d7f77854",
+      "1228467d-25b7-4eb2-b8f2-e43740a87c87",
+      "f6a0a6af-242d-460d-8654-e825bfad0b9e",
+      "821bc5b3-2756-4b68-b9f6-a1583176eda3",
+      "980b8545-b0af-48ab-8b72-7a86dfada247",
+      "95a86d36-7790-4a65-9a51-7bea658f51fa",
+      "b6462ad6-0b84-4946-a57e-aabddfaff036",
+      "93c2b725-1503-42c4-88d3-951e4dcdf12d",
+      "52a1cfda-ccdb-4378-b2e4-bbbeaa41d8f7",
+      "2df3894d-1f01-4298-a3e8-fed825e99be5",
+      "350a025d-201e-4ddb-b27d-bafbab668239"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave1.scn.20",
+    "EnemyGeneratorGuids": [
+      "d1f940e1-3f43-4e7c-aee0-f2f38c85a6cc"
+    ],
+    "EnemySpawnInfoGuids": [
+      "032ba007-3a1c-444b-a911-64350fbd83e5",
+      "115e3506-86f5-4eb2-ad11-97de7e65ef45",
+      "2c1eaef6-ea0f-4bd6-a476-29d9cce70541",
+      "077fa901-ce8e-431e-a9c4-52c27eba7d09",
+      "ebb87802-8bc4-44bd-a1e6-ed5592e56c69",
+      "7ad1d696-129b-4346-8597-3dd2bebc6315",
+      "fdb985b5-ea00-4f21-88e1-1aad0215b57b",
+      "77060633-ea30-495b-8f6d-245c8c97b0dd",
+      "ea2d9c97-26f7-4533-9492-b1945c80b75a",
+      "494999ce-75bc-4a5c-bc2d-4d3eab38c84c",
+      "282a5f38-591e-4f7f-831f-6c54caa85aa1",
+      "ae2d7375-4583-41a3-bdd4-cbca5264d5b9",
+      "d847463b-a31f-4a57-bb6e-49a2c81ec757",
+      "8a2d833d-d0fe-4c0e-b8ae-0007a72b4c94",
+      "b087da79-9657-4335-bccd-b8f60328ca98",
+      "89b926c5-a3db-46ec-bb5f-414f213152d3",
+      "52c2be2f-3d6b-4a0a-bd74-0232d02745ab",
+      "4e7ac728-93b0-424f-ade1-d65431d90348",
+      "0bcc79f5-fa78-4bce-b844-df89d3e518db",
+      "3dd1931f-fe83-4b3b-89c7-e5fa069292fc",
+      "42e63fbc-438e-4d1b-a1b3-76220c7a2f5b",
+      "6dbe928b-43f9-46ab-8ad8-9d0a03f0766e",
+      "eea7dc51-331f-430f-addd-f56f4e2a57d1",
+      "962107bd-a150-4af7-9c59-4b6c7467bede",
+      "50e59f4b-eae6-4d91-8a41-60b685151f64",
+      "00a11f3f-d25f-407e-917a-d862ba524164",
+      "c58958d5-0f90-4f5a-9bb3-70c755538967",
+      "c31e771c-f083-4b54-b54e-52b6bbe55669",
+      "e10abd92-3e20-4c8e-b5c5-bedd7a3db59c",
+      "53569139-f8d7-495e-ad8d-24d4fddc3364",
+      "910df39b-5b26-4822-9793-cd09966e7a0d",
+      "433384a2-84ec-4312-9b2b-86637d70ee0d"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave2.scn.20",
+    "EnemyGeneratorGuids": [
+      "7127ae09-083b-46ff-a4c9-137baf39e11b"
+    ],
+    "EnemySpawnInfoGuids": [
+      "c7f6a683-9770-486b-b075-8d39076d2ec1",
+      "4cec903a-da7b-407e-9e77-e3b8b11f1d7f",
+      "d9f94878-8b1a-46f6-b465-11f713490949",
+      "eff3d60c-4b23-42f8-ae5b-cc8cf73c7626",
+      "b2fac5ee-2fa9-4e0a-8aba-db9c7420822b",
+      "8501e523-81c2-47de-a87f-4b33db59674c",
+      "16cc83c5-81bb-4216-a3a2-3f961dc90abf",
+      "ee589e3e-6905-4fc8-941e-a7572f9f8817",
+      "812a28fc-b62d-4fe4-842f-93cdbe785cc7",
+      "0470bf67-5348-40a4-8ce3-003fdeb3085d",
+      "9e75e807-ad32-4c33-9caf-b1f2c7418cfc",
+      "2f1846a8-0549-42cf-ba7f-0d626f40e5e9",
+      "2ccc944e-20d4-4beb-915e-2e3626638ab9",
+      "68e52206-221d-49e4-8a3c-800aecacb896",
+      "908cd6b0-e91b-4a97-9b61-912ed3dfa964",
+      "dd565d41-091b-45ea-914c-4ffe9bd8247f",
+      "a6c86b82-776a-4667-b13a-8e9813f94861",
+      "f01d1683-2b42-4b32-aade-064d5b7bec1d",
+      "b231f5ad-bf85-4479-8dc3-baf5fcd21a27",
+      "011fa709-c0da-44fa-92b7-fc6cc4125b02",
+      "9d5b586b-0ccd-4067-8058-51bf0ac23b3f",
+      "9e9ac43c-6d06-43a3-867e-fd6cf8892782",
+      "eae58b85-85cc-41c9-8555-d4dbf154a867",
+      "054b28d2-f9dd-4563-a63a-8d359189d8cc",
+      "e6d144a9-76b3-46d7-829e-af2b0f81db13",
+      "e4bf2cc5-0fff-4d02-bf6a-f99dd596b9eb",
+      "94c95a10-392d-4af0-9355-0e23fbebddeb",
+      "ab6c0f0d-8919-4875-8b49-babf5455a7cf",
+      "4d1955e1-2661-4b6c-ab33-66c6addd0ed1",
+      "5f9b6218-a024-4d90-9af6-4597fa1c39c7",
+      "fe6b9527-3579-43d6-834c-d186df4b3bad",
+      "cab16b68-1a40-4798-b6cb-21d82b25da8d",
+      "d49d10e0-08bd-48c5-aff0-34608dcf6207",
+      "385ef82c-6d8c-4c3c-b241-93375aa93135"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave3.scn.20",
+    "EnemyGeneratorGuids": [
+      "f0b2694d-9aa3-4295-9f49-d1dc20f8440c"
+    ],
+    "EnemySpawnInfoGuids": [
+      "9f03b4ee-5c44-4970-95b5-24f41c1f3672",
+      "d2e17ce4-a9a9-43c2-bf57-cbf7eb896141",
+      "b8cac102-192a-4728-9225-192064b396d7",
+      "25853a0f-9e67-4375-97f7-914e662ff163",
+      "1f793368-88bf-4015-8a81-6242a1c48cec",
+      "d7026d74-9b60-450c-bc91-44106e250ac6",
+      "68e3f977-1721-4d26-b3bd-27cb674cf48f",
+      "4e54b368-f631-4bd7-b3ca-09485cff6155",
+      "dc44cb84-3e18-41b8-b119-fe8e14507004",
+      "19c4002d-acae-46dc-b176-546138e43c88",
+      "85ad08d6-1d83-4231-a4e7-59338572fd74",
+      "18e2b854-7ed0-4ae7-9b0c-3a4d4acf2411",
+      "55acaaf9-9f7b-48a0-8a61-2260e45dc166",
+      "ab9b109e-3cf6-4300-8aee-1f7152fe3109",
+      "58de15c9-67e4-4f46-bf5c-1c7e04c57b08",
+      "a4cda228-494e-48c9-846d-b6fa35f67681",
+      "112d0b18-bd1b-4042-9725-e26b305a489a",
+      "a7d93ba0-3305-4799-9cb2-24c1b0f4462b",
+      "37f24ac6-cb6a-4754-9753-26eacfae900f",
+      "fbc3597e-0c69-450f-b822-8362fe61cecb",
+      "1b56af74-da2f-4d30-9409-aafbaa18f16a",
+      "990396da-82c8-4038-a6f3-193311551dfe",
+      "71f6c949-bd8d-47cf-b8cb-b8ee292e5bf6",
+      "423f64e3-cf21-4312-83a7-f3050920cc53",
+      "561b7896-5466-4e36-9992-ea1a29507b30",
+      "d9486dfc-7dc9-4f19-a8bc-682f2e79cbe6",
+      "3781d7c3-1673-4214-b22a-dc048846e6c9",
+      "52da01a4-100f-48dc-80cb-c0da776a597f",
+      "58875c80-de5a-48af-9985-613dc40c0c5b",
+      "4c0d43b5-5fb6-4dfc-ba71-07219c361776",
+      "899017f9-2901-4903-b550-783febbc2c8f",
+      "3d3cee81-e392-4bcb-b71e-105e04a44fb1"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave4.scn.20",
+    "EnemyGeneratorGuids": [
+      "ea1c75f7-2555-4acc-a31b-39081d56c479"
+    ],
+    "EnemySpawnInfoGuids": [
+      "b5dfcadf-5fd4-420a-8aed-a5ce2620aefd",
+      "e0b8b2db-dfe6-4bf9-a0a1-4f8b68f5a5b8",
+      "c46b83f2-5996-45a8-beef-6da81b233797",
+      "6aed9a3b-0ac0-40f6-a378-ac3e820d2df9",
+      "51e70d1b-45f6-4687-8d35-019f583a6ec8",
+      "5078299d-d496-4ce1-b95c-273c3cb64f38",
+      "69188562-2266-4fe0-9594-9430b7d7f139",
+      "ea272ab3-4632-489d-b84f-8a1ada720b5c",
+      "163c12ba-a1f8-428f-b4a6-933b5dec95e7",
+      "0c880a91-ec8d-474a-899b-490ddd8a3173",
+      "7ee6d087-8f73-4691-84ef-a5d1c871dd97",
+      "0e303bb2-03de-4ba9-a807-d70ca635a3e9",
+      "eefaceaa-6674-4a48-b3f4-ac50b3a2f797",
+      "1450ed10-a727-44b1-b707-6a501f76c6d0",
+      "37061571-0da0-4ba2-a18c-557ecd0cc2db",
+      "5bee4391-9a51-440f-ac3d-e5022749f4a7",
+      "9917a3be-ace2-48d3-80e0-a2c6d3aec134",
+      "32b4b671-4350-4359-a76b-d484b60ce175",
+      "26f74450-87f9-41f8-aef3-07386df0b92d",
+      "2e0be38b-c767-4693-ae76-11237b410ef8",
+      "1c5da7e3-1ae8-4411-83a9-efba297318e2",
+      "fd9e4dd1-2c3f-4fb3-9d57-e4ac3ef39fc2",
+      "48aed4ef-c9ba-44e1-b27a-bfa8ea496a72",
+      "0cefddf8-e3e0-491f-9bba-30e35bb7068e",
+      "72e3019d-251c-44a6-8fd0-878a0e1fc993",
+      "de37cea5-742b-4cd8-92ac-186bacf28c34",
+      "d58844b2-a4ef-44ee-ac15-295f32d010f2",
+      "f89b7bb2-ab7b-4f83-af9b-50320da4012a",
+      "00329258-4357-4a8b-a5a4-f2d0808bfc3a",
+      "8b2b2df1-8c97-4c6f-b3d5-176dd5cf575a",
+      "a3c06ddf-1c32-4b35-b4fc-a479e1d8d0b1",
+      "5483dcd2-15dc-4f94-abcf-4570a94bc7ad"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_3/wave5.scn.20",
+    "EnemyGeneratorGuids": [
+      "3835daa3-56a3-44f9-8d84-7fe6c2216531",
+      "24229a34-0bcb-4638-9d87-c7987e417e71"
+    ],
+    "EnemySpawnInfoGuids": [
+      "4aabf8d5-9004-460c-94e8-716755310b8a",
+      "4e079576-b1a8-4450-814f-1ff17eacbd7b",
+      "83108e42-3793-4a6f-9f98-01f271c359c7",
+      "cb0250a4-a658-4b58-9799-012c094127ac",
+      "24f597bc-1b7c-4bd3-a85a-730fd82170ba",
+      "d726a1d8-0f11-4424-866d-4dd5f3fd3d45",
+      "57785ca0-841e-4fff-b9b8-7a28414e2c41",
+      "dd8ad5e3-07c3-4b87-a7a1-49bb2cd83807",
+      "e4f6ee1d-10e7-4a33-8067-728a986bb834",
+      "c4259adf-c6ea-4bd3-852d-d6c9bfed020d",
+      "d4a3c05d-a06b-413a-81fc-1e0a43f42482",
+      "b6c15f05-7086-4161-81a0-a0d4f224c65c",
+      "3d7f5bd3-4948-4249-8960-5d56919d7f81",
+      "69c69175-0ee0-4b60-95bd-509cc1ba72b2",
+      "cb911b73-5fbf-4406-a859-11987aa8f910",
+      "e3175a60-487c-49da-ad1e-eb8c74a1ed83",
+      "df600953-49ab-4d3e-ba7a-0c4ce6f66e42",
+      "2fa38455-310e-4039-b326-3803227044e4",
+      "47848ad4-fa3d-4403-85d0-0b80dfb593d8",
+      "56f04771-29c5-4665-be8c-845ad59b589d",
+      "7b71b713-7a3d-4665-b50c-864bfc5c32de",
+      "6cfd303a-05de-4727-af4e-bdd2ca77824b",
+      "a42215ed-f009-4d2b-97ab-35d43dfd4dbe",
+      "aa081465-796c-428d-b676-7248bec499f3",
+      "89bc2274-650c-424b-9ccb-9aa03c79f421",
+      "3320cf1e-c535-4bc6-84db-df2b06b5e8a8",
+      "fcd81de6-c447-4787-a9d5-b1910a72202f",
+      "3373d538-ec5b-4db3-b163-fe43fc1b543b",
+      "0a373bf4-d190-4391-a3d5-a821e63019ce",
+      "c29943c7-5048-4655-af65-217a60311327",
+      "025f702f-c09e-47b7-b5ac-e8a762337a9c",
+      "75f9246a-2427-41bf-9aa1-3829840a42e1",
+      "7cb7eda7-b3f9-43cd-bf14-c06c8b5cb330",
+      "1eefd171-29a0-4a5c-8e8d-b0a8ee9a7e2f"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/chapter7/chapter7_4/c07_4_soft.scn.20",
+    "ItemGuids": [
+      "c41b487f-e969-4a0a-82eb-c77732eca7b5"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/chapter/ff050/enemy_ff050.scn.20",
+    "EnemyGeneratorGuids": [
+      "5172905e-f33e-4814-b16e-e895c7c64f28"
+    ],
+    "EnemySpawnInfoGuids": [
+      "9b26f8b8-e0b1-4087-b50d-32f4f1cf2907",
+      "b6e38294-73cc-402a-9255-a8b196f3e7be",
+      "a9bd5e05-b2a7-4967-bfbb-51e72a416874",
+      "acfe58c5-8149-41e7-8333-109f82aac992",
+      "8915dd5d-7e64-4960-afbd-7aab109265c2",
+      "8e6a3ff0-21b8-439c-a46c-858a906ddc13",
+      "97fdd9f5-d12d-4298-8477-b36e93b4cd2d",
+      "5a00d06a-e66b-45b0-8d7e-8e87bfdec9b8",
+      "cbefae47-5ee8-47bc-ad25-4769423164c6",
+      "5f589e01-13e1-4d7c-961f-e6b15e14574e",
+      "56ef5fb0-353b-41fd-bab6-db54dfcd4c47",
+      "c25ce069-19ba-4008-a1df-c9b0efaa1a01",
+      "37d4d501-c897-4127-9031-b674c3d3ed81",
+      "4e02c254-5795-466f-a552-7c95e54d8bc0"
+    ],
+    "EnemyGenerateGuids": [
+      "648a0b0a-8533-46ed-9e68-02d4dbb5b53f",
+      "18303b02-f325-48b8-b4a1-587e990f64c6",
+      "f2d91663-d1b7-44c9-a8e3-217aa0ffbe63",
+      "77a4e863-2300-4ddf-9c38-8c4caac7153b",
+      "7c4c502c-ac87-46d8-a818-753b057ae62c",
+      "a837b22e-0823-4b8b-ba04-70760146e91a",
+      "09e1751c-32f2-488d-8647-d1d7524d7f40",
+      "51fb73fc-d565-4f96-8a1e-8ccdb7a26596",
+      "de61c8a9-9ac9-4021-8101-776fcba7cd4e",
+      "2694d7c7-61e6-4265-a984-51c6bfa1eaf5",
+      "531f4097-6d48-457e-a73c-0c32f195f797",
+      "5b9f6a41-e039-49f3-950d-5cc894691acf"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/imd/copyscene/c03_rightarea1fparlor/c03_rightarea1fparlor.scn.20",
+    "ItemGuids": [
+      "b1548f47-609a-0190-3976-50b2aeafd6b6"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/imd/copyscene/itemset_c03/0/mainhouse_west.scn.20",
+    "ItemGuids": [
+      "cb53b6ff-5326-412c-8a6c-cadd9825e0d0"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/imd/copyscene/itemset_c03/2/gardenarea.scn.20",
+    "ItemGuids": [
+      "116b3067-e23b-4d27-876c-b9bfa0b0ad30"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/imd/enemy_imd.scn.20",
+    "WeaponGuids": [
+      "bbf88559-3514-06de-0c2a-f49cac1c6350",
+      "efbd574b-138a-4ef3-8997-2806f94d7d3c",
+      "aa8b48c5-7700-416b-92d8-84a063e9d4a7",
+      "a8b47464-53ac-47fb-ac8e-66c10c3f6d40",
+      "9de2da30-1072-46b6-93e6-4942d1307215",
+      "def0cd33-43a6-0743-393b-506a53d01c0a",
+      "c5c1be87-1ce0-413d-99f5-efa66f654ccc"
+    ],
+    "EnemyGeneratorGuids": [
+      "5ffa1241-1627-4b96-b2aa-eb544aeaabb2"
+    ],
+    "EnemySpawnInfoGuids": [
+      "53d523a8-998f-08bc-3d52-4f24b5c9c6c9",
+      "69dd755c-0355-0bae-2975-0cec341b9a57",
+      "00ad3310-82b6-03d4-11f7-a2b2588ff627",
+      "436bedd5-52b0-0aa2-1ccd-85beea204723",
+      "b256005c-2438-0fb0-1b2c-3cb1f373f989",
+      "f82b12da-933d-4211-8c39-6d07765b67e5",
+      "5c092481-40e0-4825-bde4-bcf5e435ac22",
+      "81e7c31c-0b01-4761-b4ad-32417aeebde6",
+      "ef5ed0f0-5d97-4c94-b958-85b2c28532f8",
+      "2680968c-9074-480d-904f-8604aad4bbce",
+      "cdce9cf0-8f3a-4851-bf65-2207f505e784",
+      "6cea3b92-1b36-4131-8eff-6854655efeb9",
+      "2f43d792-88a9-4c04-9c45-b1726894cb84",
+      "f60b2fb2-ab9e-4225-b85c-fd77269deb5c",
+      "a0fecae1-5880-410d-81be-4ca610fa6edd",
+      "bd1f7111-ae7b-473f-87e8-a5c04e48679c",
+      "b467cb16-7a87-45a0-8209-84322ebce808",
+      "62f8aace-8c4b-441f-bba0-21e50832d704",
+      "5ad8f366-99f1-423b-bb9c-d42f78a8aed2",
+      "182809e9-57b3-4fd5-b660-09700e030710",
+      "1724f544-94d1-4ac5-a3f2-98bb93c96f66",
+      "fff10965-3069-452f-8cc9-ece1f946dba8",
+      "f45bc04d-0a81-4b57-928e-061db888364b",
+      "77920dd0-0125-4d6a-bd03-ae083288eeac",
+      "10a99fce-18db-45a4-96b1-072dada06bfa",
+      "465dacd1-4872-4da1-a715-2273cb079114",
+      "b12d80d1-e790-4e12-8be5-743f6f99fa2e",
+      "a5439c4d-b196-476a-bd35-7d38c4643244",
+      "fdc66c3c-aa08-4097-ad83-3e7c338005df",
+      "1df65a33-9e56-4806-a50f-04584bcae748",
+      "4c84a4a2-4bb1-439b-9ef9-dc8392b13a34",
+      "47c04a4b-6f1d-46dc-963d-67af4cf6c396",
+      "e2d9ef36-fb1a-4929-b126-e7f6284f386b",
+      "399b01b2-5371-41df-8853-8138258438dc",
+      "52ebcf44-261d-47b7-8d1f-573d09f7b2da",
+      "57b327f8-50e1-49d7-9167-02838778dbd0",
+      "9bf0c861-7518-4a2a-a813-56dfb7ebee09",
+      "c4098090-fe26-443d-92d4-6ffa9b4480ad",
+      "73efa2fd-0d3b-4bca-afe6-93af07efeaf5",
+      "49808776-ffcf-4072-8ac5-4a0bce829727",
+      "2e084581-df2e-4e21-8b86-b49a9ec48f93"
+    ],
+    "EnemyGenerateGuids": [
+      "d57fe9a2-67bc-4d4e-a586-348d49f3cc73",
+      "1aab58e4-42e9-45a9-bd18-f1e444a247be",
+      "bd523e3f-bc3c-4049-a8ff-f134f24def65",
+      "71eafd35-0ab1-4edc-be36-9be33277a8f7",
+      "67c7e89d-f148-446a-84a1-7e22bd941087",
+      "a315e174-db58-4a12-a4d0-eb77caa5c1ba",
+      "118da5a3-f683-40cd-a9eb-87ba7d342713",
+      "99b99900-abcc-4e31-bfb7-f41875419df2",
+      "becd13db-e9a9-4fc6-bda8-9bf60d329005",
+      "145b0b7a-f115-499b-96e7-fdb6f63f668f",
+      "8868cc89-30be-4981-bef1-d64196f1174f",
+      "baa7acfd-efde-401b-98eb-746d8f8dbb66",
+      "6abfa2d2-df01-47c5-ae06-55b7afe23ae2",
+      "31e1b1b9-1421-4e6d-b2ec-4f5fbd56e4e0",
+      "f6b34c8d-2c3e-4e9c-8587-6e1bf1718731",
+      "351278c6-fd3e-4026-a096-f649f6b83cff",
+      "f49e87fb-0e86-4c2a-8e37-11465f16f70a",
+      "d9c7e7e6-215f-43a4-ae53-46aaa09564d2",
+      "354f7da1-4ba5-4072-9fe9-ff86af7e3eac",
+      "ff99bc5d-0c76-4f95-9b8b-419a6ee9ded0",
+      "c319b22e-72cb-4e14-826e-045e1f5a622d",
+      "f58fcbc1-4b1a-4255-ad61-02e4da18f3d9",
+      "114bf717-d60d-48dd-96e6-112e5af27e48"
+    ]
+  },
+  {
+    "Path": "natives/stm/scenes/imd/randomitemboxset_imd.scn.20",
+    "ItemGuids": [
+      "b4e77e78-0aa7-4a0e-952b-c1cc429886e6",
+      "748916c6-68eb-454e-beb3-d8baa11793ec",
+      "22fff656-ab42-443d-9cb2-c428e89d6ed9",
+      "79ab1485-1aa5-4fbb-ba92-db96f2797d3c",
+      "539cb9eb-c96d-406d-8c09-d474116e0d5e",
+      "0298077e-d965-493c-a7c9-e8816e930a18",
+      "300ec752-deff-4cc6-b86e-383b005e21c8",
+      "6805e4a4-2a25-496c-ad01-3ddc0f878c4f",
+      "acbecb5c-5979-4022-94fd-9cbea0d478d5",
+      "ff1327c2-f44c-46d8-8351-6196ced7a95b",
+      "5d4c5614-5c72-46cb-aea0-ecf20ce2c93f",
+      "597cbc24-9243-4ebe-af1e-45e14f274453",
+      "ea78105c-2e48-00a8-3213-f847bf6dadbe",
+      "1b87939f-0c39-0b08-0ed0-259e3ded7804",
+      "a4a2af6c-d035-0b7b-3ff3-0b8e7d8809da",
+      "d4c2abb0-1d1d-0774-0564-e67d613b9e64",
+      "b0736458-c429-46c0-9a3c-57fce634bd31"
+    ],
+    "WeaponGuids": [
+      "748916c6-68eb-454e-beb3-d8baa11793ec",
+      "22fff656-ab42-443d-9cb2-c428e89d6ed9",
+      "79ab1485-1aa5-4fbb-ba92-db96f2797d3c",
+      "539cb9eb-c96d-406d-8c09-d474116e0d5e",
+      "0298077e-d965-493c-a7c9-e8816e930a18",
+      "300ec752-deff-4cc6-b86e-383b005e21c8",
+      "6805e4a4-2a25-496c-ad01-3ddc0f878c4f",
+      "acbecb5c-5979-4022-94fd-9cbea0d478d5",
+      "ff1327c2-f44c-46d8-8351-6196ced7a95b",
+      "5d4c5614-5c72-46cb-aea0-ecf20ce2c93f"
+    ]
+  }
+]

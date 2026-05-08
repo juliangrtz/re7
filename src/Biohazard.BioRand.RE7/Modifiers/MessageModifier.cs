@@ -42,7 +42,9 @@ internal class MessageModifier : Modifier
             });
         }
 
-        var groups = normalized.GroupBy(x => (x.MsgFileName, x.TextName));
+        var groups = normalized
+            .GroupBy(x => (x.MsgFileName, x.TextName))
+            .ToList();
 
         string ReplaceVariables(string input)
         {
@@ -54,29 +56,41 @@ internal class MessageModifier : Modifier
             return input;
         }
 
-        foreach (var group in groups)
-        {
-            var replacements = group
-                .Select(x => x.Replacement)
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .ToList();
-
-            if (replacements.Count == 0)
-                continue;
-
-            var chosen = rng.Next(replacements);
-
-            randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile($"message/{group.Key.MsgFileName}"), message =>
+        var chosenReplacements = groups
+            .Select(group =>
             {
-                var msg = message.FindMessage(group.Key.TextName);
-                if (msg == null)
-                {
-                    logger.LogLine($"Message \"{group.Key.TextName}\" in {group.Key.MsgFileName} not found!");
-                    return;
-                }
+                var replacements = group
+                    .Select(x => x.Replacement)
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .ToList();
 
-                message.SetString(msg.Guid, LanguageId.English, ReplaceVariables(chosen));
-                logger.LogLine($"Replaced message \"{group.Key.TextName}\" with \"{chosen.Truncate(100)}\" in {group.Key.MsgFileName}");
+                return new
+                {
+                    group.Key.MsgFileName,
+                    group.Key.TextName,
+                    Chosen = replacements.Count == 0 ? null : rng.Next(replacements)
+                };
+            })
+            .Where(x => x.Chosen != null)
+            .ToList();
+
+        foreach (var fileGroup in chosenReplacements.GroupBy(x => x.MsgFileName))
+        {
+            randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile($"message/{fileGroup.Key}"), message =>
+            {
+                foreach (var replacement in fileGroup)
+                {
+                    var msg = message.FindMessage(replacement.TextName);
+                    if (msg == null)
+                    {
+                        logger.LogLine($"Message \"{replacement.TextName}\" in {replacement.MsgFileName} not found!");
+                        continue;
+                    }
+
+                    var chosen = replacement.Chosen!;
+                    message.SetString(msg.Guid, LanguageId.English, ReplaceVariables(chosen));
+                    logger.LogLine($"Replaced message \"{replacement.TextName}\" with \"{chosen.Truncate(100)}\" in {replacement.MsgFileName}");
+                }
             });
         }
     }

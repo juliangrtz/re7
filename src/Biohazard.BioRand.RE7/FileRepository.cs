@@ -94,7 +94,7 @@ internal class FileRepository : IPatchContext, IDisposable
         var builder = new PakFileBuilder();
         foreach (var outputFile in GetOrderedOutputFiles())
         {
-            builder.AddEntry(outputFile.Key, outputFile.Value);
+            AddOutputFile(builder, outputFile);
         }
         builder.Save(path, CompressionKind.Zstd);
     }
@@ -104,9 +104,14 @@ internal class FileRepository : IPatchContext, IDisposable
         var builder = new PakFileBuilder();
         foreach (var outputFile in GetOrderedOutputFiles())
         {
-            builder.AddEntry(outputFile.Key, outputFile.Value);
+            AddOutputFile(builder, outputFile);
         }
         return builder;
+    }
+
+    private static void AddOutputFile(PakFileBuilder builder, KeyValuePair<string, byte[]> outputFile)
+    {
+        builder.Entries[outputFile.Key] = outputFile.Value;
     }
 
     public void WriteOutputFolder(string path)

@@ -59,6 +59,24 @@ dotnet build .\biorand-re7.sln --no-restore
 dotnet test .\biorand-re7.sln --no-build --verbosity normal
 ```
 
+## Benchmarks
+
+Randomizer throughput benchmarks live in `src/Biohazard.BioRand.RE7.Benchmarks/` and use the embedded baseline PAK, `%USERPROFILE%\.biorand\biorand-re7.pak`, or a path supplied through `BIORAND_RE7_BENCHMARK_PAK`.
+
+Run them from the repository root in Release mode:
+
+```powershell
+dotnet run -c Release --project .\src\Biohazard.BioRand.RE7.Benchmarks\Biohazard.BioRand.RE7.Benchmarks.csproj
+```
+
+To run a single scenario:
+
+```powershell
+dotnet run -c Release --project .\src\Biohazard.BioRand.RE7.Benchmarks\Biohazard.BioRand.RE7.Benchmarks.csproj -- --filter *DefaultProfile*
+```
+
+The `RealisticProfile` scenario uses the checked-in profile under `src/Biohazard.BioRand.RE7.Benchmarks/Profiles/`. Benchmarks disable dynamic Google Sheets downloads by default; set `BIORAND_RE7_BENCHMARK_DOWNLOAD_DATA=1` to include that external fetch cost.
+
 ## Data Workflows
 
 Some runtime data is embedded under `src/Biohazard.BioRand.RE7/_Data/`. Changes there affect generated seeds, not only tests.
@@ -74,6 +92,7 @@ Run data generators:
 ```powershell
 dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj -- generate config
 dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj -- generate areas item_placements item_definitions weapon_definitions enemies
+dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj -- generate area_scene_targets -f Json
 dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.DataGen.csproj -- rsz-to-cs app.TypeName --with-enums
 ```
 
@@ -84,6 +103,7 @@ Generated files are written to `GeneratedFiles/`. Some generators also copy outp
 ```text
 src/Biohazard.BioRand.RE7/                    Core randomizer library
 src/biorand-re7/                              Command-line app
+src/Biohazard.BioRand.RE7.Benchmarks/         BenchmarkDotNet throughput benchmarks
 src/Biohazard.BioRand.RE7.DataGen/            Data and code generators
 src/Biohazard.BioRand.RE7.REFrameworkPlugins/ REFramework.NET plugin
 src/Biohazard.BioRand.RE7.Tests/              xUnit regression tests

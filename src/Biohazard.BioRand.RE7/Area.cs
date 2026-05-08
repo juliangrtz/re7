@@ -50,14 +50,80 @@ internal class Area
 
     public ImmutableArray<RszGameObject> Weapons { get; set; }
 
-    public Area(Randomizer randomizer, AreaDefinition definition)
+    public Area(Randomizer randomizer, AreaDefinition definition, AreaScanMode scanMode = AreaScanMode.Full)
     {
         Randomizer = randomizer;
         Definition = definition;
         ScnFile = randomizer.FileRepository
             .GetScnFile(definition.Path)
             .ToBuilder(randomizer.FileRepository.TypeRepository);
-        Scan();
+        if (scanMode != AreaScanMode.IndexedTargets || !ScanIndexedTargets())
+        {
+            Scan();
+        }
+    }
+
+    private bool ScanIndexedTargets()
+    {
+        var targets = AreaSceneTargetRepository.Default.FromPath(Path);
+        if (targets == null)
+            return false;
+
+        var targetGuids = targets.GetEnemyGeneratorGuids()
+            .Concat(targets.GetItemGuids())
+            .Concat(targets.GetWeaponGuids())
+            .ToHashSet();
+        var targetGameObjects = FindTargetGameObjects(Scene, targetGuids);
+        var itemPlacementService = Randomizer.ItemPlacementService;
+
+        EnemyGenerators = targets.GetEnemyGeneratorGuids()
+            .Select(guid => targetGameObjects.GetValueOrDefault(guid))
+            .Where(gameObject => gameObject != null)
+            .Select(gameObject => (
+                GameObject: gameObject!,
+                Component: gameObject!.FindComponent<app.EnemyGenerator>()))
+            .Where(x => x.Component?.Enabled == true)
+            .Select(x => new EnemyGeneratorWrapper(this, x.GameObject, x.Component!))
+            .ToImmutableArray();
+        Items = targets.GetItemGuids()
+            .Select(guid => targetGameObjects.GetValueOrDefault(guid))
+            .Where(gameObject => gameObject != null && itemPlacementService.HasItem(gameObject.Guid))
+            .Cast<RszGameObject>()
+            .ToImmutableArray();
+        Weapons = targets.GetWeaponGuids()
+            .Select(guid => targetGameObjects.GetValueOrDefault(guid))
+            .Where(gameObject => gameObject != null)
+            .Cast<RszGameObject>()
+            .ToImmutableArray();
+        _pendingGameObjectGuids = [];
+
+        return true;
+    }
+
+    private static Dictionary<Guid, RszGameObject> FindTargetGameObjects(IRszSceneNode node, HashSet<Guid> remainingGuids)
+    {
+        var result = new Dictionary<Guid, RszGameObject>();
+        if (remainingGuids.Count == 0)
+            return result;
+
+        FindTargetGameObjectsInner(node);
+        return result;
+
+        void FindTargetGameObjectsInner(IRszSceneNode current)
+        {
+            if (remainingGuids.Count == 0)
+                return;
+
+            if (current is RszGameObject gameObject && remainingGuids.Remove(gameObject.Guid))
+            {
+                result[gameObject.Guid] = gameObject;
+            }
+
+            foreach (var child in current.Children)
+            {
+                FindTargetGameObjectsInner(child);
+            }
+        }
     }
 
     private void Scan()
@@ -117,4 +183,10 @@ internal class Area
     }
 
     public override string ToString() => FileName;
+}
+
+internal enum AreaScanMode
+{
+    Full,
+    IndexedTargets,
 }

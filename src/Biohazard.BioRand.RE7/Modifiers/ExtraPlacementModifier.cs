@@ -40,8 +40,7 @@ internal class ExtraPlacementModifier : Modifier
         ItemPlacement placement)
         => randomizer.ChestService.PlaceWeaponChest(logger, scene, placement);
 
-    private RszScene AddExtraCrate(
-        RszScene scene,
+    private RszGameObject AddExtraCrate(
         RszGameObject parentGameObject,
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -88,11 +87,10 @@ internal class ExtraPlacementModifier : Modifier
         logger.LogLine($"[EXTRA] {(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
         logger.LogLine($"GUID: {newGuid}");
 
-        return scene.UpdateGameObject(parentGameObject);
+        return parentGameObject;
     }
 
-    private RszScene AddExtraItemBox(
-        RszScene scene,
+    private RszGameObject AddExtraItemBox(
         RszGameObject parentGameObject,
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -124,11 +122,10 @@ internal class ExtraPlacementModifier : Modifier
         logger.LogLine($"[EXTRA] Item box at {placement.Position} in {placement.SceneFile}");
         logger.LogLine($"GUID: {newGuid}");
 
-        return scene.UpdateGameObject(parentGameObject);
+        return parentGameObject;
     }
 
-    private RszScene AddExtraItem(
-        RszScene scene,
+    private RszGameObject AddExtraItem(
         RszGameObject parentGameObject,
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -215,7 +212,7 @@ internal class ExtraPlacementModifier : Modifier
         template = template.AddOrUpdateComponent(transform);
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
-        return scene.UpdateGameObject(parentGameObject);
+        return parentGameObject;
     }
 
     private static ExtraPlacementKind GetPlacementKind(ItemPlacement placement)
@@ -255,7 +252,7 @@ internal class ExtraPlacementModifier : Modifier
             _ => allowExtraItems
         };
 
-    private RszScene ApplyPlacementToScene(
+    private (RszScene Scene, RszGameObject ParentGameObject, bool ParentChanged) ApplyPlacementToScene(
         RszScene scene,
         RszGameObject parentGameObject,
         Randomizer randomizer,
@@ -268,18 +265,18 @@ internal class ExtraPlacementModifier : Modifier
     {
         var kind = GetPlacementKind(placement);
         if (!IsPlacementEnabled(kind, allowExtraItems, allowExtraCrates))
-            return scene;
+            return (scene, parentGameObject, false);
 
         return kind switch
         {
-            ExtraPlacementKind.WoodenCrate => AddExtraCrate(scene, parentGameObject, randomizer, logger, placement, rng),
-            ExtraPlacementKind.WeaponChest => AddExtraChest(scene, randomizer, logger, placement),
-            ExtraPlacementKind.ItemBox => AddExtraItemBox(scene, parentGameObject, randomizer, logger, placement, rng),
+            ExtraPlacementKind.WoodenCrate => (scene, AddExtraCrate(parentGameObject, randomizer, logger, placement, rng), true),
+            ExtraPlacementKind.WeaponChest => (AddExtraChest(scene, randomizer, logger, placement), parentGameObject, false),
+            ExtraPlacementKind.ItemBox => (scene, AddExtraItemBox(parentGameObject, randomizer, logger, placement, rng), true),
             _ => AddPlacementItem(scene, parentGameObject, randomizer, logger, placement, rng, randomItemSettings)
         };
     }
 
-    private RszScene AddPlacementItem(
+    private (RszScene Scene, RszGameObject ParentGameObject, bool ParentChanged) AddPlacementItem(
         RszScene scene,
         RszGameObject parentGameObject,
         Randomizer randomizer,
@@ -294,10 +291,10 @@ internal class ExtraPlacementModifier : Modifier
         if (!isRandom && !hasFixedItem)
         {
             logger.LogLine($"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
-            return scene;
+            return (scene, parentGameObject, false);
         }
 
-        return AddExtraItem(scene, parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings);
+        return (scene, AddExtraItem(parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings), true);
     }
 
     private void HandleExtraItemsForScene(
@@ -314,23 +311,15 @@ internal class ExtraPlacementModifier : Modifier
 
         randomizer.FileRepository.ModifyScnFile(placements[0].SceneFile, scene =>
         {
-            Guid? dynamicParentGuid = null;
-            RszGameObject GetDynamicParentGameObject()
-            {
-                if (dynamicParentGuid == null)
-                {
-                    dynamicParentGuid = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))?.Guid
-                        ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
-                }
-
-                return scene.FindGameObject(dynamicParentGuid.Value)!;
-            }
+            var parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
+                ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
+            var parentChanged = false;
 
             foreach (var placement in placements)
             {
-                scene = ApplyPlacementToScene(
+                var result = ApplyPlacementToScene(
                     scene,
-                    GetDynamicParentGameObject(),
+                    parentGameObject,
                     randomizer,
                     logger,
                     rng,
@@ -338,6 +327,14 @@ internal class ExtraPlacementModifier : Modifier
                     randomItemSettings,
                     allowExtraItems,
                     allowExtraCrates);
+                scene = result.Scene;
+                parentGameObject = result.ParentGameObject;
+                parentChanged |= result.ParentChanged;
+            }
+
+            if (parentChanged)
+            {
+                scene = scene.UpdateGameObject(parentGameObject);
             }
 
             return scene;
