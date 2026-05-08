@@ -21,14 +21,12 @@ public interface IPatchContext
     /// <summary>
     /// Gets the data for a vanilla file, or the data for a replaced file.
     /// </summary>
-    /// <param name="path">E.g. "natives/stm/_chainsaw/appsystem/ui/userdata/itemdefinitionuserdata.user.2"</param>
     /// <returns>The raw file data.</returns>
     byte[]? GetFile(string path);
 
     /// <summary>
     /// Replaces a file with new data.
     /// </summary>
-    /// <param name="path">E.g. "natives/stm/_chainsaw/appsystem/ui/userdata/itemdefinitionuserdata.user.2"</param>
     /// <param name="data">The raw file data.</param>
     void SetFile(string path, byte[] data);
 
