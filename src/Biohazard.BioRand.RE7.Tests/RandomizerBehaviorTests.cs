@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.REE.Messages;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -16,6 +17,7 @@ public class RandomizerBehaviorTests
     private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
     private static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
     private static readonly string UiMenuMessagePath = PakPath.MessageFile("message/ui_menu_mes.msg");
+    private static readonly string ChainSawDoorScenePath = PakPath.SceneFile("environment/scene/chapter3/c03_rightareab1ffreezer.scn");
 
     [Fact]
     public void StartingInventory_Disabled_DoesNotModifyStartingInventoryFiles()
@@ -127,6 +129,24 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
+    public void WeaponSoftlockPatch_PreservesBasementChainsawAfterDoorCut()
+    {
+        using var result = RandomizerTest.RunState();
+
+        var beforeChainSawReductions = FindActions(result.ReadBeforeScene(ChainSawDoorScenePath), "app.fsm.ItemReduce")
+            .Where(IsChainSawReduction)
+            .Select(action => action.Get<int>("Num"))
+            .ToArray();
+        var afterChainSawReductions = FindActions(result.ReadAfterScene(ChainSawDoorScenePath), "app.fsm.ItemReduce")
+            .Where(IsChainSawReduction)
+            .Select(action => action.Get<int>("Num"))
+            .ToArray();
+
+        Assert.Equal([1, 1, 1], beforeChainSawReductions);
+        Assert.Equal([0, 0, 0], afterChainSawReductions);
+    }
+
+    [Fact]
     public void RecipeModifier_NoCrafting_ClearsRecipesAndDictionary()
     {
         using var result = RandomizerTest.RunState(config =>
@@ -188,5 +208,24 @@ public class RandomizerBehaviorTests
 
         Assert.True(result.WasFileModified(UiMenuMessagePath));
         Assert.NotEqual(beforeEnglish, afterEnglish);
+    }
+
+    private static List<RszObjectNode> FindActions(RszScene scene, string typeName)
+    {
+        var result = new List<RszObjectNode>();
+        scene.VisitComponents(component => component.Visit(node =>
+        {
+            if (node is RszObjectNode objectNode &&
+                objectNode.Type.Name == typeName)
+            {
+                result.Add(objectNode);
+            }
+        }));
+        return result;
+    }
+
+    private static bool IsChainSawReduction(RszObjectNode action)
+    {
+        return action.Get<string>("ItemID") == "ChainSaw";
     }
 }
