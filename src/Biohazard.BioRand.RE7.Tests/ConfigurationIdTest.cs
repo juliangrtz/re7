@@ -4,6 +4,7 @@ using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Weapons;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -29,6 +30,7 @@ public class ConfigurationIdUsageTest
     private static readonly HashSet<string> IndirectlyReferencedConfigIds = new(StringComparer.Ordinal)
     {
         "debug-force-reframework",
+        EnemyModifier.EnemyForceTargetingProbabilityConfigKey,
     };
 
     private static readonly Lazy<HashSet<string>> GeneratedConfigIds = new(CreateGeneratedConfigIds);

@@ -37,7 +37,6 @@
   "enemy-damage-min": 0.8,
   "enemy-damage-max": 1.2,
   "balanced-enemies": false,
-  "enemy-speed-exclude-four-legged-moldeds": false,
   "enemy-ratio-evelineelderly": 0,
   "enemy-ratio-flyingbug": 0.2,
   "enemy-ratio-insecthive": 0,

@@ -41,13 +41,13 @@ public class RandomizerEnemyModifierBehaviorTests
     {
         var enemyPool = new[]
         {
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("A", EnemyID.Em4000), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("B", EnemyID.Em4100), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("C", EnemyID.Em4200), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("D", EnemyID.Em5400), 1.0)
+            new EnemyTableEntry(new TestEnemyDefinition("A", EnemyID.Em4000), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("B", EnemyID.Em4100), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("C", EnemyID.Em4200), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("D", EnemyID.Em5400), 1.0)
         };
 
-        var selectedEnemies = EnemyModifier.SelectAreaEnemyPool(enemyPool, enemyVariety: 2, new Rng(0x42424242));
+        var selectedEnemies = EnemyPoolSelector.SelectAreaEnemyPool(enemyPool, enemyVariety: 2, new Rng(0x42424242));
 
         Assert.Equal(2, selectedEnemies.Length);
         Assert.Equal(2, selectedEnemies.Select(x => x.Enemy.Id).Distinct(StringComparer.Ordinal).Count());
@@ -120,12 +120,79 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
+    public void IsBalancedCompatibleReplacement_UsesChapterProgressionStrengthCaps()
+    {
+        var molded = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "Molded");
+        var moldedQuick = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedQuick");
+        var moldedFat = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedFat");
+        var jackStalker = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "JackStalker");
+        var margeMutated = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MargeMutated");
+
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            moldedQuick,
+            chapter: 1,
+            scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            molded,
+            chapter: 1,
+            scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            molded,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            moldedFat,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            moldedFat,
+            chapter: 3,
+            scenePath: OldHouseBugEnemyScenePath));
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            jackStalker,
+            chapter: 3,
+            scenePath: OldHouseBugEnemyScenePath));
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            jackStalker,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/enemy_c03_5.scn.20"));
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
+            margeMutated,
+            chapter: 4,
+            scenePath: "natives/stm/scenes/chapter/chapter4/enemy_c04_3.scn.20"));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Balanced_RestrictsOldHouseToMidTierEnemies()
     {
         using var result = RandomizerTest.RunState(
             config =>
             {
                 config["random-enemies"] = true;
+                config["balanced-enemies"] = true;
+                config["enemy-variety"] = 3;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureGeneratorEnemyPool(config, ["MoldedFat", "JackStalker"]);
+            },
+            seed: 410980);
+
+        var beforeAliases = GetGeneratorSpawnAliases(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug");
+        var afterAliases = GetGeneratorSpawnAliases(result.ReadAfterScene(OldHouseBugEnemyScenePath), "Bug");
+
+        Assert.NotEmpty(beforeAliases);
+        Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
+        Assert.NotEmpty(afterAliases);
+        Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Unbalanced_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["random-enemies"] = true;
+                config["balanced-enemies"] = false;
                 config["enemy-variety"] = 3;
                 config["enemy-pack-max-size"] = 1;
                 ConfigureGeneratorEnemyPool(config, ["Molded", "MoldedFat", "JackStalker"]);
@@ -140,9 +207,9 @@ public class RandomizerEnemyModifierBehaviorTests
             .ToList();
 
         Assert.NotEmpty(beforeAliases);
-        Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEmpty(afterAliases);
-        Assert.All(afterAliases, alias => Assert.False(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.All(afterAliases, alias => Assert.False(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEqual(beforeAliases, afterAliases);
         AssertStampSerializationDisabled(replacementInstances);
     }
@@ -222,6 +289,64 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
     }
 
+    [Fact]
+    public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0;
+            ConfigureGeneratorEnemyPool(config, ["MoldedFat"]);
+        });
+
+        var forceTargetingOptions = new List<RszObjectNode>();
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
+            {
+                var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
+                if (enemyGenerator?.Enabled != true)
+                    return;
+
+                foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
+                {
+                    if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
+                        continue;
+
+                    var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
+                    if (spawnInfo?.UnitAlias != "Em4200")
+                        continue;
+
+                    forceTargetingOptions.AddRange(child.Components.Where(EnemySpawnInfoRules.SupportsForceTargetingOption));
+                }
+            });
+        }
+
+        Assert.NotEmpty(forceTargetingOptions);
+        Assert.All(forceTargetingOptions, component =>
+            Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
+    }
+
+    [Fact]
+    public void ForceTargetingProbability_AppliesWithoutEnemyReplacement()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = false;
+            config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0;
+        });
+
+        var forceTargetingOptions = GetChangedScenePaths(result)
+            .SelectMany(path => GetForceTargetingOptions(result.ReadAfterScene(path)))
+            .ToList();
+
+        Assert.NotEmpty(forceTargetingOptions);
+        Assert.All(forceTargetingOptions, component =>
+            Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
+    }
+
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -250,7 +375,7 @@ public class RandomizerEnemyModifierBehaviorTests
             var aliases = new List<string>();
             foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
-                if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
@@ -269,6 +394,21 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
+    private static List<RszObjectNode> GetForceTargetingOptions(RszScene scene)
+    {
+        var result = new List<RszObjectNode>();
+        scene.VisitComponents((gameObject, component) =>
+        {
+            if (gameObject.FindComponent<app.EnemySpawnInfo>() != null &&
+                EnemySpawnInfoRules.SupportsForceTargetingOption(component))
+            {
+                result.Add(component);
+            }
+        });
+
+        return result;
+    }
+
     private static List<string> GetGeneratorSpawnAliases(RszScene scene, string generatorAlias)
     {
         var result = new List<string>();
@@ -281,7 +421,7 @@ public class RandomizerEnemyModifierBehaviorTests
 
             foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
-                if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();

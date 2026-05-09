@@ -39,12 +39,6 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (randomizer.GetConfigOption<bool>("enemy-speed-exclude-four-legged-moldeds"))
-        {
-            logger.LogSkip("Four-legged Moldeds are excluded from enemy speed randomization.");
-            return;
-        }
-
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
 
         // Speed

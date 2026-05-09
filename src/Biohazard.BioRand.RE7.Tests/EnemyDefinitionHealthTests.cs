@@ -58,15 +58,16 @@ public class EnemyDefinitionHealthTests
             config["debug-unique-enemy-hp"] = true;
         });
 
-        var options = new EnemyModifier.EnemyRandomizerOptions(
+        var options = new EnemyRandomizerOptions(
             EnemyVariety: 1,
             MaxPackSize: 1,
             DebugUniqueHp: true,
             IsBalanced: false,
             ProgressiveDifficulty: false,
-            ScaleOptions: new EnemyModifier.ScaleOptions(0.0, 1.0f, 1.0f)
+            ScaleOptions: new ScaleOptions(0.0, 1.0f, 1.0f),
+            ForceTargetingProbability: 0.0
         );
-        var resolver = new EnemyModifier.EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
+        var resolver = new EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
         var enemy = EnemyDefinitions.Instance.All.OfType<Molded>().Single();
 
         var firstHealth = resolver.GetHealth(enemy);

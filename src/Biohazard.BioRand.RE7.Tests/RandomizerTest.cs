@@ -47,7 +47,6 @@ public static class RandomizerTest
         configuration["enemy-multiplier"] = 1.0;
         configuration["random-enemy-speed"] = false;
         configuration["random-enemy-damage"] = false;
-        configuration["enemy-speed-exclude-four-legged-moldeds"] = true;
         configuration["random-enemy-drops"] = false;
         configuration["boss-random-health"] = false;
         configuration["enemy-random-health"] = false;
