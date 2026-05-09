@@ -41,13 +41,13 @@ public class RandomizerEnemyModifierBehaviorTests
     {
         var enemyPool = new[]
         {
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("A", EnemyID.Em4000), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("B", EnemyID.Em4100), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("C", EnemyID.Em4200), 1.0),
-            new EnemyModifier.EnemyTableEntry(new TestEnemyDefinition("D", EnemyID.Em5400), 1.0)
+            new EnemyTableEntry(new TestEnemyDefinition("A", EnemyID.Em4000), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("B", EnemyID.Em4100), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("C", EnemyID.Em4200), 1.0),
+            new EnemyTableEntry(new TestEnemyDefinition("D", EnemyID.Em5400), 1.0)
         };
 
-        var selectedEnemies = EnemyModifier.SelectAreaEnemyPool(enemyPool, enemyVariety: 2, new Rng(0x42424242));
+        var selectedEnemies = EnemyPoolSelector.SelectAreaEnemyPool(enemyPool, enemyVariety: 2, new Rng(0x42424242));
 
         Assert.Equal(2, selectedEnemies.Length);
         Assert.Equal(2, selectedEnemies.Select(x => x.Enemy.Id).Distinct(StringComparer.Ordinal).Count());
@@ -128,35 +128,35 @@ public class RandomizerEnemyModifierBehaviorTests
         var jackStalker = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "JackStalker");
         var margeMutated = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MargeMutated");
 
-        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             moldedQuick,
             chapter: 1,
             scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
-        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             molded,
             chapter: 1,
             scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
-        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             molded,
             chapter: 3,
             scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
-        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             moldedFat,
             chapter: 3,
             scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
-        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             moldedFat,
             chapter: 3,
             scenePath: OldHouseBugEnemyScenePath));
-        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.False(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             jackStalker,
             chapter: 3,
             scenePath: OldHouseBugEnemyScenePath));
-        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             jackStalker,
             chapter: 3,
             scenePath: "natives/stm/scenes/chapter/chapter3/enemy_c03_5.scn.20"));
-        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+        Assert.True(BalancedEnemyPoolSelector.IsCompatibleReplacement(
             margeMutated,
             chapter: 4,
             scenePath: "natives/stm/scenes/chapter/chapter4/enemy_c04_3.scn.20"));
@@ -180,7 +180,7 @@ public class RandomizerEnemyModifierBehaviorTests
         var afterAliases = GetGeneratorSpawnAliases(result.ReadAfterScene(OldHouseBugEnemyScenePath), "Bug");
 
         Assert.NotEmpty(beforeAliases);
-        Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEmpty(afterAliases);
         Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
     }
@@ -207,9 +207,9 @@ public class RandomizerEnemyModifierBehaviorTests
             .ToList();
 
         Assert.NotEmpty(beforeAliases);
-        Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEmpty(afterAliases);
-        Assert.All(afterAliases, alias => Assert.False(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.All(afterAliases, alias => Assert.False(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEqual(beforeAliases, afterAliases);
         AssertStampSerializationDisabled(replacementInstances);
     }
@@ -312,14 +312,14 @@ public class RandomizerEnemyModifierBehaviorTests
 
                 foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
                 {
-                    if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                    if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                         continue;
 
                     var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
                     if (spawnInfo?.UnitAlias != "Em4200")
                         continue;
 
-                    forceTargetingOptions.AddRange(child.Components.Where(EnemyModifier.SupportsForceTargetingOption));
+                    forceTargetingOptions.AddRange(child.Components.Where(EnemySpawnInfoRules.SupportsForceTargetingOption));
                 }
             });
         }
@@ -375,7 +375,7 @@ public class RandomizerEnemyModifierBehaviorTests
             var aliases = new List<string>();
             foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
-                if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
@@ -400,7 +400,7 @@ public class RandomizerEnemyModifierBehaviorTests
         scene.VisitComponents((gameObject, component) =>
         {
             if (gameObject.FindComponent<app.EnemySpawnInfo>() != null &&
-                EnemyModifier.SupportsForceTargetingOption(component))
+                EnemySpawnInfoRules.SupportsForceTargetingOption(component))
             {
                 result.Add(component);
             }
@@ -421,7 +421,7 @@ public class RandomizerEnemyModifierBehaviorTests
 
             foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
             {
-                if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();

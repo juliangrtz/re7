@@ -35,7 +35,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         double percentage,
         int expectedCount)
     {
-        Assert.Equal(expectedCount, EnemyModifier.GetExtraEnemySubsetCount(placementCount, percentage));
+        Assert.Equal(expectedCount, ExtraEnemyPlanner.GetSubsetCount(placementCount, percentage));
     }
 
     [Fact]
@@ -197,7 +197,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
 
         var extraSpawnInfos = GetNewExtraSpawnInfos(result, ExtraEnemyScenePath);
         var forceTargetingOptions = extraSpawnInfos
-            .SelectMany(gameObject => gameObject.Components.Where(EnemyModifier.SupportsForceTargetingOption))
+            .SelectMany(gameObject => gameObject.Components.Where(EnemySpawnInfoRules.SupportsForceTargetingOption))
             .ToList();
 
         Assert.Equal(4, extraSpawnInfos.Count);
@@ -206,7 +206,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
             Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
         Assert.Contains(extraSpawnInfos, gameObject =>
             GetSpawnInfo(gameObject).UnitAlias == "Em3001" &&
-            !gameObject.Components.Any(EnemyModifier.SupportsForceTargetingOption));
+            !gameObject.Components.Any(EnemySpawnInfoRules.SupportsForceTargetingOption));
     }
 
     [Fact]
@@ -481,7 +481,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
 
     private static List<RszGameObject> GetNewExtraSpawnInfos(RszScene afterScene, RszScene beforeScene)
         => GetNewGameObjects(afterScene, beforeScene)
-            .Where(EnemyModifier.IsExtraEnemySpawnInfo)
+            .Where(EnemySpawnInfoRules.IsExtraEnemySpawnInfo)
             .ToList();
 
     private static List<RszGameObject> GetNewExtraEnemyInstances(RszScene afterScene, RszScene beforeScene)

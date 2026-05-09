@@ -164,7 +164,7 @@ internal class EnemyMultiplierModifier : Modifier
         var spawnInfoAliases = new Dictionary<Guid, string>();
         scene.VisitGameObjects(gameObject =>
         {
-            if (EnemyModifier.ShouldReplaceSpawnInfo(gameObject))
+            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject))
             {
                 var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>()!;
                 spawnInfoAliases[gameObject.Guid] = spawnInfo.UnitAlias;
@@ -203,7 +203,7 @@ internal class EnemyMultiplierModifier : Modifier
         var spawnInfos = new Dictionary<Guid, RszGameObject>();
         scene.VisitGameObjects(gameObject =>
         {
-            if (EnemyModifier.ShouldReplaceSpawnInfo(gameObject))
+            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject))
             {
                 spawnInfos[gameObject.Guid] = gameObject;
             }
