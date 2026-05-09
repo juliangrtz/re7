@@ -149,6 +149,12 @@ internal class EnemyModifier : Modifier
         IEnemyDefinition Enemy
     );
 
+    private sealed class ExtraEnemyGeneratorBuild
+    {
+        public List<RszGameObject> SpawnInfos { get; } = [];
+        public List<RszGameObject> Instances { get; } = [];
+    }
+
     private static EnemyRandomizerOptions BuildOptions(Randomizer randomizer)
     {
         return new EnemyRandomizerOptions(
@@ -800,7 +806,14 @@ internal class EnemyModifier : Modifier
         instances.AddRange(CreatePoolInstancesForNestedSpawnInfos(randomizer, instance, options, rng)
             .Select(nestedInstance => RefreshRuntimeGuids(nestedInstance, rng)));
 
-        return instances;
+        return instances
+            .Select(PrepareExtraEnemyPoolInstance)
+            .ToList();
+    }
+
+    private static RszGameObject PrepareExtraEnemyPoolInstance(RszGameObject instance)
+    {
+        return instance.WithSettings(instance.Settings.SetField("Draw", false));
     }
 
     private static RszGameObject CreateExtraEnemyFsmGenerator(
@@ -848,21 +861,11 @@ internal class EnemyModifier : Modifier
 
         var poolComponent = pool.FindComponent<app.EnemyPool>()!;
         poolComponent.ExternalInstancePoolRefs.Clear();
-        poolComponent.ExternalInstancePoolRefs.Add(pool.Guid);
         pool = pool.AddOrUpdateComponent(poolComponent);
 
         return generator.WithChildren(generator.Children.Replace(
             generator.Children.Single(child => child.FindComponent<app.EnemyPool>() != null),
             pool));
-    }
-
-    private static RszScene AddExtraEnemyGenerationObjects(
-        RszScene scene,
-        RszGameObject generator,
-        IReadOnlyCollection<RszGameObject> fsmGenerators)
-    {
-        scene = scene.Add(generator);
-        return AddExtraEnemyFsmGenerators(scene, fsmGenerators);
     }
 
     private static RszScene AddExtraEnemyFsmGenerators(
@@ -1105,6 +1108,9 @@ internal class EnemyModifier : Modifier
             logger.LogLine("Constructed an empty enemy table! Random extra enemies will be skipped.");
         }
 
+        var generatorBuilds = new Dictionary<string, ExtraEnemyGeneratorBuild>(StringComparer.OrdinalIgnoreCase);
+        var fsmGeneratorsByScene = new Dictionary<string, List<RszGameObject>>(StringComparer.OrdinalIgnoreCase);
+
         foreach (var enemySceneGroup in extraEnemies)
         {
             var scene = enemySceneGroup.Key;
@@ -1177,36 +1183,55 @@ internal class EnemyModifier : Modifier
                 continue;
             }
 
-            var spawnInfos = new List<RszGameObject>(extraEnemyRequests.Count);
-            var instances = new List<RszGameObject>(extraEnemyRequests.Count);
             var fsmGenerators = new List<RszGameObject>(extraEnemyRequests.Count);
+            var generatorScene = GetExtraEnemyGeneratorScene(scene, extraEnemyRequests);
+            if (!generatorBuilds.TryGetValue(generatorScene, out var generatorBuild))
+            {
+                generatorBuild = new ExtraEnemyGeneratorBuild();
+                generatorBuilds.Add(generatorScene, generatorBuild);
+            }
 
             for (var i = 0; i < extraEnemyRequests.Count; i++)
             {
                 var request = extraEnemyRequests[i];
-                var spawnInfo = CreateExtraEnemySpawnInfo(randomizer, logger, request, healthResolver, i, rng);
+                var generatorSpawnInfoIndex = generatorBuild.SpawnInfos.Count;
+                var spawnInfo = CreateExtraEnemySpawnInfo(randomizer, logger, request, healthResolver, generatorSpawnInfoIndex, rng);
                 var requestInstances = CreateExtraEnemyInstances(randomizer, request, options, rng);
-                var fsmGenerator = CreateExtraEnemyFsmGenerator(randomizer, request, spawnInfo, i, rng);
+                var fsmGenerator = CreateExtraEnemyFsmGenerator(randomizer, request, spawnInfo, generatorSpawnInfoIndex, rng);
 
-                spawnInfos.Add(spawnInfo);
-                instances.AddRange(requestInstances);
                 fsmGenerators.Add(fsmGenerator);
+                generatorBuild.SpawnInfos.Add(spawnInfo);
+                generatorBuild.Instances.AddRange(requestInstances);
             }
 
-            var generatorScene = GetExtraEnemyGeneratorScene(scene, extraEnemyRequests);
-            var generator = CreateExtraEnemyGenerator(randomizer, spawnInfos, instances, rng);
-            if (string.Equals(generatorScene, scene, StringComparison.OrdinalIgnoreCase))
+            if (!fsmGeneratorsByScene.TryGetValue(scene, out var sceneFsmGenerators))
             {
-                randomizer.FileRepository.ModifyScnFile(scene, root =>
-                    AddExtraEnemyGenerationObjects(root, generator, fsmGenerators));
-            }
-            else
-            {
-                randomizer.FileRepository.ModifyScnFile(generatorScene, root => root.Add(generator));
-                randomizer.FileRepository.ModifyScnFile(scene, root => AddExtraEnemyFsmGenerators(root, fsmGenerators));
+                sceneFsmGenerators = [];
+                fsmGeneratorsByScene.Add(scene, sceneFsmGenerators);
             }
 
+            sceneFsmGenerators.AddRange(fsmGenerators);
             logger.Pop();
+        }
+
+        foreach (var (generatorScene, generatorBuild) in generatorBuilds.OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            var generator = CreateExtraEnemyGenerator(randomizer, generatorBuild.SpawnInfos, generatorBuild.Instances, rng);
+            randomizer.FileRepository.ModifyScnFile(generatorScene, root =>
+            {
+                root = root.Add(generator);
+                if (fsmGeneratorsByScene.Remove(generatorScene, out var fsmGenerators))
+                {
+                    root = AddExtraEnemyFsmGenerators(root, fsmGenerators);
+                }
+
+                return root;
+            });
+        }
+
+        foreach (var (scene, fsmGenerators) in fsmGeneratorsByScene.OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            randomizer.FileRepository.ModifyScnFile(scene, root => AddExtraEnemyFsmGenerators(root, fsmGenerators));
         }
 
         logger.Pop();
