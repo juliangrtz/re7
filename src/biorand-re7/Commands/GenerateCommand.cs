@@ -23,7 +23,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
 
         [Description("Seed to generate")]
         [CommandOption("-s|--seed")]
-        public int Seed { get; init; }
+        public string Seed { get; init; }
 
         [Description("Configuration to use")]
         [CommandOption("-c|--config")]
@@ -66,7 +66,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         {
             input = new RandomizerInput
             {
-                Seed = settings.Seed
+                Seed = (settings.Seed == "random") ? Random.Shared.Next() : int.Parse(settings.Seed)
             };
             if (!string.IsNullOrEmpty(settings.ConfigPath))
             {

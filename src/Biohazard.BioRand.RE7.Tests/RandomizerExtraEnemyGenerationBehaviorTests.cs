@@ -13,6 +13,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     private const string ExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20";
     private const string Chapter1EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter1/c01_b1c.scn.20";
     private const string EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+    private const string SecondEnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20";
     private const string EnvironmentExtraEnemyGeneratorScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20";
     private const string RandomExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
     private const string ExtraEnemyFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
@@ -46,7 +47,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.Equal(2, newRootFsmGenerators.Count);
         Assert.Equal(2, extraSpawnInfos.Count);
         Assert.Equal(2, extraInstances.Count);
-        Assert.Equal([extraPool.Guid], extraPoolComponent.ExternalInstancePoolRefs);
+        Assert.Empty(extraPoolComponent.ExternalInstancePoolRefs);
         Assert.Contains(newGameObjects, gameObject => gameObject.FindComponent<app.EnemyPool>() != null);
         Assert.DoesNotContain(newGameObjects, gameObject => gameObject.Name.EndsWith("_Extra", StringComparison.Ordinal));
         Assert.All(newRootFsmGenerators, AssertImmediateFsmGenerator);
@@ -56,6 +57,7 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
             extraInstances.Select(gameObject => gameObject.Name).Order().ToList());
         AssertPoolInstancesStayAtTemplatePosition(extraSpawnInfos, extraInstances);
         AssertEnemyStampSerializationDisabled(extraInstances);
+        AssertPoolInstancesStartHidden(extraInstances);
 
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -49, 4.88f, 108, 3000);
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4100", -47.92f, 4.99f, 100.86f, 900);
@@ -89,6 +91,46 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         AssertImmediateFsmGenerator(fsmGenerator);
         AssertEnemyGenerateRefs(extraSpawnInfos, [fsmGenerator]);
         AssertExtraSpawnInfo(extraSpawnInfos, "Em4000", -50, 5, 100, 3000);
+    }
+
+    [Fact]
+    public void ExtraEnemies_MultipleEnvironmentScenesInSameChapter_ShareChapterGenerator()
+    {
+        var extraEnemiesCsv = $"""
+            Enabled,Id,Comment,SceneFile,Chapter,PosX,PosY,PosZ,RotX,RotY,RotZ,RotW
+            TRUE,Em4000,First environment extra,{EnvironmentExtraEnemyScenePath},3,-50,5,100,0,0,0,1
+            TRUE,Em4100,Second environment extra,{SecondEnvironmentExtraEnemyScenePath},3,-49,5,101,0,0,0,1
+            """;
+        using var result = RunWithExtraEnemies(extraEnemiesCsv);
+        var beforeFirstEnvironmentScene = result.ReadBeforeScene(EnvironmentExtraEnemyScenePath);
+        var afterFirstEnvironmentScene = result.ReadAfterScene(EnvironmentExtraEnemyScenePath);
+        var beforeSecondEnvironmentScene = result.ReadBeforeScene(SecondEnvironmentExtraEnemyScenePath);
+        var afterSecondEnvironmentScene = result.ReadAfterScene(SecondEnvironmentExtraEnemyScenePath);
+        var beforeGeneratorScene = result.ReadBeforeScene(EnvironmentExtraEnemyGeneratorScenePath);
+        var afterGeneratorScene = result.ReadAfterScene(EnvironmentExtraEnemyGeneratorScenePath);
+
+        var newRootGenerators = GetNewRootGameObjects(afterGeneratorScene, beforeGeneratorScene)
+            .Where(gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName)
+            .ToList();
+        var extraSpawnInfos = GetNewExtraSpawnInfos(afterGeneratorScene, beforeGeneratorScene);
+        var firstEnvironmentNewObjects = GetNewGameObjects(afterFirstEnvironmentScene, beforeFirstEnvironmentScene);
+        var secondEnvironmentNewObjects = GetNewGameObjects(afterSecondEnvironmentScene, beforeSecondEnvironmentScene);
+        var fsmGenerators = firstEnvironmentNewObjects
+            .Concat(secondEnvironmentNewObjects)
+            .Where(IsFsmGenerationObject)
+            .ToList();
+
+        Assert.True(result.WasFileModified(EnvironmentExtraEnemyScenePath));
+        Assert.True(result.WasFileModified(SecondEnvironmentExtraEnemyScenePath));
+        Assert.True(result.WasFileModified(EnvironmentExtraEnemyGeneratorScenePath));
+        Assert.Single(newRootGenerators);
+        Assert.Equal(2, extraSpawnInfos.Count);
+        Assert.Single(firstEnvironmentNewObjects, IsFsmGenerationObject);
+        Assert.Single(secondEnvironmentNewObjects, IsFsmGenerationObject);
+        Assert.DoesNotContain(firstEnvironmentNewObjects, gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName);
+        Assert.DoesNotContain(secondEnvironmentNewObjects, gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName);
+        Assert.All(fsmGenerators, AssertImmediateFsmGenerator);
+        AssertEnemyGenerateRefs(extraSpawnInfos, fsmGenerators);
     }
 
     [Fact]
@@ -521,6 +563,14 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.NotEmpty(stampControllers);
         Assert.All(stampControllers, component =>
             Assert.False(RszSerializer.Deserialize<bool>(component["IsSerializeTexture"])));
+    }
+
+    private static void AssertPoolInstancesStartHidden(IEnumerable<RszGameObject> instances)
+    {
+        foreach (var instance in instances)
+        {
+            Assert.False(RszSerializer.Deserialize<bool>(instance.Settings["Draw"]));
+        }
     }
 
     private static (float X, float Y, float Z) GetPosition(RszGameObject gameObject)
