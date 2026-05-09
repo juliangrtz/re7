@@ -54,14 +54,15 @@ internal class ItemModifier : Modifier
                 var targetGuids = itemsToReplace
                     .Select(candidate => candidate.Placement.Guid)
                     .ToHashSet();
-                var originalGameObjects = FindGameObjectsByGuid(scene, targetGuids);
+                var originalGameObjects = scene.FindGameObjectsByGuidWithFsmContext(targetGuids);
                 var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
 
                 foreach (var candidate in itemsToReplace)
                 {
                     var definition = candidate.Definition;
                     var placement = candidate.Placement;
-                    var originalGameObject = originalGameObjects[placement.Guid];
+                    var originalMatch = originalGameObjects[placement.Guid];
+                    var originalGameObject = originalMatch.GameObject;
                     var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = replacements[candidate.Key];
@@ -85,9 +86,21 @@ internal class ItemModifier : Modifier
                     originalGameObject = originalGameObject.AddOrUpdateComponent(itemComponent);
 
                     var templateItemId = itemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
-                    var newGameObject = templateService
-                        .GetItemTemplate(templateItemId)
-                        .CloneWithNewGuids(templateInstanceRng, originalGameObject.Guid);
+                    var template = templateService.GetItemTemplate(templateItemId);
+
+                    if (originalMatch.HasFsmInHierarchy)
+                    {
+                        if (!preserveItemModels)
+                        {
+                            originalGameObject = originalGameObject.ApplyVisualResourcesFromTemplate(template);
+                        }
+
+                        logger.LogLine("Preserving original pickup object shape because this placement is FSM-controlled.");
+                        replacementGameObjects[originalGameObject.Guid] = originalGameObject;
+                        continue;
+                    }
+
+                    var newGameObject = template.CloneWithNewGuids(templateInstanceRng, originalGameObject.Guid);
                     newGameObject = newGameObject.AddOrUpdateComponent(originalTransform);
                     newGameObject = newGameObject.AddOrUpdateComponent(itemComponent);
 
@@ -99,6 +112,8 @@ internal class ItemModifier : Modifier
                             newGameObject = newGameObject.AddOrUpdateComponent(mesh);
                         }
                     }
+
+                    newGameObject = newGameObject.PreparePickupInteractionsForPlacement();
 
                     newGameObject = newGameObject.WithSettings(
                         newGameObject.Settings
@@ -114,23 +129,6 @@ internal class ItemModifier : Modifier
 
             logger.Pop();
         }
-    }
-
-    private static Dictionary<Guid, RszGameObject> FindGameObjectsByGuid(RszScene scene, HashSet<Guid> targetGuids)
-    {
-        var result = new Dictionary<Guid, RszGameObject>();
-        if (targetGuids.Count == 0)
-            return result;
-
-        scene.VisitGameObjects(gameObject =>
-        {
-            if (targetGuids.Remove(gameObject.Guid))
-            {
-                result[gameObject.Guid] = gameObject;
-            }
-        });
-
-        return result;
     }
 
     private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)

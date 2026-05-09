@@ -1,3 +1,4 @@
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app.Item;
@@ -96,12 +97,12 @@ internal class KeyItemLocationModifier : Modifier
                 var targetGuids = plans
                     .Select(plan => plan.Placement.Guid)
                     .ToHashSet();
-                var originalGameObjects = FindGameObjectsByGuid(scene, targetGuids);
+                var originalGameObjects = scene.FindGameObjectsByGuidWithFsmContext(targetGuids);
                 var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
 
                 foreach (var plan in plans)
                 {
-                    if (!originalGameObjects.TryGetValue(plan.Placement.Guid, out var originalGameObject))
+                    if (!originalGameObjects.TryGetValue(plan.Placement.Guid, out var originalMatch))
                     {
                         logger.LogLine($"Skipped replacing {plan.Placement.Id} in {FormatScenePath(plan.Placement.SceneFile)}: GameObject {plan.Placement.Guid} was not found.");
                         continue;
@@ -113,8 +114,9 @@ internal class KeyItemLocationModifier : Modifier
                         rng,
                         randomItemSettings,
                         plan,
-                        originalGameObject,
-                        preserveItemModels);
+                        originalMatch.GameObject,
+                        preserveItemModels,
+                        originalMatch.HasFsmInHierarchy);
 
                     replacementGameObjects[plan.Placement.Guid] = replacement;
                 }
@@ -188,7 +190,8 @@ internal class KeyItemLocationModifier : Modifier
         RandomItemSettings randomItemSettings,
         ReplacementPlan plan,
         RszGameObject originalGameObject,
-        bool preserveItemModels)
+        bool preserveItemModels,
+        bool preserveObjectShape)
     {
         var originalItem = originalGameObject.FindComponent<app.Item>()
             ?? throw new Exception($"Item placement {plan.Placement.Guid} in {plan.Placement.SceneFile} does not have an app.Item component.");
@@ -196,17 +199,24 @@ internal class KeyItemLocationModifier : Modifier
         var drop = plan.Drop;
         var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
         var template = TryGetItemTemplate(randomizer, logger, templateItemId, originalGameObject);
+
+        if (preserveObjectShape)
+        {
+            logger.LogLine("Preserving original pickup object shape because this placement is FSM-controlled.");
+            LogReplacement(logger, plan, originalItem, drop);
+            ApplyDropToItem(originalItem, rng, drop);
+            var preservedGameObject = originalGameObject.AddOrUpdateComponent(originalItem);
+            return preserveItemModels
+                ? preservedGameObject
+                : preservedGameObject.ApplyVisualResourcesFromTemplate(template);
+        }
+
         var replacement = template.CloneWithNewGuids(
             randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.Placement.Guid, templateItemId),
             originalGameObject.Guid);
         var item = replacement.FindComponent<app.Item>() ?? originalItem;
 
-        item.SaveGUID = rng.NextGuid();
-        item.ItemDataID = drop.Id;
-        item.ItemStackNum = drop.CountNormal;
-        item._IsOverwriteDifficultItemNumSetting = true;
-        item._DifficultItemNumSetting.EasyNum = drop.CountEasy;
-        item._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
+        ApplyDropToItem(item, rng, drop);
         item.Enabled = true;
         replacement = replacement.AddOrUpdateComponent(item);
 
@@ -224,6 +234,8 @@ internal class KeyItemLocationModifier : Modifier
             }
         }
 
+        replacement = replacement.PreparePickupInteractionsForPlacement();
+
         replacement = replacement.WithSettings(
             replacement.Settings
                 .Set("Update", originalGameObject.Settings.Get<bool>("Update"))
@@ -231,6 +243,17 @@ internal class KeyItemLocationModifier : Modifier
 
         LogReplacement(logger, plan, originalItem, drop);
         return replacement.WithGuid(originalGameObject.Guid);
+    }
+
+    private static void ApplyDropToItem(app.Item item, Rng rng, Item drop)
+    {
+        item.SaveGUID = rng.NextGuid();
+        item.ItemDataID = drop.Id;
+        item.ItemStackNum = drop.CountNormal;
+        item._IsOverwriteDifficultItemNumSetting = true;
+        item._DifficultItemNumSetting.EasyNum = drop.CountEasy;
+        item._DifficultItemNumSetting.HardNum = drop.CountMadhouse;
+        item.Enabled = true;
     }
 
     private static RszGameObject TryGetItemTemplate(
@@ -266,23 +289,6 @@ internal class KeyItemLocationModifier : Modifier
 
     private static string FormatScenePath(string path)
         => _areaDefinitions.FormatScenePath(path);
-
-    private static Dictionary<Guid, RszGameObject> FindGameObjectsByGuid(RszScene scene, HashSet<Guid> targetGuids)
-    {
-        var result = new Dictionary<Guid, RszGameObject>();
-        if (targetGuids.Count == 0)
-            return result;
-
-        scene.VisitGameObjects(gameObject =>
-        {
-            if (targetGuids.Remove(gameObject.Guid))
-            {
-                result[gameObject.Guid] = gameObject;
-            }
-        });
-
-        return result;
-    }
 
     private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)
         where T : IRszSceneNode

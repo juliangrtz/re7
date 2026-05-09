@@ -1,3 +1,4 @@
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.REEngine;
@@ -14,7 +15,9 @@ public class RandomizerItemRandomizationTests
     private const string ForcedDropId = "Herb";
     private const string BirdCageScenePath = "environment/scene/chapter3/c03_trailerhouse.scn";
     private const string MiaPastVhsItemScenePath = "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20";
+    private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
     private static readonly Guid MiaPastVhsChemicalGuid = new("e3b64592-382a-4446-8753-ab6bf1eefeb8");
+    private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
 
     [Fact]
     public void ItemRandomizer_DefaultFilters_RejectStoryUnlockableAndDlcItems()
@@ -80,6 +83,33 @@ public class RandomizerItemRandomizationTests
         }
 
         Assert.NotEmpty(guns);
+    }
+
+    [Fact]
+    public void ItemTemplates_KeyItemPickupInteractions_AreReadyForFreshPlacement()
+    {
+        using var result = RandomizerTest.RunState();
+        var checkedTemplateIds = new List<string>();
+
+        foreach (var item in ItemDefinitionRepository.Default.Items
+            .Where(IsKeyItem)
+            .OrderBy(item => item.Id, StringComparer.OrdinalIgnoreCase))
+        {
+            if (!TryGetItemTemplate(result.Randomizer.TemplateService, item.Id, out var template))
+            {
+                continue;
+            }
+
+            if (!HasPickupInteractions(template))
+            {
+                continue;
+            }
+
+            checkedTemplateIds.Add(item.Id);
+            AssertPickupInteractionsAreReadyForFreshPlacement(template, item.Id);
+        }
+
+        Assert.Contains("3CrestKeyA", checkedTemplateIds);
     }
 
     [Fact]
@@ -209,10 +239,11 @@ public class RandomizerItemRandomizationTests
 
         var (_, placement, beforeGameObject) = FindRandomizedPlacementWithBeforeObject(
             result,
-            (item, _, gameObject) =>
+            (item, placement, gameObject, scene) =>
                 !item.IsWeapon &&
                 item.Id != replacementId &&
-                gameObject.Children.Length > 0);
+                gameObject.Children.Length > 0 &&
+                !HasFsmInHierarchy(scene, placement.Guid));
         var afterGameObject = result.ReadAfterScene(placement.SceneFile).FindGameObject(placement.Guid);
         var template = result.Randomizer.TemplateService.GetItemTemplate(replacementId);
 
@@ -221,6 +252,42 @@ public class RandomizerItemRandomizationTests
         AssertTemplateChildShape(template, afterGameObject);
         AssertNoSharedDescendantGuids(beforeGameObject, afterGameObject);
         AssertNoSharedDescendantGuids(template, afterGameObject);
+        AssertNoSharedSaveGuids(template, afterGameObject);
+        AssertPickupInteractionsAreReadyForFreshPlacement(template, replacementId);
+        AssertPickupInteractionsAreReadyForFreshPlacement(afterGameObject, replacementId);
+    }
+
+    [Fact]
+    public void RandomItems_FsmControlledPlacement_PreservesOriginalPickupShape()
+    {
+        const string replacementId = "MachineGunBullet";
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            ConfigureSingleDrop(config, replacementId);
+        });
+
+        var beforeScene = result.ReadBeforeScene(MainHouseHallScenePath);
+        var afterScene = result.ReadAfterScene(MainHouseHallScenePath);
+        var beforeGameObject = beforeScene.FindGameObject(MainHouseHallDrawerCoinGuid);
+        var afterGameObject = afterScene.FindGameObject(MainHouseHallDrawerCoinGuid);
+        var template = result.Randomizer.TemplateService.GetItemTemplate(replacementId);
+
+        Assert.NotNull(beforeGameObject);
+        Assert.NotNull(afterGameObject);
+        Assert.True(HasFsmInHierarchy(beforeScene, MainHouseHallDrawerCoinGuid));
+        Assert.Equal(replacementId, afterGameObject!.FindComponent<app.Item>()!.ItemDataID);
+        Assert.Equal(beforeGameObject!.Name, afterGameObject.Name);
+        Assert.Equal(
+            beforeGameObject.Components.Select(component => component.Type.Name),
+            afterGameObject.Components.Select(component => component.Type.Name));
+        Assert.Equal(
+            beforeGameObject.Children.Select(child => child.Name),
+            afterGameObject.Children.Select(child => child.Name));
+        AssertVisualResourcesMatch(template, afterGameObject);
+        Assert.NotEqual(
+            GetVisualResource(beforeGameObject, "Mesh"),
+            GetVisualResource(afterGameObject, "Mesh"));
     }
 
     [Fact]
@@ -375,11 +442,12 @@ public class RandomizerItemRandomizationTests
     [Fact]
     public void AdditionalItems_Enabled_AddsRandomExtraItemAtConfiguredPlacement()
     {
+        const string forcedDropId = "MachineGunBullet";
         using var result = RandomizerTest.RunState(config =>
         {
             config["random-items"] = true;
             config["additional-items"] = true;
-            ConfigureSingleDrop(config, ForcedDropId);
+            ConfigureSingleDrop(config, forcedDropId);
         });
 
         var placement = result.ItemPlacementService.ItemPlacements.First(x =>
@@ -394,14 +462,18 @@ public class RandomizerItemRandomizationTests
         var newItem = Assert.Single(newChildren, child => child.FindComponent<app.Item>() != null);
         var item = newItem.FindComponent<app.Item>()!;
         var transform = newItem.FindComponent<GeneratedViaTransform>()!;
+        var template = result.Randomizer.TemplateService.GetItemTemplate(forcedDropId);
 
         Assert.True(result.WasFileModified(placement.SceneFile));
         Assert.Equal(beforeDynamic.Children.Count() + 1, afterDynamic.Children.Count());
-        Assert.Equal(ForcedDropId, item.ItemDataID);
-        Assert.Equal(1, item.ItemStackNum);
+        Assert.Equal(forcedDropId, item.ItemDataID);
+        Assert.True(item.ItemStackNum > 0);
         AssertPositionMatchesPlacement(transform, placement);
-        AssertTemplateChildShape(result.Randomizer.TemplateService.GetItemTemplate(ForcedDropId), newItem);
-        AssertNoSharedDescendantGuids(result.Randomizer.TemplateService.GetItemTemplate(ForcedDropId), newItem);
+        AssertTemplateChildShape(template, newItem);
+        AssertNoSharedDescendantGuids(template, newItem);
+        AssertNoSharedSaveGuids(template, newItem);
+        AssertPickupInteractionsAreReadyForFreshPlacement(template, forcedDropId);
+        AssertPickupInteractionsAreReadyForFreshPlacement(newItem, forcedDropId);
     }
 
     [Fact]
@@ -603,7 +675,7 @@ public class RandomizerItemRandomizationTests
 
     private static (ItemDefinition Definition, ItemPlacement Placement, RszGameObject BeforeGameObject) FindRandomizedPlacementWithBeforeObject(
         RandomizerRunResult result,
-        Func<ItemDefinition, ItemPlacement, RszGameObject, bool> predicate)
+        Func<ItemDefinition, ItemPlacement, RszGameObject, RszScene, bool> predicate)
     {
         var itemRandomizer = result.ItemRandomizer;
         var sceneCache = new Dictionary<string, RszScene>();
@@ -633,7 +705,7 @@ public class RandomizerItemRandomizationTests
             }
 
             var gameObject = scene.FindGameObject(placement.Guid);
-            if (gameObject != null && predicate(definition, placement, gameObject))
+            if (gameObject != null && predicate(definition, placement, gameObject, scene))
             {
                 return (definition, placement, gameObject);
             }
@@ -693,6 +765,10 @@ public class RandomizerItemRandomizationTests
         return item!;
     }
 
+    private static bool HasFsmInHierarchy(RszScene scene, Guid guid)
+        => scene.FindGameObjectsByGuidWithFsmContext([guid]).TryGetValue(guid, out var match) &&
+            match.HasFsmInHierarchy;
+
     private static RszGameObject GetDynamicParent(RszScene scene)
     {
         var gameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic", StringComparison.Ordinal));
@@ -739,6 +815,98 @@ public class RandomizerItemRandomizationTests
         {
             child.VisitGameObjects(descendant => result.Add(descendant.Guid));
         }
+        return result;
+    }
+
+    private static void AssertNoSharedSaveGuids(RszGameObject left, RszGameObject right)
+    {
+        var leftGuids = GetSaveGuids(left);
+        var rightGuids = GetSaveGuids(right);
+        Assert.Empty(leftGuids.Intersect(rightGuids));
+    }
+
+    private static bool IsKeyItem(ItemDefinition item)
+        => item.CategoryType is ItemCategoryType.KeyItem
+            or ItemCategoryType.UsableKeyItem
+            or ItemCategoryType.DiscardableKeyItem;
+
+    private static bool TryGetItemTemplate(TemplateService templateService, string itemId, out RszGameObject template)
+    {
+        try
+        {
+            template = templateService.GetItemTemplate(itemId);
+            return true;
+        }
+        catch
+        {
+            template = null!;
+            return false;
+        }
+    }
+
+    private static bool HasPickupInteractions(RszGameObject gameObject)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            result |= child.FindComponent<app.InteractDetailSearch>() != null;
+        });
+        return result;
+    }
+
+    private static void AssertPickupInteractionsAreReadyForFreshPlacement(RszGameObject gameObject, string itemId)
+    {
+        var interactions = new List<app.InteractDetailSearch>();
+        gameObject.VisitGameObjects(child =>
+        {
+            var interact = child.FindComponent<app.InteractDetailSearch>();
+            if (interact != null)
+            {
+                interactions.Add(interact);
+            }
+        });
+
+        Assert.True(interactions.Count > 0, $"{itemId} template has no InteractDetailSearch pickup interaction.");
+        Assert.All(interactions, interact => Assert.False(interact.IsCheckAngle));
+        Assert.All(interactions, interact => Assert.False(interact.IsItemGet));
+    }
+
+    private static void AssertVisualResourcesMatch(RszGameObject expected, RszGameObject actual)
+    {
+        Assert.Equal(GetVisualResource(expected, "Mesh"), GetVisualResource(actual, "Mesh"));
+        Assert.Equal(GetVisualResource(expected, "Material"), GetVisualResource(actual, "Material"));
+    }
+
+    private static string GetVisualResource(RszGameObject gameObject, string fieldName)
+    {
+        var mesh = gameObject.FindComponent("via.render.Mesh");
+        Assert.NotNull(mesh);
+        return mesh![fieldName].ToString() ?? "";
+    }
+
+    private static List<Guid> GetSaveGuids(RszGameObject gameObject)
+    {
+        var result = new List<Guid>();
+        gameObject.Visit(node =>
+        {
+            if (node is not RszObjectNode objectNode)
+                return;
+
+            var saveGuidIndex = objectNode.Type.FindFieldIndex("SaveGUID");
+            if (saveGuidIndex == -1 ||
+                objectNode.Children[saveGuidIndex] is not RszValueNode saveGuidNode ||
+                saveGuidNode.Type != RszFieldType.Guid)
+            {
+                return;
+            }
+
+            var saveGuid = RszSerializer.Deserialize<Guid>(saveGuidNode);
+            if (saveGuid != Guid.Empty)
+            {
+                result.Add(saveGuid);
+            }
+        });
+
         return result;
     }
 

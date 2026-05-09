@@ -1,4 +1,5 @@
 using System.Text;
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -25,6 +26,8 @@ public class RandomizerKeyItemLocationBehaviorTests
             ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
             ["SerumTypeE"] = new(4, ExpectedScope.EthanLateGame),
         };
+    private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
+    private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
 
     [Fact]
     public void KeyItemLocations_RandomizesSupportedKeyItemsIntoChapterScopedNormalPlacements()
@@ -77,6 +80,71 @@ public class RandomizerKeyItemLocationBehaviorTests
     }
 
     [Fact]
+    public void KeyItemLocations_RandomizedKeyItemPickupsUseFreshInteractions()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        });
+
+        var randomizedKeyItems = GetChangedPlacements(result)
+            .Where(change => ExpectedRules.ContainsKey(change.AfterId))
+            .ToList();
+
+        Assert.NotEmpty(randomizedKeyItems);
+        Assert.Contains(randomizedKeyItems, change => change.AfterId == "3CrestKeyA");
+
+        foreach (var change in randomizedKeyItems)
+        {
+            var beforeScene = result.ReadBeforeScene(change.Placement.SceneFile);
+            var afterScene = result.ReadAfterScene(change.Placement.SceneFile);
+            var beforeGameObject = beforeScene.FindGameObject(change.Placement.Guid);
+            var gameObject = afterScene.FindGameObject(change.Placement.Guid);
+            Assert.NotNull(gameObject);
+            Assert.NotNull(beforeGameObject);
+
+            if (HasFsmInHierarchy(afterScene, change.Placement.Guid))
+            {
+                AssertOriginalPickupShapePreserved(beforeGameObject!, gameObject!, change.AfterId);
+                AssertVisualResourcesMatch(result.Randomizer.TemplateService.GetItemTemplate(change.AfterId), gameObject!);
+                continue;
+            }
+
+            AssertPickupInteractionsAreReadyForFreshPlacement(gameObject!, change.AfterId);
+        }
+    }
+
+    [Fact]
+    public void KeyItemLocations_DetectsFsmControlledPickupPlacements()
+    {
+        using var result = RandomizerTest.RunState();
+        var scene = result.ReadBeforeScene(MainHouseHallScenePath);
+
+        Assert.True(HasFsmInHierarchy(scene, MainHouseHallDrawerCoinGuid));
+    }
+
+    [Fact]
+    public void KeyItemLocations_FsmControlledCoinPickup_CanUseBlueDogHeadVisuals()
+    {
+        using var result = RandomizerTest.RunState();
+        var scene = result.ReadBeforeScene(MainHouseHallScenePath);
+        var coinGameObject = scene.FindGameObject(MainHouseHallDrawerCoinGuid);
+        var blueDogHeadTemplate = result.Randomizer.TemplateService.GetItemTemplate("3CrestKeyA");
+
+        Assert.NotNull(coinGameObject);
+        var updated = coinGameObject!.ApplyVisualResourcesFromTemplate(blueDogHeadTemplate);
+
+        AssertVisualResourcesMatch(blueDogHeadTemplate, updated);
+        Assert.NotEqual(GetVisualResource(coinGameObject, "Mesh"), GetVisualResource(updated, "Mesh"));
+        Assert.Equal(
+            coinGameObject.Components.Select(component => component.Type.Name),
+            updated.Components.Select(component => component.Type.Name));
+        Assert.Equal(
+            coinGameObject.Children.Select(child => child.Name),
+            updated.Children.Select(child => child.Name));
+    }
+
+    [Fact]
     public void KeyItemLocations_DoesNotReadLegacyKeyItemsCsv()
     {
         using var result = RandomizerTest.RunState(
@@ -121,6 +189,52 @@ public class RandomizerKeyItemLocationBehaviorTests
 
     private static app.Item? GetItemOrNull(RszScene scene, Guid guid)
         => scene.FindGameObject(guid)?.FindComponent<app.Item>();
+
+    private static void AssertPickupInteractionsAreReadyForFreshPlacement(RszGameObject gameObject, string itemId)
+    {
+        var interactions = new List<app.InteractDetailSearch>();
+        gameObject.VisitGameObjects(child =>
+        {
+            var interact = child.FindComponent<app.InteractDetailSearch>();
+            if (interact != null)
+            {
+                interactions.Add(interact);
+            }
+        });
+
+        Assert.True(interactions.Count > 0, $"{itemId} replacement has no InteractDetailSearch pickup interaction.");
+        Assert.All(interactions, interact => Assert.False(interact.IsCheckAngle));
+        Assert.All(interactions, interact => Assert.False(interact.IsItemGet));
+    }
+
+    private static void AssertOriginalPickupShapePreserved(RszGameObject before, RszGameObject after, string itemId)
+    {
+        Assert.Equal(itemId, after.FindComponent<app.Item>()!.ItemDataID);
+        Assert.Equal(before.Name, after.Name);
+        Assert.Equal(
+            before.Components.Select(component => component.Type.Name),
+            after.Components.Select(component => component.Type.Name));
+        Assert.Equal(
+            before.Children.Select(child => child.Name),
+            after.Children.Select(child => child.Name));
+    }
+
+    private static void AssertVisualResourcesMatch(RszGameObject expected, RszGameObject actual)
+    {
+        Assert.Equal(GetVisualResource(expected, "Mesh"), GetVisualResource(actual, "Mesh"));
+        Assert.Equal(GetVisualResource(expected, "Material"), GetVisualResource(actual, "Material"));
+    }
+
+    private static string GetVisualResource(RszGameObject gameObject, string fieldName)
+    {
+        var mesh = gameObject.FindComponent("via.render.Mesh");
+        Assert.NotNull(mesh);
+        return mesh![fieldName].ToString() ?? "";
+    }
+
+    private static bool HasFsmInHierarchy(RszScene scene, Guid guid)
+        => scene.FindGameObjectsByGuidWithFsmContext([guid]).TryGetValue(guid, out var match) &&
+            match.HasFsmInHierarchy;
 
     private static bool ScopeMatches(ExpectedScope scope, ItemPlacement placement)
         => scope switch

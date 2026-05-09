@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using Spectre.Console;
@@ -17,10 +18,9 @@ internal class GameObjectTemplateGenerator : IFileGenerator
     public string FileName => "template.scn.20";
 
     private readonly RszTypeRepository _rszRepository =
-        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json"));
+        RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip());
 
-    private readonly PakFile _pakFile =
-        new(EmbeddedData.GetFile("biorand-re7.pak"));
+    private readonly PakFile _pakFile = Constants.BioRandPakFile;
 
     private readonly JsonSerializerOptions _serializationOptions = new()
     {
@@ -69,7 +69,7 @@ internal class GameObjectTemplateGenerator : IFileGenerator
         var itemTemplatesFolder = CreateFolder("ItemTemplates");
         foreach (var (id, go) in itemTemplates.OrderBy(t => t.Key))
         {
-            var enrichedGo = go
+            var enrichedGo = NormalizeItemTemplateInteractions(go)
                 .WithSettings(go.Settings
                     .Set("Name", $"ItemTemplate_{id}")
                     .Set("Tag", go.Name)
@@ -82,6 +82,62 @@ internal class GameObjectTemplateGenerator : IFileGenerator
 
         var built = resultSceneBuilder.AddMissingResources().Build();
         return built;
+    }
+
+    private static RszGameObject NormalizeItemTemplateInteractions(RszGameObject gameObject)
+    {
+        return gameObject.VisitGameObjects(child =>
+        {
+            var components = child.Components.ToBuilder();
+            var changed = false;
+
+            for (var i = 0; i < components.Count; i++)
+            {
+                var component = components[i];
+                if (!IsInteractDetailSearch(component))
+                {
+                    continue;
+                }
+
+                var updated = component;
+
+                if (GetBool(updated, "IsCheckAngle"))
+                {
+                    updated = updated.SetField("IsCheckAngle", false);
+                    changed = true;
+                }
+
+                if (GetBool(updated, "IsItemGet"))
+                {
+                    updated = updated.SetField("IsItemGet", false);
+                    changed = true;
+                }
+
+                components[i] = updated;
+            }
+
+            return changed
+                ? child.WithComponents(components.ToImmutable())
+                : child;
+        });
+    }
+
+    private static bool IsInteractDetailSearch(RszObjectNode component)
+    {
+        return component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
+            component.Type.FindFieldIndex("IsCheckAngle") != -1;
+    }
+
+    private static bool GetBool(RszObjectNode component, string fieldName)
+    {
+        var index = component.Type.FindFieldIndex(fieldName);
+        if (index == -1)
+        {
+            return false;
+        }
+
+        return component.Children[index] is RszValueNode valueNode &&
+            RszSerializer.Deserialize<bool>(valueNode);
     }
 
     public object Generate(GenerateSettings settings)
