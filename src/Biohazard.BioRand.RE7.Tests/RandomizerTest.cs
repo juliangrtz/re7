@@ -1,4 +1,5 @@
 using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
@@ -37,10 +38,24 @@ public static class RandomizerTest
 
         configuration["debug-download-data"] = false;
 
+        configuration["allow-bonus-items"] = false;
+        configuration["allow-dlc-items"] = true;
+
         configuration["randomized-messages"] = false;
         configuration["random-enemies"] = false;
         configuration["extra-enemy-amount"] = 0.0;
         configuration["enemy-multiplier"] = 1.0;
+        configuration["random-enemy-speed"] = false;
+        configuration["random-enemy-damage"] = false;
+        configuration["enemy-speed-exclude-four-legged-moldeds"] = true;
+        configuration["random-enemy-drops"] = false;
+        configuration["boss-random-health"] = false;
+        configuration["enemy-random-health"] = false;
+        configuration["enemy-health-progressive-difficulty"] = false;
+        foreach (var drop in ItemDrops.HighValueDrops)
+        {
+            configuration[$"enemy-drop-valuable-{drop}"] = false;
+        }
 
         configuration["random-items"] = false;
         configuration["random-key-item-locations"] = false;
@@ -51,10 +66,26 @@ public static class RandomizerTest
         configuration["random-bird-cage-drugs-coins"] = false;
         configuration["additional-items"] = false;
         configuration["additional-wooden-crates"] = false;
+        foreach (var drop in ItemDrops.GenericDrops)
+        {
+            configuration[$"item-drop-ratio-{drop.ToLowerInvariant()}"] = ItemDrops.GetDefaultGenericDropRatio(drop);
+        }
+        foreach (var drop in ItemDrops.HighValueDrops)
+        {
+            configuration[$"item-drop-valuable-{drop}"] = false;
+        }
 
         configuration["random-starting-inventory-ethan"] = false;
         configuration["random-starting-inventory-mia"] = false;
         configuration["random-starting-inventory-vhs"] = false;
+        configuration["random-starting-inventory-skills-ethan"] = false;
+        configuration["random-starting-inventory-skills-mia"] = false;
+        configuration["random-starting-inventory-size-ethan"] = "12";
+        configuration["random-starting-inventory-size-mia"] = "12";
+        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackLimitConfigurable))
+        {
+            configuration[item.StackLimitConfigId] = item.MaxStack;
+        }
 
         configuration["recipes-add-new"] = false;
 

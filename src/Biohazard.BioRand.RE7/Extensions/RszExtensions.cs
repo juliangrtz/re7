@@ -4,6 +4,8 @@ namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class RszExtensions
 {
+    public readonly record struct GameObjectMatch(RszGameObject GameObject, bool HasFsmInHierarchy);
+
     public static RszGameObject CloneWithNewGuids(
         this RszGameObject rootGameObject,
         Rng rng,
@@ -21,15 +23,22 @@ public static class RszExtensions
             return gameObject.WithGuid(newGuid);
         });
 
-        return ReplaceGameObjectRefs(root, guidMap);
+        return ReplaceGameObjectRefsAndSaveGuids(root, guidMap, new Dictionary<Guid, Guid>(), rng);
     }
 
-    private static RszGameObject ReplaceGameObjectRefs(
+    private static RszGameObject ReplaceGameObjectRefsAndSaveGuids(
         RszGameObject gameObject,
-        IReadOnlyDictionary<Guid, Guid> guidMap)
+        IReadOnlyDictionary<Guid, Guid> guidMap,
+        IDictionary<Guid, Guid> saveGuidMap,
+        Rng rng)
     {
         return gameObject.Visit(node =>
         {
+            if (node is RszObjectNode objectNode)
+            {
+                return ReplaceSaveGuid(objectNode, saveGuidMap, rng);
+            }
+
             if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
             {
                 var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
@@ -38,9 +47,198 @@ public static class RszExtensions
                     return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
                 }
             }
+            else if (node is RszValueNode guidValueNode && guidValueNode.Type == RszFieldType.Guid)
+            {
+                var guid = RszSerializer.Deserialize<Guid>(guidValueNode);
+                if (guidMap.TryGetValue(guid, out var newGuid))
+                {
+                    return RszSerializer.Serialize(RszFieldType.Guid, newGuid);
+                }
+            }
 
             return node;
         });
+    }
+
+    private static RszObjectNode ReplaceSaveGuid(
+        RszObjectNode objectNode,
+        IDictionary<Guid, Guid> saveGuidMap,
+        Rng rng)
+    {
+        var saveGuidIndex = objectNode.Type.FindFieldIndex("SaveGUID");
+        if (saveGuidIndex == -1 ||
+            objectNode.Children[saveGuidIndex] is not RszValueNode saveGuidNode ||
+            saveGuidNode.Type != RszFieldType.Guid)
+        {
+            return objectNode;
+        }
+
+        var saveGuid = RszSerializer.Deserialize<Guid>(saveGuidNode);
+        if (saveGuid == Guid.Empty)
+        {
+            return objectNode;
+        }
+
+        if (!saveGuidMap.TryGetValue(saveGuid, out var newSaveGuid))
+        {
+            newSaveGuid = rng.NextGuid();
+            saveGuidMap[saveGuid] = newSaveGuid;
+        }
+
+        return objectNode.SetField("SaveGUID", newSaveGuid);
+    }
+
+    public static RszGameObject PreparePickupInteractionsForPlacement(this RszGameObject gameObject)
+    {
+        return gameObject.VisitGameObjects(child =>
+        {
+            var components = child.Components.ToBuilder();
+            var changed = false;
+
+            for (var i = 0; i < components.Count; i++)
+            {
+                var component = components[i];
+                if (!IsPickupInteraction(component))
+                {
+                    continue;
+                }
+
+                var updated = component;
+                updated = SetBoolFieldIfPresent(updated, "IsCheckAngle", false);
+                updated = SetBoolFieldIfPresent(updated, "IsItemGet", false);
+
+                if (!ReferenceEquals(updated, component))
+                {
+                    components[i] = updated;
+                    changed = true;
+                }
+            }
+
+            return changed
+                ? child.WithComponents(components.ToImmutable())
+                : child;
+        });
+    }
+
+    public static RszGameObject ApplyVisualResourcesFromTemplate(this RszGameObject gameObject, RszGameObject template)
+    {
+        var templateMesh = template.FindComponent("via.render.Mesh");
+        if (templateMesh == null)
+        {
+            return gameObject;
+        }
+
+        var mesh = gameObject.FindComponent("via.render.Mesh");
+        if (mesh == null)
+        {
+            return gameObject.AddOrUpdateComponent(templateMesh);
+        }
+
+        mesh = CopyFieldIfPresent(mesh, templateMesh, "Mesh");
+        mesh = CopyFieldIfPresent(mesh, templateMesh, "Material");
+        return gameObject.AddOrUpdateComponent(mesh);
+    }
+
+    public static Dictionary<Guid, GameObjectMatch> FindGameObjectsByGuidWithFsmContext(
+        this RszScene scene,
+        IEnumerable<Guid> targetGuids)
+    {
+        var remaining = targetGuids.ToHashSet();
+        var result = new Dictionary<Guid, GameObjectMatch>();
+        if (remaining.Count == 0)
+        {
+            return result;
+        }
+
+        foreach (var child in scene.Children)
+        {
+            VisitSceneNode(child, hasFsmInHierarchy: false, remaining, result);
+            if (remaining.Count == 0)
+            {
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    private static void VisitSceneNode(
+        IRszSceneNode node,
+        bool hasFsmInHierarchy,
+        ISet<Guid> remaining,
+        IDictionary<Guid, GameObjectMatch> result)
+    {
+        switch (node)
+        {
+            case RszFolder folder:
+                foreach (var child in folder.Children)
+                {
+                    VisitSceneNode(child, hasFsmInHierarchy, remaining, result);
+                    if (remaining.Count == 0)
+                    {
+                        break;
+                    }
+                }
+                break;
+
+            case RszGameObject gameObject:
+                var hasFsmHere = hasFsmInHierarchy || HasFsmComponent(gameObject);
+                if (remaining.Remove(gameObject.Guid))
+                {
+                    result[gameObject.Guid] = new GameObjectMatch(gameObject, hasFsmHere);
+                }
+
+                if (remaining.Count == 0)
+                {
+                    break;
+                }
+
+                foreach (var child in gameObject.Children)
+                {
+                    VisitSceneNode(child, hasFsmHere, remaining, result);
+                    if (remaining.Count == 0)
+                    {
+                        break;
+                    }
+                }
+                break;
+        }
+    }
+
+    private static bool IsPickupInteraction(RszObjectNode component)
+    {
+        return component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
+            component.Type.FindFieldIndex("IsCheckAngle") != -1;
+    }
+
+    private static bool HasFsmComponent(RszGameObject gameObject)
+        => gameObject.Components.Any(component =>
+            component.Type.Name.Contains("Fsm", StringComparison.Ordinal) ||
+            component.Type.Name.Contains("FSM", StringComparison.Ordinal));
+
+    private static RszObjectNode SetBoolFieldIfPresent(RszObjectNode component, string fieldName, bool value)
+    {
+        var index = component.Type.FindFieldIndex(fieldName);
+        if (index == -1 ||
+            component.Children[index] is not RszValueNode valueNode ||
+            valueNode.Type != RszFieldType.Bool ||
+            RszSerializer.Deserialize<bool>(valueNode) == value)
+        {
+            return component;
+        }
+
+        return component.SetField(fieldName, value);
+    }
+
+    private static RszObjectNode CopyFieldIfPresent(RszObjectNode target, RszObjectNode source, string fieldName)
+    {
+        if (target.Type.FindFieldIndex(fieldName) == -1 ||
+            source.Type.FindFieldIndex(fieldName) == -1)
+        {
+            return target;
+        }
+
+        return target.SetField(fieldName, source[fieldName]);
     }
 
 #if false
