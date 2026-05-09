@@ -229,6 +229,86 @@ internal class EnemyModifier : Modifier
     internal static bool IsInsectSpawnAlias(string unitAlias)
         => _insectSpawnAliases.Contains(unitAlias);
 
+    internal static bool IsBalancedCompatibleReplacement(
+        IEnemyDefinition enemy,
+        int? chapter,
+        string scenePath)
+    {
+        var maxStrength = GetBalancedMaxEnemyStrength(chapter, scenePath);
+        if (maxStrength == null)
+            return true;
+
+        return GetBalancedEnemyStrength(enemy) <= maxStrength.Value;
+    }
+
+    internal static ImmutableArray<EnemyTableEntry> SelectBalancedEnemyPool(
+        IReadOnlyList<EnemyTableEntry> enemyPool,
+        int? chapter,
+        string scenePath)
+    {
+        var maxStrength = GetBalancedMaxEnemyStrength(chapter, scenePath);
+        if (maxStrength == null)
+            return [.. enemyPool];
+
+        return [.. enemyPool.Where(entry => GetBalancedEnemyStrength(entry.Enemy) <= maxStrength.Value)];
+    }
+
+    private static int GetBalancedEnemyStrength(IEnemyDefinition enemy)
+    {
+        if (enemy.BaseHealth == int.MaxValue)
+            return int.MaxValue;
+
+        return enemy.IsBoss
+            ? Math.Max(enemy.BaseHealth, 20_000)
+            : enemy.BaseHealth;
+    }
+
+    private static int? GetBalancedMaxEnemyStrength(int? chapter, string scenePath)
+    {
+        if (chapter == null)
+            return null;
+
+        if (chapter <= 1)
+            return 1_000;
+
+        if (chapter == 3)
+        {
+            var progression = GetChapter3Progression(scenePath);
+            return progression switch
+            {
+                <= 2 => 3_000,
+                3 => 6_000,
+                _ => 10_000,
+            };
+        }
+
+        return null;
+    }
+
+    private static int GetChapter3Progression(string scenePath)
+    {
+        var normalizedScenePath = scenePath.Replace('\\', '/');
+        if (normalizedScenePath.Contains("chapter3_5", StringComparison.OrdinalIgnoreCase) ||
+            normalizedScenePath.Contains("enemy_c03_5", StringComparison.OrdinalIgnoreCase))
+        {
+            return 5;
+        }
+
+        if (normalizedScenePath.Contains("chapter3_4", StringComparison.OrdinalIgnoreCase) ||
+            normalizedScenePath.Contains("enemy_c03_4", StringComparison.OrdinalIgnoreCase))
+        {
+            return 4;
+        }
+
+        if (normalizedScenePath.Contains("chapter3_3", StringComparison.OrdinalIgnoreCase) ||
+            normalizedScenePath.Contains("enemy_c03_3", StringComparison.OrdinalIgnoreCase))
+        {
+            return 3;
+        }
+
+        return 2;
+    }
+
     private static int GetScaleProbabilityPercent(double probability)
         => (int)Math.Round(Math.Clamp(probability, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
 
@@ -594,7 +674,17 @@ internal class EnemyModifier : Modifier
     {
         logger.Push(area.Path);
 
-        var areaEnemyPool = SelectAreaEnemyPool(enemyPool, options.EnemyVariety, rng);
+        var balancedEnemyPool = options.IsBalanced
+            ? SelectBalancedEnemyPool(enemyPool, area.Definition.Chapter, area.Path)
+            : enemyPool.ToImmutableArray();
+        if (balancedEnemyPool.IsDefaultOrEmpty)
+        {
+            logger.LogLine("Balanced enemy pool is empty for this area. Skipping enemy replacement.");
+            logger.Pop();
+            return;
+        }
+
+        var areaEnemyPool = SelectAreaEnemyPool(balancedEnemyPool, options.EnemyVariety, rng);
         logger.LogLine($"Area enemy pool ({areaEnemyPool.Length}/{enemyPool.Count}): {string.Join(", ", areaEnemyPool.Select(entry => entry.Enemy.Name))}");
 
         var generatorChanges = new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
@@ -1230,12 +1320,22 @@ internal class EnemyModifier : Modifier
                 Math.Min(targetEnemyCount, scenePlacements.Count),
                 rng);
             var sceneHasRandomExtraEnemies = selectedPlacements.Any(extraEnemy => IsRandomExtraEnemyId(extraEnemy.Id));
+            var selectedPlacementChapters = selectedPlacements
+                .Select(extraEnemy => extraEnemy.Chapter)
+                .Distinct()
+                .ToArray();
+            var sceneChapter = selectedPlacementChapters.Length == 1
+                ? selectedPlacementChapters[0]
+                : (int?)null;
+            var sceneRandomEnemyPool = options.IsBalanced && sceneHasRandomExtraEnemies
+                ? SelectBalancedEnemyPool(randomEnemyPool, sceneChapter, scene)
+                : randomEnemyPool;
 
             logger.Push(FormatExtraEnemySceneLog(scene, scenePlacements.Count, uncappedTargetEnemyCount, targetEnemyCount, sceneLimit));
             var extraEnemyRequests = new List<ResolvedExtraEnemyPlacement>(targetEnemyCount);
-            var areaEnemyPool = !sceneHasRandomExtraEnemies || randomEnemyPool.IsDefaultOrEmpty
+            var areaEnemyPool = !sceneHasRandomExtraEnemies || sceneRandomEnemyPool.IsDefaultOrEmpty
                 ? []
-                : SelectAreaEnemyPool(randomEnemyPool, options.EnemyVariety, rng);
+                : SelectAreaEnemyPool(sceneRandomEnemyPool, options.EnemyVariety, rng);
             var packSelector = areaEnemyPool.IsDefaultOrEmpty
                 ? null
                 : new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);

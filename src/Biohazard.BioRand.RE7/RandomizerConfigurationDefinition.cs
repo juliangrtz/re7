@@ -326,7 +326,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"balanced-enemies",
             Label = "Balanced Enemies",
-            Description = "Restrict certain enemies to a set of types that produce a more fair and consistent randomizer. " +
+            Description = "Keep very strong enemies out of earlier chapters so enemy strength ramps up with game progression. " +
             "Good for permadeath runs but may reduce chaos.",
             Type = "switch",
             Default = true

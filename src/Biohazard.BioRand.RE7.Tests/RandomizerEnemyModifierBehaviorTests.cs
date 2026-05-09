@@ -120,12 +120,79 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
+    public void IsBalancedCompatibleReplacement_UsesChapterProgressionStrengthCaps()
+    {
+        var molded = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "Molded");
+        var moldedQuick = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedQuick");
+        var moldedFat = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedFat");
+        var jackStalker = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "JackStalker");
+        var margeMutated = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MargeMutated");
+
+        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+            moldedQuick,
+            chapter: 1,
+            scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
+        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+            molded,
+            chapter: 1,
+            scenePath: "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20"));
+        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+            molded,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
+        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+            moldedFat,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/chapter3_2/moldeads.scn.20"));
+        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+            moldedFat,
+            chapter: 3,
+            scenePath: OldHouseBugEnemyScenePath));
+        Assert.False(EnemyModifier.IsBalancedCompatibleReplacement(
+            jackStalker,
+            chapter: 3,
+            scenePath: OldHouseBugEnemyScenePath));
+        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+            jackStalker,
+            chapter: 3,
+            scenePath: "natives/stm/scenes/chapter/chapter3/enemy_c03_5.scn.20"));
+        Assert.True(EnemyModifier.IsBalancedCompatibleReplacement(
+            margeMutated,
+            chapter: 4,
+            scenePath: "natives/stm/scenes/chapter/chapter4/enemy_c04_3.scn.20"));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Balanced_RestrictsOldHouseToMidTierEnemies()
     {
         using var result = RandomizerTest.RunState(
             config =>
             {
                 config["random-enemies"] = true;
+                config["balanced-enemies"] = true;
+                config["enemy-variety"] = 3;
+                config["enemy-pack-max-size"] = 1;
+                ConfigureGeneratorEnemyPool(config, ["MoldedFat", "JackStalker"]);
+            },
+            seed: 410980);
+
+        var beforeAliases = GetGeneratorSpawnAliases(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug");
+        var afterAliases = GetGeneratorSpawnAliases(result.ReadAfterScene(OldHouseBugEnemyScenePath), "Bug");
+
+        Assert.NotEmpty(beforeAliases);
+        Assert.All(beforeAliases, alias => Assert.True(EnemyModifier.IsInsectSpawnAlias(alias)));
+        Assert.NotEmpty(afterAliases);
+        Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_Unbalanced_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
+    {
+        using var result = RandomizerTest.RunState(
+            config =>
+            {
+                config["random-enemies"] = true;
+                config["balanced-enemies"] = false;
                 config["enemy-variety"] = 3;
                 config["enemy-pack-max-size"] = 1;
                 ConfigureGeneratorEnemyPool(config, ["Molded", "MoldedFat", "JackStalker"]);
