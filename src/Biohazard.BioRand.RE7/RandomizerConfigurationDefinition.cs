@@ -399,6 +399,7 @@ internal static class RandomizerConfigurationDefinition
             });
         }
 
+        var genericEnemyDrops = ItemDrops.GenericRuntimeDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
         var genericItemDrops = ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
 
         group = page.CreateGroup("Drops");
@@ -457,7 +458,7 @@ internal static class RandomizerConfigurationDefinition
 
         group = page.CreateGroup("General Drops");
 
-        foreach (var drop in genericItemDrops)
+        foreach (var drop in genericEnemyDrops)
         {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);

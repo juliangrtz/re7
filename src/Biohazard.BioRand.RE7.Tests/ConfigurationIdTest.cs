@@ -96,8 +96,8 @@ public class ConfigurationIdUsageTest
     {
         var ids = new HashSet<string>(StringComparer.Ordinal);
 
-        AddDropIds(ids, "enemy-drop");
-        AddDropIds(ids, "item-drop");
+        AddDropIds(ids, "enemy-drop", ItemDrops.GenericRuntimeDrops);
+        AddDropIds(ids, "item-drop", ItemDrops.GenericDrops);
         AddEnemyIds(ids);
         AddInventoryIds(ids);
         AddWeaponIds(ids);
@@ -105,9 +105,9 @@ public class ConfigurationIdUsageTest
         return ids;
     }
 
-    private static void AddDropIds(HashSet<string> ids, string configPrefix)
+    private static void AddDropIds(HashSet<string> ids, string configPrefix, IEnumerable<string> genericDrops)
     {
-        foreach (var drop in ItemDrops.GenericDrops)
+        foreach (var drop in genericDrops)
         {
             ids.Add($"{configPrefix}-ratio-{drop.ToLowerInvariant()}");
         }

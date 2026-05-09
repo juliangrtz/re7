@@ -57,6 +57,15 @@ internal class ItemDrops
         "Coin"
     ];
 
+    public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } = [
+        "Stimulant",
+        "Depressant",
+    ];
+
+    public static ImmutableList<string> GenericRuntimeDrops { get; } = GenericDrops
+        .Where(id => !UnsupportedRuntimeDropIds.Contains(id))
+        .ToImmutableList();
+
     public static ImmutableList<string> HighValueDrops { get; private set; } = [
         Weapon,
         DlcCoin,

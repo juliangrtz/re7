@@ -184,6 +184,10 @@ public class ConfigurationDefinitionTest
         Assert.Contains("enemy-drop-ratio-herb", ids);
         Assert.Contains("enemy-drop-ratio-handgunbullet", ids);
         Assert.Contains("enemy-drop-ratio-liquidbomb", ids);
+        Assert.DoesNotContain("enemy-drop-ratio-stimulant", ids);
+        Assert.DoesNotContain("enemy-drop-ratio-depressant", ids);
+        Assert.Contains("item-drop-ratio-stimulant", ids);
+        Assert.Contains("item-drop-ratio-depressant", ids);
         Assert.Contains("enemy-drop-valuable-repair-kit", ids);
         Assert.Contains("enemy-drop-valuable-lock-pick", ids);
         Assert.Contains("enemy-drop-valuable-birthday-skill", ids);
