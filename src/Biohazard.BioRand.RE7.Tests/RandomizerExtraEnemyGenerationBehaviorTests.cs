@@ -22,6 +22,22 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         2860522480,
     ];
 
+    [Theory]
+    [InlineData(0, 0.5, 0)]
+    [InlineData(4, -1.0, 0)]
+    [InlineData(4, 0.0, 0)]
+    [InlineData(4, 0.25, 1)]
+    [InlineData(3, 0.5, 2)]
+    [InlineData(4, 1.0, 4)]
+    [InlineData(4, 2.0, 4)]
+    public void ExtraEnemies_Amount_MapsToExactSubsetCount(
+        int placementCount,
+        double percentage,
+        int expectedCount)
+    {
+        Assert.Equal(expectedCount, EnemyModifier.GetExtraEnemySubsetCount(placementCount, percentage));
+    }
+
     [Fact]
     public void ExtraEnemies_AddDynamicGeneratorSlots()
     {
@@ -272,6 +288,26 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         {
             Assert.NotEqual(enemyAliases[i - 1], enemyAliases[i]);
         }
+    }
+
+    [Fact]
+    public void ExtraEnemies_Amount_SelectsExactRandomSubset()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(
+                RandomExtraEnemyScenePath,
+                "Em4000",
+                "Em4000",
+                "Em4000",
+                "Em4000"),
+            config =>
+            {
+                config["extra-enemy-amount"] = 0.5;
+            });
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+
+        Assert.Equal(2, extraSpawnInfos.Count);
     }
 
     [Fact]

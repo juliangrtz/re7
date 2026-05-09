@@ -53,8 +53,6 @@ public class REFPlugin
         "RemedyM",
         "RemedyL",
         "EyeDrops",
-        "Stimulant",
-        "Depressant",
         "Herb",
         "ChemicalM",
         "ChemicalL",
@@ -175,8 +173,6 @@ public class REFPlugin
         "AcidBulletS",
         "RemedyL",
         "EyeDrops",
-        "Stimulant",
-        "Depressant",
         "ChemicalM",
         "Coin",
     };

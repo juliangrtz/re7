@@ -54,7 +54,7 @@ internal class ItemDropTableModifier : Modifier
         var max = randomizer.GetConfigOption("item-drop-ammo-max", 1.0);
         var rng = randomizer.GetRng(RandomizerKey, chapter, path);
 
-        foreach (var id in ItemDrops.GenericDrops)
+        foreach (var id in ItemDrops.GenericRuntimeDrops)
         {
             var idStr = id.ToString();
             var item = _itemDefinitions.FromId(idStr)!;

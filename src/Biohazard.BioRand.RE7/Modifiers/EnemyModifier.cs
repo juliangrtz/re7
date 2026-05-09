@@ -1063,6 +1063,9 @@ internal class EnemyModifier : Modifier
         int count,
         Rng rng)
     {
+        if (count <= 0)
+            return [];
+
         if (count >= placements.Count)
             return [.. placements];
 
@@ -1078,6 +1081,17 @@ internal class EnemyModifier : Modifier
         return selectedPlacements.ToImmutable();
     }
 
+    internal static int GetExtraEnemySubsetCount(int placementCount, double percentage)
+    {
+        if (placementCount <= 0)
+            return 0;
+
+        var safePercentage = Math.Clamp(percentage, 0.0, 1.0);
+        return Math.Min(
+            placementCount,
+            Math.Max(0, (int)Math.Round(placementCount * safePercentage, MidpointRounding.AwayFromZero)));
+    }
+
     private void PlaceExtraEnemies(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -1089,12 +1103,16 @@ internal class EnemyModifier : Modifier
             return;
 
         var rng = randomizer.GetRng("modifier/extra-enemies");
-        var extraEnemyProbability = (int)Math.Round(Math.Clamp(extraEnemyPct, 0.0, 1.0) * 100.0, MidpointRounding.AwayFromZero);
         var enemyMultiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
 
-        var extraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
+        var enabledExtraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
             .Where(extraEnemy => extraEnemy.Enabled)
-            .Where(_ => rng.NextProbability(extraEnemyProbability))
+            .ToList();
+        var subsetCount = GetExtraEnemySubsetCount(enabledExtraEnemies.Count, extraEnemyPct);
+        if (subsetCount == 0)
+            return;
+
+        var extraEnemies = SelectRandomExtraEnemyPlacementsWithoutReplacement(enabledExtraEnemies, subsetCount, rng)
             .GroupBy(extraEnemy => extraEnemy.SceneFile)
             .ToList();
 

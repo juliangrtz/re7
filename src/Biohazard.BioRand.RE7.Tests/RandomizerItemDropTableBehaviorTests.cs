@@ -100,4 +100,29 @@ public class RandomizerItemDropTableBehaviorTests
         Assert.Equal(ItemDrops.GetValuableDropRate(ItemDrops.BirthdaySkill), skillDrop.NormalDropRate);
         Assert.Equal((uint)ItemDrops.GetValuableDropCount(ItemDrops.BirthdaySkill), skillDrop.NormalDropNum);
     }
+
+    [Fact]
+    public void ItemDropTable_UnsupportedRuntimePickupItems_AreExcluded()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            foreach (var drop in ItemDrops.GenericDrops)
+            {
+                config[$"item-drop-ratio-{drop.ToLowerInvariant()}"] = 0.0;
+            }
+
+            config["item-drop-ratio-stimulant"] = 1.0;
+            config["item-drop-ratio-depressant"] = 1.0;
+            config["item-drop-valuable-birthday-skill"] = false;
+            config["item-drop-valuable-lock-pick"] = false;
+            config["item-drop-valuable-repair-kit"] = false;
+            config["item-drop-valuable-weapon"] = false;
+            config["item-drop-valuable-dlc-coin"] = false;
+        });
+
+        var table = result.ReadAfterUserFile<app.ReliefItemTable>(RandomizerTestPaths.Chapter4DropTablePath);
+
+        Assert.DoesNotContain(table.DataList, x => x.ItemID == "Stimulant");
+        Assert.DoesNotContain(table.DataList, x => x.ItemID == "Depressant");
+    }
 }
