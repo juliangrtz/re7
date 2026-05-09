@@ -9,6 +9,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 internal class EnemyModifier : Modifier
 {
     private const string RandomizerKey = "modifier/enemies";
+    internal const string EnemyForceTargetingProbabilityConfigKey = "enemy-force-targeting-probability";
     internal const string ExtraEnemyGeneratorName = "BioRandExtraEnemyGenerator";
     internal const string ExtraEnemyPoolName = "BioRandExtraEnemyPool";
     internal const string ExtraEnemySpawnPointsName = "BioRandExtraEnemySpawnPoints";
@@ -62,7 +63,8 @@ internal class EnemyModifier : Modifier
         bool DebugUniqueHp,
         bool IsBalanced,
         bool ProgressiveDifficulty,
-        ScaleOptions ScaleOptions
+        ScaleOptions ScaleOptions,
+        double ForceTargetingProbability
     );
 
     internal record ScaleOptions(
@@ -168,7 +170,11 @@ internal class EnemyModifier : Modifier
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),
                 Max: Math.Clamp(randomizer.GetConfigOption("enemy-scale-max", 2.00f), 0.1f, 10.0f)
-            )
+            ),
+            ForceTargetingProbability: Math.Clamp(
+                randomizer.GetConfigOption(EnemyForceTargetingProbabilityConfigKey, 0.0),
+                0.0,
+                1.0)
         );
     }
 
@@ -285,6 +291,55 @@ internal class EnemyModifier : Modifier
 
         var newScale = rng.NextFloat(scaleOptions.Min, scaleOptions.Max);
         transform.Scale = new Vector3(newScale, newScale, newScale);
+    }
+
+    internal static bool SupportsForceTargetingOption(RszObjectNode component)
+        => component.Type.Name.Contains("EnemySpawnInfoOption", StringComparison.Ordinal)
+            && component.Type.FindFieldIndex("IsForceTargetingToPlayer") != -1;
+
+    private static RszObjectNode RandomizeForceTargetingOption(
+        RszObjectNode component,
+        EnemyRandomizerOptions options,
+        Rng rng)
+    {
+        if (options.ForceTargetingProbability <= 0 ||
+            !SupportsForceTargetingOption(component))
+        {
+            return component;
+        }
+
+        return component.SetField(
+            "IsForceTargetingToPlayer",
+            rng.NextProbability(options.ForceTargetingProbability));
+    }
+
+    private static RszScene RandomizeForceTargetingOptions(
+        RszScene scene,
+        EnemyRandomizerOptions options,
+        Rng rng,
+        out int changedCount)
+    {
+        if (options.ForceTargetingProbability <= 0)
+        {
+            changedCount = 0;
+            return scene;
+        }
+
+        var updatedCount = 0;
+        var updatedScene = scene.VisitComponents((gameObject, component) =>
+        {
+            if (gameObject.FindComponent<app.EnemySpawnInfo>() == null ||
+                !SupportsForceTargetingOption(component))
+            {
+                return component;
+            }
+
+            updatedCount++;
+            return RandomizeForceTargetingOption(component, options, rng);
+        });
+
+        changedCount = updatedCount;
+        return updatedScene;
     }
 
     private RszGameObject GetOrCreateEnemyTemplate(
@@ -671,6 +726,35 @@ internal class EnemyModifier : Modifier
         {
             ProcessArea(area, randomizer, logger, enemyPool, options, rng, healthResolver);
         }
+    }
+
+    private void RandomizeEnemyForceTargeting(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        EnemyRandomizerOptions options)
+    {
+        if (options.ForceTargetingProbability <= 0)
+            return;
+
+        var rng = randomizer.GetRng("modifier/enemies/force-targeting");
+        var updatedSceneCount = 0;
+        var updatedSpawnInfoCount = 0;
+
+        foreach (var area in randomizer.AreaService.Areas)
+        {
+            var scnFile = randomizer.FileRepository
+                .GetScnFile(area.Path)
+                .ToBuilder(randomizer.FileRepository.TypeRepository);
+            scnFile.Scene = RandomizeForceTargetingOptions(scnFile.Scene, options, rng, out var changedCount);
+            if (changedCount == 0)
+                continue;
+
+            updatedSceneCount++;
+            updatedSpawnInfoCount += changedCount;
+            randomizer.FileRepository.SetScnFile(area.Path, scnFile.AddMissingResources().Build());
+        }
+
+        logger.LogLine($"Force targeting randomized for {updatedSpawnInfoCount} enemy spawn infos in {updatedSceneCount} scenes.");
     }
 
     private static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng)
@@ -1213,7 +1297,13 @@ internal class EnemyModifier : Modifier
             {
                 var request = extraEnemyRequests[i];
                 var generatorSpawnInfoIndex = generatorBuild.SpawnInfos.Count;
-                var spawnInfo = CreateExtraEnemySpawnInfo(randomizer, logger, request, healthResolver, generatorSpawnInfoIndex, rng);
+                var spawnInfo = CreateExtraEnemySpawnInfo(
+                    randomizer,
+                    logger,
+                    request,
+                    healthResolver,
+                    generatorSpawnInfoIndex,
+                    rng);
                 var requestInstances = CreateExtraEnemyInstances(randomizer, request, options, rng);
                 var fsmGenerator = CreateExtraEnemyFsmGenerator(randomizer, request, spawnInfo, generatorSpawnInfoIndex, rng);
 
@@ -1287,5 +1377,6 @@ internal class EnemyModifier : Modifier
         var healthResolver = new EnemyHealthResolver(randomizer, options, randomizer.GetRng("modifier/enemy-health"));
         RandomizeEnemies(randomizer, logger, options, healthResolver);
         PlaceExtraEnemies(randomizer, logger, options, healthResolver);
+        RandomizeEnemyForceTargeting(randomizer, logger, options);
     }
 }

@@ -188,6 +188,28 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     }
 
     [Fact]
+    public void ExtraEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
+    {
+        using var result = RunWithExtraEnemies(
+            BuildExtraEnemiesCsv(ExtraEnemyScenePath, 1, "Em4000", "Em4100", "Em4200", "Em3001"),
+            config => config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0,
+            enemyLimitsCsv: BuildEnemyLimitsCsv(ExtraEnemyScenePath, 4));
+
+        var extraSpawnInfos = GetNewExtraSpawnInfos(result, ExtraEnemyScenePath);
+        var forceTargetingOptions = extraSpawnInfos
+            .SelectMany(gameObject => gameObject.Components.Where(EnemyModifier.SupportsForceTargetingOption))
+            .ToList();
+
+        Assert.Equal(4, extraSpawnInfos.Count);
+        Assert.Equal(3, forceTargetingOptions.Count);
+        Assert.All(forceTargetingOptions, component =>
+            Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
+        Assert.Contains(extraSpawnInfos, gameObject =>
+            GetSpawnInfo(gameObject).UnitAlias == "Em3001" &&
+            !gameObject.Components.Any(EnemyModifier.SupportsForceTargetingOption));
+    }
+
+    [Fact]
     public void ExtraEnemies_HivePlacement_AddsGeneratedInsectPoolInstances()
     {
         using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(ExtraEnemyScenePath, 1, "Em5510"));

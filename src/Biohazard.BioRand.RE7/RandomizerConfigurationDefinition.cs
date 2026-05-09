@@ -191,55 +191,17 @@ internal static class RandomizerConfigurationDefinition
             Default = 1,
         });
 
-        // TODO Implement waves
-        //group = page.CreateGroup("Waves");
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = "enemy-waves-probability",
-        //    Label = "Enemy Wave Probability",
-        //    Description = "The percentage of enemy spawns that will have waves.",
-        //    Type = "percent",
-        //    Min = 0,
-        //    Max = 1,
-        //    Step = 0.01,
-        //    Default = 1
-        //});
-
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = "enemy-waves-distance",
-        //    Label = "Enemy Wave Distance",
-        //    Description = "The minimum distance the player needs to be for a spawn point to spawn a new enemy.",
-        //    Type = "range",
-        //    Min = 1,
-        //    Max = 100,
-        //    Step = 1,
-        //    Default = 5
-        //});
-
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = "enemy-waves-min",
-        //    Label = "Min. Enemy Waves",
-        //    Description = "The minimum number of waves per enemy. A value of 2 will mean a new enemy is spawned for each enemy killed.",
-        //    Type = "range",
-        //    Min = 2,
-        //    Max = 25,
-        //    Step = 1,
-        //    Default = 1
-        //});
-
-        //group.Items.Add(new GroupItem()
-        //{
-        //    Id = "enemy-waves-max",
-        //    Label = "Max. Enemy Waves",
-        //    Description = "The maximum number of waves per enemy. A value of 4 will mean some enemies will get another 3 extra enemies which spawn in, one after another, when the last one is killed.",
-        //    Type = "range",
-        //    Min = 2,
-        //    Max = 25,
-        //    Step = 1,
-        //    Default = 1
-        //});
+        group.Items.Add(new GroupItem()
+        {
+            Id = EnemyModifier.EnemyForceTargetingProbabilityConfigKey,
+            Label = "Force Targeting Probability",
+            Description = "The probability that certain enemies target the player.",
+            Type = "percent",
+            Min = 0,
+            Max = 1,
+            Step = 0.01,
+            Default = 0.0,
+        });
 
         group = page.CreateGroup("Size");
         group.Items.Add(new GroupItem()
@@ -368,16 +330,6 @@ internal static class RandomizerConfigurationDefinition
             "Good for permadeath runs but may reduce chaos.",
             Type = "switch",
             Default = true
-        });
-
-        group.Items.Add(new GroupItem()
-        {
-            Id = "enemy-speed-exclude-four-legged-moldeds",
-            Label = "Restrict 4-Legged Molded Speed",
-            Description = "Whether to exclude the four-legged Quick Moldeds from modified speeds. " +
-            "Good for permadeath runs but may reduce chaos.",
-            Type = "switch",
-            Default = false
         });
 
         //group = page.CreateGroup("Specific");

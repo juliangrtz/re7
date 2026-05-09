@@ -222,6 +222,64 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
     }
 
+    [Fact]
+    public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0;
+            ConfigureGeneratorEnemyPool(config, ["MoldedFat"]);
+        });
+
+        var forceTargetingOptions = new List<RszObjectNode>();
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
+            {
+                var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
+                if (enemyGenerator?.Enabled != true)
+                    return;
+
+                foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
+                {
+                    if (!EnemyModifier.ShouldReplaceSpawnInfo(child))
+                        continue;
+
+                    var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
+                    if (spawnInfo?.UnitAlias != "Em4200")
+                        continue;
+
+                    forceTargetingOptions.AddRange(child.Components.Where(EnemyModifier.SupportsForceTargetingOption));
+                }
+            });
+        }
+
+        Assert.NotEmpty(forceTargetingOptions);
+        Assert.All(forceTargetingOptions, component =>
+            Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
+    }
+
+    [Fact]
+    public void ForceTargetingProbability_AppliesWithoutEnemyReplacement()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = false;
+            config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0;
+        });
+
+        var forceTargetingOptions = GetChangedScenePaths(result)
+            .SelectMany(path => GetForceTargetingOptions(result.ReadAfterScene(path)))
+            .ToList();
+
+        Assert.NotEmpty(forceTargetingOptions);
+        Assert.All(forceTargetingOptions, component =>
+            Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
+    }
+
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -263,6 +321,21 @@ public class RandomizerEnemyModifierBehaviorTests
             if (aliases.Count > 0)
             {
                 result.Add(aliases);
+            }
+        });
+
+        return result;
+    }
+
+    private static List<RszObjectNode> GetForceTargetingOptions(RszScene scene)
+    {
+        var result = new List<RszObjectNode>();
+        scene.VisitComponents((gameObject, component) =>
+        {
+            if (gameObject.FindComponent<app.EnemySpawnInfo>() != null &&
+                EnemyModifier.SupportsForceTargetingOption(component))
+            {
+                result.Add(component);
             }
         });
 
