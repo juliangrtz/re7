@@ -144,7 +144,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"extra-enemy-amount",
             Label = "Extra Enemies",
-            Description = "The percentage of extra enemy spawns to add (includes peaceful areas and boss arenas).",
+            Description = "The percentage of configured extra enemy spawns to randomly select and add (includes peaceful areas and boss arenas).",
             Type = "percent",
             Min = 0,
             Max = 1,
