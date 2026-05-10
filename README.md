@@ -29,7 +29,7 @@ For current design notes and planned work, see:
 ## Features
 
 <a href="docs/key_item_route_graph.png">
-    <img src="docs/key_item_route_graph.png" style="width: 150px;" align="right" alt="Key item rando graph"/>
+    <img src="docs/key_item_route_graph.png" style="width: 200px;" align="right" alt="Key item rando graph"/>
 </a>
 
 - Generates RE7 randomizer output as a patch PAK, Fluffy Mod Manager ZIP, or extracted `natives/` folder.
@@ -40,8 +40,6 @@ For current design notes and planned work, see:
 - Adds REFramework artifacts when features require runtime support.
 - Provides standalone mod export commands for bundled optional mods.
 - Uses embedded, spreadsheet-derived, and generated data so behavior can be tested without a local RE7 install.
-
-<br clear="right"/>
 
 ## Requirements
 
