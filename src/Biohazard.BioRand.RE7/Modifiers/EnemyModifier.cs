@@ -290,7 +290,7 @@ internal class EnemyModifier : Modifier
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
-            if (enemy.EnemyId is EnemyID.Em3300) // Elder Eveline
+            if (enemy.EnemyId is EnemyID.Em4000) // TODO: Fix stale Molded in idle animations
                 continue;
 
             if (enemy.IsBoss)
