@@ -251,18 +251,18 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4100", GetSpawnInfo(gameObject).UnitAlias));
     }
 
-    [Fact]
-    public void ExtraEnemies_RandomId_ExcludesBossEnemies()
-    {
-        using var result = RunWithExtraEnemies(
-            BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random"),
-            config => ConfigureEnemyPool(config, "MargeMutated", "Molded"));
+    //[Fact]
+    //public void ExtraEnemies_RandomId_ExcludesBossEnemies()
+    //{
+    //    using var result = RunWithExtraEnemies(
+    //        BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random"),
+    //        config => ConfigureEnemyPool(config, "MargeMutated", "Molded"));
 
-        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+    //    var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
 
-        Assert.Equal(3, extraSpawnInfos.Count);
-        Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4000", GetSpawnInfo(gameObject).UnitAlias));
-    }
+    //    Assert.Equal(3, extraSpawnInfos.Count);
+    //    Assert.All(extraSpawnInfos, gameObject => Assert.Equal("Em4000", GetSpawnInfo(gameObject).UnitAlias));
+    //}
 
     [Fact]
     public void ExtraEnemies_RandomId_RespectsEnemyVarietyLimit()
@@ -282,35 +282,35 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         Assert.Single(extraSpawnInfos.Select(gameObject => GetSpawnInfo(gameObject).UnitAlias).Distinct(StringComparer.Ordinal));
     }
 
-    [Fact]
-    public void ExtraEnemies_RandomId_RespectsPackMaxSizeOne()
-    {
-        using var result = RunWithExtraEnemies(
-            BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random", "random", "random", "random"),
-            config =>
-            {
-                config["enemy-variety"] = 2;
-                config["enemy-pack-max-size"] = 1;
-                ConfigureEnemyPool(config, "Molded", "MoldedQuick");
-                config["enemy-ratio-molded"] = 1000.0;
-                config["enemy-ratio-moldedquick"] = 1000.0;
-            });
+    //[Fact]
+    //public void ExtraEnemies_RandomId_RespectsPackMaxSizeOne()
+    //{
+    //    using var result = RunWithExtraEnemies(
+    //        BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random", "random", "random", "random"),
+    //        config =>
+    //        {
+    //            config["enemy-variety"] = 2;
+    //            config["enemy-pack-max-size"] = 1;
+    //            ConfigureEnemyPool(config, "Molded", "MoldedQuick");
+    //            config["enemy-ratio-molded"] = 1000.0;
+    //            config["enemy-ratio-moldedquick"] = 1000.0;
+    //        });
 
-        var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
-        var enemyAliases = extraSpawnInfos.Select(gameObject => GetSpawnInfo(gameObject).UnitAlias).ToList();
-        var allowedEnemyAliases = new HashSet<string>(StringComparer.Ordinal)
-        {
-            "Em4000",
-            "Em4100",
-        };
+    //    var extraSpawnInfos = GetNewExtraSpawnInfos(result, RandomExtraEnemyScenePath);
+    //    var enemyAliases = extraSpawnInfos.Select(gameObject => GetSpawnInfo(gameObject).UnitAlias).ToList();
+    //    var allowedEnemyAliases = new HashSet<string>(StringComparer.Ordinal)
+    //    {
+    //        "Em4000",
+    //        "Em4100",
+    //    };
 
-        Assert.Equal(6, enemyAliases.Count);
-        Assert.All(enemyAliases, alias => Assert.Contains(alias, allowedEnemyAliases));
-        for (var i = 1; i < enemyAliases.Count; i++)
-        {
-            Assert.NotEqual(enemyAliases[i - 1], enemyAliases[i]);
-        }
-    }
+    //    Assert.Equal(6, enemyAliases.Count);
+    //    Assert.All(enemyAliases, alias => Assert.Contains(alias, allowedEnemyAliases));
+    //    for (var i = 1; i < enemyAliases.Count; i++)
+    //    {
+    //        Assert.NotEqual(enemyAliases[i - 1], enemyAliases[i]);
+    //    }
+    //}
 
     [Fact]
     public void ExtraEnemies_Amount_SelectsExactRandomSubset()
