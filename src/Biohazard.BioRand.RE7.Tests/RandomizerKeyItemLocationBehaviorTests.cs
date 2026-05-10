@@ -19,17 +19,18 @@ public class RandomizerKeyItemLocationBehaviorTests
             ["MasterKey"] = new(3, ExpectedScope.BeforeSnakeRooms),
             ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["EthanCarKey"] = new(3, ExpectedScope.BeforeGarage),
+            ["SilhouettePazzlePiece"] = new(3, ExpectedScope.BeforeShadowPuzzle),
             ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
             ["FuseCh4"] = new(4, ExpectedScope.MiaPresentShip),
             ["EvOpener"] = new(4, ExpectedScope.MiaPresentShip),
             ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
-            ["SerumTypeE"] = new(4, ExpectedScope.EthanLateGame),
+            ["SerumTypeE"] = new(4, ExpectedScope.BeforeNecrotoxinUse),
         };
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
 
     [Fact]
-    public void KeyItemLocations_RandomizesSupportedKeyItemsIntoChapterScopedNormalPlacements()
+    public void KeyItemLocations_RandomizesSupportedKeyItemsIntoRouteSafeNormalPlacements()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -53,6 +54,8 @@ public class RandomizerKeyItemLocationBehaviorTests
         }
 
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "3CrestKeyB" && change.Placement.Chapter == 4);
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "EthanCarKey" && !IsMainHouseBeforeGarage(change.Placement.SceneFile));
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "MorgueKey" && !IsMainHouseBeforeGarage(change.Placement.SceneFile));
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SilhouettePazzlePiece" && IsYardOrTrailer(change.Placement.SceneFile));
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SerumTypeE" && change.Placement.SceneFile.Contains("/chapter4/lastbattle", StringComparison.OrdinalIgnoreCase));
     }
@@ -103,7 +106,6 @@ public class RandomizerKeyItemLocationBehaviorTests
             Assert.NotNull(gameObject);
             Assert.NotNull(beforeGameObject);
 
-            if (HasFsmInHierarchy(afterScene, change.Placement.Guid))
             if (HasFsmInHierarchy(beforeScene, change.Placement.Guid))
             {
                 AssertOriginalPickupShapePreserved(beforeGameObject!, gameObject!, change.AfterId);
@@ -240,42 +242,102 @@ public class RandomizerKeyItemLocationBehaviorTests
     private static bool ScopeMatches(ExpectedScope scope, ItemPlacement placement)
         => scope switch
         {
-            ExpectedScope.Chapter3MainHouse => IsChapter3MainHouseScene(placement.SceneFile),
-            ExpectedScope.Chapter3PreLucas => IsChapter3PreLucasScene(placement.SceneFile),
-            ExpectedScope.MiaPresentShip => IsMiaPresentShipScene(placement.SceneFile),
-            ExpectedScope.EthanLateGame => IsEthanLateGameScene(placement.SceneFile),
+            ExpectedScope.BeforeGarage => IsMainHouseBeforeGarage(placement.SceneFile),
+            ExpectedScope.Chapter3Start => IsMainHouseBeforeGarage(placement.SceneFile),
+            ExpectedScope.BeforeShadowPuzzle => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile),
+            ExpectedScope.BeforeDogDoor => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+                || IsMainHouseEastOrBasement(placement.SceneFile),
+            ExpectedScope.BeforeScorpionDoor => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+                || IsMainHouseEastOrBasement(placement.SceneFile)
+                || IsYardOrTrailer(placement.SceneFile),
+            ExpectedScope.BeforeCrowDoor => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+                || IsMainHouseEastOrBasement(placement.SceneFile)
+                || IsYardOrTrailer(placement.SceneFile)
+                || IsOldHouseBeforeCrowDoor(placement.SceneFile),
+            ExpectedScope.BeforeSnakeRooms => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+                || IsMainHouseEastOrBasement(placement.SceneFile)
+                || IsYardOrTrailer(placement.SceneFile)
+                || IsOldHouseBeforeCrowDoor(placement.SceneFile)
                 || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile),
             ExpectedScope.BeforeBarnBatterySocket => IsMainHouseBeforeGarage(placement.SceneFile)
                 || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+                || IsMainHouseEastOrBasement(placement.SceneFile)
+                || IsYardOrTrailer(placement.SceneFile)
+                || IsOldHouseBeforeCrowDoor(placement.SceneFile)
+                || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
+                || IsMainHouseSnakeKeyRoom(placement.SceneFile)
+                || IsTestingAreaBeforeBarnFight(placement.SceneFile),
             ExpectedScope.MiaPresentShip => IsMiaPresentShipRoute(placement.SceneFile),
             ExpectedScope.BeforeNecrotoxinUse => IsSaltMineBeforeNecrotoxinUse(placement.SceneFile),
             _ => true,
         };
 
-    private static bool IsMiaPresentShipScene(string sceneFile)
-        => sceneFile.Contains("/chapter4/ship", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter4/c04_ship", StringComparison.OrdinalIgnoreCase);
+    private static bool PathContains(string path, string value)
+        => path.Contains(value, StringComparison.OrdinalIgnoreCase);
 
-    private static bool IsChapter3MainHouseScene(string sceneFile)
-        => sceneFile.Contains("/chapter3/mainhouse", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_mainhouse", StringComparison.OrdinalIgnoreCase);
+    private static bool IsMainHouseBeforeGarage(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_west/")
+            || PathContains(path, "c03_mainhouse1fgaragehallway")
+            || PathContains(path, "c03_mainhouse1fhallway")
+            || PathContains(path, "c03_mainhouse1fldk")
+            || PathContains(path, "c03_mainhouse1fliving")
+            || PathContains(path, "c03_mainhouse1fpantry")
+            || PathContains(path, "c03_mainhouse1fwash");
 
-    private static bool IsChapter3PreLucasScene(string sceneFile)
-        => IsChapter3MainHouseScene(sceneFile)
-            || sceneFile.Contains("/scene/chapter3/c03_rightarea", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_soft_1", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_oldhouse", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_gh", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/chapter3/oldhouse", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/chapter3/gardenarea", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_gardenarea", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter3/c03_trailerhouse", StringComparison.OrdinalIgnoreCase);
+    private static bool IsMainHouseBeforeShadowPuzzle(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_hall/")
+            || PathContains(path, "c03_mainhouse2fbath")
+            || PathContains(path, "c03_mainhouse2fgrandma")
+            || PathContains(path, "c03_mainhouse2fhallway")
+            || PathContains(path, "c03_mainhouse2fplay")
+            || PathContains(path, "c03_mainhouse2fstoreroom")
+            || PathContains(path, "c03_mainhousehall")
+            || PathContains(path, "c03_mainhousestair01");
 
-    private static bool IsEthanLateGameScene(string sceneFile)
-        => sceneFile.Contains("/chapter4/saltdome", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter4/c04_cottage", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/scene/chapter4/c04_mainhouse", StringComparison.OrdinalIgnoreCase)
-            || sceneFile.Contains("/animation/ingame/c04/", StringComparison.OrdinalIgnoreCase);
+    private static bool IsMainHouseEastOrBasement(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_east/")
+            || PathContains(path, "c03_rightarea");
+
+    private static bool IsMainHouseSnakeKeyRoom(string path)
+        => PathContains(path, "c03_mainhouse2fbedroom")
+            || PathContains(path, "c03_mainhouse2fkids")
+            || PathContains(path, "c03_mainhousoutsideterrace2f3");
+
+    private static bool IsYardOrTrailer(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
+            || PathContains(path, "c03_gardenarea")
+            || PathContains(path, "c03_trailerhouse")
+            || PathContains(path, "c03_mainhousoutside")
+            || PathContains(path, "c03_mainhousoutsideterrace");
+
+    private static bool IsOldHouseBeforeCrowDoor(string path)
+        => PathContains(path, "c03_oldhouse1fbridge")
+            || PathContains(path, "c03_oldhouse1fentrance")
+            || PathContains(path, "c03_oldhouse1fhallway")
+            || PathContains(path, "c03_oldhouse1fhole")
+            || PathContains(path, "c03_oldhouse1fhollway")
+            || PathContains(path, "c03_oldhouse1fkitchen")
+            || PathContains(path, "c03_oldhouse1fpuzzle")
+            || PathContains(path, "c03_oldhouse1froom")
+            || PathContains(path, "c03_oldhouse1fstorage")
+            || PathContains(path, "c03_oldhouse1funderfloor")
+            || PathContains(path, "c03_oldhouse1fwallinside")
+            || PathContains(path, "c03_oldhouseoutside")
+            || PathContains(path, "c03_oldhousesaferoom");
+
+    private static bool IsOldHouseAfterCrowDoorOrGreenHouse(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/oldhouse/")
+            || PathContains(path, "/leveldesign/itemset/chapter3/greenhouse/")
+            || PathContains(path, "c03_oldhouse1fstairs")
+            || PathContains(path, "c03_oldhouse2f")
+            || PathContains(path, "c03_oldhousecave")
+            || PathContains(path, "c03_gh");
+
     private static bool IsTestingAreaBeforeBarnFight(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/cowshed/")
             || PathContains(path, "c03_cowshed");
