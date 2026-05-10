@@ -293,12 +293,6 @@ internal class EnemyModifier : Modifier
             if (enemy.EnemyId is EnemyID.Em4000) // TODO: Fix stale Molded in idle animations
                 continue;
 
-            if (enemy.IsBoss)
-                continue;
-
-            if (enemy.IsInsect)
-                continue;
-
             if (!enemy.UsesEnemyGenerator)
                 continue;
 
