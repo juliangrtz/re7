@@ -12,14 +12,13 @@ public class RandomizerKeyItemLocationBehaviorTests
     private static readonly IReadOnlyDictionary<string, ExpectedKeyItemRule> ExpectedRules =
         new Dictionary<string, ExpectedKeyItemRule>(StringComparer.OrdinalIgnoreCase)
         {
-            ["3CrestKeyB"] = new(3, ExpectedScope.Chapter3MainHouse),
-            ["3CrestKeyA"] = new(3, ExpectedScope.Chapter3MainHouse),
-            ["Battery"] = new(3, ExpectedScope.Chapter3PreLucas),
-            ["MorgueKey"] = new(3, ExpectedScope.Chapter3PreLucas),
-            ["MasterKey"] = new(3, ExpectedScope.Chapter3PreLucas),
-            ["TalismanKey"] = new(3, ExpectedScope.Chapter3PreLucas),
-            ["EthanCarKey"] = new(3, ExpectedScope.Chapter3MainHouse),
-            ["SilhouettePazzlePiece"] = new(3, ExpectedScope.Chapter3MainHouse),
+            ["3CrestKeyB"] = new(3, ExpectedScope.BeforeDogDoor),
+            ["3CrestKeyA"] = new(3, ExpectedScope.BeforeDogDoor),
+            ["Battery"] = new(3, ExpectedScope.BeforeBarnBatterySocket),
+            ["MorgueKey"] = new(3, ExpectedScope.Chapter3Start),
+            ["MasterKey"] = new(3, ExpectedScope.BeforeSnakeRooms),
+            ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
+            ["EthanCarKey"] = new(3, ExpectedScope.BeforeGarage),
             ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
             ["FuseCh4"] = new(4, ExpectedScope.MiaPresentShip),
             ["EvOpener"] = new(4, ExpectedScope.MiaPresentShip),
@@ -54,6 +53,7 @@ public class RandomizerKeyItemLocationBehaviorTests
         }
 
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "3CrestKeyB" && change.Placement.Chapter == 4);
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SilhouettePazzlePiece" && IsYardOrTrailer(change.Placement.SceneFile));
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SerumTypeE" && change.Placement.SceneFile.Contains("/chapter4/lastbattle", StringComparison.OrdinalIgnoreCase));
     }
 
@@ -104,6 +104,7 @@ public class RandomizerKeyItemLocationBehaviorTests
             Assert.NotNull(beforeGameObject);
 
             if (HasFsmInHierarchy(afterScene, change.Placement.Guid))
+            if (HasFsmInHierarchy(beforeScene, change.Placement.Guid))
             {
                 AssertOriginalPickupShapePreserved(beforeGameObject!, gameObject!, change.AfterId);
                 AssertVisualResourcesMatch(result.Randomizer.TemplateService.GetItemTemplate(change.AfterId), gameObject!);
@@ -243,6 +244,11 @@ public class RandomizerKeyItemLocationBehaviorTests
             ExpectedScope.Chapter3PreLucas => IsChapter3PreLucasScene(placement.SceneFile),
             ExpectedScope.MiaPresentShip => IsMiaPresentShipScene(placement.SceneFile),
             ExpectedScope.EthanLateGame => IsEthanLateGameScene(placement.SceneFile),
+                || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile),
+            ExpectedScope.BeforeBarnBatterySocket => IsMainHouseBeforeGarage(placement.SceneFile)
+                || IsMainHouseBeforeShadowPuzzle(placement.SceneFile)
+            ExpectedScope.MiaPresentShip => IsMiaPresentShipRoute(placement.SceneFile),
+            ExpectedScope.BeforeNecrotoxinUse => IsSaltMineBeforeNecrotoxinUse(placement.SceneFile),
             _ => true,
         };
 
@@ -270,14 +276,35 @@ public class RandomizerKeyItemLocationBehaviorTests
             || sceneFile.Contains("/scene/chapter4/c04_cottage", StringComparison.OrdinalIgnoreCase)
             || sceneFile.Contains("/scene/chapter4/c04_mainhouse", StringComparison.OrdinalIgnoreCase)
             || sceneFile.Contains("/animation/ingame/c04/", StringComparison.OrdinalIgnoreCase);
+    private static bool IsTestingAreaBeforeBarnFight(string path)
+        => PathContains(path, "/leveldesign/itemset/chapter3/cowshed/")
+            || PathContains(path, "c03_cowshed");
+
+    private static bool IsMiaPresentShipRoute(string path)
+        => !PathContains(path, "past")
+            && (PathContains(path, "/environment/scene/chapter4/c04_ship")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship")
+                || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
+
+    private static bool IsSaltMineBeforeNecrotoxinUse(string path)
+        => !PathContains(path, "/chapter4/lastbattle/")
+            && (PathContains(path, "/environment/scene/chapter4/c04_cottage")
+                || PathContains(path, "/environment/scene/chapter4/c04_cave")
+                || PathContains(path, "/leveldesign/itemset/chapter4/saltdome"));
 
     private enum ExpectedScope
     {
         Any,
-        Chapter3MainHouse,
-        Chapter3PreLucas,
+        BeforeGarage,
+        Chapter3Start,
+        BeforeShadowPuzzle,
+        BeforeDogDoor,
+        BeforeScorpionDoor,
+        BeforeCrowDoor,
+        BeforeSnakeRooms,
+        BeforeBarnBatterySocket,
         MiaPresentShip,
-        EthanLateGame,
+        BeforeNecrotoxinUse,
     }
 
     private sealed record ExpectedKeyItemRule(int Chapter, ExpectedScope Scope);
