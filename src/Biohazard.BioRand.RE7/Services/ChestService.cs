@@ -32,7 +32,7 @@ internal class ChestService(Randomizer randomizer)
         var transform = new GeneratedViaTransform()
         {
             Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
-            Rotation = new Quaternion(placement.RotX, placement.RotY, placement.RotZ, placement.RotW),
+            Rotation = placement.Rotation,
             Scale = Vector3.One,
             ParentJoint = "",
             SameJointsContraint = false,

@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Globalization;
 using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
@@ -31,6 +32,37 @@ internal class ExtraPlacementModifier : Modifier
         WoodenCrate,
         WeaponChest,
         ItemBox
+    }
+
+    internal static bool IsPlainExtraItemPlacement(ItemPlacement placement)
+        => placement.IsExtra &&
+            !placement.Tags.Contains(WoodenCrateTag) &&
+            !placement.Tags.Contains(WeaponChestTag) &&
+            !placement.Tags.Contains(ItemBoxTag);
+
+    internal static Guid GetGeneratedItemGuid(ItemPlacement placement)
+    {
+        if (placement.Guid != Guid.Empty)
+            return placement.Guid;
+
+        var key = string.Join("|", [
+            "extra-item",
+            placement.SceneFile,
+            placement.Id,
+            string.Join(",", placement.Tags.Order(StringComparer.Ordinal)),
+            placement.Comment ?? "",
+            Format(placement.PosX),
+            Format(placement.PosY),
+            Format(placement.PosZ),
+            Format(placement.RotX),
+            Format(placement.RotY),
+            Format(placement.RotZ),
+            Format(placement.RotW),
+        ]);
+        return key.GetGuidHash();
+
+        static string Format(float value)
+            => value.ToString("R", CultureInfo.InvariantCulture);
     }
 
     private RszScene AddExtraChest(
@@ -154,7 +186,7 @@ internal class ExtraPlacementModifier : Modifier
             }
 
             var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
-            newGuid = rng.NextGuid();
+            newGuid = GetGeneratedItemGuid(placement);
             var templateInstanceRng = randomizer.GetRng(
                 "modifier/extra-placement/template-instances",
                 placement.SceneFile,
@@ -178,7 +210,7 @@ internal class ExtraPlacementModifier : Modifier
         else
         {
             var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(placement.Id, rng, randomItemSettings);
-            newGuid = rng.NextGuid();
+            newGuid = GetGeneratedItemGuid(placement);
             var templateInstanceRng = randomizer.GetRng(
                 "modifier/extra-placement/template-instances",
                 placement.SceneFile,

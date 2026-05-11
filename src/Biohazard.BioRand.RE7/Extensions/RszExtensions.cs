@@ -4,7 +4,10 @@ namespace Biohazard.BioRand.RE7.Extensions;
 
 public static class RszExtensions
 {
-    public readonly record struct GameObjectMatch(RszGameObject GameObject, bool HasFsmInHierarchy);
+    public readonly record struct GameObjectMatch(
+        RszGameObject GameObject,
+        bool HasFsmInHierarchy,
+        bool HasDrawerContext = false);
 
     public static RszGameObject CloneWithNewGuids(
         this RszGameObject rootGameObject,
@@ -152,12 +155,14 @@ public static class RszExtensions
 
         foreach (var child in scene.Children)
         {
-            VisitSceneNode(child, hasFsmInHierarchy: false, remaining, result);
+            VisitSceneNode(child, hasFsmInHierarchy: false, hasDrawerInHierarchy: false, remaining, result);
             if (remaining.Count == 0)
             {
                 break;
             }
         }
+
+        MarkDrawerReferencedTargets(scene, result);
 
         return result;
     }
@@ -165,6 +170,7 @@ public static class RszExtensions
     private static void VisitSceneNode(
         IRszSceneNode node,
         bool hasFsmInHierarchy,
+        bool hasDrawerInHierarchy,
         ISet<Guid> remaining,
         IDictionary<Guid, GameObjectMatch> result)
     {
@@ -173,7 +179,7 @@ public static class RszExtensions
             case RszFolder folder:
                 foreach (var child in folder.Children)
                 {
-                    VisitSceneNode(child, hasFsmInHierarchy, remaining, result);
+                    VisitSceneNode(child, hasFsmInHierarchy, hasDrawerInHierarchy, remaining, result);
                     if (remaining.Count == 0)
                     {
                         break;
@@ -183,9 +189,10 @@ public static class RszExtensions
 
             case RszGameObject gameObject:
                 var hasFsmHere = hasFsmInHierarchy || HasFsmComponent(gameObject);
+                var hasDrawerHere = hasDrawerInHierarchy || HasDrawerComponent(gameObject);
                 if (remaining.Remove(gameObject.Guid))
                 {
-                    result[gameObject.Guid] = new GameObjectMatch(gameObject, hasFsmHere);
+                    result[gameObject.Guid] = new GameObjectMatch(gameObject, hasFsmHere, hasDrawerHere);
                 }
 
                 if (remaining.Count == 0)
@@ -195,7 +202,7 @@ public static class RszExtensions
 
                 foreach (var child in gameObject.Children)
                 {
-                    VisitSceneNode(child, hasFsmHere, remaining, result);
+                    VisitSceneNode(child, hasFsmHere, hasDrawerHere, remaining, result);
                     if (remaining.Count == 0)
                     {
                         break;
@@ -215,6 +222,73 @@ public static class RszExtensions
         => gameObject.Components.Any(component =>
             component.Type.Name.Contains("Fsm", StringComparison.Ordinal) ||
             component.Type.Name.Contains("FSM", StringComparison.Ordinal));
+
+    private static bool HasDrawerComponent(RszGameObject gameObject)
+        => gameObject.Name.Contains("Drawer", StringComparison.OrdinalIgnoreCase) ||
+            gameObject.Components.Any(component =>
+                component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal));
+
+    private static void MarkDrawerReferencedTargets(
+        RszScene scene,
+        IDictionary<Guid, GameObjectMatch> result)
+    {
+        var targetGuids = result.Keys.ToHashSet();
+        if (targetGuids.Count == 0)
+        {
+            return;
+        }
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            foreach (var component in gameObject.Components)
+            {
+                if (!component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                foreach (var targetGuid in FindReferencedTargets(component, targetGuids))
+                {
+                    var match = result[targetGuid];
+                    result[targetGuid] = match with { HasDrawerContext = true };
+                }
+            }
+        });
+    }
+
+    private static IEnumerable<Guid> FindReferencedTargets(IRszNode node, IReadOnlySet<Guid> targetGuids)
+    {
+        switch (node)
+        {
+            case RszValueNode valueNode when valueNode.Type == RszFieldType.GameObjectRef:
+                var referencedGuid = RszSerializer.Deserialize<Guid>(valueNode);
+                if (targetGuids.Contains(referencedGuid))
+                {
+                    yield return referencedGuid;
+                }
+                break;
+
+            case RszObjectNode objectNode:
+                foreach (var child in objectNode.Children)
+                {
+                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids))
+                    {
+                        yield return matchedGuid;
+                    }
+                }
+                break;
+
+            case RszArrayNode arrayNode:
+                foreach (var child in arrayNode.Children)
+                {
+                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids))
+                    {
+                        yield return matchedGuid;
+                    }
+                }
+                break;
+        }
+    }
 
     private static RszObjectNode SetBoolFieldIfPresent(RszObjectNode component, string fieldName, bool value)
     {

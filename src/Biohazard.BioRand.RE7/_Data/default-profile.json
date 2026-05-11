@@ -126,7 +126,7 @@
   "boss-health-min-miachainsaw": 0.75,
   "boss-health-max-miachainsaw": 1.25,
   "random-items": true,
-  "random-key-item-locations": false,
+  "random-key-item-locations": true,
   "replace-madhouse-tapes": false,
   "replace-weapons": false,
   "random-bird-cage-magnum": true,
