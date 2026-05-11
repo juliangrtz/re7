@@ -1,4 +1,3 @@
-using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.REEngine;
 using IntelOrca.Biohazard.REE.Rsz;
 

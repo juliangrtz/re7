@@ -1,7 +1,6 @@
 ﻿using IntelOrca.Biohazard.REE.Cryptography;
 using IntelOrca.Biohazard.REE.Variables;
 using System.Globalization;
-using System.Text;
 
 namespace Biohazard.BioRand.RE7.Services;
 

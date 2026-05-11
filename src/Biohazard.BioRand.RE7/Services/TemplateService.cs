@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Serialization;
-using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Services;

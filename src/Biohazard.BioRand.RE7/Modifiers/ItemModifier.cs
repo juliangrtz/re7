@@ -1,9 +1,7 @@
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Services;
-using Biohazard.BioRand.RE7.Extensions;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
-using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 

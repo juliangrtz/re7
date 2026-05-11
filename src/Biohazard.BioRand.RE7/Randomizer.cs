@@ -17,7 +17,7 @@ internal class Randomizer : IDisposable
     private readonly Lock _servicesLock = new();
     private readonly Dictionary<string, string> _logFiles = [];
 
-    public int PakVersion { get; set; } = 2;
+    public int PakVersion { get; set; } = 1;
     public RandomizerInput Input { get; }
     public IProgressReporter Reporter { get; }
     public FileRepository FileRepository => _fileRepository;

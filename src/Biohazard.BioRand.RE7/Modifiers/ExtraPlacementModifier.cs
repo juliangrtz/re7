@@ -1,5 +1,4 @@
 using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
