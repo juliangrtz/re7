@@ -188,6 +188,7 @@ internal class Randomizer : IDisposable
             new ItemModifier(),
             new BirdCageModifier(),
             new ItemDropTableModifier(),
+            new LucasPuzzleInventoryModifier(),
             new KeyItemLocationModifier(),
 
             // Weapons

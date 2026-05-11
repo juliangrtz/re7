@@ -246,6 +246,51 @@ public class RandomizerKeyItemLocationBehaviorTests
     }
 
     [Fact]
+    public void KeyItemLocations_PatchesLucasPuzzleRoomInventoryGate()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        });
+
+        var beforeChecks = GetLucasPuzzleInventoryChecks(result.ReadBeforeScene(LucasPuzzleInventoryModifier.ScenePath));
+        var afterScene = result.ReadAfterScene(LucasPuzzleInventoryModifier.ScenePath);
+        var afterChecks = GetLucasPuzzleInventoryChecks(afterScene);
+        var afterActions = GetLucasPuzzleFsmActions(afterScene);
+
+        Assert.Equal(9, beforeChecks.Count);
+        Assert.Empty(afterChecks);
+        Assert.All(beforeChecks, action => Assert.True(action.Get<bool>("v0_Enabled")));
+        foreach (var beforeCheck in beforeChecks)
+        {
+            var uid = beforeCheck.Get<uint>("v2_UID");
+            var listNo = beforeCheck.Get<byte>("v3_ListNo");
+            var afterAction = Assert.Single(afterActions, action =>
+                action.Get<uint>("v2_UID") == uid &&
+                action.Get<byte>("v3_ListNo") == listNo);
+            Assert.Equal("app.fsm.Wait", afterAction.Type.Name);
+            Assert.True(afterAction.Get<bool>("v0_Enabled"));
+            Assert.Equal(0f, afterAction.Get<float>("Time"));
+            Assert.Equal(0f, afterAction.Get<float>("RandamMax"));
+            Assert.Equal(0, afterAction.Get<int>("WaitType"));
+            Assert.Equal(Guid.Empty, afterAction.Get<Guid>("SetFlag"));
+        }
+
+        Assert.Contains("Lucas puzzle room inventory gate: replaced 9 inventory-empty FSM checks with successful waits", result.ProcessLog);
+    }
+
+    [Fact]
+    public void KeyItemLocations_LeavesLucasPuzzleRoomInventoryGateVanillaWhenDisabled()
+    {
+        using var result = RandomizerTest.RunState();
+        var checks = GetLucasPuzzleInventoryChecks(result.ReadAfterScene(LucasPuzzleInventoryModifier.ScenePath));
+
+        Assert.False(result.WasFileModified(LucasPuzzleInventoryModifier.ScenePath));
+        Assert.Equal(9, checks.Count);
+        Assert.All(checks, action => Assert.True(action.Get<bool>("v0_Enabled")));
+    }
+
+    [Fact]
     public void KeyItemLocations_DetectsFsmControlledPickupPlacements()
     {
         using var result = RandomizerTest.RunState();
@@ -638,6 +683,37 @@ public class RandomizerKeyItemLocationBehaviorTests
         {
             result |= child.FindComponent<app.InteractDetailSearch>() != null;
         });
+        return result;
+    }
+
+    private static List<RszObjectNode> GetLucasPuzzleInventoryChecks(RszScene scene)
+        => GetLucasPuzzleFsmActions(scene)
+            .Where(action => action.Type.Name == "app.fsm.CheckInventoryEmpty")
+            .ToList();
+
+    private static List<RszObjectNode> GetLucasPuzzleFsmActions(RszScene scene)
+    {
+        var result = new List<RszObjectNode>();
+
+        foreach (var objectName in LucasPuzzleInventoryModifier.PatchedFsmGameObjectNames)
+        {
+            var gameObject = scene.FindGameObject(objectName);
+            Assert.NotNull(gameObject);
+
+            foreach (var component in gameObject!.Components.Where(component => component.Type.Name == "via.fsm.Fsm"))
+            {
+                component.Visit(node =>
+                {
+                    if (node is RszObjectNode objectNode &&
+                        objectNode.Type.FindFieldIndex("v2_UID") != -1 &&
+                        objectNode.Type.FindFieldIndex("v3_ListNo") != -1)
+                    {
+                        result.Add(objectNode);
+                    }
+                });
+            }
+        }
+
         return result;
     }
 
