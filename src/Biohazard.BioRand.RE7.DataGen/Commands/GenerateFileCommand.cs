@@ -27,6 +27,10 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
         [CommandOption("-v|--verbose")]
         public bool Verbose { get; set; } = default!;
 
+        [CommandOption("--output-dir")]
+        [DefaultValue("GeneratedFiles")]
+        public string OutputDirectory { get; set; } = "GeneratedFiles";
+
         public override ValidationResult Validate()
         {
             if (Generators.Length == 0)
@@ -113,7 +117,7 @@ internal sealed class GenerateCommand : Command<GenerateSettings>
 
                     if (output != null)
                     {
-                        var outputPath = FileWriter.WriteOutput(outputFileName, output);
+                        var outputPath = FileWriter.WriteOutput(settings.OutputDirectory, outputFileName, output);
                         AnsiConsole.MarkupLine(
                             $"[green]Generator '{generator.Id}' (format {format.ToString().ToTitleCase()}) finished: [bold]{Path.GetFullPath(outputPath)}[/][/] "
                         );

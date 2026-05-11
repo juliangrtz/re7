@@ -1,6 +1,5 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using Biohazard.BioRand.RE7;
 using IntelOrca.Biohazard.BioRand;
 using System.Reflection;
 

@@ -17,7 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="3.119.2" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.2" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
   </ItemGroup>
+
+  <Target Name="GenerateKeyItemRouteGraphDiagram"
+          AfterTargets="Build"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(SkipKeyItemRouteGraphDiagramGeneration)' != 'true'">
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\..\.."
+          Command="dotnet &quot;$(TargetPath)&quot; generate key_item_route_graph -f Binary --output-dir &quot;$(MSBuildProjectDirectory)\..\..\docs&quot;" />
+  </Target>
 
 </Project>

@@ -43,8 +43,12 @@ public class ItemPlacement
 
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
     public SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
-    public SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
+    public SerializableRotation Rotation => HasZeroRotation
+        ? new SerializableRotation(0, 0, 0, 1)
+        : new SerializableRotation(RotX, RotY, RotZ, RotW);
     public EulerAngles Euler => new(Rotation);
 
     public const string ExcludeTag = "exclude";
+
+    private bool HasZeroRotation => RotX == 0 && RotY == 0 && RotZ == 0 && RotW == 0;
 }

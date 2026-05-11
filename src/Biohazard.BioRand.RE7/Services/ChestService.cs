@@ -1,5 +1,4 @@
 ﻿using Biohazard.BioRand.RE7.Items;
-using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
@@ -32,7 +31,7 @@ internal class ChestService(Randomizer randomizer)
         var transform = new GeneratedViaTransform()
         {
             Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
-            Rotation = new Quaternion(placement.RotX, placement.RotY, placement.RotZ, placement.RotW),
+            Rotation = placement.Rotation,
             Scale = Vector3.One,
             ParentJoint = "",
             SameJointsContraint = false,

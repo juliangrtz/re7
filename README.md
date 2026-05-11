@@ -23,9 +23,14 @@ For current design notes and planned work, see:
 - [Roadmap](docs/Roadmap.MD)
 - [Technical notes](docs/Notes.MD)
 - [Enemy spawning notes](docs/enemies/enemy_spawning.md)
+- [Key item route graph](docs/key_item_route_graph.png)
 - [Flags, triggers, stats notes](docs/UvarVariables.MD)
 
 ## Features
+
+<a href="docs/key_item_route_graph.png">
+    <img src="docs/key_item_route_graph.png" style="width: 200px;" align="right" alt="Key item rando graph"/>
+</a>
 
 - Generates RE7 randomizer output as a patch PAK, Fluffy Mod Manager ZIP, or extracted `natives/` folder.
 - Supports seeded generation and JSON configuration profiles.
@@ -97,6 +102,7 @@ dotnet run --project .\src\Biohazard.BioRand.RE7.DataGen\Biohazard.BioRand.RE7.D
 ```
 
 Generated files are written to `GeneratedFiles/`. Some generators also copy outputs into `_Data/`.
+The key item route graph image is refreshed into `docs/key_item_route_graph.png` when the DataGen project builds.
 
 ## Repository Layout
 

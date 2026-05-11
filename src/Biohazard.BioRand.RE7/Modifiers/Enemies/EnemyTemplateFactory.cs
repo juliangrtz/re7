@@ -1,5 +1,4 @@
 using Biohazard.BioRand.RE7.Enemies;
-using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 

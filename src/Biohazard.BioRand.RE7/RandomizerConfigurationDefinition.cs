@@ -250,8 +250,20 @@ internal static class RandomizerConfigurationDefinition
             Default = false
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-speed-probability",
+            Label = "Enemy speed probability",
+            Description = "The probability that a speed-randomizable enemy uses a randomized speed multiplier.",
+            Type = "percent",
+            Min = 0,
+            Max = 1,
+            Step = 0.01,
+            Default = 1.0
+        });
+
         group = page.CreateGroup("Speed Ranges");
-        group.Warning = "Random enemy speed must be enabled for these values to take effect.";
+        group.Warning = "Random enemy speed must be enabled and pass the speed probability roll for these values to take effect.";
         foreach (var enemy in speedConfigurableEnemies)
         {
             var speedConfigId = enemy.SpeedConfigId.ToLowerInvariant();
