@@ -56,6 +56,27 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
+    public void EnemyDirectiveModifier_MoldedSpeed_ProbabilityZeroSkipsSpeedChanges()
+    {
+        var enemy = EnemyDefinitions.Instance.All.First(x => x.Id == "Molded");
+
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemy-speed"] = true;
+            config["enemy-speed-probability"] = 0.0;
+            config["enemy-speed-min-molded"] = 2.0;
+            config["enemy-speed-max-molded"] = 2.0;
+        });
+
+        var directivePath = GetFirstMoldedDirectivePath(result, enemy);
+        var before = result.ReadBeforeUserFile<app.Em4000BattleDirective>(directivePath);
+        var after = result.ReadAfterUserFile<app.Em4000BattleDirective>(directivePath);
+
+        Assert.Equal(before.movement.idleIntervalTime, after.movement.idleIntervalTime, 3);
+        Assert.Equal(before.movement.animationSpeedRate, after.movement.animationSpeedRate, 3);
+    }
+
+    [Fact]
     public void EnemyDirectiveModifier_EnemySpeed_DoesNotModifySharedRankSpeed()
     {
         using var result = RandomizerTest.RunState(config =>

@@ -17,6 +17,7 @@
   "enemy-scale-min": 0.25,
   "enemy-scale-max": 2,
   "random-enemy-speed": false,
+  "enemy-speed-probability": 1,
   "enemy-speed-min-flyingbug": 0.5,
   "enemy-speed-max-flyingbug": 2,
   "enemy-speed-min-insecthive": 0.5,

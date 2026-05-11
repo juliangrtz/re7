@@ -55,7 +55,14 @@ public interface IEnemyDefinition
     }
 
     internal bool ShouldRandomizeSpeed(Randomizer randomizer)
-        => SupportsSpeedRandomization && randomizer.GetConfigOption<bool>("random-enemy-speed");
+    {
+        if (!SupportsSpeedRandomization || !randomizer.GetConfigOption<bool>("random-enemy-speed"))
+            return false;
+
+        var speedConfigId = SpeedConfigId.ToLowerInvariant();
+        var probability = Math.Clamp(randomizer.GetConfigOption("enemy-speed-probability", 1.0), 0.0, 1.0);
+        return randomizer.GetRng("enemy/speed/probability", speedConfigId).NextProbability(probability);
+    }
 
     internal float GetSpeedMultiplier(Randomizer randomizer)
     {
