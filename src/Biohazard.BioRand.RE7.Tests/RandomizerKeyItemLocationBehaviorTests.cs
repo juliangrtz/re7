@@ -15,8 +15,6 @@ public class RandomizerKeyItemLocationBehaviorTests
     private static readonly IReadOnlyDictionary<string, ExpectedKeyItemRule> ExpectedRules =
         new Dictionary<string, ExpectedKeyItemRule>(StringComparer.OrdinalIgnoreCase)
         {
-            ["Fuse"] = new(1, ExpectedScope.GuestHouseAfterAxeFight),
-            ["HandAxe"] = new(1, ExpectedScope.GuestHouseBeforeAxeFight),
             ["FloorDoorKey"] = new(3, ExpectedScope.Chapter3Start),
             ["3CrestKeyB"] = new(3, ExpectedScope.BeforeDogDoor),
             ["3CrestKeyA"] = new(3, ExpectedScope.BeforeDogDoor),
@@ -45,15 +43,15 @@ public class RandomizerKeyItemLocationBehaviorTests
             ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
             ["SerumTypeE"] = new(4, ExpectedScope.BeforeNecrotoxinUse),
         };
-    private static readonly HashSet<string> ExpectedDefaultSkippedKeyItemIds = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly HashSet<string> ExpectedPreservedChapter1KeyItemIds = new(StringComparer.OrdinalIgnoreCase)
     {
-        "Candle_Lighted",
+        "ChainCutter",
+        "Fuse",
         "HandAxe",
     };
     private static readonly IReadOnlyDictionary<string, ExpectedPickupFlag> ExpectedPickupFlags =
         new Dictionary<string, ExpectedPickupFlag>(StringComparer.OrdinalIgnoreCase)
         {
-            ["Fuse"] = new("c01_Main_FuseGet", new("f7486e9b-8924-494c-9738-c26fa3c2e055"), true),
             ["FloorDoorKey"] = new("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true),
             ["3CrestKeyC"] = new("c03_2_Main_GetCrestInFreezerRoom", new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true),
             ["WorkroomKey"] = new("c03_2_Main_OpenTrayInWorkshopKey", new("b3096800-d600-4015-b934-63d671b597a9"), true),
@@ -100,7 +98,6 @@ public class RandomizerKeyItemLocationBehaviorTests
             .Where(change => ExpectedRules.ContainsKey(change.AfterId))
             .ToList();
         var expectedRandomizedIds = ExpectedRules.Keys
-            .Where(id => !ExpectedDefaultSkippedKeyItemIds.Contains(id))
             .Order(StringComparer.OrdinalIgnoreCase)
             .ToList();
 
@@ -110,10 +107,6 @@ public class RandomizerKeyItemLocationBehaviorTests
         Assert.Equal(
             expectedRandomizedIds,
             randomizedKeyItems.Select(change => change.AfterId).Order(StringComparer.OrdinalIgnoreCase));
-        foreach (var skippedId in ExpectedDefaultSkippedKeyItemIds)
-        {
-            Assert.Contains($"Skipped key item {ItemDefinitionRepository.Default.GetName(skippedId)}:", result.ProcessLog);
-        }
 
         foreach (var change in randomizedKeyItems)
         {
@@ -207,12 +200,21 @@ public class RandomizerKeyItemLocationBehaviorTests
             .Where(change => ExpectedPickupFlags.ContainsKey(change.AfterId))
             .ToDictionary(change => change.AfterId, StringComparer.OrdinalIgnoreCase);
 
-        foreach (var (itemId, expectedFlag) in ExpectedPickupFlags.Where(entry => !ExpectedDefaultSkippedKeyItemIds.Contains(entry.Key)))
+        foreach (var (itemId, expectedFlag) in ExpectedPickupFlags)
         {
             Assert.True(randomizedKeyItems.TryGetValue(itemId, out var change), $"{itemId} was not randomized.");
-            var gameObject = result.ReadAfterScene(change!.Placement.SceneFile)
-                .FindGameObject(GetTargetGuid(change.Placement));
+            var beforeScene = result.ReadBeforeScene(change!.Placement.SceneFile);
+            var targetGuid = GetTargetGuid(change.Placement);
+            var gameObject = result.ReadAfterScene(change.Placement.SceneFile)
+                .FindGameObject(targetGuid);
             Assert.NotNull(gameObject);
+            if (!change.Placement.IsExtra &&
+                ShouldPreserveOriginalPickupCarrier(change.Placement, beforeScene, targetGuid) &&
+                !HasPickupInteraction(gameObject!))
+            {
+                continue;
+            }
+
             AssertPickupSetsBoolFlag(
                 gameObject!,
                 itemId,
@@ -223,7 +225,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     }
 
     [Fact]
-    public void KeyItemLocations_PreservesVanillaBoltCutters()
+    public void KeyItemLocations_PreservesVanillaChapter1KeyItems()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -232,8 +234,15 @@ public class RandomizerKeyItemLocationBehaviorTests
 
         var changes = GetChangedPlacements(result).ToList();
 
-        Assert.DoesNotContain(changes, change => change.BeforeId == "ChainCutter" || change.AfterId == "ChainCutter");
-        Assert.Contains("Skipped key item Bolt Cutters", result.ProcessLog);
+        Assert.DoesNotContain(
+            changes,
+            change =>
+                ExpectedPreservedChapter1KeyItemIds.Contains(change.BeforeId) ||
+                ExpectedPreservedChapter1KeyItemIds.Contains(change.AfterId));
+        foreach (var itemId in ExpectedPreservedChapter1KeyItemIds)
+        {
+            Assert.Contains($"Skipped key item {ItemDefinitionRepository.Default.GetName(itemId)}:", result.ProcessLog);
+        }
     }
 
     [Fact]
@@ -301,6 +310,7 @@ public class RandomizerKeyItemLocationBehaviorTests
             placement.SceneFile.Equals("natives/stm/environment/scene/chapter1/c01_corridor01.scn.20", StringComparison.OrdinalIgnoreCase));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(fuseCabinet, "ChainCutter"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(fuseCabinet, "Fuse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(fuseCabinet, "HandAxe"));
     }
 
@@ -313,6 +323,7 @@ public class RandomizerKeyItemLocationBehaviorTests
             placement.SceneFile.Equals("natives/stm/environment/scene/chapter1/c01_outside11.scn.20", StringComparison.OrdinalIgnoreCase));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(driversLicense, "ChainCutter"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(driversLicense, "Fuse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(driversLicense, "HandAxe"));
     }
 
@@ -326,6 +337,7 @@ public class RandomizerKeyItemLocationBehaviorTests
             placement.SceneFile.Equals(GuestHouseMiaCellScenePath, StringComparison.OrdinalIgnoreCase));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(miaCell, "ChainCutter"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(miaCell, "Fuse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(miaCell, "HandAxe"));
     }
 
@@ -618,6 +630,16 @@ public class RandomizerKeyItemLocationBehaviorTests
     private static bool HasDrawerContext(RszScene scene, Guid guid)
         => scene.FindGameObjectsByGuidWithFsmContext([guid]).TryGetValue(guid, out var match) &&
             match.HasDrawerContext;
+
+    private static bool HasPickupInteraction(RszGameObject gameObject)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            result |= child.FindComponent<app.InteractDetailSearch>() != null;
+        });
+        return result;
+    }
 
     private static bool ShouldPreserveOriginalPickupCarrier(ItemPlacement placement, RszScene beforeScene, Guid targetGuid)
     {
