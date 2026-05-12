@@ -86,13 +86,25 @@ internal class KeyItemLocationModifier : Modifier
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
         OxStatuetteMask | RedDogHeadMask | DissectionRoomKeyMask | CrankMask |
-        StoneStatuetteMask | DSeriesArmMask | BlueKeycardMask | RedKeycardMask |
-        DSeriesHeadMask | CandleMask;
+        StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+    private const int MainHouseAfterGarageCarryMasks =
+        (MainHouseBeforeHatchCarryMasks | PendulumMask) &
+        ~FloorDoorKeyMask & ~CarKeyMask & ~OxStatuetteMask & ~ScorpionKeyMask;
+    private const int MainHouseEastCarryMasks =
+        MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
+        CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+    private const int DissectionRoomCarryMasks =
+        AllDogHeadMasks | BatteryMask | SnakeKeyMask | CrowKeyMask |
+        CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
     private const int OldHouseCarryMasks =
-        CrankMask | StoneStatuetteMask | DSeriesArmMask | SnakeKeyMask |
-        BlueKeycardMask | RedKeycardMask | BatteryMask | DSeriesHeadMask | CandleMask;
-    private const int LucasCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
+        CrankMask | StoneStatuetteMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int KeycardSetupCarryMasks = BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
+    private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
+    private const int LucasAfterPuzzleCarryMasks = DSeriesHeadMask;
     private const int ShipRepairMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private static readonly Guid _mainHouseClockRewardGuid = new("0da28012-ad6a-0da5-1f0a-cacd2c677ed3");
+    private static readonly Guid _jack2RedDogHeadGuid = new("301caf06-67b8-0645-11a1-faadce741e7d");
+    private static readonly Guid _redKeycardWorkshopGuid = new("077f9206-19e7-4937-994b-cd13a80dabd4");
     private static readonly ImmutableArray<KeyItemRule> _supportedKeyItems =
     [
         new("ChainCutter", 1, BoltCuttersMask), // Bolt Cutters
@@ -696,8 +708,16 @@ internal class KeyItemLocationModifier : Modifier
             return preservedReplacement;
         }
 
-        var replacement = template.CloneWithNewGuids(
-            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid, templateItemId),
+        var carrierTemplate = template;
+        var visualTemplate = template;
+        if (!HasPickupInteraction(template))
+        {
+            logger.LogLine($"Template {templateItemId} has no pickup interaction; using {ExtraKeyItemCarrierTemplateId} as the pickup carrier.");
+            carrierTemplate = randomizer.TemplateService.GetItemTemplate(ExtraKeyItemCarrierTemplateId);
+        }
+
+        var replacement = carrierTemplate.CloneWithNewGuids(
+            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid, templateItemId, carrierTemplate.Guid),
             originalGameObject.Guid);
         var item = replacement.FindComponent<app.Item>() ?? originalItem;
 
@@ -717,6 +737,10 @@ internal class KeyItemLocationModifier : Modifier
             {
                 replacement = replacement.AddOrUpdateComponent(mesh);
             }
+        }
+        else if (!ReferenceEquals(carrierTemplate, visualTemplate))
+        {
+            replacement = replacement.ApplyVisualResourcesFromTemplate(visualTemplate);
         }
 
         replacement = ApplyAcquisitionFlags(
@@ -831,6 +855,17 @@ internal class KeyItemLocationModifier : Modifier
     private static bool IsPickupInteraction(RszObjectNode component)
         => component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
             component.Type.FindFieldIndex("SetFsmBoolFlag") != -1;
+
+    private static bool HasPickupInteraction(RszGameObject gameObject)
+    {
+        var result = false;
+        gameObject.VisitGameObjects(child =>
+        {
+            result |= child.Components.Any(IsPickupInteraction);
+        });
+
+        return result;
+    }
 
     private static RszObjectNode SetFieldIfPresent(RszObjectNode component, string fieldName, object value)
         => component.Type.FindFieldIndex(fieldName) == -1
@@ -984,6 +1019,10 @@ internal class KeyItemLocationModifier : Modifier
             || PathContains(path, "c03_mainhouse1fgaragehallway")
             || PathContains(path, "c03_mainhouse1fgarageoutside");
 
+    private static bool IsMainHouseClockReward(ItemPlacement placement)
+        => placement.Guid == _mainHouseClockRewardGuid
+            && PathContains(placement.SceneFile, "c03_mainhouse1fliving");
+
     private static bool IsGarage(string path)
         => PathContains(path, "c03_mainhouse1fgarage.scn");
 
@@ -1010,6 +1049,10 @@ internal class KeyItemLocationModifier : Modifier
         => PathContains(path, "c03_mainhouse2fbedroom")
             || PathContains(path, "c03_mainhouse2fkids")
             || PathContains(path, "c03_mainhousoutsideterrace2f3");
+
+    private static bool IsMainHouseKeycardSetup(ItemPlacement placement)
+        => placement.Guid == _redKeycardWorkshopGuid
+            || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
     private static bool IsYardOrTrailer(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
@@ -1051,6 +1094,10 @@ internal class KeyItemLocationModifier : Modifier
     private static bool IsTestingAreaBeforeBarnFight(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/cowshed/")
             || PathContains(path, "c03_cowshed");
+
+    private static bool IsTestingAreaAfterLucasPuzzle(string path)
+        => PathContains(path, "c03_leftarea1fmonitorroom")
+            || PathContains(path, "c03_leftarea1fpuzzleroom");
 
     private static bool IsBoatHouseRoute(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
@@ -1318,6 +1365,9 @@ internal class KeyItemLocationModifier : Modifier
             if (IsFlashbackPath(path))
                 return null;
 
+            if (IsUnsafeKeyItemTarget(placement))
+                return null;
+
             if (placement.Chapter == 1)
             {
                 if (IsGuestHouseAfterAxeFight(path))
@@ -1331,12 +1381,14 @@ internal class KeyItemLocationModifier : Modifier
             {
                 if (IsBoatHouseRoute(path))
                     return new(_boatHouse, SerumMask, "Boat House and serum event");
+                if (IsTestingAreaAfterLucasPuzzle(path))
+                    return new(_barn, LucasAfterPuzzleCarryMasks, "Testing Area after Lucas puzzle");
                 if (IsTestingAreaBeforeBarnFight(path))
-                    return new(_testingArea, LucasCarryMasks, "Testing Area before barn battery socket");
+                    return new(_testingArea, LucasBeforePuzzleCarryMasks, "Testing Area before barn battery socket");
                 if (IsTestingArea(path))
-                    return new(_testingArea, LucasCarryMasks, "Testing Area and Lucas puzzle");
-                if (IsMainHouseSnakeKeyRoom(path))
-                    return new(_snakeRooms, LucasCarryMasks | BlueKeycardMask | RedKeycardMask, "Main House snake-key rooms and keycard setup");
+                    return new(_testingArea, LucasBeforePuzzleCarryMasks, "Testing Area before Lucas puzzle");
+                if (IsMainHouseKeycardSetup(placement))
+                    return new(_snakeRooms, KeycardSetupCarryMasks, "Main House snake-key rooms and keycard setup");
                 if (IsOldHouseAfterCrowDoorOrGreenHouse(path))
                     return new(_oldHouseAfterCrow, OldHouseCarryMasks | LanternMask, "Old House after Crow Key door and Green House");
                 if (IsOldHouseBeforeCrowDoor(path))
@@ -1344,16 +1396,13 @@ internal class KeyItemLocationModifier : Modifier
                 if (IsYardOrTrailer(path))
                     return new(_yard, OldHouseCarryMasks | CrowKeyMask, "Yard and trailer");
                 if (IsDissectionRoomRoute(path))
-                    return new(_dissectionRoom, AllDogHeadMasks | DissectionRoomKeyMask | BatteryMask | SnakeKeyMask | CrowKeyMask |
-                        CrankMask | StoneStatuetteMask | DSeriesArmMask | BlueKeycardMask | RedKeycardMask |
-                        DSeriesHeadMask | CandleMask, "Main House dissection room route");
+                    return new(_dissectionRoom, DissectionRoomCarryMasks, "Main House dissection room route");
                 if (IsMainHouseEastOrBasement(path))
-                    return new(_mainHouseEast, MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
-                        CrankMask | StoneStatuetteMask | DSeriesArmMask | BlueKeycardMask | RedKeycardMask |
-                        DSeriesHeadMask | CandleMask, "Main House east side and processing area");
+                    return new(_mainHouseEast, MainHouseEastCarryMasks, "Main House east side and processing area");
+                if (IsMainHouseClockReward(placement))
+                    return new(_mainHouseClockReward, MainHouseAfterGarageCarryMasks & ~PendulumMask, "Main House clock-pendulum reward");
                 if (IsMainHouseBeforeShadowPuzzle(path))
-                    return new(_mainHouseBeforeShadowPuzzle, (MainHouseBeforeHatchCarryMasks | PendulumMask) & ~FloorDoorKeyMask & ~CarKeyMask & ~ScorpionKeyMask,
-                        "Main House after garage before shadow puzzle");
+                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks, "Main House after garage before shadow puzzle");
                 if (IsGarage(path))
                     return new(_garage, OxStatuetteMask, "Garage car fight");
                 if (IsMainHouseBeforeHatch(path))
@@ -1380,8 +1429,17 @@ internal class KeyItemLocationModifier : Modifier
                 return BoltCuttersMask | AxeMask;
             }
 
+            if (IsMainHouseClockReward(target.Placement))
+            {
+                return FloorDoorKeyMask | CarKeyMask | OxStatuetteMask | PendulumMask;
+            }
+
             return 0;
         }
+
+        private static bool IsUnsafeKeyItemTarget(ItemPlacement placement)
+            => placement.Guid == _jack2RedDogHeadGuid
+                && PathContains(placement.SceneFile, "c03_rightareab1ffreezer");
     }
 
     private enum ReplacementKind
