@@ -13,7 +13,7 @@ internal class KeyItemLocationModifier : Modifier
     private const string RandomizerKey = "modifier/key-item-locations";
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
-    private const int MaxRouteSeedAttempts = 8;
+    private const int MaxRouteSeedAttempts = 64;
     private const int MaxRouteDeadEndsPerAttempt = 1024;
     private const int RouteDepthPadding = 8;
     private static readonly Guid _guestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
@@ -22,6 +22,7 @@ internal class KeyItemLocationModifier : Modifier
         "ChainCutter",
         "HandAxe",
         "Fuse",
+        "SerumComplete",
     };
 
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
@@ -96,15 +97,35 @@ internal class KeyItemLocationModifier : Modifier
     private const int DissectionRoomCarryMasks =
         AllDogHeadMasks | BatteryMask | SnakeKeyMask | CrowKeyMask |
         CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
-    private const int OldHouseCarryMasks =
-        CrankMask | StoneStatuetteMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int OldHouseBeforeCrowCarryMasks =
+        CrankMask | StoneStatuetteMask | CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int OldHouseAfterStoneCarryMasks =
+        CrankMask | CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int OldHouseAfterCrankCarryMasks =
+        CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int OldHouseAfterCrowCarryMasks =
+        LanternMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int OldHouseAfterLanternCarryMasks =
+        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+    private const int SnakeKeyRewardCarryMasks =
+        SnakeKeyMask | BatteryMask | DSeriesHeadMask;
     private const int KeycardSetupCarryMasks = BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesHeadMask;
-    private const int ShipRepairMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | CorrosiveMask;
+    private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask;
     private static readonly Guid _mainHouseClockRewardGuid = new("0da28012-ad6a-0da5-1f0a-cacd2c677ed3");
     private static readonly Guid _jack2RedDogHeadGuid = new("301caf06-67b8-0645-11a1-faadce741e7d");
     private static readonly Guid _redKeycardWorkshopGuid = new("077f9206-19e7-4937-994b-cd13a80dabd4");
+    private static readonly Guid _oldHouseStoneStatuetteGuid = new("41a59cb8-7613-4d4b-a530-58aebfe0e1c8");
+    private static readonly Guid _oldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
+    private static readonly HashSet<Guid> _snakeKeyRewardGuids =
+    [
+        new("96da0bd0-1a8b-4c35-bc02-695da693e8d4"),
+        new("24512acb-965b-462c-941e-375f9d62bd5e"),
+        new("751cff95-a933-48ad-8ffa-6f96e25f8959"),
+    ];
     private static readonly ImmutableArray<KeyItemRule> _supportedKeyItems =
     [
         new("ChainCutter", 1, BoltCuttersMask), // Bolt Cutters
@@ -1037,13 +1058,13 @@ internal class KeyItemLocationModifier : Modifier
             || PathContains(path, "c03_mainhousestair01");
 
     private static bool IsMainHouseEastOrBasement(string path)
-        => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_east/")
-            || PathContains(path, "c03_rightarea");
+        => !PathContains(path, "c03_rightareab1fstoreroom")
+            && (PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_east/")
+                || PathContains(path, "c03_rightarea"));
 
     private static bool IsDissectionRoomRoute(string path)
         => PathContains(path, "c03_rightareab1ffreezer")
-            || PathContains(path, "c03_rightareab1fmorgue")
-            || PathContains(path, "c03_rightareab1fstoreroom");
+            || PathContains(path, "c03_rightareab1fmorgue");
 
     private static bool IsMainHouseSnakeKeyRoom(string path)
         => PathContains(path, "c03_mainhouse2fbedroom")
@@ -1054,6 +1075,18 @@ internal class KeyItemLocationModifier : Modifier
         => placement.Guid == _redKeycardWorkshopGuid
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
+    private static bool IsSnakeKeyRewardTarget(ItemPlacement placement)
+        => PathContains(placement.SceneFile, "c03_rightareab1fstoreroom")
+            && _snakeKeyRewardGuids.Contains(placement.Guid);
+
+    private static bool IsOldHouseStoneStatuetteTarget(ItemPlacement placement)
+        => PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/oldhouse/")
+            && placement.Guid == _oldHouseStoneStatuetteGuid;
+
+    private static bool IsOldHouseCrowKeyTarget(ItemPlacement placement)
+        => PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/oldhouse/")
+            && placement.Guid == _oldHouseCrowKeyGuid;
+
     private static bool IsYardOrTrailer(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
             || PathContains(path, "c03_gardenarea")
@@ -1062,30 +1095,44 @@ internal class KeyItemLocationModifier : Modifier
             || PathContains(path, "c03_mainhousoutsideterrace");
 
     private static bool IsOldHouseBeforeStonePuzzle(string path)
-        => PathContains(path, "c03_oldhouse1fbridge")
+        => PathContains(path, "c03_oldhouse1fbridge01")
             || PathContains(path, "c03_oldhouse1fentrance")
             || PathContains(path, "c03_oldhouse1fhallway")
-            || PathContains(path, "c03_oldhouse1fhole")
             || PathContains(path, "c03_oldhouse1fhollway")
             || PathContains(path, "c03_oldhouse1fkitchen")
             || PathContains(path, "c03_oldhouse1fpuzzle")
             || PathContains(path, "c03_oldhouse1froom")
             || PathContains(path, "c03_oldhouse1fstorage")
-            || PathContains(path, "c03_oldhouse1funderfloor")
-            || PathContains(path, "c03_oldhouse1fwallinside")
             || PathContains(path, "c03_oldhouseoutside")
             || PathContains(path, "c03_oldhousesaferoom");
 
     private static bool IsOldHouseBeforeCrowDoor(string path)
         => IsOldHouseBeforeStonePuzzle(path);
 
+    private static bool IsOldHouseAfterStonePuzzleBeforeCrank(string path)
+        => PathContains(path, "c03_oldhouse1fhole")
+            || PathContains(path, "c03_oldhouse1funderfloor")
+            || PathContains(path, "c03_oldhouse1fwallinside");
+
+    private static bool IsOldHouseAfterCrankBeforeCrowDoor(string path)
+        => PathContains(path, "c03_oldhouse1fbridge02")
+            || PathContains(path, "c03_oldhouse1fbridgestorag")
+            || PathContains(path, "c03_oldhouse1fbridgewc");
+
     private static bool IsOldHouseAfterCrowDoorOrGreenHouse(string path)
-        => PathContains(path, "/leveldesign/itemset/chapter3/oldhouse/")
-            || PathContains(path, "/leveldesign/itemset/chapter3/greenhouse/")
+        => PathContains(path, "/leveldesign/itemset/chapter3/greenhouse/")
             || PathContains(path, "c03_oldhouse1fstairs")
             || PathContains(path, "c03_oldhouse2f")
             || PathContains(path, "c03_oldhousecave")
             || PathContains(path, "c03_gh");
+
+    private static bool IsOldHouseAfterLanternDoor(string path)
+        => PathContains(path, "c03_oldhouse1fstairs")
+            || PathContains(path, "c03_oldhouse1faltar")
+            || PathContains(path, "c03_oldhouse2fbedroom")
+            || PathContains(path, "c03_oldhouse2fhallway04")
+            || PathContains(path, "c03_oldhouse2fkidsroom")
+            || PathContains(path, "c03_oldhouse2fstudy");
 
     private static bool IsTestingArea(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/leftarea/")
@@ -1099,16 +1146,47 @@ internal class KeyItemLocationModifier : Modifier
         => PathContains(path, "c03_leftarea1fmonitorroom")
             || PathContains(path, "c03_leftarea1fpuzzleroom");
 
+    private static bool IsBoatHouseAfterSerumUse(string path)
+        => PathContains(path, "c03_boat1fbridge02");
+
     private static bool IsBoatHouseRoute(string path)
-        => PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
-            || PathContains(path, "c03_boat")
-            || PathContains(path, "c03_gardenareaboat");
+        => !IsBoatHouseAfterSerumUse(path)
+            && (PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
+                || PathContains(path, "c03_boat")
+                || PathContains(path, "c03_gardenareaboat"));
+
+    private static bool IsShipBeforeLugWrench(string path)
+        => !PathContains(path, "past")
+            && (PathContains(path, "c04_ship4f")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship4f/")
+                || PathContains(path, "c04_ship2f")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship2f/"));
+
+    private static bool IsShipAfterLugWrenchBeforeCorrosive(string path)
+        => !PathContains(path, "past")
+            && !IsShipAfterCorrosiveBeforeRepair(path)
+            && (PathContains(path, "c04_ship1f")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship1f/")
+                || PathContains(path, "c04_ship3f")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship3f/")
+                || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
+
+    private static bool IsShipAfterCorrosiveBeforeRepair(string path)
+        => !PathContains(path, "past")
+            && (PathContains(path, "c04_ship3finfirmary")
+                || PathContains(path, "c04_ship3fsecurityroom")
+                || PathContains(path, "c04_ship3fshowerroom"));
+
+    private static bool IsShipAfterElevatorRepairOrExit(string path)
+        => !PathContains(path, "past")
+            && (PathContains(path, "c04_shipb1")
+                || PathContains(path, "c04_shipb2")
+                || PathContains(path, "c04_shipstairs"));
 
     private static bool IsMiaPresentShipRoute(string path)
-        => !PathContains(path, "past")
-            && (PathContains(path, "/environment/scene/chapter4/c04_ship")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship")
-                || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
+        => IsShipBeforeLugWrench(path)
+            || IsShipAfterLugWrenchBeforeCorrosive(path)
+            || IsShipAfterCorrosiveBeforeRepair(path);
 
     private static bool IsSaltMineBeforeNecrotoxinUse(string path)
         => !PathContains(path, "/chapter4/lastbattle/")
@@ -1148,8 +1226,11 @@ internal class KeyItemLocationModifier : Modifier
         private readonly Node _snakeRooms;
         private readonly Node _testingArea;
         private readonly Node _barn;
+        private readonly Node _lucasPuzzle;
         private readonly Node _boatHouse;
         private readonly Node _ship;
+        private readonly Node _shipAfterLugWrench;
+        private readonly Node _shipAfterCorrosive;
         private readonly Node _shipExit;
         private readonly Node _saltMine;
         private readonly Node _finale;
@@ -1182,13 +1263,16 @@ internal class KeyItemLocationModifier : Modifier
             _oldHouseAfterCrow = Room("old-house-after-crow", "Old House after Crow Key door and Green House", 13, 0);
             _oldHouseAfterLantern = Room("old-house-after-lantern", "Old House after Lantern door", 14, 0);
             _snakeRooms = Room("snake-rooms", "Snake-key rooms and keycard setup", 15, 0);
-            _testingArea = Room("testing-area", "Testing Area and Lucas puzzle", 16, 0);
-            _barn = Room("barn", "Testing Area barn fight", 17, 0);
-            _boatHouse = Room("boat-house", "Boat House and serum event", 18, 0);
-            _ship = Room("ship", "Wrecked Ship Mia present route", 19, 0);
-            _shipExit = Room("ship-exit", "Wrecked Ship elevator repaired", 20, 0);
-            _saltMine = Room("salt-mine", "Swamp and Salt Mine before E-Necrotoxin", 21, 0);
-            _finale = Room("finale", "Final E-Necrotoxin use", 22, 0);
+            _testingArea = Room("testing-area", "Testing Area before barn", 16, 0);
+            _barn = Room("barn", "Testing Area barn before battery socket", 17, 0);
+            _lucasPuzzle = Room("lucas-puzzle", "Testing Area Lucas puzzle and control room", 18, 0);
+            _boatHouse = Room("boat-house", "Boat House before serum use", 19, 0);
+            _ship = Room("ship", "Wrecked Ship before elevator hatch", 20, 0);
+            _shipAfterLugWrench = Room("ship-after-lug-wrench", "Wrecked Ship after Lug Wrench", 21, 0);
+            _shipAfterCorrosive = Room("ship-after-corrosive", "Wrecked Ship after Corrosive access", 22, 0);
+            _shipExit = Room("ship-exit", "Wrecked Ship elevator repaired", 23, 0);
+            _saltMine = Room("salt-mine", "Swamp and Salt Mine before E-Necrotoxin", 24, 0);
+            _finale = Room("finale", "Final E-Necrotoxin use", 25, 0);
 
             Door(_guestHouseBeforeBoltCutters, _guestHouseAfterBoltCutters, RouteKeys("ChainCutter"));
             Door(_guestHouseAfterBoltCutters, _guestHouseAfterAxeFight, RouteKeys("HandAxe"));
@@ -1209,10 +1293,13 @@ internal class KeyItemLocationModifier : Modifier
             Door(_oldHouseAfterCrow, _oldHouseAfterLantern, RouteKeys("Lantern"));
             Door(_oldHouseAfterLantern, _snakeRooms, RouteKeys("MasterKey"));
             Door(_snakeRooms, _testingArea, RouteKeys("LucasCardKey", "LucasCardKey2"));
-            Door(_testingArea, _barn, RouteKeys("Candle_Lighted", "Battery"));
-            Door(_barn, _boatHouse, RouteKeys("SerumMaterialA", "SerumMaterialB"));
+            Door(_testingArea, _barn);
+            Door(_barn, _lucasPuzzle, RouteKeys("Battery"));
+            Door(_lucasPuzzle, _boatHouse, RouteKeys("Candle_Lighted", "SerumMaterialA", "SerumMaterialB"));
             NoReturn(_boatHouse, _ship, RouteKeys("SerumComplete"));
-            Door(_ship, _shipExit, RouteKeys("EvCable", "FuseCh4", "EvOpener", "SpareKey"));
+            Door(_ship, _shipAfterLugWrench, RouteKeys("EvOpener"));
+            Door(_shipAfterLugWrench, _shipAfterCorrosive, RouteKeys("SpareKey"));
+            Door(_shipAfterCorrosive, _shipExit, RouteKeys("EvCable", "FuseCh4"));
             NoReturn(_shipExit, _saltMine);
             Door(_saltMine, _finale, RouteKeys("SerumTypeE"));
         }
@@ -1379,22 +1466,36 @@ internal class KeyItemLocationModifier : Modifier
             }
             else if (placement.Chapter == 3)
             {
+                if (IsBoatHouseAfterSerumUse(path))
+                    return null;
                 if (IsBoatHouseRoute(path))
-                    return new(_boatHouse, SerumMask, "Boat House and serum event");
+                    return new(_boatHouse, SerumMask, "Boat House before serum use");
                 if (IsTestingAreaAfterLucasPuzzle(path))
-                    return new(_barn, LucasAfterPuzzleCarryMasks, "Testing Area after Lucas puzzle");
+                    return new(_lucasPuzzle, LucasAfterPuzzleCarryMasks, "Testing Area Lucas puzzle and control room");
                 if (IsTestingAreaBeforeBarnFight(path))
-                    return new(_testingArea, LucasBeforePuzzleCarryMasks, "Testing Area before barn battery socket");
+                    return new(_barn, LucasBeforePuzzleCarryMasks, "Testing Area barn before battery socket");
                 if (IsTestingArea(path))
-                    return new(_testingArea, LucasBeforePuzzleCarryMasks, "Testing Area before Lucas puzzle");
+                    return new(_testingArea, LucasBeforePuzzleCarryMasks, "Testing Area before barn");
                 if (IsMainHouseKeycardSetup(placement))
                     return new(_snakeRooms, KeycardSetupCarryMasks, "Main House snake-key rooms and keycard setup");
+                if (IsSnakeKeyRewardTarget(placement))
+                    return new(_oldHouseAfterLantern, SnakeKeyRewardCarryMasks, "Old House cleared / Main House basement police body");
+                if (IsOldHouseStoneStatuetteTarget(placement))
+                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks, "Old House Stone Statuette pickup");
+                if (IsOldHouseCrowKeyTarget(placement))
+                    return new(_oldHouseAfterCrank, OldHouseAfterCrankCarryMasks, "Old House Crow Key chest");
+                if (IsOldHouseAfterLanternDoor(path))
+                    return new(_oldHouseAfterLantern, OldHouseAfterLanternCarryMasks, "Old House after Lantern door");
                 if (IsOldHouseAfterCrowDoorOrGreenHouse(path))
-                    return new(_oldHouseAfterCrow, OldHouseCarryMasks | LanternMask, "Old House after Crow Key door and Green House");
+                    return new(_oldHouseAfterCrow, OldHouseAfterCrowCarryMasks, "Old House after Crow Key door and Green House");
+                if (IsOldHouseAfterCrankBeforeCrowDoor(path))
+                    return new(_oldHouseAfterCrank, OldHouseAfterCrankCarryMasks, "Old House after Crank bridges");
+                if (IsOldHouseAfterStonePuzzleBeforeCrank(path))
+                    return new(_oldHouseAfterStonePuzzle, OldHouseAfterStoneCarryMasks, "Old House after Stone Statuette shadow puzzle");
                 if (IsOldHouseBeforeCrowDoor(path))
-                    return new(_oldHouseBeforeStonePuzzle, OldHouseCarryMasks | CrowKeyMask, "Old House before Stone Statuette shadow puzzle");
+                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks, "Old House before Stone Statuette shadow puzzle");
                 if (IsYardOrTrailer(path))
-                    return new(_yard, OldHouseCarryMasks | CrowKeyMask, "Yard and trailer");
+                    return new(_yard, OldHouseBeforeCrowCarryMasks, "Yard and trailer");
                 if (IsDissectionRoomRoute(path))
                     return new(_dissectionRoom, DissectionRoomCarryMasks, "Main House dissection room route");
                 if (IsMainHouseEastOrBasement(path))
@@ -1412,8 +1513,14 @@ internal class KeyItemLocationModifier : Modifier
             }
             else if (placement.Chapter == 4)
             {
-                if (IsMiaPresentShipRoute(path))
-                    return new(_ship, ShipRepairMasks, "Wrecked Ship Mia present route");
+                if (IsShipAfterElevatorRepairOrExit(path))
+                    return null;
+                if (IsShipAfterCorrosiveBeforeRepair(path))
+                    return new(_shipAfterCorrosive, ShipAfterCorrosiveMasks, "Wrecked Ship after Corrosive access");
+                if (IsShipAfterLugWrenchBeforeCorrosive(path))
+                    return new(_shipAfterLugWrench, ShipAfterWrenchMasks, "Wrecked Ship after Lug Wrench");
+                if (IsShipBeforeLugWrench(path))
+                    return new(_ship, ShipBeforeWrenchMasks, "Wrecked Ship before elevator hatch");
                 if (IsSaltMineBeforeNecrotoxinUse(path))
                     return new(_saltMine, NecrotoxinMask, "Swamp and Salt Mine before E-Necrotoxin");
             }
