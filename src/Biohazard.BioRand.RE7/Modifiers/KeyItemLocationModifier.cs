@@ -364,6 +364,11 @@ internal class KeyItemLocationModifier : Modifier
         return routeTarget != null && (routeTarget.GroupMask & rule.RouteMask) == rule.RouteMask;
     }
 
+    private static bool IsOriginalSupportedKeyItemPlacement(ItemPlacement placement)
+        => !placement.IsExtra
+            && !string.IsNullOrWhiteSpace(placement.Id)
+            && _supportedKeyItems.Any(rule => rule.Id.Equals(placement.Id, StringComparison.OrdinalIgnoreCase));
+
     private static IEnumerable<ItemReplacementTarget> ExcludeDrawerKeyItemTargets(
         Randomizer randomizer,
         IEnumerable<ItemReplacementTarget> targets)
@@ -913,6 +918,9 @@ internal class KeyItemLocationModifier : Modifier
 
         if (placement.IsExtra && ExtraPlacementModifier.IsPlainExtraItemPlacement(placement))
             return "this key item is using a generated extra pickup carrier";
+
+        if (IsOriginalSupportedKeyItemPlacement(placement))
+            return "this placement is an original key item carrier";
 
         if (!string.IsNullOrWhiteSpace(placement.Id)
             && !_supportedKeyItems.Any(rule => rule.Id.Equals(placement.Id, StringComparison.OrdinalIgnoreCase))

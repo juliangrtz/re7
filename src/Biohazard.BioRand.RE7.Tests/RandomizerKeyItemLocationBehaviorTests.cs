@@ -71,6 +71,7 @@ public class RandomizerKeyItemLocationBehaviorTests
         };
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
     private const string MainHouseLivingRoomScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+    private const string MainHouseWestItemSetScenePath = "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn.20";
     private const string Jack2ScenePath = "natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20";
     private const string RedKeycardWorkshopScenePath = "natives/stm/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn.20";
     private const string BlueKeycardAtticScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20";
@@ -89,8 +90,10 @@ public class RandomizerKeyItemLocationBehaviorTests
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
     private static readonly Guid GuestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
     private static readonly Guid GuestHouseMiaDriversLicenseGuid = new("ee3242fe-55a4-450c-b8ca-0a8ab3c39546");
+    private static readonly Guid MainHouseHatchKeyGuid = new("665a86ed-7e9c-4b56-a889-4377fa1d3f47");
     private static readonly Guid MainHouseClockRewardGuid = new("0da28012-ad6a-0da5-1f0a-cacd2c677ed3");
     private static readonly Guid Jack2RedDogHeadGuid = new("301caf06-67b8-0645-11a1-faadce741e7d");
+    private static readonly Guid MainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
     private static readonly Guid RedKeycardWorkshopGuid = new("077f9206-19e7-4937-994b-cd13a80dabd4");
     private static readonly Guid BlueKeycardAtticGuid = new("ccf47d14-a937-43c4-9b87-f35b07d14034");
     private static readonly Guid GreenhouseStairsItemGuid = new("af78cd5c-b090-4557-bd9c-2f6a0d74b0c0");
@@ -169,6 +172,51 @@ public class RandomizerKeyItemLocationBehaviorTests
         Assert.Equal(ExpectedRules.Count, randomizedKeyItems.Count);
         Assert.DoesNotContain("Skipped full key item route", result.ProcessLog);
         Assert.DoesNotContain("no complete safe route", result.ProcessLog);
+    }
+
+    [Fact]
+    public void KeyItemLocations_PreservesOriginalKeyCarrierShapeForSoftlockSeed()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        }, seed: 300214);
+
+        var change = GetChangedPlacements(result).Single(changed =>
+            changed.Placement.Guid == MainHouseHatchKeyGuid &&
+            changed.Placement.SceneFile.Equals(MainHouseWestItemSetScenePath, StringComparison.OrdinalIgnoreCase));
+        var before = result.ReadBeforeScene(change.Placement.SceneFile).FindGameObject(MainHouseHatchKeyGuid);
+        var after = result.ReadAfterScene(change.Placement.SceneFile).FindGameObject(MainHouseHatchKeyGuid);
+
+        Assert.Equal("FloorDoorKey", change.BeforeId);
+        Assert.Equal("EntranceHallKey", change.AfterId);
+        Assert.NotNull(before);
+        Assert.NotNull(after);
+        AssertOriginalPickupShapePreserved(before!, after!, "EntranceHallKey");
+        AssertVisualResourcesMatch(result.Randomizer.TemplateService.GetItemTemplate("EntranceHallKey"), after!);
+        Assert.Contains("Preserving original pickup object shape because this placement is an original key item carrier.", result.ProcessLog);
+    }
+
+    [Fact]
+    public void KeyItemLocations_PreservesOriginalBlueKeycardCarrierShapeForSoftlockSeed()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        }, seed: 2);
+
+        var change = GetChangedPlacements(result).Single(changed =>
+            changed.Placement.Guid == MainHouseWestBlueKeycardGuid &&
+            changed.Placement.SceneFile.Equals(MainHouseWestItemSetScenePath, StringComparison.OrdinalIgnoreCase));
+        var before = result.ReadBeforeScene(change.Placement.SceneFile).FindGameObject(MainHouseWestBlueKeycardGuid);
+        var after = result.ReadAfterScene(change.Placement.SceneFile).FindGameObject(MainHouseWestBlueKeycardGuid);
+
+        Assert.Equal("LucasCardKey", change.BeforeId);
+        Assert.Equal("MorgueKey", change.AfterId);
+        Assert.NotNull(before);
+        Assert.NotNull(after);
+        AssertOriginalPickupShapePreserved(before!, after!, "MorgueKey");
+        AssertVisualResourcesMatch(result.Randomizer.TemplateService.GetItemTemplate("MorgueKey"), after!);
     }
 
     [Fact]
@@ -976,8 +1024,13 @@ public class RandomizerKeyItemLocationBehaviorTests
         if (HasFsmInHierarchy(beforeScene, targetGuid))
             return true;
 
-        if (string.IsNullOrWhiteSpace(placement.Id)
-            || ExpectedRules.ContainsKey(placement.Id))
+        if (!string.IsNullOrWhiteSpace(placement.Id)
+            && ExpectedRules.ContainsKey(placement.Id))
+        {
+            return true;
+        }
+
+        if (string.IsNullOrWhiteSpace(placement.Id))
         {
             return false;
         }
