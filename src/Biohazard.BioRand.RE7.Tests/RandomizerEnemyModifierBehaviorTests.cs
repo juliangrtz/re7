@@ -290,6 +290,46 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
+    public void RandomizeEnemies_GeneratorReplacementsUseTargetSpecifiedRankParameters()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["balanced-enemies"] = false;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["MoldedQuick"]);
+        });
+
+        var replacementsFromExplicitSpawnInfos = 0;
+        foreach (var path in GetChangedScenePaths(result)
+            .Where(path => path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase)))
+        {
+            var beforeScene = result.ReadBeforeScene(path);
+            var afterScene = result.ReadAfterScene(path);
+
+            afterScene.VisitGameObjects(afterGameObject =>
+            {
+                var afterSpawnInfo = afterGameObject.FindComponent<app.EnemySpawnInfo>();
+                if (afterSpawnInfo?.UnitAlias != "Em4100")
+                    return;
+
+                var beforeSpawnInfo = beforeScene.FindGameObject(afterGameObject.Guid)
+                    ?.FindComponent<app.EnemySpawnInfo>();
+                if (beforeSpawnInfo == null || IsSpecifiedRankParameterEmpty(beforeSpawnInfo))
+                    return;
+
+                replacementsFromExplicitSpawnInfos++;
+                Assert.Empty(afterSpawnInfo.specifiedRankParameter.SpecifiedDirectivesName);
+                Assert.Empty(afterSpawnInfo.specifiedRankParameter.SpecifiedResistParameterName);
+                Assert.Empty(afterSpawnInfo.specifiedRankParameter.SpecifiedSlipParameterName);
+            });
+        }
+
+        Assert.True(replacementsFromExplicitSpawnInfos > 0);
+    }
+
+    [Fact]
     public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
     {
         using var result = RandomizerTest.RunState(config =>
@@ -548,6 +588,14 @@ public class RandomizerEnemyModifierBehaviorTests
         });
 
         return result;
+    }
+
+    private static bool IsSpecifiedRankParameterEmpty(app.EnemySpawnInfo spawnInfo)
+    {
+        var specified = spawnInfo.specifiedRankParameter;
+        return string.IsNullOrEmpty(specified.SpecifiedDirectivesName) &&
+            string.IsNullOrEmpty(specified.SpecifiedResistParameterName) &&
+            string.IsNullOrEmpty(specified.SpecifiedSlipParameterName);
     }
 
     private sealed class TestEnemyDefinition(string id, EnemyID enemyId) : IEnemyDefinition

@@ -52,6 +52,18 @@ internal class EnemyModifier : Modifier
             rng.NextProbability(options.ForceTargetingProbability));
     }
 
+    private static void CopySpecifiedRankParameter(
+        app.EnemySpawnInfo target,
+        app.EnemySpawnInfo source)
+    {
+        if (target.specifiedRankParameter == null || source.specifiedRankParameter == null)
+            return;
+
+        target.specifiedRankParameter.SpecifiedDirectivesName = source.specifiedRankParameter.SpecifiedDirectivesName;
+        target.specifiedRankParameter.SpecifiedResistParameterName = source.specifiedRankParameter.SpecifiedResistParameterName;
+        target.specifiedRankParameter.SpecifiedSlipParameterName = source.specifiedRankParameter.SpecifiedSlipParameterName;
+    }
+
     private static RszScene RandomizeForceTargetingOptions(
         RszScene scene,
         EnemyRandomizerOptions options,
@@ -106,6 +118,7 @@ internal class EnemyModifier : Modifier
                 // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
                 var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
                 var spawnInfoTemplate = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng);
+                var spawnInfoTemplateComponent = spawnInfoTemplate.FindComponent<app.EnemySpawnInfo>()!;
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
@@ -124,6 +137,7 @@ internal class EnemyModifier : Modifier
                 var assignedHealth = healthResolver.GetHealth(newEnemy);
                 originalSpawnInfoComponent.HealthParameter.Health = assignedHealth;
                 originalSpawnInfoComponent.UnitAlias = enemyId;
+                CopySpecifiedRankParameter(originalSpawnInfoComponent, spawnInfoTemplateComponent);
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
                     .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);
