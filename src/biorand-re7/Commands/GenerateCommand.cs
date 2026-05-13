@@ -141,16 +141,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             {
                 reporter.RunTask($"Writing {outputPath}", () =>
                 {
-                    using var zip = new ZipArchive(new MemoryStream(zipFile));
-                    foreach (var entry in zip.Entries)
-                    {
-                        if (!entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase))
-                            continue;
-
-                        var destinationPath = Path.Combine(outputPath, entry.FullName);
-                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-                        entry.ExtractToFile(destinationPath, overwrite: true);
-                    }
+                    ExtractEntries(zipFile, outputPath, entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
                 });
             }
         }
@@ -162,35 +153,60 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
     }
 
     private static void ExtractNatives(byte[] zipFile, string outputPath)
+        => ExtractEntries(zipFile, outputPath, entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
+
+    private static void ExtractLogFiles(byte[] zipFile, string outputPath)
+        => ExtractEntries(zipFile, outputPath, entry =>
+            !entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase) &&
+            entry.FullName != "modinfo.ini" &&
+            entry.FullName != "pic.jpg");
+
+    private static void ExtractEntries(byte[] zipFile, string outputPath, Func<ZipArchiveEntry, bool> includeEntry)
     {
         using var zip = new ZipArchive(new MemoryStream(zipFile));
         foreach (var entry in zip.Entries)
         {
-            if (!entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase))
+            if (!includeEntry(entry))
                 continue;
 
-            var destinationPath = Path.Combine(outputPath, entry.FullName);
-            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-            entry.ExtractToFile(destinationPath, overwrite: true);
+            ExtractEntryToDirectory(entry, outputPath);
         }
     }
 
-    private static void ExtractLogFiles(byte[] zipFile, string outputPath)
+    internal static void ExtractEntryToDirectory(ZipArchiveEntry entry, string outputPath)
     {
-        using var zip = new ZipArchive(new MemoryStream(zipFile));
-        foreach (var entry in zip.Entries)
+        if (string.IsNullOrEmpty(entry.Name))
         {
-            if (entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase))
-                continue;
-            if (entry.FullName == "modinfo.ini")
-                continue;
-            if (entry.FullName == "pic.jpg")
-                continue;
-
-            var destinationPath = Path.Combine(outputPath, entry.FullName);
-            Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-            entry.ExtractToFile(destinationPath, overwrite: true);
+            return;
         }
+
+        if (HasParentDirectorySegment(entry.FullName))
+        {
+            throw new InvalidDataException($"Archive entry '{entry.FullName}' contains a parent-directory segment.");
+        }
+
+        var destinationRoot = Path.GetFullPath(outputPath);
+        var destinationPath = Path.GetFullPath(Path.Combine(destinationRoot, entry.FullName));
+        var rootWithSeparator = Path.EndsInDirectorySeparator(destinationRoot)
+            ? destinationRoot
+            : destinationRoot + Path.DirectorySeparatorChar;
+        var comparison = OperatingSystem.IsWindows()
+            ? StringComparison.OrdinalIgnoreCase
+            : StringComparison.Ordinal;
+
+        if (!destinationPath.StartsWith(rootWithSeparator, comparison))
+        {
+            throw new InvalidDataException($"Archive entry '{entry.FullName}' would extract outside '{outputPath}'.");
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+        entry.ExtractToFile(destinationPath, overwrite: true);
+    }
+
+    private static bool HasParentDirectorySegment(string path)
+    {
+        var segments = path.Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries);
+        return segments.Any(segment => segment == "..");
     }
 
     private static byte[] GetPakFile(byte[] zip)
