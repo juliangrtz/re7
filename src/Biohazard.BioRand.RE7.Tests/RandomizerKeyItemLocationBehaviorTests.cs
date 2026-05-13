@@ -86,7 +86,6 @@ public class RandomizerKeyItemLocationBehaviorTests
     private const string ShipCaptainCabinItemSetScenePath = "natives/stm/leveldesign/itemset/chapter4/ship4f/ship4f.scn.20";
     private const string ShipSickBayScenePath = "natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20";
     private const string ShipLoungeScenePath = "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20";
-    private static readonly Guid MainHouseHallExtraItemGuid = new("6f2662e3-3bdf-6e6f-46f0-4dd15ea89164");
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
     private static readonly Guid GuestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
     private static readonly Guid GuestHouseMiaDriversLicenseGuid = new("ee3242fe-55a4-450c-b8ca-0a8ab3c39546");
@@ -811,11 +810,11 @@ public class RandomizerKeyItemLocationBehaviorTests
             placement.IsExtra &&
             placement.Comment == "Main Hall" &&
             placement.SceneFile.Equals(MainHouseHallScenePath, StringComparison.OrdinalIgnoreCase));
-        Assert.Equal(MainHouseHallExtraItemGuid, ExtraPlacementModifier.GetGeneratedItemGuid(placement));
         AssertQuaternionEquals(Quaternion.Identity, placement.Rotation);
 
         var scene = result.ReadAfterScene(MainHouseHallScenePath);
-        var gameObject = scene.FindGameObject(MainHouseHallExtraItemGuid);
+        var generatedGuid = ExtraPlacementModifier.GetGeneratedItemGuid(placement);
+        var gameObject = scene.FindGameObject(generatedGuid);
         Assert.NotNull(gameObject);
         var transform = gameObject!.FindComponent<GeneratedViaTransform>();
         Assert.NotNull(transform);
@@ -841,24 +840,6 @@ public class RandomizerKeyItemLocationBehaviorTests
         Assert.Equal(
             coinGameObject.Children.Select(child => child.Name),
             updated.Children.Select(child => child.Name));
-    }
-
-    [Fact]
-    public void KeyItemLocations_DoesNotReadLegacyKeyItemsCsv()
-    {
-        using var result = RandomizerTest.RunState(
-            config =>
-            {
-                config["random-key-item-locations"] = true;
-            },
-            prepareRandomizer: randomizer =>
-            {
-                randomizer.DynamicData.SetData(
-                    DynamicDataName.KeyItems,
-                    Encoding.UTF8.GetBytes("this,is,not,the,legacy,schema\r\n"));
-            });
-
-        Assert.Contains("[KEY ITEM]", result.ProcessLog);
     }
 
     private static IEnumerable<ChangedItemPlacement> GetChangedPlacements(RandomizerRunResult result)

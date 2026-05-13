@@ -72,7 +72,9 @@ internal class RecipeModifier : Modifier
         }
 
         var csv = randomizer.DynamicData.GetData(DynamicDataName.Recipes) ?? throw new Exception("Unable to get recipe data");
-        var recipes = Csv.Deserialize<RecipeModel>(csv).ToImmutableList();
+        var recipes = Csv.Deserialize<RecipeModel>(csv)
+            .Where(r => r.Enabled)
+            .ToImmutableList();
 
         recipes.ForEach(r =>
         {
@@ -219,6 +221,7 @@ internal class RecipeModifier : Modifier
 
     internal sealed class RecipeModel
     {
+        public bool Enabled { get; init; }
         public RecipePool Pool { get; init; }
         public int Count1_Min { get; init; }
         public int Count1_Max { get; init; }

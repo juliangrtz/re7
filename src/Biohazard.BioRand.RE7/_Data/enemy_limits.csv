@@ -228,6 +228,9 @@ natives/stm/scenes/chapter/chapter3/c03_soft_3.scn.20,,0,Non-environment control
 natives/stm/scenes/chapter/chapter3/c03_soft_4.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter3/c03_soft_5.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter3/c03_souko.scn.20,,0,Non-environment controller/helper scene
+natives/stm/scenes/chapter/chapter3/chapter3_2/hard.scn.20,,0,Non-environment controller/helper scene
+natives/stm/scenes/chapter/chapter3/chapter3_3/hard.scn.20,,0,Non-environment controller/helper scene
+natives/stm/scenes/chapter/chapter3/chapter3_4/hard.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter3/mansionai_c03_2.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter3/mansoinai_c03_1.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/loadtempscene/loadtemp_chapter3.scn.20,,0,Non-environment controller/helper scene
@@ -356,11 +359,6 @@ natives/stm/environment/scene/ff030/c03_oldhouse2fkidsroom02.scn.20,Mia VHS / Ol
 natives/stm/environment/scene/ff030/c03_oldhouseoutside.scn.20,Mia VHS / Old House / Exterior,99,Large or combat-capable area
 natives/stm/environment/scene/ff030/c03_oldhousesaferoom01.scn.20,Mia VHS / Old House / Safe Room,1,Safe or hub scene
 natives/stm/environment/scene/ff050/c04_shipelevator_ff.scn.20,Old Ship Videotape / Elevator,4,Connector or medium area
-natives/stm/scenes/chapter/chapter3/chapter3_2/hard.scn.20,Enemy Generator Scene,99,Main House
-natives/stm/scenes/chapter/chapter3/chapter3_3/hard.scn.20,Enemy Generator Scene,99,Main House
-natives/stm/scenes/chapter/chapter3/chapter3_4/hard.scn.20,Enemy Generator Scene,99,Main House
-natives/stm/scenes/chapter/chapter4/chapter4_1/hard.scn.20,Enemy Generator Scene,99,Ship
-natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20,Enemy Generator Scene,99,Salt Mines
 natives/stm/scenes/chapter/chapter4.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/aimap_c04_1.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/aimap_c04_2.scn.20,,0,Non-environment controller/helper scene
@@ -376,6 +374,8 @@ natives/stm/scenes/chapter/chapter4/c04_soft_1.scn.20,,0,Non-environment control
 natives/stm/scenes/chapter/chapter4/c04_soft_2.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/c04_soft_3.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/c04_souko.scn.20,,0,Non-environment controller/helper scene
+natives/stm/scenes/chapter/chapter4/chapter4_1/hard.scn.20,,0,Non-environment controller/helper scene
+natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/character_c04_1_2.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/player_c04.scn.20,,0,Non-environment controller/helper scene
 natives/stm/scenes/chapter/chapter4/player_c04_pl0000.scn.20,,0,Non-environment controller/helper scene

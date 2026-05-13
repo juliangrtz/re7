@@ -56,6 +56,7 @@ internal class BirdCageModifier : Modifier
 
     private record BirdCageReplacement
     {
+        public bool Enabled { get; init; }
         public ReplacementCategory Category { get; init; }
         public ItemID ItemId { get; init; }
         public int MinAmount { get; init; }
@@ -147,7 +148,8 @@ internal class BirdCageModifier : Modifier
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
     {
         var csv = randomizer.DynamicData.GetData(DynamicDataName.BirdCages) ?? throw new Exception("Unable to get bird cage data");
-        var replacements = Serialization.Csv.Deserialize<BirdCageReplacement>(csv)
+        var replacements = Csv.Deserialize<BirdCageReplacement>(csv)
+            .Where(b => b.Enabled)
             .ToImmutableList();
 
         var randomizeMagnum = randomizer.GetConfigOption<bool>("random-bird-cage-magnum");

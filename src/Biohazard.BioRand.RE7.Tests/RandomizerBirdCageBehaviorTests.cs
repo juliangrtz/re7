@@ -69,18 +69,18 @@ public class RandomizerBirdCageBehaviorTests
                 randomizer.DynamicData.SetData(
                     DynamicDataName.BirdCages,
                     System.Text.Encoding.UTF8.GetBytes("""
-                    Category,ItemId,MinAmount,MaxAmount,Coins,InputItemIds
-                    Drug,MachineGun,1,1,7,Coin CoinOld
-                    Drug,MiaKnife,1,1,3,Coin CoinOld
-                    Drug,Herb,3,6,2,Coin CoinOld
-                    Drug,RemedyM,2,4,2,Coin CoinOld
-                    Drug,RemedyL,1,3,3,Coin CoinOld
-                    Drug,Gunpowder,3,6,2,Coin CoinOld
-                    Drug,ChemicalS,2,4,2,Coin CoinOld
-                    Drug,ShotgunBullet,8,12,3,Coin CoinOld
-                    Drug,HandgunBullet,15,25,2,Coin CoinOld
-                    Drug,HandgunBulletL,10,15,2,Coin CoinOld
-                    Drug,MagnumBullet,4,6,7,Coin CoinOld
+                        Enabled,Category,ItemId,MinAmount,MaxAmount,Coins,InputItemIds
+                        true,Drug,MachineGun,1,1,7,Coin CoinOld
+                        true,Drug,MiaKnife,1,1,3,Coin CoinOld
+                        true,Drug,Herb,3,6,2,Coin CoinOld
+                        true,Drug,RemedyM,2,4,2,Coin CoinOld
+                        true,Drug,RemedyL,1,3,3,Coin CoinOld
+                        true,Drug,Gunpowder,3,6,2,Coin CoinOld
+                        true,Drug,ChemicalS,2,4,2,Coin CoinOld
+                        true,Drug,ShotgunBullet,8,12,3,Coin CoinOld
+                        true,Drug,HandgunBullet,15,25,2,Coin CoinOld
+                        true,Drug,HandgunBulletL,10,15,2,Coin CoinOld
+                        true,Drug,MagnumBullet,4,6,7,Coin CoinOld
                     """));
             });
 
