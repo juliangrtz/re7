@@ -53,7 +53,7 @@ public static class Csv
                     {
                         propertyMap.Add(null);
                     }
-                    propertyMap[x] = typ.GetProperty(t.Text, BindingFlags.Public | BindingFlags.Instance);
+                    propertyMap[x] = typ.GetProperty(t.Text.Trim(), BindingFlags.Public | BindingFlags.Instance);
                 }
                 else
                 {

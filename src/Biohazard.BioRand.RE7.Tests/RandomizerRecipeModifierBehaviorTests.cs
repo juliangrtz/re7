@@ -11,10 +11,10 @@ public class RandomizerRecipeModifierBehaviorTests
     public void RecipeModifier_WithInjectedRecipes_AddsSelectedRecipesAndRebuildsDictionary()
     {
         var recipesCsv = """
-Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
-AlwaysEnabled,1,1,Herb,1,1,Herb,1,1,Strong Chem Fluid,Always recipe
-Balanced,2,2,Handgun Ammo,1,1,Gunpowder,3,3,Shotgun Shells,Balanced recipe
-Balanced,1,1,Herb,1,1,Herb,1,1,Stabilizer,Filtered recipe
+Enabled,Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
+true,AlwaysEnabled,1,1,Herb,1,1,Herb,1,1,Strong Chem Fluid,Always recipe
+true,Balanced,2,2,Handgun Ammo,1,1,Gunpowder,3,3,Shotgun Shells,Balanced recipe
+true,Balanced,1,1,Herb,1,1,Herb,1,1,Stabilizer,Filtered recipe
 """;
 
         using var result = RandomizerTest.RunState(
@@ -47,9 +47,9 @@ Balanced,1,1,Herb,1,1,Herb,1,1,Stabilizer,Filtered recipe
     public void RecipeModifier_WithQuantityRandomization_ScalesSelectedRecipeAmounts()
     {
         var recipesCsv = """
-Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
-AlwaysEnabled,1,1,Herb,1,1,Herb,1,1,Strong Chem Fluid,Always recipe
-Balanced,2,2,Handgun Ammo,1,1,Gunpowder,3,3,Shotgun Shells,Balanced recipe
+Enabled,Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
+true,AlwaysEnabled,1,1,Herb,1,1,Herb,1,1,Strong Chem Fluid,Always recipe
+true,Balanced,2,2,Handgun Ammo,1,1,Gunpowder,3,3,Shotgun Shells,Balanced recipe
 """;
 
         using var result = RandomizerTest.RunState(

@@ -15,7 +15,6 @@ public enum DynamicDataName
     EnemyLimits,
     Messages,
     BirdCages,
-    KeyItems,
     DebugStartItems,
     BirthdaySkills,
 }

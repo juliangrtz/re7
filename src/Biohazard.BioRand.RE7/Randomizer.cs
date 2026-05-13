@@ -22,6 +22,7 @@ internal class Randomizer : IDisposable
     public IProgressReporter Reporter { get; }
     public FileRepository FileRepository => _fileRepository;
     public DynamicData DynamicData { get; }
+    internal bool CaptureStateLogs { get; set; } = true;
     internal RandomizerLoggerIO? LastLog { get; private set; }
 
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
@@ -125,14 +126,22 @@ internal class Randomizer : IDisposable
         // Patches
         Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
 
-        // Input
-        IterateModifiers((n, m) =>
+        if (CaptureStateLogs)
         {
-            logger.Input.Push(n);
-            m.LogState(this, logger.Input);
-            logger.Input.Pop();
+            // Input
+            IterateModifiers((n, m) =>
+            {
+                logger.Input.Push(n);
+                m.LogState(this, logger.Input);
+                logger.Input.Pop();
+                logger.Input.LogHr();
+            });
+        }
+        else
+        {
+            logger.Input.LogLine("State logging disabled.");
             logger.Input.LogHr();
-        });
+        }
 
         // Apply modifiers
         IterateModifiers((n, m) =>
@@ -146,14 +155,22 @@ internal class Randomizer : IDisposable
         // Save Flags
         FlagService.Save(logger.Process);
 
-        // Output
-        IterateModifiers((n, m) =>
+        if (CaptureStateLogs)
         {
-            logger.Output.Push(n);
-            m.LogState(this, logger.Output);
-            logger.Output.Pop();
+            // Output
+            IterateModifiers((n, m) =>
+            {
+                logger.Output.Push(n);
+                m.LogState(this, logger.Output);
+                logger.Output.Pop();
+                logger.Output.LogHr();
+            });
+        }
+        else
+        {
+            logger.Output.LogLine("State logging disabled.");
             logger.Output.LogHr();
-        });
+        }
 
         LastLog = logger;
         return logger;
