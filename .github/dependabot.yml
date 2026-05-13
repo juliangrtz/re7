@@ -1,11 +1,48 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
+
 updates:
-  - package-ecosystem: "" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "nuget"
+    directories:
+      - "/src/Biohazard.BioRand.RE7"
+      - "/src/Biohazard.BioRand.RE7.Benchmarks"
+      - "/src/Biohazard.BioRand.RE7.DataGen"
+      - "/src/Biohazard.BioRand.RE7.Tests"
+      - "/src/biorand-re7"
+    target-branch: "staging"
     schedule:
       interval: "weekly"
+      day: "saturday"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    groups:
+      nuget-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    labels:
+      - "dependencies"
+      - "nuget"
+    commit-message:
+      prefix: "deps"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "staging"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "04:30"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 2
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "deps"
