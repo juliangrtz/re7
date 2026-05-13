@@ -138,6 +138,7 @@ public static class RandomizerTest
         };
 
         var randomizer = new Randomizer(input, InputPakPath, new EmptyReporter());
+        randomizer.CaptureStateLogs = false;
         randomizer.DynamicData.SetData(
             DynamicDataName.EnemyLimits,
             System.Text.Encoding.UTF8.GetBytes("SceneFile,MaxEnemies,Comment\r\n"));
@@ -176,6 +177,21 @@ public static class RandomizerTest
 
         throw new FileNotFoundException(
             $"Baseline {PAKName} not found. Put it at {LocalPAKPath} or set {TestPAKPathEnvVariable}.");
+    }
+}
+
+public sealed class DefaultRandomizerRunFixture : IDisposable
+{
+    private readonly Lazy<RandomizerRunResult> _result = new(() => RandomizerTest.RunState());
+
+    public RandomizerRunResult Result => _result.Value;
+
+    public void Dispose()
+    {
+        if (_result.IsValueCreated)
+        {
+            _result.Value.Dispose();
+        }
     }
 }
 

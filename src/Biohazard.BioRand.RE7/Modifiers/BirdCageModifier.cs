@@ -77,11 +77,17 @@ internal class BirdCageModifier : Modifier
             _replacements = replacements;
         }
 
-        public ReplacementData GetReplacement(ReplacementCategory category, Rng rng, ItemRandomizer itemRandomizer)
+        public bool TryGetReplacement(ReplacementCategory category, Rng rng, ItemRandomizer itemRandomizer, out ReplacementData result)
         {
             var categoryReplacements = _replacements
                 .Where(replacement => replacement.Category == category)
                 .ToList();
+            if (categoryReplacements.Count == 0)
+            {
+                result = default;
+                return false;
+            }
+
             var candidates = categoryReplacements
                 .Where(replacement => !_selectedItemIds.Contains(replacement.ItemId.ToString()))
                 .ToList();
@@ -109,7 +115,8 @@ internal class BirdCageModifier : Modifier
             var itemId = replacement.ItemId.ToString();
             _selectedItemIds.Add(itemId);
             itemRandomizer.MarkItemPlaced(itemId);
-            return (replacement.ItemId, rng.NextInclusive(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
+            result = (replacement.ItemId, rng.NextInclusive(replacement.MinAmount, replacement.MaxAmount), replacement.Coins, replacement.InputItemIds);
+            return true;
         }
 
         private static bool IsAlreadyPlacedWeapon(BirdCageReplacement replacement, ItemRandomizer itemRandomizer)
@@ -119,9 +126,12 @@ internal class BirdCageModifier : Modifier
         }
     }
 
-    private void RandomizeBirdCageContent(BirdCageReplacementPicker replacementPicker, Rng rng, BirdCage birdCage, ReplacementCategory category, ItemRandomizer itemRandomizer)
+    private bool RandomizeBirdCageContent(BirdCageReplacementPicker replacementPicker, Rng rng, BirdCage birdCage, ReplacementCategory category, ItemRandomizer itemRandomizer)
     {
-        var (Id, Quantity, Coins, ValidItemIDs) = replacementPicker.GetReplacement(category, rng, itemRandomizer);
+        if (!replacementPicker.TryGetReplacement(category, rng, itemRandomizer, out var replacement))
+            return false;
+
+        var (Id, Quantity, Coins, ValidItemIDs) = replacement;
         birdCage.Item.ItemDataID = Id.ToString();
         birdCage.Item.ItemStackNum = Quantity;
         birdCage.Item.SaveGUID = rng.NextGuid(); // IMPORTANT!
@@ -143,6 +153,8 @@ internal class BirdCageModifier : Modifier
 
             birdCage.ItemSelectReaction.Enabled = true;
         }
+
+        return true;
     }
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger)
@@ -182,7 +194,12 @@ internal class BirdCageModifier : Modifier
                             (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
                         var beforeName = _items.FromId(beforeItemId)!.Name;
 
-                        RandomizeBirdCageContent(replacementPicker, rng, birdCage, category, randomizer.ItemRandomizer);
+                        if (!RandomizeBirdCageContent(replacementPicker, rng, birdCage, category, randomizer.ItemRandomizer))
+                        {
+                            logger.LogLine($"Skipped {beforeItemCount}x {beforeName} bird cage reward because no enabled {category} replacements are available.");
+                            return;
+                        }
+
                         changedBirdCages.Add(birdCage);
                         var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
 

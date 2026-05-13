@@ -10,8 +10,15 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerKeyItemLocationBehaviorTests
+public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRandomizerRunFixture>
 {
+    private readonly DefaultRandomizerRunFixture _defaultRun;
+
+    public RandomizerKeyItemLocationBehaviorTests(DefaultRandomizerRunFixture defaultRun)
+    {
+        _defaultRun = defaultRun;
+    }
+
     private static readonly IReadOnlyDictionary<string, ExpectedKeyItemRule> ExpectedRules =
         new Dictionary<string, ExpectedKeyItemRule>(StringComparer.OrdinalIgnoreCase)
         {
@@ -380,7 +387,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_LeavesLucasPuzzleRoomInventoryGateVanillaWhenDisabled()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var checks = GetLucasPuzzleInventoryChecks(result.ReadAfterScene(LucasPuzzleInventoryModifier.ScenePath));
 
         Assert.False(result.WasFileModified(LucasPuzzleInventoryModifier.ScenePath));
@@ -391,7 +398,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DetectsFsmControlledPickupPlacements()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var scene = result.ReadBeforeScene(MainHouseHallScenePath);
 
         Assert.True(HasFsmInHierarchy(scene, MainHouseHallDrawerCoinGuid));
@@ -401,7 +408,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DetectsInteractDrawerReferencedPickupPlacements()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var scene = result.ReadBeforeScene(ShipMaintenanceRoomScenePath);
 
         Assert.True(HasFsmInHierarchy(scene, ShipMaintenanceRoomDrawerHandgunGuid));
@@ -447,7 +454,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotTreatFuseCabinetAsPreBoltCuttersCandidate()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var fuseCabinet = result.ItemPlacementService.MainGamePlacements.Single(placement =>
             placement.Guid == GuestHouseFuseCabinetGuid &&
             placement.SceneFile.Equals("natives/stm/environment/scene/chapter1/c01_corridor01.scn.20", StringComparison.OrdinalIgnoreCase));
@@ -460,7 +467,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotUseMissableGuestHouseOutsidePlacements()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var driversLicense = result.ItemPlacementService.MainGamePlacements.Single(placement =>
             placement.Guid == GuestHouseMiaDriversLicenseGuid &&
             placement.SceneFile.Equals("natives/stm/environment/scene/chapter1/c01_outside11.scn.20", StringComparison.OrdinalIgnoreCase));
@@ -473,7 +480,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotTreatMiaCellAsPreBoltCuttersCandidate()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var miaCell = result.ItemPlacementService.MainGamePlacements.Single(placement =>
             placement.IsExtra &&
             placement.Comment == "Mia's Cell" &&
@@ -487,7 +494,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotTreatClockRewardAsPrePendulumCandidate()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var clockReward = FindPlacement(result, MainHouseLivingRoomScenePath, MainHouseClockRewardGuid);
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(clockReward, "FloorDoorKey"));
@@ -500,7 +507,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotUseJack2RedDogHeadAsKeyItemTarget()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var jack2RedDogHead = FindPlacement(result, Jack2ScenePath, Jack2RedDogHeadGuid);
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(jack2RedDogHead, "LucasCardKey"));
@@ -511,7 +518,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_RestrictsKeycardsToSnakeKeySetupTargets()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var blueKeycardAttic = FindPlacement(result, BlueKeycardAtticScenePath, BlueKeycardAtticGuid);
         var redKeycardWorkshop = FindPlacement(result, RedKeycardWorkshopScenePath, RedKeycardWorkshopGuid);
         var greenhouseStairs = FindPlacement(result, GreenhouseStairsScenePath, GreenhouseStairsItemGuid);
@@ -528,7 +535,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_SeparatesTestingAreaBatteryAndBirthdayPuzzlePhases()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var barnPlacement = result.ItemPlacementService.MainGamePlacements.First(placement =>
             !placement.IsExtra &&
             placement.Id == "ShotgunBullet" &&
@@ -554,7 +561,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotRandomizeSerumComplete()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var postJack3Bridge = result.ItemPlacementService.MainGamePlacements.Single(placement =>
             placement.IsExtra &&
             placement.Comment == "Post-Jack 3 Bridges" &&
@@ -566,7 +573,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_TreatsSnakeKeyBodyAsAfterOldHouseNotProcessingArea()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
 
         foreach (var guid in SnakeKeyBodyGuids)
         {
@@ -590,7 +597,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_DoesNotPlaceOldHouseGateItemsBehindTheirOwnGates()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var stoneStatuette = FindPlacement(result, OldHouseItemSetScenePath, OldHouseStoneStatuetteGuid);
         var crowKeyChest = FindPlacement(result, OldHouseItemSetScenePath, OldHouseCrowKeyGuid);
         var crankTunnel = FindPlacement(result, OldHouseCrankScenePath, OldHouseCrankGuid);
@@ -628,7 +635,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_SeparatesWreckedShipRepairPhases()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var shipExitExtra = result.ItemPlacementService.MainGamePlacements.Single(placement =>
             placement.IsExtra &&
             placement.Comment == "Wrecked Ship Exit" &&
@@ -824,7 +831,7 @@ public class RandomizerKeyItemLocationBehaviorTests
     [Fact]
     public void KeyItemLocations_FsmControlledCoinPickup_CanUseBlueDogHeadVisuals()
     {
-        using var result = RandomizerTest.RunState();
+        var result = _defaultRun.Result;
         var scene = result.ReadBeforeScene(MainHouseHallScenePath);
         var coinGameObject = scene.FindGameObject(MainHouseHallDrawerCoinGuid);
         var blueDogHeadTemplate = result.Randomizer.TemplateService.GetItemTemplate("3CrestKeyA");
