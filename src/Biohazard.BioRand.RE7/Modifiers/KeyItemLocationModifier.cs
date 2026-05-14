@@ -23,6 +23,7 @@ internal class KeyItemLocationModifier : Modifier
         "EntranceHallKey",
         "HandAxe",
         "Fuse",
+        "FuseCh4",
         "Lantern",
         "SerumComplete",
     };
@@ -627,7 +628,8 @@ internal class KeyItemLocationModifier : Modifier
                 assignment.Target.TargetGuid,
                 assignment.Rule);
             logger.LogLine($"[KEY ITEM ROUTE] {_itemDefinitions.GetName(assignment.Rule.Id)} " +
-                $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)}");
+                $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)} " +
+                $"[{assignment.Target.Placement.Position}]");
             logger.LogLine($"GUID: {assignment.Target.TargetGuid}");
         }
 
