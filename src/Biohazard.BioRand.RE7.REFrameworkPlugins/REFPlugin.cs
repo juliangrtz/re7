@@ -161,6 +161,13 @@ public class REFPlugin
         "Em8001", // Chainsaw Jack
     };
 
+    private static readonly HashSet<string> SingleDropPerSpawnEnemyTypeIds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Em5510", // Insect hive
+        "Em5511",
+        "Em5512",
+    };
+
     private static readonly HashSet<string> BossEnemyDropItemDataIds = new(StringComparer.Ordinal)
     {
         "LiquidBomb",
@@ -867,6 +874,12 @@ public class REFPlugin
         }
     }
 
+    private static bool ShouldKeepEnemyDropStateAfterForgetDie(ManagedObject dropSourceObject, via.GameObject? enemyObject)
+    {
+        var enemyTypeId = GetEnemyTypeId(dropSourceObject, enemyObject);
+        return enemyTypeId != null && SingleDropPerSpawnEnemyTypeIds.Contains(enemyTypeId);
+    }
+
     private static bool TryBeginEnemyDrop(via.GameObject enemyObject, out int generation)
     {
         lock (enemyDropStateLock)
@@ -947,7 +960,17 @@ public class REFPlugin
     [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.forgetDie), MethodHookType.Pre)]
     private static PreHookResult EnemyActionController_forgetDie_Pre(Span<ulong> args)
     {
-        ResetEnemyDropState(ManagedObject.ToManagedObject(args[1]).As<EnemyActionController>()?.GameObject);
+        var controllerObject = ManagedObject.ToManagedObject(args[1]);
+        var controller = controllerObject.As<EnemyActionController>();
+        if (ShouldKeepEnemyDropStateAfterForgetDie(controllerObject, controller?.GameObject))
+        {
+            logger.Log(
+                $"Preserving enemy drop state after forgetDie for enemy object 0x{controller?.GameObject?.Address() ?? 0:X}.",
+                isVerbose: true);
+            return PreHookResult.Continue;
+        }
+
+        ResetEnemyDropState(controller?.GameObject);
         return PreHookResult.Continue;
     }
 

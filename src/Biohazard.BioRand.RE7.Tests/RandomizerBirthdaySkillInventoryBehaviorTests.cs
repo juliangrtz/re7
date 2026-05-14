@@ -26,7 +26,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests
         Assert.NotNull(skill);
         Assert.Equal(Enums.app.Item.ItemCategoryType.KeyItem, skill!.Category);
         Assert.Equal(ItemSortCategory.EquipItem, skill.SortCategory);
-        Assert.Equal(Enums.app.Item.ItemSlotSize.Slot1, skill.SlotSize);
+        Assert.Equal(Enums.app.Item.ItemSlotSize.Slot2, skill.SlotSize);
         Assert.Equal(Skl001ItemPrefabPath, skill.ItemPrefab.Path.ToString());
         Assert.Equal(Skl001DropPrefabPath, skill.DropItemSetting.DropItemPrefab.Path.ToString());
         Assert.DoesNotContain(settings, x => x.ItemDataID == "skl001no");

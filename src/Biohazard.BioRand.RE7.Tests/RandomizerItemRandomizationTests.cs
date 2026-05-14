@@ -516,6 +516,8 @@ public class RandomizerItemRandomizationTests
         Assert.Equal(beforeDynamic.Children.Count() + expectedAdditions, afterDynamic.Children.Count());
         Assert.NotNull(destruct);
         Assert.True(destruct!.Enabled);
+        Assert.Equal(ForcedDropId, destruct.SetItemID);
+        Assert.Equal(1, destruct.ChangeStackNum);
         AssertPositionMatchesPlacement(transform, placement);
     }
 
@@ -549,6 +551,46 @@ public class RandomizerItemRandomizationTests
         });
 
         Assert.Equal("ItemBox_Fake", newChild.Name);
+    }
+
+    [Fact]
+    public void AdditionalWoodenCrates_UnsupportedRuntimeDrops_AreExcluded()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-items"] = true;
+            config["additional-wooden-crates"] = true;
+            config["additional-wooden-crates-fakes"] = false;
+
+            foreach (var dropId in ItemDrops.GenericDrops)
+            {
+                config[$"item-drop-ratio-{dropId.ToLowerInvariant()}"] = 0.0;
+            }
+
+            config["item-drop-ratio-stimulant"] = 1.0;
+            config["item-drop-ratio-depressant"] = 1.0;
+        });
+
+        var placement = result.ItemPlacementService.ItemPlacements.First(x =>
+            x.Enabled &&
+            x.IsExtra &&
+            !string.IsNullOrEmpty(x.SceneFile) &&
+            x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag) &&
+            x.Tags.Contains(ExtraPlacementModifier.NotFakeCrateTag));
+
+        var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
+        var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
+        var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+        var newChild = Assert.Single(newChildren, child =>
+        {
+            var transform = child.FindComponent<GeneratedViaTransform>();
+            return transform != null && TransformMatchesPlacement(transform, placement);
+        });
+        var destruct = newChild.FindComponent<app.ItemDropDestruct>();
+
+        Assert.NotNull(destruct);
+        Assert.Equal("Herb", destruct!.SetItemID);
+        Assert.DoesNotContain(destruct.SetItemID, ItemDrops.UnsupportedRuntimeDropIds);
     }
 
     [Fact]

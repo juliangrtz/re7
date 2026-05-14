@@ -304,7 +304,6 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         cloned.Category = Enums.app.Item.ItemCategoryType.KeyItem;
         cloned.SortCategory = ItemSortCategory.EquipItem;
         cloned.SortPriority = 100 + ParseSkillNumber(source.ItemDataID);
-        cloned.SlotSize = Enums.app.Item.ItemSlotSize.Slot1;
         cloned.MaxStackNum = 1;
         cloned.CanStoreItembox = true;
         cloned.DropItemSetting = new app.ItemData.DropItemData
