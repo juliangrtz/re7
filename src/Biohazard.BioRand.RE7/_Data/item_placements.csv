@@ -38,7 +38,7 @@ TRUE,crate,Molded Creation Room,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000
 TRUE,random,Main Hall,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,-8.54,0.4,1.13,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,,,
 FALSE,crate,Laundry Room,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,28.1,0,9.74,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,,,
 TRUE,random,Pantry,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,10.2,-1.2,11.05,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,,,
-TRUE,random,Dinner Table,,TRUE,1,1,1,,1,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,20.34,0.855,2.524,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,,,
+TRUE,random,Dinner Table,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,20.34,0.855,2.524,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,,,
 TRUE,item_box,Dining Room,,TRUE,1,1,1,,3,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,20.38,0,-0.71,0,0,0,1,,natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,,,
 TRUE,crate,Basement,,TRUE,1,1,1,,1,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,-0.553,-6.994,13.455,0,0,0,1,,natives/stm/environment/scene/chapter1/c01_b1g.scn.20,,,
 TRUE,random,Mia's Cell,,TRUE,1,1,1,,1,00000000-0000-0000-0000-000000000000,00000000-0000-0000-0000-000000000000,13.7,-6.8,6.45,0,0,0,1,,natives/stm/environment/scene/chapter1/c01_b1f.scn.20,,,

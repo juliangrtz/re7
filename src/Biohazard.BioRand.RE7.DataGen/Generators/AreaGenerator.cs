@@ -2,6 +2,7 @@
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Compression;
 using IntelOrca.Biohazard.REE.Package;
+using IntelOrca.Biohazard.REE.Rsz;
 using Spectre.Console;
 using System.Collections.Concurrent;
 using System.Text;
@@ -18,6 +19,12 @@ internal class AreaGenerator : IFileGenerator
 
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
+
+    private readonly RszTypeRepository _rszRepository =
+        RszRepositorySerializer.Default.FromJsonGz(EmbeddedData.GetFile("rszre7rt.json.gz"));
+
+    private readonly Lazy<Dictionary<string, string>> _csvDescriptions;
+    private readonly Lazy<AreaDescriptionProvider> _descriptionProvider;
 
     private readonly List<string> _pathExclusions = [
         "/alphatest/",
@@ -41,6 +48,12 @@ internal class AreaGenerator : IFileGenerator
     private readonly Regex foundFootageRegex = new Regex(@"(?:^|[\/_])ff(\d{3})(?:[\/_\.]|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private readonly Regex itemRegex = new Regex(@"/items/|/itemsettings/|/itemset/|_item_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private readonly Regex enemyRegex = new Regex(@"enemy|enemies", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    public AreaGenerator()
+    {
+        _csvDescriptions = new Lazy<Dictionary<string, string>>(LoadCsvDescriptions);
+        _descriptionProvider = new Lazy<AreaDescriptionProvider>(() => new AreaDescriptionProvider(_pakFile, _pakList, _rszRepository));
+    }
 
     private int? ExtractChapter(string path, AreaKind kind, GenerateCommand.GenerateSettings settings)
     {
@@ -167,13 +180,85 @@ internal class AreaGenerator : IFileGenerator
             {
                 Path = path,
                 Chapter = chapter,
-                Description = dlc == null ? "" : null,
+                Description = ResolveDescription(path, chapter, dlc, kind),
                 Dlc = dlc,
                 OnlyDifficulty = difficulty,
                 Kind = kind
             });
         });
 
-        return result.ToList().OrderBy(area => area.Chapter ?? int.MaxValue);
+        return result
+            .OrderBy(area => area.Chapter ?? int.MaxValue)
+            .ThenBy(area => area.Dlc?.ToString() ?? "")
+            .ThenBy(area => area.Kind)
+            .ThenBy(area => area.Path, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+    }
+
+    private string? ResolveDescription(string path, int? chapter, DlcType? dlc, AreaKind kind)
+    {
+        if (_csvDescriptions.Value.TryGetValue(path, out var csvDescription))
+        {
+            return csvDescription;
+        }
+
+        return _descriptionProvider.Value.Describe(path, chapter, dlc, kind);
+    }
+
+    private static Dictionary<string, string> LoadCsvDescriptions()
+    {
+        var csv = TryReadSourceDataFile("areas.csv") ?? EmbeddedData.TryGetFile("areas.csv");
+        if (csv == null)
+            return [];
+
+        return Csv.Deserialize<AreaDefinition>(csv)
+            .Where(area => !string.IsNullOrWhiteSpace(area.Path) && !string.IsNullOrWhiteSpace(area.Description))
+            .GroupBy(area => area.Path, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                group => group.Key,
+                group => NormalizeDescription(group.First().Description!),
+                StringComparer.OrdinalIgnoreCase);
+    }
+
+    private static byte[]? TryReadSourceDataFile(string name)
+    {
+        foreach (var root in new[] { AppContext.BaseDirectory, Environment.CurrentDirectory })
+        {
+            var current = new DirectoryInfo(root);
+            while (current != null)
+            {
+                var sourcePath = Path.Combine(
+                    current.FullName,
+                    "src",
+                    "Biohazard.BioRand.RE7",
+                    EmbeddedData.DataDirectoryName,
+                    name);
+                if (File.Exists(sourcePath))
+                {
+                    return File.ReadAllBytes(sourcePath);
+                }
+
+                sourcePath = Path.Combine(
+                    current.FullName,
+                    "Biohazard.BioRand.RE7",
+                    EmbeddedData.DataDirectoryName,
+                    name);
+                if (File.Exists(sourcePath))
+                {
+                    return File.ReadAllBytes(sourcePath);
+                }
+
+                current = current.Parent;
+            }
+        }
+
+        return null;
+    }
+
+    private static string NormalizeDescription(string description)
+    {
+        var parts = description
+            .Split('/', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        return parts.Length == 0 ? description.Trim() : string.Join(" / ", parts);
     }
 }

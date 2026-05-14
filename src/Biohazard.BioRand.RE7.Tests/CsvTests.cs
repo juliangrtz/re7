@@ -29,9 +29,26 @@ public class CsvTests
         }
     }
 
+    [Fact]
+    public void Deserialize_MapsBomPrefixedFirstHeader()
+    {
+        var csv = Encoding.UTF8.GetBytes("\uFEFFName,Value\nMain Hall,7\n");
+
+        var row = Assert.Single(Csv.Deserialize<BomHeaderRow>(csv));
+
+        Assert.Equal("Main Hall", row.Name);
+        Assert.Equal(7, row.Value);
+    }
+
     private sealed class DecimalRow
     {
         public float FloatValue { get; init; }
         public double DoubleValue { get; init; }
+    }
+
+    private sealed class BomHeaderRow
+    {
+        public string Name { get; init; } = "";
+        public int Value { get; init; }
     }
 }

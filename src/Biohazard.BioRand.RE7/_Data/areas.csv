@@ -1262,16 +1262,16 @@ natives/stm/scenes/dlc/addcommand/chapter7_2_commandupdater.scn.20,,,,TwentyOne,
 natives/stm/scenes/items/itemresources_chapter7_2.scn.20,,,,TwentyOne,Item,FALSE
 natives/stm/environment/scene/chapter1/c01_2f.scn.20,1,Guest House / 2F / Stairs up / Safe Room,,,General,FALSE
 natives/stm/environment/scene/chapter1/c01_3f.scn.20,1,Guest House / 3F / Mia 2,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1a.scn.20,1,Guest House / B / Ladder,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1b.scn.20,1,Guest House / B / Water Corridor 1,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1c.scn.20,1,Guest House / B / Water Corridor 2 / André's body,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1d.scn.20,1,Guest House / B / Water Exit / Missing people placards,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1e.scn.20,1,Guest House / B / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1,Guest House / B / Mia Cell,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1g.scn.20,1,Guest House / B / Mia Follow 1,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1h.scn.20,1,Guest House / B / Mia Follow 2,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1i.scn.20,1,Guest House / B / Mia Follow 3 / Wall Break,,,General,FALSE
-natives/stm/environment/scene/chapter1/c01_b1j.scn.20,1,Guest House / B / Staircase,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1a.scn.20,1,Guest House / B1 / Ladder,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1b.scn.20,1,Guest House / B1 / Water Corridor 1,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1c.scn.20,1,Guest House / B1 / Water Corridor 2 / Andre's body,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1d.scn.20,1,Guest House / B1 / Water Exit / Missing people placards,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1e.scn.20,1,Guest House / B1 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1f.scn.20,1,Guest House / B1 / Mia Cell,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1g.scn.20,1,Guest House / B1 / Mia Follow 1,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1h.scn.20,1,Guest House / B1 / Mia Follow 2,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1i.scn.20,1,Guest House / B1 / Mia Follow 3 / Wall Break,,,General,FALSE
+natives/stm/environment/scene/chapter1/c01_b1j.scn.20,1,Guest House / B1 / Staircase,,,General,FALSE
 natives/stm/environment/scene/chapter1/c01_bathroom01.scn.20,1,Guest House / 1F / Bathroom,,,General,FALSE
 natives/stm/environment/scene/chapter1/c01_corridor01.scn.20,1,Guest House / 1F / Entrance Corridor,,,General,FALSE
 natives/stm/environment/scene/chapter1/c01_corridor02.scn.20,1,Guest House / 1F / Corridor at the back,,,General,FALSE
@@ -1314,22 +1314,22 @@ natives/stm/environment/scene/chapter3/c03_gardenarea1sub02.scn.20,3,Terrain,,,G
 natives/stm/environment/scene/chapter3/c03_gardenarea1sub03.scn.20,3,Terrain,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_gardenareaboat01.scn.20,3,Terrain,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_gardenareaboat02.scn.20,3,Terrain,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1fentrance01.scn.20,3,Green House / Exit,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1fentrance02.scn.20,3,Green House / 1F / Ladder,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1fhallway01.scn.20,3,Green House / 1F / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20,3,Green House / 1F / Yard,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1froom01.scn.20,3,Green House / 1F / Room 1,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20,3,Green House / 1F / Room 2,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1froom03.scn.20,3,Green House / 1F / Room 3,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh1fstairs01.scn.20,3,Green House / 1F / Stairs / Marge Trigger,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20,3,Green House / 2F / Stairs,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh2froom01.scn.20,3,Green House / 1F / Room 1,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh2fsaferoom01.scn.20,3,Green House / 2F / Entrance / Loot,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh2fsaferoom02.scn.20,3,Green House / 2F / Entrance / Hole,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_gh2fterrace01.scn.20,3,Green House / 2F / Terrace,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_ghinsidelow01.scn.20,3,Green House / Low Poly,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_ghoutside01.scn.20,3,Green House / Exterior,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_ghoutsidegarden.scn.20,3,Green House / Exterior Yard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fentrance01.scn.20,3,Greenhouse / Exit,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fentrance02.scn.20,3,Greenhouse / 1F / Ladder,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fhallway01.scn.20,3,Greenhouse / 1F / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1flowerroom01.scn.20,3,Greenhouse / 1F / Yard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom01.scn.20,3,Greenhouse / 1F / Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom02.scn.20,3,Greenhouse / 1F / Room 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1froom03.scn.20,3,Greenhouse / 1F / Room 3,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh1fstairs01.scn.20,3,Greenhouse / 1F / Stairs / Marguerite Trigger,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fhallway01.scn.20,3,Greenhouse / 2F / Stairs,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2froom01.scn.20,3,Greenhouse / 1F / Room 1,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fsaferoom01.scn.20,3,Greenhouse / 2F / Entrance / Loot,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fsaferoom02.scn.20,3,Greenhouse / 2F / Entrance / Hole,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_gh2fterrace01.scn.20,3,Greenhouse / 2F / Terrace,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghinsidelow01.scn.20,3,Greenhouse / Low Poly,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghoutside01.scn.20,3,Greenhouse / Exterior,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_ghoutsidegarden.scn.20,3,Greenhouse / Exterior Yard,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_leftarea1fbackstage.scn.20,3,Testing Area / 2F / Backstage,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_leftarea1fhallway.scn.20,3,Testing Area / 2F / Staircase down,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_leftarea1fmonitorroom.scn.20,3,Testing Area / 1F / Monitor Room,,,General,FALSE
@@ -1342,24 +1342,24 @@ natives/stm/environment/scene/chapter3/c03_leftarea2froom1.scn.20,3,Testing Area
 natives/stm/environment/scene/chapter3/c03_leftarea2froom2.scn.20,3,Testing Area / 2F / Room 2,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_leftarea2ftvroom.scn.20,3,Testing Area / 2F / TV Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse1fgarage.scn.20,3,Main House / 1F / Garage,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fgaragehallway.scn.20,3,Main House  / 1F / Garage Entrance,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fgarageoutside.scn.20,3,Main House  / 1F / Garage Outside,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,Main House  / 1F / Main Hallway,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,3,Main House  / 1F / Dining Room / Kitchen,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20,3,Main House  / 1F / Living Room / Pendulum,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,3,Main House  / 1F / Pantry / Hatch,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20,3,Main House  / 1F / Laundry / Safe Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fgaragehallway.scn.20,3,Main House / 1F / Garage Entrance,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fgarageoutside.scn.20,3,Main House / 1F / Garage Outside,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20,3,Main House / 1F / Main Hallway,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20,3,Main House / 1F / Dining Room / Kitchen,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20,3,Main House / 1F / Living Room / Pendulum,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20,3,Main House / 1F / Pantry / Hatch,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse1fwash.scn.20,3,Main House / 1F / Laundry / Safe Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fbath.scn.20,3,Main House / 2F / Bathroom,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fbedroom.scn.20,3,Main House / 2F / Bedroom / Clock Puzzle,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fgrandma.scn.20,3,Main House / 2F / Grandma's Room / Shotgun,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fhallway.scn.20,3,Main House / 2F / Corridor 1 / Both Molded and Non-Molded,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fhallway2.scn.20,3,Main House / 2F / Corridor 2,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse2fkids.scn.20,3,Main House / 2F / Lucas' teenage room,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20,3,Main House / 2F / Lucas' teenage room / Attic,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhouse2fplay.scn.20,3,Main House / 2F / Play Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fkids.scn.20,3,Main House / 2F / Kid's Room,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fkids02.scn.20,3,Main House / 2F / Kid's Room / Attic,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhouse2fplay.scn.20,3,Main House / 2F / Recreation Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhouse2fstoreroom.scn.20,3,Main House / 2F / Storage Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhousefakeset01.scn.20,3,Main House / Fake Set,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,3,Main House / Hall,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20,3,Main House / Main Hall,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhousestair01.scn.20,3,Main House / 2F / Stair leading to basement,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhousoutside.scn.20,3,Main House / Exterior,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_mainhousoutsidesub01.scn.20,3,Main House / Exterior / Windows,,,General,FALSE
@@ -1370,7 +1370,7 @@ natives/stm/environment/scene/chapter3/c03_mainhousoutsideterrace2f3.scn.20,3,Ma
 natives/stm/environment/scene/chapter3/c03_oldhouse1fbridge01.scn.20,3,Old House / Entrance Bridge,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fbridge02.scn.20,3,Old House / 1F / Bridges at the back,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fbridgestorag01.scn.20,3,Old House / 1F / Bridges / Storage Room,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_oldhouse1fbridgewc01.scn.20,3,Old House / 1F / Bridges /Toilet,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fbridgewc01.scn.20,3,Old House / 1F / Bridges / Toilet,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fentrance01.scn.20,3,Old House / 1F / Entrance,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fhallway01.scn.20,3,Old House / 1F / Corridor,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fhole01.scn.20,3,Old House / 1F / Hole Area / Crank,,,General,FALSE
@@ -1382,7 +1382,7 @@ natives/stm/environment/scene/chapter3/c03_oldhouse1froom02.scn.20,3,Old House /
 natives/stm/environment/scene/chapter3/c03_oldhouse1fstairs01.scn.20,3,Old House / 1F / Altar / D-Series Arm,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1fstorage.scn.20,3,Old House / 1F / Storage Room / Unused?,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse1funderfloor01.scn.20,3,Old House / 1F / Underground Tunnel / Crank,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_oldhouse1fwallinside01.scn.20,3,Old House / 1F / Centipide Wall,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhouse1fwallinside01.scn.20,3,Old House / 1F / Centipede Wall,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse2fbedroom.scn.20,3,Old House / 2F / Bedroom,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway02.scn.20,3,Old House / 2F / Corridor / D-Series Case,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway03.scn.20,3,Old House / 2F / Corridor / Lantern Placement,,,General,FALSE
@@ -1390,34 +1390,34 @@ natives/stm/environment/scene/chapter3/c03_oldhouse2fhallway04.scn.20,3,Old Hous
 natives/stm/environment/scene/chapter3/c03_oldhouse2fkidsroom01.scn.20,3,Old House / 2F / Child's room / Alligator,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse2fkidsroom02.scn.20,3,Old House / 2F / Child's room / Toys,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouse2fstudy01.scn.20,3,Old House / 2F / Moldy study room,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_oldhousecave01.scn.20,3,Old House / Tunnel / Mutated Marge,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_oldhousecave01.scn.20,3,Old House / Tunnel / Mutated Marguerite,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhouseoutside.scn.20,3,Old House / Exterior,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_oldhousesaferoom01.scn.20,3,Old House / Bridges / Safe Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fhallway1.scn.20,3,Main House / 1F / Right Side Corridor / Scorpion Key,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightarea1fhallway2.scn.20,3,Main House / 1F / Right Side Corridor/ Staircase leading to basement,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightarea1fhallway2.scn.20,3,Main House / 1F / Right Side Corridor / Staircase leading to basement,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fmonitorroom.scn.20,3,Main House / 1F / Moldy Monitor Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1foffice.scn.20,3,Main House / 1F / Office / Unused?,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fopeninghallway.scn.20,3,Main House / 1F / Wall after Shadow Puzzle,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fparlor.scn.20,3,Main House / 1F / Right Side Parlor,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fstorageroom.scn.20,3,Main House / 1F / Right Side Storage Room,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_rightarea1fstudy.scn.20,3,Main House / 1F / Safe Room,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20,3,Main House / B / Jack 2,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fhallway1.scn.20,3,Main House / B / Corridor / After going down,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fhallway2.scn.20,3,Main House / B / Corridor / Workshop / Green barrier,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fhallway3.scn.20,3,Main House / B / Staircase / Snake key,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fhallway4.scn.20,3,Main House / B / Corridor / Jack Cutscene,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fmoldedcreationroom.scn.20,3,Main House / B / Molded Creation Room / Bath tubs,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fmorgue.scn.20,3,Main House / B / Morgue / Dissection Room Key,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fpowerroom.scn.20,3,Main House / B / Carcasses / Red Keycard,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom1.scn.20,3,Main House / B / Electricity Room / Four-Legged Moldeds,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom2.scn.20,3,Main House / B / Storage Room / Scorpion Key / Treasure Photo,,,General,FALSE
-natives/stm/environment/scene/chapter3/c03_rightareab1fstoreroom.scn.20,3,Main House / B / Police Officer's body / Snake Key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20,3,Processing Area / B1 / Jack 2,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway1.scn.20,3,Processing Area / B1 / Corridor / After going down,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway2.scn.20,3,Processing Area / B1 / Corridor / Workshop / Green barrier,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway3.scn.20,3,Processing Area / B1 / Staircase / Snake key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fhallway4.scn.20,3,Processing Area / B1 / Corridor / Jack Cutscene,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fmoldedcreationroom.scn.20,3,Processing Area / B1 / Molded Creation Room / Bath tubs,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fmorgue.scn.20,3,Processing Area / B1 / Morgue / Dissection Room Key,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fpowerroom.scn.20,3,Processing Area / B1 / Carcasses / Red Keycard,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom1.scn.20,3,Processing Area / B1 / Electricity Room / Four-Legged Moldeds,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstorageroom2.scn.20,3,Processing Area / B1 / Storage Room / Scorpion Key / Treasure Photo,,,General,FALSE
+natives/stm/environment/scene/chapter3/c03_rightareab1fstoreroom.scn.20,3,Processing Area / B1 / Police Officer's body / Snake Key,,,General,FALSE
 natives/stm/environment/scene/chapter3/c03_trailerhouse.scn.20,3,Yard / Trailer,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_c012f.scn.20,4,Guest House / 2F / Stairs up,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_c013f.scn.20,4,Guest House / 3F / Evie,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_c01b1h.scn.20,4,Guest House / B / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_c01b1i.scn.20,4,Guest House / B / Mia Wall Break,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_c01b1j.scn.20,4,Guest House / B / Staircase,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1h.scn.20,4,Guest House / B1 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1i.scn.20,4,Guest House / B1 / Mia Wall Break,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_c01b1j.scn.20,4,Guest House / B1 / Staircase,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_c01bathroom01.scn.20,4,Guest House / 1F / Bathroom,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_c01corridor01.scn.20,4,Guest House / 1F / Corridor / Ethan threatens Evie,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_c01corridor02.scn.20,4,Guest House / 1F / Corridor at the back,,,General,FALSE
@@ -1447,7 +1447,7 @@ natives/stm/environment/scene/chapter4/c04_cottage.scn.20,4,Swamp / Mine Office,
 natives/stm/environment/scene/chapter4/c04_cottageswamp01.scn.20,4,Swamp / Dead Fish,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_cottageswamp02.scn.20,4,Swamp / Mine Entrance Path,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_mainhouse1flivingjack.scn.20,4,Main House / 1F / Living Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_outsidepastfront.scn.20,4,Ship / Deck,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_outsidepastfront.scn.20,4,Wrecked Ship / Deck,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship1fcabina.scn.20,4,Wrecked Ship / 1F / Recreation Room,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship1fcabinb.scn.20,4,Wrecked Ship / 1F / Cabin,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship1fcorridor.scn.20,4,Wrecked Ship / 1F / Corridor,,,General,FALSE
@@ -1458,40 +1458,40 @@ natives/stm/environment/scene/chapter4/c04_ship1fstairs.scn.20,4,Wrecked Ship / 
 natives/stm/environment/scene/chapter4/c04_ship1fwarehousea.scn.20,4,Wrecked Ship / 1F / Storage,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship1fwarehouseb.scn.20,4,Wrecked Ship / 1F / Storage,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2fcabina.scn.20,4,Wrecked Ship / 2F / Bunk Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2fcabinapast.scn.20,4,Ship / 2F / Bunk Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabinapast.scn.20,4,Wrecked Ship / 2F / Bunk Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2fcabinmia.scn.20,4,Wrecked Ship / 2F / Guest Room / Safe Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2fcabinmiapast.scn.20,4,Ship / 2F / Guest Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcabinmiapast.scn.20,4,Wrecked Ship / 2F / Guest Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2fcorridorc.scn.20,4,Wrecked Ship / 2F / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2fcorridorcpast.scn.20,4,Ship / 2F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fcorridorcpast.scn.20,4,Wrecked Ship / 2F / Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2fkitchen.scn.20,4,Wrecked Ship / 2F / Kitchen,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2fkitchenpast.scn.20,4,Ship / 2F / Kitchen Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fkitchenpast.scn.20,4,Wrecked Ship / 2F / Kitchen Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20,4,Wrecked Ship / 2F / Lounge,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2freceptionroompast.scn.20,4,Ship / 2F / Lounge Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2freceptionroompast.scn.20,4,Wrecked Ship / 2F / Lounge Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2frestaurant.scn.20,4,Wrecked Ship / 2F / Dining Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2frestaurantpast.scn.20,4,Ship / 2F / Dining Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2frestaurantpast.scn.20,4,Wrecked Ship / 2F / Dining Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2fshaft.scn.20,4,Wrecked Ship / 2F / Shaft,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2fshaftpast.scn.20,4,Ship / 2F / Shaft Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2fshaftpast.scn.20,4,Wrecked Ship / 2F / Shaft Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship2ftearoom.scn.20,4,Wrecked Ship / 2F / Break Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship2ftearoompast.scn.20,4,Ship / 2F / Break Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship2ftearoompast.scn.20,4,Wrecked Ship / 2F / Break Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fcorridor01.scn.20,4,Wrecked Ship / 3F / Corridor at the back,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fcorridor01past.scn.20,4,Wrecked Ship / 3F / Corridor at the back / Evie cutscene,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fcorridor02.scn.20,4,Wrecked Ship / 3F / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fcorridor02past.scn.20,4,Ship / 3F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor02past.scn.20,4,Wrecked Ship / 3F / Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fcorridor03.scn.20,4,Wrecked Ship / 3F / Broken Elevator Door Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fcorridor03past.scn.20,4,Ship / 3F / Broken Elevator Door Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor03past.scn.20,4,Wrecked Ship / 3F / Broken Elevator Door Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fcorridor04.scn.20,4,Wrecked Ship / 3F / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fcorridor04past.scn.20,4,Ship / 3F / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fcorridor04past.scn.20,4,Wrecked Ship / 3F / Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3felectricdistributionroom.scn.20,4,Wrecked Ship / 3F / Control Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3felectricdistributionroompast.scn.20,4,Ship / 3F / Control Room Pest,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3felectricdistributionroompast.scn.20,4,Wrecked Ship / 3F / Control Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20,4,Wrecked Ship / 3F / Sick Bay,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3finfirmarypa.scn.20,4,Ship / 3F / Sick Bay Past,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3finfirmarypast.scn.20,4,Ship / 3F / Sick Bay Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3finfirmarypa.scn.20,4,Wrecked Ship / 3F / Sick Bay Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3finfirmarypast.scn.20,4,Wrecked Ship / 3F / Sick Bay Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fsecurityroom.scn.20,4,Wrecked Ship / 3F / Security,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fsecurityroompast.scn.20,4,Ship / 3F / Security Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fsecurityroompast.scn.20,4,Wrecked Ship / 3F / Security Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fshaft.scn.20,4,Wrecked Ship / 3F / Shaft,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fshaftpast.scn.20,4,Ship / 3F / Shaft Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshaftpast.scn.20,4,Wrecked Ship / 3F / Shaft Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship3fshowerroom.scn.20,4,Wrecked Ship / 3F / Shower Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_ship3fshowerroompast.scn.20,4,Ship / 3F / Shower Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_ship3fshowerroompast.scn.20,4,Wrecked Ship / 3F / Shower Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship4fbridge.scn.20,4,Wrecked Ship / 4F / Bridge,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship4fcabina.scn.20,4,Wrecked Ship / 4F / Captain's Cabin,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_ship4fcorridora.scn.20,4,Wrecked Ship / 4F / Corridor with staircase leading downwards,,,General,FALSE
@@ -1512,22 +1512,22 @@ natives/stm/environment/scene/chapter4/c04_shipb1room02.scn.20,4,Wrecked Ship / 
 natives/stm/environment/scene/chapter4/c04_shipb1stairs.scn.20,4,Wrecked Ship / S2 / Moldy Stairwell,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb1workshop.scn.20,4,Wrecked Ship / S2 / Workshop,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2corridor01.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2corridor01past.scn.20,4,Ship / S2 / Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor01past.scn.20,4,Wrecked Ship / S2 / Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2corridor02.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2corridor03.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2corridor03past.scn.20,4,Ship / S2 / Corridor,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor03past.scn.20,4,Wrecked Ship / S2 / Corridor,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2corridor04.scn.20,4,Wrecked Ship / S2 / Moldy Corridor,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2corridor04past.scn.20,4,Ship / S2 / Moldy Corridor Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2corridor04past.scn.20,4,Wrecked Ship / S2 / Moldy Corridor Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2engineroom01.scn.20,4,Wrecked Ship / S2 / No. 2 Engine Room / Evie,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2engineroom01past.scn.20,4,Ship / S2 / No. 2 Engine Room / Evie,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2engineroom01past.scn.20,4,Wrecked Ship / S2 / No. 2 Engine Room / Evie,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2storage01.scn.20,4,Wrecked Ship / S2 / Store Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2storage01past.scn.20,4,Ship / S2 / Store Room Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage01past.scn.20,4,Wrecked Ship / S2 / Store Room Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2storage02.scn.20,4,Wrecked Ship / S2 / Pressure Gauge Room / Near Swamp Exit,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipb2storage03.scn.20,4,Wrecked Ship / S2 / No. 1 Engine Room,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipb2storage03past.scn.20,4,Ship / S2 / No. 1 Engine Room,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipb2storage03past.scn.20,4,Wrecked Ship / S2 / No. 1 Engine Room,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipelevatorshaft01a.scn.20,4,Wrecked Ship / Elevator Shaft,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_shipstairs.scn.20,4,Wrecked Ship / Staircase,,,General,FALSE
-natives/stm/environment/scene/chapter4/c04_shipstairspast.scn.20,4,Ship / Staircase Past,,,General,FALSE
+natives/stm/environment/scene/chapter4/c04_shipstairspast.scn.20,4,Wrecked Ship / Staircase Past,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_swamp01.scn.20,4,Terrain,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_swamp02.scn.20,4,Terrain,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_swamp03.scn.20,4,Terrain,,,General,FALSE
@@ -1538,9 +1538,9 @@ natives/stm/environment/scene/chapter4/c04_tankercenter.scn.20,4,Wrecked Ship / 
 natives/stm/environment/scene/chapter4/c04_tankerfront.scn.20,4,Wrecked Ship / Exterior Front,,,General,FALSE
 natives/stm/environment/scene/chapter4/c04_tankerstern.scn.20,4,Wrecked Ship / Exterior Stern,,,General,FALSE
 natives/stm/environment/scene/ff000/c01_2f.scn.20,1,Derelict House Footage / Guest House / 2F / Stairs,,,General,FALSE
-natives/stm/environment/scene/ff000/c01_b1a.scn.20,1,Derelict House Footage / Guest House / B / André,,,General,FALSE
-natives/stm/environment/scene/ff000/c01_b1b.scn.20,1,Derelict House Footage / Guest House / B / Water Corridor,,,General,FALSE
-natives/stm/environment/scene/ff000/c01_b1c.scn.20,1,Derelict House Footage / Guest House / B / Water Corridor,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1a.scn.20,1,Derelict House Footage / Guest House / B1 / Andre,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1b.scn.20,1,Derelict House Footage / Guest House / B1 / Water Corridor,,,General,FALSE
+natives/stm/environment/scene/ff000/c01_b1c.scn.20,1,Derelict House Footage / Guest House / B1 / Water Corridor,,,General,FALSE
 natives/stm/environment/scene/ff000/c01_corridor01.scn.20,1,Derelict House Footage / Guest House / 1F / Entrance Corridor,,,General,FALSE
 natives/stm/environment/scene/ff000/c01_corridor02.scn.20,1,Derelict House Footage / Guest House / 1F / Corridor at the back,,,General,FALSE
 natives/stm/environment/scene/ff000/c01_kitchen01.scn.20,1,Derelict House Footage / Guest House / 1F / Kitchen,,,General,FALSE
@@ -1570,7 +1570,7 @@ natives/stm/environment/scene/ff030/c03_oldhouse1froom02.scn.20,3,Mia VHS / Old 
 natives/stm/environment/scene/ff030/c03_oldhouse1fstairs01.scn.20,3,Mia VHS / Old House / Altar,,,General,FALSE
 natives/stm/environment/scene/ff030/c03_oldhouse1fstorage.scn.20,3,Mia VHS / Old House / Storage Room / Unused?,,,General,FALSE
 natives/stm/environment/scene/ff030/c03_oldhouse1funderfloor01.scn.20,3,Mia VHS / Old House / Underground Tunnel,,,General,FALSE
-natives/stm/environment/scene/ff030/c03_oldhouse1fwallinside01.scn.20,3,Mia VHS / Old House / Centipide Wall,,,General,FALSE
+natives/stm/environment/scene/ff030/c03_oldhouse1fwallinside01.scn.20,3,Mia VHS / Old House / Centipede Wall,,,General,FALSE
 natives/stm/environment/scene/ff030/c03_oldhouse2fhallway01.scn.20,3,Mia VHS / Old House / Corridor,,,General,FALSE
 natives/stm/environment/scene/ff030/c03_oldhouse2fhallway02.scn.20,3,Mia VHS / Old House / Corridor,,,General,FALSE
 natives/stm/environment/scene/ff030/c03_oldhouse2fkidsroom01.scn.20,3,Mia VHS / Old House / Child's Room 1,,,General,FALSE
@@ -1705,7 +1705,7 @@ natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20,3,,,,Enemy,FALSE
 natives/stm/scenes/chapter/chapter3/enemy_c03_4.scn.20,3,,,,Enemy,FALSE
 natives/stm/scenes/chapter/chapter3/enemy_c03_5.scn.20,3,,,,Enemy,FALSE
 natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20,3,,,,Enemy,FALSE
-natives/stm/scenes/chapter/chapter3/enemy_em3600.scn.20,3,Mutated Marge,,,Enemy,FALSE
+natives/stm/scenes/chapter/chapter3/enemy_em3600.scn.20,3,Mutated Marguerite,,,Enemy,FALSE
 natives/stm/scenes/chapter/chapter3/mansionai_c03_2.scn.20,3,,,,General,FALSE
 natives/stm/scenes/chapter/chapter3/mansoinai_c03_1.scn.20,3,,,,General,FALSE
 natives/stm/scenes/chapter/chapter4.scn.20,4,,,,General,FALSE
