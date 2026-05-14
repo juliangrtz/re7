@@ -1,0 +1,48 @@
+version: 2
+
+updates:
+  - package-ecosystem: "nuget"
+    directories:
+      - "/src/Biohazard.BioRand.RE7"
+      - "/src/Biohazard.BioRand.RE7.Benchmarks"
+      - "/src/Biohazard.BioRand.RE7.DataGen"
+      - "/src/Biohazard.BioRand.RE7.Tests"
+      - "/src/biorand-re7"
+    target-branch: "staging"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    groups:
+      nuget-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    labels:
+      - "dependencies"
+      - "nuget"
+    commit-message:
+      prefix: "deps"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "staging"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "04:30"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 2
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "deps"

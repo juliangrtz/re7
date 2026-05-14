@@ -1,6 +1,7 @@
 ﻿namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
 using app;
+using app.Collision;
 using Hexa.NET.ImGui;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
@@ -18,6 +19,11 @@ public class REFPlugin
     private const double MadhouseAmmoDropAmountFactor = 0.75;
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
+    private const float EnemyDropGroundRayStartOffset = 0.25f;
+    private const float EnemyDropGroundRayDistance = 50.0f;
+    private const float EnemyDropGroundMinNormalY = 0.5f;
+    private const float EnemyDropWallProbeDistance = 0.75f;
+    private static readonly float[] EnemyDropWallClearanceDistances = [0.6f, 0.9f, 1.2f];
 
     private static bool IsInitialized = false;
     private static readonly Configuration config = new();
@@ -159,6 +165,13 @@ public class REFPlugin
         "Em3600", // Mutated Marguerite
         "Em8000", // Chainsaw Jack
         "Em8001", // Chainsaw Jack
+    };
+
+    private static readonly HashSet<string> SingleDropPerSpawnEnemyTypeIds = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Em5510", // Insect hive
+        "Em5511",
+        "Em5512",
     };
 
     private static readonly HashSet<string> BossEnemyDropItemDataIds = new(StringComparer.Ordinal)
@@ -867,6 +880,12 @@ public class REFPlugin
         }
     }
 
+    private static bool ShouldKeepEnemyDropStateAfterForgetDie(ManagedObject dropSourceObject, via.GameObject? enemyObject)
+    {
+        var enemyTypeId = GetEnemyTypeId(dropSourceObject, enemyObject);
+        return enemyTypeId != null && SingleDropPerSpawnEnemyTypeIds.Contains(enemyTypeId);
+    }
+
     private static bool TryBeginEnemyDrop(via.GameObject enemyObject, out int generation)
     {
         lock (enemyDropStateLock)
@@ -877,7 +896,182 @@ public class REFPlugin
         }
     }
 
-    private static void SpawnEnemyDrop(via.GameObject enemyObject, string itemDataId, int stackNum)
+    private static via.vec3 CreateVec3(float x, float y, float z)
+    {
+        var result = via.vec3.Zero;
+        result.x = x;
+        result.y = y;
+        result.z = z;
+        return result;
+    }
+
+    private static via.vec3 AddVec3(via.vec3 left, via.vec3 right)
+        => CreateVec3(left.x + right.x, left.y + right.y, left.z + right.z);
+
+    private static via.vec3 SubtractVec3(via.vec3 left, via.vec3 right)
+        => CreateVec3(left.x - right.x, left.y - right.y, left.z - right.z);
+
+    private static via.vec3 MultiplyVec3(via.vec3 value, float scalar)
+        => CreateVec3(value.x * scalar, value.y * scalar, value.z * scalar);
+
+    private static bool TryNormalizeHorizontal(via.vec3 value, out via.vec3 normal)
+    {
+        value.y = 0.0f;
+        var length = MathF.Sqrt(value.x * value.x + value.z * value.z);
+        if (length <= 0.0001f)
+        {
+            normal = via.vec3.Zero;
+            return false;
+        }
+
+        normal = CreateVec3(value.x / length, 0.0f, value.z / length);
+        return true;
+    }
+
+    private static float DotHorizontal(via.vec3 left, via.vec3 right)
+        => left.x * right.x + left.z * right.z;
+
+    private static bool TryCastEnemyDropTerrainRay(
+        via.vec3 start,
+        via.vec3 end,
+        out via.vec3 hitPosition,
+        out via.vec3 hitNormal)
+    {
+        hitPosition = via.vec3.Zero;
+        hitNormal = via.vec3.Zero;
+
+        try
+        {
+            var collisionSystem = API.GetManagedSingleton("app.Collision.CollisionSystem")?.As<CollisionSystem>();
+            if (collisionSystem == null)
+                return false;
+
+            var filter = collisionSystem.createFilterInfo(
+                CollisionSystem.Layer.TerrainCheck,
+                CollisionSystem.MaskTerrain.TbEmHit);
+            var query = via.physics.CastRayQuery.REFType.CreateInstance(0)?.As<via.physics.CastRayQuery>();
+            var result = via.physics.CastRayResult.REFType.CreateInstance(0)?.As<via.physics.CastRayResult>();
+            if (filter == null || query == null || result == null)
+                return false;
+
+            query.clearOptions();
+            query.enableNearSort();
+            query.enableOneHitBreak();
+            query.disableInsideHits();
+            query.FilterInfo = filter;
+            query.setRay(start, end);
+
+            result.clear();
+            via.physics.System.castRay(query, result);
+            if (!result.Finished
+                || result.AsyncResult != via.physics.CastRayResult.Result.Success
+                || result.NumContactPoints == 0)
+                return false;
+
+            var contactPoint = result.getContactPoint(0);
+            hitPosition = contactPoint.Position;
+            hitNormal = contactPoint.Normal;
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Unable to cast enemy drop terrain ray: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            return false;
+        }
+    }
+
+    private static bool TryProjectEnemyDropToGround(via.vec3 dropPosition, out via.vec3 groundPosition)
+    {
+        groundPosition = dropPosition;
+
+        var start = CreateVec3(
+            dropPosition.x,
+            dropPosition.y + EnemyDropGroundRayStartOffset,
+            dropPosition.z);
+        var end = CreateVec3(
+            dropPosition.x,
+            dropPosition.y - EnemyDropGroundRayDistance,
+            dropPosition.z);
+        if (!TryCastEnemyDropTerrainRay(start, end, out var collisionPosition, out var collisionNormal))
+            return false;
+
+        if (collisionNormal.y < EnemyDropGroundMinNormalY
+            || collisionPosition.y > dropPosition.y + EnemyDropGroundRayStartOffset)
+            return false;
+
+        collisionPosition.x = dropPosition.x;
+        collisionPosition.z = dropPosition.z;
+        groundPosition = collisionPosition;
+        return true;
+    }
+
+    private static bool TryGetPlayerPosition(out via.vec3 playerPosition)
+    {
+        playerPosition = via.vec3.Zero;
+
+        try
+        {
+            var objectManager = API.GetManagedSingleton("app.ObjectManager")?.As<ObjectManager>();
+            var player = objectManager?.PlayerObj ?? objectManager?.findActivePlayer();
+            var transform = player?.Transform;
+            if (transform == null)
+                return false;
+
+            playerPosition = transform.Position;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryGetEnemyDropWallClearanceDirection(via.GameObject enemyObject, via.vec3 dropPosition, out via.vec3 direction)
+    {
+        direction = via.vec3.Zero;
+        if (TryGetPlayerPosition(out var playerPosition)
+            && TryNormalizeHorizontal(SubtractVec3(playerPosition, dropPosition), out var playerDirection))
+        {
+            var start = AddVec3(dropPosition, MultiplyVec3(playerDirection, EnemyDropWallProbeDistance));
+            var end = AddVec3(dropPosition, MultiplyVec3(playerDirection, -EnemyDropWallProbeDistance));
+            if (TryCastEnemyDropTerrainRay(start, end, out var wallPosition, out var wallNormal)
+                && TryNormalizeHorizontal(wallNormal, out direction))
+            {
+                if (DotHorizontal(direction, playerDirection) < 0.0f)
+                    direction = MultiplyVec3(direction, -1.0f);
+
+                return true;
+            }
+
+            direction = playerDirection;
+            return true;
+        }
+
+        var enemyTransform = enemyObject.Transform;
+        return enemyTransform != null
+            && (TryNormalizeHorizontal(enemyTransform.AxisY, out direction)
+                || TryNormalizeHorizontal(enemyTransform.AxisZ, out direction)
+                || TryNormalizeHorizontal(enemyTransform.AxisX, out direction));
+    }
+
+    private static bool TryProjectEnemyDropAwayFromWall(via.GameObject enemyObject, via.vec3 dropPosition, out via.vec3 groundPosition)
+    {
+        groundPosition = dropPosition;
+
+        if (!TryGetEnemyDropWallClearanceDirection(enemyObject, dropPosition, out var clearanceDirection))
+            return false;
+
+        foreach (var clearanceDistance in EnemyDropWallClearanceDistances)
+        {
+            var candidatePosition = AddVec3(dropPosition, MultiplyVec3(clearanceDirection, clearanceDistance));
+            if (TryProjectEnemyDropToGround(candidatePosition, out groundPosition))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static void SpawnEnemyDrop(via.GameObject enemyObject, string? enemyTypeId, string itemDataId, int stackNum)
     {
         var itemManager = GetItemManager();
         if (itemManager == null)
@@ -898,6 +1092,23 @@ public class REFPlugin
         {
             var worldPosition = dropTransform.Position;
             var worldRotation = dropTransform.Rotation;
+            if (TryProjectEnemyDropToGround(worldPosition, out var groundPosition))
+            {
+                logger.Log(
+                    $"Projected enemy drop '{itemDataId}' from Y {worldPosition.y:0.###} to ground Y {groundPosition.y:0.###}.",
+                    isVerbose: true);
+                worldPosition = groundPosition;
+            }
+            else if (enemyTypeId != null
+                && SingleDropPerSpawnEnemyTypeIds.Contains(enemyTypeId)
+                && TryProjectEnemyDropAwayFromWall(enemyObject, worldPosition, out groundPosition))
+            {
+                logger.Log(
+                    $"Moved wall-mounted hive drop '{itemDataId}' from ({worldPosition.x:0.###}, {worldPosition.y:0.###}, {worldPosition.z:0.###}) to ground ({groundPosition.x:0.###}, {groundPosition.y:0.###}, {groundPosition.z:0.###}).",
+                    isVerbose: true);
+                worldPosition = groundPosition;
+            }
+
             dropTransform.setParent(null!, true);
             dropTransform.Position = worldPosition;
             dropTransform.Rotation = worldRotation;
@@ -923,7 +1134,7 @@ public class REFPlugin
             selection.Value.ItemDataId,
             selection.Value.StackNum,
             dropMultiplier);
-        SpawnEnemyDrop(enemyObject, selection.Value.ItemDataId, finalStackNum);
+        SpawnEnemyDrop(enemyObject, enemyTypeId, selection.Value.ItemDataId, finalStackNum);
     }
 
     private static void TrySpawnConfiguredEnemyDrop(ManagedObject dropSourceObject, via.GameObject? enemyObject)
@@ -947,7 +1158,17 @@ public class REFPlugin
     [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.forgetDie), MethodHookType.Pre)]
     private static PreHookResult EnemyActionController_forgetDie_Pre(Span<ulong> args)
     {
-        ResetEnemyDropState(ManagedObject.ToManagedObject(args[1]).As<EnemyActionController>()?.GameObject);
+        var controllerObject = ManagedObject.ToManagedObject(args[1]);
+        var controller = controllerObject.As<EnemyActionController>();
+        if (ShouldKeepEnemyDropStateAfterForgetDie(controllerObject, controller?.GameObject))
+        {
+            logger.Log(
+                $"Preserving enemy drop state after forgetDie for enemy object 0x{controller?.GameObject?.Address() ?? 0:X}.",
+                isVerbose: true);
+            return PreHookResult.Continue;
+        }
+
+        ResetEnemyDropState(controller?.GameObject);
         return PreHookResult.Continue;
     }
 

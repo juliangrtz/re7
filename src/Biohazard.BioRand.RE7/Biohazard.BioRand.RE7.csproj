@@ -5,10 +5,13 @@
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);ENABLE_BETA_FEATURES</DefineConstants>
     <PlatformTarget>x64</PlatformTarget>
+    <ReeutilsProjectPath>..\reeutils\src\IntelOrca.Biohazard.REE\IntelOrca.Biohazard.REE.csproj</ReeutilsProjectPath>
+    <UseReeutilsProjectReference Condition="'$(UseReeutilsProjectReference)' == '' and Exists('$(ReeutilsProjectPath)')">true</UseReeutilsProjectReference>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="IntelOrca.Biohazard.BioRand.Common" Version="1.5.2" />
+    <PackageReference Include="IntelOrca.Biohazard.REE" Version="1.4.2" Condition="'$(UseReeutilsProjectReference)' != 'true'" />
     <PackageReference Include="RectangleBinPacking" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
@@ -16,6 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Biohazard.BioRand.RE7.REFrameworkPlugins\Biohazard.BioRand.RE7.REFrameworkPlugins.csproj" />
-    <ProjectReference Include="..\reeutils\src\IntelOrca.Biohazard.REE\IntelOrca.Biohazard.REE.csproj" />
+    <ProjectReference Include="$(ReeutilsProjectPath)" Condition="'$(UseReeutilsProjectReference)' == 'true'" />
   </ItemGroup>
 </Project>

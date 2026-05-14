@@ -76,7 +76,8 @@ internal class ExtraPlacementModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         ItemPlacement placement,
-        Rng rng)
+        Rng rng,
+        RandomItemSettings randomItemSettings)
     {
         var allowFakeCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates-fakes");
         RszGameObject template;
@@ -103,10 +104,16 @@ internal class ExtraPlacementModifier : Modifier
                 .CloneWithNewGuids(
                     randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile, placement.GuidOrAuto, false),
                     newGuid);
+            var drop = GetNextWoodenCrateDrop(randomizer.ItemRandomizer, rng, randomItemSettings);
             var itemDropDestruct = template.FindComponent<app.ItemDropDestruct>()!;
             itemDropDestruct.Enabled = true;
+            itemDropDestruct.SetItemID = drop.Id;
+            itemDropDestruct.ChangeStackNum = drop.CountNormal;
             itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : rng.NextGuid();
             template = template.AddOrUpdateComponent(itemDropDestruct);
+
+            var name = _itemDefinitions.FromId(drop.Id)?.Name ?? drop.Id;
+            logger.LogLine($"[EXTRA] Wooden crate drop: {drop.CountNormal}x {name}");
         }
 
         var transform = template.FindComponent<GeneratedViaTransform>()!;
@@ -119,6 +126,29 @@ internal class ExtraPlacementModifier : Modifier
         logger.LogLine($"GUID: {newGuid}");
 
         return parentGameObject;
+    }
+
+    private static Item GetNextWoodenCrateDrop(
+        ItemRandomizer itemRandomizer,
+        Rng rng,
+        RandomItemSettings randomItemSettings)
+    {
+        if (!ItemDrops.GenericRuntimeDrops.Any(id => randomItemSettings.GetItemRatio(id) > 0))
+        {
+            return new Item(ItemID.Herb.ToString(), 1);
+        }
+
+        return itemRandomizer.GetNextGeneralDrop(
+            rng,
+            new RandomItemSettings
+            {
+                MinAmmoQuantity = randomItemSettings.MinAmmoQuantity,
+                MaxAmmoQuantity = randomItemSettings.MaxAmmoQuantity,
+                ItemRatioKeyFunc = id => ItemDrops.GenericRuntimeDrops.Contains(id)
+                    ? randomItemSettings.GetItemRatio(id)
+                    : 0.0,
+                ValidateFunc = randomItemSettings.ValidateFunc,
+            });
     }
 
     private RszGameObject AddExtraItemBox(
@@ -301,7 +331,7 @@ internal class ExtraPlacementModifier : Modifier
 
         return kind switch
         {
-            ExtraPlacementKind.WoodenCrate => (scene, AddExtraCrate(parentGameObject, randomizer, logger, placement, rng), true),
+            ExtraPlacementKind.WoodenCrate => (scene, AddExtraCrate(parentGameObject, randomizer, logger, placement, rng, randomItemSettings), true),
             ExtraPlacementKind.WeaponChest => (AddExtraChest(scene, randomizer, logger, placement), parentGameObject, false),
             ExtraPlacementKind.ItemBox => (scene, AddExtraItemBox(parentGameObject, randomizer, logger, placement, rng), true),
             _ => AddPlacementItem(scene, parentGameObject, randomizer, logger, placement, rng, randomItemSettings)
