@@ -37,6 +37,31 @@ internal static class RandomizerConfigurationDefinition
             _ => null
         };
 
+    private static GroupItem CreateHealthRangeItem(string prefix, IEnemyDefinition enemy, EnemyHealthPart healthPart, bool isMin)
+    {
+        var labelPrefix = isMin ? "Min" : "Max";
+        var defaultValue = Math.Round(healthPart.BaseHealth * (isMin ? 0.75 : 1.25));
+        var maxValue = Math.Max(defaultValue, Math.Round(healthPart.BaseHealth * (enemy.IsBoss ? 3.0 : 5.0)));
+
+        return new GroupItem()
+        {
+            Id = $"{prefix}-health-{(isMin ? "min" : "max")}-{healthPart.ConfigId.ToLowerInvariant()}",
+            Label = $"{labelPrefix}. {GetHealthPartLabel(enemy, healthPart)} HP",
+            Type = "range",
+            Min = 1,
+            Max = maxValue,
+            Step = 1,
+            Default = defaultValue
+        };
+    }
+
+    private static string GetHealthPartLabel(IEnemyDefinition enemy, EnemyHealthPart healthPart)
+    {
+        return string.Equals(healthPart.Label, enemy.Name, StringComparison.Ordinal)
+            ? enemy.Name
+            : $"{enemy.Name} {healthPart.Label}";
+    }
+
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition Create()
     {
         var configDefinition = new IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition();
@@ -123,7 +148,7 @@ internal static class RandomizerConfigurationDefinition
 
         #region Enemies
 
-        var allEnemies = EnemyDefinitions.Instance.All.OrderBy(boss => boss.Name);
+        var allEnemies = EnemyDefinitions.Instance.Randomizable.OrderBy(enemy => enemy.Name);
         var bosses = EnemyDefinitions.Instance.Bosses.OrderBy(boss => boss.Name);
         var nonBosses = EnemyDefinitions.Instance.NonBosses.OrderBy(nonBoss => nonBoss.Name);
         var speedConfigurableEnemies = allEnemies.Where(enemy => enemy.SupportsSpeedRandomization);
@@ -462,7 +487,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"boss-random-health",
             Label = "Random Boss Health",
-            Description = "Let BioRand randomize the boss health using the min/max values.",
+            Description = "Let BioRand randomize the boss health using the absolute min/max HP values.",
             Type = "switch",
             Default = false
         });
@@ -471,7 +496,7 @@ internal static class RandomizerConfigurationDefinition
         {
             Id = $"enemy-random-health",
             Label = "Random Enemy Health",
-            Description = "Let BioRand randomize the enemy health using the min/max values.",
+            Description = "Let BioRand randomize the enemy health using the absolute min/max HP values.",
             Type = "switch",
             Default = false
         });
@@ -485,60 +510,28 @@ internal static class RandomizerConfigurationDefinition
         });
 
         group = page.CreateGroup("Enemies");
-        group.Warning = "Random enemy health must be enabled for these values to take affect.";
+        group.Warning = "Random enemy health must be enabled for these values to take effect.";
         foreach (var enemy in nonBosses)
         {
             if (enemy is MargeStalker or MoldedBlade or EvelineGrandmother)
                 continue;
 
-            group.Items.Add(new GroupItem()
+            foreach (var healthPart in enemy.HealthParts)
             {
-                Id = $"enemy-health-min-{enemy.Id.ToString().ToLowerInvariant()}",
-                Label = $"Min. {enemy.Name} HP Multiplier",
-                Type = "range",
-                Min = 0.1,
-                Max = 5.00,
-                Step = 0.05,
-                Default = 0.75
-            });
-
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"enemy-health-max-{enemy.Id.ToString().ToLowerInvariant()}",
-                Label = $"Max. {enemy.Name} HP Multiplier",
-                Type = "range",
-                Min = 0.1,
-                Max = 5.00,
-                Step = 0.05,
-                Default = 1.25
-            });
+                group.Items.Add(CreateHealthRangeItem("enemy", enemy, healthPart, isMin: true));
+                group.Items.Add(CreateHealthRangeItem("enemy", enemy, healthPart, isMin: false));
+            }
         }
 
         group = page.CreateGroup($"Bosses");
-        group.Warning = "Random boss health must be enabled for these values to take affect.";
+        group.Warning = "Random boss health must be enabled for these values to take effect.";
         foreach (var boss in bosses)
         {
-            group.Items.Add(new GroupItem()
+            foreach (var healthPart in boss.HealthParts)
             {
-                Id = $"boss-health-min-{boss.Id.ToString().ToLowerInvariant()}",
-                Label = $"Min. {boss.Name} HP Multiplier",
-                Type = "range",
-                Min = 0.1,
-                Max = 3.00,
-                Step = 0.05,
-                Default = 0.75
-            });
-
-            group.Items.Add(new GroupItem()
-            {
-                Id = $"boss-health-max-{boss.Id.ToString().ToLowerInvariant()}",
-                Label = $"Max. {boss.Name} HP Multiplier",
-                Type = "range",
-                Min = 0.1,
-                Max = 3.00,
-                Step = 0.05,
-                Default = 1.25
-            });
+                group.Items.Add(CreateHealthRangeItem("boss", boss, healthPart, isMin: true));
+                group.Items.Add(CreateHealthRangeItem("boss", boss, healthPart, isMin: false));
+            }
         }
 
         #endregion

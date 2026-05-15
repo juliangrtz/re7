@@ -17,7 +17,7 @@ internal class EnemyDirectiveModifier : Modifier
         new MargeStalkerDirectiveModifier(),
         new MiaDirectiveModifier(),
         new MoldedDirectiveModifier(),
-        //new MoldedFatDirectiveModifier(),
+        new MoldedFatDirectiveModifier(),
         new MoldedQuickDirectiveModifier(),
     ];
 

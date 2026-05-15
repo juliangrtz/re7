@@ -19,8 +19,10 @@ public interface IEnemyDefinition
     public int BaseHealth { get; }
 
     public string HealthConfigId => Id;
+    public IReadOnlyList<EnemyHealthPart> HealthParts => [new(HealthConfigId, Name, BaseHealth)];
     public string SpeedConfigId => Id;
     public bool SupportsSpeedRandomization => false;
+    public bool SupportsRandomEnemyPlacement => true;
 
     public string DirectivesHolderPath { get; }
     public string ResistParamsHolderPath { get; }
@@ -36,22 +38,35 @@ public interface IEnemyDefinition
 
     public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template) => template;
 
-    internal float GetHealthMultiplier(Randomizer randomizer, Rng rng)
+    internal bool ShouldRandomizeHealth(Randomizer randomizer)
     {
+        var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
+        var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
+        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss);
+    }
+
+    internal float GetHealth(Randomizer randomizer, Rng rng, EnemyHealthPart healthPart)
+    {
+        if (!ShouldRandomizeHealth(randomizer))
+        {
+            return healthPart.BaseHealth;
+        }
+
         var healthPrefix = IsBoss ? "boss" : "enemy";
-        var healthConfigId = HealthConfigId.ToLowerInvariant();
-        var min = randomizer.GetConfigOption($"{healthPrefix}-health-min-{healthConfigId}", 1.0);
-        var max = randomizer.GetConfigOption($"{healthPrefix}-health-max-{healthConfigId}", 1.0);
+        var healthConfigId = healthPart.ConfigId.ToLowerInvariant();
+        var min = randomizer.GetConfigOption($"{healthPrefix}-health-min-{healthConfigId}", healthPart.BaseHealth);
+        var max = randomizer.GetConfigOption($"{healthPrefix}-health-max-{healthConfigId}", healthPart.BaseHealth);
+        if (max < min)
+        {
+            (min, max) = (max, min);
+        }
+
         return (float)rng.NextDouble(min, max);
     }
 
     internal float GetHealth(Randomizer randomizer, Rng rng)
     {
-        var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
-        var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
-        return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss) 
-            ? BaseHealth * GetHealthMultiplier(randomizer, rng) 
-            : BaseHealth;
+        return GetHealth(randomizer, rng, HealthParts[0]);
     }
 
     internal bool ShouldRandomizeSpeed(Randomizer randomizer)

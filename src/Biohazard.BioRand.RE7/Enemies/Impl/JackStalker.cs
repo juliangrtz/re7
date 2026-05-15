@@ -63,8 +63,17 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
         var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
-        var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
-        logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
+        var shouldRandomizeHealth = enemy.ShouldRandomizeHealth(randomizer);
+        var health = shouldRandomizeHealth ? enemy.GetHealth(randomizer, rng) : (float?)null;
+        if (health.HasValue)
+        {
+            logger.LogHealthAssignment("Health", enemy.BaseHealth, health.Value);
+        }
+        else
+        {
+            logger.LogLine("Health: unchanged (enemy health randomization disabled)");
+        }
+
         if (applySpeed)
         {
             logger.LogMultiplier("Walk speed multiplier", speedMultiplier);
@@ -87,7 +96,7 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
 
             logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(d, logger, healthMultiplier, speedMultiplier, scaleMultiplier)
+                d => ModifyDirective(d, logger, health, speedMultiplier, scaleMultiplier)
             ));
         }
     }
@@ -95,7 +104,7 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
     private app.Em3000BattleDirective ModifyDirective(
         app.Em3000BattleDirective directive,
         RandomizerLogger logger,
-        float healthMultiplier,
+        float? health,
         float speedMultiplier,
         double scaleMultiplier)
     {
@@ -103,9 +112,12 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier
         directive.common.ModelScale *= (float)scaleMultiplier;
 
         // Health
-        var oldHealth = directive.chapter3Battle1Final.Health;
-        directive.chapter3Battle1Final.Health *= healthMultiplier;
-        logger.LogChange("Chapter 3 final health", oldHealth, directive.chapter3Battle1Final.Health);
+        if (health.HasValue)
+        {
+            var oldHealth = directive.chapter3Battle1Final.Health;
+            directive.chapter3Battle1Final.Health = health.Value;
+            logger.LogChange("Chapter 3 final health", oldHealth, directive.chapter3Battle1Final.Health);
+        }
 
         // Speed
         if (speedMultiplier == 1f)

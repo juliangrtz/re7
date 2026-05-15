@@ -49,8 +49,17 @@ internal class MiaDirectiveModifier : IDirectiveModifier
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
         var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
-        var healthMultiplier = enemy.GetHealthMultiplier(randomizer, rng);
-        logger.LogHealthMultiplier(enemy.BaseHealth, healthMultiplier);
+        var shouldRandomizeHealth = enemy.ShouldRandomizeHealth(randomizer);
+        var health = shouldRandomizeHealth ? enemy.GetHealth(randomizer, rng) : (float?)null;
+        if (health.HasValue)
+        {
+            logger.LogHealthAssignment("Health", enemy.BaseHealth, health.Value);
+        }
+        else
+        {
+            logger.LogLine("Health: unchanged (enemy health randomization disabled)");
+        }
+
         if (enemy.IsBoss)
         {
             if (applySpeed)
@@ -72,7 +81,7 @@ internal class MiaDirectiveModifier : IDirectiveModifier
 
             logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
                 userFilePath,
-                d => ModifyDirective(enemy, d, logger, healthMultiplier, speedMultiplier)
+                d => ModifyDirective(enemy, d, logger, health, speedMultiplier)
             ));
         }
     }
@@ -81,14 +90,17 @@ internal class MiaDirectiveModifier : IDirectiveModifier
         IEnemyDefinition enemy,
         app.Em2000BattleDirective directive,
         RandomizerLogger logger,
-        float healthMultiplier,
+        float? health,
         float speedMultiplier)
     {
         if (enemy.IsBoss)
         {
-            var oldHealth = directive.chapter1Battle4.Health;
-            directive.chapter1Battle4.Health *= healthMultiplier;
-            logger.LogChange("Chapter 1 battle 4 health", oldHealth, directive.chapter1Battle4.Health);
+            if (health.HasValue)
+            {
+                var oldHealth = directive.chapter1Battle4.Health;
+                directive.chapter1Battle4.Health = health.Value;
+                logger.LogChange("Chapter 1 battle 4 health", oldHealth, directive.chapter1Battle4.Health);
+            }
 
             if (speedMultiplier == 1f)
             {
@@ -110,9 +122,12 @@ internal class MiaDirectiveModifier : IDirectiveModifier
         }
         else
         {
-            var oldHealth = directive.chapter1Battle2.Health;
-            directive.chapter1Battle2.Health *= healthMultiplier;
-            logger.LogChange("Chapter 1 battle 2 health", oldHealth, directive.chapter1Battle2.Health);
+            if (health.HasValue)
+            {
+                var oldHealth = directive.chapter1Battle2.Health;
+                directive.chapter1Battle2.Health = health.Value;
+                logger.LogChange("Chapter 1 battle 2 health", oldHealth, directive.chapter1Battle2.Health);
+            }
         }
 
         return directive;

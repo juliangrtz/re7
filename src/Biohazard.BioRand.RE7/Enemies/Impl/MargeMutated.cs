@@ -1,9 +1,18 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
 internal class MargeMutated : IEnemyDefinition
 {
+    internal static readonly IReadOnlyList<EnemyHealthPart> PartHealth =
+    [
+        new("MargeMutated", "Marguerite Baker (Mutated)", 15000),
+        new("MargeMutated-escape-resist", "Escape Resist", 1100),
+        new("MargeMutated-wall-move-resist", "Wall Move Resist", 900),
+        new("MargeMutated-sneak-grapple-resist", "Sneak Grapple Resist", 300),
+    ];
+
     public string Id => "MargeMutated";
 
     public EnemyID EnemyId => EnemyID.Em3600;
@@ -15,6 +24,8 @@ internal class MargeMutated : IEnemyDefinition
     public bool IsBoss => true;
 
     public int BaseHealth => 15000;
+
+    public IReadOnlyList<EnemyHealthPart> HealthParts => PartHealth;
 
     public List<string> RcolPaths =>
         [
@@ -38,18 +49,50 @@ internal class MargeMutated : IEnemyDefinition
 
 internal class MargeMutatedDirectiveModifier : IDirectiveModifier
 {
+    private const string ResistFolder = "prefab/character/em3600/resistparameters";
+
+    private static readonly IReadOnlyDictionary<string, string> ResistHealthPaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["MargeMutated-escape-resist"] = "units[0].parts[0].healthMax",
+        ["MargeMutated-wall-move-resist"] = "units[1].parts[0].healthMax",
+        ["MargeMutated-sneak-grapple-resist"] = "units[2].parts[0].healthMax",
+    };
+
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em3600;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        if (!enemy.ShouldRandomizeSpeed(randomizer))
+        var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
+        var applyHealth = enemy.ShouldRandomizeHealth(randomizer);
+
+        if (!applySpeed && !applyHealth)
         {
-            logger.LogSkip("Enemy speed randomization is disabled.");
+            logger.LogSkip("Boss health and enemy speed randomization are disabled.");
             return;
         }
 
-        // Speed
+        if (applySpeed)
+        {
+            ApplySpeed(enemy, randomizer, logger);
+        }
+        else
+        {
+            logger.LogSkip("Enemy speed randomization is disabled.");
+        }
+
+        if (applyHealth)
+        {
+            ApplyResistHealth(enemy, randomizer, logger);
+        }
+        else
+        {
+            logger.LogSkip("Boss health randomization is disabled.");
+        }
+    }
+
+    private void ApplySpeed(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
         var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", newSpeed);
 
@@ -64,6 +107,49 @@ internal class MargeMutatedDirectiveModifier : IDirectiveModifier
                 d => ModifyDirective(d, logger, newSpeed)
             ));
         }
+    }
+
+    private static void ApplyResistHealth(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
+    {
+        var rng = randomizer.GetRng("enemy/em3600/health");
+        var healthValues = enemy.HealthParts
+            .Where(part => ResistHealthPaths.ContainsKey(part.ConfigId))
+            .ToDictionary(
+                part => part.ConfigId,
+                part => enemy.GetHealth(randomizer, rng, part),
+                StringComparer.OrdinalIgnoreCase);
+
+        foreach (var part in enemy.HealthParts.Where(part => healthValues.ContainsKey(part.ConfigId)))
+        {
+            logger.LogHealthAssignment(part.Label, part.BaseHealth, healthValues[part.ConfigId]);
+        }
+
+        foreach (var (label, path) in GetResistFiles())
+        {
+            logger.LogDirectiveFile(label, path, () => randomizer.FileRepository.ModifyUserFile(path, resistParameter =>
+            {
+                foreach (var part in enemy.HealthParts.Where(part => healthValues.ContainsKey(part.ConfigId)))
+                {
+                    var fieldPath = ResistHealthPaths[part.ConfigId];
+                    var oldHealth = resistParameter.Get<float>(fieldPath);
+                    var newHealth = healthValues[part.ConfigId];
+                    resistParameter = resistParameter.Set(fieldPath, newHealth);
+                    logger.LogChange(part.Label, oldHealth, newHealth);
+                }
+
+                return resistParameter;
+            }));
+        }
+    }
+
+    private static IEnumerable<(string Label, string Path)> GetResistFiles()
+    {
+        yield return ("Default", PakPath.UserFile("prefab/character/em3600/em3600resistparameter.user"));
+        yield return ("Easy", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_easy.user"));
+        yield return ("Normal", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_normal.user"));
+        yield return ("Hard", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_hard.user"));
+        yield return ("Harder", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_harder.user"));
+        yield return ("Hardest", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_hardest.user"));
     }
 
     private app.Em3600Directive ModifyDirective(
