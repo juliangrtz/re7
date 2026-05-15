@@ -72,14 +72,7 @@ internal class MoldedDirectiveModifier : IDirectiveModifier
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        var rng = randomizer.GetRng("enemy/em4000");
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
-
-        // Health (vanilla prefab + rando prefab)
-        var min = randomizer.GetConfigOption<int>("enemy-health-min-molded");
-        var max = randomizer.GetConfigOption<int>("enemy-health-max-molded");
-        var newHealth = (float)rng.NextDouble(min, max);
-        logger.LogHealthMultiplier(enemy.BaseHealth, newHealth);
 
         // Speed
         var newSpeed = enemy.GetSpeedMultiplier(randomizer);

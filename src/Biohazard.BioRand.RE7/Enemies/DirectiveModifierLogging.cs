@@ -42,10 +42,8 @@ internal static class DirectiveModifierLogging
     public static void LogMultiplier(this RandomizerLogger logger, string label, double multiplier)
         => logger.LogLine($"{label}: {FormatValue(multiplier)}x");
 
-    public static void LogHealthMultiplier(this RandomizerLogger logger, int baseHealth, double multiplier)
-        => logger.LogLine(
-            $"Health multiplier: {FormatValue(multiplier)}x " +
-            $"({FormatValue(baseHealth)} => {FormatValue(baseHealth * multiplier)})");
+    public static void LogHealthAssignment(this RandomizerLogger logger, string label, double baseHealth, double health)
+        => logger.LogLine($"{label}: {FormatValue(baseHealth)} => {FormatValue(health)} HP");
 
     public static void LogSpawnHealthAssignment(
         this RandomizerLogger logger,

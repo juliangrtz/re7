@@ -284,7 +284,7 @@ internal class EnemyModifier : Modifier
     private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true)
     {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
-        foreach (var enemy in EnemyDefinitions.Instance.All)
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
         {
             if (!includeBosses && enemy.IsBoss)
                 continue;
@@ -302,7 +302,7 @@ internal class EnemyModifier : Modifier
     private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer)
     {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
-        foreach (var enemy in EnemyDefinitions.Instance.All)
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
         {
             if (enemy.EnemyId is EnemyID.Em4000) // TODO: Fix stale Molded in idle animations
                 continue;

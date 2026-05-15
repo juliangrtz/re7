@@ -122,7 +122,7 @@ public class ConfigurationIdUsageTest
 
     private static void AddEnemyIds(HashSet<string> ids)
     {
-        foreach (var enemy in EnemyDefinitions.Instance.All)
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
         {
             var id = enemy.Id.ToLowerInvariant();
             ids.Add($"enemy-ratio-{id}");
@@ -133,15 +133,19 @@ public class ConfigurationIdUsageTest
                 ids.Add($"enemy-speed-max-{id}");
             }
 
-            if (enemy.IsBoss)
+        }
+
+        foreach (var enemy in EnemyDefinitions.Instance.All)
+        {
+            if (enemy is MargeStalker or MoldedBlade or EvelineGrandmother)
+                continue;
+
+            var prefix = enemy.IsBoss ? "boss" : "enemy";
+            foreach (var healthPart in enemy.HealthParts)
             {
-                ids.Add($"boss-health-min-{id}");
-                ids.Add($"boss-health-max-{id}");
-            }
-            else if (enemy is not MargeStalker and not MoldedBlade and not EvelineGrandmother)
-            {
-                ids.Add($"enemy-health-min-{id}");
-                ids.Add($"enemy-health-max-{id}");
+                var id = healthPart.ConfigId.ToLowerInvariant();
+                ids.Add($"{prefix}-health-min-{id}");
+                ids.Add($"{prefix}-health-max-{id}");
             }
         }
     }

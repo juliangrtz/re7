@@ -1,9 +1,20 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
 internal class MoldedFat : IEnemyDefinition
 {
+    internal static readonly IReadOnlyList<EnemyHealthPart> PartHealth =
+    [
+        new("MoldedFat", "Molded (Fat)", 6000),
+        new("MoldedFat-lost-head", "Lost Head", 2000),
+        new("MoldedFat-lost-left-arm", "Lost Left Arm", 1000),
+        new("MoldedFat-lost-right-arm", "Lost Right Arm", 1000),
+        new("MoldedFat-lost-left-leg", "Lost Left Leg", 2000),
+        new("MoldedFat-lost-right-leg", "Lost Right Leg", 2000),
+    ];
+
     public string Id => "MoldedFat";
 
     public EnemyID EnemyId => EnemyID.Em4200;
@@ -15,6 +26,8 @@ internal class MoldedFat : IEnemyDefinition
     public bool IsBoss => false;
 
     public int BaseHealth => 6000;
+
+    public IReadOnlyList<EnemyHealthPart> HealthParts => PartHealth;
 
     public List<string> RcolPaths => [
             PakPath.RcolFile("collision/collider/enemy/em4200/em4200.rcol"),
@@ -33,35 +46,63 @@ internal class MoldedFat : IEnemyDefinition
 
     public bool UsesEnemyGenerator => true;
 }
+
 internal class MoldedFatDirectiveModifier : IDirectiveModifier
 {
+    private static readonly IReadOnlyDictionary<string, string> LostPartHealthPaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["MoldedFat-lost-head"] = "units[2].parts[0].healthUnits[0].healthMax",
+        ["MoldedFat-lost-left-arm"] = "units[2].parts[1].healthUnits[0].healthMax",
+        ["MoldedFat-lost-right-arm"] = "units[2].parts[2].healthUnits[0].healthMax",
+        ["MoldedFat-lost-left-leg"] = "units[2].parts[3].healthUnits[0].healthMax",
+        ["MoldedFat-lost-right-leg"] = "units[2].parts[4].healthUnits[0].healthMax",
+    };
+
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em4200;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
     {
-        var rng = randomizer.GetRng("enemy/em4200");
-        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4200DirectivesHolder>(enemy.DirectivesHolderPath);
-
-        foreach (var directive in holder.holder.Units)
+        if (!enemy.ShouldRandomizeHealth(randomizer))
         {
-            var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            logger.LogSkip("Enemy health randomization is disabled.");
+            return;
+        }
 
-            logger.LogLine($"[Rank {rank}] {userFilePath}");
+        var rng = randomizer.GetRng("enemy/em4200/health");
+        var healthValues = enemy.HealthParts
+            .Where(part => LostPartHealthPaths.ContainsKey(part.ConfigId))
+            .ToDictionary(
+                part => part.ConfigId,
+                part => enemy.GetHealth(randomizer, rng, part),
+                StringComparer.OrdinalIgnoreCase);
 
-            randomizer.FileRepository.ModifyUserFile<app.Em4200BattleDirective>(
-                userFilePath,
-                d => ModifyDirective(d, logger)
-            );
+        foreach (var part in enemy.HealthParts.Where(part => healthValues.ContainsKey(part.ConfigId)))
+        {
+            logger.LogHealthAssignment(part.Label, part.BaseHealth, healthValues[part.ConfigId]);
+        }
+
+        foreach (var (label, path) in GetResistFiles())
+        {
+            logger.LogDirectiveFile(label, path, () => randomizer.FileRepository.ModifyUserFile(path, resistParameter =>
+            {
+                foreach (var part in enemy.HealthParts.Where(part => healthValues.ContainsKey(part.ConfigId)))
+                {
+                    var fieldPath = LostPartHealthPaths[part.ConfigId];
+                    var oldHealth = resistParameter.Get<float>(fieldPath);
+                    var newHealth = healthValues[part.ConfigId];
+                    resistParameter = resistParameter.Set(fieldPath, newHealth);
+                    logger.LogChange(part.Label, oldHealth, newHealth);
+                }
+
+                return resistParameter;
+            }));
         }
     }
 
-    private app.Em4200BattleDirective ModifyDirective(
-        app.Em4200BattleDirective directive,
-        RandomizerLogger logger)
+    private static IEnumerable<(string Label, string Path)> GetResistFiles()
     {
-        // TODO: Make puke range configurable
-        return directive;
+        yield return ("Default", PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameter_04.user"));
+        yield return ("Chapter 3/4 boss", PakPath.UserFile("prefab/character/em4200/parameter/resist/chp3_4_boss/em4200resistparameter.user"));
     }
 }

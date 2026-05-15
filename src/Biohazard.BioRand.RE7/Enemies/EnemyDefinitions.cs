@@ -9,6 +9,7 @@ public sealed class EnemyDefinitions
     public List<IEnemyDefinition> All { get; private set; } = [];
     public List<IEnemyDefinition> Bosses { get; private set; } = [];
     public List<IEnemyDefinition> NonBosses { get; private set; } = [];
+    public List<IEnemyDefinition> Randomizable { get; private set; } = [];
 
     public static EnemyDefinitions Instance => _instance.Value;
 
@@ -28,7 +29,7 @@ public sealed class EnemyDefinitions
             new InsectHive(),
             new InsectSwarm(),
             new JackShears(),
-            //new JackMutated(),
+            new JackMutated(),
             new JackStalker(),
             new MargeMutated(),
             //new MargeStalker(),
@@ -41,6 +42,7 @@ public sealed class EnemyDefinitions
         ];
         Bosses = All.Where(em => em.IsBoss).ToList();
         NonBosses = All.Where(em => !em.IsBoss).ToList();
+        Randomizable = All.Where(em => em.SupportsRandomEnemyPlacement).ToList();
     }
 
     public IEnemyDefinition? FromId(EnemyID id)

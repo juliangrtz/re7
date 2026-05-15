@@ -390,7 +390,7 @@ public class RandomizerEnemyModifierBehaviorTests
     private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
     {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var enemy in EnemyDefinitions.Instance.All)
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
         {
             configuration[$"enemy-ratio-{enemy.Id.ToLowerInvariant()}"] = enabledSet.Contains(enemy.Id) ? 1.0 : 0.0;
         }

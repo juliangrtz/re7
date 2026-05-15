@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -95,9 +96,96 @@ public class RandomizerEnemyDirectiveBehaviorTests
         }
     }
 
+    [Fact]
+    public void EnemyDirectiveModifier_JackMutatedHealth_UsesIndividualAbsolutePartValues()
+    {
+        var directivePath = PakPath.UserFile("prefab/character/em8100/parameter/directive/em8100battledirective.user");
+
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["boss-random-health"] = true;
+            config["boss-health-min-jackmutated-body"] = 31000.0;
+            config["boss-health-max-jackmutated-body"] = 31000.0;
+            config["boss-health-min-jackmutated-eye-1"] = 1700.0;
+            config["boss-health-max-jackmutated-eye-1"] = 1700.0;
+            config["boss-health-min-jackmutated-final-eye"] = 1550.0;
+            config["boss-health-max-jackmutated-final-eye"] = 1550.0;
+        });
+
+        var before = ReadFirstUserObject(result.ReadBeforeBytes(directivePath));
+        var after = ReadFirstUserObject(result.ReadAfterBytes(directivePath));
+
+        Assert.True(result.WasFileModified(directivePath));
+        Assert.NotEqual(31000.0f, before.Get<float>("battle.Health"));
+        Assert.Equal(31000.0f, after.Get<float>("battle.Health"));
+        Assert.Equal(1700.0f, after.Get<float>("weak.WeakInfoList[0].MaxHealth"));
+        Assert.Equal(1550.0f, after.Get<float>("weak.LastWeakMaxHealth"));
+    }
+
+    [Fact]
+    public void EnemyDirectiveModifier_MargeMutatedHealth_UsesSecondaryAbsolutePartValues()
+    {
+        var resistPath = PakPath.UserFile("prefab/character/em3600/resistparameters/em3600resistparameter_normal.user");
+
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["boss-random-health"] = true;
+            config["boss-health-min-margemutated-escape-resist"] = 1111.0;
+            config["boss-health-max-margemutated-escape-resist"] = 1111.0;
+            config["boss-health-min-margemutated-wall-move-resist"] = 922.0;
+            config["boss-health-max-margemutated-wall-move-resist"] = 922.0;
+            config["boss-health-min-margemutated-sneak-grapple-resist"] = 333.0;
+            config["boss-health-max-margemutated-sneak-grapple-resist"] = 333.0;
+        });
+
+        var before = ReadFirstUserObject(result.ReadBeforeBytes(resistPath));
+        var after = ReadFirstUserObject(result.ReadAfterBytes(resistPath));
+
+        Assert.True(result.WasFileModified(resistPath));
+        Assert.NotEqual(1111.0f, before.Get<float>("units[0].parts[0].healthMax"));
+        Assert.Equal(1111.0f, after.Get<float>("units[0].parts[0].healthMax"));
+        Assert.Equal(922.0f, after.Get<float>("units[1].parts[0].healthMax"));
+        Assert.Equal(333.0f, after.Get<float>("units[2].parts[0].healthMax"));
+    }
+
+    [Fact]
+    public void EnemyDirectiveModifier_MoldedFatHealth_UsesLostPartAbsoluteValues()
+    {
+        var resistPath = PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameter_04.user");
+
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["enemy-random-health"] = true;
+            config["enemy-health-min-moldedfat-lost-head"] = 2100.0;
+            config["enemy-health-max-moldedfat-lost-head"] = 2100.0;
+            config["enemy-health-min-moldedfat-lost-left-arm"] = 1100.0;
+            config["enemy-health-max-moldedfat-lost-left-arm"] = 1100.0;
+            config["enemy-health-min-moldedfat-lost-right-arm"] = 1200.0;
+            config["enemy-health-max-moldedfat-lost-right-arm"] = 1200.0;
+            config["enemy-health-min-moldedfat-lost-left-leg"] = 2200.0;
+            config["enemy-health-max-moldedfat-lost-left-leg"] = 2200.0;
+            config["enemy-health-min-moldedfat-lost-right-leg"] = 2300.0;
+            config["enemy-health-max-moldedfat-lost-right-leg"] = 2300.0;
+        });
+
+        var before = ReadFirstUserObject(result.ReadBeforeBytes(resistPath));
+        var after = ReadFirstUserObject(result.ReadAfterBytes(resistPath));
+
+        Assert.True(result.WasFileModified(resistPath));
+        Assert.NotEqual(2100.0f, before.Get<float>("units[2].parts[0].healthUnits[0].healthMax"));
+        Assert.Equal(2100.0f, after.Get<float>("units[2].parts[0].healthUnits[0].healthMax"));
+        Assert.Equal(1100.0f, after.Get<float>("units[2].parts[1].healthUnits[0].healthMax"));
+        Assert.Equal(1200.0f, after.Get<float>("units[2].parts[2].healthUnits[0].healthMax"));
+        Assert.Equal(2200.0f, after.Get<float>("units[2].parts[3].healthUnits[0].healthMax"));
+        Assert.Equal(2300.0f, after.Get<float>("units[2].parts[4].healthUnits[0].healthMax"));
+    }
+
     private static string GetFirstMoldedDirectivePath(RandomizerRunResult result, IEnemyDefinition enemy)
     {
         var holder = result.ReadAfterUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         return PakPath.UserFile(holder.holder.Units.First().Directive.Path);
     }
+
+    private static RszObjectNode ReadFirstUserObject(byte[] data)
+        => new UserFile(data).GetObjects(FileRepository.RszRepository)[0];
 }
