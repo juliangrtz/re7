@@ -28,21 +28,20 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["3CrestKeyC"] = new(3, ExpectedScope.BeforeDogDoor),
             ["Battery"] = new(3, ExpectedScope.BeforeBarnBatterySocket),
             ["PendulumClock"] = new(3, ExpectedScope.AfterGarageBeforeShadowPuzzle),
-            ["MorgueKey"] = new(3, ExpectedScope.Chapter3Start),
+            ["MorgueKey"] = new(3, ExpectedScope.BeforeShadowPuzzle),
             ["WorkroomKey"] = new(3, ExpectedScope.BeforeDissectionRoom),
             ["MasterKey"] = new(3, ExpectedScope.AfterLanternBeforeSnakeRooms),
             ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
-            ["SerumMaterialA"] = new(3, ExpectedScope.BeforeBoatHouse),
+            ["SerumMaterialA"] = new(3, ExpectedScope.BeforeJack3),
             ["LucasCardKey"] = new(3, ExpectedScope.BeforeTestingAreaGate),
             ["LucasCardKey2"] = new(3, ExpectedScope.BeforeTestingAreaGate),
-            ["SerumMaterialB"] = new(3, ExpectedScope.BeforeBoatHouse),
+            ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
             ["Candle_Lighted"] = new(3, ExpectedScope.BeforeLucasPuzzle),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
             ["SilhouettePazzlePiece"] = new(3, ExpectedScope.BeforeShadowPuzzle),
             ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
-            ["FuseCh4"] = new(4, ExpectedScope.MiaPresentShip),
             ["EvOpener"] = new(4, ExpectedScope.MiaPresentShip),
             ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
             ["SerumTypeE"] = new(4, ExpectedScope.BeforeNecrotoxinUse),
@@ -52,6 +51,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         "ChainCutter",
         "EntranceHallKey",
         "Fuse",
+        "FuseCh4",
         "HandAxe",
         "Lantern",
         "SerumComplete",
@@ -73,7 +73,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["SerumMaterialB"] = new("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true),
             ["Candle_Lighted"] = new("c03_4_Main_PazzleRoom_CandleOn", new("e8f18a82-943a-41dd-977b-f1d729499dee"), true),
             ["EvCable"] = new("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"), true),
-            ["FuseCh4"] = new("c04_objective_ElevatorFuseGetInventory", new("c7004b40-85bc-4d0a-a274-05d771d581ab"), true),
         };
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
     private const string MainHouseDiningKitchenScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20";
@@ -96,6 +95,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private const string ShipSickBayScenePath = "natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20";
     private const string ShipLoungeScenePath = "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20";
     private const string LucasPuzzleRoomScenePath = "natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom1.scn.20";
+    private const string SaltMineCultivationRoomScenePath = "natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20";
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
     private static readonly Guid GuestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
     private static readonly Guid GuestHouseMiaDriversLicenseGuid = new("ee3242fe-55a4-450c-b8ca-0a8ab3c39546");
@@ -118,6 +118,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid Ship2FItemSetCorrosiveGuid = new("284aa600-8e59-475a-82b4-d7cd353f70e9");
     private static readonly Guid ShipPowerCableGuid = new("ba174dbf-64e9-0e76-187a-801520648246");
     private static readonly Guid ShipLoungeFuseGuid = new("77468bde-b24f-0949-0741-de56355592c7");
+    private static readonly Guid[] CultivationRoomDoorGuids =
+    [
+        new("3f4ca9a0-b4ff-432b-8784-1403fd1b687f"),
+        new("55adadba-98ee-4086-bce7-3610a3bd9ecb"),
+        new("03b4daed-2766-435e-96cb-1b4857b71f0a"),
+        new("d7f7420e-e505-4772-a973-0342b1d58a85"),
+    ];
     private static readonly Guid[] SnakeKeyBodyGuids =
     [
         new("96da0bd0-1a8b-4c35-bc02-695da693e8d4"),
@@ -164,8 +171,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             Assert.True(ScopeMatches(rule.Scope, change.Placement), $"{change.AfterId} was placed in unexpected scene {change.Placement.SceneFile}.");
         }
 
+        var duplicateKeyItemLocation = randomizedKeyItems
+            .GroupBy(change => GetCollisionKey(change.Placement))
+            .FirstOrDefault(group => group.Count() > 1);
+        Assert.Null(duplicateKeyItemLocation);
+
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "3CrestKeyB" && change.Placement.Chapter == 4);
-        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "MorgueKey" && !IsMainHouseBeforeGarage(change.Placement));
+        Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "MorgueKey" && !ScopeMatches(ExpectedScope.BeforeShadowPuzzle, change.Placement));
         Assert.DoesNotContain(randomizedKeyItems, change => change.AfterId == "SerumTypeE" && change.Placement.SceneFile.Contains("/chapter4/lastbattle", StringComparison.OrdinalIgnoreCase));
     }
 
@@ -245,7 +257,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var blueDogHead = FindPlacement(result, MainHouseWestItemSetScenePath, MainHouseWestBlueDogHeadGuid);
         var duplicateBlueKeycard = FindPlacement(result, MainHouseWestItemSetScenePath, MainHouseWestBlueKeycardGuid);
 
-        foreach (var earlyKeyId in new[] { "FloorDoorKey", "EthanCarKey", "MorgueKey" })
+        foreach (var earlyKeyId in new[] { "FloorDoorKey", "EthanCarKey" })
         {
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueDogHead, earlyKeyId));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(duplicateBlueKeycard, earlyKeyId));
@@ -253,8 +265,10 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueDogHead, "MasterKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(duplicateBlueKeycard, "MasterKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueDogHead, "MorgueKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(duplicateBlueKeycard, "MorgueKey"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueDogHead, "3CrestKeyB"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(duplicateBlueKeycard, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(duplicateBlueKeycard, "LucasCardKey2"));
     }
 
     [Fact]
@@ -592,19 +606,25 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_RestrictsKeycardsToSnakeKeySetupTargets()
+    public void KeyItemLocations_AllowsKeycardsBeforeTestingAreaGateButNotAtNormalKeycardLocations()
     {
         var result = _defaultRun.Result;
         var blueKeycardAttic = FindPlacement(result, BlueKeycardAtticScenePath, BlueKeycardAtticGuid);
+        var blueKeycardDuplicate = FindPlacement(result, MainHouseWestItemSetScenePath, MainHouseWestBlueKeycardGuid);
         var redKeycardWorkshop = FindPlacement(result, RedKeycardWorkshopScenePath, RedKeycardWorkshopGuid);
         var greenhouseStairs = FindPlacement(result, GreenhouseStairsScenePath, GreenhouseStairsItemGuid);
+        var snakeKeyBody = FindPlacement(result, SnakeKeyBodyScenePath, SnakeKeyBodyGuids[0]);
 
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey2"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Candle_Lighted"));
     }
 
@@ -625,14 +645,17 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "Battery"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "Candle_Lighted"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "SerumMaterialA"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "SerumMaterialB"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "Battery"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "Candle_Lighted"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "SerumMaterialA"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "SerumMaterialB"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesHead, "Battery"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesHead, "Candle_Lighted"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(puzzleCandle, "SerumMaterialA"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(puzzleCandle, "SerumMaterialB"));
     }
 
@@ -646,6 +669,25 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             placement.SceneFile.Equals(BoatHousePostJack3ScenePath, StringComparison.OrdinalIgnoreCase));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(postJack3Bridge, "SerumComplete"));
+    }
+
+    [Fact]
+    public void KeyItemLocations_RemovesCultivationRoomMineDoorsForEarlyNecrotoxinPickup()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+        });
+
+        var beforeScene = result.ReadBeforeScene(SaltMineCultivationRoomScenePath);
+        var afterScene = result.ReadAfterScene(SaltMineCultivationRoomScenePath);
+        foreach (var doorGuid in CultivationRoomDoorGuids)
+        {
+            Assert.NotNull(beforeScene.FindGameObject(doorGuid));
+            Assert.Null(afterScene.FindGameObject(doorGuid));
+        }
+
+        Assert.Contains("Cultivation room mine doors removed:", result.ProcessLog);
     }
 
     [Fact]
@@ -665,9 +707,10 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Crank"));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SilhouettePazzlePieceOldHouse"));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Lantern"));
-            Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
-            Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
+            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
+            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Battery"));
+            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialA"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialB"));
         }
     }
@@ -706,6 +749,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Crank"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "SilhouettePazzlePieceOldHouse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Lantern"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "Lantern"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "MasterKey"));
@@ -732,13 +777,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var loungeFuse = FindPlacement(result, ShipLoungeScenePath, ShipLoungeFuseGuid);
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "EvOpener"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "FuseCh4"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "SpareKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "FuseCh4"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "EvOpener"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvOpener"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "EvOpener"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvOpener"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "EvOpener"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "SpareKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "FuseCh4"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "FuseCh4"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipExitExtra, "EvOpener"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipExitExtra, "EvCable"));
@@ -964,6 +1009,16 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ? ExtraPlacementModifier.GetGeneratedItemGuid(placement)
             : placement.Guid;
 
+    private static (string SceneFile, int X, int Y, int Z) GetCollisionKey(ItemPlacement placement)
+        => (
+            placement.SceneFile,
+            QuantizeLocation(placement.Position.X),
+            QuantizeLocation(placement.Position.Y),
+            QuantizeLocation(placement.Position.Z));
+
+    private static int QuantizeLocation(float value)
+        => (int)MathF.Round(value * 2, MidpointRounding.AwayFromZero);
+
     private static app.Item GetItem(RszScene scene, Guid guid)
     {
         var item = GetItemOrNull(scene, guid);
@@ -1174,8 +1229,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 || IsMainHouseSnakeKeyRoom(placement.SceneFile)
                 || IsTestingAreaBeforeLucasPuzzle(placement.SceneFile)
                 || IsTestingAreaBeforeBarnFight(placement.SceneFile),
-            ExpectedScope.BeforeTestingAreaGate => IsMainHouseKeycardSetup(placement),
-            ExpectedScope.BeforeLucasPuzzle => IsMainHouseKeycardSetup(placement)
+            ExpectedScope.BeforeTestingAreaGate => IsBeforeTestingAreaGate(placement),
+            ExpectedScope.BeforeLucasPuzzle => IsBeforeTestingAreaGate(placement)
                 || IsTestingAreaBeforeLucasPuzzle(placement.SceneFile)
                 || IsTestingAreaBeforeBarnFight(placement.SceneFile),
             ExpectedScope.BeforeBoatHouse => IsMainHouseBeforeGarage(placement)
@@ -1192,6 +1247,9 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 || IsMainHouseSnakeKeyRoom(placement.SceneFile)
                 || IsTestingArea(placement.SceneFile)
                 || IsTestingAreaBeforeBarnFight(placement.SceneFile),
+            ExpectedScope.BeforeJack3 => IsMainHouseBeforeGarage(placement.SceneFile)
+                || ScopeMatches(ExpectedScope.BeforeBoatHouse, placement)
+                || IsBoatHouseRoute(placement.SceneFile),
             ExpectedScope.BoatHouse => IsBoatHouseRoute(placement.SceneFile),
             ExpectedScope.MiaPresentShip => IsMiaPresentShipRoute(placement.SceneFile),
             ExpectedScope.BeforeNecrotoxinUse => IsSaltMineBeforeNecrotoxinUse(placement.SceneFile),
@@ -1289,6 +1347,12 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         => placement.Guid == RedKeycardWorkshopGuid
             || IsMainHouseWestBlueKeycard(placement)
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
+
+    private static bool IsBeforeTestingAreaGate(ItemPlacement placement)
+        => IsMainHouseKeycardSetup(placement)
+            || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
+            || IsOldHouseAfterLanternDoor(placement.SceneFile)
+            || IsSnakeKeyBody(placement.SceneFile);
 
     private static bool IsYardOrTrailer(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
@@ -1420,6 +1484,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeLucasPuzzle,
         BeforeBarnBatterySocket,
         BeforeBoatHouse,
+        BeforeJack3,
         BoatHouse,
         MiaPresentShip,
         BeforeNecrotoxinUse,
