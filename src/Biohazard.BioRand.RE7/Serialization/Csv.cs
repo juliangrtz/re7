@@ -20,11 +20,12 @@ public static class Csv
 
         var results = new List<T>();
         T? element = default;
+        var rowHasValue = false;
         foreach (var t in tokens)
         {
             if (t.Kind == TokenKind.EOF)
             {
-                if (element != null)
+                if (element != null && rowHasValue)
                 {
                     results.Add(element);
                 }
@@ -36,13 +37,14 @@ public static class Csv
             }
             else if (t.Kind == TokenKind.NewLine)
             {
-                if (element != null)
+                if (element != null && rowHasValue)
                 {
                     results.Add(element);
                 }
                 y++;
                 x = 0;
                 element = Activator.CreateInstance<T>();
+                rowHasValue = false;
                 keyProperty?.SetValue(element, y + 1);
             }
             else if (t.Kind == TokenKind.Text)
@@ -53,7 +55,8 @@ public static class Csv
                     {
                         propertyMap.Add(null);
                     }
-                    propertyMap[x] = typ.GetProperty(t.Text.Trim(), BindingFlags.Public | BindingFlags.Instance);
+                    var propertyName = t.Text.Trim().TrimStart('\uFEFF');
+                    propertyMap[x] = typ.GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance);
                 }
                 else
                 {
@@ -62,6 +65,7 @@ public static class Csv
                     {
                         if (!string.IsNullOrWhiteSpace(t.Text))
                         {
+                            rowHasValue = true;
                             prop.SetValue(element, ParseValue(t.Text, prop.PropertyType));
                         }
                     }

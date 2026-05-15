@@ -13,6 +13,7 @@ internal class KeyItemLocationModifier : Modifier
     private const string RandomizerKey = "modifier/key-item-locations";
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
+    private const string CultivationRoomScenePath = "natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20";
     private const int MaxRouteSeedAttempts = 64;
     private const int MaxRouteDeadEndsPerAttempt = 1024;
     private const int RouteDepthPadding = 8;
@@ -20,8 +21,11 @@ internal class KeyItemLocationModifier : Modifier
     private static readonly HashSet<string> _preservedVanillaKeyItemIds = new(StringComparer.OrdinalIgnoreCase) // TODO
     {
         "ChainCutter",
+        "EntranceHallKey",
         "HandAxe",
         "Fuse",
+        "FuseCh4",
+        "Lantern",
         "SerumComplete",
     };
 
@@ -83,43 +87,54 @@ internal class KeyItemLocationModifier : Modifier
     private const int CandleMask = 1 << 29;
     private const int DogHeadMasks = WhiteDogHeadMask | BlueDogHeadMask;
     private const int AllDogHeadMasks = DogHeadMasks | RedDogHeadMask;
-    private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask | SnakeKeyMask | CrowKeyMask;
+    private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask | CrowKeyMask;
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
         OxStatuetteMask | RedDogHeadMask | DissectionRoomKeyMask | CrankMask |
         StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
     private const int MainHouseAfterGarageCarryMasks =
         (MainHouseBeforeHatchCarryMasks | PendulumMask) &
-        ~FloorDoorKeyMask & ~CarKeyMask & ~OxStatuetteMask & ~ScorpionKeyMask;
+        ~FloorDoorKeyMask & ~CarKeyMask & ~OxStatuetteMask;
     private const int MainHouseEastCarryMasks =
         MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
         CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
     private const int DissectionRoomCarryMasks =
-        AllDogHeadMasks | BatteryMask | SnakeKeyMask | CrowKeyMask |
+        AllDogHeadMasks | BatteryMask | CrowKeyMask |
         CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
     private const int OldHouseBeforeCrowCarryMasks =
-        CrankMask | StoneStatuetteMask | CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+        CrankMask | StoneStatuetteMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterStoneCarryMasks =
-        CrankMask | CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+        CrankMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterCrankCarryMasks =
-        CrowKeyMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+        CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterCrowCarryMasks =
-        LanternMask | DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
     private const int OldHouseAfterLanternCarryMasks =
-        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
     private const int SnakeKeyRewardCarryMasks =
-        SnakeKeyMask | BatteryMask | DSeriesHeadMask;
-    private const int KeycardSetupCarryMasks = BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
-    private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
-    private const int LucasAfterPuzzleCarryMasks = DSeriesHeadMask;
+        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+    private const int KeycardSetupCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
+    private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
+    private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
     private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
-    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | CorrosiveMask;
-    private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask;
+    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
+    private static readonly Guid _mainHouseWestBlueDogHeadGuid = new("401dbfaa-3469-0702-1c9a-d74a7d185216");
+    private static readonly Guid _mainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
     private static readonly Guid _mainHouseClockRewardGuid = new("0da28012-ad6a-0da5-1f0a-cacd2c677ed3");
     private static readonly Guid _jack2RedDogHeadGuid = new("301caf06-67b8-0645-11a1-faadce741e7d");
     private static readonly Guid _redKeycardWorkshopGuid = new("077f9206-19e7-4937-994b-cd13a80dabd4");
+    private static readonly Guid _blueKeycardAtticGuid = new("ccf47d14-a937-43c4-9b87-f35b07d14034");
     private static readonly Guid _oldHouseStoneStatuetteGuid = new("41a59cb8-7613-4d4b-a530-58aebfe0e1c8");
     private static readonly Guid _oldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
+    private static readonly Guid _lucasPuzzleCandleGuid = new("05606c7e-3669-497e-8196-561faefb95e5");
+    private static readonly Guid[] _cultivationRoomDoorGuids =
+    [
+        new("3f4ca9a0-b4ff-432b-8784-1403fd1b687f"),
+        new("55adadba-98ee-4086-bce7-3610a3bd9ecb"),
+        new("03b4daed-2766-435e-96cb-1b4857b71f0a"),
+        new("d7f7420e-e505-4772-a973-0342b1d58a85"),
+    ];
     private static readonly HashSet<Guid> _snakeKeyRewardGuids =
     [
         new("96da0bd0-1a8b-4c35-bc02-695da693e8d4"),
@@ -184,8 +199,14 @@ internal class KeyItemLocationModifier : Modifier
         var itemRandomizer = randomizer.ItemRandomizer;
         var randomItemSettings = randomizer.StaticItemRandomizationService.RandomItemSettings;
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
+        RemoveCultivationRoomMineDoors(randomizer, logger);
         var availableTargets = GetEligibleTargetPlacements(randomizer, itemPlacementService)
-            .DistinctBy(target => target.Key)
+            .OrderBy(target => target.Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(target => target.LocationKey.X)
+            .ThenBy(target => target.LocationKey.Y)
+            .ThenBy(target => target.LocationKey.Z)
+            .ThenBy(target => target.TargetGuid.ToString("D"), StringComparer.OrdinalIgnoreCase)
+            .DistinctBy(target => target.LocationKey)
             .ToList();
         var replacementPlanSet = CreateKeyItemReplacementPlans(logger, rng, availableTargets);
         if (replacementPlanSet == null)
@@ -272,6 +293,27 @@ internal class KeyItemLocationModifier : Modifier
         }
     }
 
+    private static void RemoveCultivationRoomMineDoors(Randomizer randomizer, RandomizerLogger logger)
+    {
+        var removed = 0;
+        var doorGuids = _cultivationRoomDoorGuids.ToHashSet();
+        randomizer.FileRepository.ModifyScnFile(CultivationRoomScenePath, scene =>
+        {
+            foreach (var doorGuid in doorGuids)
+            {
+                if (scene.FindGameObject(doorGuid) == null)
+                    continue;
+
+                scene = scene.RemoveGameObject(doorGuid);
+                removed++;
+            }
+
+            return scene;
+        });
+
+        logger.LogLine($"Cultivation room mine doors removed: {removed} in {FormatScenePath(CultivationRoomScenePath)}.");
+    }
+
     private static IEnumerable<ItemReplacementTarget> GetEligibleTargetPlacements(
         Randomizer randomizer,
         ItemPlacementService itemPlacementService)
@@ -298,6 +340,9 @@ internal class KeyItemLocationModifier : Modifier
             {
                 continue;
             }
+
+            if (isSupportedKeyPlacement && _preservedVanillaKeyItemIds.Contains(placement.Id))
+                continue;
 
             if (placement.IsExtra)
             {
@@ -350,6 +395,13 @@ internal class KeyItemLocationModifier : Modifier
     {
         if (_preservedVanillaKeyItemIds.Contains(keyItemId))
             return false;
+
+        if (!placement.IsExtra
+            && !string.IsNullOrWhiteSpace(placement.Id)
+            && _preservedVanillaKeyItemIds.Contains(placement.Id))
+        {
+            return false;
+        }
 
         var rule = _supportedKeyItems.Single(supported => supported.Id.Equals(keyItemId, StringComparison.OrdinalIgnoreCase));
         var definition = string.IsNullOrWhiteSpace(placement.Id)
@@ -589,30 +641,11 @@ internal class KeyItemLocationModifier : Modifier
             }
         }
 
-        Route? route = null;
-        var routeFailureLog = "";
-        for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++)
-        {
-            if (!routeGraph.TryGenerateRoute(unchecked(routeSeed + attempt), out var candidateRoute, out var failureLog))
-            {
-                routeFailureLog = failureLog ?? routeFailureLog;
-                continue;
-            }
-
-            if (candidateRoute.AllNodesVisited)
-            {
-                route = candidateRoute;
-                break;
-            }
-
-            routeFailureLog = candidateRoute.Log;
-        }
-
-        if (route == null)
+        if (!routeGraph.TryGenerateAssignments(routeSeed, out var assignments, out var routeFailureLog))
         {
             if (activeRules.Length == fullRuleCount)
             {
-                logger.LogLine($"Skipped full key item route: route graph could not visit every progression region after {MaxRouteSeedAttempts} bounded attempts.");
+                logger.LogLine($"Skipped full key item route: route graph could not assign and validate every progression key after {MaxRouteSeedAttempts} bounded attempts.");
                 if (!string.IsNullOrWhiteSpace(routeFailureLog))
                 {
                     logger.LogLine(routeFailureLog);
@@ -622,8 +655,7 @@ internal class KeyItemLocationModifier : Modifier
             return null;
         }
 
-        var assignments = routeGraph.GetAssignments(route, logger).ToList();
-        if (assignments.Count != activeRules.Length)
+        if (assignments.Length != activeRules.Length)
         {
             return null;
         }
@@ -642,7 +674,8 @@ internal class KeyItemLocationModifier : Modifier
                 assignment.Target.TargetGuid,
                 assignment.Rule);
             logger.LogLine($"[KEY ITEM ROUTE] {_itemDefinitions.GetName(assignment.Rule.Id)} " +
-                $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)}");
+                $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)} " +
+                $"[{assignment.Target.Placement.Position}]");
             logger.LogLine($"GUID: {assignment.Target.TargetGuid}");
         }
 
@@ -1052,6 +1085,23 @@ internal class KeyItemLocationModifier : Modifier
         => placement.Guid == _mainHouseClockRewardGuid
             && PathContains(placement.SceneFile, "c03_mainhouse1fliving");
 
+    private static bool IsMainHouseWestBlueDogHead(ItemPlacement placement)
+        => placement.Guid == _mainHouseWestBlueDogHeadGuid
+            && placement.Id.Equals("3CrestKeyA", StringComparison.OrdinalIgnoreCase)
+            && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
+
+    private static bool IsMainHouseWestBlueKeycard(ItemPlacement placement)
+        => placement.Guid == _mainHouseWestBlueKeycardGuid
+            && placement.Id.Equals("LucasCardKey", StringComparison.OrdinalIgnoreCase)
+            && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
+
+    private static bool IsOriginalKeycardTarget(ItemPlacement placement)
+        => IsMainHouseWestBlueKeycard(placement)
+            || (placement.Guid == _redKeycardWorkshopGuid
+                && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn"))
+            || (placement.Guid == _blueKeycardAtticGuid
+                && PathContains(placement.SceneFile, "c03_mainhouse2fkids02.scn"));
+
     private static bool IsGarage(string path)
         => PathContains(path, "c03_mainhouse1fgarage.scn");
 
@@ -1081,6 +1131,7 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsMainHouseKeycardSetup(ItemPlacement placement)
         => placement.Guid == _redKeycardWorkshopGuid
+            || IsMainHouseWestBlueKeycard(placement)
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
     private static bool IsSnakeKeyRewardTarget(ItemPlacement placement)
@@ -1166,15 +1217,15 @@ internal class KeyItemLocationModifier : Modifier
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
             && (PathContains(path, "c04_ship4f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship4f/")
-                || PathContains(path, "c04_ship2f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship2f/"));
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship4f/"));
 
     private static bool IsShipAfterLugWrenchBeforeCorrosive(string path)
         => !PathContains(path, "past")
             && !IsShipAfterCorrosiveBeforeRepair(path)
             && (PathContains(path, "c04_ship1f")
                 || PathContains(path, "/leveldesign/itemset/chapter4/ship1f/")
+                || PathContains(path, "c04_ship2f")
+                || PathContains(path, "/leveldesign/itemset/chapter4/ship2f/")
                 || PathContains(path, "c04_ship3f")
                 || PathContains(path, "/leveldesign/itemset/chapter4/ship3f/")
                 || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
@@ -1303,11 +1354,11 @@ internal class KeyItemLocationModifier : Modifier
             Door(_snakeRooms, _testingArea, RouteKeys("LucasCardKey", "LucasCardKey2"));
             Door(_testingArea, _barn);
             Door(_barn, _lucasPuzzle, RouteKeys("Battery"));
-            Door(_lucasPuzzle, _boatHouse, RouteKeys("Candle_Lighted", "SerumMaterialA", "SerumMaterialB"));
-            NoReturn(_boatHouse, _ship, RouteKeys("SerumComplete"));
-            Door(_ship, _shipAfterLugWrench, RouteKeys("EvOpener"));
+            Door(_lucasPuzzle, _boatHouse, RouteKeys("Candle_Lighted"));
+            NoReturn(_boatHouse, _ship, RouteKeys("SerumComplete", "SerumMaterialA", "SerumMaterialB"));
+            Door(_ship, _shipAfterLugWrench);
             Door(_shipAfterLugWrench, _shipAfterCorrosive, RouteKeys("SpareKey"));
-            Door(_shipAfterCorrosive, _shipExit, RouteKeys("EvCable", "FuseCh4"));
+            Door(_shipAfterCorrosive, _shipExit, RouteKeys("EvCable", "EvOpener", "FuseCh4"));
             NoReturn(_shipExit, _saltMine);
             Door(_saltMine, _finale, RouteKeys("SerumTypeE"));
         }
@@ -1317,14 +1368,18 @@ internal class KeyItemLocationModifier : Modifier
             var routeTarget = GetRouteTarget(target);
             if (routeTarget == null)
                 return false;
-            var groupMask = routeTarget.GroupMask;
 
-            var node = _builder.Item(
-                $"{target.Label} @ {FormatScenePath(target.Placement.SceneFile)}",
-                groupMask,
-                routeTarget.Room);
-            _targetsByNode[node] = target;
-            _regionByNode[node] = routeTarget.RegionName;
+            AddTargetNode(target, routeTarget, routeTarget.GroupMask);
+            return true;
+        }
+
+        public bool TryAddFixedTarget(ItemReplacementTarget target, KeyItemRule rule)
+        {
+            var routeTarget = GetRouteTarget(target);
+            if (routeTarget == null || (routeTarget.GroupMask & rule.RouteMask) != rule.RouteMask)
+                return false;
+
+            AddTargetNode(target, routeTarget, rule.RouteMask);
             return true;
         }
 
@@ -1346,8 +1401,52 @@ internal class KeyItemLocationModifier : Modifier
                 : routeTarget with { GroupMask = groupMask };
         }
 
+        private void AddTargetNode(ItemReplacementTarget target, RouteTarget routeTarget, int groupMask)
+        {
+            var node = _builder.Item(
+                $"{target.Label} @ {FormatScenePath(target.Placement.SceneFile)}",
+                groupMask,
+                routeTarget.Room);
+            _targetsByNode[node] = target;
+            _regionByNode[node] = routeTarget.RegionName;
+        }
+
         public bool HasCandidate(KeyItemRule rule)
             => _targetsByNode.Keys.Any(node => (node.Group & rule.RouteMask) == rule.RouteMask);
+
+        public bool TryGenerateAssignments(
+            int seed,
+            out ImmutableArray<KeyItemRouteAssignment> assignments,
+            out string? failureLog)
+        {
+            failureLog = null;
+            assignments = [];
+            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++)
+            {
+                if (!TryCreateMatchingAssignments(unchecked(seed + attempt), out var candidateAssignments, out failureLog))
+                {
+                    continue;
+                }
+
+                if (TryValidateAssignments(candidateAssignments, unchecked(seed + attempt), out failureLog))
+                {
+                    assignments = candidateAssignments;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public bool HasAssignmentsForAllRules(Route route)
+            => _activeRules.All(rule =>
+            {
+                var routeKey = RouteKey(rule.Id);
+                return route.GetItemsContainingKey(routeKey)
+                    .Where(_targetsByNode.ContainsKey)
+                    .Take(2)
+                    .Count() == 1;
+            });
 
         public bool TryGenerateRoute(int seed, out Route route, out string? failureLog)
         {
@@ -1374,6 +1473,146 @@ internal class KeyItemLocationModifier : Modifier
                 route = null!;
                 failureLog = $"{ex.Message} Seed={seed}, dead ends={deadEnds}.";
                 return false;
+            }
+        }
+
+        private bool TryCreateMatchingAssignments(
+            int seed,
+            out ImmutableArray<KeyItemRouteAssignment> assignments,
+            out string? failureLog)
+        {
+            assignments = [];
+            failureLog = null;
+            var rng = new Rng(seed);
+            var candidatesByRule = new Dictionary<KeyItemRule, List<Node>>();
+            foreach (var rule in _activeRules)
+            {
+                var candidates = _targetsByNode.Keys
+                    .Where(node => (node.Group & rule.RouteMask) == rule.RouteMask)
+                    .OrderBy(node => _targetsByNode[node].Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
+                    .ThenBy(node => _targetsByNode[node].TargetGuid.ToString("D"), StringComparer.OrdinalIgnoreCase)
+                    .ToList();
+                if (candidates.Count == 0)
+                {
+                    failureLog = $"No route-safe candidate placement was found for {_itemDefinitions.GetName(rule.Id)}.";
+                    return false;
+                }
+
+                Shuffle(candidates, rng);
+                candidatesByRule[rule] = candidates;
+            }
+
+            var targetAssignments = new Dictionary<Node, KeyItemRule>();
+            var ruleAssignments = new Dictionary<KeyItemRule, Node>();
+            foreach (var rule in _activeRules
+                .OrderBy(rule => candidatesByRule[rule].Count)
+                .ThenByDescending(rule => rule.Priority)
+                .ThenBy(rule => rule.Id, StringComparer.OrdinalIgnoreCase))
+            {
+                if (!TryAssign(rule, []))
+                {
+                    failureLog = $"No complete route-safe key item matching was found. " +
+                        $"Could not reserve a unique target for {_itemDefinitions.GetName(rule.Id)} " +
+                        $"from {candidatesByRule[rule].Count} candidate placements. " +
+                        $"Candidates: {DescribeCandidates(rule)}. " +
+                        "Candidate counts: " +
+                        string.Join(", ", _activeRules
+                            .OrderBy(candidateRule => candidateRule.Id, StringComparer.OrdinalIgnoreCase)
+                            .Select(candidateRule => $"{_itemDefinitions.GetName(candidateRule.Id)}={candidatesByRule[candidateRule].Count}"));
+                    return false;
+                }
+            }
+
+            assignments = _activeRules
+                .Select(rule =>
+                {
+                    var node = ruleAssignments[rule];
+                    return new KeyItemRouteAssignment(
+                        rule,
+                        _targetsByNode[node],
+                        _regionByNode[node]);
+                })
+                .ToImmutableArray();
+
+            var duplicateLocation = assignments
+                .GroupBy(assignment => assignment.Target.LocationKey)
+                .FirstOrDefault(group => group.Count() > 1);
+            if (duplicateLocation != null)
+            {
+                failureLog = "No complete route-safe key item matching was found. " +
+                    $"Multiple key items were assigned to the same physical location in {duplicateLocation.Key.SceneFile}.";
+                return false;
+            }
+
+            return true;
+
+            bool TryAssign(KeyItemRule rule, HashSet<Node> visitedTargets)
+            {
+                foreach (var candidate in candidatesByRule[rule])
+                {
+                    if (!visitedTargets.Add(candidate))
+                        continue;
+
+                    if (targetAssignments.TryGetValue(candidate, out var currentRule) &&
+                        !TryAssign(currentRule, visitedTargets))
+                    {
+                        continue;
+                    }
+
+                    targetAssignments[candidate] = rule;
+                    ruleAssignments[rule] = candidate;
+                    return true;
+                }
+
+                return false;
+            }
+
+            string DescribeCandidates(KeyItemRule rule)
+                => string.Join("; ", candidatesByRule[rule]
+                    .OrderBy(node => _targetsByNode[node].Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
+                    .ThenBy(node => _targetsByNode[node].TargetGuid.ToString("D"), StringComparer.OrdinalIgnoreCase)
+                    .Select(node => $"{_regionByNode[node]} / {FormatScenePath(_targetsByNode[node].Placement.SceneFile)} / {_targetsByNode[node].TargetGuid}"));
+        }
+
+        private bool TryValidateAssignments(
+            ImmutableArray<KeyItemRouteAssignment> assignments,
+            int seed,
+            out string? failureLog)
+        {
+            var validationGraph = new KeyItemRouteGraph(_activeRules);
+            foreach (var assignment in assignments)
+            {
+                if (!validationGraph.TryAddFixedTarget(assignment.Target, assignment.Rule))
+                {
+                    failureLog = $"Route-safe matching assigned {_itemDefinitions.GetName(assignment.Rule.Id)} to an invalid target.";
+                    return false;
+                }
+            }
+
+            failureLog = null;
+            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++)
+            {
+                if (!validationGraph.TryGenerateRoute(unchecked(seed + attempt), out var route, out var candidateFailureLog))
+                {
+                    failureLog = candidateFailureLog ?? failureLog;
+                    continue;
+                }
+
+                if (route.AllNodesVisited && validationGraph.HasAssignmentsForAllRules(route))
+                    return true;
+
+                failureLog = route.Log;
+            }
+
+            return false;
+        }
+
+        private static void Shuffle<T>(IList<T> items, Rng rng)
+        {
+            for (var i = 0; i < items.Count; i++)
+            {
+                var j = rng.Next(0, i + 1);
+                (items[i], items[j]) = (items[j], items[i]);
             }
         }
 
@@ -1477,7 +1716,7 @@ internal class KeyItemLocationModifier : Modifier
                 if (IsBoatHouseAfterSerumUse(path))
                     return null;
                 if (IsBoatHouseRoute(path))
-                    return new(_boatHouse, SerumMask, "Boat House before serum use");
+                    return new(_boatHouse, SerumMask | DSeriesArmMask | DSeriesHeadMask, "Boat House before serum use");
                 if (IsTestingAreaAfterLucasPuzzle(path))
                     return new(_lucasPuzzle, LucasAfterPuzzleCarryMasks, "Testing Area Lucas puzzle and control room");
                 if (IsTestingAreaBeforeBarnFight(path))
@@ -1510,6 +1749,8 @@ internal class KeyItemLocationModifier : Modifier
                     return new(_mainHouseEast, MainHouseEastCarryMasks, "Main House east side and processing area");
                 if (IsMainHouseClockReward(placement))
                     return new(_mainHouseClockReward, MainHouseAfterGarageCarryMasks & ~PendulumMask, "Main House clock-pendulum reward");
+                if (IsMainHouseWestBlueDogHead(placement))
+                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks, "Main House after garage before shadow puzzle");
                 if (IsMainHouseBeforeShadowPuzzle(path))
                     return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks, "Main House after garage before shadow puzzle");
                 if (IsGarage(path))
@@ -1538,23 +1779,31 @@ internal class KeyItemLocationModifier : Modifier
 
         private static int GetTargetAccessRequirementMask(ItemReplacementTarget target)
         {
+            var mask = 0;
             if (target.Placement.Guid == _guestHouseFuseCabinetGuid &&
                 PathContains(target.Placement.SceneFile, "/chapter1/c01_corridor01.scn"))
             {
-                return BoltCuttersMask | AxeMask;
+                mask |= BoltCuttersMask | AxeMask;
             }
 
             if (IsMainHouseClockReward(target.Placement))
             {
-                return FloorDoorKeyMask | CarKeyMask | OxStatuetteMask | PendulumMask;
+                mask |= FloorDoorKeyMask | CarKeyMask | OxStatuetteMask | PendulumMask;
             }
 
-            return 0;
+            if (IsOriginalKeycardTarget(target.Placement))
+            {
+                mask |= BlueKeycardMask | RedKeycardMask;
+            }
+
+            return mask;
         }
 
         private static bool IsUnsafeKeyItemTarget(ItemPlacement placement)
-            => placement.Guid == _jack2RedDogHeadGuid
-                && PathContains(placement.SceneFile, "c03_rightareab1ffreezer");
+            => (placement.Guid == _jack2RedDogHeadGuid
+                    && PathContains(placement.SceneFile, "c03_rightareab1ffreezer"))
+                || (placement.Guid == _lucasPuzzleCandleGuid
+                    && PathContains(placement.SceneFile, "c03_leftarea1fpuzzleroom1"));
     }
 
     private enum ReplacementKind
@@ -1604,6 +1853,8 @@ internal class KeyItemLocationModifier : Modifier
 
     private readonly record struct ReplacementKey(string SceneFile, Guid Guid);
 
+    private readonly record struct ReplacementLocationKey(string SceneFile, int X, int Y, int Z);
+
     private sealed record ItemReplacementTarget(
         ItemPlacement Placement,
         ItemDefinition? Definition,
@@ -1611,7 +1862,16 @@ internal class KeyItemLocationModifier : Modifier
         string Label)
     {
         public ReplacementKey Key => new(Placement.SceneFile, TargetGuid);
+
+        public ReplacementLocationKey LocationKey => new(
+            Placement.SceneFile,
+            QuantizeLocation(Placement.Position.X),
+            QuantizeLocation(Placement.Position.Y),
+            QuantizeLocation(Placement.Position.Z));
     }
+
+    private static int QuantizeLocation(float value)
+        => (int)MathF.Round(value * 2, MidpointRounding.AwayFromZero);
 
     private sealed record ReplacementPlan(
         ReplacementKind Kind,
