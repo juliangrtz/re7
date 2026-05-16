@@ -7,7 +7,6 @@ internal class JackMutated : IEnemyDefinition
 {
     internal static readonly IReadOnlyList<EnemyHealthPart> PartHealth =
     [
-        new("JackMutated-body", "Body", 30000),
         new("JackMutated-eye-1", "Eye 1", 1600),
         new("JackMutated-eye-2", "Eye 2", 1200),
         new("JackMutated-eye-3", "Eye 3", 1200),
@@ -58,7 +57,6 @@ internal class JackMutatedDirectiveModifier : IDirectiveModifier
 
     private static readonly IReadOnlyDictionary<string, string> HealthPartPaths = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        ["JackMutated-body"] = "battle.Health",
         ["JackMutated-eye-1"] = "weak.WeakInfoList[0].MaxHealth",
         ["JackMutated-eye-2"] = "weak.WeakInfoList[1].MaxHealth",
         ["JackMutated-eye-3"] = "weak.WeakInfoList[2].MaxHealth",

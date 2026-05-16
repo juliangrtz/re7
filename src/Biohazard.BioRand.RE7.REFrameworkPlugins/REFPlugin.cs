@@ -179,13 +179,10 @@ public class REFPlugin
         "LiquidBomb",
         "HandgunBulletL",
         "ShotgunBullet",
-        "MachineGunBullet",
         "MagnumBullet",
-        "BurnerBullet",
         "FlameBulletS",
         "AcidBulletS",
         "RemedyL",
-        "EyeDrops",
         "ChemicalM",
         "Coin",
     };
