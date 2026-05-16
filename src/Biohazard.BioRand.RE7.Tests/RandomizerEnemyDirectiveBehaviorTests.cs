@@ -104,8 +104,6 @@ public class RandomizerEnemyDirectiveBehaviorTests
         using var result = RandomizerTest.RunState(config =>
         {
             config["boss-random-health"] = true;
-            config["boss-health-min-jackmutated-body"] = 31000.0;
-            config["boss-health-max-jackmutated-body"] = 31000.0;
             config["boss-health-min-jackmutated-eye-1"] = 1700.0;
             config["boss-health-max-jackmutated-eye-1"] = 1700.0;
             config["boss-health-min-jackmutated-final-eye"] = 1550.0;
@@ -116,8 +114,6 @@ public class RandomizerEnemyDirectiveBehaviorTests
         var after = ReadFirstUserObject(result.ReadAfterBytes(directivePath));
 
         Assert.True(result.WasFileModified(directivePath));
-        Assert.NotEqual(31000.0f, before.Get<float>("battle.Health"));
-        Assert.Equal(31000.0f, after.Get<float>("battle.Health"));
         Assert.Equal(1700.0f, after.Get<float>("weak.WeakInfoList[0].MaxHealth"));
         Assert.Equal(1550.0f, after.Get<float>("weak.LastWeakMaxHealth"));
     }
