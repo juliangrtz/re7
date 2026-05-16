@@ -39,7 +39,6 @@ internal class KeyItemLocationModifier : Modifier
             ["Fuse"] = Flags(new KeyItemAcquisitionFlag("c01_Main_FuseGet", new("f7486e9b-8924-494c-9738-c26fa3c2e055"), true)),
             ["FloorDoorKey"] = Flags(new KeyItemAcquisitionFlag("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true)),
             ["3CrestKeyC"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetCrestInFreezerRoom", new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true)),
-            ["WorkroomKey"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_OpenTrayInWorkshopKey", new("b3096800-d600-4015-b934-63d671b597a9"), true)),
             ["MasterKey"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetSnakeKey", new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true)),
             ["Crank"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetCrank", new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true)),
             ["TalismanKey"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true)),
@@ -90,7 +89,7 @@ internal class KeyItemLocationModifier : Modifier
     private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask | CrowKeyMask;
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
-        OxStatuetteMask | RedDogHeadMask | DissectionRoomKeyMask | CrankMask |
+        OxStatuetteMask | RedDogHeadMask | CrankMask |
         StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
     private const int MainHouseAfterGarageCarryMasks =
         (MainHouseBeforeHatchCarryMasks | PendulumMask) &
@@ -497,6 +496,12 @@ internal class KeyItemLocationModifier : Modifier
             if (flags.Length == 0)
                 continue;
 
+            if (HasUnsafeRelocatedPickupSideEffect(placementGroup.Key, flags))
+            {
+                logger.LogLine($"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: the vanilla workshop tray flag is tied to the morgue FSM and is unsafe when relocated.");
+                continue;
+            }
+
             if (flags.Length > 1)
             {
                 logger.LogLine($"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: multiple distinct vanilla pickup flags were found.");
@@ -516,6 +521,14 @@ internal class KeyItemLocationModifier : Modifier
         => _levelFsmAcquisitionFlagsByItemId.TryGetValue(itemId, out var flags)
             ? flags
             : [];
+
+    private static bool HasUnsafeRelocatedPickupSideEffect(
+        string itemId,
+        ImmutableArray<KeyItemAcquisitionFlag> flags)
+        => itemId.Equals("WorkroomKey", StringComparison.OrdinalIgnoreCase) &&
+            flags.Any(flag =>
+                flag.Name.Equals("c03_2_Main_OpenTrayInWorkshopKey", StringComparison.OrdinalIgnoreCase)
+                || flag.Guid == new Guid("b3096800-d600-4015-b934-63d671b597a9"));
 
     private static IEnumerable<KeyItemAcquisitionFlag> GetPickupAcquisitionFlags(
         Randomizer randomizer,
@@ -1070,6 +1083,7 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsMainHouseBeforeHatch(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_west/")
+            || PathContains(path, "c03_mainhouse1fgaragehallway")
             || PathContains(path, "c03_mainhouse1fhallway")
             || PathContains(path, "c03_mainhouse1fldk")
             || PathContains(path, "c03_mainhouse1fliving")
@@ -1084,6 +1098,21 @@ internal class KeyItemLocationModifier : Modifier
     private static bool IsMainHouseClockReward(ItemPlacement placement)
         => placement.Guid == _mainHouseClockRewardGuid
             && PathContains(placement.SceneFile, "c03_mainhouse1fliving");
+
+    private static bool IsHatchKeySafeTarget(ItemPlacement placement)
+        => PathContains(placement.SceneFile, "c03_mainhouse1fldk")
+            || (PathContains(placement.SceneFile, "c03_mainhouse1fliving")
+                && !IsMainHouseClockReward(placement))
+            || (PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
+                && !IsUnderHatchPantryTarget(placement))
+            || PathContains(placement.SceneFile, "c03_mainhouse1fhallway")
+            || PathContains(placement.SceneFile, "c03_mainhouse1fgaragehallway");
+
+    private static bool IsUnderHatchPantryTarget(ItemPlacement placement)
+        => placement.IsExtra
+            && string.Equals(placement.Comment, "Pantry", StringComparison.OrdinalIgnoreCase)
+            && PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
+            && placement.Position.Y < -0.5f;
 
     private static bool IsMainHouseWestBlueDogHead(ItemPlacement placement)
         => placement.Guid == _mainHouseWestBlueDogHeadGuid
@@ -1789,6 +1818,11 @@ internal class KeyItemLocationModifier : Modifier
             if (IsMainHouseClockReward(target.Placement))
             {
                 mask |= FloorDoorKeyMask | CarKeyMask | OxStatuetteMask | PendulumMask;
+            }
+
+            if (!IsHatchKeySafeTarget(target.Placement))
+            {
+                mask |= FloorDoorKeyMask;
             }
 
             if (IsOriginalKeycardTarget(target.Placement))
