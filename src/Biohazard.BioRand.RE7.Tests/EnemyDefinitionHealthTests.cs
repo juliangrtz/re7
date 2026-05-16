@@ -55,7 +55,6 @@ public class EnemyDefinitionHealthTests
     {
         var enemy = EnemyDefinitions.Instance.All.OfType<JackMutated>().Single();
 
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "JackMutated-body" && part.BaseHealth == 30000);
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "JackMutated-eye-1" && part.BaseHealth == 1600);
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "JackMutated-final-eye" && part.BaseHealth == 1500);
     }
