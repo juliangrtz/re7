@@ -115,8 +115,9 @@ internal class KeyItemLocationModifier : Modifier
     private const int KeycardSetupCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
-    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
-    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipPastBeforeCorrosiveMasks = CorrosiveMask;
+    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
+    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
     private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
     private static readonly Guid _mainHouseWestBlueDogHeadGuid = new("401dbfaa-3469-0702-1c9a-d74a7d185216");
     private static readonly Guid _mainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
@@ -1243,6 +1244,13 @@ internal class KeyItemLocationModifier : Modifier
                 || PathContains(path, "c03_boat")
                 || PathContains(path, "c03_gardenareaboat"));
 
+    private static bool IsShipPastBeforeCorrosive(string path)
+        => PathContains(path, "/leveldesign/itemset/ff050/bf/")
+            || (PathContains(path, "past")
+                && (PathContains(path, "c04_ship2f")
+                    || PathContains(path, "c04_shipb2")
+                    || PathContains(path, "c04_shipstairs")));
+
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
             && (PathContains(path, "c04_ship4f")
@@ -1725,6 +1733,9 @@ internal class KeyItemLocationModifier : Modifier
         {
             var placement = target.Placement;
             var path = placement.SceneFile;
+            if (placement.Chapter == 4 && IsShipPastBeforeCorrosive(path))
+                return new(_ship, ShipPastBeforeCorrosiveMasks, "Wrecked Ship VHS before Corrosive");
+
             if (IsFlashbackPath(path))
                 return null;
 

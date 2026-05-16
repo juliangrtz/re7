@@ -95,6 +95,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private const string Ship2FItemSetScenePath = "natives/stm/leveldesign/itemset/chapter4/ship2f/ship2f.scn.20";
     private const string ShipSickBayScenePath = "natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20";
     private const string ShipLoungeScenePath = "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20";
+    private const string ShipPastKitchenScenePath = "natives/stm/environment/scene/chapter4/c04_ship2fkitchenpast.scn.20";
     private const string LucasPuzzleRoomScenePath = "natives/stm/environment/scene/chapter3/c03_leftarea1fpuzzleroom1.scn.20";
     private const string SaltMineCultivationRoomScenePath = "natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20";
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
@@ -825,12 +826,21 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var ship2FCorrosive = FindPlacement(result, Ship2FItemSetScenePath, Ship2FItemSetCorrosiveGuid);
         var powerCable = FindPlacement(result, ShipSickBayScenePath, ShipPowerCableGuid);
         var loungeFuse = FindPlacement(result, ShipLoungeScenePath, ShipLoungeFuseGuid);
+        var shipPastKitchen = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Ship Kitchen" &&
+            placement.SceneFile.Equals(ShipPastKitchenScenePath, StringComparison.OrdinalIgnoreCase));
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "EvOpener"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "FuseCh4"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "EvOpener"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "SpareKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "EvOpener"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvOpener"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "SpareKey"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "EvOpener"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "FuseCh4"));
@@ -1481,9 +1491,17 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         => PathContains(path, "c03_boat1fbridge02");
 
     private static bool IsMiaPresentShipRoute(string path)
-        => IsShipBeforeLugWrench(path)
+        => IsShipPastBeforeCorrosive(path)
+            || IsShipBeforeLugWrench(path)
             || IsShipAfterLugWrenchBeforeCorrosive(path)
             || IsShipAfterCorrosiveBeforeRepair(path);
+
+    private static bool IsShipPastBeforeCorrosive(string path)
+        => PathContains(path, "/leveldesign/itemset/ff050/bf/")
+            || (PathContains(path, "past")
+                && (PathContains(path, "c04_ship2f")
+                    || PathContains(path, "c04_shipb2")
+                    || PathContains(path, "c04_shipstairs")));
 
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
