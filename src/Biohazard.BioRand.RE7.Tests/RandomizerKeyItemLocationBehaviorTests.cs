@@ -61,7 +61,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         {
             ["FloorDoorKey"] = new("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true),
             ["3CrestKeyC"] = new("c03_2_Main_GetCrestInFreezerRoom", new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true),
-            ["WorkroomKey"] = new("c03_2_Main_OpenTrayInWorkshopKey", new("b3096800-d600-4015-b934-63d671b597a9"), true),
             ["MasterKey"] = new("c03_2_Main_GetSnakeKey", new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true),
             ["Crank"] = new("c03_3_Main_GetCrank", new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true),
             ["TalismanKey"] = new("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true),
@@ -77,6 +76,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
     private const string MainHouseDiningKitchenScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fldk.scn.20";
     private const string MainHouseLivingRoomScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
+    private const string MainHousePantryScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20";
+    private const string MainHouseRightParlorScenePath = "natives/stm/environment/scene/chapter3/c03_rightarea1fparlor.scn.20";
     private const string MainHouseWestItemSetScenePath = "natives/stm/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn.20";
     private const string MainHouseGarageScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fgarage.scn.20";
     private const string Jack2ScenePath = "natives/stm/environment/scene/chapter3/c03_rightareab1ffreezer.scn.20";
@@ -101,6 +102,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid GuestHouseMiaDriversLicenseGuid = new("ee3242fe-55a4-450c-b8ca-0a8ab3c39546");
     private static readonly Guid MainHouseWestBlueDogHeadGuid = new("401dbfaa-3469-0702-1c9a-d74a7d185216");
     private static readonly Guid MainHouseHatchKeyGuid = new("665a86ed-7e9c-4b56-a889-4377fa1d3f47");
+    private static readonly Guid MainHousePendulumGuid = new("7a0710fd-6939-02b3-1a5b-229ce8cf7e77");
+    private static readonly Guid MainHouseRightParlorStimulantGuid = new("b1548f47-609a-0190-3976-50b2aeafd6b6");
     private static readonly Guid MainHouseGarageOxStatuetteGuid = new("3463277a-19ba-062b-2b8d-7d1f666496a2");
     private static readonly Guid MainHouseClockRewardGuid = new("0da28012-ad6a-0da5-1f0a-cacd2c677ed3");
     private static readonly Guid Jack2RedDogHeadGuid = new("301caf06-67b8-0645-11a1-faadce741e7d");
@@ -288,6 +291,51 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
+    public void KeyItemLocations_RestrictsHatchKeyToReachablePreHatchRooms()
+    {
+        var result = _defaultRun.Result;
+        var diningTable = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Dinner Table" &&
+            placement.SceneFile.Equals(MainHouseDiningKitchenScenePath, StringComparison.OrdinalIgnoreCase));
+        var pantryUnderHatch = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Pantry" &&
+            placement.SceneFile.Equals(MainHousePantryScenePath, StringComparison.OrdinalIgnoreCase));
+        var hatchKeyCarrier = FindPlacement(result, MainHouseWestItemSetScenePath, MainHouseHatchKeyGuid);
+        var mainHallExtra = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Main Hall" &&
+            placement.SceneFile.Equals(MainHouseHallScenePath, StringComparison.OrdinalIgnoreCase));
+
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(diningTable, "FloorDoorKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(pantryUnderHatch, "FloorDoorKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(hatchKeyCarrier, "FloorDoorKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(mainHallExtra, "FloorDoorKey"));
+    }
+
+    [Fact]
+    public void KeyItemLocations_DoesNotPlaceDissectionRoomKeyBeforeBasementEntry()
+    {
+        var result = _defaultRun.Result;
+        var diningTable = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Dinner Table" &&
+            placement.SceneFile.Equals(MainHouseDiningKitchenScenePath, StringComparison.OrdinalIgnoreCase));
+        var mainHallExtra = result.ItemPlacementService.MainGamePlacements.Single(placement =>
+            placement.IsExtra &&
+            placement.Comment == "Main Hall" &&
+            placement.SceneFile.Equals(MainHouseHallScenePath, StringComparison.OrdinalIgnoreCase));
+        var mainHallClock = FindPlacement(result, MainHouseHallScenePath, MainHousePendulumGuid);
+        var rightParlorStimulant = FindPlacement(result, MainHouseRightParlorScenePath, MainHouseRightParlorStimulantGuid);
+
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(diningTable, "WorkroomKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(mainHallExtra, "WorkroomKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(mainHallClock, "WorkroomKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(rightParlorStimulant, "WorkroomKey"));
+    }
+
+    [Fact]
     public void KeyItemLocations_Softlock2SeedKeepsHatchKeyBeforeHatchAndPreservesOxStatuette()
     {
         using var result = RandomizerTest.RunState(
@@ -417,6 +465,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 expectedFlag.Guid,
                 expectedFlag.Value);
         }
+
+        Assert.DoesNotContain("Pickup side effect: sets c03_2_Main_OpenTrayInWorkshopKey", result.ProcessLog);
     }
 
     [Fact]
