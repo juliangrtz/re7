@@ -177,6 +177,11 @@ public class ConfigurationDefinitionTest
             .ToHashSet();
 
         Assert.Contains("random-enemy-drops", ids);
+        Assert.Contains("enemy-drop-probability", ids);
+        Assert.Contains("enemy-drop-probability-flyingbug", ids);
+        Assert.Contains("enemy-drop-probability-molded", ids);
+        Assert.Contains("enemy-drop-probability-jackmutated", ids);
+        Assert.DoesNotContain("enemy-drop-probability-moldedblade", ids);
         Assert.Contains("enemy-drop-respect-difficulty", ids);
         Assert.Contains("enemy-drop-ammo-only-available-weapons", ids);
         Assert.Contains("enemy-drop-ammo-min", ids);

@@ -37,6 +37,16 @@ internal static class RandomizerConfigurationDefinition
             _ => null
         };
 
+    private static IEnumerable<IEnemyDefinition> GetEnemyDropProbabilityEnemies()
+        => EnemyDefinitions.Instance.All
+            .Where(enemy => enemy is not EvelineGrandmother and not MoldedBlade)
+            .OrderBy(enemy => enemy.Name);
+
+    private static string GetEnemyDropProbabilityLabel(IEnemyDefinition enemy)
+        => enemy is Molded
+            ? "Molded (Normal / Blade)"
+            : enemy.Name;
+
     private static GroupItem CreateHealthRangeItem(string prefix, IEnemyDefinition enemy, EnemyHealthPart healthPart, bool isMin)
     {
         var labelPrefix = isMin ? "Min" : "Max";
@@ -402,6 +412,35 @@ internal static class RandomizerConfigurationDefinition
             Default = true
         });
 
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-drop-probability",
+            Label = "Default Enemy Drop Probability",
+            Description = "The fallback probability that a defeated enemy drops an item. Per-enemy probabilities below override this value.",
+            Type = "percent",
+            Min = 0,
+            Max = 1,
+            Step = 0.01,
+            Default = 0.5
+        });
+
+        group = page.CreateGroup("Enemy Drop Probabilities");
+        foreach (var enemy in GetEnemyDropProbabilityEnemies())
+        {
+            group.Items.Add(new GroupItem()
+            {
+                Id = $"enemy-drop-probability-{enemy.Id.ToLowerInvariant()}",
+                Label = GetEnemyDropProbabilityLabel(enemy),
+                Category = new GroupItemCategory(enemy.Category.ToConfigCategory()),
+                Type = "percent",
+                Min = 0,
+                Max = 1,
+                Step = 0.01,
+                Default = 0.5
+            });
+        }
+
+        group = page.CreateGroup("Drop Settings");
         group.Items.Add(new GroupItem()
         {
             Id = $"enemy-drop-respect-difficulty",
