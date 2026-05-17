@@ -107,17 +107,16 @@ internal class KeyItemLocationModifier : Modifier
     private const int OldHouseAfterCrankCarryMasks =
         CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterCrowCarryMasks =
-        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterLanternCarryMasks =
-        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
     private const int SnakeKeyRewardCarryMasks =
-        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask;
     private const int KeycardSetupCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
-    private const int ShipPastBeforeCorrosiveMasks = CorrosiveMask;
-    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
-    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
+    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
     private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
     private static readonly Guid _mainHouseWestBlueDogHeadGuid = new("401dbfaa-3469-0702-1c9a-d74a7d185216");
     private static readonly Guid _mainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
@@ -1052,7 +1051,8 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsFlashbackPath(string path)
         => PathContains(path, "/environment/scene/ff")
-            || PathContains(path, "/leveldesign/itemset/ff");
+            || PathContains(path, "/leveldesign/itemset/ff")
+            || PathContains(path, "past");
 
     private static bool IsGuestHouseBeforeBoltCutters(string path)
         => !IsFlashbackPath(path)
@@ -1124,13 +1124,6 @@ internal class KeyItemLocationModifier : Modifier
         => placement.Guid == _mainHouseWestBlueKeycardGuid
             && placement.Id.Equals("LucasCardKey", StringComparison.OrdinalIgnoreCase)
             && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
-
-    private static bool IsOriginalKeycardTarget(ItemPlacement placement)
-        => IsMainHouseWestBlueKeycard(placement)
-            || (placement.Guid == _redKeycardWorkshopGuid
-                && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn"))
-            || (placement.Guid == _blueKeycardAtticGuid
-                && PathContains(placement.SceneFile, "c03_mainhouse2fkids02.scn"));
 
     private static bool IsGarage(string path)
         => PathContains(path, "c03_mainhouse1fgarage.scn");
@@ -1243,13 +1236,6 @@ internal class KeyItemLocationModifier : Modifier
             && (PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
                 || PathContains(path, "c03_boat")
                 || PathContains(path, "c03_gardenareaboat"));
-
-    private static bool IsShipPastBeforeCorrosive(string path)
-        => PathContains(path, "/leveldesign/itemset/ff050/bf/")
-            || (PathContains(path, "past")
-                && (PathContains(path, "c04_ship2f")
-                    || PathContains(path, "c04_shipb2")
-                    || PathContains(path, "c04_shipstairs")));
 
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
@@ -1733,9 +1719,6 @@ internal class KeyItemLocationModifier : Modifier
         {
             var placement = target.Placement;
             var path = placement.SceneFile;
-            if (placement.Chapter == 4 && IsShipPastBeforeCorrosive(path))
-                return new(_ship, ShipPastBeforeCorrosiveMasks, "Wrecked Ship VHS before Corrosive");
-
             if (IsFlashbackPath(path))
                 return null;
 
@@ -1836,7 +1819,7 @@ internal class KeyItemLocationModifier : Modifier
                 mask |= FloorDoorKeyMask;
             }
 
-            if (IsOriginalKeycardTarget(target.Placement))
+            if (IsMainHouseWestBlueKeycard(target.Placement))
             {
                 mask |= BlueKeycardMask | RedKeycardMask;
             }
