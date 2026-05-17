@@ -11,6 +11,13 @@ permissions:
 
 jobs:
   build:
+    # The same-repo master branch is already tested by the push trigger.
+    if: >-
+      ${{
+        github.event_name != 'pull_request' ||
+        github.head_ref != 'master' ||
+        github.event.pull_request.head.repo.full_name != github.repository
+      }}
     runs-on: ubuntu-latest
     env:
       BIORAND_RE7_TEST_PAK_URL: ${{ secrets.BIORAND_RE7_TEST_PAK_URL }}
