@@ -1,9 +1,7 @@
-using System.Text;
 using System.Numerics;
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
-using Biohazard.BioRand.RE7.Serialization;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
 

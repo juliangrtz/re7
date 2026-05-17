@@ -7,10 +7,9 @@ using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
+using ReplacementData = (Enums.app.ItemID Id, int Quantity, int Coins, System.Collections.Immutable.ImmutableArray<string> ValidItemIDs);
+
 namespace Biohazard.BioRand.RE7.Modifiers;
-
-using ReplacementData = (ItemID Id, int Quantity, int Coins, ImmutableArray<string> ValidItemIDs);
-
 internal class BirdCageModifier : Modifier
 {
     private const string RandomizerKey = "modifier/bird-cage";
