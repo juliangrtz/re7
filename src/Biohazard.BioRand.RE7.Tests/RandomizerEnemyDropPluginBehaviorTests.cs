@@ -12,6 +12,8 @@ public class RandomizerEnemyDropPluginBehaviorTests
         var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
         {
             config["random-enemy-drops"] = true;
+            config["enemy-drop-probability"] = 0.25;
+            config["enemy-drop-probability-flyingbug"] = 0.1;
             config["recipes-add-new"] = false;
         });
 
@@ -30,5 +32,7 @@ public class RandomizerEnemyDropPluginBehaviorTests
         Assert.Null(rootConfig["biorand-seed"]);
         Assert.Equal(0x12345678, reframeworkConfig["biorand-seed"]!.GetValue<int>());
         Assert.True(reframeworkConfig["random-enemy-drops"]!.GetValue<bool>());
+        Assert.Equal(0.25, reframeworkConfig["enemy-drop-probability"]!.GetValue<double>());
+        Assert.Equal(0.1, reframeworkConfig["enemy-drop-probability-flyingbug"]!.GetValue<double>());
     }
 }

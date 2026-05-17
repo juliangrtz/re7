@@ -19,6 +19,7 @@ public class REFPlugin
     private const double MadhouseAmmoDropAmountFactor = 0.75;
     private const double ValuableDropChanceWeight = 3.0;
     private const double ValuableWeaponDropChanceWeight = 1.0;
+    private const double DefaultEnemyDropProbability = 0.5;
     private const float EnemyDropGroundRayStartOffset = 0.25f;
     private const float EnemyDropGroundRayDistance = 50.0f;
     private const float EnemyDropGroundMinNormalY = 0.5f;
@@ -147,6 +148,24 @@ public class REFPlugin
                23 /* Brawler */,
        }.Select(index => $"skl{index:000}")
         .ToImmutableArray();
+
+    private static readonly Dictionary<string, string> EnemyDropProbabilityConfigIdsByTypeId = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Em3000"] = "jackstalker",
+        ["Em3001"] = "jackstalker",
+        ["Em3600"] = "margemutated",
+        ["Em4000"] = "molded",
+        ["Em4100"] = "moldedquick",
+        ["Em4200"] = "moldedfat",
+        ["Em5400"] = "flyingbug",
+        ["Em5510"] = "insecthive",
+        ["Em5511"] = "insecthive",
+        ["Em5512"] = "insecthive",
+        ["Em5520"] = "insectswarm",
+        ["Em8000"] = "jackshears",
+        ["Em8001"] = "jackshears",
+        ["Em8100"] = "jackmutated",
+    };
 
     private static readonly Dictionary<string, double> SpecialEnemyDropMultipliers = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -619,6 +638,19 @@ public class REFPlugin
     private static bool IsEnemyDropEnabled()
         => config.ReadOrDefault("random-enemy-drops", true);
 
+    private static double GetEnemyDropProbability(string? enemyTypeId)
+    {
+        var probability = config.ReadOrDefault("enemy-drop-probability", DefaultEnemyDropProbability);
+        if (enemyTypeId != null
+            && EnemyDropProbabilityConfigIdsByTypeId.TryGetValue(enemyTypeId, out var configId)
+            && config.TryRead($"enemy-drop-probability-{configId}", out double enemyProbability))
+        {
+            probability = enemyProbability;
+        }
+
+        return Math.Clamp(probability, 0.0, 1.0);
+    }
+
     private static string GetCurrentChapterName()
         => API.GetManagedSingleton("app.GameFlowFsmManager").As<GameFlowFsmManager>().CurrentMainGameFlow.ToString();
 
@@ -834,9 +866,34 @@ public class REFPlugin
         return result;
     }
 
-    private static EnemyDropSelection? SelectEnemyDrop(via.GameObject enemyObject, int generation, bool restrictToBossDropPool)
+    private static EnemyDropSelection? SelectEnemyDrop(
+        via.GameObject enemyObject,
+        int generation,
+        bool restrictToBossDropPool,
+        string? enemyTypeId)
     {
         var rng = CreateEnemyDropRandom(enemyObject.Address(), generation);
+        var dropProbability = GetEnemyDropProbability(enemyTypeId);
+        if (dropProbability <= 0.0)
+        {
+            logger.Log(
+                $"Enemy drop probability is 0%; skipping drop for enemy '{enemyTypeId ?? "unknown"}' object 0x{enemyObject.Address():X}.",
+                isVerbose: true);
+            return null;
+        }
+
+        if (dropProbability < 1.0)
+        {
+            var dropRoll = rng.NextDouble();
+            if (dropRoll >= dropProbability)
+            {
+                logger.Log(
+                    $"Enemy drop roll {dropRoll:0.###} failed probability {dropProbability:0.###} for enemy '{enemyTypeId ?? "unknown"}' object 0x{enemyObject.Address():X}.",
+                    isVerbose: true);
+                return null;
+            }
+        }
+
         var candidates = BuildEnemyDropCandidates(rng, restrictToBossDropPool);
         if (candidates.Count == 0)
             return null;
@@ -1120,7 +1177,8 @@ public class REFPlugin
         var selection = SelectEnemyDrop(
             enemyObject,
             generation,
-            restrictToBossDropPool: IsBossEnemyTypeId(enemyTypeId));
+            restrictToBossDropPool: IsBossEnemyTypeId(enemyTypeId),
+            enemyTypeId: enemyTypeId);
         if (selection == null)
         {
             logger.Log($"No eligible enemy drop candidates for enemy object 0x{enemyObject.Address():X}.", isVerbose: true);

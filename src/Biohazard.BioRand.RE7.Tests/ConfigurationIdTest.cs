@@ -137,6 +137,14 @@ public class ConfigurationIdUsageTest
 
         foreach (var enemy in EnemyDefinitions.Instance.All)
         {
+            if (enemy is EvelineGrandmother or MoldedBlade)
+                continue;
+
+            ids.Add($"enemy-drop-probability-{enemy.Id.ToLowerInvariant()}");
+        }
+
+        foreach (var enemy in EnemyDefinitions.Instance.All)
+        {
             if (enemy is MargeStalker or MoldedBlade or EvelineGrandmother)
                 continue;
 
