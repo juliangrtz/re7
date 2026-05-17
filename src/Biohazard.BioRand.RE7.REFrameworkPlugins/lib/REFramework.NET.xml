@@ -22,6 +22,39 @@
         <member name="T:REFrameworkNET.ICallback">
             <summary>Internal interface used to prove that a class is a callback belonging to REFrameworkNET</summary>
         </member>
+        <member name="M:REFrameworkNET.ResourceManager.CreateUserData(System.String,System.String)">
+Creates a new userdata managed object.
+typeName is a via.typeinfo.TypeInfo name (NOT a TypeDefinition name).
+name is the resource path / identifier.
+Returns nullptr if the type is not found or creation fails.
+</member>
+        <member name="M:REFrameworkNET.ResourceManager.CreateResource(System.String,System.String)">
+Creates a new resource from a PAK path.
+typeName is a via.typeinfo.TypeInfo name (NOT a TypeDefinition name).
+name is the resource path in the PAK (e.g. "path/to/resource.tex").
+Returns nullptr if the type is not found or creation fails.
+</member>
+        <member name="T:REFrameworkNET.ResourceManager">
+Wraps the native RE Engine ResourceManager.
+Obtain via API::GetResourceManager().
+</member>
+        <member name="M:REFrameworkNET.Resource.CreateHolder(System.String)">
+Create a resource holder ManagedObject for the given type name.
+typeName is a TypeDefinition name (e.g. "via.render.TextureResource").
+</member>
+        <member name="M:REFrameworkNET.Resource.Release">
+Decrement the native reference count.
+</member>
+        <member name="M:REFrameworkNET.Resource.AddRef">
+Increment the native reference count.
+</member>
+        <member name="P:REFrameworkNET.Resource.Handle">
+The underlying native handle.
+</member>
+        <member name="T:REFrameworkNET.Resource">
+Wraps a native RE Engine resource handle (via.Resource).
+Returned by API::CreateResource. Supports reference counting and holder creation.
+</member>
         <member name="M:REFrameworkNET.NativeObject.FromAddress(System.UInt64,REFrameworkNET.TypeDefinition)">
             <summary>
 Creates a NativeObject wrapper over the given address
@@ -178,6 +211,16 @@ Use the other invoke method to automatically convert the return value correctly 
         <member name="M:REFrameworkNET.TypeDefinition.GetUnderlyingType">
             <returns>The underlying type of this <see cref="T:REFrameworkNET.TypeDefinition" />.</returns>
             <remarks>Usually used for enums.</remarks>
+        </member>
+        <member name="M:REFrameworkNET.TypeDefinition.CreateManagedArray(System.UInt32)">
+            <summary>
+Creates a managed array whose element type is this <see cref="T:REFrameworkNET.TypeDefinition" />.
+<para>
+Like CreateInstance, the returned object is NOT globalized.
+Call <see cref="M:REFrameworkNET.ManagedObject.Globalize" /> if you intend to keep it around.
+</para></summary>
+            <param name="size">Number of elements in the array.</param>
+            <returns>A new managed array, or nullptr on failure.</returns>
         </member>
         <member name="M:REFrameworkNET.TypeDefinition.CreateInstance(System.Int32)">
             <summary>
