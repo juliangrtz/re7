@@ -379,8 +379,15 @@ internal static class RandomizerConfigurationDefinition
             Default = true
         });
 
-        //group = page.CreateGroup("Specific");
-        // TODO
+        group = page.CreateGroup("Specific");
+        group.Items.Add(new GroupItem()
+        {
+            Id = $"enemy-evelineelderly-explosive-behavior",
+            Label = "Explosive Eveline Elderly",
+            Description = "Make Eveline Elderly detonate after the player gets close, then despawn.",
+            Type = "switch",
+            Default = true
+        });
 
         group = page.CreateGroup("Classes");
         foreach (var enemy in allEnemies)
