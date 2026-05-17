@@ -107,11 +107,11 @@ internal class KeyItemLocationModifier : Modifier
     private const int OldHouseAfterCrankCarryMasks =
         CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterCrowCarryMasks =
-        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
     private const int OldHouseAfterLanternCarryMasks =
-        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
     private const int SnakeKeyRewardCarryMasks =
-        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask;
+        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask;
     private const int KeycardSetupCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
@@ -1125,13 +1125,6 @@ internal class KeyItemLocationModifier : Modifier
             && placement.Id.Equals("LucasCardKey", StringComparison.OrdinalIgnoreCase)
             && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
 
-    private static bool IsOriginalKeycardTarget(ItemPlacement placement)
-        => IsMainHouseWestBlueKeycard(placement)
-            || (placement.Guid == _redKeycardWorkshopGuid
-                && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_east/mainhouse_east.scn"))
-            || (placement.Guid == _blueKeycardAtticGuid
-                && PathContains(placement.SceneFile, "c03_mainhouse2fkids02.scn"));
-
     private static bool IsGarage(string path)
         => PathContains(path, "c03_mainhouse1fgarage.scn");
 
@@ -1836,7 +1829,7 @@ internal class KeyItemLocationModifier : Modifier
                 mask |= FloorDoorKeyMask;
             }
 
-            if (IsOriginalKeycardTarget(target.Placement))
+            if (IsMainHouseWestBlueKeycard(target.Placement))
             {
                 mask |= BlueKeycardMask | RedKeycardMask;
             }

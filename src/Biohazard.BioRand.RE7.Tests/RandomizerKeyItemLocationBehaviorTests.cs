@@ -35,8 +35,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
             ["SerumMaterialA"] = new(3, ExpectedScope.BeforeJack3),
-            ["LucasCardKey"] = new(3, ExpectedScope.BeforeTestingAreaGate),
-            ["LucasCardKey2"] = new(3, ExpectedScope.BeforeTestingAreaGate),
+            ["LucasCardKey"] = new(3, ExpectedScope.KeycardBranchSetup),
+            ["LucasCardKey2"] = new(3, ExpectedScope.KeycardBranchSetup),
             ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
             ["Candle_Lighted"] = new(3, ExpectedScope.BeforeLucasPuzzle),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
@@ -233,7 +233,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_PreservesOriginalBlueKeycardCarrierShapeForSoftlockSeed()
+    public void KeyItemLocations_DoesNotUseDuplicateBlueKeycardCarrierForKeyItems()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -243,15 +243,9 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var change = GetChangedPlacements(result).Single(changed =>
             changed.Placement.Guid == MainHouseWestBlueKeycardGuid &&
             changed.Placement.SceneFile.Equals(MainHouseWestItemSetScenePath, StringComparison.OrdinalIgnoreCase));
-        var before = result.ReadBeforeScene(change.Placement.SceneFile).FindGameObject(MainHouseWestBlueKeycardGuid);
-        var after = result.ReadAfterScene(change.Placement.SceneFile).FindGameObject(MainHouseWestBlueKeycardGuid);
 
         Assert.Equal("LucasCardKey", change.BeforeId);
-        Assert.Contains(change.AfterId, ExpectedRules.Keys);
-        Assert.NotNull(before);
-        Assert.NotNull(after);
-        AssertOriginalPickupShapePreserved(before!, after!, change.AfterId);
-        AssertVisualResourcesMatch(result.Randomizer.TemplateService.GetItemTemplate(change.AfterId), after!);
+        Assert.DoesNotContain(change.AfterId, ExpectedRules.Keys);
     }
 
     [Fact]
@@ -657,7 +651,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_AllowsKeycardsBeforeTestingAreaGateButNotAtNormalKeycardLocations()
+    public void KeyItemLocations_RestrictsKeycardsToVanillaBranchCarriers()
     {
         var result = _defaultRun.Result;
         var blueKeycardAttic = FindPlacement(result, BlueKeycardAtticScenePath, BlueKeycardAtticGuid);
@@ -667,16 +661,41 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var snakeKeyBody = FindPlacement(result, SnakeKeyBodyScenePath, SnakeKeyBodyGuids[0]);
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey2"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey2"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Candle_Lighted"));
+    }
+
+    [Fact]
+    public void KeyItemLocations_KeycardsStayBehindPuzzleBranchesForLucasDoorSoftlockSeed()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+            config["random-items"] = true;
+            config["replace-madhouse-tapes"] = true;
+            config["replace-weapons"] = true;
+            config["additional-items"] = true;
+        }, seed: 669496);
+
+        var keycards = GetChangedPlacements(result)
+            .Where(change => change.AfterId is "LucasCardKey" or "LucasCardKey2")
+            .ToDictionary(change => change.AfterId, StringComparer.OrdinalIgnoreCase);
+
+        var blue = Assert.Contains("LucasCardKey", keycards);
+        Assert.Equal(RedKeycardWorkshopScenePath, blue.Placement.SceneFile);
+        Assert.Equal(RedKeycardWorkshopGuid, GetTargetGuid(blue.Placement));
+
+        var red = Assert.Contains("LucasCardKey2", keycards);
+        Assert.Equal(BlueKeycardAtticScenePath, red.Placement.SceneFile);
+        Assert.Equal(BlueKeycardAtticGuid, GetTargetGuid(red.Placement));
     }
 
     [Fact]
@@ -758,8 +777,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Crank"));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SilhouettePazzlePieceOldHouse"));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Lantern"));
-            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
-            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
+            Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
+            Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Battery"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialA"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialB"));
@@ -800,8 +819,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Crank"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "SilhouettePazzlePieceOldHouse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Lantern"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "Lantern"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "MasterKey"));
@@ -1275,6 +1294,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 || IsOldHouseBeforeCrowDoor(placement.SceneFile),
             ExpectedScope.OldHouseAfterCrowDoor => IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
                 && !IsOldHouseAfterLanternDoor(placement.SceneFile),
+            ExpectedScope.KeycardBranchSetup => IsKeycardBranchSetup(placement),
             ExpectedScope.BeforeBarnBatterySocket => IsMainHouseBeforeGarage(placement)
                 || IsMainHouseAfterGarageBeforeShadowPuzzle(placement)
                 || IsMainHouseEastOrBasement(placement.SceneFile)
@@ -1407,6 +1427,12 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         => placement.Guid == RedKeycardWorkshopGuid
             || IsMainHouseWestBlueKeycard(placement)
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
+
+    private static bool IsKeycardBranchSetup(ItemPlacement placement)
+        => (placement.Guid == RedKeycardWorkshopGuid
+                && placement.SceneFile.Equals(RedKeycardWorkshopScenePath, StringComparison.OrdinalIgnoreCase))
+            || (placement.Guid == BlueKeycardAtticGuid
+                && placement.SceneFile.Equals(BlueKeycardAtticScenePath, StringComparison.OrdinalIgnoreCase));
 
     private static bool IsBeforeTestingAreaGate(ItemPlacement placement)
         => IsMainHouseKeycardSetup(placement)
@@ -1548,6 +1574,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeDissectionRoom,
         BeforeOldHouseShadowPuzzle,
         OldHouseAfterCrowDoor,
+        KeycardBranchSetup,
         BeforeTestingAreaGate,
         BeforeLucasPuzzle,
         BeforeBarnBatterySocket,
