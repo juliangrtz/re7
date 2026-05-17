@@ -851,12 +851,12 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             placement.SceneFile.Equals(ShipPastKitchenScenePath, StringComparison.OrdinalIgnoreCase));
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "EvOpener"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "SpareKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "FuseCh4"));
-        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "SpareKey"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "EvOpener"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "SpareKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "EvOpener"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvOpener"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "SpareKey"));
@@ -1517,17 +1517,9 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         => PathContains(path, "c03_boat1fbridge02");
 
     private static bool IsMiaPresentShipRoute(string path)
-        => IsShipPastBeforeCorrosive(path)
-            || IsShipBeforeLugWrench(path)
+        => IsShipBeforeLugWrench(path)
             || IsShipAfterLugWrenchBeforeCorrosive(path)
             || IsShipAfterCorrosiveBeforeRepair(path);
-
-    private static bool IsShipPastBeforeCorrosive(string path)
-        => PathContains(path, "/leveldesign/itemset/ff050/bf/")
-            || (PathContains(path, "past")
-                && (PathContains(path, "c04_ship2f")
-                    || PathContains(path, "c04_shipb2")
-                    || PathContains(path, "c04_shipstairs")));
 
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
