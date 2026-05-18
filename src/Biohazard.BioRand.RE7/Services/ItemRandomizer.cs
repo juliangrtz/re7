@@ -9,6 +9,12 @@ namespace Biohazard.BioRand.RE7.Services;
 
 internal class ItemRandomizer
 {
+    private static readonly HashSet<string> ExcludedGunDropIds = [
+        "BlueBlaster",
+        "HyperBlaster",
+        "RedBlaster",
+    ];
+
     private readonly Randomizer _randomizer;
     private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private readonly HashSet<string> _placedItemIds = [];
@@ -298,6 +304,12 @@ internal class ItemRandomizer
     {
         if (item.WeaponId == null)
             return false;
+
+        if (ExcludedGunDropIds.Contains(item.Id) ||
+            ExcludedGunDropIds.Contains(item.WeaponId.Value.ToString()))
+        {
+            return false;
+        }
 
         if (WeaponDefinitionRepository.Default.IsRestricted(item.WeaponId.Value))
             return false;

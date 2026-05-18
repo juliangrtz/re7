@@ -16,6 +16,7 @@ public class RandomizerItemRandomizationTests
     private const string BirdCageScenePath = "environment/scene/chapter3/c03_trailerhouse.scn";
     private const string MiaPastVhsItemScenePath = "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20";
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
+    private static readonly HashSet<string> BlasterIds = ["BlueBlaster", "HyperBlaster", "RedBlaster"];
     private static readonly Guid MiaPastVhsChemicalGuid = new("e3b64592-382a-4446-8753-ab6bf1eefeb8");
     private static readonly Guid MainHouseHallDrawerCoinGuid = new("ccd5a2ee-49f5-485b-97a8-42cf8282da07");
 
@@ -83,6 +84,28 @@ public class RandomizerItemRandomizationTests
         }
 
         Assert.NotEmpty(guns);
+        Assert.Empty(guns.Select(gun => gun.Id).Intersect(BlasterIds));
+    }
+
+    [Fact]
+    public void ItemRandomizer_AllowedGunDrops_ExcludeBlastersEvenWhenDlcItemsAreAllowed()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["allow-dlc-items"] = true;
+        });
+        var rng = result.Randomizer.GetRng("tests/allowed-gun-excludes-blasters");
+        var guns = new List<ItemDefinition>();
+
+        for (var gun = result.ItemRandomizer.GetRandomGun(rng, allowReoccurance: false);
+            gun != null;
+            gun = result.ItemRandomizer.GetRandomGun(rng, allowReoccurance: false))
+        {
+            guns.Add(gun);
+        }
+
+        Assert.NotEmpty(guns);
+        Assert.Empty(guns.Select(gun => gun.Id).Intersect(BlasterIds));
     }
 
     [Fact]
@@ -330,11 +353,14 @@ public class RandomizerItemRandomizationTests
         var (placement, beforeItem, afterItem) = FindChangedPlacementByAfterItem(
             result,
             itemId => ItemDefinitionRepository.Default.FromId(itemId)?.IsWeapon == true);
+        var afterGameObject = result.ReadAfterScene(placement.SceneFile).FindGameObject(placement.Guid);
 
         Assert.True(result.WasFileModified(placement.SceneFile));
         Assert.NotEqual(beforeItem.ItemDataID, afterItem.ItemDataID);
         Assert.True(ItemDefinitionRepository.Default.FromId(afterItem.ItemDataID)!.IsWeapon);
         Assert.Equal(1, afterItem.ItemStackNum);
+        Assert.NotNull(afterGameObject);
+        AssertWeaponPickupInteractionGameObjectsAreReady(afterGameObject!);
     }
 
     [Fact]
@@ -474,6 +500,62 @@ public class RandomizerItemRandomizationTests
         AssertNoSharedSaveGuids(template, newItem);
         AssertPickupInteractionsAreReadyForFreshPlacement(template, forcedDropId);
         AssertPickupInteractionsAreReadyForFreshPlacement(newItem, forcedDropId);
+    }
+
+    [Fact]
+    public void AdditionalWeaponChests_Enabled_AddsDrawerOwnedWeaponPickup()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["additional-items"] = true;
+        });
+
+        var placement = result.ItemPlacementService.ItemPlacements.First(x =>
+            x.Enabled &&
+            x.IsExtra &&
+            !string.IsNullOrEmpty(x.SceneFile) &&
+            x.SceneFile.EndsWith("c03_rightareab1ffreezer.scn.20", StringComparison.OrdinalIgnoreCase) &&
+            x.Tags.Contains(ExtraPlacementModifier.WeaponChestTag));
+
+        var beforeScene = result.ReadBeforeScene(placement.SceneFile);
+        var afterScene = result.ReadAfterScene(placement.SceneFile);
+        var beforeRootGuids = beforeScene.Children
+            .OfType<RszGameObject>()
+            .Select(child => child.Guid)
+            .ToHashSet();
+        var newRootObjects = afterScene.Children
+            .OfType<RszGameObject>()
+            .Where(child => !beforeRootGuids.Contains(child.Guid))
+            .ToArray();
+        var chest = Assert.Single(newRootObjects, child =>
+            child.Children.Any(grandChild => grandChild.FindComponent<app.InteractDrawer>() != null));
+        var drawerObject = Assert.Single(chest.Children, child => child.FindComponent<app.InteractDrawer>() != null);
+        var drawer = drawerObject.FindComponent<app.InteractDrawer>()!;
+        var weapon = afterScene.FindGameObject(drawer.DirectSetGameObject);
+        Assert.NotNull(weapon);
+        var weaponItem = weapon.FindComponent<app.Item>();
+        var weaponInteractions = GetWeaponInteractionObjects(weapon);
+
+        Assert.True(result.WasFileModified(placement.SceneFile));
+        Assert.NotNull(weaponItem);
+        Assert.Equal("", drawer.SetItemID);
+        Assert.Equal(-1, drawer.ChangeStackNum);
+        Assert.False(drawer.UseDrawerPos);
+        Assert.True(drawer.IsDirectGameObjectSet);
+        Assert.NotEqual(Guid.Empty, drawer.DirectSetGameObject);
+        Assert.Contains(drawerObject.Children, child => child.Guid == drawer.DirectSetGameObject);
+        Assert.False(weapon.Settings.Get<bool>("Update"));
+        Assert.False(weapon.Settings.Get<bool>("Draw"));
+        Assert.NotEmpty(weaponInteractions);
+        Assert.All(weaponInteractions, interaction =>
+        {
+            Assert.True(interaction.GameObject.Settings.Get<bool>("Update"));
+            Assert.False(interaction.GameObject.Settings.Get<bool>("Draw"));
+            Assert.False(interaction.Component.IsCheckAngle);
+            Assert.False(interaction.Component.IsGetEventEnabled);
+            Assert.False(interaction.Component.IsForceEquip);
+            Assert.True(interaction.Component.UsePickupSE);
+        });
     }
 
     [Fact]
@@ -894,6 +976,35 @@ public class RandomizerItemRandomizationTests
             result |= child.FindComponent<app.InteractDetailSearch>() != null;
         });
         return result;
+    }
+
+    private static List<(RszGameObject GameObject, app.InteractWeapon Component)> GetWeaponInteractionObjects(RszGameObject gameObject)
+    {
+        var result = new List<(RszGameObject, app.InteractWeapon)>();
+        gameObject.VisitGameObjects(child =>
+        {
+            var interact = child.FindComponent<app.InteractWeapon>();
+            if (interact != null)
+            {
+                result.Add((child, interact));
+            }
+        });
+        return result;
+    }
+
+    private static void AssertWeaponPickupInteractionGameObjectsAreReady(RszGameObject gameObject)
+    {
+        var interactions = GetWeaponInteractionObjects(gameObject);
+        Assert.NotEmpty(interactions);
+        Assert.All(interactions, interaction =>
+        {
+            Assert.True(interaction.GameObject.Settings.Get<bool>("Update"));
+            Assert.False(interaction.GameObject.Settings.Get<bool>("Draw"));
+            Assert.False(interaction.Component.IsCheckAngle);
+            Assert.False(interaction.Component.IsGetEventEnabled);
+            Assert.False(interaction.Component.IsForceEquip);
+            Assert.True(interaction.Component.UsePickupSE);
+        });
     }
 
     private static void AssertPickupInteractionsAreReadyForFreshPlacement(RszGameObject gameObject, string itemId)

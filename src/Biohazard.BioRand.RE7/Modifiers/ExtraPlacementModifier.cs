@@ -271,7 +271,9 @@ internal class ExtraPlacementModifier : Modifier
         transform.Position = placement.Position;
         transform.Rotation = placement.Rotation;
         template = template.AddOrUpdateComponent(transform);
-        template = template.PreparePickupInteractionsForPlacement();
+        template = template
+            .PreparePickupInteractionsForPlacement()
+            .PrepareWeaponPickupInteractionGameObjects();
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
         return parentGameObject;

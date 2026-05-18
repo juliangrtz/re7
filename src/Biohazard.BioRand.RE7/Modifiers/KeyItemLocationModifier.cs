@@ -816,7 +816,9 @@ internal class KeyItemLocationModifier : Modifier
         }
 
         replacement = ApplyAcquisitionFlags(
-            replacement.PreparePickupInteractionsForPlacement(),
+            replacement
+                .PreparePickupInteractionsForPlacement()
+                .PrepareWeaponPickupInteractionGameObjects(),
             GetAcquisitionFlags(acquisitionFlagsByItemId, drop.Id));
 
         replacement = replacement.WithSettings(
@@ -867,7 +869,8 @@ internal class KeyItemLocationModifier : Modifier
         replacement = ApplyAcquisitionFlags(
             replacement
                 .ApplyVisualResourcesFromTemplate(visualTemplate)
-                .PreparePickupInteractionsForPlacement(),
+                .PreparePickupInteractionsForPlacement()
+                .PrepareWeaponPickupInteractionGameObjects(),
             GetAcquisitionFlags(acquisitionFlagsByItemId, drop.Id));
         replacement = replacement.WithSettings(
             replacement.Settings
