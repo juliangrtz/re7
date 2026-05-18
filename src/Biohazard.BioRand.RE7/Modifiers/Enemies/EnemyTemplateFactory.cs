@@ -6,6 +6,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal sealed class EnemyTemplateFactory(Randomizer randomizer)
 {
+    internal const string ExplosiveEm3300Tag = "BioRandExplosiveEm3300";
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
 
@@ -46,7 +47,7 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
             template = template.AddOrUpdateComponent(templateTransform);
         }
 
-        return DisableEnemyStampSerialization(template.WithName(enemyId));
+        return DisableEnemyStampSerialization(MarkExplosiveEm3300Template(enemyId, template.WithName(enemyId)));
     }
 
     internal RszGameObject GetOrCreateSpawnInfoTemplate(
@@ -141,6 +142,14 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
 
             return component;
         });
+    }
+
+    private static RszGameObject MarkExplosiveEm3300Template(string enemyId, RszGameObject gameObject)
+    {
+        if (!string.Equals(enemyId, EnemyID.Em3300.ToString(), StringComparison.Ordinal))
+            return gameObject;
+
+        return gameObject.WithSettings(gameObject.Settings.Set("Tag", ExplosiveEm3300Tag));
     }
 
     internal static RszGameObject RefreshRuntimeGuids(RszGameObject gameObject, Rng rng)

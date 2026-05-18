@@ -72,9 +72,33 @@ public partial class REFPlugin
         }
     }
 
+    private static bool HasEm3300ExplosionMarker(via.GameObject gameObject)
+    {
+        try
+        {
+            if (string.Equals(gameObject.Tag, Em3300ExplosionMarkerTag, StringComparison.Ordinal))
+                return true;
+        }
+        catch
+        {
+        }
+
+        try
+        {
+            return string.Equals(gameObject.Name, "Em3300_Static", StringComparison.OrdinalIgnoreCase);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     private static bool IsEm3300GameObject(via.GameObject? gameObject)
     {
         if (!IsValidGameObject(gameObject))
+            return false;
+
+        if (!HasEm3300ExplosionMarker(gameObject!))
             return false;
 
         try
@@ -434,7 +458,7 @@ public partial class REFPlugin
             ? ManagedObject.ToManagedObject(args[2])?.As<via.fsm.ActionArg>()
             : null;
         var enemyObject = GetEm3300GameObject(action, actionArg);
-        if (enemyObject != null)
+        if (enemyObject != null && IsEm3300GameObject(enemyObject))
         {
             lock (em3300ExplosionStateLock)
             {
@@ -460,7 +484,7 @@ public partial class REFPlugin
             ? ManagedObject.ToManagedObject(args[2])?.As<via.fsm.ActionArg>()
             : null;
         var enemyObject = GetEm3300GameObject(action, actionArg);
-        if (enemyObject == null)
+        if (enemyObject == null || !IsEm3300GameObject(enemyObject))
             return PreHookResult.Continue;
 
         return UpdateEm3300Explosion(enemyObject)

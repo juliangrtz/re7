@@ -20,6 +20,7 @@ public partial class REFPlugin
     private const double Em3300ExplosionMinDelaySeconds = 3.0;
     private const double Em3300ExplosionMaxDelaySeconds = 8.0;
     private const double Em3300DespawnDelaySeconds = 0.25;
+    private const string Em3300ExplosionMarkerTag = "BioRandExplosiveEm3300";
     private const float EnemyDropGroundRayStartOffset = 0.25f;
     private const float EnemyDropGroundRayDistance = 50.0f;
     private const float EnemyDropGroundMinNormalY = 0.5f;
