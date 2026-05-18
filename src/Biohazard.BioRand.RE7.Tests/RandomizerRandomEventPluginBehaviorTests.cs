@@ -59,13 +59,19 @@ public class RandomizerRandomEventPluginBehaviorTests
     [Fact]
     public void RandomEvents_DebugUi_CanStartEverySupportedEffect()
     {
+        var pluginSource = ReadPluginSource("REFPlugin.cs");
         var randomEventsSource = ReadPluginSource("REFPlugin.RandomEvents.cs");
         var uiSource = ReadPluginSource("REFPlugin.UI.cs");
 
         Assert.Contains("activeRandomEventStartedFromUi", randomEventsSource);
+        Assert.Contains("ImGuiRender.Post += OnImGuiRender", pluginSource);
         Assert.Contains("StartRandomEventFromUi(RandomEventKind.PlayerStatus)", uiSource);
         Assert.Contains("StartRandomStatusEffectFromUi(delta)", uiSource);
         Assert.Contains("RandomStatusEffectDeltas", uiSource);
+        Assert.Contains("DrawRandomEventOverlay()", uiSource);
+        Assert.Contains("TryGetRandomEventOverlayLabel", randomEventsSource);
+        Assert.Contains("SetNextWindowPos", uiSource);
+        Assert.Contains("NoInputs", uiSource);
 
         foreach (var kind in new[]
         {

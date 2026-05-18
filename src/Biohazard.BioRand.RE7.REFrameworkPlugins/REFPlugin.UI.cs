@@ -1,5 +1,6 @@
 using Hexa.NET.ImGui;
 using System.Globalization;
+using System.Numerics;
 using System.Text.Json;
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
@@ -19,6 +20,13 @@ public partial class REFPlugin
         RandomEventKind.EnemyStrong,
         RandomEventKind.EnemyPaused,
     ];
+
+    private static void OnImGuiRender()
+    {
+        if (!IsInitialized) return;
+
+        DrawRandomEventOverlay();
+    }
 
     private static void OnImGuiDrawUi()
     {
@@ -165,6 +173,62 @@ public partial class REFPlugin
             }
 
             ImGui.TreePop();
+        }
+    }
+
+    private static void DrawRandomEventOverlay()
+    {
+        if (!TryGetRandomEventOverlayLabel(out var label))
+            return;
+
+        try
+        {
+            var viewport = ImGui.GetMainViewport();
+            var position = new Vector2(
+                viewport.WorkPos.X + viewport.WorkSize.X * 0.5f,
+                viewport.WorkPos.Y + 72.0f);
+            var flags = ImGuiWindowFlags.NoDecoration
+                | ImGuiWindowFlags.AlwaysAutoResize
+                | ImGuiWindowFlags.NoSavedSettings
+                | ImGuiWindowFlags.NoFocusOnAppearing
+                | ImGuiWindowFlags.NoNav
+                | ImGuiWindowFlags.NoMove
+                | ImGuiWindowFlags.NoInputs;
+            var styleVarsPushed = 0;
+            var styleColorsPushed = 0;
+            var windowBegun = false;
+
+            ImGui.SetNextWindowPos(position, ImGuiCond.Always, new Vector2(0.5f, 0.0f));
+            ImGui.SetNextWindowBgAlpha(0.45f);
+            try
+            {
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(14.0f, 8.0f));
+                styleVarsPushed++;
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowRounding, 6.0f);
+                styleVarsPushed++;
+                ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.95f, 0.78f, 1.0f));
+                styleColorsPushed++;
+
+                var windowVisible = ImGui.Begin("BioRand random event overlay##biorand-random-event-overlay", flags);
+                windowBegun = true;
+                if (windowVisible)
+                    ImGui.TextUnformatted(label);
+            }
+            finally
+            {
+                if (windowBegun)
+                    ImGui.End();
+
+                if (styleColorsPushed > 0)
+                    ImGui.PopStyleColor(styleColorsPushed);
+
+                if (styleVarsPushed > 0)
+                    ImGui.PopStyleVar(styleVarsPushed);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Log($"Unable to draw random event overlay: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
         }
     }
 

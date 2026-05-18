@@ -51,6 +51,7 @@ public partial class REFPlugin
 
     private static void Initialize()
     {
+        ImGuiRender.Post += OnImGuiRender;
         ImGuiDrawUI.Post += OnImGuiDrawUi;
         IsInitialized = true;
         logger.Log("Loaded.");
