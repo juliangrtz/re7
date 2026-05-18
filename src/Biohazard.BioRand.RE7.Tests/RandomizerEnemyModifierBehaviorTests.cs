@@ -330,6 +330,60 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
+    public void RandomizeEnemies_Em3300ReplacementsAreMarkedForExplosiveBehavior()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-enemies"] = true;
+            config["balanced-enemies"] = false;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["EvelineElderly"]);
+        });
+
+        var replacements = new List<RszGameObject>();
+        foreach (var path in GetChangedScenePaths(result))
+        {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
+            {
+                if (gameObject.Name == "Em3300_Static")
+                {
+                    replacements.Add(gameObject);
+                }
+            });
+        }
+
+        Assert.NotEmpty(replacements);
+        Assert.All(
+            replacements,
+            gameObject => Assert.Equal(
+                EnemyTemplateFactory.ExplosiveEm3300Tag,
+                gameObject.Settings.Get<string>("Tag")));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_VanillaEm3300sDoNotHaveExplosionMarker()
+    {
+        using var result = RandomizerTest.RunState();
+        var scene = result.ReadAfterScene("natives/stm/scenes/enemy/em3300.scn.20");
+        var vanillaEm3300s = new List<RszGameObject>();
+
+        scene.VisitGameObjects(gameObject =>
+        {
+            if (string.Equals(gameObject.Name, "Em3300", StringComparison.OrdinalIgnoreCase)
+                || gameObject.Name.StartsWith("Em3300_", StringComparison.OrdinalIgnoreCase))
+            {
+                vanillaEm3300s.Add(gameObject);
+            }
+        });
+
+        Assert.NotEmpty(vanillaEm3300s);
+        Assert.DoesNotContain(
+            vanillaEm3300s,
+            gameObject => gameObject.Settings.Get<string>("Tag") == EnemyTemplateFactory.ExplosiveEm3300Tag);
+    }
+
+    [Fact]
     public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
     {
         using var result = RandomizerTest.RunState(config =>

@@ -15,6 +15,8 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
     private const string EnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fliving.scn.20";
     private const string SecondEnvironmentExtraEnemyScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fpantry.scn.20";
     private const string EnvironmentExtraEnemyGeneratorScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20";
+    private const string JackGarageHallwayScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fgaragehallway.scn.20";
+    private const string JackHatchHallwayScenePath = "natives/stm/environment/scene/chapter3/c03_mainhouse1fhallway.scn.20";
     private const string RandomExtraEnemyScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
     private const string ExtraEnemyFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
     private static readonly uint[] ExtraEnemyGenerateActionUids =
@@ -36,6 +38,19 @@ public class RandomizerExtraEnemyGenerationBehaviorTests
         int expectedCount)
     {
         Assert.Equal(expectedCount, ExtraEnemyPlanner.GetSubsetCount(placementCount, percentage));
+    }
+
+    [Theory]
+    [InlineData(JackGarageHallwayScenePath)]
+    [InlineData(JackHatchHallwayScenePath)]
+    public void ExtraEnemies_DefaultData_DoesNotEnableOpeningJackSequenceScenes(string scenePath)
+    {
+        var enabledPlacements = Biohazard.BioRand.RE7.Serialization.Csv
+            .Deserialize<ExtraEnemyPlacement>(EmbeddedData.GetFile("extra_enemies.csv"))
+            .Where(extraEnemy => extraEnemy.Enabled && extraEnemy.SceneFile.Equals(scenePath, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        Assert.Empty(enabledPlacements);
     }
 
     [Fact]
