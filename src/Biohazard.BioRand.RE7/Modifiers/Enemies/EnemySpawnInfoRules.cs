@@ -4,6 +4,8 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal static class EnemySpawnInfoRules
 {
+    private const string OldHouseBugEnemyScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20";
+
     private static readonly HashSet<Guid> BarnFightMoldeds = [
         new Guid("3d39aa00-a4f6-48ab-87f5-8f04dbfc13a5"),
         new Guid("7ae3d438-f9cb-49da-9a60-00435b946a59"),
@@ -54,7 +56,19 @@ internal static class EnemySpawnInfoRules
     internal static bool IsInsectSpawnAlias(string unitAlias)
         => InsectSpawnAliases.Contains(unitAlias);
 
+    internal static bool RequiresInsectReplacement(string scenePath, RszGameObject spawnInfoGameObject)
+    {
+        if (!string.Equals(NormalizePath(scenePath), OldHouseBugEnemyScenePath, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        var spawnInfo = spawnInfoGameObject.FindComponent<app.EnemySpawnInfo>();
+        return spawnInfo != null && IsInsectSpawnAlias(spawnInfo.UnitAlias);
+    }
+
     internal static bool SupportsForceTargetingOption(RszObjectNode component)
         => component.Type.Name.Contains("EnemySpawnInfoOption", StringComparison.Ordinal)
             && component.Type.FindFieldIndex("IsForceTargetingToPlayer") != -1;
+
+    private static string NormalizePath(string path)
+        => path.Replace('\\', '/');
 }
