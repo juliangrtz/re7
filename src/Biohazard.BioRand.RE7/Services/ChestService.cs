@@ -1,4 +1,5 @@
 ﻿using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Extensions;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
@@ -43,9 +44,12 @@ internal class ChestService(Randomizer randomizer)
         // Create weapon from template
         var weaponGuid = _rng.NextGuid();
         var weapon = GetCachedWeaponOrCreate(weaponDrop.Id)
-            .CloneWithNewGuids(_templateRng, weaponGuid);
+            .CloneWithNewGuids(_templateRng, weaponGuid)
+            .PreparePickupInteractionsForPlacement()
+            .PrepareWeaponPickupInteractionGameObjects();
 
-        // Prevent weapon pickup without using the lock pick
+        // Match vanilla drawer-direct item structure: keep the item hidden until the
+        // drawer opens, but leave weapon pickup children updatable so they can register.
         weapon = weapon.WithSettings(
             weapon.Settings
                 .Set("Update", false)
@@ -60,12 +64,15 @@ internal class ChestService(Randomizer randomizer)
         var interactDrawer = chest.Children.Single(c => c.Name == "InteractDrawer");
         var interactDrawerComponent = interactDrawer.FindComponent<app.InteractDrawer>()!;
         interactDrawerComponent.SaveGUID = _templateRng.NextGuid();
+        interactDrawerComponent.SetItemID = "";
+        interactDrawerComponent.ChangeStackNum = -1;
+        interactDrawerComponent.UseDrawerPos = false;
         interactDrawerComponent.IsDirectGameObjectSet = true;
         interactDrawerComponent.DirectSetGameObject = weaponGuid;
         interactDrawer = interactDrawer.AddOrUpdateComponent(interactDrawerComponent);
+        interactDrawer = interactDrawer.AddOrUpdateChild(weapon);
         chest = chest.AddOrUpdateChild(interactDrawer);
 
-        scene = scene.Add(weapon);
         scene = scene.Add(chest);
 
         logger.LogLine($"[EXTRA] Chest at {transform.Position} in {placement.SceneFile} containing {weapon.Name}");

@@ -111,7 +111,9 @@ internal class ItemModifier : Modifier
                         }
                     }
 
-                    newGameObject = newGameObject.PreparePickupInteractionsForPlacement();
+                    newGameObject = newGameObject
+                        .PreparePickupInteractionsForPlacement()
+                        .PrepareWeaponPickupInteractionGameObjects();
 
                     newGameObject = newGameObject.WithSettings(
                         newGameObject.Settings

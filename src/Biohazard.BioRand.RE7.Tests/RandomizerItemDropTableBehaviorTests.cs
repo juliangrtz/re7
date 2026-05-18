@@ -48,6 +48,7 @@ public class RandomizerItemDropTableBehaviorTests
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.Chapter4DropTablePath));
         Assert.NotEqual("NoName", weaponDrop.ItemID);
+        Assert.False(new[] { "BlueBlaster", "HyperBlaster", "RedBlaster" }.Contains(weaponDrop.ItemID));
         Assert.True(result.ItemRandomizer.IsItemAllowed(ItemDefinitionRepository.Default.FromId(weaponDrop.ItemID)!));
         Assert.Equal((uint)ItemDrops.GetValuableDropCount(ItemDrops.Weapon), weaponDrop.NormalDropNum);
     }

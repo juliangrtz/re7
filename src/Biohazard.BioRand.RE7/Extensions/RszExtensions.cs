@@ -101,7 +101,8 @@ public static class RszExtensions
             for (var i = 0; i < components.Count; i++)
             {
                 var component = components[i];
-                if (!IsPickupInteraction(component))
+                if (!IsPickupInteraction(component) &&
+                    !IsWeaponPickupInteraction(component))
                 {
                     continue;
                 }
@@ -109,6 +110,9 @@ public static class RszExtensions
                 var updated = component;
                 updated = SetBoolFieldIfPresent(updated, "IsCheckAngle", false);
                 updated = SetBoolFieldIfPresent(updated, "IsItemGet", false);
+                updated = SetBoolFieldIfPresent(updated, "IsGetEventEnabled", false);
+                updated = SetBoolFieldIfPresent(updated, "IsForceEquip", false);
+                updated = SetBoolFieldIfPresent(updated, "UsePickupSE", true);
 
                 if (!ReferenceEquals(updated, component))
                 {
@@ -120,6 +124,22 @@ public static class RszExtensions
             return changed
                 ? child.WithComponents(components.ToImmutable())
                 : child;
+        });
+    }
+
+    public static RszGameObject PrepareWeaponPickupInteractionGameObjects(this RszGameObject gameObject)
+    {
+        return gameObject.VisitGameObjects(child =>
+        {
+            if (!child.Components.Any(IsWeaponPickupInteraction))
+            {
+                return child;
+            }
+
+            return child.WithSettings(
+                child.Settings
+                    .Set("Update", true)
+                    .Set("Draw", false));
         });
     }
 
@@ -216,6 +236,12 @@ public static class RszExtensions
     {
         return component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
             component.Type.FindFieldIndex("IsCheckAngle") != -1;
+    }
+
+    private static bool IsWeaponPickupInteraction(RszObjectNode component)
+    {
+        return component.Type.Name.Contains("InteractWeapon", StringComparison.Ordinal) &&
+            component.Type.FindFieldIndex("IsForceEquip") != -1;
     }
 
     private static bool HasFsmComponent(RszGameObject gameObject)

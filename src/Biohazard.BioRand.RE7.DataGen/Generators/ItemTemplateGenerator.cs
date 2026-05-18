@@ -85,60 +85,9 @@ internal class GameObjectTemplateGenerator : IFileGenerator
     }
 
     private static RszGameObject NormalizeItemTemplateInteractions(RszGameObject gameObject)
-    {
-        return gameObject.VisitGameObjects(child =>
-        {
-            var components = child.Components.ToBuilder();
-            var changed = false;
-
-            for (var i = 0; i < components.Count; i++)
-            {
-                var component = components[i];
-                if (!IsInteractDetailSearch(component))
-                {
-                    continue;
-                }
-
-                var updated = component;
-
-                if (GetBool(updated, "IsCheckAngle"))
-                {
-                    updated = updated.SetField("IsCheckAngle", false);
-                    changed = true;
-                }
-
-                if (GetBool(updated, "IsItemGet"))
-                {
-                    updated = updated.SetField("IsItemGet", false);
-                    changed = true;
-                }
-
-                components[i] = updated;
-            }
-
-            return changed
-                ? child.WithComponents(components.ToImmutable())
-                : child;
-        });
-    }
-
-    private static bool IsInteractDetailSearch(RszObjectNode component)
-    {
-        return component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
-            component.Type.FindFieldIndex("IsCheckAngle") != -1;
-    }
-
-    private static bool GetBool(RszObjectNode component, string fieldName)
-    {
-        var index = component.Type.FindFieldIndex(fieldName);
-        if (index == -1)
-        {
-            return false;
-        }
-
-        return component.Children[index] is RszValueNode valueNode &&
-            RszSerializer.Deserialize<bool>(valueNode);
-    }
+        => gameObject
+            .PreparePickupInteractionsForPlacement()
+            .PrepareWeaponPickupInteractionGameObjects();
 
     public object Generate(GenerateSettings settings)
     {
