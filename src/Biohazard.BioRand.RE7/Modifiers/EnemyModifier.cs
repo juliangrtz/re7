@@ -244,7 +244,7 @@ internal class EnemyModifier : Modifier
 
             logger.Push($"Generator '{enemyGenerator.Generator.Alias}' ({spawnInfos.Length} EnemySpawnInfos)");
 
-            var packSelector = new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
+            var packSelectors = new Dictionary<string, EnemyPackSelector>(StringComparer.Ordinal);
             var replacements = new List<(Guid, IEnemyDefinition)>();
             foreach (var spawnInfo in spawnInfos)
             {
@@ -252,6 +252,14 @@ internal class EnemyModifier : Modifier
                     continue;
 
                 var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
+                var compatibleEnemyPool = SelectCompatibleEnemyPool(area.Path, spawnInfo, areaEnemyPool, balancedEnemyPool);
+                if (compatibleEnemyPool.IsDefaultOrEmpty)
+                {
+                    logger.LogLine($"Keeping {component.UnitAlias} ({spawnInfo.Name}): no compatible replacement.");
+                    continue;
+                }
+
+                var packSelector = GetPackSelector(packSelectors, compatibleEnemyPool, options.MaxPackSize, rng);
                 var replacement = packSelector.Next();
 
                 logger.LogLine($"Replacing {component.UnitAlias} with {replacement.Name} ({spawnInfo.Name})");
@@ -279,6 +287,42 @@ internal class EnemyModifier : Modifier
         }
 
         logger.Pop();
+    }
+
+    private static ImmutableArray<EnemyTableEntry> SelectCompatibleEnemyPool(
+        string scenePath,
+        RszGameObject spawnInfo,
+        ImmutableArray<EnemyTableEntry> areaEnemyPool,
+        ImmutableArray<EnemyTableEntry> fallbackEnemyPool)
+    {
+        if (!EnemySpawnInfoRules.RequiresInsectReplacement(scenePath, spawnInfo))
+            return areaEnemyPool;
+
+        var areaInsects = areaEnemyPool
+            .Where(entry => entry.Enemy.IsInsect)
+            .ToImmutableArray();
+        if (!areaInsects.IsDefaultOrEmpty)
+            return areaInsects;
+
+        return fallbackEnemyPool
+            .Where(entry => entry.Enemy.IsInsect)
+            .ToImmutableArray();
+    }
+
+    private static EnemyPackSelector GetPackSelector(
+        Dictionary<string, EnemyPackSelector> packSelectors,
+        ImmutableArray<EnemyTableEntry> enemyPool,
+        int maxPackSize,
+        Rng rng)
+    {
+        var key = string.Join("|", enemyPool.Select(entry => entry.Enemy.Id));
+        if (!packSelectors.TryGetValue(key, out var packSelector))
+        {
+            packSelector = new EnemyPackSelector(enemyPool, maxPackSize, rng);
+            packSelectors.Add(key, packSelector);
+        }
+
+        return packSelector;
     }
 
     private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true)

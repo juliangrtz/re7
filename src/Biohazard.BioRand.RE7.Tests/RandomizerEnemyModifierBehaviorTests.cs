@@ -163,7 +163,7 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_Balanced_RestrictsOldHouseToMidTierEnemies()
+    public void RandomizeEnemies_Balanced_PreservesOldHouseInsectsWhenPoolHasNoCompatibleInsects()
     {
         using var result = RandomizerTest.RunState(
             config =>
@@ -182,34 +182,37 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.NotEmpty(beforeAliases);
         Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEmpty(afterAliases);
-        Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
+        Assert.Equal(beforeAliases, afterAliases);
     }
 
     [Fact]
-    public void RandomizeEnemies_Unbalanced_CanReplaceOldHouseInsectsWithNonInsects_AndDisablesStampSerialization()
+    public void RandomizeEnemies_Unbalanced_RestrictsOldHouseInsectsToInsectReplacements_AndDisablesStampSerialization()
     {
         using var result = RandomizerTest.RunState(
             config =>
             {
                 config["random-enemies"] = true;
                 config["balanced-enemies"] = false;
-                config["enemy-variety"] = 3;
+                config["enemy-variety"] = 4;
                 config["enemy-pack-max-size"] = 1;
-                ConfigureGeneratorEnemyPool(config, ["Molded", "MoldedFat", "JackStalker"]);
+                ConfigureGeneratorEnemyPool(config, ["InsectHive", "Molded", "MoldedFat", "JackStalker"]);
             },
             seed: 410980);
 
         var beforeAliases = GetGeneratorSpawnAliases(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug");
         var afterScene = result.ReadAfterScene(OldHouseBugEnemyScenePath);
         var afterAliases = GetGeneratorSpawnAliases(afterScene, "Bug");
+        var beforePoolGuids = GetGeneratorPoolInstances(result.ReadBeforeScene(OldHouseBugEnemyScenePath), "Bug")
+            .Select(gameObject => gameObject.Guid)
+            .ToHashSet();
         var replacementInstances = GetGeneratorPoolInstances(afterScene, "Bug")
-            .Where(gameObject => afterAliases.Contains(gameObject.Name, StringComparer.OrdinalIgnoreCase))
+            .Where(gameObject => !beforePoolGuids.Contains(gameObject.Guid))
             .ToList();
 
         Assert.NotEmpty(beforeAliases);
         Assert.All(beforeAliases, alias => Assert.True(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
         Assert.NotEmpty(afterAliases);
-        Assert.All(afterAliases, alias => Assert.False(EnemySpawnInfoRules.IsInsectSpawnAlias(alias)));
+        Assert.All(afterAliases, alias => Assert.Equal("Em5510", alias));
         Assert.NotEqual(beforeAliases, afterAliases);
         AssertStampSerializationDisabled(replacementInstances);
     }
