@@ -92,6 +92,8 @@ public static class RandomizerTest
         configuration["weapon-mod-ammo-capacity"] = false;
         configuration["weapon-mod-reload-speed"] = false;
 
+        configuration["random-events"] = false;
+
         configure?.Invoke(configuration);
         return configuration;
     }

@@ -437,10 +437,11 @@ public partial class REFPlugin
         {
             var objectManager = API.GetManagedSingleton("app.ObjectManager")?.As<ObjectManager>();
             UpdateEm3300Explosions(objectManager);
+            UpdateRandomEvents(objectManager);
         }
         catch (Exception ex)
         {
-            logger.Log($"Unable to update Em3300 explosions: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            logger.Log($"Unable to update runtime features: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
         }
     }
 

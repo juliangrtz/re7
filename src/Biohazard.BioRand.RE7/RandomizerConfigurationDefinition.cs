@@ -1176,6 +1176,358 @@ internal static class RandomizerConfigurationDefinition
 
         #endregion
 
+        #region Events
+
+        page = configDefinition.CreatePage("Events");
+        group = page.CreateGroup("General");
+        group.Warning = "Events should be treated as experimental!";
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-events",
+            Label = "Random Events",
+            Description = "Whether BioRand should trigger temporary runtime events while playing.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-events-interval-min",
+            Label = "Min. Event Interval",
+            Description = "The minimum number of seconds between random events.",
+            Type = "range",
+            Min = 15,
+            Max = 600,
+            Step = 5,
+            Default = 90
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "random-events-interval-max",
+            Label = "Max. Event Interval",
+            Description = "The maximum number of seconds between random events.",
+            Type = "range",
+            Min = 15,
+            Max = 600,
+            Step = 5,
+            Default = 210
+        });
+
+        group = page.CreateGroup("Player Events");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-status-effects",
+            Label = "Random status effects",
+            Description = "Temporarily applies one random Jack's 55th Birthday-style passive skill effect or drawback.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-status-duration",
+            Label = "Status effect duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 30
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-blindness",
+            Label = "Brief blindness",
+            Description = "Temporarily fades the screen to black through the game's blackout manager.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-blindness-duration",
+            Label = "Blindness duration",
+            Type = "range",
+            Min = 1,
+            Max = 30,
+            Step = 1,
+            Default = 4
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-freeze",
+            Label = "Movement lock",
+            Description = "Temporarily prevents player movement without disabling camera control.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-freeze-duration",
+            Label = "Movement lock duration",
+            Type = "range",
+            Min = 1,
+            Max = 30,
+            Step = 1,
+            Default = 5
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-scale",
+            Label = "Player scale changes",
+            Description = "Temporarily makes the active player smaller or larger.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-scale-duration",
+            Label = "Player scale duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-scale-min",
+            Label = "Min. Player Scale",
+            Type = "range",
+            Min = 0.3,
+            Max = 2.5,
+            Step = 0.05,
+            Default = 0.65
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-player-scale-max",
+            Label = "Max. Player Scale",
+            Type = "range",
+            Min = 0.3,
+            Max = 2.5,
+            Step = 0.05,
+            Default = 1.55
+        });
+
+        group = page.CreateGroup("Weapon Events");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-infinite-ammo",
+            Label = "Infinite ammo",
+            Description = "Temporarily prevents guns from consuming loaded ammo.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-infinite-ammo-duration",
+            Label = "Infinite ammo duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-neuro-ammo",
+            Label = "Neuro ammo",
+            Description = "Temporarily converts fired gun bullets into neuro grenade rounds when possible.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-neuro-ammo-duration",
+            Label = "Neuro ammo duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 20
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-explosive-ammo",
+            Label = "Explosive ammo",
+            Description = "Temporarily adds a small bomb detonation to gunshots.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-weapon-explosive-ammo-duration",
+            Label = "Explosive ammo duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 20
+        });
+
+        group = page.CreateGroup("Enemy Events");
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-speed",
+            Label = "Enemy speed shuffle",
+            Description = "Temporarily makes nearby enemies much faster or slower.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-speed-duration",
+            Label = "Enemy speed duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-speed-min",
+            Label = "Min. Event Enemy Speed",
+            Type = "range",
+            Min = 0.1,
+            Max = 4,
+            Step = 0.05,
+            Default = 0.4
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-speed-max",
+            Label = "Max. Event Enemy Speed",
+            Type = "range",
+            Min = 0.1,
+            Max = 4,
+            Step = 0.05,
+            Default = 2.5
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-invisible",
+            Label = "Invisible enemies",
+            Description = "Temporarily hides nearby enemies while leaving them active.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-invisible-duration",
+            Label = "Invisible enemy duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 15
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-weak",
+            Label = "Weak enemies",
+            Description = "Temporarily lowers max health for nearby enemies.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-weak-duration",
+            Label = "Weak enemy duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-strong",
+            Label = "Strong enemies",
+            Description = "Temporarily raises max health for nearby enemies.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-strong-duration",
+            Label = "Strong enemy duration",
+            Type = "range",
+            Min = 5,
+            Max = 120,
+            Step = 1,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-paused",
+            Label = "Paused enemies",
+            Description = "Temporarily freezes nearby enemies in place.",
+            Type = "switch",
+            Default = true
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-paused-duration",
+            Label = "Paused enemy duration",
+            Type = "range",
+            Min = 1,
+            Max = 60,
+            Step = 1,
+            Default = 8
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-radius",
+            Label = "Enemy event radius",
+            Description = "Only enemies within this many meters of the player are affected.",
+            Type = "range",
+            Min = 5,
+            Max = 60,
+            Step = 0.5,
+            Default = 25
+        });
+
+        group.Items.Add(new GroupItem()
+        {
+            Id = "event-enemy-max-targets",
+            Label = "Max. Enemy Event Targets",
+            Description = "The maximum number of nearby enemies affected by a single enemy event.",
+            Type = "range",
+            Min = 1,
+            Max = 20,
+            Step = 1,
+            Default = 8
+        });
+
+        #endregion Events
+
         #region Debug
 
         page = configDefinition.CreatePage("Debug");

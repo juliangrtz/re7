@@ -5,6 +5,21 @@ using System.Text.Json;
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 public partial class REFPlugin
 {
+    private static readonly RandomEventKind[] RandomEventDebugKinds =
+    [
+        RandomEventKind.PlayerBlindness,
+        RandomEventKind.PlayerFreeze,
+        RandomEventKind.PlayerScale,
+        RandomEventKind.WeaponInfiniteAmmo,
+        RandomEventKind.WeaponNeuroAmmo,
+        RandomEventKind.WeaponExplosiveAmmo,
+        RandomEventKind.EnemySpeed,
+        RandomEventKind.EnemyInvisible,
+        RandomEventKind.EnemyWeak,
+        RandomEventKind.EnemyStrong,
+        RandomEventKind.EnemyPaused,
+    ];
+
     private static void OnImGuiDrawUi()
     {
         if (!IsInitialized) return;
@@ -61,6 +76,7 @@ public partial class REFPlugin
         DrawLabelValue("Additional items", FormatEnabled(config.ReadOrDefault("additional-items", false)));
         DrawLabelValue("Enemy drops", $"{FormatEnabled(IsEnemyDropEnabled())} ({GetEnemyDropStateLabel()})");
         DrawLabelValue("Em3300 explosions", $"{FormatEnabled(IsEm3300ExplosionEnabled())} ({GetEm3300ExplosionStateLabel()})");
+        DrawLabelValue("Random events", $"{FormatEnabled(IsRandomEventsEnabled())} ({GetRandomEventStateLabel()})");
         DrawLabelValue("Madhouse saves", FormatEnabled(ReadRuntimeBool(IsMadhouseNormalSaveSystemEnabled)));
         DrawLabelValue("Reload speed", $"{FormatEnabled(config.ReadOrDefault("weapon-mod-reload-speed", false))} ({GetWeaponReloadSpeedStateLabel()})");
         DrawLabelValue("Ethan inventory", config.ReadOrDefault("random-starting-inventory-size-ethan", "12"));
@@ -103,6 +119,49 @@ public partial class REFPlugin
             if (ImGui.Button("Clear reload cache"))
             {
                 ClearWeaponReloadSpeedStateFromUi();
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Button("Clear random event state"))
+            {
+                ClearRandomEventStateFromUi();
+            }
+
+            ImGui.Separator();
+            DrawRandomEventDebugTools();
+
+            ImGui.TreePop();
+        }
+    }
+
+    private static void DrawRandomEventDebugTools()
+    {
+        if (ImGui.TreeNode("Random event effects"))
+        {
+            DrawLabelValue("State", GetRandomEventStateLabel());
+            DrawLabelValue("Status duration", string.Create(CultureInfo.InvariantCulture, $"{GetRandomEventDurationSeconds(RandomEventKind.PlayerStatus):0.###}s"));
+
+            if (ImGui.Button("Random player status"))
+            {
+                StartRandomEventFromUi(RandomEventKind.PlayerStatus);
+            }
+
+            for (var i = 0; i < RandomStatusEffectDeltas.Length; i++)
+            {
+                var delta = RandomStatusEffectDeltas[i];
+                if (ImGui.Button($"{delta.Label}##random-status-effect-{i}"))
+                {
+                    StartRandomStatusEffectFromUi(delta);
+                }
+            }
+
+            ImGui.Separator();
+            foreach (var kind in RandomEventDebugKinds)
+            {
+                if (ImGui.Button($"{GetRandomEventDisplayName(kind)}##random-event-effect-{kind}"))
+                {
+                    StartRandomEventFromUi(kind);
+                }
             }
 
             ImGui.TreePop();
@@ -230,7 +289,7 @@ public partial class REFPlugin
         logger.Log(
             $"Snapshot: seed={GetSeedLabel()}, player={ReadRuntimeValue(GetPlayerName)}, chapter={ReadRuntimeValue(GetCurrentChapterName)}, difficulty={ReadRuntimeValue(() => GetCurrentDifficulty().ToString())}, position={ReadRuntimeValue(GetPlayerPositionLabel)}.");
         logger.Log(
-            $"Features: key-items={FormatEnabled(config.ReadOrDefault("random-key-item-locations", false))}, items={FormatEnabled(config.ReadOrDefault("random-items", true))}, enemy-drops={FormatEnabled(IsEnemyDropEnabled())}, em3300={FormatEnabled(IsEm3300ExplosionEnabled())}, reload-speed={FormatEnabled(config.ReadOrDefault("weapon-mod-reload-speed", false))}.");
+            $"Features: key-items={FormatEnabled(config.ReadOrDefault("random-key-item-locations", false))}, items={FormatEnabled(config.ReadOrDefault("random-items", true))}, enemy-drops={FormatEnabled(IsEnemyDropEnabled())}, em3300={FormatEnabled(IsEm3300ExplosionEnabled())}, random-events={FormatEnabled(IsRandomEventsEnabled())}, reload-speed={FormatEnabled(config.ReadOrDefault("weapon-mod-reload-speed", false))}.");
     }
 
     private static void ClearEnemyDropStateFromUi()

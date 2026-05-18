@@ -197,4 +197,33 @@ public class ConfigurationDefinitionTest
         Assert.Contains("enemy-drop-valuable-lock-pick", ids);
         Assert.Contains("enemy-drop-valuable-birthday-skill", ids);
     }
+
+    [Fact]
+    public void Test_RandomEvent_Configuration_Items_Exist()
+    {
+        var ids = items
+            .Where(item => item.Id != null)
+            .Select(item => item.Id!)
+            .ToHashSet();
+
+        Assert.Contains("random-events", ids);
+        Assert.Contains("random-events-interval-min", ids);
+        Assert.Contains("random-events-interval-max", ids);
+        Assert.Contains("event-player-status-effects", ids);
+        Assert.Contains("event-player-status-duration", ids);
+        Assert.Contains("event-player-blindness", ids);
+        Assert.Contains("event-player-freeze", ids);
+        Assert.Contains("event-player-scale-min", ids);
+        Assert.Contains("event-player-scale-max", ids);
+        Assert.Contains("event-weapon-infinite-ammo", ids);
+        Assert.Contains("event-weapon-neuro-ammo", ids);
+        Assert.Contains("event-weapon-explosive-ammo", ids);
+        Assert.Contains("event-enemy-speed", ids);
+        Assert.Contains("event-enemy-invisible", ids);
+        Assert.Contains("event-enemy-weak", ids);
+        Assert.Contains("event-enemy-strong", ids);
+        Assert.Contains("event-enemy-paused", ids);
+        Assert.Contains("event-enemy-radius", ids);
+        Assert.Contains("event-enemy-max-targets", ids);
+    }
 }
