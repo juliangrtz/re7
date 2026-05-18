@@ -903,7 +903,7 @@ public partial class REFPlugin
                 var remaining = Math.Max(0.0, ElapsedSeconds(now, activeRandomEvent.EndsAt));
                 return string.Create(
                     CultureInfo.InvariantCulture,
-                    $"{GetRandomEventDisplayName(activeRandomEvent.Kind)} active, {remaining:0.#}s left");
+                    $"{GetRandomEventDisplayName(activeRandomEvent.Kind)}{GetRandomEventInstanceSuffix(activeRandomEvent)} active, {remaining:0.#}s left");
             }
 
             if (nextRandomEventAt != 0)
@@ -913,6 +913,25 @@ public partial class REFPlugin
             }
 
             return "idle";
+        }
+    }
+
+    private static bool TryGetRandomEventOverlayLabel(out string label)
+    {
+        lock (randomEventStateLock)
+        {
+            var now = Stopwatch.GetTimestamp();
+            if (activeRandomEvent == null || now >= activeRandomEvent.EndsAt)
+            {
+                label = string.Empty;
+                return false;
+            }
+
+            var remaining = Math.Max(0.0, ElapsedSeconds(now, activeRandomEvent.EndsAt));
+            label = string.Create(
+                CultureInfo.InvariantCulture,
+                $"BioRand event: {GetRandomEventDisplayName(activeRandomEvent.Kind)}{GetRandomEventInstanceSuffix(activeRandomEvent)} | {remaining:0.#}s");
+            return true;
         }
     }
 
