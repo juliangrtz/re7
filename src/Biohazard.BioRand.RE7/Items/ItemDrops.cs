@@ -30,6 +30,7 @@ internal class ItemDrops
             ["Gunpowder"] = 0.35,
             ["LiquidBomb"] = 0.05,
             ["Coin"] = 0.1,
+            ["Alcohol"] = 0.05,
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
     public static ImmutableList<string> GenericDrops { get; private set; } = [
@@ -54,7 +55,8 @@ internal class ItemDrops
         "ChemicalL",
         "ChemicalS",
         "Gunpowder",
-        "Coin"
+        "Coin",
+        "Alcohol"
     ];
 
     public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } = [
@@ -181,6 +183,7 @@ internal class ItemDrops
         "ChemicalL" => CategoryMaterial,
         "ChemicalS" => CategoryMaterial,
         "Gunpowder" => CategoryMaterial,
+        "Alcohol" => CategoryMaterial,
         "GoodLuckCoinA" => CategoryCoin,
         "GoodLuckCoinB" => CategoryCoin,
         "GoodLuckCoinC" => CategoryCoin,
