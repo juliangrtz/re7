@@ -70,6 +70,8 @@ public partial class REFPlugin
     {
         IsInitialized = false;
         pendingReloadSpeedController = null;
+        pendingInfiniteAmmoGun = null;
+        pendingInfiniteAmmoActive = false;
         pendingMadhouseSaveSelectItemMenu = null;
         lock (weaponReloadSpeedCacheLock)
         {
@@ -90,6 +92,7 @@ public partial class REFPlugin
         {
             em3300ExplosionStates.Clear();
         }
+        ClearRandomEventState(restore: true);
         logger.Log("Unloaded.");
     }
 }
