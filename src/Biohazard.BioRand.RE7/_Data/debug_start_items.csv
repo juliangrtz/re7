@@ -7,7 +7,7 @@ skl002,0,Health Regen
 skl003,0,Clairvoyance
 skl008,0,Defense II
 skl009,0,Defense I
-skl010,0,Speed Up II
+skl010,1,Speed Up II
 skl011,0,Speed Up I
 skl012,0,Firepower Up II
 skl013,0,Firepower Up I
