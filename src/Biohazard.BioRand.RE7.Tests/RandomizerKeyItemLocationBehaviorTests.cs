@@ -33,8 +33,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
             ["SerumMaterialA"] = new(3, ExpectedScope.BeforeJack3),
-            ["LucasCardKey"] = new(3, ExpectedScope.KeycardBranchSetup),
-            ["LucasCardKey2"] = new(3, ExpectedScope.KeycardBranchSetup),
             ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
             ["Candle_Lighted"] = new(3, ExpectedScope.BeforeLucasPuzzle),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
@@ -52,6 +50,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         "FuseCh4",
         "HandAxe",
         "Lantern",
+        "LucasCardKey",
+        "LucasCardKey2",
         "SerumComplete",
     };
     private static readonly IReadOnlyDictionary<string, ExpectedPickupFlag> ExpectedPickupFlags =
@@ -65,8 +65,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["SilhouettePazzlePiece"] = new("c03_2_Main_GetPazzleObject", new("e165ff7a-0829-4edc-8c34-68a01a1ff3b2"), true),
             ["SilhouettePazzlePieceOldHouse"] = new("c03_3_Main_EnterMiaCapturedRoom", new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true),
             ["SerumMaterialA"] = new("c03_3_Main_GetEvlineArm", new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true),
-            ["LucasCardKey"] = new("c03_4A_Main_LucasCardKeyGet_InLoft", new("b5532ea8-facb-428d-bf61-ea3e66d373dd"), true),
-            ["LucasCardKey2"] = new("c03_4B_Main_LucasCardKeyGet_InWorkRoom", new("b9f9b409-c6b8-4142-9697-c70f24a7c15b"), true),
             ["SerumMaterialB"] = new("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true),
             ["Candle_Lighted"] = new("c03_4_Main_PazzleRoom_CandleOn", new("e8f18a82-943a-41dd-977b-f1d729499dee"), true),
             ["EvCable"] = new("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"), true),
@@ -91,6 +89,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private const string ShipExitScenePath = "natives/stm/environment/scene/chapter4/c04_shipb2storage02.scn.20";
     private const string ShipCaptainCabinItemSetScenePath = "natives/stm/leveldesign/itemset/chapter4/ship4f/ship4f.scn.20";
     private const string Ship2FItemSetScenePath = "natives/stm/leveldesign/itemset/chapter4/ship2f/ship2f.scn.20";
+    private const string ShipFlashbackBasementItemSetScenePath = "natives/stm/leveldesign/itemset/ff050/bf/bf.scn.20";
     private const string ShipSickBayScenePath = "natives/stm/environment/scene/chapter4/c04_ship3finfirmary.scn.20";
     private const string ShipLoungeScenePath = "natives/stm/environment/scene/chapter4/c04_ship2freceptionroom.scn.20";
     private const string ShipPastKitchenScenePath = "natives/stm/environment/scene/chapter4/c04_ship2fkitchenpast.scn.20";
@@ -109,6 +108,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid MainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
     private static readonly Guid RedKeycardWorkshopGuid = new("077f9206-19e7-4937-994b-cd13a80dabd4");
     private static readonly Guid BlueKeycardAtticGuid = new("ccf47d14-a937-43c4-9b87-f35b07d14034");
+    private static readonly Guid BlueKeycardAtticVhsGuid = new("31aa60d9-4317-4139-973d-7c3d09fc426d");
     private static readonly Guid GreenhouseStairsItemGuid = new("af78cd5c-b090-4557-bd9c-2f6a0d74b0c0");
     private static readonly Guid OldHouseStoneStatuetteGuid = new("41a59cb8-7613-4d4b-a530-58aebfe0e1c8");
     private static readonly Guid OldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
@@ -120,6 +120,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid Ship2FItemSetCorrosiveGuid = new("284aa600-8e59-475a-82b4-d7cd353f70e9");
     private static readonly Guid ShipPowerCableGuid = new("ba174dbf-64e9-0e76-187a-801520648246");
     private static readonly Guid ShipLoungeFuseGuid = new("77468bde-b24f-0949-0741-de56355592c7");
+    private static readonly Guid[] ExcludedShipFlashbackCorrosiveGuids =
+    [
+        new("dfa15efd-e270-4778-b0ed-192963e99a1e"),
+        new("9c5de4b4-5e99-4bbc-bf21-bd904789401a"),
+        new("802213a2-7a22-4d87-9b0f-af57c1bd4a71"),
+        new("2c5c06d7-bcea-4df7-9a72-62657522dad6"),
+    ];
     private static readonly Guid[] CultivationRoomDoorGuids =
     [
         new("3f4ca9a0-b4ff-432b-8784-1403fd1b687f"),
@@ -225,12 +232,42 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             config["random-key-item-locations"] = true;
         }, seed: 2);
 
-        var change = GetChangedPlacements(result).Single(changed =>
+        var change = GetChangedPlacements(result).SingleOrDefault(changed =>
             changed.Placement.Guid == MainHouseWestBlueKeycardGuid &&
             changed.Placement.SceneFile.Equals(MainHouseWestItemSetScenePath, StringComparison.OrdinalIgnoreCase));
+        var duplicateBlueKeycard = GetItem(result.ReadAfterScene(MainHouseWestItemSetScenePath), MainHouseWestBlueKeycardGuid);
 
-        Assert.Equal("LucasCardKey", change.BeforeId);
-        Assert.DoesNotContain(change.AfterId, ExpectedRules.Keys);
+        Assert.Null(change);
+        Assert.Equal("LucasCardKey", duplicateBlueKeycard.ItemDataID);
+    }
+
+    [Fact]
+    public void KeyItemLocations_DoesNotReplaceExcludedCorrosivesWithFiller()
+    {
+        using var result = RandomizerTest.RunState(config =>
+        {
+            config["random-key-item-locations"] = true;
+            config["random-items"] = true;
+            config["replace-weapons"] = true;
+            config["additional-items"] = true;
+            config["additional-wooden-crates"] = true;
+        }, seed: 999477);
+
+        var changedExcludedCorrosives = GetChangedPlacements(result)
+            .Where(change =>
+                change.Placement.SceneFile.Equals(ShipFlashbackBasementItemSetScenePath, StringComparison.OrdinalIgnoreCase) &&
+                ExcludedShipFlashbackCorrosiveGuids.Contains(change.Placement.Guid))
+            .ToList();
+
+        Assert.Empty(changedExcludedCorrosives);
+        foreach (var guid in ExcludedShipFlashbackCorrosiveGuids)
+        {
+            var placement = FindPlacement(result, ShipFlashbackBasementItemSetScenePath, guid);
+            var corrosive = GetItem(result.ReadAfterScene(ShipFlashbackBasementItemSetScenePath), guid);
+
+            Assert.Contains(ItemPlacement.ExcludeTag, placement.Tags);
+            Assert.Equal("SpareKey", corrosive.ItemDataID);
+        }
     }
 
     [Fact]
@@ -361,6 +398,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 !string.IsNullOrWhiteSpace(placement.Id) &&
                 randomizedIds.Contains(placement.Id) &&
                 placement.Enabled &&
+                !placement.Tags.Contains(ItemPlacement.ExcludeTag) &&
                 !placement.IsExtra)
             .DistinctBy(placement => (placement.SceneFile, placement.Guid)))
         {
@@ -638,20 +676,22 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_RestrictsKeycardsToVanillaBranchCarriers()
+    public void KeyItemLocations_PreservesKeycardsAndAvoidsAtticShadowPuzzleTargets()
     {
         var result = _defaultRun.Result;
         var blueKeycardAttic = FindPlacement(result, BlueKeycardAtticScenePath, BlueKeycardAtticGuid);
+        var blueKeycardAtticVhs = FindPlacement(result, BlueKeycardAtticScenePath, BlueKeycardAtticVhsGuid);
         var blueKeycardDuplicate = FindPlacement(result, MainHouseWestItemSetScenePath, MainHouseWestBlueKeycardGuid);
         var redKeycardWorkshop = FindPlacement(result, RedKeycardWorkshopScenePath, RedKeycardWorkshopGuid);
         var greenhouseStairs = FindPlacement(result, GreenhouseStairsScenePath, GreenhouseStairsItemGuid);
         var snakeKeyBody = FindPlacement(result, SnakeKeyBodyScenePath, SnakeKeyBodyGuids[0]);
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAttic, "LucasCardKey2"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardAtticVhs, "SerumMaterialB"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(blueKeycardDuplicate, "LucasCardKey2"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(redKeycardWorkshop, "LucasCardKey2"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
@@ -661,7 +701,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_KeycardsStayBehindPuzzleBranchesForLucasDoorSoftlockSeed()
+    public void KeyItemLocations_PreservesKeycardsForAtticShadowPuzzleSoftlockSeed()
     {
         using var result = RandomizerTest.RunState(config =>
         {
@@ -670,19 +710,23 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             config["replace-madhouse-tapes"] = true;
             config["replace-weapons"] = true;
             config["additional-items"] = true;
-        }, seed: 669496);
+        }, seed: 866537);
 
-        var keycards = GetChangedPlacements(result)
-            .Where(change => change.AfterId is "LucasCardKey" or "LucasCardKey2")
-            .ToDictionary(change => change.AfterId, StringComparer.OrdinalIgnoreCase);
+        var changedKeyItems = GetChangedPlacements(result)
+            .Where(change => ExpectedRules.ContainsKey(change.AfterId))
+            .ToList();
+        var duplicateBlueKeycard = GetItem(result.ReadAfterScene(MainHouseWestItemSetScenePath), MainHouseWestBlueKeycardGuid);
+        var atticBlueKeycard = GetItem(result.ReadAfterScene(BlueKeycardAtticScenePath), BlueKeycardAtticGuid);
+        var redKeycard = GetItem(result.ReadAfterScene(RedKeycardWorkshopScenePath), RedKeycardWorkshopGuid);
 
-        var blue = Assert.Contains("LucasCardKey", keycards);
-        Assert.Equal(RedKeycardWorkshopScenePath, blue.Placement.SceneFile);
-        Assert.Equal(RedKeycardWorkshopGuid, GetTargetGuid(blue.Placement));
-
-        var red = Assert.Contains("LucasCardKey2", keycards);
-        Assert.Equal(BlueKeycardAtticScenePath, red.Placement.SceneFile);
-        Assert.Equal(BlueKeycardAtticGuid, GetTargetGuid(red.Placement));
+        Assert.Equal("LucasCardKey", duplicateBlueKeycard.ItemDataID);
+        Assert.Equal("LucasCardKey", atticBlueKeycard.ItemDataID);
+        Assert.Equal("LucasCardKey2", redKeycard.ItemDataID);
+        Assert.DoesNotContain(changedKeyItems, change =>
+            change.Placement.SceneFile.Equals(BlueKeycardAtticScenePath, StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain(changedKeyItems, change => change.AfterId is "LucasCardKey" or "LucasCardKey2");
+        Assert.Contains("Skipped key item Keycard (Blue):", result.ProcessLog);
+        Assert.Contains("Skipped key item Keycard (Red):", result.ProcessLog);
     }
 
     [Fact]
@@ -1281,7 +1325,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 || IsOldHouseBeforeCrowDoor(placement.SceneFile),
             ExpectedScope.OldHouseAfterCrowDoor => IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
                 && !IsOldHouseAfterLanternDoor(placement.SceneFile),
-            ExpectedScope.KeycardBranchSetup => IsKeycardBranchSetup(placement),
             ExpectedScope.BeforeBarnBatterySocket => IsMainHouseBeforeGarage(placement)
                 || IsMainHouseAfterGarageBeforeShadowPuzzle(placement)
                 || IsMainHouseEastOrBasement(placement.SceneFile)
@@ -1415,12 +1458,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             || IsMainHouseWestBlueKeycard(placement)
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
-    private static bool IsKeycardBranchSetup(ItemPlacement placement)
-        => (placement.Guid == RedKeycardWorkshopGuid
-                && placement.SceneFile.Equals(RedKeycardWorkshopScenePath, StringComparison.OrdinalIgnoreCase))
-            || (placement.Guid == BlueKeycardAtticGuid
-                && placement.SceneFile.Equals(BlueKeycardAtticScenePath, StringComparison.OrdinalIgnoreCase));
-
     private static bool IsBeforeTestingAreaGate(ItemPlacement placement)
         => IsMainHouseKeycardSetup(placement)
             || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
@@ -1553,7 +1590,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeDissectionRoom,
         BeforeOldHouseShadowPuzzle,
         OldHouseAfterCrowDoor,
-        KeycardBranchSetup,
         BeforeTestingAreaGate,
         BeforeLucasPuzzle,
         BeforeBarnBatterySocket,
