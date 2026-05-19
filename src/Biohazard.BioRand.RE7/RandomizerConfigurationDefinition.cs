@@ -776,6 +776,7 @@ internal static class RandomizerConfigurationDefinition
                 Min = 0,
                 Max = 1,
                 Step = 0.01,
+                Default = ItemDrops.GetDefaultGenericDropRatio(drop)
             });
         }
 

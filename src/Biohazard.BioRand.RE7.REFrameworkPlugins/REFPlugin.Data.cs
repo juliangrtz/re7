@@ -25,6 +25,7 @@ public partial class REFPlugin
         "ChemicalS",
         "Gunpowder",
         "Coin",
+        "Alcohol",
     ];
 
     private static readonly HashSet<string> AmmoEnemyDropItemDataIds = new(StringComparer.Ordinal)
@@ -57,6 +58,7 @@ public partial class REFPlugin
         ["LiquidBomb"] = 20,
         ["RemedyL"] = 3,
         ["RemedyM"] = 3,
+        ["Alcohol"] = 5,
     };
 
     private static readonly Dictionary<string, string[]> ChapterAmmoAvailability = new(StringComparer.Ordinal)
