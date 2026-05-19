@@ -26,6 +26,8 @@ internal class KeyItemLocationModifier : Modifier
         "Fuse",
         "FuseCh4",
         "Lantern",
+        "LucasCardKey",
+        "LucasCardKey2",
         "SerumComplete",
     };
 
@@ -465,6 +467,7 @@ internal class KeyItemLocationModifier : Modifier
             .Where(placement =>
                 supportedIds.Contains(placement.Id) &&
                 placement.Enabled &&
+                !placement.Tags.Contains(ItemPlacement.ExcludeTag) &&
                 !placement.IsExtra)
             .DistinctBy(placement => new ReplacementKey(placement.SceneFile, placement.Guid));
     }
@@ -1160,6 +1163,9 @@ internal class KeyItemLocationModifier : Modifier
             || IsMainHouseWestBlueKeycard(placement)
             || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
+    private static bool IsMainHouseAtticShadowPuzzleArea(string path)
+        => PathContains(path, "c03_mainhouse2fkids02");
+
     private static bool IsSnakeKeyRewardTarget(ItemPlacement placement)
         => PathContains(placement.SceneFile, "c03_rightareab1fstoreroom")
             && _snakeKeyRewardGuids.Contains(placement.Guid);
@@ -1834,7 +1840,8 @@ internal class KeyItemLocationModifier : Modifier
             => (placement.Guid == _jack2RedDogHeadGuid
                     && PathContains(placement.SceneFile, "c03_rightareab1ffreezer"))
                 || (placement.Guid == _lucasPuzzleCandleGuid
-                    && PathContains(placement.SceneFile, "c03_leftarea1fpuzzleroom1"));
+                    && PathContains(placement.SceneFile, "c03_leftarea1fpuzzleroom1"))
+                || IsMainHouseAtticShadowPuzzleArea(placement.SceneFile);
     }
 
     private enum ReplacementKind
