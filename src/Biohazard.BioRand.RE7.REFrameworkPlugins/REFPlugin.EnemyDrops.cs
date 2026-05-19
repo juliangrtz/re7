@@ -53,10 +53,10 @@ public partial class REFPlugin
     private static bool IsAmmoEnemyDrop(string itemDataId)
         => AmmoEnemyDropItemDataIds.Contains(itemDataId);
 
-    private static int GetItemStackLimit(string itemDataId)
+    private static int GetVanillaEnemyDropStackLimit(string itemDataId)
     {
         var defaultStackSize = DefaultEnemyDropStackLimits.GetValueOrDefault(itemDataId, 1);
-        return config.ReadOrDefault($"inventory-stack-limit-{itemDataId.ToLowerInvariant()}", defaultStackSize);
+        return Math.Max(1, defaultStackSize);
     }
 
     private static string? GetManagedObjectRuntimeTypeName(ManagedObject? managedObject)
@@ -149,7 +149,7 @@ public partial class REFPlugin
         if (!IsAmmoEnemyDrop(itemDataId))
             return 1;
 
-        var stackSize = GetItemStackLimit(itemDataId);
+        var stackSize = GetVanillaEnemyDropStackLimit(itemDataId);
         var min = ReadEnemyDropConfigOrDefault("enemy-drop-ammo-min", "item-drop-ammo-min", 0.1);
         var max = ReadEnemyDropConfigOrDefault("enemy-drop-ammo-max", "item-drop-ammo-max", 0.4);
         if (max < min)
@@ -173,7 +173,7 @@ public partial class REFPlugin
         if (sanitizedMultiplier == 1.0)
             return stackNum;
 
-        var stackLimit = Math.Max(1.0, GetItemStackLimit(itemDataId));
+        var stackLimit = Math.Max(1.0, GetVanillaEnemyDropStackLimit(itemDataId));
         var multipliedStackNum = stackNum * sanitizedMultiplier;
         var finalStackNum = (int)Math.Round(Math.Clamp(multipliedStackNum, 1.0, stackLimit));
 
