@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-public sealed class WeaponDefinition
-{
-    [Key]
-    public required WeaponID WeaponId { get; set; }
+public sealed class WeaponDefinition {
+    [Key] public required WeaponID WeaponId { get; set; }
 
     public string Id { get; set; } = "";
     public string? Name { get; set; } = null;
@@ -34,8 +32,7 @@ public sealed class WeaponDefinition
         => $"{Name ?? WeaponId.ToString()} ({Id})";
 }
 
-public sealed class WeaponDamageStats
-{
+public sealed class WeaponDamageStats {
     public int Damage { get; set; }
     public int Stun { get; set; }
 

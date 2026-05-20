@@ -3,19 +3,16 @@ using Biohazard.BioRand.RE7.Weapons;
 
 namespace Biohazard.BioRand.RE7.Tests.Repositories;
 
-public class WeaponDefinitionRepositoryTests
-{
+public class WeaponDefinitionRepositoryTests {
     private readonly WeaponDefinitionRepository repository = WeaponDefinitionRepository.Default;
 
     [Fact]
-    public void Repository_Should_Not_Be_Empty()
-    {
+    public void Repository_Should_Not_Be_Empty() {
         Assert.NotEmpty(repository.WeaponDefinitions);
     }
 
     [Fact]
-    public void All_Weapons_Must_Have_Damage()
-    {
+    public void All_Weapons_Must_Have_Damage() {
         var invalid = repository
             .WeaponDefinitions
             .Where(w => w.Damage == null || w.Damage.Count == 0)
@@ -26,8 +23,7 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void All_Weapons_Must_Have_Sane_Damage_Stats()
-    {
+    public void All_Weapons_Must_Have_Sane_Damage_Stats() {
         var invalid = repository
             .WeaponDefinitions
             .Where(w => w.Damage.Values.Any(d => d.Damage <= 0 && d.Stun <= 0))
@@ -38,8 +34,7 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void WeaponIds_Must_Be_Unique()
-    {
+    public void WeaponIds_Must_Be_Unique() {
         var duplicates = repository
             .WeaponDefinitions
             .GroupBy(w => w.WeaponId)
@@ -52,8 +47,7 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Named_Weapons_Should_Not_Have_Empty_Names()
-    {
+    public void Named_Weapons_Should_Not_Have_Empty_Names() {
         var invalid = repository
             .WeaponDefinitions
             .Where(w => w.Name != null && string.IsNullOrWhiteSpace(w.Name))
@@ -65,8 +59,7 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Guns_Must_Be_Flagged_Correctly()
-    {
+    public void Guns_Must_Be_Flagged_Correctly() {
         var invalid = repository
             .Guns
             .Where(w => w.BulletItemIDs == null || w.BulletItemIDs.Count == 0)
@@ -78,8 +71,7 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Melee_Must_Not_Have_Bullets()
-    {
+    public void Melee_Must_Not_Have_Bullets() {
         var invalid = repository
             .MeleeWeapons
             .Where(w => w.BulletItemIDs != null && w.BulletItemIDs.Count > 0)
@@ -92,8 +84,7 @@ public class WeaponDefinitionRepositoryTests
 
 
     [Fact]
-    public void Player_Weapons_Should_Be_Resolvable_In_ItemRepository()
-    {
+    public void Player_Weapons_Should_Be_Resolvable_In_ItemRepository() {
         var invalid = repository
             .WeaponDefinitions
             .Where(w => w.UserType == Enums.app.CharacterDefine.Type.Player)
@@ -106,12 +97,10 @@ public class WeaponDefinitionRepositoryTests
     }
 
     [Fact]
-    public void FromWeaponId_String_And_Enum_Should_Be_Consistent()
-    {
+    public void FromWeaponId_String_And_Enum_Should_Be_Consistent() {
         var mismatches = repository
             .WeaponDefinitions
-            .Where(w =>
-            {
+            .Where(w => {
                 var fromEnum = repository.FromWeaponId(w.WeaponId);
                 var fromString = repository.FromWeaponId(w.WeaponId.ToString());
                 return !ReferenceEquals(fromEnum, fromString);

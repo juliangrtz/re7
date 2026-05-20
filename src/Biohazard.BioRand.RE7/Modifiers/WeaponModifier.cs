@@ -7,8 +7,7 @@ using System.Globalization;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class WeaponModifier : Modifier
-{
+internal class WeaponModifier : Modifier {
     private const string RandomizerKey = "modifier/weapons";
     private const string WeaponItemMessagePath = "message/ui_item_mes.msg";
     private const string ItemSettingsDirectory = "natives/stm/prefab/item";
@@ -19,12 +18,9 @@ internal class WeaponModifier : Modifier
     private readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
     private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
-    {
-        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
-        {
-            if (string.IsNullOrEmpty(definition.UserParamsPath))
-            {
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions) {
+            if (string.IsNullOrEmpty(definition.UserParamsPath)) {
                 continue;
             }
 
@@ -34,22 +30,18 @@ internal class WeaponModifier : Modifier
         }
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var rng = randomizer.GetRng(RandomizerKey);
         var rolls = new Dictionary<WeaponID, WeaponStatRolls>();
-        if (randomizer.GetConfigOption<bool>("weapon-mod-damage"))
-        {
+        if (randomizer.GetConfigOption<bool>("weapon-mod-damage")) {
             RandomizeWeaponDamage(randomizer, logger, rng, rolls);
         }
 
-        if (randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity"))
-        {
+        if (randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity")) {
             RandomizeAmmoCapacities(randomizer, logger, rng, rolls);
         }
 
-        if (randomizer.GetConfigOption<bool>("weapon-mod-reload-speed"))
-        {
+        if (randomizer.GetConfigOption<bool>("weapon-mod-reload-speed")) {
             RecordReloadSpeedRolls(randomizer, rolls);
             LogReloadSpeedRuntimeHandling(logger);
         }
@@ -65,35 +57,29 @@ internal class WeaponModifier : Modifier
         double factor,
         bool randomizeStun,
         bool randomizePlayerDmg
-    )
-    {
+    ) {
         int ScaleDamage(int value) => Math.Max(0, (int)Math.Round(value * factor));
 
         logger.Push(weapon.Name ?? weapon.WeaponId.ToString());
-        randomizer.FileRepository.ModifyRcolFile(rcolPath, rcol =>
-        {
-            foreach (var requestSet in rcol.RequestSets)
-            {
-                if (requestSet.UserData == null)
-                {
+        randomizer.FileRepository.ModifyRcolFile(rcolPath, rcol => {
+            foreach (var requestSet in rcol.RequestSets) {
+                if (requestSet.UserData == null) {
                     logger.LogLine($"Skipping request set {requestSet.Name} in {rcolPath}, it has no user data?!");
                     continue;
                 }
 
                 var isDefaultBulletRcol = rcolPath.Contains("defaultbullet.rcol");
-                if (isDefaultBulletRcol && !string.Equals(requestSet.Name, weapon.WeaponId.ToString(), StringComparison.OrdinalIgnoreCase))
-                {
+                if (isDefaultBulletRcol && !string.Equals(requestSet.Name, weapon.WeaponId.ToString(),
+                        StringComparison.OrdinalIgnoreCase)) {
                     continue;
                 }
 
                 var isPlayerRequestSet = requestSet.Name.Contains("player", StringComparison.OrdinalIgnoreCase);
-                if (isPlayerRequestSet && !randomizePlayerDmg)
-                {
+                if (isPlayerRequestSet && !randomizePlayerDmg) {
                     continue;
                 }
 
-                if (requestSet.UserData.Type.Name != "app.Collision.AttackUserData")
-                {
+                if (requestSet.UserData.Type.Name != "app.Collision.AttackUserData") {
                     continue;
                 }
 
@@ -102,27 +88,22 @@ internal class WeaponModifier : Modifier
                 var prevStun = attackUserData.Stun;
 
                 attackUserData.Damage = ScaleDamage(attackUserData.Damage);
-                if (randomizeStun)
-                {
+                if (randomizeStun) {
                     attackUserData.Stun = ScaleDamage(attackUserData.Stun);
                 }
 
-                if (prevDmg == attackUserData.Damage)
-                {
+                if (prevDmg == attackUserData.Damage) {
                     logger.LogLine($"Damage of RequestSet {requestSet.Name} remains ({prevDmg})");
-                }
-                else
-                {
-                    logger.LogLine($"Damage of RequestSet {requestSet.Name} changes from {prevDmg} to {attackUserData.Damage}");
+                } else {
+                    logger.LogLine(
+                        $"Damage of RequestSet {requestSet.Name} changes from {prevDmg} to {attackUserData.Damage}");
                 }
 
-                if (prevStun == attackUserData.Stun)
-                {
+                if (prevStun == attackUserData.Stun) {
                     logger.LogLine($"Stun of RequestSet {requestSet.Name} remains ({prevStun})");
-                }
-                else
-                {
-                    logger.LogLine($"Stun of RequestSet {requestSet.Name} changes from {prevStun} to {attackUserData.Stun}");
+                } else {
+                    logger.LogLine(
+                        $"Stun of RequestSet {requestSet.Name} changes from {prevStun} to {attackUserData.Stun}");
                 }
 
                 requestSet.UserData = (RszObjectNode)RszSerializer.Serialize(requestSet.UserData.Type, attackUserData);
@@ -135,25 +116,21 @@ internal class WeaponModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         Rng rng,
-        Dictionary<WeaponID, WeaponStatRolls> rolls)
-    {
+        Dictionary<WeaponID, WeaponStatRolls> rolls) {
         var randomizeStun = randomizer.GetConfigOption<bool>("weapon-mod-damage-include-stun");
         var randomizePlayerDmg = randomizer.GetConfigOption<bool>("weapon-mod-damage-include-player-damage");
 
-        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
-        {
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions) {
             var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
             var min = randomizer.GetConfigOption($"weapon-damage-min-{sanitizedId}", -1d);
             var max = randomizer.GetConfigOption($"weapon-damage-max-{sanitizedId}", -1d);
-            if ((min == -1d && max == -1d) || (min == 1.0d && max == 1.0d))
-            {
+            if ((min == -1d && max == -1d) || (min == 1.0d && max == 1.0d)) {
                 continue;
             }
 
             var factor = Math.Round(rng.NextDouble(min, max), 1);
             GetOrCreateRolls(rolls, definition.WeaponId).DamageMultiplier = factor;
-            foreach (var rcolPath in definition.RcolPaths)
-            {
+            foreach (var rcolPath in definition.RcolPaths) {
                 ModifyDamageInRcol(rcolPath, definition, randomizer, logger, factor, randomizeStun, randomizePlayerDmg);
             }
         }
@@ -163,15 +140,12 @@ internal class WeaponModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         Rng rng,
-        Dictionary<WeaponID, WeaponStatRolls> rolls)
-    {
+        Dictionary<WeaponID, WeaponStatRolls> rolls) {
         var ensureAtLeastOneBullet = randomizer.GetConfigOption<bool>("weapon-mod-ammo-capacity-prevent-zero");
         var minCap = ensureAtLeastOneBullet ? 1 : 0;
 
-        foreach (var definition in _weaponDefinitions.WeaponDefinitions)
-        {
-            if (definition.UserParamsPath == null || !definition.IsGun)
-            {
+        foreach (var definition in _weaponDefinitions.WeaponDefinitions) {
+            if (definition.UserParamsPath == null || !definition.IsGun) {
                 continue;
             }
 
@@ -182,30 +156,25 @@ internal class WeaponModifier : Modifier
             var factor = Math.Max(minCap, Math.Round(rng.NextDouble(min, max), 1));
             GetOrCreateRolls(rolls, definition.WeaponId).AmmoCapacityMultiplier = factor;
 
-            randomizer.FileRepository.ModifyUserFile<app.WeaponGunParameter>(definition.UserParamsPath, root =>
-            {
+            randomizer.FileRepository.ModifyUserFile<app.WeaponGunParameter>(definition.UserParamsPath, root => {
                 var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
 
-                if (root.MaxLoadNum == newLoadNum)
-                {
+                if (root.MaxLoadNum == newLoadNum) {
                     logger.LogLine($"Ammo capacity of {name} remains ({root.MaxLoadNum})");
-                }
-                else
-                {
+                } else {
                     logger.LogLine($"Changing ammo capacity of {name} from {root.MaxLoadNum} to {newLoadNum}");
                 }
+
                 root.MaxLoadNum = newLoadNum;
                 return root;
             });
         }
     }
 
-    private void RecordReloadSpeedRolls(Randomizer randomizer, Dictionary<WeaponID, WeaponStatRolls> rolls)
-    {
-        foreach (var definition in _weaponDefinitions.Guns.Where(x => x.UserType == Enums.app.CharacterDefine.Type.Player))
-        {
-            if (!TryGetReloadSpeedRange(randomizer, definition, out var min, out var max))
-            {
+    private void RecordReloadSpeedRolls(Randomizer randomizer, Dictionary<WeaponID, WeaponStatRolls> rolls) {
+        foreach (var definition in _weaponDefinitions.Guns.Where(x =>
+                     x.UserType == Enums.app.CharacterDefine.Type.Player)) {
+            if (!TryGetReloadSpeedRange(randomizer, definition, out var min, out var max)) {
                 continue;
             }
 
@@ -219,34 +188,27 @@ internal class WeaponModifier : Modifier
     private void ApplyWeaponDescriptions(
         Randomizer randomizer,
         RandomizerLogger logger,
-        IReadOnlyDictionary<WeaponID, WeaponStatRolls> rolls)
-    {
+        IReadOnlyDictionary<WeaponID, WeaponStatRolls> rolls) {
         var activeRolls = rolls
             .Where(x => x.Value.HasAny)
             .ToDictionary(x => x.Key, x => x.Value);
-        if (activeRolls.Count == 0)
-        {
+        if (activeRolls.Count == 0) {
             return;
         }
 
         var itemDataByWeaponId = GetWeaponItemDataByWeaponId(randomizer, activeRolls.Keys);
-        if (itemDataByWeaponId.Count == 0)
-        {
+        if (itemDataByWeaponId.Count == 0) {
             return;
         }
 
-        randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile(WeaponItemMessagePath), messages =>
-        {
-            foreach (var (weaponId, roll) in activeRolls.OrderBy(x => x.Key.ToString(), StringComparer.Ordinal))
-            {
-                if (!itemDataByWeaponId.TryGetValue(weaponId, out var itemData) || itemData.ManualMsg == Guid.Empty)
-                {
+        randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile(WeaponItemMessagePath), messages => {
+            foreach (var (weaponId, roll) in activeRolls.OrderBy(x => x.Key.ToString(), StringComparer.Ordinal)) {
+                if (!itemDataByWeaponId.TryGetValue(weaponId, out var itemData) || itemData.ManualMsg == Guid.Empty) {
                     continue;
                 }
 
                 var message = messages.FindMessage(itemData.ManualMsg);
-                if (message == null)
-                {
+                if (message == null) {
                     logger.LogLine($"Weapon description for {weaponId} not found in ui_item_mes.msg.");
                     continue;
                 }
@@ -258,8 +220,8 @@ internal class WeaponModifier : Modifier
         });
     }
 
-    private Dictionary<WeaponID, app.ItemData> GetWeaponItemDataByWeaponId(Randomizer randomizer, IEnumerable<WeaponID> weaponIds)
-    {
+    private Dictionary<WeaponID, app.ItemData> GetWeaponItemDataByWeaponId(Randomizer randomizer,
+        IEnumerable<WeaponID> weaponIds) {
         var result = new Dictionary<WeaponID, app.ItemData>();
         var pendingWeaponIds = weaponIds.ToHashSet();
         var itemDefinitionsBySource = pendingWeaponIds
@@ -267,20 +229,17 @@ internal class WeaponModifier : Modifier
             .Where(item => item?.SourceUserFile != null)
             .GroupBy(item => item!.SourceUserFile!, StringComparer.OrdinalIgnoreCase);
 
-        foreach (var group in itemDefinitionsBySource)
-        {
+        foreach (var group in itemDefinitionsBySource) {
             var path = $"{ItemSettingsDirectory}/{group.Key}".ToLowerInvariant();
-            if (!randomizer.FileRepository.Exists(path))
-            {
+            if (!randomizer.FileRepository.Exists(path)) {
                 continue;
             }
 
             var settings = randomizer.FileRepository.DeserializeUserFile<app.ItemSettings>(path);
             var itemDataByItemId = settings._Settings.ToDictionary(x => x.ItemDataID, StringComparer.OrdinalIgnoreCase);
-            foreach (var itemDefinition in group)
-            {
-                if (itemDefinition?.WeaponId == null || !itemDataByItemId.TryGetValue(itemDefinition.Id, out var itemData))
-                {
+            foreach (var itemDefinition in group) {
+                if (itemDefinition?.WeaponId == null ||
+                    !itemDataByItemId.TryGetValue(itemDefinition.Id, out var itemData)) {
                     continue;
                 }
 
@@ -291,39 +250,33 @@ internal class WeaponModifier : Modifier
         return result;
     }
 
-    private static bool TryGetReloadSpeedRange(Randomizer randomizer, WeaponDefinition definition, out double min, out double max)
-    {
+    private static bool TryGetReloadSpeedRange(Randomizer randomizer, WeaponDefinition definition, out double min,
+        out double max) {
         var sanitizedId = SanitizeWeaponId(definition.WeaponId);
         min = randomizer.GetConfigOption($"weapon-reload-speed-min-{sanitizedId}", double.NaN);
         max = randomizer.GetConfigOption($"weapon-reload-speed-max-{sanitizedId}", double.NaN);
 
-        if (double.IsNaN(min) && double.IsNaN(max))
-        {
+        if (double.IsNaN(min) && double.IsNaN(max)) {
             return false;
         }
 
-        if (double.IsNaN(min))
-        {
+        if (double.IsNaN(min)) {
             min = DefaultWeaponReloadSpeedMin;
         }
 
-        if (double.IsNaN(max))
-        {
+        if (double.IsNaN(max)) {
             max = DefaultWeaponReloadSpeedMax;
         }
 
-        if (max < min)
-        {
+        if (max < min) {
             (min, max) = (max, min);
         }
 
         return true;
     }
 
-    private static WeaponStatRolls GetOrCreateRolls(Dictionary<WeaponID, WeaponStatRolls> rolls, WeaponID weaponId)
-    {
-        if (!rolls.TryGetValue(weaponId, out var roll))
-        {
+    private static WeaponStatRolls GetOrCreateRolls(Dictionary<WeaponID, WeaponStatRolls> rolls, WeaponID weaponId) {
+        if (!rolls.TryGetValue(weaponId, out var roll)) {
             roll = new WeaponStatRolls();
             rolls[weaponId] = roll;
         }
@@ -340,33 +293,29 @@ internal class WeaponModifier : Modifier
     private static string FormatMultiplier(double multiplier)
         => multiplier.ToString("0.###", CultureInfo.InvariantCulture);
 
-    private void LogReloadSpeedRuntimeHandling(RandomizerLogger logger)
-    {
+    private void LogReloadSpeedRuntimeHandling(RandomizerLogger logger) {
         logger.LogLine("Weapon reload speed randomization is applied by the REFramework plugin at runtime.");
     }
 
-    private sealed class WeaponStatRolls
-    {
+    private sealed class WeaponStatRolls {
         public double? DamageMultiplier { get; set; }
         public double? AmmoCapacityMultiplier { get; set; }
         public double? ReloadSpeedMultiplier { get; set; }
-        public bool HasAny => DamageMultiplier != null || AmmoCapacityMultiplier != null || ReloadSpeedMultiplier != null;
 
-        public string Format()
-        {
+        public bool HasAny =>
+            DamageMultiplier != null || AmmoCapacityMultiplier != null || ReloadSpeedMultiplier != null;
+
+        public string Format() {
             var parts = new List<string>();
-            if (DamageMultiplier != null)
-            {
+            if (DamageMultiplier != null) {
                 parts.Add($"Damage {FormatMultiplier(DamageMultiplier.Value)}x");
             }
 
-            if (AmmoCapacityMultiplier != null)
-            {
+            if (AmmoCapacityMultiplier != null) {
                 parts.Add($"Ammo capacity {FormatMultiplier(AmmoCapacityMultiplier.Value)}x");
             }
 
-            if (ReloadSpeedMultiplier != null)
-            {
+            if (ReloadSpeedMultiplier != null) {
                 parts.Add($"Reload speed {FormatMultiplier(ReloadSpeedMultiplier.Value)}x");
             }
 

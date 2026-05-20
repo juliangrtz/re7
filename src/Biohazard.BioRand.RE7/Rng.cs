@@ -1,38 +1,31 @@
 ﻿namespace Biohazard.BioRand.RE7;
 
-public sealed class Rng
-{
+public sealed class Rng {
     private readonly Random _random;
 
-    public Rng()
-    {
+    public Rng() {
         _random = new Random();
     }
 
-    public Rng(int seed)
-    {
+    public Rng(int seed) {
         _random = new Random(seed);
     }
 
-    public Rng NextFork()
-    {
+    public Rng NextFork() {
         return new Rng(_random.Next());
     }
 
-    public double NextDouble()
-    {
+    public double NextDouble() {
         return _random.NextDouble();
     }
 
     public float NextFloat() => NextFloat(0, 1);
 
-    public float NextFloat(float min, float max)
-    {
+    public float NextFloat(float min, float max) {
         return (float)NextDouble(min, max);
     }
 
-    public double NextDouble(double min, double max)
-    {
+    public double NextDouble(double min, double max) {
         if (max <= min)
             return min;
 
@@ -40,13 +33,11 @@ public sealed class Rng
         return min + (_random.NextDouble() * range);
     }
 
-    public bool NextProbability(int percent)
-    {
+    public bool NextProbability(int percent) {
         return Next(0, 100) < percent;
     }
 
-    public bool NextProbability(double probability)
-    {
+    public bool NextProbability(double probability) {
         if (probability <= 0)
             return false;
         if (probability >= 1)
@@ -57,15 +48,13 @@ public sealed class Rng
     public bool CoinToss()
         => NextProbability(50);
 
-    public int Next(int min, int max)
-    {
+    public int Next(int min, int max) {
         if (max <= min)
             return min;
         return _random.Next(min, max);
     }
 
-    public int NextInclusive(int min, int max)
-    {
+    public int NextInclusive(int min, int max) {
         if (max <= min)
             return min;
         return (int)_random.NextInt64(min, (long)max + 1);
@@ -74,16 +63,13 @@ public sealed class Rng
     public int Next()
         => _random.Next();
 
-    public T NextOf<T>(params T[] values)
-    {
+    public T NextOf<T>(params T[] values) {
         var i = _random.Next(0, values.Length);
         return values[i];
     }
 
-    public T Next<T>(IEnumerable<T> values)
-    {
-        switch (values)
-        {
+    public T Next<T>(IEnumerable<T> values) {
+        switch (values) {
             case IList<T> list when list.Count > 0:
                 return list[_random.Next(0, list.Count)];
             case IReadOnlyList<T> list when list.Count > 0:
@@ -98,20 +84,17 @@ public sealed class Rng
         }
     }
 
-    public T NextOf8020<T>(params T[] values)
-    {
-        for (var i = 0; i < values.Length - 1; i++)
-        {
-            if (NextProbability(80))
-            {
+    public T NextOf8020<T>(params T[] values) {
+        for (var i = 0; i < values.Length - 1; i++) {
+            if (NextProbability(80)) {
                 return values[i];
             }
         }
+
         return values[^1];
     }
 
-    public double NextGaussian(double mean, double stdDev)
-    {
+    public double NextGaussian(double mean, double stdDev) {
         var u1 = 1.0 - _random.NextDouble();
         var u2 = 1.0 - _random.NextDouble();
 
@@ -124,36 +107,31 @@ public sealed class Rng
         return randNormal;
     }
 
-    public Table<T> CreateProbabilityTable<T>()
-    {
+    public Table<T> CreateProbabilityTable<T>() {
         return new Table<T>(this);
     }
 
-    public Guid NextGuid()
-    {
+    public Guid NextGuid() {
         var buffer = new byte[16];
         _random.NextBytes(buffer);
         buffer[8] = (byte)(0x40 | (buffer[8] & 0x0F));
         return new Guid(buffer);
     }
 
-    public class Table<T>
-    {
+    public class Table<T> {
         private readonly Rng _rng;
-        private readonly List<(T, double)> _table = new List<(T, double)>();
+        private readonly List<(T, double)> _table = new();
         private double _total;
 
         public bool IsEmpty => _table.Count == 0;
         public T[] Values => _table.Select(x => x.Item1).ToArray();
         public int Count => _table.Count;
 
-        public Table(Rng rng)
-        {
+        public Table(Rng rng) {
             _rng = rng;
         }
 
-        public void Add(T value, double prob)
-        {
+        public void Add(T value, double prob) {
             if (prob == 0)
                 return;
 
@@ -161,25 +139,23 @@ public sealed class Rng
             _total += prob;
         }
 
-        public T Next()
-        {
+        public T Next() {
             if (_table.Count == 0)
                 throw new InvalidOperationException("No probability entries added");
-            if (_table.Count > 1)
-            {
+            if (_table.Count > 1) {
                 var p = 0.0;
                 var n = _rng.NextDouble() * _total;
-                for (int i = 0; i < _table.Count - 1; i++)
-                {
+                for (int i = 0; i < _table.Count - 1; i++) {
                     var entry = _table[i];
                     var nextI = p + entry.Item2;
-                    if (n < nextI)
-                    {
+                    if (n < nextI) {
                         return entry.Item1;
                     }
+
                     p = nextI;
                 }
             }
+
             return _table[_table.Count - 1].Item1;
         }
     }

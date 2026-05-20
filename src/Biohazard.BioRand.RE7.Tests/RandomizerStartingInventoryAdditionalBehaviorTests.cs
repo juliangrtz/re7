@@ -1,5 +1,4 @@
 using System.Text;
-
 using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Serialization;
@@ -7,19 +6,15 @@ using Biohazard.BioRand.RE7.Serialization;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerStartingInventoryAdditionalBehaviorTests
-{
+public class RandomizerStartingInventoryAdditionalBehaviorTests {
     [Fact]
-    public void StartingInventory_VhsEnabled_RandomizesVhsInventories()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void StartingInventory_VhsEnabled_RandomizesVhsInventories() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = true;
             config["random-starting-inventory-mia"] = false;
             config["random-starting-inventory-vhs"] = true;
 
-            foreach (var category in Enum.GetValues<StartingWeaponCategory>())
-            {
+            foreach (var category in Enum.GetValues<StartingWeaponCategory>()) {
                 config[$"inventory-weapon-{category.ToString().ToLowerInvariant()}-ethan"] = false;
             }
 
@@ -27,10 +22,14 @@ public class RandomizerStartingInventoryAdditionalBehaviorTests
             config["random-starting-inventory-give-ammo"] = false;
         });
 
-        var beforeClancy = result.ReadBeforeUserFile<app.AddItemListData>(RandomizerTestPaths.ClancyInventoryPath)._AddItems;
-        var afterClancy = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.ClancyInventoryPath)._AddItems;
-        var beforeMiaVhs = result.ReadBeforeUserFile<app.AddItemListData>(RandomizerTestPaths.MiaVhsInventoryPath)._AddItems;
-        var afterMiaVhs = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.MiaVhsInventoryPath)._AddItems;
+        var beforeClancy = result.ReadBeforeUserFile<app.AddItemListData>(RandomizerTestPaths.ClancyInventoryPath)
+            ._AddItems;
+        var afterClancy = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.ClancyInventoryPath)
+            ._AddItems;
+        var beforeMiaVhs = result.ReadBeforeUserFile<app.AddItemListData>(RandomizerTestPaths.MiaVhsInventoryPath)
+            ._AddItems;
+        var afterMiaVhs = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.MiaVhsInventoryPath)
+            ._AddItems;
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.ClancyInventoryPath));
         Assert.False(result.WasFileModified(RandomizerTestPaths.MiaVhsInventoryPath));
@@ -39,28 +38,26 @@ public class RandomizerStartingInventoryAdditionalBehaviorTests
     }
 
     [Fact]
-    public void StartingInventory_DebugUser_UsesInjectedDebugStartItems()
-    {
+    public void StartingInventory_DebugUser_UsesInjectedDebugStartItems() {
         var debugCsv = """
-ItemId,Quantity
-Coin,2
-Herb,1
-""";
+                       ItemId,Quantity
+                       Coin,2
+                       Herb,1
+                       """;
 
         using var result = RandomizerTest.RunState(
-            config =>
-            {
+            config => {
                 config["username"] = "captainezekiel";
                 config["random-starting-inventory-ethan"] = true;
                 config["inventory-weapon-handgun-ethan"] = false;
                 config["random-starting-inventory-give-ammo"] = false;
             },
-            prepareRandomizer: randomizer =>
-            {
+            prepareRandomizer: randomizer => {
                 randomizer.DynamicData.SetData(DynamicDataName.DebugStartItems, Encoding.UTF8.GetBytes(debugCsv));
             });
 
-        var ethanInventory = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.EthanInventoryPath)._AddItems;
+        var ethanInventory = result.ReadAfterUserFile<app.AddItemListData>(RandomizerTestPaths.EthanInventoryPath)
+            ._AddItems;
 
         Assert.Contains(
             [("Coin", 2), ("Herb", 1)],
@@ -68,10 +65,8 @@ Herb,1
     }
 
     [Fact]
-    public void StartingInventory_EthanRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToEthan()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void StartingInventory_EthanRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToEthan() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = false;
             config["random-starting-inventory-mia"] = false;
             config["random-starting-inventory-vhs"] = false;
@@ -84,10 +79,8 @@ Herb,1
     }
 
     [Fact]
-    public void StartingInventory_MiaRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToMia()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void StartingInventory_MiaRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToMia() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = false;
             config["random-starting-inventory-mia"] = false;
             config["random-starting-inventory-vhs"] = false;
@@ -100,8 +93,7 @@ Herb,1
         AssertRandomSkillItems(result, RandomizerTestPaths.MiaInventoryPath);
     }
 
-    private static void AssertRandomSkillItems(RandomizerRunResult result, string inventoryPath)
-    {
+    private static void AssertRandomSkillItems(RandomizerRunResult result, string inventoryPath) {
         var before = result.ReadBeforeUserFile<app.AddItemListData>(inventoryPath)._AddItems;
         var after = result.ReadAfterUserFile<app.AddItemListData>(inventoryPath)._AddItems;
         var newItems = after.Skip(before.Count).ToArray();
@@ -110,9 +102,11 @@ Herb,1
             .ToArray();
 
         Assert.InRange(skillItems.Length, 1, 2);
-        Assert.Equal(skillItems.Length, skillItems.Select(item => item.ItemDataID).Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        Assert.Equal(skillItems.Length,
+            skillItems.Select(item => item.ItemDataID).Distinct(StringComparer.OrdinalIgnoreCase).Count());
         Assert.All(skillItems, item => Assert.Equal(1, item.Num));
-        Assert.All(skillItems, item => Assert.False(item.ItemDataID.EndsWith("no", StringComparison.OrdinalIgnoreCase)));
+        Assert.All(skillItems,
+            item => Assert.False(item.ItemDataID.EndsWith("no", StringComparison.OrdinalIgnoreCase)));
         Assert.Equal(skillItems.Length, newItems.Length);
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Biohazard.BioRand.RE7;
 
-public class FileVersions
-{
+public static class FileVersions {
     public const int UserFileVersion = 2;
     public const int SceneFileVersion = 20;
     public const int MsgFileVersion = 17;

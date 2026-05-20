@@ -1,7 +1,6 @@
 ﻿namespace Biohazard.BioRand.RE7;
 
-public class AreaDefinition
-{
+public class AreaDefinition {
     public string Path { get; set; } = "";
     public int? Chapter { get; set; }
     public string? Description { get; set; } = "";
@@ -10,8 +9,7 @@ public class AreaDefinition
     public AreaKind Kind { get; set; }
 }
 
-public enum AreaKind
-{
+public enum AreaKind {
     General,
     Item,
     Enemy,

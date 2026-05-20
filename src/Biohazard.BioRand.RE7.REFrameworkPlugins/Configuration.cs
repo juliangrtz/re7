@@ -6,8 +6,7 @@ namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 /// Reads config.json in the reframework/data directory.
 /// It's copied there in Biohazard.BioRand.RE7.RE7RandomizerOutput
 /// </summary>
-internal class Configuration
-{
+internal class Configuration {
     private const string WorkingDirectory = @"reframework\data\BioRand7";
     private const string DataDirectory = @"data\BioRand7";
     private const string ConfigFileName = "config.json";
@@ -21,10 +20,8 @@ internal class Configuration
     public Configuration()
         => Reload();
 
-    public void Reload()
-    {
-        lock (sync)
-        {
+    public void Reload() {
+        lock (sync) {
             jsonConfig.Clear();
             HasConfigFile = false;
             LoadError = null;
@@ -33,43 +30,37 @@ internal class Configuration
             if (!File.Exists(ConfigPath))
                 return;
 
-            try
-            {
+            try {
                 var file = File.ReadAllText(ConfigPath);
                 var values = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(file) ?? new();
-                foreach (var (key, value) in values)
-                {
+                foreach (var (key, value) in values) {
                     jsonConfig[key] = value.Clone();
                 }
+
                 HasConfigFile = true;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 LoadError = ex.Message;
             }
         }
     }
 
-    public string Read(string key)
-    {
+    public string Read(string key) {
         return ReadOrDefault(key, string.Empty);
     }
 
-    public bool TryRead<T>(string key, out T value)
-    {
+    public bool TryRead<T>(string key, out T value) {
         value = default!;
 
         JsonElement jsonValue;
-        lock (sync)
-        {
+        lock (sync) {
             if (!jsonConfig.TryGetValue(key, out jsonValue))
                 return false;
 
             jsonValue = jsonValue.Clone();
         }
 
-        try
-        {
+        try {
             var parsed = JsonSerializer.Deserialize<T>(jsonValue.GetRawText());
             if (parsed == null)
                 return false;
@@ -77,21 +68,17 @@ internal class Configuration
             value = parsed;
             return true;
         }
-        catch
-        {
+        catch {
             return false;
         }
     }
 
-    public T ReadOrDefault<T>(string key, T defaultValue)
-    {
+    public T ReadOrDefault<T>(string key, T defaultValue) {
         return TryRead(key, out T value) ? value : defaultValue;
     }
 
-    public KeyValuePair<string, JsonElement>[] GetEntriesSnapshot()
-    {
-        lock (sync)
-        {
+    public KeyValuePair<string, JsonElement>[] GetEntriesSnapshot() {
+        lock (sync) {
             return jsonConfig
                 .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
                 .Select(x => new KeyValuePair<string, JsonElement>(x.Key, x.Value.Clone()))
@@ -99,12 +86,9 @@ internal class Configuration
         }
     }
 
-    public int Entries
-    {
-        get
-        {
-            lock (sync)
-            {
+    public int Entries {
+        get {
+            lock (sync) {
                 return jsonConfig.Count;
             }
         }
@@ -113,15 +97,13 @@ internal class Configuration
     public string[] GetConfigSearchPaths()
         => GetCandidateConfigPaths();
 
-    private static string ResolveConfigPath()
-    {
+    private static string ResolveConfigPath() {
         var candidates = GetCandidateConfigPaths();
         return candidates.FirstOrDefault(File.Exists)
-            ?? candidates.First();
+               ?? candidates.First();
     }
 
-    private static string[] GetCandidateConfigPaths()
-    {
+    private static string[] GetCandidateConfigPaths() {
         var result = new List<string>();
         AddCandidate(result, Path.Combine(Environment.CurrentDirectory, WorkingDirectory, ConfigFileName));
         AddCandidate(result, Path.Combine(AppContext.BaseDirectory, WorkingDirectory, ConfigFileName));
@@ -130,8 +112,7 @@ internal class Configuration
         AddCandidate(result, Path.Combine(AppContext.BaseDirectory, "..", "..", DataDirectory, ConfigFileName));
 
         var processDirectory = GetProcessDirectory();
-        if (processDirectory != null)
-        {
+        if (processDirectory != null) {
             AddCandidate(result, Path.Combine(processDirectory, WorkingDirectory, ConfigFileName));
         }
 
@@ -142,28 +123,21 @@ internal class Configuration
                 .ToArray();
     }
 
-    private static void AddCandidate(List<string> result, string path)
-    {
-        try
-        {
+    private static void AddCandidate(List<string> result, string path) {
+        try {
             result.Add(Path.GetFullPath(path));
         }
-        catch
-        {
-        }
+        catch { }
     }
 
-    private static string? GetProcessDirectory()
-    {
-        try
-        {
+    private static string? GetProcessDirectory() {
+        try {
             var processPath = Environment.ProcessPath;
             return string.IsNullOrWhiteSpace(processPath)
                 ? null
                 : Path.GetDirectoryName(processPath);
         }
-        catch
-        {
+        catch {
             return null;
         }
     }

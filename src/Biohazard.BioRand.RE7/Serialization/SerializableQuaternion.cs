@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
-public class SerializableRotation(float x, float y, float z, float w)
-{
+public class SerializableRotation(float x, float y, float z, float w) {
     public float X { get; set; } = x;
 
     public float Y { get; set; } = y;
@@ -16,8 +15,8 @@ public class SerializableRotation(float x, float y, float z, float w)
         => $"[{X}, {Y}, {Z}, {W}]";
 
     public static implicit operator Quaternion(SerializableRotation rValue)
-        => new Quaternion(rValue.X, rValue.Y, rValue.Z, rValue.W);
+        => new(rValue.X, rValue.Y, rValue.Z, rValue.W);
 
     public static implicit operator SerializableRotation(Quaternion rValue)
-        => new SerializableRotation(rValue.X, rValue.Y, rValue.Z, rValue.W);
+        => new(rValue.X, rValue.Y, rValue.Z, rValue.W);
 }

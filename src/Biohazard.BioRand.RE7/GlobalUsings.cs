@@ -1,4 +1,5 @@
 ﻿// Often used dependencies
+
 global using Biohazard.BioRand.RE7.Extensions;
 global using System;
 global using System.Collections;

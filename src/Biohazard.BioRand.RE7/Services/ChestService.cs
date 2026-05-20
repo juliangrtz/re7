@@ -5,32 +5,27 @@ using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class ChestService(Randomizer randomizer)
-{
+internal class ChestService(Randomizer randomizer) {
     private readonly RszGameObject _chestTemplate = randomizer.TemplateService.GetObject("Chest");
     private readonly Dictionary<string, RszGameObject> _weaponCache = new();
     private readonly Rng _rng = randomizer.GetRng("drops/weapon-chests");
     private readonly Rng _templateRng = randomizer.GetRng("drops/weapon-chests/template-instances");
 
-    private RszGameObject GetCachedWeaponOrCreate(string weaponId)
-    {
+    private RszGameObject GetCachedWeaponOrCreate(string weaponId) {
         if (!_weaponCache.ContainsKey(weaponId))
             _weaponCache[weaponId] = randomizer.TemplateService.GetItemTemplate(weaponId);
         return _weaponCache[weaponId];
     }
 
-    public RszScene PlaceWeaponChest(RandomizerLogger logger, RszScene scene, ItemPlacement placement)
-    {
+    public RszScene PlaceWeaponChest(RandomizerLogger logger, RszScene scene, ItemPlacement placement) {
         var weaponDrop = randomizer.ItemRandomizer.GetRandomGun(_rng, allowReoccurance: false);
-        if (weaponDrop == null)
-        {
+        if (weaponDrop == null) {
             // Should never happen given correct weapon definitions
             logger.LogLine("Failed to get random weapon! Empty weapon pool.");
             return scene;
         }
 
-        var transform = new GeneratedViaTransform()
-        {
+        var transform = new GeneratedViaTransform(){
             Position = new Vector3(placement.PosX, placement.PosY, placement.PosZ),
             Rotation = placement.Rotation,
             Scale = Vector3.One,

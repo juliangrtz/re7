@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Serialization;
 
-public class SerializablePosition(float x, float y, float z)
-{
+public class SerializablePosition(float x, float y, float z) {
     public float X { get; set; } = x;
 
     public float Y { get; set; } = y;
@@ -14,8 +13,8 @@ public class SerializablePosition(float x, float y, float z)
         => $"[{X}, {Y}, {Z}]";
 
     public static implicit operator Vector3(SerializablePosition rValue)
-        => new Vector3(rValue.X, rValue.Y, rValue.Z);
+        => new(rValue.X, rValue.Y, rValue.Z);
 
     public static implicit operator SerializablePosition(Vector3 rValue)
-        => new SerializablePosition(rValue.X, rValue.Y, rValue.Z);
+        => new(rValue.X, rValue.Y, rValue.Z);
 }

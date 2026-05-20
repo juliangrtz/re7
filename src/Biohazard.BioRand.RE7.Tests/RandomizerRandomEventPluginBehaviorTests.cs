@@ -4,13 +4,10 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerRandomEventPluginBehaviorTests
-{
+public class RandomizerRandomEventPluginBehaviorTests {
     [Fact]
-    public void RandomEvents_EnableREFrameworkConfigAndInjectPluginSeedMetadata()
-    {
-        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
-        {
+    public void RandomEvents_EnableREFrameworkConfigAndInjectPluginSeedMetadata() {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
             config["allow-dlc-items"] = false;
             config["random-events"] = true;
             config["random-events-interval-min"] = 10;
@@ -42,8 +39,7 @@ public class RandomizerRandomEventPluginBehaviorTests
     }
 
     [Fact]
-    public void RandomEvents_InfiniteAmmo_UsesPassiveSkillInfinityFlag()
-    {
+    public void RandomEvents_InfiniteAmmo_UsesPassiveSkillInfinityFlag() {
         var source = ReadPluginSource("REFPlugin.RandomEvents.cs");
 
         Assert.Contains("case RandomEventKind.WeaponInfiniteAmmo:", source);
@@ -57,8 +53,7 @@ public class RandomizerRandomEventPluginBehaviorTests
     }
 
     [Fact]
-    public void RandomEvents_DebugUi_CanStartEverySupportedEffect()
-    {
+    public void RandomEvents_DebugUi_CanStartEverySupportedEffect() {
         var pluginSource = ReadPluginSource("REFPlugin.cs");
         var randomEventsSource = ReadPluginSource("REFPlugin.RandomEvents.cs");
         var uiSource = ReadPluginSource("REFPlugin.UI.cs");
@@ -73,30 +68,26 @@ public class RandomizerRandomEventPluginBehaviorTests
         Assert.Contains("SetNextWindowPos", uiSource);
         Assert.Contains("NoInputs", uiSource);
 
-        foreach (var kind in new[]
-        {
-            "PlayerBlindness",
-            "PlayerFreeze",
-            "PlayerScale",
-            "WeaponInfiniteAmmo",
-            "WeaponNeuroAmmo",
-            "WeaponExplosiveAmmo",
-            "EnemySpeed",
-            "EnemyInvisible",
-            "EnemyWeak",
-            "EnemyStrong",
-            "EnemyPaused",
-        })
-        {
+        foreach (var kind in new[]{
+                     "PlayerBlindness",
+                     "PlayerFreeze",
+                     "PlayerScale",
+                     "WeaponInfiniteAmmo",
+                     "WeaponNeuroAmmo",
+                     "WeaponExplosiveAmmo",
+                     "EnemySpeed",
+                     "EnemyInvisible",
+                     "EnemyWeak",
+                     "EnemyStrong",
+                     "EnemyPaused",
+                 }) {
             Assert.Contains($"RandomEventKind.{kind}", uiSource);
         }
     }
 
-    private static string ReadPluginSource(string fileName)
-    {
+    private static string ReadPluginSource(string fileName) {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
-        while (directory != null && !File.Exists(Path.Combine(directory.FullName, "biorand-re7.sln")))
-        {
+        while (directory != null && !File.Exists(Path.Combine(directory.FullName, "biorand-re7.sln"))) {
             directory = directory.Parent;
         }
 

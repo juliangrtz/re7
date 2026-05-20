@@ -5,45 +5,41 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-public sealed class WeaponDefinitionRepository
-{
+public sealed class WeaponDefinitionRepository {
     private static WeaponDefinitionRepository? _default;
     private static readonly object _defaultLock = new();
     public ImmutableList<WeaponDefinition> WeaponDefinitions { get; private set; } = [];
     public ImmutableDictionary<WeaponID, WeaponDefinition> IdToWeaponMap { get; private set; } = [];
-    private readonly List<WeaponID> _restrictedWeapons = [
+
+    private readonly List<WeaponID> _restrictedWeapons =[
         WeaponID.GimmickKnife, WeaponID.GoldenBar, WeaponID.Lantern_C,
         WeaponID.Lighter_Z
     ];
 
     private const string WeaponDefinitionFileName = "weapon_definitions.json";
 
-    public static WeaponDefinitionRepository Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                lock (_defaultLock)
-                {
-                    if (_default == null)
-                    {
-                        var repository = new WeaponDefinitionRepository
-                        {
-                            WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName).DeserializeJson<List<WeaponDefinition>>().ToImmutableList()
+    public static WeaponDefinitionRepository Default {
+        get {
+            if (_default == null) {
+                lock (_defaultLock) {
+                    if (_default == null) {
+                        var repository = new WeaponDefinitionRepository{
+                            WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName)
+                                .DeserializeJson<List<WeaponDefinition>>().ToImmutableList()
                         };
                         repository.Initialize();
                         _default = repository;
                     }
                 }
             }
+
             return _default;
         }
     }
 
-    private void Initialize()
-    {
-        WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName).DeserializeJson<List<WeaponDefinition>>().ToImmutableList();
+    private void Initialize() {
+        WeaponDefinitions = EmbeddedData.GetFile(WeaponDefinitionFileName).DeserializeJson<List<WeaponDefinition>>()
+            .ToImmutableList();
         IdToWeaponMap = WeaponDefinitions.ToImmutableDictionary(x => x.WeaponId, x => x);
     }
 
@@ -53,13 +49,11 @@ public sealed class WeaponDefinitionRepository
     public WeaponDefinition FromWeaponId(WeaponID id)
         => IdToWeaponMap[id];
 
-    public void Restrict(WeaponID wp)
-    {
+    public void Restrict(WeaponID wp) {
         _restrictedWeapons.Add(wp);
     }
 
-    public List<ItemID> GetAmmoTypes(WeaponID wp)
-    {
+    public List<ItemID> GetAmmoTypes(WeaponID wp) {
         IdToWeaponMap.TryGetValue(wp, out WeaponDefinition? wpDefinition);
         return wpDefinition?.BulletItemIDs ?? new();
     }
@@ -85,5 +79,5 @@ public sealed class WeaponDefinitionRepository
         => WeaponDefinitions.Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Player).ToList();
 
     public List<WeaponDefinition> EnemyWeapons
-    => WeaponDefinitions.Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Enemy).ToList();
+        => WeaponDefinitions.Where(wp => wp.UserType == Enums.app.CharacterDefine.Type.Enemy).ToList();
 }

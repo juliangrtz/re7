@@ -7,8 +7,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal sealed class ExtraEnemySceneBuilder(
     Randomizer randomizer,
-    EnemyTemplateFactory templateFactory)
-{
+    EnemyTemplateFactory templateFactory) {
     internal const string GeneratorName = "BioRandExtraEnemyGenerator";
     internal const string PoolName = "BioRandExtraEnemyPool";
     internal const string SpawnPointsName = "BioRandExtraEnemySpawnPoints";
@@ -17,22 +16,19 @@ internal sealed class ExtraEnemySceneBuilder(
     private const string EnemyGenerationFsmFolderName = "EnemyGenFsm";
     private const string GenerateFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
 
-    private static readonly IReadOnlyDictionary<int, string> GeneratorSceneByChapter = new Dictionary<int, string>()
-    {
+    private static readonly IReadOnlyDictionary<int, string> GeneratorSceneByChapter = new Dictionary<int, string>(){
         [1] = "natives/stm/scenes/chapter/chapter1/enemy_c01.scn.20",
         [3] = "natives/stm/scenes/chapter/chapter3/enemy_c03.scn.20",
         [4] = "natives/stm/scenes/chapter/chapter4/enemy_c04.scn.20",
     };
 
-    private static readonly HashSet<string> MoldedIds = new(StringComparer.Ordinal)
-    {
+    private static readonly HashSet<string> MoldedIds = new(StringComparer.Ordinal){
         "Em4000",
         "Em4100",
         "Em4200",
     };
 
-    private static readonly (string ScenePrefix, string MapName)[] MoldedAiMapByScenePrefix =
-    [
+    private static readonly (string ScenePrefix, string MapName)[] MoldedAiMapByScenePrefix =[
         ("natives/stm/environment/scene/chapter3/c03_gh", "c03_AIMap"),
         ("natives/stm/environment/scene/chapter3/c03_oldhouse", "c03_AIMap"),
         ("natives/stm/environment/scene/chapter3/c03_cow", "c03_4_Lucus_Cowshed"),
@@ -50,8 +46,7 @@ internal sealed class ExtraEnemySceneBuilder(
         ("natives/stm/scenes/chapter/chapter4/chapter4_2/", "c04_2_AIMap"),
     ];
 
-    private static readonly uint[] GenerateActionUids =
-    [
+    private static readonly uint[] GenerateActionUids =[
         2860522480,
     ];
 
@@ -60,8 +55,7 @@ internal sealed class ExtraEnemySceneBuilder(
         ResolvedExtraEnemyPlacement request,
         EnemyHealthResolver healthResolver,
         int index,
-        Rng rng)
-    {
+        Rng rng) {
         var enemyId = request.Enemy.EnemyId.ToString();
         var spawnInfo = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng)
             .WithName(enemyId);
@@ -95,11 +89,9 @@ internal sealed class ExtraEnemySceneBuilder(
     internal List<RszGameObject> CreateInstances(
         ResolvedExtraEnemyPlacement request,
         EnemyRandomizerOptions options,
-        Rng rng)
-    {
+        Rng rng) {
         var enemyId = request.Enemy.EnemyId.ToString();
-        var transform = new GeneratedViaTransform()
-        {
+        var transform = new GeneratedViaTransform(){
             Position = Vector3.Zero,
             Rotation = Quaternion.Identity,
             Scale = Vector3.One,
@@ -114,8 +106,7 @@ internal sealed class ExtraEnemySceneBuilder(
                 rng,
                 request.Enemy)
             .WithName(enemyId), rng);
-        var instances = new List<RszGameObject>()
-        {
+        var instances = new List<RszGameObject>(){
             instance,
         };
         instances.AddRange(templateFactory.CreatePoolInstancesForNestedSpawnInfos(instance, options.ScaleOptions, rng)
@@ -130,8 +121,7 @@ internal sealed class ExtraEnemySceneBuilder(
         ResolvedExtraEnemyPlacement request,
         RszGameObject spawnInfo,
         int index,
-        Rng rng)
-    {
+        Rng rng) {
         var enemyId = request.Enemy.EnemyId.ToString();
         var fsmGenerator = EnemyTemplateFactory.CloneGameObject(randomizer.TemplateService.GetEnemyFsmGenerator(), rng)
             .WithName($"{GeneratePrefix}_{enemyId}_{index:000}");
@@ -146,8 +136,7 @@ internal sealed class ExtraEnemySceneBuilder(
     internal RszGameObject CreateGenerator(
         IReadOnlyList<RszGameObject> spawnInfos,
         IReadOnlyList<RszGameObject> instances,
-        Rng rng)
-    {
+        Rng rng) {
         var generator = EnemyTemplateFactory.CloneGameObject(randomizer.TemplateService.GetEnemyGenerator(), rng)
             .WithName(GeneratorName);
 
@@ -177,12 +166,10 @@ internal sealed class ExtraEnemySceneBuilder(
 
     internal static RszScene AddFsmGenerators(
         RszScene scene,
-        IReadOnlyCollection<RszGameObject> fsmGenerators)
-    {
+        IReadOnlyCollection<RszGameObject> fsmGenerators) {
         var dynamicParent = scene.FindGameObject(gameObject =>
             gameObject.Name.EndsWith("_dynamic", StringComparison.OrdinalIgnoreCase));
-        if (dynamicParent != null)
-        {
+        if (dynamicParent != null) {
             var children = dynamicParent.Children
                 .AddRange(fsmGenerators);
             return scene.UpdateGameObject(dynamicParent.WithChildren(children));
@@ -191,10 +178,8 @@ internal sealed class ExtraEnemySceneBuilder(
         var fsmFolder = scene.Children
             .OfType<RszFolder>()
             .FirstOrDefault(folder => folder.Name == EnemyGenerationFsmFolderName);
-        if (fsmFolder == null)
-        {
-            foreach (var fsmGenerator in fsmGenerators)
-            {
+        if (fsmFolder == null) {
+            foreach (var fsmGenerator in fsmGenerators) {
                 scene = scene.Add(fsmGenerator);
             }
 
@@ -207,8 +192,7 @@ internal sealed class ExtraEnemySceneBuilder(
 
     internal static string GetGeneratorScene(
         string requestScene,
-        IReadOnlyCollection<ResolvedExtraEnemyPlacement> requests)
-    {
+        IReadOnlyCollection<ResolvedExtraEnemyPlacement> requests) {
         if (!IsEnvironmentScene(requestScene))
             return requestScene;
 
@@ -216,14 +200,12 @@ internal sealed class ExtraEnemySceneBuilder(
             .Select(request => request.Placement.Chapter)
             .Distinct()
             .ToArray();
-        if (chapters.Length != 1)
-        {
+        if (chapters.Length != 1) {
             throw new InvalidOperationException(
                 $"Extra enemy environment scene '{requestScene}' has placements for multiple chapters: {string.Join(", ", chapters)}.");
         }
 
-        if (GeneratorSceneByChapter.TryGetValue(chapters[0], out var generatorScene))
-        {
+        if (GeneratorSceneByChapter.TryGetValue(chapters[0], out var generatorScene)) {
             return generatorScene;
         }
 
@@ -236,24 +218,20 @@ internal sealed class ExtraEnemySceneBuilder(
         int placementCount,
         int uncappedTargetEnemyCount,
         int targetEnemyCount,
-        int? sceneLimit)
-    {
-        if (sceneLimit == null && placementCount == targetEnemyCount)
-        {
+        int? sceneLimit) {
+        if (sceneLimit == null && placementCount == targetEnemyCount) {
             return scene;
         }
 
         var label = $"{scene} ({placementCount} => {targetEnemyCount}";
-        if (sceneLimit != null && targetEnemyCount != uncappedTargetEnemyCount)
-        {
+        if (sceneLimit != null && targetEnemyCount != uncappedTargetEnemyCount) {
             label += $", limit {sceneLimit}";
         }
 
         return label + ")";
     }
 
-    private static RszGameObject PreparePoolInstance(RszGameObject instance)
-    {
+    private static RszGameObject PreparePoolInstance(RszGameObject instance) {
         return instance.WithSettings(instance.Settings.SetField("Draw", false));
     }
 
@@ -263,8 +241,7 @@ internal sealed class ExtraEnemySceneBuilder(
     private static void ConfigureMoldedAiMap(
         app.EnemySpawnInfo spawnInfo,
         string enemyId,
-        string sceneFile)
-    {
+        string sceneFile) {
         if (!MoldedIds.Contains(enemyId))
             return;
 
@@ -278,13 +255,10 @@ internal sealed class ExtraEnemySceneBuilder(
         spawnInfo.MapParameter.VolumeSpaceMapName = "";
     }
 
-    private static string? ResolveMoldedAiMapName(string sceneFile)
-    {
+    private static string? ResolveMoldedAiMapName(string sceneFile) {
         var normalizedSceneFile = sceneFile.Replace('\\', '/');
-        foreach (var (scenePrefix, mapName) in MoldedAiMapByScenePrefix)
-        {
-            if (normalizedSceneFile.StartsWith(scenePrefix, StringComparison.OrdinalIgnoreCase))
-            {
+        foreach (var (scenePrefix, mapName) in MoldedAiMapByScenePrefix) {
+            if (normalizedSceneFile.StartsWith(scenePrefix, StringComparison.OrdinalIgnoreCase)) {
                 return mapName;
             }
         }
@@ -300,26 +274,21 @@ internal sealed class ExtraEnemySceneBuilder(
 
     private static RszGameObject ConfigureGenerateActions(
         RszGameObject generationGameObject,
-        Guid spawnInfoGuid)
-    {
+        Guid spawnInfoGuid) {
         var actionIndex = 0;
-        var result = generationGameObject.Visit(node =>
-        {
+        var result = generationGameObject.Visit(node => {
             if (node is not RszObjectNode objectNode ||
-                objectNode.Type.Name != "via.fsm.SceneFsmData")
-            {
+                objectNode.Type.Name != "via.fsm.SceneFsmData") {
                 return node;
             }
 
             var actions = (RszArrayNode)objectNode["v1_Actions"];
             var configuredActions = ImmutableArray.CreateBuilder<IRszNode>();
-            foreach (var action in actions.Children.OfType<RszObjectNode>())
-            {
+            foreach (var action in actions.Children.OfType<RszObjectNode>()) {
                 if (action.Type.Name != "app.fsm.EnemyGenerate")
                     continue;
 
-                if (actionIndex >= GenerateActionUids.Length)
-                {
+                if (actionIndex >= GenerateActionUids.Length) {
                     throw new InvalidOperationException(
                         $"Extra enemy generation template has more app.fsm.EnemyGenerate actions than {GenerateFsmResource} expects.");
                 }
@@ -340,8 +309,7 @@ internal sealed class ExtraEnemySceneBuilder(
                 .SetField("v2_Conditions", new RszArrayNode(conditions.Type, []));
         });
 
-        if (actionIndex != GenerateActionUids.Length)
-        {
+        if (actionIndex != GenerateActionUids.Length) {
             throw new InvalidOperationException(
                 $"Extra enemy generation template has {actionIndex} app.fsm.EnemyGenerate actions, expected {GenerateActionUids.Length} for {GenerateFsmResource}.");
         }
@@ -349,35 +317,31 @@ internal sealed class ExtraEnemySceneBuilder(
         return result;
     }
 
-    private static void ValidateFsmGeneratorTemplate(RszGameObject generationGameObject)
-    {
+    private static void ValidateFsmGeneratorTemplate(RszGameObject generationGameObject) {
         var componentNames = generationGameObject.Components
             .Select(component => component.Type.Name)
             .ToArray();
         var unexpectedComponents = componentNames
-            .Where(componentName => componentName is "app.GimmickActiveControl" or "via.physics.Colliders" or "app.TriggerInAction")
+            .Where(componentName =>
+                componentName is "app.GimmickActiveControl" or "via.physics.Colliders" or "app.TriggerInAction")
             .ToArray();
-        if (unexpectedComponents.Length != 0)
-        {
+        if (unexpectedComponents.Length != 0) {
             throw new InvalidOperationException(
                 $"Extra enemy generation template has unsupported trigger wrapper components: {string.Join(", ", unexpectedComponents)}.");
         }
 
         if (!componentNames.Contains("via.Transform", StringComparer.Ordinal) ||
-            !componentNames.Contains("via.fsm.Fsm", StringComparer.Ordinal))
-        {
+            !componentNames.Contains("via.fsm.Fsm", StringComparer.Ordinal)) {
             throw new InvalidOperationException(
                 $"Extra enemy generation template must be a plain GameObject with via.Transform and via.fsm.Fsm; found: {string.Join(", ", componentNames)}.");
         }
     }
 
-    private static void ValidateFsmResource(RszGameObject generationGameObject)
-    {
+    private static void ValidateFsmResource(RszGameObject generationGameObject) {
         var fsm = generationGameObject.FindComponent("via.fsm.Fsm")
-            ?? throw new InvalidOperationException("Extra enemy generation template is missing via.fsm.Fsm.");
+                  ?? throw new InvalidOperationException("Extra enemy generation template is missing via.fsm.Fsm.");
         var resource = ((RszResourceNode)fsm["Resource"]).Value;
-        if (!string.Equals(resource, GenerateFsmResource, StringComparison.Ordinal))
-        {
+        if (!string.Equals(resource, GenerateFsmResource, StringComparison.Ordinal)) {
             throw new InvalidOperationException(
                 $"Extra enemy generation template uses '{resource}', expected '{GenerateFsmResource}'.");
         }

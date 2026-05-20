@@ -7,8 +7,7 @@ namespace Biohazard.BioRand.RE7.Benchmarks;
 
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
-public class RandomizerGenerationBenchmarks
-{
+public class RandomizerGenerationBenchmarks {
     private const int Seed = 0x42424242;
     private RandomizerExecutor _executor = null!;
     private RandomizerInput _input = null!;
@@ -22,29 +21,24 @@ public class RandomizerGenerationBenchmarks
     public RandomizerScenario Scenario { get; set; }
 
     [GlobalSetup]
-    public void GlobalSetup()
-    {
+    public void GlobalSetup() {
         _executor = new RandomizerExecutor(BenchmarkPakPath.Resolve(), new NoOpReporter());
         _input = CreateInput();
     }
 
     [IterationSetup]
-    public void IterationSetup()
-    {
+    public void IterationSetup() {
         _input = CreateInput();
     }
 
     [Benchmark(Description = "Generate patch and Fluffy outputs")]
-    public long Generate()
-    {
+    public long Generate() {
         var output = _executor.Randomize(_input);
         return output.Assets.Sum(asset => (long)asset.Data.Length);
     }
 
-    private RandomizerInput CreateInput()
-    {
-        return new RandomizerInput
-        {
+    private RandomizerInput CreateInput() {
+        return new RandomizerInput{
             Seed = Seed,
             UserName = "benchmark",
             ProfileName = $"Benchmark: {Scenario}",
@@ -54,13 +48,11 @@ public class RandomizerGenerationBenchmarks
         };
     }
 
-    private static RandomizerConfiguration CreateConfiguration(RandomizerScenario scenario)
-    {
+    private static RandomizerConfiguration CreateConfiguration(RandomizerScenario scenario) {
         var configuration = RandomizerExecutor.DefaultConfiguration;
         configuration["debug-download-data"] = false;
 
-        switch (scenario)
-        {
+        switch (scenario) {
             case RandomizerScenario.Minimal:
                 DisableHighLevelFeatures(configuration);
                 break;
@@ -90,28 +82,25 @@ public class RandomizerGenerationBenchmarks
         return configuration;
     }
 
-    private static RandomizerConfiguration LoadEmbeddedConfiguration(string fileName)
-    {
+    private static RandomizerConfiguration LoadEmbeddedConfiguration(string fileName) {
         var assembly = Assembly.GetExecutingAssembly();
         var resourceName = assembly
             .GetManifestResourceNames()
             .Single(name => name.EndsWith($".{fileName}", StringComparison.Ordinal));
 
         using var stream = assembly.GetManifestResourceStream(resourceName)
-            ?? throw new FileNotFoundException($"Embedded profile '{fileName}' not found.");
+                           ?? throw new FileNotFoundException($"Embedded profile '{fileName}' not found.");
         using var reader = new StreamReader(stream);
         return RandomizerConfiguration.FromJson(reader.ReadToEnd());
     }
 
-    private static bool ShouldDownloadDynamicData()
-    {
+    private static bool ShouldDownloadDynamicData() {
         var value = Environment.GetEnvironmentVariable("BIORAND_RE7_BENCHMARK_DOWNLOAD_DATA");
         return string.Equals(value, "1", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+               || string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
     }
 
-    private static void DisableHighLevelFeatures(RandomizerConfiguration configuration)
-    {
+    private static void DisableHighLevelFeatures(RandomizerConfiguration configuration) {
         configuration["randomized-messages"] = false;
         configuration["random-enemies"] = false;
         configuration["extra-enemy-amount"] = 0.0;
@@ -140,8 +129,7 @@ public class RandomizerGenerationBenchmarks
     }
 }
 
-public enum RandomizerScenario
-{
+public enum RandomizerScenario {
     Minimal,
     DefaultProfile,
     ItemsAndKeyItems,
@@ -149,10 +137,8 @@ public enum RandomizerScenario
     RealisticProfile
 }
 
-internal sealed class NoOpReporter : IProgressReporter
-{
-    public void RunTask(string text, Action cb)
-    {
+internal sealed class NoOpReporter : IProgressReporter {
+    public void RunTask(string text, Action cb) {
         cb();
     }
 }

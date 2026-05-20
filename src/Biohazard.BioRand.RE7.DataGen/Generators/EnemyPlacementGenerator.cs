@@ -12,8 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
-internal class EnemyPlacementGenerator : IFileGenerator
-{
+internal class EnemyPlacementGenerator : IFileGenerator {
     public string Id => "enemies";
     public bool CopyToDataDirectory => true;
 
@@ -25,22 +24,20 @@ internal class EnemyPlacementGenerator : IFileGenerator
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    private static readonly string[] _pathExclusions =
-    [
+    private static readonly string[] _pathExclusions =[
         "/alphatest/", "/vfx/", "/animation/", "/copyasset/", "/light/",
         "lightset", "/ui/", "/sound/", "/vr/", "/install/",
         "/preloading/", "/loadtemp/", "/mainmenu/", "cubemap"
     ];
 
     private static readonly Regex _enemyRegexPath =
-        new Regex(@"Character/Enemy/(Em\d{4})\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        new(@"Character/Enemy/(Em\d{4})\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 
     private static readonly Regex _enemyRegexGameObjectName =
-        new Regex(@"(Em\d{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        new(@"(Em\d{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-    private List<EnemyPlacement> ReadEnemyPlacements(ulong hash)
-    {
+    private List<EnemyPlacement> ReadEnemyPlacements(ulong hash) {
         var path = _pakList.GetPath(hash)!;
 
         if (IsExcluded(path))
@@ -51,8 +48,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
 
         var results = new List<EnemyPlacement>();
 
-        scene.VisitGameObjects(go =>
-        {
+        scene.VisitGameObjects(go => {
             TryExtractFromMesh(go, path, results);
             TryExtractFromSpawnInfo(go, path, results);
         });
@@ -63,8 +59,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
     private static bool IsExcluded(string path) =>
         _pathExclusions.Any(ex => path.Contains(ex, StringComparison.OrdinalIgnoreCase));
 
-    private void TryExtractFromMesh(RszGameObject go, string path, List<EnemyPlacement> results)
-    {
+    private void TryExtractFromMesh(RszGameObject go, string path, List<EnemyPlacement> results) {
         var mesh = go.FindComponent("via.render.Mesh");
         if (mesh == null)
             return;
@@ -92,8 +87,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         );
     }
 
-    private void TryExtractFromSpawnInfo(RszGameObject go, string path, List<EnemyPlacement> results)
-    {
+    private void TryExtractFromSpawnInfo(RszGameObject go, string path, List<EnemyPlacement> results) {
         var spawn = go.FindComponent<app.EnemySpawnInfo>();
         if (spawn == null)
             return;
@@ -117,16 +111,14 @@ internal class EnemyPlacementGenerator : IFileGenerator
         );
     }
 
-    private EnemyID? ParseEnemyId(string source, string debugName, string path, string context)
-    {
+    private EnemyID? ParseEnemyId(string source, string debugName, string path, string context) {
         Regex regexToBeUsed = context == "EnemySpawnInfo" ? _enemyRegexGameObjectName : _enemyRegexPath;
         var match = regexToBeUsed.Match(source);
         if (!match.Success)
             return null;
 
         var emIdInPath = match.Groups[1].Value;
-        if (!Enum.TryParse(emIdInPath, true, out EnemyID enemyId))
-        {
+        if (!Enum.TryParse(emIdInPath, true, out EnemyID enemyId)) {
             AnsiConsole.MarkupLine($"[yellow]{context} -- Unknown Enemy ID {debugName} in {path}[/].");
             return null;
         }
@@ -141,8 +133,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         EnemyID enemyId,
         IEnemyDefinition definition,
         bool isSpawnInfo,
-        bool enabled)
-    {
+        bool enabled) {
         var dlc = DlcTypeExtensions.FromPakFileName(path);
         if (dlc != null)
             return;
@@ -154,7 +145,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
             ? "Molded (Blade)"
             : definition.Name;
 
-        string tags = path.StartsWith("natives/stm/scenes/enemy", StringComparison.InvariantCultureIgnoreCase) 
+        string tags = path.StartsWith("natives/stm/scenes/enemy", StringComparison.InvariantCultureIgnoreCase)
             ? "prefab"
             : "";
 
@@ -163,8 +154,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
 
         tags = tags.TrimStart();
 
-        results.Add(new EnemyPlacement
-        {
+        results.Add(new EnemyPlacement{
             EnemyID = enemyId,
             Chapter = chapter,
             Dlc = dlc,
@@ -184,8 +174,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         });
     }
 
-    private static int GetChapterFromPath(string path) => path switch
-    {
+    private static int GetChapterFromPath(string path) => path switch{
         var p when p.Contains("chapter0") => 0,
         var p when p.Contains("chapter1") || p.Contains("c01") => 1,
         var p when p.Contains("chapter3") || p.Contains("c03") => 3,
@@ -196,16 +185,14 @@ internal class EnemyPlacementGenerator : IFileGenerator
         _ => -1
     };
 
-    private List<EnemyPlacement> GetEnemyPlacements()
-    {
+    private List<EnemyPlacement> GetEnemyPlacements() {
         var results = new ConcurrentBag<EnemyPlacement>();
 
         var hashes = _pakFile.FileHashes
             .Where(h => _pakList.GetPath(h)?.EndsWith($".scn.{FileVersions.SceneFileVersion}") == true)
             .ToList();
 
-        Parallel.ForEach(hashes, hash =>
-        {
+        Parallel.ForEach(hashes, hash => {
             var path = _pakList.GetPath(hash)!;
             var placements = ReadEnemyPlacements(hash);
 
@@ -221,8 +208,7 @@ internal class EnemyPlacementGenerator : IFileGenerator
         return results.ToList();
     }
 
-    public object Generate(GenerateSettings settings)
-    {
+    public object Generate(GenerateSettings settings) {
         var placements = GetEnemyPlacements();
         AnsiConsole.MarkupLine($"[green]Generated {placements.Count} enemy placements.[/]");
         return placements.OrderBy(p => p.Chapter);

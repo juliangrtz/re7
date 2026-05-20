@@ -1,5 +1,4 @@
 using System.Reflection;
-
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 
@@ -7,10 +6,8 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 [Collection("FlagService serial")]
 [Trait("Category", "RequiresPak")]
-public class FlagServiceTests
-{
-    private static readonly (Guid Guid, string Name)[] RecipeUnlockFlags =
-    [
+public class FlagServiceTests {
+    private static readonly (Guid Guid, string Name)[] RecipeUnlockFlags =[
         (new("38208fea-638c-4d54-ac9c-8d05a31436dd"), "cmb_releasable_RemedyS"),
         (new("d5c61cc1-5fc3-42bd-a247-a0673c3dc1b8"), "cmb_enable_RemedyS"),
         (new("d8e59fe1-a257-4a78-8574-d20f5ad35e1d"), "cmb_enable_Eye"),
@@ -26,18 +23,17 @@ public class FlagServiceTests
     ];
 
     [Fact]
-    public void Save_WithoutPendingFlags_DoesNotModifyGlobalVariables()
-    {
+    public void Save_WithoutPendingFlags_DoesNotModifyGlobalVariables() {
         using var context = CreateContext();
 
         context.FlagService.Save(new RandomizerLogger());
 
-        Assert.False(context.Randomizer.FileRepository.GetOutputFilesSnapshot().ContainsKey(RandomizerTestPaths.GlobalVariablesPath));
+        Assert.False(context.Randomizer.FileRepository.GetOutputFilesSnapshot()
+            .ContainsKey(RandomizerTestPaths.GlobalVariablesPath));
     }
 
     [Fact]
-    public void Save_WithAllocatedFlags_PersistsBioRandVariablesAndValues()
-    {
+    public void Save_WithAllocatedFlags_PersistsBioRandVariablesAndValues() {
         using var context = CreateContext();
         Assert.DoesNotContain(
             RandomizerTestHelpers.ReadGlobalVariableGroups(
@@ -65,12 +61,8 @@ public class FlagServiceTests
     }
 
     [Fact]
-    public void Randomizer_WithRecipesUnlockFromStart_EnablesExpectedGlobalVariables()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config["recipes-unlock-from-start"] = true;
-        });
+    public void Randomizer_WithRecipesUnlockFromStart_EnablesExpectedGlobalVariables() {
+        using var result = RandomizerTest.RunState(config => { config["recipes-unlock-from-start"] = true; });
 
         var beforeVariables = RandomizerTestHelpers.ReadGlobalVariableGroups(result, before: true)
             .SelectMany(group => group.Variables)
@@ -81,8 +73,7 @@ public class FlagServiceTests
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.GlobalVariablesPath));
 
-        foreach (var (guid, name) in RecipeUnlockFlags)
-        {
+        foreach (var (guid, name) in RecipeUnlockFlags) {
             Assert.True(beforeVariables.TryGetValue(guid, out var before), $"Missing baseline flag {name} ({guid}).");
             Assert.True(afterVariables.TryGetValue(guid, out var after), $"Missing modded flag {name} ({guid}).");
 
@@ -98,11 +89,9 @@ public class FlagServiceTests
             flag => !beforeVariables[flag.Guid].BooleanValue && afterVariables[flag.Guid].BooleanValue);
     }
 
-    private static FlagServiceTestContext CreateContext(Action<RandomizerConfiguration>? configure = null)
-    {
+    private static FlagServiceTestContext CreateContext(Action<RandomizerConfiguration>? configure = null) {
         var configuration = RandomizerTest.CreateFeatureTestConfiguration(configure);
-        var input = new RandomizerInput()
-        {
+        var input = new RandomizerInput(){
             Seed = 0x42424242,
             UserName = "flag-service-tests",
             ProfileName = "Flag Service Tests",
@@ -120,13 +109,11 @@ public class FlagServiceTests
         return new FlagServiceTestContext(randomizer, randomizer.FlagService);
     }
 
-    private sealed class FlagServiceTestContext(Randomizer randomizer, FlagService flagService) : IDisposable
-    {
+    private sealed class FlagServiceTestContext(Randomizer randomizer, FlagService flagService) : IDisposable {
         public Randomizer Randomizer { get; } = randomizer;
         public FlagService FlagService { get; } = flagService;
 
-        public void Dispose()
-        {
+        public void Dispose() {
             Randomizer.Dispose();
         }
     }

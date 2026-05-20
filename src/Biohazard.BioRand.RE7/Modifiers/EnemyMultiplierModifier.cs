@@ -4,8 +4,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class EnemyMultiplierModifier : Modifier
-{
+internal class EnemyMultiplierModifier : Modifier {
     private const string RandomizerKey = "modifier/enemy-multiplier";
 
     internal sealed record EnemySpawnSlot(
@@ -31,20 +30,18 @@ internal class EnemyMultiplierModifier : Modifier
         RszGameObject GenerationGameObject
     );
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var multiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
-        if (multiplier == 1.0)
-        {
+        if (multiplier == 1.0) {
             logger.LogLine("Not running modifier with default modifier of 1.0.");
             return;
         }
 
         var enemyLimitService = randomizer.EnemySceneLimitService;
         var rng = randomizer.GetRng(RandomizerKey);
-        foreach (var scenePath in GetCandidateScenePaths(randomizer))
-        {
-            var scnFile = randomizer.FileRepository.GetScnFile(scenePath).ToBuilder(randomizer.FileRepository.TypeRepository);
+        foreach (var scenePath in GetCandidateScenePaths(randomizer)) {
+            var scnFile = randomizer.FileRepository.GetScnFile(scenePath)
+                .ToBuilder(randomizer.FileRepository.TypeRepository);
             var updatedScene = ProcessScene(
                 scnFile.Scene,
                 randomizer,
@@ -54,19 +51,16 @@ internal class EnemyMultiplierModifier : Modifier
                 rng,
                 enemyLimitService.GetMaxEnemiesForScene(scenePath),
                 enemyLimitService);
-            if (!ReferenceEquals(updatedScene, scnFile.Scene))
-            {
+            if (!ReferenceEquals(updatedScene, scnFile.Scene)) {
                 scnFile.Scene = updatedScene;
                 randomizer.FileRepository.SetScnFile(scenePath, scnFile.AddMissingResources().Build());
             }
         }
     }
 
-    private static IEnumerable<string> GetCandidateScenePaths(Randomizer randomizer)
-    {
+    private static IEnumerable<string> GetCandidateScenePaths(Randomizer randomizer) {
         var targetRepository = AreaSceneTargetRepository.Default;
-        if (targetRepository.All.Count == 0)
-        {
+        if (targetRepository.All.Count == 0) {
             return randomizer.AreaService.Areas.Select(area => area.Path);
         }
 
@@ -92,8 +86,7 @@ internal class EnemyMultiplierModifier : Modifier
         double multiplier,
         Rng rng,
         int? maxEnemyCount = null,
-        EnemySceneLimitService? enemyLimitService = null)
-    {
+        EnemySceneLimitService? enemyLimitService = null) {
         var slots = CollectMultipliableSpawnSlots(scene);
         var limitableSlots = maxEnemyCount == null
             ? []
@@ -116,14 +109,11 @@ internal class EnemyMultiplierModifier : Modifier
             ? $", limit {Math.Max(0, maxEnemyCount.Value)}"
             : "";
         logger.Push($"{scenePath}: enemy multiplier {currentEnemyCount} => {targetCount}{limitLabel}");
-        if (targetCount < currentEnemyCount)
-        {
+        if (targetCount < currentEnemyCount) {
             scene = limitableSlots.IsDefaultOrEmpty
                 ? RemoveSpawnSlots(scene, slots, currentEnemyCount - targetCount, logger, rng)
                 : DisableGenerateSlots(scene, limitableSlots, currentEnemyCount - targetCount, logger, rng);
-        }
-        else if (slots.Length != 0)
-        {
+        } else if (slots.Length != 0) {
             scene = AddSpawnSlots(scene, randomizer, slots, targetCount - currentEnemyCount, logger, rng);
         }
 
@@ -132,8 +122,7 @@ internal class EnemyMultiplierModifier : Modifier
         return scene;
     }
 
-    internal static int GetTargetEnemyCount(int currentEnemyCount, double multiplier)
-    {
+    internal static int GetTargetEnemyCount(int currentEnemyCount, double multiplier) {
         if (currentEnemyCount <= 0)
             return 0;
 
@@ -141,11 +130,9 @@ internal class EnemyMultiplierModifier : Modifier
         return Math.Max(0, (int)Math.Round(currentEnemyCount * safeMultiplier, MidpointRounding.AwayFromZero));
     }
 
-    internal static int ApplyMaxEnemyCount(int currentEnemyCount, int uncappedTargetCount, int maxEnemyCount)
-    {
+    internal static int ApplyMaxEnemyCount(int currentEnemyCount, int uncappedTargetCount, int maxEnemyCount) {
         var safeMaxEnemyCount = Math.Max(0, maxEnemyCount);
-        if (uncappedTargetCount >= currentEnemyCount)
-        {
+        if (uncappedTargetCount >= currentEnemyCount) {
             return Math.Max(currentEnemyCount, Math.Min(uncappedTargetCount, safeMaxEnemyCount));
         }
 
@@ -159,28 +146,22 @@ internal class EnemyMultiplierModifier : Modifier
 
     internal static ImmutableArray<EnemyGenerateSlot> CollectLimitableSpawnSlots(
         RszScene scene,
-        EnemySceneLimitService? enemyLimitService = null)
-    {
+        EnemySceneLimitService? enemyLimitService = null) {
         var spawnInfoAliases = new Dictionary<Guid, string>();
-        scene.VisitGameObjects(gameObject =>
-        {
-            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject))
-            {
+        scene.VisitGameObjects(gameObject => {
+            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject)) {
                 var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>()!;
                 spawnInfoAliases[gameObject.Guid] = spawnInfo.UnitAlias;
             }
         });
 
         var slots = ImmutableArray.CreateBuilder<EnemyGenerateSlot>();
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             if (!IsGenerationGameObject(gameObject))
                 return;
 
-            foreach (var spawnInfoGuid in GetEnabledEnemyGenerateSpawnInfoRefs(gameObject).Distinct())
-            {
-                if (!spawnInfoAliases.TryGetValue(spawnInfoGuid, out var unitAlias))
-                {
+            foreach (var spawnInfoGuid in GetEnabledEnemyGenerateSpawnInfoRefs(gameObject).Distinct()) {
+                if (!spawnInfoAliases.TryGetValue(spawnInfoGuid, out var unitAlias)) {
                     if (enemyLimitService?.TryGetVanillaSpawnInfo(spawnInfoGuid, out var placement) != true)
                         continue;
 
@@ -198,13 +179,10 @@ internal class EnemyMultiplierModifier : Modifier
         return slots.ToImmutable();
     }
 
-    internal static ImmutableArray<EnemySpawnGroup> CollectMultipliableSpawnGroups(RszScene scene)
-    {
+    internal static ImmutableArray<EnemySpawnGroup> CollectMultipliableSpawnGroups(RszScene scene) {
         var spawnInfos = new Dictionary<Guid, RszGameObject>();
-        scene.VisitGameObjects(gameObject =>
-        {
-            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject))
-            {
+        scene.VisitGameObjects(gameObject => {
+            if (EnemySpawnInfoRules.ShouldReplaceSpawnInfo(gameObject)) {
                 spawnInfos[gameObject.Guid] = gameObject;
             }
         });
@@ -215,8 +193,7 @@ internal class EnemyMultiplierModifier : Modifier
         var parentByChild = BuildParentMap(scene);
         var generationObjects = new List<(RszGameObject GameObject, ImmutableArray<Guid> SpawnInfoRefs)>();
         var generationObjectsBySpawnInfo = new Dictionary<Guid, List<RszGameObject>>();
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             if (!IsGenerationGameObject(gameObject))
                 return;
 
@@ -229,10 +206,8 @@ internal class EnemyMultiplierModifier : Modifier
                 return;
 
             generationObjects.Add((gameObject, referencedSpawnInfos));
-            foreach (var spawnInfoGuid in referencedSpawnInfos)
-            {
-                if (!generationObjectsBySpawnInfo.TryGetValue(spawnInfoGuid, out var generationRefs))
-                {
+            foreach (var spawnInfoGuid in referencedSpawnInfos) {
+                if (!generationObjectsBySpawnInfo.TryGetValue(spawnInfoGuid, out var generationRefs)) {
                     generationRefs = [];
                     generationObjectsBySpawnInfo[spawnInfoGuid] = generationRefs;
                 }
@@ -242,16 +217,13 @@ internal class EnemyMultiplierModifier : Modifier
         });
 
         var groups = ImmutableArray.CreateBuilder<EnemySpawnGroup>();
-        foreach (var (generationGameObject, referencedSpawnInfos) in generationObjects)
-        {
+        foreach (var (generationGameObject, referencedSpawnInfos) in generationObjects) {
             var slots = ImmutableArray.CreateBuilder<EnemySpawnSlot>();
-            foreach (var spawnInfoGuid in referencedSpawnInfos)
-            {
+            foreach (var spawnInfoGuid in referencedSpawnInfos) {
                 if (!spawnInfos.TryGetValue(spawnInfoGuid, out var spawnInfoGameObject) ||
                     !generationObjectsBySpawnInfo.TryGetValue(spawnInfoGuid, out var generationRefs) ||
                     generationRefs.Count != 1 ||
-                    !parentByChild.TryGetValue(spawnInfoGuid, out var spawnInfoParentGuid))
-                {
+                    !parentByChild.TryGetValue(spawnInfoGuid, out var spawnInfoParentGuid)) {
                     continue;
                 }
 
@@ -270,8 +242,7 @@ internal class EnemyMultiplierModifier : Modifier
                     generationGameObject));
             }
 
-            if (slots.Count != 0)
-            {
+            if (slots.Count != 0) {
                 groups.Add(new EnemySpawnGroup(
                     generationGameObject.Guid,
                     generationGameObject,
@@ -282,15 +253,12 @@ internal class EnemyMultiplierModifier : Modifier
         return groups.ToImmutable();
     }
 
-    internal static ImmutableArray<Guid> GetEnabledEnemyGenerateSpawnInfoRefs(RszGameObject gameObject)
-    {
+    internal static ImmutableArray<Guid> GetEnabledEnemyGenerateSpawnInfoRefs(RszGameObject gameObject) {
         var result = ImmutableArray.CreateBuilder<Guid>();
-        gameObject.Visit(node =>
-        {
+        gameObject.Visit(node => {
             if (node is not RszObjectNode objectNode ||
                 !IsEnemyGenerateAction(objectNode) ||
-                !IsEnemyGenerateEnabled(objectNode))
-            {
+                !IsEnemyGenerateEnabled(objectNode)) {
                 return;
             }
 
@@ -306,8 +274,7 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableArray<EnemySpawnSlot> slots,
         int removeCount,
         RandomizerLogger logger,
-        Rng rng)
-    {
+        Rng rng) {
         var removedSlots = SelectRandomSlotsWithoutReplacement(slots, removeCount, rng);
         var removedSpawnInfosByGeneration = removedSlots
             .GroupBy(slot => slot.GenerationGameObjectGuid)
@@ -315,17 +282,15 @@ internal class EnemyMultiplierModifier : Modifier
                 group => group.Key,
                 group => group.Select(slot => slot.SpawnInfoGuid).ToHashSet());
 
-        foreach (var (generationGameObjectGuid, removedSpawnInfoGuids) in removedSpawnInfosByGeneration)
-        {
+        foreach (var (generationGameObjectGuid, removedSpawnInfoGuids) in removedSpawnInfosByGeneration) {
             var generationGameObject = scene.FindGameObject(generationGameObjectGuid);
-            if (generationGameObject != null)
-            {
-                scene = scene.UpdateGameObject(DisableEnemyGenerateActions(generationGameObject, removedSpawnInfoGuids));
+            if (generationGameObject != null) {
+                scene = scene.UpdateGameObject(DisableEnemyGenerateActions(generationGameObject,
+                    removedSpawnInfoGuids));
             }
         }
 
-        foreach (var slot in removedSlots)
-        {
+        foreach (var slot in removedSlots) {
             logger.LogLine($"Removing {slot.UnitAlias} ({slot.SpawnInfoGuid})");
             scene = scene.RemoveGameObject(slot.SpawnInfoGuid);
         }
@@ -338,8 +303,7 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableArray<EnemyGenerateSlot> slots,
         int removeCount,
         RandomizerLogger logger,
-        Rng rng)
-    {
+        Rng rng) {
         var removedSlots = SelectRandomSlotsWithoutReplacement(slots, removeCount, rng);
         var removedSpawnInfosByGeneration = removedSlots
             .GroupBy(slot => slot.GenerationGameObjectGuid)
@@ -347,17 +311,15 @@ internal class EnemyMultiplierModifier : Modifier
                 group => group.Key,
                 group => group.Select(slot => slot.SpawnInfoGuid).ToHashSet());
 
-        foreach (var (generationGameObjectGuid, removedSpawnInfoGuids) in removedSpawnInfosByGeneration)
-        {
+        foreach (var (generationGameObjectGuid, removedSpawnInfoGuids) in removedSpawnInfosByGeneration) {
             var generationGameObject = scene.FindGameObject(generationGameObjectGuid);
-            if (generationGameObject != null)
-            {
-                scene = scene.UpdateGameObject(DisableEnemyGenerateActions(generationGameObject, removedSpawnInfoGuids));
+            if (generationGameObject != null) {
+                scene = scene.UpdateGameObject(DisableEnemyGenerateActions(generationGameObject,
+                    removedSpawnInfoGuids));
             }
         }
 
-        foreach (var slot in removedSlots)
-        {
+        foreach (var slot in removedSlots) {
             logger.LogLine($"Disabling {slot.UnitAlias} ({slot.SpawnInfoGuid})");
         }
 
@@ -370,10 +332,8 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableArray<EnemySpawnSlot> slots,
         int addCount,
         RandomizerLogger logger,
-        Rng rng)
-    {
-        for (var i = 0; i < addCount; i++)
-        {
+        Rng rng) {
+        for (var i = 0; i < addCount; i++) {
             var sourceSlot = rng.Next(slots);
             scene = DuplicateSpawnSlot(scene, randomizer, sourceSlot, logger, rng);
         }
@@ -386,24 +346,23 @@ internal class EnemyMultiplierModifier : Modifier
         Randomizer randomizer,
         EnemySpawnSlot sourceSlot,
         RandomizerLogger logger,
-        Rng rng)
-    {
+        Rng rng) {
         var spawnInfoClone = CloneGameObject(sourceSlot.SpawnInfoGameObject, rng)
             .WithName(sourceSlot.SpawnInfoGameObject.Name + "_BioRandMultiplier");
 
         var enemyInstanceClone = CreateEnemyInstanceClone(scene, randomizer, sourceSlot, rng);
-        if (enemyInstanceClone == null)
-        {
+        if (enemyInstanceClone == null) {
             // TODO External pool ref?
             // Maybe don't skip...
-            logger.LogLine($"Skipped multiplying {sourceSlot.UnitAlias}: unable to find or create a pooled enemy instance.");
+            logger.LogLine(
+                $"Skipped multiplying {sourceSlot.UnitAlias}: unable to find or create a pooled enemy instance.");
             return scene;
         }
 
         var spawnInfoParent = scene.FindGameObject(sourceSlot.SpawnInfoParentGuid);
-        if (spawnInfoParent == null)
-        {
-            logger.LogLine($"Skipped multiplying {sourceSlot.UnitAlias}: missing spawn info parent {sourceSlot.SpawnInfoParentGuid}.");
+        if (spawnInfoParent == null) {
+            logger.LogLine(
+                $"Skipped multiplying {sourceSlot.UnitAlias}: missing spawn info parent {sourceSlot.SpawnInfoParentGuid}.");
             return scene;
         }
 
@@ -411,17 +370,16 @@ internal class EnemyMultiplierModifier : Modifier
         scene = scene.UpdateGameObject(spawnInfoParent);
 
         var enemyPool = scene.FindGameObject(sourceSlot.EnemyPoolGuid);
-        if (enemyPool == null)
-        {
-            logger.LogLine($"Skipped multiplying {sourceSlot.UnitAlias}: missing enemy pool {sourceSlot.EnemyPoolGuid}.");
+        if (enemyPool == null) {
+            logger.LogLine(
+                $"Skipped multiplying {sourceSlot.UnitAlias}: missing enemy pool {sourceSlot.EnemyPoolGuid}.");
             return scene;
         }
 
         enemyPool = enemyPool.WithChildren(enemyPool.Children.Add(enemyInstanceClone));
         scene = scene.UpdateGameObject(enemyPool);
 
-        var spawnInfoMap = new Dictionary<Guid, Guid>
-        {
+        var spawnInfoMap = new Dictionary<Guid, Guid>{
             [sourceSlot.SpawnInfoGuid] = spawnInfoClone.Guid
         };
         var generationClone = CloneGameObject(sourceSlot.GenerationGameObject, rng)
@@ -439,8 +397,7 @@ internal class EnemyMultiplierModifier : Modifier
         RszScene scene,
         Randomizer randomizer,
         EnemySpawnSlot sourceSlot,
-        Rng rng)
-    {
+        Rng rng) {
         var enemyPool = scene.FindGameObject(sourceSlot.EnemyPoolGuid);
         if (enemyPool == null)
             return null;
@@ -452,26 +409,21 @@ internal class EnemyMultiplierModifier : Modifier
         if (existingInstance != null)
             return CloneGameObject(existingInstance, rng).WithName(existingInstance.Name + "_BioRandMultiplier");
 
-        try
-        {
+        try {
             return CloneGameObject(randomizer.TemplateService.GetEnemyTemplate(sourceSlot.UnitAlias), rng);
         }
-        catch
-        {
+        catch {
             return null;
         }
     }
 
     private static RszGameObject DisableEnemyGenerateActions(
         RszGameObject generationGameObject,
-        HashSet<Guid> spawnInfoGuids)
-    {
-        return generationGameObject.Visit(node =>
-        {
+        HashSet<Guid> spawnInfoGuids) {
+        return generationGameObject.Visit(node => {
             if (node is RszObjectNode objectNode &&
                 IsEnemyGenerateAction(objectNode) &&
-                spawnInfoGuids.Contains(GetEnemyGenerateSpawnInfo(objectNode)))
-            {
+                spawnInfoGuids.Contains(GetEnemyGenerateSpawnInfo(objectNode))) {
                 return DisableEnemyGenerateAction(objectNode);
             }
 
@@ -481,16 +433,13 @@ internal class EnemyMultiplierModifier : Modifier
 
     private static RszGameObject ConfigureEnemyGenerateActions(
         RszGameObject generationGameObject,
-        Dictionary<Guid, Guid> spawnInfoMap)
-    {
-        return generationGameObject.Visit(node =>
-        {
+        Dictionary<Guid, Guid> spawnInfoMap) {
+        return generationGameObject.Visit(node => {
             if (node is not RszObjectNode objectNode || !IsEnemyGenerateAction(objectNode))
                 return node;
 
             var spawnInfoGuid = GetEnemyGenerateSpawnInfo(objectNode);
-            if (spawnInfoMap.TryGetValue(spawnInfoGuid, out var newSpawnInfoGuid))
-            {
+            if (spawnInfoMap.TryGetValue(spawnInfoGuid, out var newSpawnInfoGuid)) {
                 return objectNode
                     .SetField("v0_Enabled", true)
                     .SetField("SpawnInfo", newSpawnInfoGuid);
@@ -521,16 +470,14 @@ internal class EnemyMultiplierModifier : Modifier
         => gameObject.FindComponent("via.fsm.Fsm") != null &&
            gameObject.FindComponent("app.TriggerInAction") != null;
 
-    private static bool IsEnemyInstance(RszGameObject gameObject)
-    {
+    private static bool IsEnemyInstance(RszGameObject gameObject) {
         var result = false;
-        gameObject.VisitGameObjects(child =>
-        {
+        gameObject.VisitGameObjects(child => {
             var mesh = child.FindComponent("via.render.Mesh");
             if (mesh != null &&
                 mesh.Children.Length > 2 &&
-                mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true)
-            {
+                mesh.Children[2]?.ToString()
+                    ?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true) {
                 result = true;
             }
         });
@@ -543,12 +490,10 @@ internal class EnemyMultiplierModifier : Modifier
     private static ImmutableArray<T> SelectRandomSlotsWithoutReplacement<T>(
         ImmutableArray<T> slots,
         int count,
-        Rng rng)
-    {
+        Rng rng) {
         var remainingSlots = slots.ToList();
         var selectedSlots = ImmutableArray.CreateBuilder<T>(Math.Min(count, slots.Length));
-        while (selectedSlots.Count < count && remainingSlots.Count > 0)
-        {
+        while (selectedSlots.Count < count && remainingSlots.Count > 0) {
             var selectedSlot = rng.Next(remainingSlots);
             selectedSlots.Add(selectedSlot);
             remainingSlots.Remove(selectedSlot);
@@ -557,13 +502,10 @@ internal class EnemyMultiplierModifier : Modifier
         return selectedSlots.ToImmutable();
     }
 
-    private static ImmutableDictionary<Guid, Guid> BuildParentMap(RszScene scene)
-    {
+    private static ImmutableDictionary<Guid, Guid> BuildParentMap(RszScene scene) {
         var result = ImmutableDictionary.CreateBuilder<Guid, Guid>();
-        scene.VisitGameObjects(parent =>
-        {
-            foreach (var child in parent.Children)
-            {
+        scene.VisitGameObjects(parent => {
+            foreach (var child in parent.Children) {
                 result[child.Guid] = parent.Guid;
             }
         });
@@ -574,11 +516,9 @@ internal class EnemyMultiplierModifier : Modifier
         ImmutableDictionary<Guid, Guid> parentByChild,
         RszScene scene,
         Guid childGuid,
-        string componentName)
-    {
+        string componentName) {
         var currentGuid = childGuid;
-        while (parentByChild.TryGetValue(currentGuid, out var parentGuid))
-        {
+        while (parentByChild.TryGetValue(currentGuid, out var parentGuid)) {
             var parent = scene.FindGameObject(parentGuid);
             if (parent?.FindComponent(componentName) != null)
                 return parentGuid;
@@ -591,11 +531,9 @@ internal class EnemyMultiplierModifier : Modifier
 
     // RszGameObject.Clone() uses Guid.NewGuid()
     // This keeps multiplier output seed-deterministic instead
-    private static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng)
-    {
+    private static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng) {
         var guidMap = new Dictionary<Guid, Guid>();
-        var root = rootGameObject.VisitGameObjects(gameObject =>
-        {
+        var root = rootGameObject.VisitGameObjects(gameObject => {
             var newGuid = rng.NextGuid();
             guidMap[gameObject.Guid] = newGuid;
             return gameObject.WithGuid(newGuid);
@@ -606,15 +544,11 @@ internal class EnemyMultiplierModifier : Modifier
 
     private static RszGameObject ReplaceGameObjectRefs(
         RszGameObject gameObject,
-        Dictionary<Guid, Guid> guidMap)
-    {
-        return gameObject.Visit(node =>
-        {
-            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
-            {
+        Dictionary<Guid, Guid> guidMap) {
+        return gameObject.Visit(node => {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef) {
                 var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                if (guidMap.TryGetValue(refGuid, out var newGuid))
-                {
+                if (guidMap.TryGetValue(refGuid, out var newGuid)) {
                     return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
                 }
             }
@@ -623,10 +557,8 @@ internal class EnemyMultiplierModifier : Modifier
         });
     }
 
-    private static RszGameObject RefreshGenerationObjectInstanceIds(RszGameObject gameObject, Rng rng)
-    {
-        return gameObject.VisitComponents(component =>
-        {
+    private static RszGameObject RefreshGenerationObjectInstanceIds(RszGameObject gameObject, Rng rng) {
+        return gameObject.VisitComponents(component => {
             if (component.Type.Name == "via.fsm.Fsm" && component.Type.FindFieldIndex("InstanceGuid") != -1)
                 return component.SetField("InstanceGuid", rng.NextGuid());
 
@@ -641,16 +573,13 @@ internal class EnemyMultiplierModifier : Modifier
         T node,
         Guid existingSiblingGuid,
         RszGameObject newSibling)
-        where T : IRszSceneNode
-    {
+        where T : IRszSceneNode {
         if (node.Children.IsDefaultOrEmpty)
             return node;
 
         var children = node.Children.ToBuilder();
-        for (var i = 0; i < children.Count; i++)
-        {
-            if (children[i] is RszGameObject gameObject && gameObject.Guid == existingSiblingGuid)
-            {
+        for (var i = 0; i < children.Count; i++) {
+            if (children[i] is RszGameObject gameObject && gameObject.Guid == existingSiblingGuid) {
                 children.Insert(i + 1, newSibling);
                 return (T)node.WithChildren(children.ToImmutable());
             }

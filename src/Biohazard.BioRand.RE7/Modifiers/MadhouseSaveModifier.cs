@@ -3,12 +3,10 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class MadhouseSaveModifier : Modifier
-{
+internal class MadhouseSaveModifier : Modifier {
     internal const string ConfigKey = "madhouse-normal-saves";
 
-    internal static readonly string[] AutosaveScenePaths =
-    [
+    internal static readonly string[] AutosaveScenePaths =[
         PakPath.SceneFile("leveldesign/fsm/chapter1/levelfsm_c01.scn"),
         PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_1/levelfsm_c03_1.scn"),
         PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_2/levelfsm_c03_2.scn"),
@@ -23,30 +21,24 @@ internal class MadhouseSaveModifier : Modifier
         PakPath.SceneFile("leveldesign/fsm/ff050/level_fsm_ff050.scn"),
     ];
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
         logger.LogLine($"Madhouse normal saves: {IsEnabled(randomizer)}");
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         if (!IsEnabled(randomizer))
             return;
 
         var totalPatchedFlags = 0;
-        foreach (var path in AutosaveScenePaths)
-        {
+        foreach (var path in AutosaveScenePaths) {
             var patchedFlags = 0;
-            randomizer.FileRepository.ModifyScnFile(path, scene =>
-            {
-                return scene.Visit(node =>
-                {
+            randomizer.FileRepository.ModifyScnFile(path, scene => {
+                return scene.Visit(node => {
                     if (node is not RszObjectNode objectNode)
                         return node;
 
                     var updatedObject = ClearHardNoSaveFlag(objectNode, ref patchedFlags);
-                    if (updatedObject.Type.Name == "app.TriggerInAction")
-                    {
+                    if (updatedObject.Type.Name == "app.TriggerInAction") {
                         updatedObject = ClearTriggerInActionHardNoSaveFlag(updatedObject, ref patchedFlags);
                     }
 
@@ -61,15 +53,14 @@ internal class MadhouseSaveModifier : Modifier
             logger.LogLine($"Enabled Madhouse autosaves in {path}: cleared {patchedFlags} save restriction flags.");
         }
 
-        logger.LogLine($"Enabled Easy/Normal save behavior on Madhouse: cleared {totalPatchedFlags} save restriction flags.");
+        logger.LogLine(
+            $"Enabled Easy/Normal save behavior on Madhouse: cleared {totalPatchedFlags} save restriction flags.");
     }
 
-    private static RszObjectNode ClearTriggerInActionHardNoSaveFlag(RszObjectNode objectNode, ref int patchedFlags)
-    {
+    private static RszObjectNode ClearTriggerInActionHardNoSaveFlag(RszObjectNode objectNode, ref int patchedFlags) {
         if (objectNode.Type.FindFieldIndex("ExtraCommand") == -1 ||
             objectNode["ExtraCommand"] is not RszObjectNode extraCommand ||
-            !ReadBoolean(extraCommand, "IsHardNoSave"))
-        {
+            !ReadBoolean(extraCommand, "IsHardNoSave")) {
             return objectNode;
         }
 
@@ -77,8 +68,7 @@ internal class MadhouseSaveModifier : Modifier
         return objectNode.Set("ExtraCommand.IsHardNoSave", false);
     }
 
-    private static RszObjectNode ClearHardNoSaveFlag(RszObjectNode objectNode, ref int patchedFlags)
-    {
+    private static RszObjectNode ClearHardNoSaveFlag(RszObjectNode objectNode, ref int patchedFlags) {
         if (!IsAutosaveAction(objectNode) || !ReadBoolean(objectNode, "IsHardNoSave"))
             return objectNode;
 

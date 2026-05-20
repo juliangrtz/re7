@@ -1,67 +1,58 @@
-﻿
-using app;
+﻿using app;
 using REFrameworkNET;
 using REFrameworkNET.Attributes;
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
-public partial class REFPlugin
-{
+
+public partial class REFPlugin {
     private static string GetWeaponReloadSpeedConfigId(WeaponID weaponId)
         => weaponId.ToString().ToLowerInvariant().Replace("_", "-");
 
     private static string GetWeaponReloadSpeedMultiplierConfigKey(WeaponID weaponId)
         => $"weapon-reload-speed-multiplier-{GetWeaponReloadSpeedConfigId(weaponId)}";
 
-    private static bool TryGetWeaponReloadSpeedMultiplier(WeaponID weaponId, out double multiplier)
-    {
-        lock (weaponReloadSpeedCacheLock)
-        {
-            if (weaponReloadSpeedMultiplierCache.TryGetValue(weaponId, out var cachedMultiplier))
-            {
+    private static bool TryGetWeaponReloadSpeedMultiplier(WeaponID weaponId, out double multiplier) {
+        lock (WeaponReloadSpeedCacheLock) {
+            if (WeaponReloadSpeedMultiplierCache.TryGetValue(weaponId, out var cachedMultiplier)) {
                 multiplier = cachedMultiplier ?? 1.0;
                 return cachedMultiplier.HasValue;
             }
         }
 
         double? result = null;
-        if (config.TryRead(GetWeaponReloadSpeedMultiplierConfigKey(weaponId), out double configuredMultiplier))
-        {
+        if (Config.TryRead(GetWeaponReloadSpeedMultiplierConfigKey(weaponId), out double configuredMultiplier)) {
             result = configuredMultiplier;
         }
 
-        lock (weaponReloadSpeedCacheLock)
-        {
-            weaponReloadSpeedMultiplierCache[weaponId] = result;
+        lock (WeaponReloadSpeedCacheLock) {
+            WeaponReloadSpeedMultiplierCache[weaponId] = result;
         }
 
         multiplier = result ?? 1.0;
         return result.HasValue;
     }
 
-    private static void LogWeaponReloadSpeedRate(WeaponID weaponId, int depressantLevel, float baseRate, double multiplier, float newRate)
-    {
-        lock (weaponReloadSpeedLogLock)
-        {
-            if (lastLoggedWeaponReloadSpeedWeapon == weaponId
-                && lastLoggedWeaponReloadSpeedDepressantLevel == depressantLevel
-                && lastLoggedWeaponReloadSpeedRate == newRate)
-            {
+    private static void LogWeaponReloadSpeedRate(WeaponID weaponId, int depressantLevel, float baseRate,
+        double multiplier, float newRate) {
+        lock (WeaponReloadSpeedLogLock) {
+            if (_lastLoggedWeaponReloadSpeedWeapon == weaponId
+                && _lastLoggedWeaponReloadSpeedDepressantLevel == depressantLevel
+                && _lastLoggedWeaponReloadSpeedRate == newRate) {
                 return;
             }
 
-            lastLoggedWeaponReloadSpeedWeapon = weaponId;
-            lastLoggedWeaponReloadSpeedDepressantLevel = depressantLevel;
-            lastLoggedWeaponReloadSpeedRate = newRate;
+            _lastLoggedWeaponReloadSpeedWeapon = weaponId;
+            _lastLoggedWeaponReloadSpeedDepressantLevel = depressantLevel;
+            _lastLoggedWeaponReloadSpeedRate = newRate;
         }
 
-        logger.Log(
+        Logger.Log(
             $"Applied reload speed for {weaponId} with {depressantLevel} stabilizers: {baseRate:0.###} x {multiplier:0.###} = {newRate:0.###}.",
             isVerbose: true);
     }
 
-    private static void ApplyConfiguredWeaponReloadSpeed(PlayerMotionController controller)
-    {
-        if (!config.ReadOrDefault("weapon-mod-reload-speed", false))
+    private static void ApplyConfiguredWeaponReloadSpeed(PlayerMotionController controller) {
+        if (!Config.ReadOrDefault("weapon-mod-reload-speed", false))
             return;
 
         var table = controller.PlayerReloadSpeedRateTable;
@@ -70,8 +61,7 @@ public partial class REFPlugin
             return;
 
         var weaponId = controller.CurrentWeaponID;
-        if (!TryGetWeaponReloadSpeedMultiplier(weaponId, out var multiplier))
-        {
+        if (!TryGetWeaponReloadSpeedMultiplier(weaponId, out var multiplier)) {
             var currentWeaponId = controller.CurrentWeapon?.WeaponID ?? weaponId;
             if (currentWeaponId == weaponId || !TryGetWeaponReloadSpeedMultiplier(currentWeaponId, out multiplier))
                 return;
@@ -80,9 +70,8 @@ public partial class REFPlugin
         }
 
         var depressantLevel = Math.Max(0, controller.DepressantLevel);
-        if (!config.ReadOrDefault("weapon-mod-reload-speed-include-stabilizers", true)
-            && depressantLevel > 0)
-        {
+        if (!Config.ReadOrDefault("weapon-mod-reload-speed-include-stabilizers", true)
+            && depressantLevel > 0) {
             multiplier = 1.0;
         }
 
@@ -94,21 +83,19 @@ public partial class REFPlugin
     }
 
     [MethodHook(typeof(PlayerMotionController), nameof(PlayerMotionController.update), MethodHookType.Pre)]
-    private static PreHookResult PlayerMotionController_update_Pre(Span<ulong> args)
-    {
-        pendingReloadSpeedController = null;
-        if (config.ReadOrDefault("weapon-mod-reload-speed", false))
-        {
-            pendingReloadSpeedController = ManagedObject.ToManagedObject(args[1])?.As<PlayerMotionController>();
+    private static PreHookResult PlayerMotionController_update_Pre(Span<ulong> args) {
+        _pendingReloadSpeedController = null;
+        if (Config.ReadOrDefault("weapon-mod-reload-speed", false)) {
+            _pendingReloadSpeedController = ManagedObject.ToManagedObject(args[1])?.As<PlayerMotionController>();
         }
+
         return PreHookResult.Continue;
     }
 
     [MethodHook(typeof(PlayerMotionController), nameof(PlayerMotionController.update), MethodHookType.Post)]
-    private static void PlayerMotionController_update_Post(ref ulong _)
-    {
-        var controller = pendingReloadSpeedController;
-        pendingReloadSpeedController = null;
+    private static void PlayerMotionController_update_Post(ref ulong _) {
+        var controller = _pendingReloadSpeedController;
+        _pendingReloadSpeedController = null;
 
         if (controller == null)
             return;

@@ -11,8 +11,7 @@ using System.IO.Compression;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
-public static class RandomizerTest
-{
+public static class RandomizerTest {
     private const string TestPAKPathEnvVariable = "BIORAND_RE7_TEST_PAK";
     private const string PAKName = "biorand-re7.pak";
 
@@ -32,8 +31,8 @@ public static class RandomizerTest
 
     public static string InputPakPath => PakPath.Value;
 
-    public static RandomizerConfiguration CreateFeatureTestConfiguration(Action<RandomizerConfiguration>? configure = null)
-    {
+    public static RandomizerConfiguration CreateFeatureTestConfiguration(
+        Action<RandomizerConfiguration>? configure = null) {
         var configuration = RandomizerExecutor.DefaultConfiguration;
 
         configuration["debug-download-data"] = false;
@@ -51,8 +50,7 @@ public static class RandomizerTest
         configuration["boss-random-health"] = false;
         configuration["enemy-random-health"] = false;
         configuration["enemy-health-progressive-difficulty"] = false;
-        foreach (var drop in ItemDrops.HighValueDrops)
-        {
+        foreach (var drop in ItemDrops.HighValueDrops) {
             configuration[$"enemy-drop-valuable-{drop}"] = false;
         }
 
@@ -65,12 +63,11 @@ public static class RandomizerTest
         configuration["random-bird-cage-drugs-coins"] = false;
         configuration["additional-items"] = false;
         configuration["additional-wooden-crates"] = false;
-        foreach (var drop in ItemDrops.GenericDrops)
-        {
+        foreach (var drop in ItemDrops.GenericDrops) {
             configuration[$"item-drop-ratio-{drop.ToLowerInvariant()}"] = ItemDrops.GetDefaultGenericDropRatio(drop);
         }
-        foreach (var drop in ItemDrops.HighValueDrops)
-        {
+
+        foreach (var drop in ItemDrops.HighValueDrops) {
             configuration[$"item-drop-valuable-{drop}"] = false;
         }
 
@@ -81,8 +78,7 @@ public static class RandomizerTest
         configuration["random-starting-inventory-skills-mia"] = false;
         configuration["random-starting-inventory-size-ethan"] = "12";
         configuration["random-starting-inventory-size-mia"] = "12";
-        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackLimitConfigurable))
-        {
+        foreach (var item in ItemDefinitionRepository.Default.Items.Where(item => item.IsStackLimitConfigurable)) {
             configuration[item.StackLimitConfigId] = item.MaxStack;
         }
 
@@ -98,10 +94,8 @@ public static class RandomizerTest
         return configuration;
     }
 
-    public static (ZipArchive, PakFile) Run(string configJson, int seed = DefaultTestingSeed)
-    {
-        var input = new RandomizerInput()
-        {
+    public static (ZipArchive, PakFile) Run(string configJson, int seed = DefaultTestingSeed) {
+        var input = new RandomizerInput(){
             Seed = seed,
             Configuration = RandomizerConfiguration.FromJson(configJson)
         };
@@ -116,9 +110,9 @@ public static class RandomizerTest
             zipAsset,
             new PakFile(
                 zipAsset
-                .Entries
-                .Single(entry => entry.Name.EndsWith(".pak"))
-                .GetBytes()
+                    .Entries
+                    .Single(entry => entry.Name.EndsWith(".pak"))
+                    .GetBytes()
             )
         );
     }
@@ -126,11 +120,9 @@ public static class RandomizerTest
     internal static RandomizerRunResult RunState(
         Action<RandomizerConfiguration>? configure = null,
         int seed = DefaultTestingSeed,
-        Action<Randomizer>? prepareRandomizer = null)
-    {
+        Action<Randomizer>? prepareRandomizer = null) {
         var configuration = CreateFeatureTestConfiguration(configure);
-        var input = new RandomizerInput()
-        {
+        var input = new RandomizerInput(){
             Seed = seed,
             UserName = "behavior-tests",
             ProfileName = "Behavior Tests",
@@ -151,27 +143,22 @@ public static class RandomizerTest
         return new RandomizerRunResult(randomizer, beforeRepository);
     }
 
-    private static string ResolvePAKPath()
-    {
+    private static string ResolvePAKPath() {
         var configuredPath = Environment.GetEnvironmentVariable(TestPAKPathEnvVariable);
-        if (!string.IsNullOrWhiteSpace(configuredPath))
-        {
-            if (!File.Exists(configuredPath))
-            {
+        if (!string.IsNullOrWhiteSpace(configuredPath)) {
+            if (!File.Exists(configuredPath)) {
                 throw new FileNotFoundException("Configured baseline PAK not found.", configuredPath);
             }
 
             return configuredPath;
         }
 
-        if (File.Exists(LocalPAKPath))
-        {
+        if (File.Exists(LocalPAKPath)) {
             return LocalPAKPath;
         }
 
         var embeddedPAK = EmbeddedData.TryGetFile(PAKName);
-        if (embeddedPAK is not null)
-        {
+        if (embeddedPAK is not null) {
             Directory.CreateDirectory(BiorandDirectory);
             File.WriteAllBytes(LocalPAKPath, embeddedPAK);
             return LocalPAKPath;
@@ -182,28 +169,23 @@ public static class RandomizerTest
     }
 }
 
-public sealed class DefaultRandomizerRunFixture : IDisposable
-{
+public sealed class DefaultRandomizerRunFixture : IDisposable {
     private readonly Lazy<RandomizerRunResult> _result = new(() => RandomizerTest.RunState());
 
     public RandomizerRunResult Result => _result.Value;
 
-    public void Dispose()
-    {
-        if (_result.IsValueCreated)
-        {
+    public void Dispose() {
+        if (_result.IsValueCreated) {
             _result.Value.Dispose();
         }
     }
 }
 
-public sealed class RandomizerRunResult : IDisposable
-{
+public sealed class RandomizerRunResult : IDisposable {
     private readonly Randomizer _randomizer;
     private readonly FileRepository _beforeRepository;
 
-    internal RandomizerRunResult(Randomizer randomizer, FileRepository beforeRepository)
-    {
+    internal RandomizerRunResult(Randomizer randomizer, FileRepository beforeRepository) {
         _randomizer = randomizer;
         _beforeRepository = beforeRepository;
         ChangedFiles = _randomizer.FileRepository.GetOutputFilesSnapshot();
@@ -220,7 +202,8 @@ public sealed class RandomizerRunResult : IDisposable
         => _beforeRepository.GetFile(path) ?? throw new InvalidOperationException($"Missing baseline file '{path}'.");
 
     public byte[] ReadAfterBytes(string path)
-        => _randomizer.FileRepository.GetFile(path) ?? throw new InvalidOperationException($"Missing output file '{path}'.");
+        => _randomizer.FileRepository.GetFile(path) ??
+           throw new InvalidOperationException($"Missing output file '{path}'.");
 
     public T ReadBeforeUserFile<T>(string path) => _beforeRepository.DeserializeUserFile<T>(path);
 
@@ -242,8 +225,7 @@ public sealed class RandomizerRunResult : IDisposable
 
     public bool WasFileModified(string path) => ChangedFiles.ContainsKey(path);
 
-    public void Dispose()
-    {
+    public void Dispose() {
         _beforeRepository.Dispose();
         _randomizer.Dispose();
     }

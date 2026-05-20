@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.DataGen;
 
-internal interface IFileGenerator
-{
+internal interface IFileGenerator {
     string Id { get; }
 
     string? FileName => null; // <Id>.<Extension> if null
@@ -13,8 +12,7 @@ internal interface IFileGenerator
     bool CopyToDataDirectory => false;
 }
 
-internal enum OutputFormat
-{
+internal enum OutputFormat {
     Csv,
     Json,
     Binary

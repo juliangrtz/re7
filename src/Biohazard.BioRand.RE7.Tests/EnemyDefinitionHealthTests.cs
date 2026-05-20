@@ -6,13 +6,10 @@ using IntelOrca.Biohazard.BioRand;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class EnemyDefinitionHealthTests
-{
+public class EnemyDefinitionHealthTests {
     [Fact]
-    public void MoldedBlade_UsesSharedMoldedHealthConfig()
-    {
-        using var randomizer = CreateRandomizer(config =>
-        {
+    public void MoldedBlade_UsesSharedMoldedHealthConfig() {
+        using var randomizer = CreateRandomizer(config => {
             config["enemy-random-health"] = true;
             config["enemy-health-min-molded"] = 2000.0;
             config["enemy-health-max-molded"] = 2000.0;
@@ -26,10 +23,8 @@ public class EnemyDefinitionHealthTests
     }
 
     [Fact]
-    public void GetHealth_UsesCallerProvidedRngSequence()
-    {
-        using var randomizer = CreateRandomizer(config =>
-        {
+    public void GetHealth_UsesCallerProvidedRngSequence() {
+        using var randomizer = CreateRandomizer(config => {
             config["enemy-random-health"] = true;
             config["enemy-health-min-molded"] = 2250.0;
             config["enemy-health-max-molded"] = 3750.0;
@@ -51,8 +46,7 @@ public class EnemyDefinitionHealthTests
     }
 
     [Fact]
-    public void JackMutated_ExposesIndividualHealthParts()
-    {
+    public void JackMutated_ExposesIndividualHealthParts() {
         var enemy = EnemyDefinitions.Instance.All.OfType<JackMutated>().Single();
 
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "JackMutated-eye-1" && part.BaseHealth == 1600);
@@ -60,36 +54,37 @@ public class EnemyDefinitionHealthTests
     }
 
     [Fact]
-    public void MargeMutated_ExposesSecondaryHealthParts()
-    {
+    public void MargeMutated_ExposesSecondaryHealthParts() {
         var enemy = EnemyDefinitions.Instance.All.OfType<MargeMutated>().Single();
 
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MargeMutated" && part.BaseHealth == 15000);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MargeMutated-escape-resist" && part.BaseHealth == 1100);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MargeMutated-wall-move-resist" && part.BaseHealth == 900);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MargeMutated-sneak-grapple-resist" && part.BaseHealth == 300);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MargeMutated-escape-resist" && part.BaseHealth == 1100);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MargeMutated-wall-move-resist" && part.BaseHealth == 900);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MargeMutated-sneak-grapple-resist" && part.BaseHealth == 300);
     }
 
     [Fact]
-    public void MoldedFat_ExposesLostPartHealthParts()
-    {
+    public void MoldedFat_ExposesLostPartHealthParts() {
         var enemy = EnemyDefinitions.Instance.All.OfType<MoldedFat>().Single();
 
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat" && part.BaseHealth == 6000);
         Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat-lost-head" && part.BaseHealth == 2000);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat-lost-left-arm" && part.BaseHealth == 1000);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat-lost-right-arm" && part.BaseHealth == 1000);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat-lost-left-leg" && part.BaseHealth == 2000);
-        Assert.Contains(enemy.HealthParts, part => part.ConfigId == "MoldedFat-lost-right-leg" && part.BaseHealth == 2000);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MoldedFat-lost-left-arm" && part.BaseHealth == 1000);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MoldedFat-lost-right-arm" && part.BaseHealth == 1000);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MoldedFat-lost-left-leg" && part.BaseHealth == 2000);
+        Assert.Contains(enemy.HealthParts,
+            part => part.ConfigId == "MoldedFat-lost-right-leg" && part.BaseHealth == 2000);
     }
 
     [Fact]
-    public void EnemyHealthResolver_DebugUniqueHp_MakesRepeatedHealthValuesDistinct()
-    {
-        using var randomizer = CreateRandomizer(config =>
-        {
-            config["debug-unique-enemy-hp"] = true;
-        });
+    public void EnemyHealthResolver_DebugUniqueHp_MakesRepeatedHealthValuesDistinct() {
+        using var randomizer = CreateRandomizer(config => { config["debug-unique-enemy-hp"] = true; });
 
         var options = new EnemyRandomizerOptions(
             EnemyVariety: 1,
@@ -111,11 +106,9 @@ public class EnemyDefinitionHealthTests
         Assert.True(secondHealth > firstHealth);
     }
 
-    private static Randomizer CreateRandomizer(Action<RandomizerConfiguration> configure)
-    {
+    private static Randomizer CreateRandomizer(Action<RandomizerConfiguration> configure) {
         var configuration = RandomizerTest.CreateFeatureTestConfiguration(configure);
-        var input = new RandomizerInput
-        {
+        var input = new RandomizerInput{
             Seed = 0x42424242,
             UserName = "health-tests",
             ProfileName = "Health Tests",

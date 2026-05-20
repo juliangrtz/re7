@@ -2,113 +2,100 @@
 
 namespace Biohazard.BioRand.RE7.Extensions;
 
-public static class CollectionExtensions
-{
-    public static IEnumerable<T> Choose<T>(this IEnumerable<T?> source)
-    {
+public static class CollectionExtensions {
+    public static IEnumerable<T> Choose<T>(this IEnumerable<T?> source) {
 #pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
         return source.Where(x => x is not null);
 #pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
     }
 
-    public static IEnumerable<TResult> Choose<T, TResult>(this IEnumerable<T> source, Func<T, TResult?> selector)
-    {
+    public static IEnumerable<TResult> Choose<T, TResult>(this IEnumerable<T> source, Func<T, TResult?> selector) {
         return source.Select(selector).Choose();
     }
 
-    public static int FindIndex<T>(this IEnumerable<T> source, Func<T, bool> predicate)
-    {
+    public static int FindIndex<T>(this IEnumerable<T> source, Func<T, bool> predicate) {
         ArgumentNullException.ThrowIfNull(source);
         ArgumentNullException.ThrowIfNull(predicate);
 
         int index = 0;
-        foreach (var item in source)
-        {
-            if (predicate(item))
-            {
+        foreach (var item in source) {
+            if (predicate(item)) {
                 return index;
             }
+
             index++;
         }
+
         return -1;
     }
 
-    public static T? GetItem<T>(this List<T> list, int index)
-    {
+    public static T? GetItem<T>(this List<T> list, int index) {
         return list.Count <= index ? default : list[index];
     }
 
-    public static void SetItem<T>(this List<T> list, int index, T value)
-    {
+    public static void SetItem<T>(this List<T> list, int index, T value) {
         if (list.Count <= index)
             list.Resize(index + 1);
         list[index] = value;
     }
 
-    public static void Resize<T>(this List<T> list, int count)
-    {
+    public static void Resize<T>(this List<T> list, int count) {
         if (list.Count > count)
             list.RemoveRange(count, list.Count - count);
         while (list.Count < count)
             list.Add(default!);
     }
 
-    public static void Pop<T>(this List<T> list)
-    {
+    public static void Pop<T>(this List<T> list) {
         list.RemoveAt(list.Count - 1);
     }
 
-    public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
-    {
+    public static Queue<T> ToQueue<T>(this IEnumerable<T> collection) {
         return new Queue<T>(collection);
     }
 
     public static IEnumerable<IGrouping<TKey, TValue>> GroupByProportion<TKey, TValue>(
         this IEnumerable<TValue> collection,
-        Dictionary<TKey, double> proportions) where TKey : notnull
-    {
+        Dictionary<TKey, double> proportions) where TKey : notnull {
         var orderedProportions = proportions.OrderBy(x => x.Value).ToArray();
         var total = orderedProportions.Sum(x => x.Value);
 
         var q = collection.ToQueue();
         var result = new List<IGrouping<TKey, TValue>>();
-        for (var i = 0; i < orderedProportions.Length; i++)
-        {
+        for (var i = 0; i < orderedProportions.Length; i++) {
             var p = orderedProportions[i];
             var count = i == orderedProportions.Length - 1
                 ? q.Count
                 : Math.Min(q.Count, (int)Math.Round((p.Value / total) * q.Count));
             var group = new List<TValue>();
-            for (var j = 0; j < count; j++)
-            {
+            for (var j = 0; j < count; j++) {
                 group.Add(q.Dequeue());
             }
+
             result.Add(new ProportionalGrouping<TKey, TValue>(p.Key, group));
         }
+
         return result;
     }
 
-    public static void PrependValues<T>(this List<T> source, List<T> valuesToPrepend)
-    {
+    public static void PrependValues<T>(this List<T> source, List<T> valuesToPrepend) {
         if (valuesToPrepend == null || valuesToPrepend.Count == 0)
             return;
 
         source.InsertRange(0, valuesToPrepend);
     }
 
-    public static IEnumerable<T> Except<T>(this IEnumerable<T> orgList, IEnumerable<T> toRemove)
-    {
+    public static IEnumerable<T> Except<T>(this IEnumerable<T> orgList, IEnumerable<T> toRemove) {
         var list = orgList.OrderBy(x => x).ToList();
-        foreach (var x in toRemove)
-        {
+        foreach (var x in toRemove) {
             var inx = list.BinarySearch(x);
             if (inx >= 0) list.RemoveAt(inx);
         }
+
         return list;
     }
 
-    private readonly struct ProportionalGrouping<TKey, TValue>(TKey key, List<TValue> items) : IGrouping<TKey, TValue>
-    {
+    private readonly struct ProportionalGrouping<TKey, TValue>(TKey key, List<TValue> items) : IGrouping<TKey, TValue> {
         public TKey Key => key;
 
         public IEnumerator<TValue> GetEnumerator() => items.GetEnumerator();
@@ -116,15 +103,13 @@ public static class CollectionExtensions
         IEnumerator IEnumerable.GetEnumerator() => items.GetEnumerator();
     }
 
-    public static void AddRange<T>(this ConcurrentBag<T> @this, IEnumerable<T> toAdd)
-    {
-        foreach (var element in toAdd)
-        {
+    public static void AddRange<T>(this ConcurrentBag<T> @this, IEnumerable<T> toAdd) {
+        foreach (var element in toAdd) {
             @this.Add(element);
         }
     }
 
-    public static List<T>? EmptyToNull<T>(this List<T> source) 
+    public static List<T>? EmptyToNull<T>(this List<T> source)
         => source.All(p => p == null) ? null : source;
 
     public static string? EmptyToNullStr(this string source)

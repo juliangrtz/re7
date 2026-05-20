@@ -7,9 +7,8 @@ using System.Globalization;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class ItemRandomizer
-{
-    private static readonly HashSet<string> ExcludedGunDropIds = [
+internal class ItemRandomizer {
+    private static readonly HashSet<string> ExcludedGunDropIds =[
         "BlueBlaster",
         "HyperBlaster",
         "RedBlaster",
@@ -30,34 +29,39 @@ internal class ItemRandomizer
         .Select(x => ItemDefinitionRepository.Default.FromId(x)!)
         .ToArray();
 
-    public readonly Dictionary<GameFlowKindEnum, List<string>> ChapterAmmoMap = new()
-    {
-        {GameFlowKindEnum.C03_1_Main, [
-            "HandgunBullet", "HandgunBulletL"
-        ]},
-        {GameFlowKindEnum.C03_2_Main, [
-            "HandgunBullet", "HandgunBulletL", "ShotgunBullet"
-        ]},
-        {GameFlowKindEnum.C03_3_Main, [
-            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
-            "MagnumBullet",
-            "AcidBulletS", "FlameBulletS"
-        ]},
-        {GameFlowKindEnum.C03_4_Main, [
-            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
-            "MagnumBullet",
-            "AcidBulletS", "FlameBulletS",
-            "BurnerBullet"
-        ]},
-        {GameFlowKindEnum.C03_5_Main, [
-            "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
-            "MagnumBullet",
-            "AcidBulletS", "FlameBulletS",
-            "BurnerBullet"
-        ]},
-        {GameFlowKindEnum.C04_1_Main, ["MachineGunBullet"]},
-        {GameFlowKindEnum.C04_2_Main, ["MachineGunBullet"]},
-        {GameFlowKindEnum.C04_3_Main, ["MachineGunBullet"]},
+    public readonly Dictionary<GameFlowKindEnum, List<string>> ChapterAmmoMap = new(){
+        {
+            GameFlowKindEnum.C03_1_Main, [
+                "HandgunBullet", "HandgunBulletL"
+            ]
+        },{
+            GameFlowKindEnum.C03_2_Main, [
+                "HandgunBullet", "HandgunBulletL", "ShotgunBullet"
+            ]
+        },{
+            GameFlowKindEnum.C03_3_Main, [
+                "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+                "MagnumBullet",
+                "AcidBulletS", "FlameBulletS"
+            ]
+        },{
+            GameFlowKindEnum.C03_4_Main, [
+                "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+                "MagnumBullet",
+                "AcidBulletS", "FlameBulletS",
+                "BurnerBullet"
+            ]
+        },{
+            GameFlowKindEnum.C03_5_Main, [
+                "HandgunBullet", "HandgunBulletL", "ShotgunBullet",
+                "MagnumBullet",
+                "AcidBulletS", "FlameBulletS",
+                "BurnerBullet"
+            ]
+        },
+        { GameFlowKindEnum.C04_1_Main, ["MachineGunBullet"] },
+        { GameFlowKindEnum.C04_2_Main, ["MachineGunBullet"] },
+        { GameFlowKindEnum.C04_3_Main, ["MachineGunBullet"] },
     };
 
     private const int ItemStackCeiling = 150;
@@ -65,8 +69,7 @@ internal class ItemRandomizer
     private const double NormalAmmoDropAmountFactor = 1f;
     private const double MadhouseAmmoDropAmountFactor = 0.75f;
 
-    public ItemRandomizer(Randomizer randomizer)
-    {
+    public ItemRandomizer(Randomizer randomizer) {
         _randomizer = randomizer;
         _allowUnlockables = randomizer.GetConfigOption<bool>("allow-bonus-items");
         _allowDlcItems = randomizer.GetConfigOption<bool>("allow-dlc-items");
@@ -90,21 +93,17 @@ internal class ItemRandomizer
         );
 
     // (easy #, normal #, madhouse #)
-    public (uint, uint, uint) DetermineDropAmount(string id, double min, double max, Rng rng)
-    {
+    public (uint, uint, uint) DetermineDropAmount(string id, double min, double max, Rng rng) {
         var item = _itemDefinitions.FromId(id.ToString())!;
         var respectDifficulty = _randomizer.GetConfigOption<bool>("item-drop-respect-difficulty");
 
-        if (item.CategoryType == ItemCategoryType.Shell)
-        {
+        if (item.CategoryType == ItemCategoryType.Shell) {
             var stack = Math.Min(item.MaxStack, ItemStackCeiling); // Avoid overly generous drops
             var minAmount = Math.Max(1, (int)Math.Round(min * stack));
             var maxAmount = Math.Min(stack, (int)Math.Round(max * stack));
             var result = (uint)rng.Next(minAmount, maxAmount + 1);
             return respectDifficulty ? ApplyDifficultyToDropAmount(result) : (result, result, result);
-        }
-        else
-        {
+        } else {
             return (1u, 1u, 1u);
         }
     }
@@ -112,11 +111,12 @@ internal class ItemRandomizer
     public ItemDefinition? GetRandomGun(Rng rng, bool allowReoccurance = true)
         => GetRandomItemFromPool(rng, _allowedGuns, allowReoccurance);
 
-    public ItemDefinition? GetRandomItemDefinition(Rng rng, ItemCategoryType kind, bool allowReoccurance = true, Func<ItemDefinition, bool>? extraCheck = null)
-        => GetRandomItemFromPool(rng, _allowedItemsByCategory.GetValueOrDefault(kind, []), allowReoccurance, extraCheck);
+    public ItemDefinition? GetRandomItemDefinition(Rng rng, ItemCategoryType kind, bool allowReoccurance = true,
+        Func<ItemDefinition, bool>? extraCheck = null)
+        => GetRandomItemFromPool(rng, _allowedItemsByCategory.GetValueOrDefault(kind, []), allowReoccurance,
+            extraCheck);
 
-    public bool IsItemAllowed(ItemDefinition itemDefinition)
-    {
+    public bool IsItemAllowed(ItemDefinition itemDefinition) {
         if (itemDefinition.IsStoryProgressionItem)
             return false;
         if (itemDefinition.IsUnlockable)
@@ -127,23 +127,21 @@ internal class ItemRandomizer
         return true;
     }
 
-    public Item GetNextGeneralDrop(Rng rng, RandomItemSettings settings)
-    {
+    public Item GetNextGeneralDrop(Rng rng, RandomItemSettings settings) {
         var bag = CreateGeneralItemPool(settings, rng);
 
         var id = bag.Next();
-        for (var i = 0; i < 1000; i++)
-        {
-            if (settings.ValidateFunc?.Invoke(id) != false)
-            {
+        for (var i = 0; i < 1000; i++) {
+            if (settings.ValidateFunc?.Invoke(id) != false) {
                 break;
             }
+
             id = bag.Next();
         }
 
-        var (easyAmount, normalAmount, madhouseAmount) = DetermineDropAmount(id, settings.MinAmmoQuantity, settings.MaxAmmoQuantity, rng);
-        return new Item()
-        {
+        var (easyAmount, normalAmount, madhouseAmount) =
+            DetermineDropAmount(id, settings.MinAmmoQuantity, settings.MaxAmmoQuantity, rng);
+        return new Item(){
             Id = id.ToString(),
             CountEasy = (int)easyAmount,
             CountNormal = (int)normalAmount,
@@ -151,16 +149,12 @@ internal class ItemRandomizer
         };
     }
 
-    public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng)
-    {
-        if (!_generalDrops.TryGetValue(settings, out var result))
-        {
+    public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng) {
+        if (!_generalDrops.TryGetValue(settings, out var result)) {
             var weights = new Dictionary<string, decimal>();
-            foreach (var dropKind in ItemDrops.GenericDrops)
-            {
+            foreach (var dropKind in ItemDrops.GenericDrops) {
                 var weight = ConvertToWeight(settings.GetItemRatio(dropKind));
-                if (weight > 0)
-                {
+                if (weight > 0) {
                     weights.Add(dropKind, weight);
                 }
             }
@@ -170,21 +164,21 @@ internal class ItemRandomizer
 
             var scale = (decimal)Math.Pow(10, weights.Values.Max(GetDecimalPlaces));
             var entries = weights
-                .Select(kvp => (Id: kvp.Key, Count: Math.Max(1, (int)decimal.Round(kvp.Value * scale, 0, MidpointRounding.AwayFromZero))))
+                .Select(kvp => (Id: kvp.Key,
+                    Count: Math.Max(1, (int)decimal.Round(kvp.Value * scale, 0, MidpointRounding.AwayFromZero))))
                 .ToList();
             var divisor = entries
                 .Select(x => x.Count)
                 .Aggregate(GetGreatestCommonDivisor);
 
             var pool = new List<string>();
-            foreach (var (id, count) in entries)
-            {
+            foreach (var (id, count) in entries) {
                 var repeats = count / divisor;
-                for (var i = 0; i < repeats; i++)
-                {
+                for (var i = 0; i < repeats; i++) {
                     pool.Add(id);
                 }
             }
+
             result = new EndlessBag<string>(rng, pool);
             _generalDrops[settings] = result;
         }
@@ -192,10 +186,8 @@ internal class ItemRandomizer
         return result;
     }
 
-    public string GetItemTemplateIdForDrop(string itemDataId, Rng rng, RandomItemSettings settings)
-    {
-        if (!ItemDrops.IsBirthdaySkill(itemDataId))
-        {
+    public string GetItemTemplateIdForDrop(string itemDataId, Rng rng, RandomItemSettings settings) {
+        if (!ItemDrops.IsBirthdaySkill(itemDataId)) {
             return itemDataId;
         }
 
@@ -209,47 +201,43 @@ internal class ItemRandomizer
             : rng.Next(visibleTemplateCandidates);
     }
 
-    public IReadOnlyList<ValuableDrop> GetValuableDrops(Rng rng, string configPrefix)
-    {
+    public IReadOnlyList<ValuableDrop> GetValuableDrops(Rng rng, string configPrefix) {
         var result = new List<ValuableDrop>();
 
-        foreach (var type in ItemDrops.HighValueDrops)
-        {
-            if (!_randomizer.GetConfigOption<bool>($"{configPrefix}-valuable-{type}"))
-            {
+        foreach (var type in ItemDrops.HighValueDrops) {
+            if (!_randomizer.GetConfigOption<bool>($"{configPrefix}-valuable-{type}")) {
                 continue;
             }
 
-            switch (type)
-            {
+            switch (type) {
                 case ItemDrops.Weapon:
                     var weapon = GetRandomGun(rng, allowReoccurance: false);
-                    if (weapon != null)
-                    {
+                    if (weapon != null) {
                         result.Add(CreateValuableDrop(weapon.Id, type));
                     }
+
                     break;
                 case ItemDrops.DlcCoin:
-                    foreach (var (coinId, minDropRate, maxDropRate) in ItemDrops.DlcCoinDrops)
-                    {
+                    foreach (var (coinId, minDropRate, maxDropRate) in ItemDrops.DlcCoinDrops) {
                         result.Add(CreateValuableDrop(
                             coinId,
                             type,
                             (uint)rng.Next((int)minDropRate, (int)maxDropRate + 1)));
                     }
+
                     break;
                 case ItemDrops.BirthdaySkill:
-                    if (_allowDlcItems)
-                    {
+                    if (_allowDlcItems) {
                         result.Add(CreateValuableDrop(rng.Next(ItemDrops.BirthdaySkillIds), type));
                     }
+
                     break;
                 default:
                     var itemId = ItemDrops.ToItemID(type);
-                    if (itemId != Enums.app.ItemID.NoName.ToString())
-                    {
+                    if (itemId != Enums.app.ItemID.NoName.ToString()) {
                         result.Add(CreateValuableDrop(itemId, type));
                     }
+
                     break;
             }
         }
@@ -260,18 +248,15 @@ internal class ItemRandomizer
     private static ValuableDrop CreateValuableDrop(
         string id,
         string highValueDrop,
-        uint? dropRate = null)
-    {
+        uint? dropRate = null) {
         var count = ItemDrops.GetValuableDropCount(highValueDrop);
         return new ValuableDrop(
             new Item(id, count),
             dropRate ?? ItemDrops.GetValuableDropRate(highValueDrop));
     }
 
-    private Item? GetRandomSingleItem(Rng rng, ItemCategoryType kind, bool allowReoccurance = false)
-    {
-        ItemDefinition? itemDefinition = kind switch
-        {
+    private Item? GetRandomSingleItem(Rng rng, ItemCategoryType kind, bool allowReoccurance = false) {
+        ItemDefinition? itemDefinition = kind switch{
             ItemCategoryType.Weapon => GetRandomGun(rng, allowReoccurance),
             _ => GetRandomItemDefinition(rng, kind, allowReoccurance),
         };
@@ -280,8 +265,7 @@ internal class ItemRandomizer
         return null;
     }
 
-    public Item? GetRandomAmmo(string? itemId, Rng rng, RandomItemSettings settings)
-    {
+    public Item? GetRandomAmmo(string? itemId, Rng rng, RandomItemSettings settings) {
         var itemDef = itemId == null
             ? GetRandomItemDefinition(rng, ItemCategoryType.Shell)
             : ItemDefinitionRepository.Default.FromId(itemId);
@@ -300,14 +284,12 @@ internal class ItemRandomizer
 
     public bool IsItemPlaced(string id) => _placedItemIds.Contains(id);
 
-    private static bool IsGunCandidate(ItemDefinition item)
-    {
+    private static bool IsGunCandidate(ItemDefinition item) {
         if (item.WeaponId == null)
             return false;
 
         if (ExcludedGunDropIds.Contains(item.Id) ||
-            ExcludedGunDropIds.Contains(item.WeaponId.Value.ToString()))
-        {
+            ExcludedGunDropIds.Contains(item.WeaponId.Value.ToString())) {
             return false;
         }
 
@@ -316,31 +298,27 @@ internal class ItemRandomizer
 
         var definition = WeaponDefinitionRepository.Default.FromWeaponId(item.WeaponId.Value.ToString());
         return definition.UserType == Enums.app.CharacterDefine.Type.Player
-            && definition.IsGun;
+               && definition.IsGun;
     }
 
     private ItemDefinition? GetRandomItemFromPool(
         Rng rng,
         IReadOnlyList<ItemDefinition> pool,
         bool allowReoccurance,
-        Func<ItemDefinition, bool>? extraCheck = null)
-    {
+        Func<ItemDefinition, bool>? extraCheck = null) {
         if (pool.Count == 0)
             return null;
 
-        if (allowReoccurance && extraCheck == null)
-        {
+        if (allowReoccurance && extraCheck == null) {
             var chosen = pool[rng.Next(0, pool.Count)];
             _placedItemIds.Add(chosen.Id);
             return chosen;
         }
 
         var availableCount = 0;
-        foreach (var item in pool)
-        {
+        foreach (var item in pool) {
             if ((allowReoccurance || !_placedItemIds.Contains(item.Id))
-                && (extraCheck?.Invoke(item) != false))
-            {
+                && (extraCheck?.Invoke(item) != false)) {
                 availableCount++;
             }
         }
@@ -349,12 +327,10 @@ internal class ItemRandomizer
             return null;
 
         var index = rng.Next(0, availableCount);
-        foreach (var item in pool)
-        {
+        foreach (var item in pool) {
             if ((allowReoccurance || !_placedItemIds.Contains(item.Id))
                 && (extraCheck?.Invoke(item) != false)
-                && index-- == 0)
-            {
+                && index-- == 0) {
                 _placedItemIds.Add(item.Id);
                 return item;
             }
@@ -369,27 +345,24 @@ internal class ItemRandomizer
     private static int GetDecimalPlaces(decimal value)
         => (decimal.GetBits(value)[3] >> 16) & 0xFF;
 
-    private static int GetGreatestCommonDivisor(int left, int right)
-    {
-        while (right != 0)
-        {
+    private static int GetGreatestCommonDivisor(int left, int right) {
+        while (right != 0) {
             (left, right) = (right, left % right);
         }
+
         return Math.Abs(left);
     }
 }
 
 internal readonly record struct ValuableDrop(Item Item, uint DropRate);
 
-public class RandomItemSettings
-{
+public class RandomItemSettings {
     public double MinAmmoQuantity { get; set; }
     public double MaxAmmoQuantity { get; set; }
     public Func<string, double>? ItemRatioKeyFunc { get; set; }
     public Func<string, bool>? ValidateFunc { get; set; }
 
-    public double GetItemRatio(string id)
-    {
+    public double GetItemRatio(string id) {
         return ItemRatioKeyFunc?.Invoke(id) ?? 0;
     }
 }

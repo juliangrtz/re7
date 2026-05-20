@@ -2,18 +2,15 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class AreaService(Randomizer randomizer)
-{
+internal class AreaService(Randomizer randomizer) {
     private readonly Dictionary<Guid, Area> _guidToArea = [];
     private ImmutableArray<Area> _areas = [];
     private ImmutableArray<Area> _enemyAreas = [];
     private bool _isLoaded;
     private bool _areEnemyAreasLoaded;
 
-    public ImmutableArray<Area> Areas
-    {
-        get
-        {
+    public ImmutableArray<Area> Areas {
+        get {
             EnsureLoaded();
             return _areas;
         }
@@ -24,17 +21,14 @@ internal class AreaService(Randomizer randomizer)
 
     public void LoadAreas() => EnsureLoaded();
 
-    public ImmutableArray<Area> EnemyAreas
-    {
-        get
-        {
+    public ImmutableArray<Area> EnemyAreas {
+        get {
             EnsureEnemyAreasLoaded();
             return _enemyAreas;
         }
     }
 
-    private void EnsureLoaded()
-    {
+    private void EnsureLoaded() {
         if (_isLoaded)
             return;
 
@@ -42,8 +36,7 @@ internal class AreaService(Randomizer randomizer)
         _isLoaded = true;
     }
 
-    private void LoadAreasCore()
-    {
+    private void LoadAreasCore() {
         Areas = AreaDefinitionRepository.Default.All
             .Where(a => a.Dlc == null)
             .AsParallel()
@@ -54,14 +47,12 @@ internal class AreaService(Randomizer randomizer)
         // Map initial guids
         _guidToArea.Clear();
 
-        foreach (var area in _areas)
-        {
+        foreach (var area in _areas) {
             area.MapGameObjectGuids(_guidToArea);
         }
     }
 
-    private void EnsureEnemyAreasLoaded()
-    {
+    private void EnsureEnemyAreasLoaded() {
         if (_areEnemyAreasLoaded)
             return;
 
@@ -69,11 +60,9 @@ internal class AreaService(Randomizer randomizer)
         _areEnemyAreasLoaded = true;
     }
 
-    private void LoadEnemyAreasCore()
-    {
+    private void LoadEnemyAreasCore() {
         var targetRepository = AreaSceneTargetRepository.Default;
-        if (targetRepository.All.Count == 0)
-        {
+        if (targetRepository.All.Count == 0) {
             EnsureLoaded();
             _enemyAreas = Areas
                 .Where(area => area.EnemyGenerators.Length != 0)
@@ -95,35 +84,28 @@ internal class AreaService(Randomizer randomizer)
             .ToImmutableArray();
     }
 
-    public Area? FindAreaContainingGameObject(Guid guid)
-    {
+    public Area? FindAreaContainingGameObject(Guid guid) {
         EnsureLoaded();
         _guidToArea.TryGetValue(guid, out var area);
         return area;
     }
 
-    public void RemoveGuid(Guid guid)
-    {
+    public void RemoveGuid(Guid guid) {
         _guidToArea.Remove(guid);
     }
 
-    public void AddGuidToArea(Guid guid, Area area)
-    {
+    public void AddGuidToArea(Guid guid, Area area) {
         _guidToArea[guid] = area;
     }
 
-    public Area FindBestArea(AreaKind kind, int? chapter = null)
-    {
+    public Area FindBestArea(AreaKind kind, int? chapter = null) {
         EnsureLoaded();
 
-        if (chapter != null)
-        {
+        if (chapter != null) {
             return Areas
                 .Where(x => x.Definition.Kind == kind)
                 .First(x => x.Definition.Chapter == chapter);
-        }
-        else
-        {
+        } else {
             return Areas
                 .Where(x => x.Definition.Kind == kind)
                 .First();

@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-public enum EnemyCategory
-{
+public enum EnemyCategory {
     Mia,
     Molded,
     Jack,
@@ -12,10 +11,8 @@ public enum EnemyCategory
     Eveline
 }
 
-internal static class EnemyCategoryExtensions
-{
-    public static ConfigCategory ToConfigCategory(this EnemyCategory enemyCategory) => enemyCategory switch
-    {
+internal static class EnemyCategoryExtensions {
+    public static ConfigCategory ToConfigCategory(this EnemyCategory enemyCategory) => enemyCategory switch{
         EnemyCategory.Mia => new ConfigCategory("Mia", "#fcba03", "#fff"),
         EnemyCategory.Molded => new ConfigCategory("Molded", "#171616", "#fff"),
         EnemyCategory.Jack => new ConfigCategory("Jack", "#750c0c", "#fff"),

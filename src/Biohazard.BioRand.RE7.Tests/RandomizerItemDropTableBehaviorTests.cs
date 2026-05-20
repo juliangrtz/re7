@@ -3,13 +3,10 @@ using Biohazard.BioRand.RE7.Items;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerItemDropTableBehaviorTests
-{
+public class RandomizerItemDropTableBehaviorTests {
     [Fact]
-    public void ItemDropTable_AvailableWeaponsOnly_FiltersUnavailableAmmoAndAddsLockPick()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void ItemDropTable_AvailableWeaponsOnly_FiltersUnavailableAmmoAndAddsLockPick() {
+        using var result = RandomizerTest.RunState(config => {
             RandomizerTestHelpers.ConfigureSingleDropRate(config, "HandgunBullet", 0.5);
             RandomizerTestHelpers.ConfigureSingleDropRate(config, "MachineGunBullet", 0.25);
             config["item-drop-ammo-only-available-weapons"] = true;
@@ -25,15 +22,13 @@ public class RandomizerItemDropTableBehaviorTests
         Assert.DoesNotContain(table.DataList, x => x.ItemID == "HandgunBullet");
         Assert.Contains(table.DataList, x => x.ItemID == "MachineGunBullet" && x.NormalDropRate == 25);
         Assert.Contains(table.DataList, x => x.ItemID == "CylinderKey"
-            && x.NormalDropRate == ItemDrops.GetValuableDropRate(ItemDrops.LockPick)
-            && x.NormalDropNum == ItemDrops.GetValuableDropCount(ItemDrops.LockPick));
+                                             && x.NormalDropRate == ItemDrops.GetValuableDropRate(ItemDrops.LockPick)
+                                             && x.NormalDropNum == ItemDrops.GetValuableDropCount(ItemDrops.LockPick));
     }
 
     [Fact]
-    public void ItemDropTable_WeaponValuableDrop_AddsRandomAllowedWeapon()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void ItemDropTable_WeaponValuableDrop_AddsRandomAllowedWeapon() {
+        using var result = RandomizerTest.RunState(config => {
             config["item-drop-valuable-weapon"] = true;
             config["item-drop-valuable-birthday-skill"] = false;
             config["item-drop-valuable-lock-pick"] = false;
@@ -48,16 +43,14 @@ public class RandomizerItemDropTableBehaviorTests
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.Chapter4DropTablePath));
         Assert.NotEqual("NoName", weaponDrop.ItemID);
-        Assert.False(new[] { "BlueBlaster", "HyperBlaster", "RedBlaster" }.Contains(weaponDrop.ItemID));
+        Assert.False(new[]{ "BlueBlaster", "HyperBlaster", "RedBlaster" }.Contains(weaponDrop.ItemID));
         Assert.True(result.ItemRandomizer.IsItemAllowed(ItemDefinitionRepository.Default.FromId(weaponDrop.ItemID)!));
         Assert.Equal((uint)ItemDrops.GetValuableDropCount(ItemDrops.Weapon), weaponDrop.NormalDropNum);
     }
 
     [Fact]
-    public void ItemDropTable_AmmoAmounts_MapToDifficultyFields()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void ItemDropTable_AmmoAmounts_MapToDifficultyFields() {
+        using var result = RandomizerTest.RunState(config => {
             RandomizerTestHelpers.ConfigureSingleDropRate(config, "ShotgunBullet", 1.0);
             config["item-drop-ammo-only-available-weapons"] = false;
             config["item-drop-respect-difficulty"] = true;
@@ -81,10 +74,8 @@ public class RandomizerItemDropTableBehaviorTests
     }
 
     [Fact]
-    public void ItemDropTable_BirthdaySkillValuableDrop_AddsRealSkillWhenDlcItemsAreAllowed()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void ItemDropTable_BirthdaySkillValuableDrop_AddsRealSkillWhenDlcItemsAreAllowed() {
+        using var result = RandomizerTest.RunState(config => {
             config["allow-dlc-items"] = true;
             config["item-drop-valuable-birthday-skill"] = true;
             config["item-drop-valuable-lock-pick"] = false;
@@ -103,12 +94,9 @@ public class RandomizerItemDropTableBehaviorTests
     }
 
     [Fact]
-    public void ItemDropTable_UnsupportedRuntimePickupItems_AreExcluded()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
-            foreach (var drop in ItemDrops.GenericDrops)
-            {
+    public void ItemDropTable_UnsupportedRuntimePickupItems_AreExcluded() {
+        using var result = RandomizerTest.RunState(config => {
+            foreach (var drop in ItemDrops.GenericDrops) {
                 config[$"item-drop-ratio-{drop.ToLowerInvariant()}"] = 0.0;
             }
 

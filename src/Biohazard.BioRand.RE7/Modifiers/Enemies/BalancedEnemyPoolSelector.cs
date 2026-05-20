@@ -3,13 +3,11 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal static class BalancedEnemyPoolSelector
-{
+internal static class BalancedEnemyPoolSelector {
     internal static bool IsCompatibleReplacement(
         IEnemyDefinition enemy,
         int? chapter,
-        string scenePath)
-    {
+        string scenePath) {
         var maxStrength = GetMaxEnemyStrength(chapter, scenePath);
         if (maxStrength == null)
             return true;
@@ -20,8 +18,7 @@ internal static class BalancedEnemyPoolSelector
     internal static ImmutableArray<EnemyTableEntry> Select(
         IReadOnlyList<EnemyTableEntry> enemyPool,
         int? chapter,
-        string scenePath)
-    {
+        string scenePath) {
         var maxStrength = GetMaxEnemyStrength(chapter, scenePath);
         if (maxStrength == null)
             return [.. enemyPool];
@@ -29,8 +26,7 @@ internal static class BalancedEnemyPoolSelector
         return [.. enemyPool.Where(entry => GetEnemyStrength(entry.Enemy) <= maxStrength.Value)];
     }
 
-    private static int GetEnemyStrength(IEnemyDefinition enemy)
-    {
+    private static int GetEnemyStrength(IEnemyDefinition enemy) {
         if (enemy.BaseHealth == int.MaxValue)
             return int.MaxValue;
 
@@ -39,19 +35,16 @@ internal static class BalancedEnemyPoolSelector
             : enemy.BaseHealth;
     }
 
-    private static int? GetMaxEnemyStrength(int? chapter, string scenePath)
-    {
+    private static int? GetMaxEnemyStrength(int? chapter, string scenePath) {
         if (chapter == null)
             return null;
 
         if (chapter <= 1)
             return 1_000;
 
-        if (chapter == 3)
-        {
+        if (chapter == 3) {
             var progression = GetChapter3Progression(scenePath);
-            return progression switch
-            {
+            return progression switch{
                 <= 2 => 3_000,
                 3 => 6_000,
                 _ => 10_000,
@@ -61,24 +54,20 @@ internal static class BalancedEnemyPoolSelector
         return null;
     }
 
-    private static int GetChapter3Progression(string scenePath)
-    {
+    private static int GetChapter3Progression(string scenePath) {
         var normalizedScenePath = scenePath.Replace('\\', '/');
         if (normalizedScenePath.Contains("chapter3_5", StringComparison.OrdinalIgnoreCase) ||
-            normalizedScenePath.Contains("enemy_c03_5", StringComparison.OrdinalIgnoreCase))
-        {
+            normalizedScenePath.Contains("enemy_c03_5", StringComparison.OrdinalIgnoreCase)) {
             return 5;
         }
 
         if (normalizedScenePath.Contains("chapter3_4", StringComparison.OrdinalIgnoreCase) ||
-            normalizedScenePath.Contains("enemy_c03_4", StringComparison.OrdinalIgnoreCase))
-        {
+            normalizedScenePath.Contains("enemy_c03_4", StringComparison.OrdinalIgnoreCase)) {
             return 4;
         }
 
         if (normalizedScenePath.Contains("chapter3_3", StringComparison.OrdinalIgnoreCase) ||
-            normalizedScenePath.Contains("enemy_c03_3", StringComparison.OrdinalIgnoreCase))
-        {
+            normalizedScenePath.Contains("enemy_c03_3", StringComparison.OrdinalIgnoreCase)) {
             return 3;
         }
 

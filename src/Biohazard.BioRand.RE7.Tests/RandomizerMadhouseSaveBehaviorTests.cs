@@ -6,20 +6,14 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerMadhouseSaveBehaviorTests
-{
+public class RandomizerMadhouseSaveBehaviorTests {
     [Fact]
-    public void MadhouseNormalSaves_ClearAutosaveHardNoSaveFlags()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config[MadhouseSaveModifier.ConfigKey] = true;
-        });
+    public void MadhouseNormalSaves_ClearAutosaveHardNoSaveFlags() {
+        using var result = RandomizerTest.RunState(config => { config[MadhouseSaveModifier.ConfigKey] = true; });
 
         var baselineFlags = 0;
         var patchedFlags = 0;
-        foreach (var path in MadhouseSaveModifier.AutosaveScenePaths)
-        {
+        foreach (var path in MadhouseSaveModifier.AutosaveScenePaths) {
             baselineFlags += CountHardNoSaveFlags(result.ReadBeforeScene(path));
             patchedFlags += CountHardNoSaveFlags(result.ReadAfterScene(path));
             Assert.True(result.WasFileModified(path), $"Expected save scene to be modified: {path}");
@@ -30,10 +24,8 @@ public class RandomizerMadhouseSaveBehaviorTests
     }
 
     [Fact]
-    public void MadhouseNormalSaves_IncludesREFrameworkConfigAndPlugin_WhenEnabled()
-    {
-        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
-        {
+    public void MadhouseNormalSaves_IncludesREFrameworkConfigAndPlugin_WhenEnabled() {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
             config["allow-dlc-items"] = false;
             config["random-enemy-drops"] = false;
             config[MadhouseSaveModifier.ConfigKey] = true;
@@ -52,24 +44,20 @@ public class RandomizerMadhouseSaveBehaviorTests
         Assert.True(reframeworkConfig[MadhouseSaveModifier.ConfigKey]!.GetValue<bool>());
     }
 
-    private static int CountHardNoSaveFlags(RszScene scene)
-    {
+    private static int CountHardNoSaveFlags(RszScene scene) {
         var count = 0;
-        scene.Visit(node =>
-        {
+        scene.Visit(node => {
             if (node is not RszObjectNode objectNode)
                 return node;
 
             if (objectNode.Type.Name == "app.TriggerInAction" &&
                 objectNode["ExtraCommand"] is RszObjectNode extraCommand &&
-                ReadBoolean(extraCommand, "IsHardNoSave"))
-            {
+                ReadBoolean(extraCommand, "IsHardNoSave")) {
                 count++;
             }
 
             if (objectNode.Type.Name == "app.fsm.AutoSave" &&
-                ReadBoolean(objectNode, "IsHardNoSave"))
-            {
+                ReadBoolean(objectNode, "IsHardNoSave")) {
                 count++;
             }
 

@@ -2,8 +2,7 @@ using Biohazard.BioRand.RE7.Serialization;
 
 namespace Biohazard.BioRand.RE7.Benchmarks;
 
-internal static class BenchmarkPakPath
-{
+internal static class BenchmarkPakPath {
     private const string BenchmarkPakPathEnvVariable = "BIORAND_RE7_BENCHMARK_PAK";
     private const string TestPakPathEnvVariable = "BIORAND_RE7_TEST_PAK";
     private const string PakName = "biorand-re7.pak";
@@ -18,10 +17,9 @@ internal static class BenchmarkPakPath
         PakName
     );
 
-    public static string Resolve()
-    {
+    public static string Resolve() {
         var configuredPath = ResolveConfiguredPath(BenchmarkPakPathEnvVariable)
-            ?? ResolveConfiguredPath(TestPakPathEnvVariable);
+                             ?? ResolveConfiguredPath(TestPakPathEnvVariable);
         if (configuredPath is not null)
             return configuredPath;
 
@@ -29,8 +27,7 @@ internal static class BenchmarkPakPath
             return LocalPakPath;
 
         var embeddedPak = EmbeddedData.TryGetFile(PakName);
-        if (embeddedPak is not null)
-        {
+        if (embeddedPak is not null) {
             Directory.CreateDirectory(BiorandDirectory);
             File.WriteAllBytes(LocalPakPath, embeddedPak);
             return LocalPakPath;
@@ -40,8 +37,7 @@ internal static class BenchmarkPakPath
             $"Baseline {PakName} not found. Put it at {LocalPakPath} or set {BenchmarkPakPathEnvVariable}.");
     }
 
-    private static string? ResolveConfiguredPath(string variable)
-    {
+    private static string? ResolveConfiguredPath(string variable) {
         var configuredPath = Environment.GetEnvironmentVariable(variable);
         if (string.IsNullOrWhiteSpace(configuredPath))
             return null;

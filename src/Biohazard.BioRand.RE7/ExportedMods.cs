@@ -9,58 +9,51 @@ using System.Reflection;
 
 namespace Biohazard.BioRand.RE7;
 
-public static class ExportedMods
-{
+public static class ExportedMods {
     private static ImmutableArray<Type> _patches;
     private static ImmutableArray<ExportModAttribute> _all;
 
-    private static ImmutableArray<Type> PatchTypes
-    {
-        get
-        {
-            if (_patches.IsDefault)
-            {
+    private static ImmutableArray<Type> PatchTypes {
+        get {
+            if (_patches.IsDefault) {
                 var patches = new List<(Type, int)>();
                 var assembly = Assembly.GetExecutingAssembly();
-                foreach (var t in assembly.GetTypes())
-                {
-                    if (t.GetInterfaces().Any(x => x == typeof(IPatch)))
-                    {
+                foreach (var t in assembly.GetTypes()) {
+                    if (t.GetInterfaces().Any(x => x == typeof(IPatch))) {
                         var order = 0;
                         var orderAttribute = t.GetCustomAttribute<OrderAttribute>();
-                        if (orderAttribute != null)
-                        {
+                        if (orderAttribute != null) {
                             order = orderAttribute.Order;
                         }
+
                         patches.Add((t, order));
                     }
                 }
+
                 _patches = patches
                     .OrderBy(x => x.Item2)
                     .Select(x => x.Item1)
                     .ToImmutableArray();
             }
+
             return _patches;
         }
     }
 
-    public static ImmutableArray<ExportModAttribute> All
-    {
-        get
-        {
-            if (_all.IsDefault)
-            {
+    public static ImmutableArray<ExportModAttribute> All {
+        get {
+            if (_all.IsDefault) {
                 _all = PatchTypes
                     .Select(x => x.GetCustomAttribute<ExportModAttribute>()!)
                     .Where(x => x != null)
                     .ToImmutableArray();
             }
+
             return _all;
         }
     }
 
-    private static void ApplyPatch(Type type, Randomizer? randomizer, IPatchContext context)
-    {
+    private static void ApplyPatch(Type type, Randomizer? randomizer, IPatchContext context) {
         var ctors = type.GetConstructors();
         if (ctors.Length > 1)
             throw new NotSupportedException($"Only one constructor supported for {nameof(IPatch)}");
@@ -68,14 +61,12 @@ public static class ExportedMods
         var ctor = ctors[0];
         var ctorParameters = ctor.GetParameters().ToArray();
         var ctorArguments = new object?[ctorParameters.Length];
-        for (var i = 0; i < ctorArguments.Length; i++)
-        {
-            if (ctorParameters[i].ParameterType == typeof(Randomizer))
-            {
+        for (var i = 0; i < ctorArguments.Length; i++) {
+            if (ctorParameters[i].ParameterType == typeof(Randomizer)) {
                 ctorArguments[i] = randomizer;
             }
-            if (ctorParameters[i].ParameterType == typeof(IPatchContext))
-            {
+
+            if (ctorParameters[i].ParameterType == typeof(IPatchContext)) {
                 ctorArguments[i] = context;
             }
         }
@@ -84,16 +75,15 @@ public static class ExportedMods
         patchInstance.Apply();
     }
 
-    public static ModBuilder ExportMod(string inputPath, string name)
-    {
+    public static ModBuilder ExportMod(string inputPath, string name) {
         var exportedModAttribute = All.FirstOrDefault(x => x.Name == name)
-            ?? throw new ArgumentException($"{name} not found", nameof(name));
-        var type = PatchTypes.FirstOrDefault(x => x.GetCustomAttribute<ExportModAttribute>()?.Name == exportedModAttribute.Name)
-            ?? throw new Exception($"Type for {name} not found");
+                                   ?? throw new ArgumentException($"{name} not found", nameof(name));
+        var type = PatchTypes.FirstOrDefault(x =>
+                       x.GetCustomAttribute<ExportModAttribute>()?.Name == exportedModAttribute.Name)
+                   ?? throw new Exception($"Type for {name} not found");
 
         var vanilla = new RePakCollection(inputPath);
-        var modBuilder = new ModBuilder
-        {
+        var modBuilder = new ModBuilder{
             Name = exportedModAttribute.Name,
             Description = exportedModAttribute.Description,
             Version = exportedModAttribute.Version,
@@ -106,18 +96,15 @@ public static class ExportedMods
         return modBuilder;
     }
 
-    internal static void ApplyAll(Randomizer? randomizer, IPatchContext context)
-    {
-        foreach (var patchType in PatchTypes)
-        {
+    internal static void ApplyAll(Randomizer? randomizer, IPatchContext context) {
+        foreach (var patchType in PatchTypes) {
             ApplyPatch(patchType, randomizer, context);
         }
     }
 
-    private class PatchContext(IPakFile vanilla, ModBuilder modBuilder) : IPatchContext
-    {
+    private class PatchContext(IPakFile vanilla, ModBuilder modBuilder) : IPatchContext {
         public RszTypeRepository TypeRepository => FileRepository.RszRepository;
-        public DynamicData DynamicData { get; } = new DynamicData(download: false);
+        public DynamicData DynamicData { get; } = new(download: false);
 
         public byte[]? GetSupplementFile(string path) => EmbeddedData.GetFile(path);
 

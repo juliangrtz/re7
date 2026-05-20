@@ -9,8 +9,7 @@ using System.Text;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-internal sealed class AreaSceneTargetsGenerator : IFileGenerator
-{
+internal sealed class AreaSceneTargetsGenerator : IFileGenerator {
     public string Id => "area_scene_targets";
     public bool CopyToDataDirectory => true;
 
@@ -22,8 +21,7 @@ internal sealed class AreaSceneTargetsGenerator : IFileGenerator
     private readonly PakList _pakList =
         new(Encoding.UTF8.GetString(Gzip.DecompressData(EmbeddedData.GetFile("pakcontentsrt.txt.gz"))));
 
-    public object Generate(GenerateCommand.GenerateSettings settings)
-    {
+    public object Generate(GenerateCommand.GenerateSettings settings) {
         var areaDefinitions = ((IEnumerable<AreaDefinition>)new AreaGenerator().Generate(settings)).ToList();
         var hashByPath = _pakFile.FileHashes
             .Select(hash => (Hash: hash, Path: _pakList.GetPath(hash)))
@@ -31,14 +29,12 @@ internal sealed class AreaSceneTargetsGenerator : IFileGenerator
             .ToDictionary(x => x.Path!, x => x.Hash, StringComparer.OrdinalIgnoreCase);
         var results = new ConcurrentBag<AreaSceneTargets>();
 
-        Parallel.ForEach(areaDefinitions, definition =>
-        {
+        Parallel.ForEach(areaDefinitions, definition => {
             if (!hashByPath.TryGetValue(definition.Path, out var hash))
                 return;
 
             var targets = ReadTargets(definition.Path, hash);
-            if (targets.HasAnyTargets())
-            {
+            if (targets.HasAnyTargets()) {
                 results.Add(targets);
             }
         });
@@ -48,8 +44,7 @@ internal sealed class AreaSceneTargetsGenerator : IFileGenerator
             .ToList();
     }
 
-    private AreaSceneTargets ReadTargets(string path, ulong hash)
-    {
+    private AreaSceneTargets ReadTargets(string path, ulong hash) {
         var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(hash))
             .ReadScene(_rszRepository);
         var itemGuids = new List<Guid>();
@@ -58,39 +53,32 @@ internal sealed class AreaSceneTargetsGenerator : IFileGenerator
         var enemySpawnInfoGuids = new List<Guid>();
         var enemyGenerateGuids = new List<Guid>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
-            if (gameObject.FindComponent<app.Item>() != null)
-            {
+        scene.VisitGameObjects(gameObject => {
+            if (gameObject.FindComponent<app.Item>() != null) {
                 itemGuids.Add(gameObject.Guid);
             }
 
             if (gameObject.FindComponent<app.Weapon>() != null ||
-                gameObject.FindComponent<app.WeaponGun>() != null)
-            {
+                gameObject.FindComponent<app.WeaponGun>() != null) {
                 weaponGuids.Add(gameObject.Guid);
             }
 
             var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
-            if (enemyGenerator?.Enabled == true)
-            {
+            if (enemyGenerator?.Enabled == true) {
                 enemyGeneratorGuids.Add(gameObject.Guid);
             }
 
             var enemySpawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
-            if (enemySpawnInfo?.Enabled == true)
-            {
+            if (enemySpawnInfo?.Enabled == true) {
                 enemySpawnInfoGuids.Add(gameObject.Guid);
             }
 
-            if (HasEnemyGenerateAction(gameObject))
-            {
+            if (HasEnemyGenerateAction(gameObject)) {
                 enemyGenerateGuids.Add(gameObject.Guid);
             }
         });
 
-        return new AreaSceneTargets
-        {
+        return new AreaSceneTargets{
             Path = path,
             ItemGuids = NullIfEmpty(itemGuids),
             WeaponGuids = NullIfEmpty(weaponGuids),
@@ -100,20 +88,16 @@ internal sealed class AreaSceneTargetsGenerator : IFileGenerator
         };
     }
 
-    private static bool HasEnemyGenerateAction(RszGameObject gameObject)
-    {
+    private static bool HasEnemyGenerateAction(RszGameObject gameObject) {
         if (gameObject.FindComponent("via.fsm.Fsm") == null ||
-            gameObject.FindComponent("app.TriggerInAction") == null)
-        {
+            gameObject.FindComponent("app.TriggerInAction") == null) {
             return false;
         }
 
         var result = false;
-        gameObject.Visit(node =>
-        {
+        gameObject.Visit(node => {
             if (node is RszObjectNode objectNode &&
-                objectNode.Type.Name == "app.fsm.EnemyGenerate")
-            {
+                objectNode.Type.Name == "app.fsm.EnemyGenerate") {
                 result = true;
             }
         });

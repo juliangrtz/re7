@@ -7,102 +7,81 @@ namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 /// <summary>
 /// Decompiled adaptation of IntelOrca's code for custom Enum handling.
 /// </summary>
-public class RszTypeCsharpWriter
-{
+public class RszTypeCsharpWriter {
     private const string Modifier = "public";
 
     public bool GenerateEnums { get; set; }
     public bool UseEnumTypes { get; set; }
     public string? EnumNamespace { get; set; }
 
-    private class CsharpWriter
-    {
+    private class CsharpWriter {
         private readonly StringBuilder _sb = new();
         private int _indent;
 
-        public void AppendLine(string line)
-        {
+        public void AppendLine(string line) {
             _sb.Append(new string(' ', _indent * 4));
             _sb.Append(line);
             _sb.AppendLine();
         }
 
-        public void BeginNamespaceBlock(string ns)
-        {
+        public void BeginNamespaceBlock(string ns) {
             AppendLine("namespace " + ns);
             AppendLine("{");
             Indent();
         }
 
-        public void BeginEnumBlock(string name)
-        {
+        public void BeginEnumBlock(string name) {
             AppendLine($"{Modifier} enum " + name);
             AppendLine("{");
             Indent();
         }
 
-        public void BeginClassBlock(string name, string? parentName)
-        {
+        public void BeginClassBlock(string name, string? parentName) {
             string text = ((parentName == null) ? "" : (" : " + parentName));
             AppendLine($"{Modifier} class " + name + text);
             AppendLine("{");
             Indent();
         }
 
-        public void Property(string type, string name, string? initializer)
-        {
-            if (initializer == null)
-            {
+        public void Property(string type, string name, string? initializer) {
+            if (initializer == null) {
                 AppendLine($"public {type} {name} {{ get; set; }}");
-            }
-            else
-            {
+            } else {
                 AppendLine($"public {type} {name} {{ get; set; }} = {initializer};");
             }
         }
 
-        public void EndBlock()
-        {
+        public void EndBlock() {
             Outdent();
             AppendLine("}");
         }
 
-        public void Indent()
-        {
+        public void Indent() {
             _indent++;
         }
 
-        public void Outdent()
-        {
+        public void Outdent() {
             _indent--;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return _sb.ToString();
         }
     }
 
-    public string Generate(RszType rszType)
-    {
+    public string Generate(RszType rszType) {
         CsharpWriter writer = new();
         List<RszType> allTypes = FindTypes([], rszType);
         foreach (IGrouping<string, RszType> item in from x in allTypes
-                                                    group x by x.Namespace)
-        {
+                 group x by x.Namespace) {
             writer.BeginNamespaceBlock(item.Key);
-            foreach (RszType item2 in item)
-            {
-                if (item2.IsEnum)
-                {
-                    if (GenerateEnums)
-                    {
+            foreach (RszType item2 in item) {
+                if (item2.IsEnum) {
+                    if (GenerateEnums) {
                         writer.BeginEnumBlock(item2.NameWithoutNamespace);
                         writer.EndBlock();
                     }
-                }
-                else
-                {
+                } else {
                     WriteType(item2);
                 }
             }
@@ -111,40 +90,33 @@ public class RszTypeCsharpWriter
         }
 
         return writer.ToString();
-        void WriteType(RszType t)
-        {
-            if (!t.Name.Contains("[]") && !t.Name.Contains('<'))
-            {
+
+        void WriteType(RszType t) {
+            if (!t.Name.Contains("[]") && !t.Name.Contains('<')) {
                 string? parentName = null;
                 RszType? rszType2 = null;
-                if (t.Parent != null && allTypes.Contains(t.Parent))
-                {
+                if (t.Parent != null && allTypes.Contains(t.Parent)) {
                     rszType2 = t.Parent;
                     parentName = ((t.Parent.Namespace == t.Namespace) ? t.Parent.NameWithoutNamespace : t.Parent.Name);
                 }
 
                 writer.BeginClassBlock(t.NameWithoutNamespace, parentName);
                 ImmutableArray<RszTypeField>.Enumerator enumerator3 = t.Fields.GetEnumerator();
-                while (enumerator3.MoveNext())
-                {
+                while (enumerator3.MoveNext()) {
                     RszTypeField current3 = enumerator3.Current;
-                    if (rszType2 == null || !t.IsFieldInherited(current3.Name))
-                    {
+                    if (rszType2 == null || !t.IsFieldInherited(current3.Name)) {
                         string fieldTypeName = GetFieldTypeName(current3);
-                        if (current3.IsArray)
-                        {
-                            writer.Property("System.Collections.Generic.List<" + fieldTypeName + ">", current3.Name, "[]");
-                        }
-                        else
-                        {
+                        if (current3.IsArray) {
+                            writer.Property("System.Collections.Generic.List<" + fieldTypeName + ">", current3.Name,
+                                "[]");
+                        } else {
                             writer.Property(fieldTypeName, current3.Name, GetInitializer(current3));
                         }
                     }
                 }
 
                 ImmutableArray<RszType>.Enumerator enumerator4 = t.Repository.GetNestedTypes(t).GetEnumerator();
-                while (enumerator4.MoveNext())
-                {
+                while (enumerator4.MoveNext()) {
                     RszType current4 = enumerator4.Current;
                     WriteType(current4);
                 }
@@ -154,40 +126,31 @@ public class RszTypeCsharpWriter
         }
     }
 
-    private static string? GetInitializer(RszTypeField f)
-    {
-        if (f.Type == RszFieldType.String)
-        {
+    private static string? GetInitializer(RszTypeField f) {
+        if (f.Type == RszFieldType.String) {
             return "\"\"";
         }
 
-        if (f.ObjectType != null)
-        {
+        if (f.ObjectType != null) {
             return null;
         }
 
         return "new()";
     }
 
-    private string GetFieldTypeName(RszTypeField field)
-    {
+    private string GetFieldTypeName(RszTypeField field) {
         RszType? objectType = field.ObjectType;
-        if (objectType != null && objectType.IsEnum)
-        {
-            if (UseEnumTypes)
-            {
+        if (objectType != null && objectType.IsEnum) {
+            if (UseEnumTypes) {
                 return string.IsNullOrWhiteSpace(EnumNamespace)
-                        ? objectType.Name
-                        : $"{EnumNamespace}.{objectType.Name}";
-            }
-            else if (!GenerateEnums)
-            {
+                    ? objectType.Name
+                    : $"{EnumNamespace}.{objectType.Name}";
+            } else if (!GenerateEnums) {
                 objectType = objectType.Fields[0].ObjectType;
             }
         }
 
-        return field.Type switch
-        {
+        return field.Type switch{
             RszFieldType.Bool => "bool",
             RszFieldType.S8 => "sbyte",
             RszFieldType.U8 => "byte",
@@ -213,44 +176,35 @@ public class RszTypeCsharpWriter
         };
     }
 
-    private List<RszType> FindTypes(List<RszType> types, RszType type)
-    {
-        if (type.Name.StartsWith("System."))
-        {
+    private List<RszType> FindTypes(List<RszType> types, RszType type) {
+        if (type.Name.StartsWith("System.")) {
             return types;
         }
 
-        if (type.Name.StartsWith("via."))
-        {
+        if (type.Name.StartsWith("via.")) {
             return types;
         }
 
-        if (type.IsEnum && !GenerateEnums)
-        {
+        if (type.IsEnum && !GenerateEnums) {
             return types;
         }
 
-        if (types.Contains(type))
-        {
+        if (types.Contains(type)) {
             return types;
         }
 
-        if (type.Repository.FromName(type.Namespace) == null)
-        {
+        if (type.Repository.FromName(type.Namespace) == null) {
             types.Add(type);
         }
 
-        foreach (RszType item in type.Children.OrderBy(x => x.Name))
-        {
+        foreach (RszType item in type.Children.OrderBy(x => x.Name)) {
             types.Add(item);
         }
 
         ImmutableArray<RszTypeField>.Enumerator enumerator2 = type.Fields.GetEnumerator();
-        while (enumerator2.MoveNext())
-        {
+        while (enumerator2.MoveNext()) {
             RszTypeField current2 = enumerator2.Current;
-            if (current2.ObjectType != null)
-            {
+            if (current2.ObjectType != null) {
                 FindTypes(types, current2.ObjectType);
             }
         }

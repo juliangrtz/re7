@@ -8,8 +8,7 @@ using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class KeyItemLocationModifier : Modifier
-{
+internal class KeyItemLocationModifier : Modifier {
     private const string RandomizerKey = "modifier/key-item-locations";
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
@@ -18,6 +17,7 @@ internal class KeyItemLocationModifier : Modifier
     private const int MaxRouteDeadEndsPerAttempt = 1024;
     private const int RouteDepthPadding = 8;
     private static readonly Guid _guestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
+
     private static readonly HashSet<string> _preservedVanillaKeyItemIds = new(StringComparer.OrdinalIgnoreCase) // TODO
     {
         "ChainCutter",
@@ -34,28 +34,48 @@ internal class KeyItemLocationModifier : Modifier
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private static readonly AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
     private static readonly HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
-    private static readonly IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> _levelFsmAcquisitionFlagsByItemId =
-        new Dictionary<string, ImmutableArray<KeyItemAcquisitionFlag>>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["ChainCutter"] = Flags(new KeyItemAcquisitionFlag("PL_ChainCutterGet", new("889fd052-4339-4fb4-920c-a6ac99eb6fd7"), true)),
-            ["Fuse"] = Flags(new KeyItemAcquisitionFlag("c01_Main_FuseGet", new("f7486e9b-8924-494c-9738-c26fa3c2e055"), true)),
-            ["FloorDoorKey"] = Flags(new KeyItemAcquisitionFlag("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true)),
-            ["3CrestKeyC"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetCrestInFreezerRoom", new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true)),
-            ["MasterKey"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetSnakeKey", new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true)),
-            ["Crank"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetCrank", new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true)),
-            ["TalismanKey"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true)),
-            ["SilhouettePazzlePiece"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetPazzleObject", new("e165ff7a-0829-4edc-8c34-68a01a1ff3b2"), true)),
-            ["SilhouettePazzlePieceOldHouse"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_EnterMiaCapturedRoom", new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true)),
-            ["SerumMaterialA"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetEvlineArm", new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true)),
-            ["Lantern"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetLantern", new("acb7e0bd-e123-4a57-8a0b-1bf77087e856"), true)),
-            ["LucasCardKey"] = Flags(new KeyItemAcquisitionFlag("c03_4A_Main_LucasCardKeyGet_InLoft", new("b5532ea8-facb-428d-bf61-ea3e66d373dd"), true)),
-            ["LucasCardKey2"] = Flags(new KeyItemAcquisitionFlag("c03_4B_Main_LucasCardKeyGet_InWorkRoom", new("b9f9b409-c6b8-4142-9697-c70f24a7c15b"), true)),
-            ["SerumMaterialB"] = Flags(new KeyItemAcquisitionFlag("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true)),
-            ["Candle_Lighted"] = Flags(new KeyItemAcquisitionFlag("c03_4_Main_PazzleRoom_CandleOn", new("e8f18a82-943a-41dd-977b-f1d729499dee"), true)),
-            ["SerumComplete"] = Flags(new KeyItemAcquisitionFlag("c03_5_Main_GetKesseiEventEnd", new("2f3f5ec1-c595-4078-a686-118a5a8d1a8f"), true)),
-            ["EvCable"] = Flags(new KeyItemAcquisitionFlag("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"), true)),
-            ["FuseCh4"] = Flags(new KeyItemAcquisitionFlag("c04_objective_ElevatorFuseGetInventory", new("c7004b40-85bc-4d0a-a274-05d771d581ab"), true)),
-        };
+
+    private static readonly IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>>
+        _levelFsmAcquisitionFlagsByItemId =
+            new Dictionary<string, ImmutableArray<KeyItemAcquisitionFlag>>(StringComparer.OrdinalIgnoreCase){
+                ["ChainCutter"] = Flags(new KeyItemAcquisitionFlag("PL_ChainCutterGet",
+                    new("889fd052-4339-4fb4-920c-a6ac99eb6fd7"), true)),
+                ["Fuse"] = Flags(new KeyItemAcquisitionFlag("c01_Main_FuseGet",
+                    new("f7486e9b-8924-494c-9738-c26fa3c2e055"), true)),
+                ["FloorDoorKey"] = Flags(new KeyItemAcquisitionFlag("c03_1_Main_GetFloorDoorKey",
+                    new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true)),
+                ["3CrestKeyC"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetCrestInFreezerRoom",
+                    new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true)),
+                ["MasterKey"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetSnakeKey",
+                    new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true)),
+                ["Crank"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetCrank",
+                    new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true)),
+                ["TalismanKey"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_TalismanKeyGet",
+                    new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true)),
+                ["SilhouettePazzlePiece"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetPazzleObject",
+                    new("e165ff7a-0829-4edc-8c34-68a01a1ff3b2"), true)),
+                ["SilhouettePazzlePieceOldHouse"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_EnterMiaCapturedRoom",
+                    new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true)),
+                ["SerumMaterialA"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetEvlineArm",
+                    new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true)),
+                ["Lantern"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetLantern",
+                    new("acb7e0bd-e123-4a57-8a0b-1bf77087e856"), true)),
+                ["LucasCardKey"] = Flags(new KeyItemAcquisitionFlag("c03_4A_Main_LucasCardKeyGet_InLoft",
+                    new("b5532ea8-facb-428d-bf61-ea3e66d373dd"), true)),
+                ["LucasCardKey2"] = Flags(new KeyItemAcquisitionFlag("c03_4B_Main_LucasCardKeyGet_InWorkRoom",
+                    new("b9f9b409-c6b8-4142-9697-c70f24a7c15b"), true)),
+                ["SerumMaterialB"] = Flags(new KeyItemAcquisitionFlag("c03_objective_EvlineFace_Get",
+                    new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true)),
+                ["Candle_Lighted"] = Flags(new KeyItemAcquisitionFlag("c03_4_Main_PazzleRoom_CandleOn",
+                    new("e8f18a82-943a-41dd-977b-f1d729499dee"), true)),
+                ["SerumComplete"] = Flags(new KeyItemAcquisitionFlag("c03_5_Main_GetKesseiEventEnd",
+                    new("2f3f5ec1-c595-4078-a686-118a5a8d1a8f"), true)),
+                ["EvCable"] = Flags(new KeyItemAcquisitionFlag("c04_objective_ElevatorCableGetInventory",
+                    new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"), true)),
+                ["FuseCh4"] = Flags(new KeyItemAcquisitionFlag("c04_objective_ElevatorFuseGetInventory",
+                    new("c7004b40-85bc-4d0a-a274-05d771d581ab"), true)),
+            };
+
     private const int WhiteDogHeadMask = 1 << 0;
     private const int BlueDogHeadMask = 1 << 1;
     private const int BatteryMask = 1 << 2;
@@ -89,32 +109,45 @@ internal class KeyItemLocationModifier : Modifier
     private const int DogHeadMasks = WhiteDogHeadMask | BlueDogHeadMask;
     private const int AllDogHeadMasks = DogHeadMasks | RedDogHeadMask;
     private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask | CrowKeyMask;
+
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
         OxStatuetteMask | RedDogHeadMask | CrankMask |
         StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+
     private const int MainHouseAfterGarageCarryMasks =
         (MainHouseBeforeHatchCarryMasks | PendulumMask) &
         ~FloorDoorKeyMask & ~CarKeyMask & ~OxStatuetteMask;
+
     private const int MainHouseEastCarryMasks =
         MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
         CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+
     private const int DissectionRoomCarryMasks =
         AllDogHeadMasks | BatteryMask | CrowKeyMask |
         CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+
     private const int OldHouseBeforeCrowCarryMasks =
         CrankMask | StoneStatuetteMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+
     private const int OldHouseAfterStoneCarryMasks =
         CrankMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+
     private const int OldHouseAfterCrankCarryMasks =
         CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+
     private const int OldHouseAfterCrowCarryMasks =
         LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+
     private const int OldHouseAfterLanternCarryMasks =
         DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
+
     private const int SnakeKeyRewardCarryMasks =
         SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask;
-    private const int KeycardSetupCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
+
+    private const int KeycardSetupCarryMasks =
+        BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
+
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
     private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
@@ -129,21 +162,21 @@ internal class KeyItemLocationModifier : Modifier
     private static readonly Guid _oldHouseStoneStatuetteGuid = new("41a59cb8-7613-4d4b-a530-58aebfe0e1c8");
     private static readonly Guid _oldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
     private static readonly Guid _lucasPuzzleCandleGuid = new("05606c7e-3669-497e-8196-561faefb95e5");
-    private static readonly Guid[] _cultivationRoomDoorGuids =
-    [
+
+    private static readonly Guid[] _cultivationRoomDoorGuids =[
         new("3f4ca9a0-b4ff-432b-8784-1403fd1b687f"),
         new("55adadba-98ee-4086-bce7-3610a3bd9ecb"),
         new("03b4daed-2766-435e-96cb-1b4857b71f0a"),
         new("d7f7420e-e505-4772-a973-0342b1d58a85"),
     ];
-    private static readonly HashSet<Guid> _snakeKeyRewardGuids =
-    [
+
+    private static readonly HashSet<Guid> _snakeKeyRewardGuids =[
         new("96da0bd0-1a8b-4c35-bc02-695da693e8d4"),
         new("24512acb-965b-462c-941e-375f9d62bd5e"),
         new("751cff95-a933-48ad-8ffa-6f96e25f8959"),
     ];
-    private static readonly ImmutableArray<KeyItemRule> _supportedKeyItems =
-    [
+
+    private static readonly ImmutableArray<KeyItemRule> _supportedKeyItems =[
         new("ChainCutter", 1, BoltCuttersMask), // Bolt Cutters
         new("Fuse", 1, GuestFuseMask), // Fuse
         new("HandAxe", 1, AxeMask, Priority: 20), // Axe
@@ -176,22 +209,19 @@ internal class KeyItemLocationModifier : Modifier
         new("SilhouettePazzlePiece", 3, WoodenStatuetteMask, Priority: 80), // Wooden Statuette
     ];
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
-    {
-        foreach (var rule in _supportedKeyItems)
-        {
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+        foreach (var rule in _supportedKeyItems) {
             var item = _itemDefinitions.FromId(rule.Id)!;
             var placements = randomizer.ItemPlacementService.FromId(rule.Id);
-            foreach (var placement in placements.Where(x => x.Enabled && !x.IsExtra && x.Dlc == null))
-            {
-                logger.LogLine($"{item.Name} in {FormatScenePath(placement.SceneFile)}, X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
+            foreach (var placement in placements.Where(x => x.Enabled && !x.IsExtra && x.Dlc == null)) {
+                logger.LogLine(
+                    $"{item.Name} in {FormatScenePath(placement.SceneFile)}, X={placement.Position.X}, Y={placement.Position.Y}, Z={placement.Position.Z}");
                 logger.LogLine($"GUID: {placement.Guid}");
             }
         }
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         if (!randomizer.GetConfigOption<bool>("random-key-item-locations"))
             return;
 
@@ -219,8 +249,8 @@ internal class KeyItemLocationModifier : Modifier
             replacementPlanSet.ActiveRules,
             logger);
 
-        foreach (var placement in GetOriginalSupportedKeyItemPlacements(itemPlacementService, replacementPlanSet.ActiveRules))
-        {
+        foreach (var placement in GetOriginalSupportedKeyItemPlacements(itemPlacementService,
+                     replacementPlanSet.ActiveRules)) {
             var key = new ReplacementKey(placement.SceneFile, placement.Guid);
             if (replacementPlans.ContainsKey(key))
                 continue;
@@ -231,28 +261,25 @@ internal class KeyItemLocationModifier : Modifier
                 itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings));
         }
 
-        foreach (var sceneGroup in replacementPlans.Values.GroupBy(plan => plan.Placement.SceneFile, StringComparer.OrdinalIgnoreCase))
-        {
+        foreach (var sceneGroup in replacementPlans.Values.GroupBy(plan => plan.Placement.SceneFile,
+                     StringComparer.OrdinalIgnoreCase)) {
             logger.Push(FormatScenePath(sceneGroup.Key));
-            randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene =>
-            {
+            randomizer.FileRepository.ModifyScnFile(sceneGroup.Key, scene => {
                 var plans = sceneGroup.ToList();
                 var targetGuids = plans
                     .Select(plan => plan.TargetGuid)
                     .ToHashSet();
                 var originalGameObjects = scene.FindGameObjectsByGuidWithFsmContext(targetGuids);
                 var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
-                var extraParentGameObject = scene.FindGameObject(gameObject => gameObject.Name.EndsWith("_dynamic", StringComparison.Ordinal));
+                var extraParentGameObject = scene.FindGameObject(gameObject =>
+                    gameObject.Name.EndsWith("_dynamic", StringComparison.Ordinal));
                 var extraParentChanged = false;
 
-                foreach (var plan in plans)
-                {
-                    if (!originalGameObjects.TryGetValue(plan.TargetGuid, out var originalMatch))
-                    {
+                foreach (var plan in plans) {
+                    if (!originalGameObjects.TryGetValue(plan.TargetGuid, out var originalMatch)) {
                         if (plan.Placement.IsExtra &&
                             ExtraPlacementModifier.IsPlainExtraItemPlacement(plan.Placement) &&
-                            extraParentGameObject != null)
-                        {
+                            extraParentGameObject != null) {
                             var extraKeyItem = CreateExtraKeyItemGameObject(
                                 randomizer,
                                 logger,
@@ -265,7 +292,8 @@ internal class KeyItemLocationModifier : Modifier
                             continue;
                         }
 
-                        logger.LogLine($"Skipped replacing {plan.Placement.Id} in {FormatScenePath(plan.Placement.SceneFile)}: GameObject {plan.TargetGuid} was not found.");
+                        logger.LogLine(
+                            $"Skipped replacing {plan.Placement.Id} in {FormatScenePath(plan.Placement.SceneFile)}: GameObject {plan.TargetGuid} was not found.");
                         continue;
                     }
 
@@ -283,8 +311,7 @@ internal class KeyItemLocationModifier : Modifier
                     replacementGameObjects[plan.TargetGuid] = replacement;
                 }
 
-                if (extraParentChanged)
-                {
+                if (extraParentChanged) {
                     scene = scene.UpdateGameObject(extraParentGameObject!);
                 }
 
@@ -294,14 +321,11 @@ internal class KeyItemLocationModifier : Modifier
         }
     }
 
-    private static void RemoveCultivationRoomMineDoors(Randomizer randomizer, RandomizerLogger logger)
-    {
+    private static void RemoveCultivationRoomMineDoors(Randomizer randomizer, RandomizerLogger logger) {
         var removed = 0;
         var doorGuids = _cultivationRoomDoorGuids.ToHashSet();
-        randomizer.FileRepository.ModifyScnFile(CultivationRoomScenePath, scene =>
-        {
-            foreach (var doorGuid in doorGuids)
-            {
+        randomizer.FileRepository.ModifyScnFile(CultivationRoomScenePath, scene => {
+            foreach (var doorGuid in doorGuids) {
                 if (scene.FindGameObject(doorGuid) == null)
                     continue;
 
@@ -312,15 +336,15 @@ internal class KeyItemLocationModifier : Modifier
             return scene;
         });
 
-        logger.LogLine($"Cultivation room mine doors removed: {removed} in {FormatScenePath(CultivationRoomScenePath)}.");
+        logger.LogLine(
+            $"Cultivation room mine doors removed: {removed} in {FormatScenePath(CultivationRoomScenePath)}.");
     }
 
     private static IEnumerable<ItemReplacementTarget> GetEligibleTargetPlacements(
         Randomizer randomizer,
-        ItemPlacementService itemPlacementService)
-    {
+        ItemPlacementService itemPlacementService) {
         var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes")
-            || MadhouseSaveModifier.IsEnabled(randomizer);
+                                   || MadhouseSaveModifier.IsEnabled(randomizer);
         var eligibleScenePaths = AreaDefinitionRepository.Default.All
             .Where(area => area.Dlc == null)
             .Select(area => area.Path)
@@ -330,23 +354,20 @@ internal class KeyItemLocationModifier : Modifier
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         var metadataEligibleTargets = new List<ItemReplacementTarget>();
-        foreach (var placement in itemPlacementService.MainGamePlacements)
-        {
+        foreach (var placement in itemPlacementService.MainGamePlacements) {
             var isSupportedKeyPlacement = supportedIds.Contains(placement.Id);
             if (!eligibleScenePaths.Contains(placement.SceneFile)
                 || !placement.Enabled
                 || placement.Difficulty != null
                 || placement.Tags.Contains(ItemPlacement.ExcludeTag)
-                || _birdCageGuids.Contains(placement.Guid))
-            {
+                || _birdCageGuids.Contains(placement.Guid)) {
                 continue;
             }
 
             if (isSupportedKeyPlacement && _preservedVanillaKeyItemIds.Contains(placement.Id))
                 continue;
 
-            if (placement.IsExtra)
-            {
+            if (placement.IsExtra) {
                 if (!ExtraPlacementModifier.IsPlainExtraItemPlacement(placement))
                     continue;
 
@@ -366,8 +387,7 @@ internal class KeyItemLocationModifier : Modifier
 
             var definition = _itemDefinitions.FromId(placement.Id);
             if (definition == null
-                || (!isSupportedKeyPlacement && !randomizer.ItemRandomizer.IsItemAllowed(definition)))
-            {
+                || (!isSupportedKeyPlacement && !randomizer.ItemRandomizer.IsItemAllowed(definition))) {
                 continue;
             }
 
@@ -377,11 +397,11 @@ internal class KeyItemLocationModifier : Modifier
             if (!isSupportedKeyPlacement && !IsPlainRandomItemTarget(definition))
                 continue;
 
-            metadataEligibleTargets.Add(new ItemReplacementTarget(placement, definition, placement.Guid, definition.Name ?? definition.Id));
+            metadataEligibleTargets.Add(new ItemReplacementTarget(placement, definition, placement.Guid,
+                definition.Name ?? definition.Id));
         }
 
-        foreach (var target in ExcludeDrawerKeyItemTargets(randomizer, metadataEligibleTargets))
-        {
+        foreach (var target in ExcludeDrawerKeyItemTargets(randomizer, metadataEligibleTargets)) {
             yield return target;
         }
     }
@@ -392,19 +412,18 @@ internal class KeyItemLocationModifier : Modifier
             or ItemCategoryType.Material
             or ItemCategoryType.OtherItem;
 
-    internal static bool CanPlaceKeyItemInPlacementForTesting(ItemPlacement placement, string keyItemId)
-    {
+    internal static bool CanPlaceKeyItemInPlacementForTesting(ItemPlacement placement, string keyItemId) {
         if (_preservedVanillaKeyItemIds.Contains(keyItemId))
             return false;
 
         if (!placement.IsExtra
             && !string.IsNullOrWhiteSpace(placement.Id)
-            && _preservedVanillaKeyItemIds.Contains(placement.Id))
-        {
+            && _preservedVanillaKeyItemIds.Contains(placement.Id)) {
             return false;
         }
 
-        var rule = _supportedKeyItems.Single(supported => supported.Id.Equals(keyItemId, StringComparison.OrdinalIgnoreCase));
+        var rule = _supportedKeyItems.Single(supported =>
+            supported.Id.Equals(keyItemId, StringComparison.OrdinalIgnoreCase));
         var definition = string.IsNullOrWhiteSpace(placement.Id)
             ? null
             : _itemDefinitions.FromId(placement.Id);
@@ -419,15 +438,14 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsOriginalSupportedKeyItemPlacement(ItemPlacement placement)
         => !placement.IsExtra
-            && !string.IsNullOrWhiteSpace(placement.Id)
-            && _supportedKeyItems.Any(rule => rule.Id.Equals(placement.Id, StringComparison.OrdinalIgnoreCase));
+           && !string.IsNullOrWhiteSpace(placement.Id)
+           && _supportedKeyItems.Any(rule => rule.Id.Equals(placement.Id, StringComparison.OrdinalIgnoreCase));
 
     private static IEnumerable<ItemReplacementTarget> ExcludeDrawerKeyItemTargets(
         Randomizer randomizer,
-        IEnumerable<ItemReplacementTarget> targets)
-    {
-        foreach (var sceneGroup in targets.GroupBy(target => target.Placement.SceneFile, StringComparer.OrdinalIgnoreCase))
-        {
+        IEnumerable<ItemReplacementTarget> targets) {
+        foreach (var sceneGroup in targets.GroupBy(target => target.Placement.SceneFile,
+                     StringComparer.OrdinalIgnoreCase)) {
             var sceneTargets = sceneGroup.ToList();
             var scene = randomizer.FileRepository
                 .GetScnFile(sceneGroup.Key)
@@ -435,12 +453,10 @@ internal class KeyItemLocationModifier : Modifier
             var targetMatches = scene.FindGameObjectsByGuidWithFsmContext(
                 sceneTargets.Select(target => target.TargetGuid).ToHashSet());
 
-            foreach (var target in sceneTargets)
-            {
-                if (!targetMatches.TryGetValue(target.TargetGuid, out var match))
-                {
-                    if (target.Placement.IsExtra && ExtraPlacementModifier.IsPlainExtraItemPlacement(target.Placement))
-                    {
+            foreach (var target in sceneTargets) {
+                if (!targetMatches.TryGetValue(target.TargetGuid, out var match)) {
+                    if (target.Placement.IsExtra &&
+                        ExtraPlacementModifier.IsPlainExtraItemPlacement(target.Placement)) {
                         yield return target;
                     }
 
@@ -457,8 +473,7 @@ internal class KeyItemLocationModifier : Modifier
 
     private static IEnumerable<ItemPlacement> GetOriginalSupportedKeyItemPlacements(
         ItemPlacementService itemPlacementService,
-        IEnumerable<KeyItemRule> activeRules)
-    {
+        IEnumerable<KeyItemRule> activeRules) {
         var supportedIds = activeRules
             .Select(rule => rule.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -476,21 +491,19 @@ internal class KeyItemLocationModifier : Modifier
         Randomizer randomizer,
         ItemPlacementService itemPlacementService,
         IEnumerable<KeyItemRule> activeRules,
-        RandomizerLogger logger)
-    {
+        RandomizerLogger logger) {
         var supportedIds = activeRules
             .Select(rule => rule.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var result = new Dictionary<string, ImmutableArray<KeyItemAcquisitionFlag>>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var placementGroup in itemPlacementService.MainGamePlacements
-            .Where(placement =>
-                supportedIds.Contains(placement.Id) &&
-                placement.Enabled &&
-                !placement.IsExtra &&
-                placement.Dlc == null)
-            .GroupBy(placement => placement.Id, StringComparer.OrdinalIgnoreCase))
-        {
+                     .Where(placement =>
+                         supportedIds.Contains(placement.Id) &&
+                         placement.Enabled &&
+                         !placement.IsExtra &&
+                         placement.Dlc == null)
+                     .GroupBy(placement => placement.Id, StringComparer.OrdinalIgnoreCase)) {
             var flags = placementGroup
                 .SelectMany(placement => GetPickupAcquisitionFlags(randomizer, placement))
                 .Concat(GetLevelFsmAcquisitionFlags(placementGroup.Key))
@@ -499,15 +512,15 @@ internal class KeyItemLocationModifier : Modifier
             if (flags.Length == 0)
                 continue;
 
-            if (HasUnsafeRelocatedPickupSideEffect(placementGroup.Key, flags))
-            {
-                logger.LogLine($"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: the vanilla workshop tray flag is tied to the morgue FSM and is unsafe when relocated.");
+            if (HasUnsafeRelocatedPickupSideEffect(placementGroup.Key, flags)) {
+                logger.LogLine(
+                    $"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: the vanilla workshop tray flag is tied to the morgue FSM and is unsafe when relocated.");
                 continue;
             }
 
-            if (flags.Length > 1)
-            {
-                logger.LogLine($"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: multiple distinct vanilla pickup flags were found.");
+            if (flags.Length > 1) {
+                logger.LogLine(
+                    $"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: multiple distinct vanilla pickup flags were found.");
                 continue;
             }
 
@@ -529,14 +542,13 @@ internal class KeyItemLocationModifier : Modifier
         string itemId,
         ImmutableArray<KeyItemAcquisitionFlag> flags)
         => itemId.Equals("WorkroomKey", StringComparison.OrdinalIgnoreCase) &&
-            flags.Any(flag =>
-                flag.Name.Equals("c03_2_Main_OpenTrayInWorkshopKey", StringComparison.OrdinalIgnoreCase)
-                || flag.Guid == new Guid("b3096800-d600-4015-b934-63d671b597a9"));
+           flags.Any(flag =>
+               flag.Name.Equals("c03_2_Main_OpenTrayInWorkshopKey", StringComparison.OrdinalIgnoreCase)
+               || flag.Guid == new Guid("b3096800-d600-4015-b934-63d671b597a9"));
 
     private static IEnumerable<KeyItemAcquisitionFlag> GetPickupAcquisitionFlags(
         Randomizer randomizer,
-        ItemPlacement placement)
-    {
+        ItemPlacement placement) {
         var scene = randomizer.FileRepository
             .GetScnFile(placement.SceneFile)
             .ReadScene(randomizer.FileRepository.TypeRepository);
@@ -544,39 +556,30 @@ internal class KeyItemLocationModifier : Modifier
         if (gameObject == null)
             yield break;
 
-        foreach (var component in GetPickupInteractionComponents(gameObject))
-        {
-            if (TryGetAcquisitionFlag(component) is { } flag)
-            {
+        foreach (var component in GetPickupInteractionComponents(gameObject)) {
+            if (TryGetAcquisitionFlag(component) is{ } flag) {
                 yield return flag;
             }
         }
     }
 
-    private static IEnumerable<RszObjectNode> GetPickupInteractionComponents(RszGameObject gameObject)
-    {
+    private static IEnumerable<RszObjectNode> GetPickupInteractionComponents(RszGameObject gameObject) {
         var result = new List<RszObjectNode>();
-        gameObject.VisitGameObjects(child =>
-        {
-            result.AddRange(child.Components.Where(IsPickupInteraction));
-        });
+        gameObject.VisitGameObjects(child => { result.AddRange(child.Components.Where(IsPickupInteraction)); });
 
         return result;
     }
 
-    private static KeyItemAcquisitionFlag? TryGetAcquisitionFlag(RszObjectNode component)
-    {
+    private static KeyItemAcquisitionFlag? TryGetAcquisitionFlag(RszObjectNode component) {
         if (component.Type.FindFieldIndex("SetFsmBoolFlag") == -1 ||
             component.Type.FindFieldIndex("SetFsmBoolFlagId") == -1 ||
-            component.Type.FindFieldIndex("SetFsmBoolFlagValue") == -1)
-        {
+            component.Type.FindFieldIndex("SetFsmBoolFlagValue") == -1) {
             return null;
         }
 
         var flagName = component.Get<string>("SetFsmBoolFlag");
         if (string.IsNullOrWhiteSpace(flagName) ||
-            flagName.Equals("none", StringComparison.OrdinalIgnoreCase))
-        {
+            flagName.Equals("none", StringComparison.OrdinalIgnoreCase)) {
             return null;
         }
 
@@ -589,8 +592,7 @@ internal class KeyItemLocationModifier : Modifier
     private static KeyItemReplacementPlanSet? CreateKeyItemReplacementPlans(
         RandomizerLogger logger,
         Rng rng,
-        IReadOnlyCollection<ItemReplacementTarget> availableTargets)
-    {
+        IReadOnlyCollection<ItemReplacementTarget> availableTargets) {
         var supportedIds = _supportedKeyItems
             .Select(rule => rule.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -598,34 +600,35 @@ internal class KeyItemLocationModifier : Modifier
             .Where(rule => !_preservedVanillaKeyItemIds.Contains(rule.Id))
             .ToImmutableArray();
         var routeSeed = rng.Next();
-        foreach (var preservedRule in _supportedKeyItems.Where(rule => _preservedVanillaKeyItemIds.Contains(rule.Id)))
-        {
-            logger.LogLine($"Skipped key item {_itemDefinitions.GetName(preservedRule.Id)}: vanilla placement is preserved until exact access-sphere data is available.");
+        foreach (var preservedRule in _supportedKeyItems.Where(rule => _preservedVanillaKeyItemIds.Contains(rule.Id))) {
+            logger.LogLine(
+                $"Skipped key item {_itemDefinitions.GetName(preservedRule.Id)}: vanilla placement is preserved until exact access-sphere data is available.");
         }
 
         // Some vanilla-safe keys only have drawer-backed candidate locations.
         // Keep those keys vanilla instead of forcing the whole feature into unsafe targets.
-        foreach (var activeRules in EnumerateRuleSubsets(randomizableRules))
-        {
+        foreach (var activeRules in EnumerateRuleSubsets(randomizableRules)) {
             var activeIds = activeRules
                 .Select(rule => rule.Id)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
             var activeTargets = availableTargets
                 .Where(target => !supportedIds.Contains(target.Placement.Id) || activeIds.Contains(target.Placement.Id))
                 .ToList();
-            var plans = TryCreateKeyItemReplacementPlans(routeSeed, activeRules, activeTargets, randomizableRules.Length, logger);
+            var plans = TryCreateKeyItemReplacementPlans(routeSeed, activeRules, activeTargets,
+                randomizableRules.Length, logger);
             if (plans == null)
                 continue;
 
-            foreach (var skippedRule in randomizableRules.Where(rule => !activeIds.Contains(rule.Id)))
-            {
-                logger.LogLine($"Skipped key item {_itemDefinitions.GetName(skippedRule.Id)}: no complete safe route was found after excluding drawer-backed pickups; vanilla placement is preserved.");
+            foreach (var skippedRule in randomizableRules.Where(rule => !activeIds.Contains(rule.Id))) {
+                logger.LogLine(
+                    $"Skipped key item {_itemDefinitions.GetName(skippedRule.Id)}: no complete safe route was found after excluding drawer-backed pickups; vanilla placement is preserved.");
             }
 
             return new KeyItemReplacementPlanSet(plans, activeRules);
         }
 
-        logger.LogLine("Skipped key item randomization: no supported key item could be placed on a complete safe route after excluding drawer-backed pickups.");
+        logger.LogLine(
+            "Skipped key item randomization: no supported key item could be placed on a complete safe route after excluding drawer-backed pickups.");
         return null;
     }
 
@@ -634,36 +637,30 @@ internal class KeyItemLocationModifier : Modifier
         ImmutableArray<KeyItemRule> activeRules,
         IReadOnlyCollection<ItemReplacementTarget> availableTargets,
         int fullRuleCount,
-        RandomizerLogger logger)
-    {
+        RandomizerLogger logger) {
         var routeGraph = new KeyItemRouteGraph(activeRules);
         foreach (var target in availableTargets
-            .OrderBy(target => target.Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(target => target.TargetGuid))
-        {
+                     .OrderBy(target => target.Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
+                     .ThenBy(target => target.TargetGuid)) {
             routeGraph.TryAddTarget(target);
         }
 
-        foreach (var rule in activeRules)
-        {
-            if (!routeGraph.HasCandidate(rule))
-            {
-                if (activeRules.Length == fullRuleCount)
-                {
-                    logger.LogLine($"Skipped key item {_itemDefinitions.GetName(rule.Id)}: no route-safe candidate placement was found.");
+        foreach (var rule in activeRules) {
+            if (!routeGraph.HasCandidate(rule)) {
+                if (activeRules.Length == fullRuleCount) {
+                    logger.LogLine(
+                        $"Skipped key item {_itemDefinitions.GetName(rule.Id)}: no route-safe candidate placement was found.");
                 }
 
                 return null;
             }
         }
 
-        if (!routeGraph.TryGenerateAssignments(routeSeed, out var assignments, out var routeFailureLog))
-        {
-            if (activeRules.Length == fullRuleCount)
-            {
-                logger.LogLine($"Skipped full key item route: route graph could not assign and validate every progression key after {MaxRouteSeedAttempts} bounded attempts.");
-                if (!string.IsNullOrWhiteSpace(routeFailureLog))
-                {
+        if (!routeGraph.TryGenerateAssignments(routeSeed, out var assignments, out var routeFailureLog)) {
+            if (activeRules.Length == fullRuleCount) {
+                logger.LogLine(
+                    $"Skipped full key item route: route graph could not assign and validate every progression key after {MaxRouteSeedAttempts} bounded attempts.");
+                if (!string.IsNullOrWhiteSpace(routeFailureLog)) {
                     logger.LogLine(routeFailureLog);
                 }
             }
@@ -671,17 +668,15 @@ internal class KeyItemLocationModifier : Modifier
             return null;
         }
 
-        if (assignments.Length != activeRules.Length)
-        {
+        if (assignments.Length != activeRules.Length) {
             return null;
         }
 
         var result = new Dictionary<ReplacementKey, ReplacementPlan>();
-        foreach (var assignment in assignments)
-        {
-            if (result.ContainsKey(assignment.Target.Key))
-            {
-                logger.LogLine($"Skipped key item randomization: route graph assigned multiple key items to {FormatScenePath(assignment.Target.Placement.SceneFile)}.");
+        foreach (var assignment in assignments) {
+            if (result.ContainsKey(assignment.Target.Key)) {
+                logger.LogLine(
+                    $"Skipped key item randomization: route graph assigned multiple key items to {FormatScenePath(assignment.Target.Placement.SceneFile)}.");
                 return null;
             }
 
@@ -690,21 +685,18 @@ internal class KeyItemLocationModifier : Modifier
                 assignment.Target.TargetGuid,
                 assignment.Rule);
             logger.LogLine($"[KEY ITEM ROUTE] {_itemDefinitions.GetName(assignment.Rule.Id)} " +
-                $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)} " +
-                $"[{assignment.Target.Placement.Position}]");
+                           $"-> {assignment.RegionName}: {FormatScenePath(assignment.Target.Placement.SceneFile)} " +
+                           $"[{assignment.Target.Placement.Position}]");
             logger.LogLine($"GUID: {assignment.Target.TargetGuid}");
         }
 
         return result;
     }
 
-    private static IEnumerable<ImmutableArray<KeyItemRule>> EnumerateRuleSubsets(ImmutableArray<KeyItemRule> rules)
-    {
-        if (rules.Length > 20)
-        {
+    private static IEnumerable<ImmutableArray<KeyItemRule>> EnumerateRuleSubsets(ImmutableArray<KeyItemRule> rules) {
+        if (rules.Length > 20) {
             var activeRules = rules;
-            while (activeRules.Length > 0)
-            {
+            while (activeRules.Length > 0) {
                 yield return activeRules;
                 var dropRule = activeRules
                     .OrderBy(rule => rule.Priority)
@@ -717,25 +709,20 @@ internal class KeyItemLocationModifier : Modifier
         }
 
         var maxMask = 1 << rules.Length;
-        for (var size = rules.Length; size >= 1; size--)
-        {
+        for (var size = rules.Length; size >= 1; size--) {
             foreach (var entry in Enumerable.Range(1, maxMask - 1)
-                .Where(mask => BitOperations.PopCount((uint)mask) == size)
-                .Select(mask => new
-                {
-                    Mask = mask,
-                    Score = rules
-                        .Where((_, index) => (mask & (1 << index)) != 0)
-                        .Sum(rule => rule.Priority),
-                })
-                .OrderByDescending(entry => entry.Score)
-                .ThenBy(entry => entry.Mask))
-            {
+                         .Where(mask => BitOperations.PopCount((uint)mask) == size)
+                         .Select(mask => new{
+                             Mask = mask,
+                             Score = rules
+                                 .Where((_, index) => (mask & (1 << index)) != 0)
+                                 .Sum(rule => rule.Priority),
+                         })
+                         .OrderByDescending(entry => entry.Score)
+                         .ThenBy(entry => entry.Mask)) {
                 var subset = ImmutableArray.CreateBuilder<KeyItemRule>(size);
-                for (var i = 0; i < rules.Length; i++)
-                {
-                    if ((entry.Mask & (1 << i)) != 0)
-                    {
+                for (var i = 0; i < rules.Length; i++) {
+                    if ((entry.Mask & (1 << i)) != 0) {
                         subset.Add(rules[i]);
                     }
                 }
@@ -760,17 +747,16 @@ internal class KeyItemLocationModifier : Modifier
         RszGameObject originalGameObject,
         bool preserveItemModels,
         string? preserveObjectShapeReason,
-        IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> acquisitionFlagsByItemId)
-    {
+        IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> acquisitionFlagsByItemId) {
         var originalItem = originalGameObject.FindComponent<app.Item>()
-            ?? throw new Exception($"Item placement {plan.TargetGuid} in {plan.Placement.SceneFile} does not have an app.Item component.");
+                           ?? throw new Exception(
+                               $"Item placement {plan.TargetGuid} in {plan.Placement.SceneFile} does not have an app.Item component.");
         var originalTransform = originalGameObject.FindComponent<GeneratedViaTransform>();
         var drop = plan.Drop;
         var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
         var template = TryGetItemTemplate(randomizer, logger, templateItemId, originalGameObject);
 
-        if (preserveObjectShapeReason != null)
-        {
+        if (preserveObjectShapeReason != null) {
             logger.LogLine($"Preserving original pickup object shape because {preserveObjectShapeReason}.");
             LogReplacement(logger, plan, originalItem, drop);
             ApplyDropToItem(originalItem, rng, drop);
@@ -778,21 +764,23 @@ internal class KeyItemLocationModifier : Modifier
             var preservedReplacement = preserveItemModels
                 ? preservedGameObject
                 : preservedGameObject.ApplyVisualResourcesFromTemplate(template);
-            preservedReplacement = ApplyAcquisitionFlags(preservedReplacement, GetAcquisitionFlags(acquisitionFlagsByItemId, drop.Id));
+            preservedReplacement = ApplyAcquisitionFlags(preservedReplacement,
+                GetAcquisitionFlags(acquisitionFlagsByItemId, drop.Id));
             LogAcquisitionFlags(logger, acquisitionFlagsByItemId, drop.Id);
             return preservedReplacement;
         }
 
         var carrierTemplate = template;
         var visualTemplate = template;
-        if (!HasPickupInteraction(template))
-        {
-            logger.LogLine($"Template {templateItemId} has no pickup interaction; using {ExtraKeyItemCarrierTemplateId} as the pickup carrier.");
+        if (!HasPickupInteraction(template)) {
+            logger.LogLine(
+                $"Template {templateItemId} has no pickup interaction; using {ExtraKeyItemCarrierTemplateId} as the pickup carrier.");
             carrierTemplate = randomizer.TemplateService.GetItemTemplate(ExtraKeyItemCarrierTemplateId);
         }
 
         var replacement = carrierTemplate.CloneWithNewGuids(
-            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid, templateItemId, carrierTemplate.Guid),
+            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid, templateItemId,
+                carrierTemplate.Guid),
             originalGameObject.Guid);
         var item = replacement.FindComponent<app.Item>() ?? originalItem;
 
@@ -800,21 +788,16 @@ internal class KeyItemLocationModifier : Modifier
         item.Enabled = true;
         replacement = replacement.AddOrUpdateComponent(item);
 
-        if (originalTransform != null)
-        {
+        if (originalTransform != null) {
             replacement = replacement.AddOrUpdateComponent(originalTransform);
         }
 
-        if (preserveItemModels)
-        {
+        if (preserveItemModels) {
             var mesh = originalGameObject.FindComponent("via.render.Mesh");
-            if (mesh != null)
-            {
+            if (mesh != null) {
                 replacement = replacement.AddOrUpdateComponent(mesh);
             }
-        }
-        else if (!ReferenceEquals(carrierTemplate, visualTemplate))
-        {
+        } else if (!ReferenceEquals(carrierTemplate, visualTemplate)) {
             replacement = replacement.ApplyVisualResourcesFromTemplate(visualTemplate);
         }
 
@@ -840,29 +823,28 @@ internal class KeyItemLocationModifier : Modifier
         Rng rng,
         RandomItemSettings randomItemSettings,
         ReplacementPlan plan,
-        IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> acquisitionFlagsByItemId)
-    {
+        IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> acquisitionFlagsByItemId) {
         var drop = plan.Drop;
         var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
         var template = randomizer.TemplateService.GetItemTemplate(ExtraKeyItemCarrierTemplateId);
         var visualTemplate = randomizer.TemplateService.GetItemTemplate(templateItemId);
         var replacement = template.CloneWithNewGuids(
-            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid, ExtraKeyItemCarrierTemplateId, templateItemId),
+            randomizer.GetRng(TemplateInstanceKey, plan.Placement.SceneFile, plan.TargetGuid,
+                ExtraKeyItemCarrierTemplateId, templateItemId),
             plan.TargetGuid);
         var item = replacement.FindComponent<app.Item>()
-            ?? throw new Exception($"Item template {ExtraKeyItemCarrierTemplateId} does not have an app.Item component.");
+                   ?? throw new Exception(
+                       $"Item template {ExtraKeyItemCarrierTemplateId} does not have an app.Item component.");
 
         ApplyDropToItem(item, rng, drop);
-        if (plan.Placement.SaveGuid != Guid.Empty)
-        {
+        if (plan.Placement.SaveGuid != Guid.Empty) {
             item.SaveGUID = plan.Placement.SaveGuid;
         }
 
         item.RoomId = 0;
         replacement = replacement.AddOrUpdateComponent(item);
 
-        if (replacement.FindComponent<GeneratedViaTransform>() is { } transform)
-        {
+        if (replacement.FindComponent<GeneratedViaTransform>() is{ } transform) {
             transform.Position = plan.Placement.Position;
             transform.Rotation = plan.Placement.Rotation;
             transform.Scale = Vector3.One;
@@ -881,7 +863,7 @@ internal class KeyItemLocationModifier : Modifier
                 .Set("Draw", true));
 
         logger.LogLine($"[KEY ITEM] Placing [{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x " +
-            $"{_itemDefinitions.GetName(drop.Id)} at {plan.Placement.Position}.");
+                       $"{_itemDefinitions.GetName(drop.Id)} at {plan.Placement.Position}.");
         logger.LogLine($"GUID: {plan.TargetGuid}");
         LogAcquisitionFlags(logger, acquisitionFlagsByItemId, drop.Id);
         return replacement.WithGuid(plan.TargetGuid);
@@ -896,19 +878,16 @@ internal class KeyItemLocationModifier : Modifier
 
     private static RszGameObject ApplyAcquisitionFlags(
         RszGameObject gameObject,
-        ImmutableArray<KeyItemAcquisitionFlag> flags)
-    {
+        ImmutableArray<KeyItemAcquisitionFlag> flags) {
         if (flags.IsDefaultOrEmpty)
             return gameObject;
 
         var flag = flags[0];
-        return gameObject.VisitGameObjects(child =>
-        {
+        return gameObject.VisitGameObjects(child => {
             var components = child.Components.ToBuilder();
             var changed = false;
 
-            for (var i = 0; i < components.Count; i++)
-            {
+            for (var i = 0; i < components.Count; i++) {
                 var component = components[i];
                 if (!IsPickupInteraction(component))
                     continue;
@@ -917,8 +896,7 @@ internal class KeyItemLocationModifier : Modifier
                 updated = SetFieldIfPresent(updated, "SetFsmBoolFlagId", flag.Guid);
                 updated = SetFieldIfPresent(updated, "SetFsmBoolFlagValue", flag.Value);
 
-                if (!ReferenceEquals(updated, component))
-                {
+                if (!ReferenceEquals(updated, component)) {
                     components[i] = updated;
                     changed = true;
                 }
@@ -932,15 +910,11 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsPickupInteraction(RszObjectNode component)
         => component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
-            component.Type.FindFieldIndex("SetFsmBoolFlag") != -1;
+           component.Type.FindFieldIndex("SetFsmBoolFlag") != -1;
 
-    private static bool HasPickupInteraction(RszGameObject gameObject)
-    {
+    private static bool HasPickupInteraction(RszGameObject gameObject) {
         var result = false;
-        gameObject.VisitGameObjects(child =>
-        {
-            result |= child.Components.Any(IsPickupInteraction);
-        });
+        gameObject.VisitGameObjects(child => { result |= child.Components.Any(IsPickupInteraction); });
 
         return result;
     }
@@ -953,18 +927,15 @@ internal class KeyItemLocationModifier : Modifier
     private static void LogAcquisitionFlags(
         RandomizerLogger logger,
         IReadOnlyDictionary<string, ImmutableArray<KeyItemAcquisitionFlag>> acquisitionFlagsByItemId,
-        string itemId)
-    {
-        foreach (var flag in GetAcquisitionFlags(acquisitionFlagsByItemId, itemId))
-        {
+        string itemId) {
+        foreach (var flag in GetAcquisitionFlags(acquisitionFlagsByItemId, itemId)) {
             logger.LogLine($"Pickup side effect: sets {flag.Name}={flag.Value} ({flag.Guid}).");
         }
     }
 
     private static string? GetPreserveObjectShapeReason(
         ItemPlacement placement,
-        Biohazard.BioRand.RE7.Extensions.RszExtensions.GameObjectMatch originalMatch)
-    {
+        Biohazard.BioRand.RE7.Extensions.RszExtensions.GameObjectMatch originalMatch) {
         if (originalMatch.HasFsmInHierarchy)
             return "this placement is FSM-controlled";
 
@@ -976,17 +947,15 @@ internal class KeyItemLocationModifier : Modifier
 
         if (!string.IsNullOrWhiteSpace(placement.Id)
             && !_supportedKeyItems.Any(rule => rule.Id.Equals(placement.Id, StringComparison.OrdinalIgnoreCase))
-            && _itemDefinitions.FromId(placement.Id) is { } definition
-            && IsPlainRandomItemTarget(definition))
-        {
+            && _itemDefinitions.FromId(placement.Id) is{ } definition
+            && IsPlainRandomItemTarget(definition)) {
             return "this key item is using an existing random-item pickup carrier";
         }
 
         return null;
     }
 
-    private static void ApplyDropToItem(app.Item item, Rng rng, Item drop)
-    {
+    private static void ApplyDropToItem(app.Item item, Rng rng, Item drop) {
         item.SaveGUID = rng.NextGuid();
         item.ItemDataID = drop.Id;
         item.ItemStackNum = drop.CountNormal;
@@ -1000,15 +969,13 @@ internal class KeyItemLocationModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         string templateItemId,
-        RszGameObject originalGameObject)
-    {
-        try
-        {
+        RszGameObject originalGameObject) {
+        try {
             return randomizer.TemplateService.GetItemTemplate(templateItemId);
         }
-        catch (Exception ex)
-        {
-            logger.LogLine($"Template {templateItemId} was not found; preserving original pickup object shape. {ex.Message}");
+        catch (Exception ex) {
+            logger.LogLine(
+                $"Template {templateItemId} was not found; preserving original pickup object shape. {ex.Message}");
             return originalGameObject;
         }
     }
@@ -1017,13 +984,12 @@ internal class KeyItemLocationModifier : Modifier
         RandomizerLogger logger,
         ReplacementPlan plan,
         app.Item originalItem,
-        Item drop)
-    {
+        Item drop) {
         var replaceeName = _itemDefinitions.GetName(originalItem.ItemDataID);
         var replacerName = _itemDefinitions.GetName(drop.Id);
         var prefix = plan.Kind == ReplacementKind.KeyItem ? "[KEY ITEM]" : "[KEY ITEM FILLER]";
         logger.LogLine($"{prefix} Replacing {replaceeName} at {plan.Placement.Position} with " +
-            $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}.");
+                       $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}.");
         logger.LogLine($"GUID: {plan.TargetGuid}");
     }
 
@@ -1031,20 +997,16 @@ internal class KeyItemLocationModifier : Modifier
         => _areaDefinitions.FormatScenePath(path);
 
     private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)
-        where T : IRszSceneNode
-    {
+        where T : IRszSceneNode {
         if (node.Children.IsDefaultOrEmpty)
             return node;
 
         var children = node.Children.ToBuilder();
-        for (var i = 0; i < children.Count; i++)
-        {
-            if (children[i] is RszGameObject oldGameObject && replacements.TryGetValue(oldGameObject.Guid, out var replacement))
-            {
+        for (var i = 0; i < children.Count; i++) {
+            if (children[i] is RszGameObject oldGameObject &&
+                replacements.TryGetValue(oldGameObject.Guid, out var replacement)) {
                 children[i] = replacement.WithGuid(oldGameObject.Guid);
-            }
-            else
-            {
+            } else {
                 children[i] = ReplaceGameObjects(children[i], replacements);
             }
         }
@@ -1057,236 +1019,235 @@ internal class KeyItemLocationModifier : Modifier
 
     private static bool IsFlashbackPath(string path)
         => PathContains(path, "/environment/scene/ff")
-            || PathContains(path, "/leveldesign/itemset/ff")
-            || PathContains(path, "past");
+           || PathContains(path, "/leveldesign/itemset/ff")
+           || PathContains(path, "past");
 
     private static bool IsGuestHouseBeforeBoltCutters(string path)
         => !IsFlashbackPath(path)
-            && (PathContains(path, "c01_kitchen")
-                || PathContains(path, "c01_living")
-                || PathContains(path, "c01_corridor01")
-                || PathContains(path, "c01_corridor02")
-                || PathContains(path, "c01_b1a")
-                || PathContains(path, "c01_b1b")
-                || PathContains(path, "c01_b1c")
-                || PathContains(path, "c01_b1d")
-                || PathContains(path, "c01_b1e"));
+           && (PathContains(path, "c01_kitchen")
+               || PathContains(path, "c01_living")
+               || PathContains(path, "c01_corridor01")
+               || PathContains(path, "c01_corridor02")
+               || PathContains(path, "c01_b1a")
+               || PathContains(path, "c01_b1b")
+               || PathContains(path, "c01_b1c")
+               || PathContains(path, "c01_b1d")
+               || PathContains(path, "c01_b1e"));
 
     private static bool IsGuestHouseAfterBoltCutters(string path)
         => !IsFlashbackPath(path)
-            && (PathContains(path, "c01_b1g")
-                || PathContains(path, "c01_b1h")
-                || PathContains(path, "c01_b1i")
-                || PathContains(path, "c01_b1j")
-                || PathContains(path, "c01_corridor03")
-                || PathContains(path, "c01_storeroom"));
+           && (PathContains(path, "c01_b1g")
+               || PathContains(path, "c01_b1h")
+               || PathContains(path, "c01_b1i")
+               || PathContains(path, "c01_b1j")
+               || PathContains(path, "c01_corridor03")
+               || PathContains(path, "c01_storeroom"));
 
     private static bool IsGuestHouseAfterAxeFight(string path)
         => !IsFlashbackPath(path)
-            && (PathContains(path, "c01_bathroom")
-                || PathContains(path, "c01_2f")
-                || PathContains(path, "c01_3f")
-                || PathContains(path, "/leveldesign/itemset/chapter1/"));
+           && (PathContains(path, "c01_bathroom")
+               || PathContains(path, "c01_2f")
+               || PathContains(path, "c01_3f")
+               || PathContains(path, "/leveldesign/itemset/chapter1/"));
 
     private static bool IsMainHouseBeforeHatch(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_west/")
-            || PathContains(path, "c03_mainhouse1fgaragehallway")
-            || PathContains(path, "c03_mainhouse1fhallway")
-            || PathContains(path, "c03_mainhouse1fldk")
-            || PathContains(path, "c03_mainhouse1fliving")
-            || PathContains(path, "c03_mainhouse1fpantry")
-            || PathContains(path, "c03_mainhouse1fwash");
+           || PathContains(path, "c03_mainhouse1fgaragehallway")
+           || PathContains(path, "c03_mainhouse1fhallway")
+           || PathContains(path, "c03_mainhouse1fldk")
+           || PathContains(path, "c03_mainhouse1fliving")
+           || PathContains(path, "c03_mainhouse1fpantry")
+           || PathContains(path, "c03_mainhouse1fwash");
 
     private static bool IsMainHouseBeforeGarage(string path)
         => IsMainHouseBeforeHatch(path)
-            || PathContains(path, "c03_mainhouse1fgaragehallway")
-            || PathContains(path, "c03_mainhouse1fgarageoutside");
+           || PathContains(path, "c03_mainhouse1fgaragehallway")
+           || PathContains(path, "c03_mainhouse1fgarageoutside");
 
     private static bool IsMainHouseClockReward(ItemPlacement placement)
         => placement.Guid == _mainHouseClockRewardGuid
-            && PathContains(placement.SceneFile, "c03_mainhouse1fliving");
+           && PathContains(placement.SceneFile, "c03_mainhouse1fliving");
 
     private static bool IsHatchKeySafeTarget(ItemPlacement placement)
         => PathContains(placement.SceneFile, "c03_mainhouse1fldk")
-            || (PathContains(placement.SceneFile, "c03_mainhouse1fliving")
-                && !IsMainHouseClockReward(placement))
-            || (PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
-                && !IsUnderHatchPantryTarget(placement))
-            || PathContains(placement.SceneFile, "c03_mainhouse1fhallway")
-            || PathContains(placement.SceneFile, "c03_mainhouse1fgaragehallway");
+           || (PathContains(placement.SceneFile, "c03_mainhouse1fliving")
+               && !IsMainHouseClockReward(placement))
+           || (PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
+               && !IsUnderHatchPantryTarget(placement))
+           || PathContains(placement.SceneFile, "c03_mainhouse1fhallway")
+           || PathContains(placement.SceneFile, "c03_mainhouse1fgaragehallway");
 
     private static bool IsUnderHatchPantryTarget(ItemPlacement placement)
         => placement.IsExtra
-            && string.Equals(placement.Comment, "Pantry", StringComparison.OrdinalIgnoreCase)
-            && PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
-            && placement.Position.Y < -0.5f;
+           && string.Equals(placement.Comment, "Pantry", StringComparison.OrdinalIgnoreCase)
+           && PathContains(placement.SceneFile, "c03_mainhouse1fpantry")
+           && placement.Position.Y < -0.5f;
 
     private static bool IsMainHouseWestBlueDogHead(ItemPlacement placement)
         => placement.Guid == _mainHouseWestBlueDogHeadGuid
-            && placement.Id.Equals("3CrestKeyA", StringComparison.OrdinalIgnoreCase)
-            && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
+           && placement.Id.Equals("3CrestKeyA", StringComparison.OrdinalIgnoreCase)
+           && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
 
     private static bool IsMainHouseWestBlueKeycard(ItemPlacement placement)
         => placement.Guid == _mainHouseWestBlueKeycardGuid
-            && placement.Id.Equals("LucasCardKey", StringComparison.OrdinalIgnoreCase)
-            && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
+           && placement.Id.Equals("LucasCardKey", StringComparison.OrdinalIgnoreCase)
+           && PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/mainhouse_west/mainhouse_west.scn");
 
     private static bool IsGarage(string path)
         => PathContains(path, "c03_mainhouse1fgarage.scn");
 
     private static bool IsMainHouseBeforeShadowPuzzle(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_hall/")
-            || PathContains(path, "c03_mainhouse2fbath")
-            || PathContains(path, "c03_mainhouse2fgrandma")
-            || PathContains(path, "c03_mainhouse2fhallway")
-            || PathContains(path, "c03_mainhouse2fplay")
-            || PathContains(path, "c03_mainhouse2fstoreroom")
-            || PathContains(path, "c03_mainhousehall")
-            || PathContains(path, "c03_mainhousestair01");
+           || PathContains(path, "c03_mainhouse2fbath")
+           || PathContains(path, "c03_mainhouse2fgrandma")
+           || PathContains(path, "c03_mainhouse2fhallway")
+           || PathContains(path, "c03_mainhouse2fplay")
+           || PathContains(path, "c03_mainhouse2fstoreroom")
+           || PathContains(path, "c03_mainhousehall")
+           || PathContains(path, "c03_mainhousestair01");
 
     private static bool IsMainHouseEastOrBasement(string path)
         => !PathContains(path, "c03_rightareab1fstoreroom")
-            && (PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_east/")
-                || PathContains(path, "c03_rightarea"));
+           && (PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_east/")
+               || PathContains(path, "c03_rightarea"));
 
     private static bool IsDissectionRoomRoute(string path)
         => PathContains(path, "c03_rightareab1ffreezer")
-            || PathContains(path, "c03_rightareab1fmorgue");
+           || PathContains(path, "c03_rightareab1fmorgue");
 
     private static bool IsMainHouseSnakeKeyRoom(string path)
         => PathContains(path, "c03_mainhouse2fbedroom")
-            || PathContains(path, "c03_mainhouse2fkids")
-            || PathContains(path, "c03_mainhousoutsideterrace2f3");
+           || PathContains(path, "c03_mainhouse2fkids")
+           || PathContains(path, "c03_mainhousoutsideterrace2f3");
 
     private static bool IsMainHouseKeycardSetup(ItemPlacement placement)
         => placement.Guid == _redKeycardWorkshopGuid
-            || IsMainHouseWestBlueKeycard(placement)
-            || IsMainHouseSnakeKeyRoom(placement.SceneFile);
+           || IsMainHouseWestBlueKeycard(placement)
+           || IsMainHouseSnakeKeyRoom(placement.SceneFile);
 
     private static bool IsMainHouseAtticShadowPuzzleArea(string path)
         => PathContains(path, "c03_mainhouse2fkids02");
 
     private static bool IsSnakeKeyRewardTarget(ItemPlacement placement)
         => PathContains(placement.SceneFile, "c03_rightareab1fstoreroom")
-            && _snakeKeyRewardGuids.Contains(placement.Guid);
+           && _snakeKeyRewardGuids.Contains(placement.Guid);
 
     private static bool IsOldHouseStoneStatuetteTarget(ItemPlacement placement)
         => PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/oldhouse/")
-            && placement.Guid == _oldHouseStoneStatuetteGuid;
+           && placement.Guid == _oldHouseStoneStatuetteGuid;
 
     private static bool IsOldHouseCrowKeyTarget(ItemPlacement placement)
         => PathContains(placement.SceneFile, "/leveldesign/itemset/chapter3/oldhouse/")
-            && placement.Guid == _oldHouseCrowKeyGuid;
+           && placement.Guid == _oldHouseCrowKeyGuid;
 
     private static bool IsYardOrTrailer(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
-            || PathContains(path, "c03_gardenarea")
-            || PathContains(path, "c03_trailerhouse")
-            || PathContains(path, "c03_mainhousoutside")
-            || PathContains(path, "c03_mainhousoutsideterrace");
+           || PathContains(path, "c03_gardenarea")
+           || PathContains(path, "c03_trailerhouse")
+           || PathContains(path, "c03_mainhousoutside")
+           || PathContains(path, "c03_mainhousoutsideterrace");
 
     private static bool IsOldHouseBeforeStonePuzzle(string path)
         => PathContains(path, "c03_oldhouse1fbridge01")
-            || PathContains(path, "c03_oldhouse1fentrance")
-            || PathContains(path, "c03_oldhouse1fhallway")
-            || PathContains(path, "c03_oldhouse1fhollway")
-            || PathContains(path, "c03_oldhouse1fkitchen")
-            || PathContains(path, "c03_oldhouse1fpuzzle")
-            || PathContains(path, "c03_oldhouse1froom")
-            || PathContains(path, "c03_oldhouse1fstorage")
-            || PathContains(path, "c03_oldhouseoutside")
-            || PathContains(path, "c03_oldhousesaferoom");
+           || PathContains(path, "c03_oldhouse1fentrance")
+           || PathContains(path, "c03_oldhouse1fhallway")
+           || PathContains(path, "c03_oldhouse1fhollway")
+           || PathContains(path, "c03_oldhouse1fkitchen")
+           || PathContains(path, "c03_oldhouse1fpuzzle")
+           || PathContains(path, "c03_oldhouse1froom")
+           || PathContains(path, "c03_oldhouse1fstorage")
+           || PathContains(path, "c03_oldhouseoutside")
+           || PathContains(path, "c03_oldhousesaferoom");
 
     private static bool IsOldHouseBeforeCrowDoor(string path)
         => IsOldHouseBeforeStonePuzzle(path);
 
     private static bool IsOldHouseAfterStonePuzzleBeforeCrank(string path)
         => PathContains(path, "c03_oldhouse1fhole")
-            || PathContains(path, "c03_oldhouse1funderfloor")
-            || PathContains(path, "c03_oldhouse1fwallinside");
+           || PathContains(path, "c03_oldhouse1funderfloor")
+           || PathContains(path, "c03_oldhouse1fwallinside");
 
     private static bool IsOldHouseAfterCrankBeforeCrowDoor(string path)
         => PathContains(path, "c03_oldhouse1fbridge02")
-            || PathContains(path, "c03_oldhouse1fbridgestorag")
-            || PathContains(path, "c03_oldhouse1fbridgewc");
+           || PathContains(path, "c03_oldhouse1fbridgestorag")
+           || PathContains(path, "c03_oldhouse1fbridgewc");
 
     private static bool IsOldHouseAfterCrowDoorOrGreenHouse(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/greenhouse/")
-            || PathContains(path, "c03_oldhouse1fstairs")
-            || PathContains(path, "c03_oldhouse2f")
-            || PathContains(path, "c03_oldhousecave")
-            || PathContains(path, "c03_gh");
+           || PathContains(path, "c03_oldhouse1fstairs")
+           || PathContains(path, "c03_oldhouse2f")
+           || PathContains(path, "c03_oldhousecave")
+           || PathContains(path, "c03_gh");
 
     private static bool IsOldHouseAfterLanternDoor(string path)
         => PathContains(path, "c03_oldhouse1fstairs")
-            || PathContains(path, "c03_oldhouse1faltar")
-            || PathContains(path, "c03_oldhouse2fbedroom")
-            || PathContains(path, "c03_oldhouse2fhallway04")
-            || PathContains(path, "c03_oldhouse2fkidsroom")
-            || PathContains(path, "c03_oldhouse2fstudy");
+           || PathContains(path, "c03_oldhouse1faltar")
+           || PathContains(path, "c03_oldhouse2fbedroom")
+           || PathContains(path, "c03_oldhouse2fhallway04")
+           || PathContains(path, "c03_oldhouse2fkidsroom")
+           || PathContains(path, "c03_oldhouse2fstudy");
 
     private static bool IsTestingArea(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/leftarea/")
-            || PathContains(path, "c03_leftarea");
+           || PathContains(path, "c03_leftarea");
 
     private static bool IsTestingAreaBeforeBarnFight(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/cowshed/")
-            || PathContains(path, "c03_cowshed");
+           || PathContains(path, "c03_cowshed");
 
     private static bool IsTestingAreaAfterLucasPuzzle(string path)
         => PathContains(path, "c03_leftarea1fmonitorroom")
-            || PathContains(path, "c03_leftarea1fpuzzleroom");
+           || PathContains(path, "c03_leftarea1fpuzzleroom");
 
     private static bool IsBoatHouseAfterSerumUse(string path)
         => PathContains(path, "c03_boat1fbridge02");
 
     private static bool IsBoatHouseRoute(string path)
         => !IsBoatHouseAfterSerumUse(path)
-            && (PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
-                || PathContains(path, "c03_boat")
-                || PathContains(path, "c03_gardenareaboat"));
+           && (PathContains(path, "/leveldesign/itemset/chapter3/boatshed/")
+               || PathContains(path, "c03_boat")
+               || PathContains(path, "c03_gardenareaboat"));
 
     private static bool IsShipBeforeLugWrench(string path)
         => !PathContains(path, "past")
-            && (PathContains(path, "c04_ship4f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship4f/"));
+           && (PathContains(path, "c04_ship4f")
+               || PathContains(path, "/leveldesign/itemset/chapter4/ship4f/"));
 
     private static bool IsShipAfterLugWrenchBeforeCorrosive(string path)
         => !PathContains(path, "past")
-            && !IsShipAfterCorrosiveBeforeRepair(path)
-            && (PathContains(path, "c04_ship1f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship1f/")
-                || PathContains(path, "c04_ship2f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship2f/")
-                || PathContains(path, "c04_ship3f")
-                || PathContains(path, "/leveldesign/itemset/chapter4/ship3f/")
-                || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
+           && !IsShipAfterCorrosiveBeforeRepair(path)
+           && (PathContains(path, "c04_ship1f")
+               || PathContains(path, "/leveldesign/itemset/chapter4/ship1f/")
+               || PathContains(path, "c04_ship2f")
+               || PathContains(path, "/leveldesign/itemset/chapter4/ship2f/")
+               || PathContains(path, "c04_ship3f")
+               || PathContains(path, "/leveldesign/itemset/chapter4/ship3f/")
+               || PathContains(path, "/scenes/chapter/chapter4/c04_shipelevator"));
 
     private static bool IsShipAfterCorrosiveBeforeRepair(string path)
         => !PathContains(path, "past")
-            && (PathContains(path, "c04_ship3finfirmary")
-                || PathContains(path, "c04_ship3fsecurityroom")
-                || PathContains(path, "c04_ship3fshowerroom"));
+           && (PathContains(path, "c04_ship3finfirmary")
+               || PathContains(path, "c04_ship3fsecurityroom")
+               || PathContains(path, "c04_ship3fshowerroom"));
 
     private static bool IsShipAfterElevatorRepairOrExit(string path)
         => !PathContains(path, "past")
-            && (PathContains(path, "c04_shipb1")
-                || PathContains(path, "c04_shipb2")
-                || PathContains(path, "c04_shipstairs"));
+           && (PathContains(path, "c04_shipb1")
+               || PathContains(path, "c04_shipb2")
+               || PathContains(path, "c04_shipstairs"));
 
     private static bool IsMiaPresentShipRoute(string path)
         => IsShipBeforeLugWrench(path)
-            || IsShipAfterLugWrenchBeforeCorrosive(path)
-            || IsShipAfterCorrosiveBeforeRepair(path);
+           || IsShipAfterLugWrenchBeforeCorrosive(path)
+           || IsShipAfterCorrosiveBeforeRepair(path);
 
     private static bool IsSaltMineBeforeNecrotoxinUse(string path)
         => !PathContains(path, "/chapter4/lastbattle/")
-            && (PathContains(path, "/environment/scene/chapter4/c04_cottage")
-                || PathContains(path, "/environment/scene/chapter4/c04_cave")
-                || PathContains(path, "/leveldesign/itemset/chapter4/saltdome"));
+           && (PathContains(path, "/environment/scene/chapter4/c04_cottage")
+               || PathContains(path, "/environment/scene/chapter4/c04_cave")
+               || PathContains(path, "/leveldesign/itemset/chapter4/saltdome"));
 
-    private sealed class KeyItemRouteGraph
-    {
+    private sealed class KeyItemRouteGraph {
         private readonly GraphBuilder _builder = new();
         private readonly ImmutableArray<KeyItemRule> _activeRules;
         private readonly Dictionary<string, Key> _routeKeys;
@@ -1326,8 +1287,7 @@ internal class KeyItemLocationModifier : Modifier
         private readonly Node _saltMine;
         private readonly Node _finale;
 
-        public KeyItemRouteGraph(ImmutableArray<KeyItemRule> activeRules)
-        {
+        public KeyItemRouteGraph(ImmutableArray<KeyItemRule> activeRules) {
             _activeRules = activeRules;
             _routeKeys = activeRules.ToDictionary(
                 rule => rule.Id,
@@ -1335,21 +1295,26 @@ internal class KeyItemLocationModifier : Modifier
                 StringComparer.OrdinalIgnoreCase);
             _activeRulesById = activeRules.ToDictionary(rule => rule.Id, StringComparer.OrdinalIgnoreCase);
 
-            _guestHouseBeforeBoltCutters = Room("guest-house-before-bolt-cutters", "Guest House before Mia cell chain", 0, 0);
-            _guestHouseAfterBoltCutters = Room("guest-house-after-bolt-cutters", "Guest House after Bolt Cutters", 1, 0);
+            _guestHouseBeforeBoltCutters =
+                Room("guest-house-before-bolt-cutters", "Guest House before Mia cell chain", 0, 0);
+            _guestHouseAfterBoltCutters =
+                Room("guest-house-after-bolt-cutters", "Guest House after Bolt Cutters", 1, 0);
             _guestHouseAfterAxeFight = Room("guest-house-after-axe-fight", "Guest House after Mia axe fight", 2, 0);
             _guestHouseAttic = Room("guest-house-attic", "Guest House attic route", 3, 0);
             _mainHouseBeforeHatch = Room("main-house-before-hatch", "Main House west side before hatch", 4, 0);
             _mainHouseBeforeGarage = Room("main-house-before-garage", "Main House west side before garage", 5, 0);
             _garage = Room("garage", "Garage car fight", 6, 0);
-            _mainHouseBeforeShadowPuzzle = Room("main-house-before-shadow-puzzle", "Main House after garage before shadow puzzle", 7, 0);
+            _mainHouseBeforeShadowPuzzle = Room("main-house-before-shadow-puzzle",
+                "Main House after garage before shadow puzzle", 7, 0);
             _mainHouseClockReward = Room("main-house-clock-reward", "Main House clock-pendulum reward", 7, 1);
             _mainHouseEast = Room("main-house-east", "Main House east side and processing area", 8, 0);
             _scorpionRooms = Room("scorpion-rooms", "Main House scorpion-key rooms", 6, 2);
             _dissectionRoom = Room("dissection-room", "Main House dissection room route", 9, 1);
             _yard = Room("yard", "Yard and trailer", 9, 0);
-            _oldHouseBeforeStonePuzzle = Room("old-house-before-stone-puzzle", "Old House before Stone Statuette shadow puzzle", 10, 0);
-            _oldHouseAfterStonePuzzle = Room("old-house-after-stone-puzzle", "Old House after Stone Statuette shadow puzzle", 11, 0);
+            _oldHouseBeforeStonePuzzle = Room("old-house-before-stone-puzzle",
+                "Old House before Stone Statuette shadow puzzle", 10, 0);
+            _oldHouseAfterStonePuzzle = Room("old-house-after-stone-puzzle",
+                "Old House after Stone Statuette shadow puzzle", 11, 0);
             _oldHouseAfterCrank = Room("old-house-after-crank", "Old House after Crank bridges", 12, 0);
             _oldHouseAfterCrow = Room("old-house-after-crow", "Old House after Crow Key door and Green House", 13, 0);
             _oldHouseAfterLantern = Room("old-house-after-lantern", "Old House after Lantern door", 14, 0);
@@ -1395,18 +1360,14 @@ internal class KeyItemLocationModifier : Modifier
             Door(_saltMine, _finale, RouteKeys("SerumTypeE"));
         }
 
-        public bool TryAddTarget(ItemReplacementTarget target)
-        {
+        public void TryAddTarget(ItemReplacementTarget target) {
             var routeTarget = GetRouteTarget(target);
-            if (routeTarget == null)
-                return false;
+            if (routeTarget == null) return;
 
             AddTargetNode(target, routeTarget, routeTarget.GroupMask);
-            return true;
         }
 
-        public bool TryAddFixedTarget(ItemReplacementTarget target, KeyItemRule rule)
-        {
+        public bool TryAddFixedTarget(ItemReplacementTarget target, KeyItemRule rule) {
             var routeTarget = GetRouteTarget(target);
             if (routeTarget == null || (routeTarget.GroupMask & rule.RouteMask) != rule.RouteMask)
                 return false;
@@ -1415,26 +1376,23 @@ internal class KeyItemLocationModifier : Modifier
             return true;
         }
 
-        public RouteTarget? GetRouteTarget(ItemReplacementTarget target)
-        {
+        public RouteTarget? GetRouteTarget(ItemReplacementTarget target) {
             var routeTarget = ClassifyTarget(target);
             if (routeTarget == null)
                 return null;
 
             var groupMask = routeTarget.GroupMask & ~GetTargetAccessRequirementMask(target);
             if (!string.IsNullOrWhiteSpace(target.Placement.Id) &&
-                _activeRulesById.TryGetValue(target.Placement.Id, out var sourceKeyRule))
-            {
+                _activeRulesById.TryGetValue(target.Placement.Id, out var sourceKeyRule)) {
                 groupMask &= ~sourceKeyRule.RouteMask;
             }
 
             return groupMask == 0
                 ? null
-                : routeTarget with { GroupMask = groupMask };
+                : routeTarget with{ GroupMask = groupMask };
         }
 
-        private void AddTargetNode(ItemReplacementTarget target, RouteTarget routeTarget, int groupMask)
-        {
+        private void AddTargetNode(ItemReplacementTarget target, RouteTarget routeTarget, int groupMask) {
             var node = _builder.Item(
                 $"{target.Label} @ {FormatScenePath(target.Placement.SceneFile)}",
                 groupMask,
@@ -1449,19 +1407,16 @@ internal class KeyItemLocationModifier : Modifier
         public bool TryGenerateAssignments(
             int seed,
             out ImmutableArray<KeyItemRouteAssignment> assignments,
-            out string? failureLog)
-        {
+            out string? failureLog) {
             failureLog = null;
             assignments = [];
-            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++)
-            {
-                if (!TryCreateMatchingAssignments(unchecked(seed + attempt), out var candidateAssignments, out failureLog))
-                {
+            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++) {
+                if (!TryCreateMatchingAssignments(unchecked(seed + attempt), out var candidateAssignments,
+                        out failureLog)) {
                     continue;
                 }
 
-                if (TryValidateAssignments(candidateAssignments, unchecked(seed + attempt), out failureLog))
-                {
+                if (TryValidateAssignments(candidateAssignments, unchecked(seed + attempt), out failureLog)) {
                     assignments = candidateAssignments;
                     return true;
                 }
@@ -1471,8 +1426,7 @@ internal class KeyItemLocationModifier : Modifier
         }
 
         public bool HasAssignmentsForAllRules(Route route)
-            => _activeRules.All(rule =>
-            {
+            => _activeRules.All(rule => {
                 var routeKey = RouteKey(rule.Id);
                 return route.GetItemsContainingKey(routeKey)
                     .Where(_targetsByNode.ContainsKey)
@@ -1480,28 +1434,23 @@ internal class KeyItemLocationModifier : Modifier
                     .Count() == 1;
             });
 
-        public bool TryGenerateRoute(int seed, out Route route, out string? failureLog)
-        {
+        public bool TryGenerateRoute(int seed, out Route route, out string? failureLog) {
             var deadEnds = 0;
-            try
-            {
-                route = _builder.ToGraph().GenerateRoute(seed, new RouteFinderOptions
-                {
+            try {
+                route = _builder.ToGraph().GenerateRoute(seed, new RouteFinderOptions{
                     DebugDepthLimit = _activeRules.Length + RouteDepthPadding,
-                    DebugDeadendCallback = _ =>
-                    {
+                    DebugDeadendCallback = _ => {
                         deadEnds++;
-                        if (deadEnds > MaxRouteDeadEndsPerAttempt)
-                        {
-                            throw new RouteFinderException($"Route dead-end budget exceeded ({MaxRouteDeadEndsPerAttempt}).", _);
+                        if (deadEnds > MaxRouteDeadEndsPerAttempt) {
+                            throw new RouteFinderException(
+                                $"Route dead-end budget exceeded ({MaxRouteDeadEndsPerAttempt}).", _);
                         }
                     },
                 });
                 failureLog = null;
                 return true;
             }
-            catch (RouteFinderException ex)
-            {
+            catch (RouteFinderException ex) {
                 route = null!;
                 failureLog = $"{ex.Message} Seed={seed}, dead ends={deadEnds}.";
                 return false;
@@ -1511,22 +1460,20 @@ internal class KeyItemLocationModifier : Modifier
         private bool TryCreateMatchingAssignments(
             int seed,
             out ImmutableArray<KeyItemRouteAssignment> assignments,
-            out string? failureLog)
-        {
+            out string? failureLog) {
             assignments = [];
             failureLog = null;
             var rng = new Rng(seed);
             var candidatesByRule = new Dictionary<KeyItemRule, List<Node>>();
-            foreach (var rule in _activeRules)
-            {
+            foreach (var rule in _activeRules) {
                 var candidates = _targetsByNode.Keys
                     .Where(node => (node.Group & rule.RouteMask) == rule.RouteMask)
                     .OrderBy(node => _targetsByNode[node].Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
                     .ThenBy(node => _targetsByNode[node].TargetGuid.ToString("D"), StringComparer.OrdinalIgnoreCase)
                     .ToList();
-                if (candidates.Count == 0)
-                {
-                    failureLog = $"No route-safe candidate placement was found for {_itemDefinitions.GetName(rule.Id)}.";
+                if (candidates.Count == 0) {
+                    failureLog =
+                        $"No route-safe candidate placement was found for {_itemDefinitions.GetName(rule.Id)}.";
                     return false;
                 }
 
@@ -1537,27 +1484,25 @@ internal class KeyItemLocationModifier : Modifier
             var targetAssignments = new Dictionary<Node, KeyItemRule>();
             var ruleAssignments = new Dictionary<KeyItemRule, Node>();
             foreach (var rule in _activeRules
-                .OrderBy(rule => candidatesByRule[rule].Count)
-                .ThenByDescending(rule => rule.Priority)
-                .ThenBy(rule => rule.Id, StringComparer.OrdinalIgnoreCase))
-            {
-                if (!TryAssign(rule, []))
-                {
+                         .OrderBy(rule => candidatesByRule[rule].Count)
+                         .ThenByDescending(rule => rule.Priority)
+                         .ThenBy(rule => rule.Id, StringComparer.OrdinalIgnoreCase)) {
+                if (!TryAssign(rule, [])) {
                     failureLog = $"No complete route-safe key item matching was found. " +
-                        $"Could not reserve a unique target for {_itemDefinitions.GetName(rule.Id)} " +
-                        $"from {candidatesByRule[rule].Count} candidate placements. " +
-                        $"Candidates: {DescribeCandidates(rule)}. " +
-                        "Candidate counts: " +
-                        string.Join(", ", _activeRules
-                            .OrderBy(candidateRule => candidateRule.Id, StringComparer.OrdinalIgnoreCase)
-                            .Select(candidateRule => $"{_itemDefinitions.GetName(candidateRule.Id)}={candidatesByRule[candidateRule].Count}"));
+                                 $"Could not reserve a unique target for {_itemDefinitions.GetName(rule.Id)} " +
+                                 $"from {candidatesByRule[rule].Count} candidate placements. " +
+                                 $"Candidates: {DescribeCandidates(rule)}. " +
+                                 "Candidate counts: " +
+                                 string.Join(", ", _activeRules
+                                     .OrderBy(candidateRule => candidateRule.Id, StringComparer.OrdinalIgnoreCase)
+                                     .Select(candidateRule =>
+                                         $"{_itemDefinitions.GetName(candidateRule.Id)}={candidatesByRule[candidateRule].Count}"));
                     return false;
                 }
             }
 
             assignments = _activeRules
-                .Select(rule =>
-                {
+                .Select(rule => {
                     var node = ruleAssignments[rule];
                     return new KeyItemRouteAssignment(
                         rule,
@@ -1569,25 +1514,21 @@ internal class KeyItemLocationModifier : Modifier
             var duplicateLocation = assignments
                 .GroupBy(assignment => assignment.Target.LocationKey)
                 .FirstOrDefault(group => group.Count() > 1);
-            if (duplicateLocation != null)
-            {
+            if (duplicateLocation != null) {
                 failureLog = "No complete route-safe key item matching was found. " +
-                    $"Multiple key items were assigned to the same physical location in {duplicateLocation.Key.SceneFile}.";
+                             $"Multiple key items were assigned to the same physical location in {duplicateLocation.Key.SceneFile}.";
                 return false;
             }
 
             return true;
 
-            bool TryAssign(KeyItemRule rule, HashSet<Node> visitedTargets)
-            {
-                foreach (var candidate in candidatesByRule[rule])
-                {
+            bool TryAssign(KeyItemRule rule, HashSet<Node> visitedTargets) {
+                foreach (var candidate in candidatesByRule[rule]) {
                     if (!visitedTargets.Add(candidate))
                         continue;
 
                     if (targetAssignments.TryGetValue(candidate, out var currentRule) &&
-                        !TryAssign(currentRule, visitedTargets))
-                    {
+                        !TryAssign(currentRule, visitedTargets)) {
                         continue;
                     }
 
@@ -1603,29 +1544,27 @@ internal class KeyItemLocationModifier : Modifier
                 => string.Join("; ", candidatesByRule[rule]
                     .OrderBy(node => _targetsByNode[node].Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
                     .ThenBy(node => _targetsByNode[node].TargetGuid.ToString("D"), StringComparer.OrdinalIgnoreCase)
-                    .Select(node => $"{_regionByNode[node]} / {FormatScenePath(_targetsByNode[node].Placement.SceneFile)} / {_targetsByNode[node].TargetGuid}"));
+                    .Select(node =>
+                        $"{_regionByNode[node]} / {FormatScenePath(_targetsByNode[node].Placement.SceneFile)} / {_targetsByNode[node].TargetGuid}"));
         }
 
         private bool TryValidateAssignments(
             ImmutableArray<KeyItemRouteAssignment> assignments,
             int seed,
-            out string? failureLog)
-        {
+            out string? failureLog) {
             var validationGraph = new KeyItemRouteGraph(_activeRules);
-            foreach (var assignment in assignments)
-            {
-                if (!validationGraph.TryAddFixedTarget(assignment.Target, assignment.Rule))
-                {
-                    failureLog = $"Route-safe matching assigned {_itemDefinitions.GetName(assignment.Rule.Id)} to an invalid target.";
+            foreach (var assignment in assignments) {
+                if (!validationGraph.TryAddFixedTarget(assignment.Target, assignment.Rule)) {
+                    failureLog =
+                        $"Route-safe matching assigned {_itemDefinitions.GetName(assignment.Rule.Id)} to an invalid target.";
                     return false;
                 }
             }
 
             failureLog = null;
-            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++)
-            {
-                if (!validationGraph.TryGenerateRoute(unchecked(seed + attempt), out var route, out var candidateFailureLog))
-                {
+            for (var attempt = 0; attempt < MaxRouteSeedAttempts; attempt++) {
+                if (!validationGraph.TryGenerateRoute(unchecked(seed + attempt), out var route,
+                        out var candidateFailureLog)) {
                     failureLog = candidateFailureLog ?? failureLog;
                     continue;
                 }
@@ -1639,10 +1578,8 @@ internal class KeyItemLocationModifier : Modifier
             return false;
         }
 
-        private static void Shuffle<T>(IList<T> items, Rng rng)
-        {
-            for (var i = 0; i < items.Count; i++)
-            {
+        private static void Shuffle<T>(IList<T> items, Rng rng) {
+            for (var i = 0; i < items.Count; i++) {
                 var j = rng.Next(0, i + 1);
                 (items[i], items[j]) = (items[j], items[i]);
             }
@@ -1654,25 +1591,23 @@ internal class KeyItemLocationModifier : Modifier
         public KeyItemRouteGraphDiagram ToDiagram()
             => new([.. _diagramNodes], [.. _diagramEdges]);
 
-        public IEnumerable<KeyItemRouteAssignment> GetAssignments(Route route, RandomizerLogger logger)
-        {
-            foreach (var rule in _activeRules)
-            {
+        public IEnumerable<KeyItemRouteAssignment> GetAssignments(Route route, RandomizerLogger logger) {
+            foreach (var rule in _activeRules) {
                 var routeKey = RouteKey(rule.Id);
                 var nodes = route.GetItemsContainingKey(routeKey)
                     .Where(_targetsByNode.ContainsKey)
                     .OrderBy(node => node)
                     .ToArray();
 
-                if (nodes.Length == 0)
-                {
-                    logger.LogLine($"Skipped key item {_itemDefinitions.GetName(rule.Id)}: route did not assign a placement.");
+                if (nodes.Length == 0) {
+                    logger.LogLine(
+                        $"Skipped key item {_itemDefinitions.GetName(rule.Id)}: route did not assign a placement.");
                     continue;
                 }
 
-                if (nodes.Length > 1)
-                {
-                    logger.LogLine($"Skipped key item {_itemDefinitions.GetName(rule.Id)}: route assigned multiple placements.");
+                if (nodes.Length > 1) {
+                    logger.LogLine(
+                        $"Skipped key item {_itemDefinitions.GetName(rule.Id)}: route assigned multiple placements.");
                     continue;
                 }
 
@@ -1688,32 +1623,30 @@ internal class KeyItemLocationModifier : Modifier
             => _routeKeys[itemId];
 
         private Key[] RouteKeys(params string[] itemIds)
-            => [.. itemIds
-                .Where(_routeKeys.ContainsKey)
-                .Select(RouteKey)];
+            =>[
+                .. itemIds
+                    .Where(_routeKeys.ContainsKey)
+                    .Select(RouteKey)
+            ];
 
-        private Node Room(string id, string label, int row, int column)
-        {
+        private Node Room(string id, string label, int row, int column) {
             var node = _builder.Room(label);
             _diagramNodeIds[node] = id;
             _diagramNodes.Add(new(id, label, row, column));
             return node;
         }
 
-        private void Door(Node source, Node target, params Key[] keys)
-        {
+        private void Door(Node source, Node target, params Key[] keys) {
             _builder.Door(source, target, [.. keys.Select(key => (Requirement)key)]);
             AddDiagramEdge(source, target, keys, isNoReturn: false);
         }
 
-        private void NoReturn(Node source, Node target, params Key[] keys)
-        {
+        private void NoReturn(Node source, Node target, params Key[] keys) {
             _builder.NoReturn(source, target, [.. keys.Select(key => (Requirement)key)]);
             AddDiagramEdge(source, target, keys, isNoReturn: true);
         }
 
-        private void AddDiagramEdge(Node source, Node target, Key[] keys, bool isNoReturn)
-        {
+        private void AddDiagramEdge(Node source, Node target, Key[] keys, bool isNoReturn) {
             var labels = keys
                 .Select(key => key.Label ?? key.ToString())
                 .ToImmutableArray();
@@ -1724,8 +1657,7 @@ internal class KeyItemLocationModifier : Modifier
                 isNoReturn));
         }
 
-        private RouteTarget? ClassifyTarget(ItemReplacementTarget target)
-        {
+        private RouteTarget? ClassifyTarget(ItemReplacementTarget target) {
             var placement = target.Placement;
             var path = placement.SceneFile;
             if (IsFlashbackPath(path))
@@ -1734,17 +1666,15 @@ internal class KeyItemLocationModifier : Modifier
             if (IsUnsafeKeyItemTarget(placement))
                 return null;
 
-            if (placement.Chapter == 1)
-            {
+            if (placement.Chapter == 1) {
                 if (IsGuestHouseAfterAxeFight(path))
                     return new(_guestHouseAfterAxeFight, GuestFuseMask, "Guest House after Mia axe fight");
                 if (IsGuestHouseAfterBoltCutters(path))
                     return new(_guestHouseAfterBoltCutters, AxeMask, "Guest House after Bolt Cutters");
                 if (IsGuestHouseBeforeBoltCutters(path))
-                    return new(_guestHouseBeforeBoltCutters, BoltCuttersMask | AxeMask, "Guest House before Mia cell chain");
-            }
-            else if (placement.Chapter == 3)
-            {
+                    return new(_guestHouseBeforeBoltCutters, BoltCuttersMask | AxeMask,
+                        "Guest House before Mia cell chain");
+            } else if (placement.Chapter == 3) {
                 if (IsBoatHouseAfterSerumUse(path))
                     return null;
                 if (IsBoatHouseRoute(path))
@@ -1758,21 +1688,26 @@ internal class KeyItemLocationModifier : Modifier
                 if (IsMainHouseKeycardSetup(placement))
                     return new(_snakeRooms, KeycardSetupCarryMasks, "Main House snake-key rooms and keycard setup");
                 if (IsSnakeKeyRewardTarget(placement))
-                    return new(_oldHouseAfterLantern, SnakeKeyRewardCarryMasks, "Old House cleared / Main House basement police body");
+                    return new(_oldHouseAfterLantern, SnakeKeyRewardCarryMasks,
+                        "Old House cleared / Main House basement police body");
                 if (IsOldHouseStoneStatuetteTarget(placement))
-                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks, "Old House Stone Statuette pickup");
+                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks,
+                        "Old House Stone Statuette pickup");
                 if (IsOldHouseCrowKeyTarget(placement))
                     return new(_oldHouseAfterCrank, OldHouseAfterCrankCarryMasks, "Old House Crow Key chest");
                 if (IsOldHouseAfterLanternDoor(path))
                     return new(_oldHouseAfterLantern, OldHouseAfterLanternCarryMasks, "Old House after Lantern door");
                 if (IsOldHouseAfterCrowDoorOrGreenHouse(path))
-                    return new(_oldHouseAfterCrow, OldHouseAfterCrowCarryMasks, "Old House after Crow Key door and Green House");
+                    return new(_oldHouseAfterCrow, OldHouseAfterCrowCarryMasks,
+                        "Old House after Crow Key door and Green House");
                 if (IsOldHouseAfterCrankBeforeCrowDoor(path))
                     return new(_oldHouseAfterCrank, OldHouseAfterCrankCarryMasks, "Old House after Crank bridges");
                 if (IsOldHouseAfterStonePuzzleBeforeCrank(path))
-                    return new(_oldHouseAfterStonePuzzle, OldHouseAfterStoneCarryMasks, "Old House after Stone Statuette shadow puzzle");
+                    return new(_oldHouseAfterStonePuzzle, OldHouseAfterStoneCarryMasks,
+                        "Old House after Stone Statuette shadow puzzle");
                 if (IsOldHouseBeforeCrowDoor(path))
-                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks, "Old House before Stone Statuette shadow puzzle");
+                    return new(_oldHouseBeforeStonePuzzle, OldHouseBeforeCrowCarryMasks,
+                        "Old House before Stone Statuette shadow puzzle");
                 if (IsYardOrTrailer(path))
                     return new(_yard, OldHouseBeforeCrowCarryMasks, "Yard and trailer");
                 if (IsDissectionRoomRoute(path))
@@ -1780,20 +1715,23 @@ internal class KeyItemLocationModifier : Modifier
                 if (IsMainHouseEastOrBasement(path))
                     return new(_mainHouseEast, MainHouseEastCarryMasks, "Main House east side and processing area");
                 if (IsMainHouseClockReward(placement))
-                    return new(_mainHouseClockReward, MainHouseAfterGarageCarryMasks & ~PendulumMask, "Main House clock-pendulum reward");
+                    return new(_mainHouseClockReward, MainHouseAfterGarageCarryMasks & ~PendulumMask,
+                        "Main House clock-pendulum reward");
                 if (IsMainHouseWestBlueDogHead(placement))
-                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks, "Main House after garage before shadow puzzle");
+                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks,
+                        "Main House after garage before shadow puzzle");
                 if (IsMainHouseBeforeShadowPuzzle(path))
-                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks, "Main House after garage before shadow puzzle");
+                    return new(_mainHouseBeforeShadowPuzzle, MainHouseAfterGarageCarryMasks,
+                        "Main House after garage before shadow puzzle");
                 if (IsGarage(path))
                     return new(_garage, OxStatuetteMask, "Garage car fight");
                 if (IsMainHouseBeforeHatch(path))
-                    return new(_mainHouseBeforeHatch, MainHouseBeforeHatchCarryMasks, "Main House west side before hatch");
+                    return new(_mainHouseBeforeHatch, MainHouseBeforeHatchCarryMasks,
+                        "Main House west side before hatch");
                 if (IsMainHouseBeforeGarage(path))
-                    return new(_mainHouseBeforeGarage, MainHouseBeforeHatchCarryMasks & ~FloorDoorKeyMask, "Main House west side before garage");
-            }
-            else if (placement.Chapter == 4)
-            {
+                    return new(_mainHouseBeforeGarage, MainHouseBeforeHatchCarryMasks & ~FloorDoorKeyMask,
+                        "Main House west side before garage");
+            } else if (placement.Chapter == 4) {
                 if (IsShipAfterElevatorRepairOrExit(path))
                     return null;
                 if (IsShipAfterCorrosiveBeforeRepair(path))
@@ -1809,27 +1747,22 @@ internal class KeyItemLocationModifier : Modifier
             return null;
         }
 
-        private static int GetTargetAccessRequirementMask(ItemReplacementTarget target)
-        {
+        private static int GetTargetAccessRequirementMask(ItemReplacementTarget target) {
             var mask = 0;
             if (target.Placement.Guid == _guestHouseFuseCabinetGuid &&
-                PathContains(target.Placement.SceneFile, "/chapter1/c01_corridor01.scn"))
-            {
+                PathContains(target.Placement.SceneFile, "/chapter1/c01_corridor01.scn")) {
                 mask |= BoltCuttersMask | AxeMask;
             }
 
-            if (IsMainHouseClockReward(target.Placement))
-            {
+            if (IsMainHouseClockReward(target.Placement)) {
                 mask |= FloorDoorKeyMask | CarKeyMask | OxStatuetteMask | PendulumMask;
             }
 
-            if (!IsHatchKeySafeTarget(target.Placement))
-            {
+            if (!IsHatchKeySafeTarget(target.Placement)) {
                 mask |= FloorDoorKeyMask;
             }
 
-            if (IsMainHouseWestBlueKeycard(target.Placement))
-            {
+            if (IsMainHouseWestBlueKeycard(target.Placement)) {
                 mask |= BlueKeycardMask | RedKeycardMask;
             }
 
@@ -1838,14 +1771,13 @@ internal class KeyItemLocationModifier : Modifier
 
         private static bool IsUnsafeKeyItemTarget(ItemPlacement placement)
             => (placement.Guid == _jack2RedDogHeadGuid
-                    && PathContains(placement.SceneFile, "c03_rightareab1ffreezer"))
-                || (placement.Guid == _lucasPuzzleCandleGuid
-                    && PathContains(placement.SceneFile, "c03_leftarea1fpuzzleroom1"))
-                || IsMainHouseAtticShadowPuzzleArea(placement.SceneFile);
+                && PathContains(placement.SceneFile, "c03_rightareab1ffreezer"))
+               || (placement.Guid == _lucasPuzzleCandleGuid
+                   && PathContains(placement.SceneFile, "c03_leftarea1fpuzzleroom1"))
+               || IsMainHouseAtticShadowPuzzleArea(placement.SceneFile);
     }
 
-    private enum ReplacementKind
-    {
+    private enum ReplacementKind {
         KeyItem,
         Filler,
     }
@@ -1897,8 +1829,7 @@ internal class KeyItemLocationModifier : Modifier
         ItemPlacement Placement,
         ItemDefinition? Definition,
         Guid TargetGuid,
-        string Label)
-    {
+        string Label) {
         public ReplacementKey Key => new(Placement.SceneFile, TargetGuid);
 
         public ReplacementLocationKey LocationKey => new(
@@ -1915,8 +1846,7 @@ internal class KeyItemLocationModifier : Modifier
         ReplacementKind Kind,
         ItemPlacement Placement,
         Guid TargetGuid,
-        Item Drop)
-    {
+        Item Drop) {
         public static ReplacementPlan KeyItem(ItemPlacement placement, Guid targetGuid, KeyItemRule rule)
             => new(ReplacementKind.KeyItem, placement, targetGuid, new Item(rule.Id, rule.Count));
 

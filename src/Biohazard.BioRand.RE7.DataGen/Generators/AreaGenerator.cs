@@ -10,8 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-internal class AreaGenerator : IFileGenerator
-{
+internal class AreaGenerator : IFileGenerator {
     public string Id => "areas";
     public bool CopyToDataDirectory => true;
 
@@ -26,7 +25,7 @@ internal class AreaGenerator : IFileGenerator
     private readonly Lazy<Dictionary<string, string>> _csvDescriptions;
     private readonly Lazy<AreaDescriptionProvider> _descriptionProvider;
 
-    private readonly List<string> _pathExclusions = [
+    private readonly List<string> _pathExclusions =[
         "/alphatest/",
         "/vfx/",
         "/animation/",
@@ -44,125 +43,102 @@ internal class AreaGenerator : IFileGenerator
         "cubemap"
     ];
 
-    private readonly Regex chapterRegex = new Regex(@"(chapter|ch|c)[_-]*(\d+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private readonly Regex foundFootageRegex = new Regex(@"(?:^|[\/_])ff(\d{3})(?:[\/_\.]|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private readonly Regex itemRegex = new Regex(@"/items/|/itemsettings/|/itemset/|_item_", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private readonly Regex enemyRegex = new Regex(@"enemy|enemies", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private readonly Regex chapterRegex =
+        new(@"(chapter|ch|c)[_-]*(\d+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public AreaGenerator()
-    {
+    private readonly Regex foundFootageRegex =
+        new(@"(?:^|[\/_])ff(\d{3})(?:[\/_\.]|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    private readonly Regex itemRegex = new("/items/|/itemsettings/|/itemset/|_item_",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    private readonly Regex enemyRegex = new("enemy|enemies", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    public AreaGenerator() {
         _csvDescriptions = new Lazy<Dictionary<string, string>>(LoadCsvDescriptions);
-        _descriptionProvider = new Lazy<AreaDescriptionProvider>(() => new AreaDescriptionProvider(_pakFile, _pakList, _rszRepository));
+        _descriptionProvider =
+            new Lazy<AreaDescriptionProvider>(() => new AreaDescriptionProvider(_pakFile, _pakList, _rszRepository));
     }
 
-    private int? ExtractChapter(string path, AreaKind kind, GenerateCommand.GenerateSettings settings)
-    {
+    private int? ExtractChapter(string path, AreaKind kind, GenerateCommand.GenerateSettings settings) {
         var match = chapterRegex.Match(path);
-        if (match.Success)
-        {
-            if (int.TryParse(match.Groups[2].Value, out var chapter))
-            {
-                if (chapter is >= 0 and <= 9)
-                {
+        if (match.Success) {
+            if (int.TryParse(match.Groups[2].Value, out var chapter)) {
+                if (chapter is >= 0 and <= 9) {
 #if DEBUG
                     AnsiConsole.MarkupLine($"[grey]Chapter match:[/] '{match.Value}' (chapter {chapter}) in '{path}'");
 #endif
                     return chapter;
-                }
-                else return null;
-            }
-            else return null;
+                } else return null;
+            } else return null;
         }
 
         var foundFootageChapter = kind is AreaKind.Item or AreaKind.Enemy
             ? ExtractFoundFootageChapter(path)
             : null;
-        if (foundFootageChapter != null)
-        {
+        if (foundFootageChapter != null) {
 #if DEBUG
             AnsiConsole.MarkupLine($"[grey]Found footage chapter match:[/] chapter {foundFootageChapter} in '{path}'");
 #endif
             return foundFootageChapter;
         }
 
-        if (settings.Verbose)
-        {
+        if (settings.Verbose) {
             AnsiConsole.MarkupLine($"[yellow]Failed to extract chapter for path '{path}'[/]!");
         }
 
         return null;
     }
 
-    private int? ExtractFoundFootageChapter(string path)
-    {
+    private int? ExtractFoundFootageChapter(string path) {
         var match = foundFootageRegex.Match(path);
-        if (!match.Success || !int.TryParse(match.Groups[1].Value, out var footageId))
-        {
+        if (!match.Success || !int.TryParse(match.Groups[1].Value, out var footageId)) {
             return null;
         }
 
         // FF050 item/enemy scene paths omit c04/chapter4 but are part of the main-game ship section.
-        return footageId switch
-        {
+        return footageId switch{
             50 => 4,
             _ => null
         };
     }
 
 
-    private Difficulty? ExtractDifficulty(string path)
-    {
-        if (path.EndsWith("easy.scn.20") || path.EndsWith("casual.scn.20"))
-        {
+    private Difficulty? ExtractDifficulty(string path) {
+        if (path.EndsWith("easy.scn.20") || path.EndsWith("casual.scn.20")) {
             return Difficulty.Easy;
-        }
-        else if (path.EndsWith("normal.scn.20"))
-        {
+        } else if (path.EndsWith("normal.scn.20")) {
             return Difficulty.Normal;
-        }
-        else if (path.EndsWith("hard.scn.20"))
-        {
+        } else if (path.EndsWith("hard.scn.20")) {
             return Difficulty.Madhouse;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
-    private AreaKind ExtractKind(string path)
-    {
-        if (itemRegex.IsMatch(path))
-        {
+    private AreaKind ExtractKind(string path) {
+        if (itemRegex.IsMatch(path)) {
             return AreaKind.Item;
-        }
-        else if (enemyRegex.IsMatch(path))
-        {
+        } else if (enemyRegex.IsMatch(path)) {
             return AreaKind.Enemy;
-        }
-        else
-        {
+        } else {
             return AreaKind.General;
         }
     }
 
-    public object Generate(GenerateCommand.GenerateSettings settings)
-    {
+    public object Generate(GenerateCommand.GenerateSettings settings) {
         var result = new ConcurrentBag<AreaDefinition>();
 
         var relevantHashes = _pakFile.FileHashes
-            .Where(hash =>
-            {
+            .Where(hash => {
                 var path = _pakList.GetPath(hash);
                 return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersion}");
             })
             .ToList();
 
-        Parallel.ForEach(relevantHashes, hash =>
-        {
+        Parallel.ForEach(relevantHashes, hash => {
             var path = _pakList.GetPath(hash)!;
-            if (_pathExclusions.Any(ex => path.Contains(ex, StringComparison.OrdinalIgnoreCase)))
-            {
+            if (_pathExclusions.Any(ex => path.Contains(ex, StringComparison.OrdinalIgnoreCase))) {
                 return;
             }
 
@@ -171,13 +147,11 @@ internal class AreaGenerator : IFileGenerator
             var chapter = dlc == null ? ExtractChapter(path, kind, settings) : null;
             var difficulty = ExtractDifficulty(path);
 
-            if (chapter == null && dlc == null)
-            {
+            if (chapter == null && dlc == null) {
                 return;
             }
 
-            result.Add(new AreaDefinition
-            {
+            result.Add(new AreaDefinition{
                 Path = path,
                 Chapter = chapter,
                 Description = ResolveDescription(path, chapter, dlc, kind),
@@ -195,18 +169,15 @@ internal class AreaGenerator : IFileGenerator
             .ToList();
     }
 
-    private string? ResolveDescription(string path, int? chapter, DlcType? dlc, AreaKind kind)
-    {
-        if (_csvDescriptions.Value.TryGetValue(path, out var csvDescription))
-        {
+    private string? ResolveDescription(string path, int? chapter, DlcType? dlc, AreaKind kind) {
+        if (_csvDescriptions.Value.TryGetValue(path, out var csvDescription)) {
             return csvDescription;
         }
 
         return _descriptionProvider.Value.Describe(path, chapter, dlc, kind);
     }
 
-    private static Dictionary<string, string> LoadCsvDescriptions()
-    {
+    private static Dictionary<string, string> LoadCsvDescriptions() {
         var csv = TryReadSourceDataFile("areas.csv") ?? EmbeddedData.TryGetFile("areas.csv");
         if (csv == null)
             return [];
@@ -220,21 +191,17 @@ internal class AreaGenerator : IFileGenerator
                 StringComparer.OrdinalIgnoreCase);
     }
 
-    private static byte[]? TryReadSourceDataFile(string name)
-    {
-        foreach (var root in new[] { AppContext.BaseDirectory, Environment.CurrentDirectory })
-        {
+    private static byte[]? TryReadSourceDataFile(string name) {
+        foreach (var root in new[]{ AppContext.BaseDirectory, Environment.CurrentDirectory }) {
             var current = new DirectoryInfo(root);
-            while (current != null)
-            {
+            while (current != null) {
                 var sourcePath = Path.Combine(
                     current.FullName,
                     "src",
                     "Biohazard.BioRand.RE7",
                     EmbeddedData.DataDirectoryName,
                     name);
-                if (File.Exists(sourcePath))
-                {
+                if (File.Exists(sourcePath)) {
                     return File.ReadAllBytes(sourcePath);
                 }
 
@@ -243,8 +210,7 @@ internal class AreaGenerator : IFileGenerator
                     "Biohazard.BioRand.RE7",
                     EmbeddedData.DataDirectoryName,
                     name);
-                if (File.Exists(sourcePath))
-                {
+                if (File.Exists(sourcePath)) {
                     return File.ReadAllBytes(sourcePath);
                 }
 
@@ -255,8 +221,7 @@ internal class AreaGenerator : IFileGenerator
         return null;
     }
 
-    private static string NormalizeDescription(string description)
-    {
+    private static string NormalizeDescription(string description) {
         var parts = description
             .Split('/', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         return parts.Length == 0 ? description.Trim() : string.Join(" / ", parts);

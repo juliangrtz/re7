@@ -10,8 +10,7 @@ using System.Text.Json;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class ScnFileTests
-{
+public class ScnFileTests {
     private readonly RszTypeRepository _repo =
         RszRepositorySerializer.Default.FromJson(EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip());
 
@@ -41,8 +40,7 @@ public class ScnFileTests
     );
 
     [Fact]
-    void Test_Single_Scene_File()
-    {
+    void Test_Single_Scene_File() {
         var hash = _pakFile.FileHashes.FirstOrDefault(h =>
             _pakList.GetPath(h) == _singleFileTest);
 
@@ -51,60 +49,53 @@ public class ScnFileTests
         var differences = TestSceneFile(hash, _singleFileTest);
 
         if (differences.Count > 0)
-            Assert.True(false, ToJson(differences));
+            Assert.Fail(ToJson(differences));
     }
 
     [Fact(Skip = "Skip until RSZ is fixed")]
-    void Test_Relevant_Scene_Files()
-    {
+    void Test_Relevant_Scene_Files() {
         var differences = new List<object>();
-        var allowedDirectories = new string[] {
+        var allowedDirectories = new string[]{
             //"natives/stm/ch8", "natives/stm/ch9", 
             "natives/stm/environment", "natives/stm/leveldesign", "natives/stm/scenes"
         };
-        var scnFileHashes = _pakFile.FileHashes.Where(hash =>
-        {
+        var scnFileHashes = _pakFile.FileHashes.Where(hash => {
             var path = _pakList.GetPath(hash);
 
             return path != null
-                    && allowedDirectories.Any(dir => path.StartsWith(dir))
-                    && path.EndsWith($".scn.{FileVersions.SceneFileVersion}")
-                    && !path.Contains("levelfsm");
+                   && allowedDirectories.Any(dir => path.StartsWith(dir))
+                   && path.EndsWith($".scn.{FileVersions.SceneFileVersion}")
+                   && !path.Contains("levelfsm");
         }).ToList();
 
-        foreach (var hash in scnFileHashes)
-        {
+        foreach (var hash in scnFileHashes) {
             var path = _pakList.GetPath(hash)!;
             differences.AddRange(TestSceneFile(hash, path));
         }
 
         if (differences.Count > 0)
-            Assert.True(false, ToJson(differences));
+            Assert.Fail(ToJson(differences));
     }
 
     [Fact(Skip = "Skip until RSZ is fixed")]
-    void Test_All_Scene_Files()
-    {
+    void Test_All_Scene_Files() {
         var differences = new List<object>();
 
-        var scnFileHashes = _pakFile.FileHashes.Where(hash =>
-        {
+        var scnFileHashes = _pakFile.FileHashes.Where(hash => {
             var path = _pakList.GetPath(hash);
             return path != null && path.EndsWith($".scn.{FileVersions.SceneFileVersion}");
         });
 
-        foreach (var hash in scnFileHashes)
-        {
+        foreach (var hash in scnFileHashes) {
             var path = _pakList.GetPath(hash)!;
             differences.AddRange(TestSceneFile(hash, path));
         }
 
         if (differences.Count > 0)
-            Assert.True(false, ToJson(differences));
+            Assert.Fail(ToJson(differences));
     }
 
-    private List<object> TestSceneFile(ulong hash, string path)
-    {
+    private List<object> TestSceneFile(ulong hash, string path) {
         var differences = new List<object>();
 
         var input = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(hash));
@@ -113,8 +104,7 @@ public class ScnFileTests
         var inputInstances = ReadInstances(GetRsz(input));
         var outputInstances = ReadInstances(GetRsz(output));
 
-        if (inputInstances.Count != outputInstances.Count)
-        {
+        if (inputInstances.Count != outputInstances.Count) {
             differences.Add(new InstanceCountMismatch(
                 path,
                 inputInstances.Count,
@@ -124,13 +114,11 @@ public class ScnFileTests
             return differences;
         }
 
-        for (int i = 0; i < inputInstances.Count; i++)
-        {
+        for (int i = 0; i < inputInstances.Count; i++) {
             var a = inputInstances[i]?.ToString() ?? "<null>";
             var b = outputInstances[i]?.ToString() ?? "<null>";
 
-            if (a != b)
-            {
+            if (a != b) {
                 differences.Add(new InstanceDifference(
                     path,
                     i,
@@ -145,8 +133,7 @@ public class ScnFileTests
         return differences;
     }
 
-    private static object GetRsz(object scn)
-    {
+    private static object GetRsz(object scn) {
         var prop = scn.GetType().GetProperty(
             "Rsz",
             BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
@@ -154,8 +141,7 @@ public class ScnFileTests
         return prop.GetValue(scn)!;
     }
 
-    private List<object> ReadInstances(object rsz)
-    {
+    private List<object> ReadInstances(object rsz) {
         var method = rsz.GetType().GetMethod(
             "ReadInstanceList",
             BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)!;
@@ -165,8 +151,7 @@ public class ScnFileTests
         return ((IEnumerable<RszInstance>)instances).Cast<object>().ToList();
     }
 
-    private static int FindFirstDifference(string a, string b)
-    {
+    private static int FindFirstDifference(string a, string b) {
         var len = Math.Min(a.Length, b.Length);
 
         for (int i = 0; i < len; i++)
@@ -176,10 +161,8 @@ public class ScnFileTests
         return len;
     }
 
-    private static string ToJson(object obj)
-    {
-        return JsonSerializer.Serialize(obj, new JsonSerializerOptions
-        {
+    private static string ToJson(object obj) {
+        return JsonSerializer.Serialize(obj, new JsonSerializerOptions{
             WriteIndented = true
         });
     }

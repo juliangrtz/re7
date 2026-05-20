@@ -3,11 +3,9 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Items;
 
-internal class ItemDrops
-{
+internal class ItemDrops {
     private static readonly ImmutableDictionary<string, double> _defaultGenericDropRatios =
-        new Dictionary<string, double>(StringComparer.Ordinal)
-        {
+        new Dictionary<string, double>(StringComparer.Ordinal){
             ["HandgunBullet"] = 0.2,
             ["HandgunBulletL"] = 0.2,
             ["ShotgunBullet"] = 0.2,
@@ -33,7 +31,7 @@ internal class ItemDrops
             ["Alcohol"] = 0.05,
         }.ToImmutableDictionary(StringComparer.Ordinal);
 
-    public static ImmutableList<string> GenericDrops { get; private set; } = [
+    public static ImmutableList<string> GenericDrops { get; private set; } =[
         "EasyBoots",
         "AlphaGrass",
         "LiquidBomb",
@@ -59,7 +57,7 @@ internal class ItemDrops
         "Alcohol"
     ];
 
-    public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } = [
+    public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } =[
         "Stimulant",
         "Depressant",
     ];
@@ -68,7 +66,7 @@ internal class ItemDrops
         .Where(id => !UnsupportedRuntimeDropIds.Contains(id))
         .ToImmutableList();
 
-    public static ImmutableList<string> HighValueDrops { get; private set; } = [
+    public static ImmutableList<string> HighValueDrops { get; private set; } =[
         Weapon,
         DlcCoin,
         BirthdaySkill,
@@ -77,48 +75,47 @@ internal class ItemDrops
     ];
 
     public static ImmutableArray<string> BirthdaySkillIds { get; } =
-           new int[] {
-               /* 1  Infinite Ammo */
-               2 /* Health Regen */,
-               /*3  Clairvoyance (Perma Psychostimulants) */
-               /* 4, 5, 6, 7 (Time Bonuses) */
-               8 /* Defense II */,
-               9 /* Defense I */,
-               10 /* Speed Up II */,
-               11 /* Speed Up I */,
-               12 /* Firepower Up II */,
-               13 /* Firepower Up I */,
-               14 /* Impact II */,
-               15 /* Impact I */,
-               16 /* Toughness II */,
-               17 /* Toughness I */,
-               18 /* Guard Up */,
-               19 /* Quick Reload */,
-               /* 20 (Masochist) */
-               21 /* Vengeance */,
-               22 /* Narrow Escape */,
-               23 /* Brawler */,
-           }.Select(index => $"skl{index:000}")
+        new int[]{
+                /* 1  Infinite Ammo */
+                2 /* Health Regen */,
+                /*3  Clairvoyance (Perma Psychostimulants) */
+                /* 4, 5, 6, 7 (Time Bonuses) */
+                8 /* Defense II */,
+                9 /* Defense I */,
+                10 /* Speed Up II */,
+                11 /* Speed Up I */,
+                12 /* Firepower Up II */,
+                13 /* Firepower Up I */,
+                14 /* Impact II */,
+                15 /* Impact I */,
+                16 /* Toughness II */,
+                17 /* Toughness I */,
+                18 /* Guard Up */,
+                19 /* Quick Reload */,
+                /* 20 (Masochist) */
+                21 /* Vengeance */,
+                22 /* Narrow Escape */,
+                23 /* Brawler */,
+            }.Select(index => $"skl{index:000}")
             .ToImmutableArray();
 
-    public static ImmutableArray<(string Id, uint MinDropRate, uint MaxDropRate)> DlcCoinDrops { get; } = [
-        ("GoodLuckCoinA_Buy", 3u, 5u),  // Defense Coin
-        ("GoodLuckCoinB_Buy", 3u, 5u),  // Attack Coin
+    public static ImmutableArray<(string Id, uint MinDropRate, uint MaxDropRate)> DlcCoinDrops { get; } =[
+        ("GoodLuckCoinA_Buy", 3u, 5u), // Defense Coin
+        ("GoodLuckCoinB_Buy", 3u, 5u), // Attack Coin
         ("GoodLuckCoinC_Buy", 5u, 10u), // Instinct Coin
         ("GoodLuckCoinD_Buy", 10u, 15u), // Reload Coin
-        ("GoodLuckCoinE_Buy", 1u, 3u),  // Universal Coin
+        ("GoodLuckCoinE_Buy", 1u, 3u), // Universal Coin
     ];
 
     public const string BirthdaySkillVisualTemplateFallback = "Herb";
 
-    public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch
-    {
+    public static string GetHighValueDropLabel(string highValueDrop) => highValueDrop switch{
         DlcCoin => "DLC Coin",
         BirthdaySkill => "Jack's 55th Birthday Skill",
         _ => highValueDrop.Replace("-", " ").ToTitleCase()
     };
 
-    public static List<string> GetEnabledValuableDrops() => [
+    public static List<string> GetEnabledValuableDrops() =>[
         RepairKit, LockPick
     ];
 
@@ -144,25 +141,22 @@ internal class ItemDrops
 
     public static bool IsBirthdaySkill(string id)
         => id.StartsWith("skl", StringComparison.OrdinalIgnoreCase)
-        && !id.EndsWith("no", StringComparison.OrdinalIgnoreCase);
+           && !id.EndsWith("no", StringComparison.OrdinalIgnoreCase);
 
-    public static uint GetValuableDropRate(string highValueDrop) => highValueDrop switch
-    {
+    public static uint GetValuableDropRate(string highValueDrop) => highValueDrop switch{
         Weapon => 1u,
         _ => 3u
     };
 
     public static int GetValuableDropCount(string highValueDrop) => 1;
 
-    public static string ToItemID(string highValueDrop) => highValueDrop switch
-    {
+    public static string ToItemID(string highValueDrop) => highValueDrop switch{
         LockPick => ItemID.CylinderKey.ToString(),
         RepairKit => "RepairKit",
         _ => ItemID.NoName.ToString()
     };
 
-    public static string GetCategory(string id) => id switch
-    {
+    public static string GetCategory(string id) => id switch{
         "NoName" => CategoryNone,
         "LiquidBomb" => CategoryExplosive,
         "HandgunBullet" => CategoryAmmo,
@@ -195,10 +189,8 @@ internal class ItemDrops
         _ => CategoryOther
     };
 
-    public static (string BackgroundColor, string TextColor) GetColor(string category)
-    {
-        return category switch
-        {
+    public static (string BackgroundColor, string TextColor) GetColor(string category) {
+        return category switch{
             CategoryAmmo => ("#66f", "#fff"),
             CategoryHealth => ("#696", "#fff"),
             CategoryExplosive => ("#833", "#fff"),

@@ -4,8 +4,7 @@ using System.Globalization;
 
 namespace Biohazard.BioRand.RE7.Services;
 
-internal class FlagService
-{
+internal class FlagService {
     private readonly List<Guid> _flagGuids = [];
     private readonly Dictionary<Guid, bool> _flagSets = [];
     private readonly Randomizer _randomizer;
@@ -16,20 +15,17 @@ internal class FlagService
     private const float TrueValue = 1.401298E-45f;
     private const string GlobalVariablesPath = "natives/stm/userdata/globalvariables.uvar.2";
 
-    public FlagService(Randomizer randomizer)
-    {
+    public FlagService(Randomizer randomizer) {
         var uvarBytes = randomizer.FileRepository.GetFile(GlobalVariablesPath)
-            ?? throw new Exception("Invalid uvar path!");
+                        ?? throw new Exception("Invalid uvar path!");
         _uvarFile = new UvarFile(uvarBytes);
         _randomizer = randomizer;
         _preRandoVariables = GetVariablesByEmbeddedFile();
     }
 
-    public List<(string, List<UvarFile.Builder.Variable>)> GetVariablesByEmbeddedFile()
-    {
+    public List<(string, List<UvarFile.Builder.Variable>)> GetVariablesByEmbeddedFile() {
         var result = new List<(string, List<UvarFile.Builder.Variable>)>();
-        for (int i = 0; i < _uvarFile.EmbeddedCount; i++)
-        {
+        for (int i = 0; i < _uvarFile.EmbeddedCount; i++) {
             var embeddedFile = _uvarFile.GetEmbedded(i);
             var variables = embeddedFile.ToBuilder().Variables;
             result.Add((embeddedFile.Name, variables));
@@ -38,16 +34,14 @@ internal class FlagService
         return result;
     }
 
-    public Guid AllocateFlag()
-    {
+    public Guid AllocateFlag() {
         var biorandFlagIndex = _flagGuids.Count;
         var guid = $"BioRand_{biorandFlagIndex:00000}".GetGuidHash();
         _flagGuids.Add(guid);
         return guid;
     }
 
-    public void SetFlag(Guid guid, bool value)
-    {
+    public void SetFlag(Guid guid, bool value) {
         _flagSets[guid] = value;
     }
 
@@ -55,11 +49,9 @@ internal class FlagService
         => ((Enums.via.userdata.TypeKind)typeVal).ToString();
 
     // TODO: Move into reeutils
-    private static string FormatValue(UvarFile.Builder.Variable variable)
-    {
+    private static string FormatValue(UvarFile.Builder.Variable variable) {
         var data = variable.ValueData;
-        return ((Enums.via.userdata.TypeKind)variable.TypeVal) switch
-        {
+        return ((Enums.via.userdata.TypeKind)variable.TypeVal) switch{
             Enums.via.userdata.TypeKind.Boolean => (variable.Value != 0).ToString(),
             Enums.via.userdata.TypeKind.Int8 when data.Length >= sizeof(byte) =>
                 ((sbyte)data[0]).ToString(CultureInfo.InvariantCulture),
@@ -91,45 +83,42 @@ internal class FlagService
         };
     }
 
-    private static string FormatNullTerminatedString(byte[] data, Encoding encoding)
-    {
+    private static string FormatNullTerminatedString(byte[] data, Encoding encoding) {
         if (data.Length == 0)
             return "";
 
         var value = encoding.GetString(data);
         var nullTerminator = value.IndexOf('\0');
-        if (nullTerminator != -1)
-        {
+        if (nullTerminator != -1) {
             value = value[..nullTerminator];
         }
+
         return value;
     }
 
-    private static string FormatRawValue(UvarFile.Builder.Variable variable)
-    {
+    private static string FormatRawValue(UvarFile.Builder.Variable variable) {
         var value = variable.Value.ToString("G9", CultureInfo.InvariantCulture);
         return variable.ValueData.Length == 0
             ? value
             : $"{value} (0x{Convert.ToHexString(variable.ValueData)})";
     }
 
-    public void Save(RandomizerLogger logger)
-    {
+    public void Save(RandomizerLogger logger) {
         if (_flagGuids.Count == 0 && _flagSets.Count == 0)
             return;
 
         logger.Push("Default variables");
         _preRandoVariables = _randomizer.FlagService.GetVariablesByEmbeddedFile();
-        foreach (var (name, variables) in _preRandoVariables)
-        {
+        foreach (var (name, variables) in _preRandoVariables) {
             logger.Push(name);
-            foreach (var variable in variables)
-            {
+            foreach (var variable in variables) {
                 logger.LogLine($"[{variable.Guid}] {variable.Name} ({GetReadableTypeVal(variable.TypeVal)}): " +
-                    $"{FormatValue(variable)}");
+                               $"{FormatValue(variable)}");
             }
+
             logger.Pop();
         }
+
         logger.Pop();
 
         var biorandGroup = new UvarFile.Builder(_uvarFile.GetEmbedded(0)) // TODO improve API
@@ -141,11 +130,9 @@ internal class FlagService
         biorandGroup.Variables.Clear();
 
         var flagIndex = 0;
-        foreach (var flagGuid in _flagGuids)
-        {
+        foreach (var flagGuid in _flagGuids) {
             var name = $"BioRand_{flagIndex:00000}";
-            biorandGroup.Variables.Add(new UvarFile.Builder.Variable()
-            {
+            biorandGroup.Variables.Add(new UvarFile.Builder.Variable(){
                 Guid = flagGuid,
                 Name = name,
                 TypeVal = 2,
@@ -173,37 +160,31 @@ internal class FlagService
         {
             var (preFile, preVars) = _preRandoVariables[i];
             var (_, postVars) = postRandoVariables[i];
-            for (int j = 0; j < postVars.Count; j++)
-            {
-                if (preVars[j].Value != postVars[j].Value)
-                {
+            for (int j = 0; j < postVars.Count; j++) {
+                if (preVars[j].Value != postVars[j].Value) {
                     logger.LogLine($"[{preVars[j].Guid}] {preVars[j].Name} changed from " +
-                        $"{FormatValue(preVars[j])} to " +
-                        $"{FormatValue(postVars[j])} ({preFile})");
+                                   $"{FormatValue(preVars[j])} to " +
+                                   $"{FormatValue(postVars[j])} ({preFile})");
                 }
             }
         }
+
         logger.Pop();
     }
 
-    private void VisitUvar(UvarFile.Builder builder)
-    {
-        foreach (var v in builder.Variables)
-        {
-            if (_flagSets.TryGetValue(v.Guid, out var value))
-            {
+    private void VisitUvar(UvarFile.Builder builder) {
+        foreach (var v in builder.Variables) {
+            if (_flagSets.TryGetValue(v.Guid, out var value)) {
                 var serializedValue = value ? TrueValue : FalseValue;
                 v.Value = serializedValue;
                 v.ValueData = BitConverter.GetBytes(serializedValue);
-                if (v.ValueOffset == 0)
-                {
+                if (v.ValueOffset == 0) {
                     v.ValueOffset = 1;
                 }
             }
         }
 
-        foreach (var child in builder.Children)
-        {
+        foreach (var child in builder.Children) {
             VisitUvar(child);
         }
     }

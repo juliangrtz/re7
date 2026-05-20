@@ -8,16 +8,14 @@ namespace Biohazard.BioRand.RE7.DataGen.CodeGen;
 /// TODO: Look into proper Roslyn-powered C# code generation
 /// https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
 /// </summary>
-internal class RszCodeGenerator
-{
+internal class RszCodeGenerator {
     private static readonly byte[] rszJsonGz = EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip();
     private static readonly RszTypeRepository _rszRepository = RszRepositorySerializer.Default.FromJson(rszJsonGz);
 
-    public static string Generate(string typeName, bool generateEnums = false)
-    {
-        var type = _rszRepository.FromName(typeName) ?? throw new ArgumentException($"Type name {typeName} is invalid!");
-        var csb = new RszTypeCsharpWriter()
-        {
+    public static string Generate(string typeName, bool generateEnums = false) {
+        var type = _rszRepository.FromName(typeName) ??
+                   throw new ArgumentException($"Type name {typeName} is invalid!");
+        var csb = new RszTypeCsharpWriter(){
             GenerateEnums = generateEnums,
             UseEnumTypes = true,
             EnumNamespace = nameof(Enums)

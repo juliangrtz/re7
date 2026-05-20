@@ -4,10 +4,8 @@ using Biohazard.BioRand.RE7.REEngine;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class EnemyDirectiveModifier : Modifier
-{
-    private readonly List<IDirectiveModifier> _enemySpecificDirectiveModifiers =
-    [
+internal class EnemyDirectiveModifier : Modifier {
+    private readonly List<IDirectiveModifier> _enemySpecificDirectiveModifiers =[
         new EvelineFinalBossDirectiveModifier(),
         new InsectsDirectiveModifier(),
         new JackShearsDirectiveModifier(),
@@ -21,43 +19,35 @@ internal class EnemyDirectiveModifier : Modifier
         new MoldedQuickDirectiveModifier(),
     ];
 
-    private readonly List<IDirectiveModifier> _genericDirectiveModifiers =
-    [
+    private readonly List<IDirectiveModifier> _genericDirectiveModifiers =[
         new EnemyRankParamDirectiveModifier(),
     ];
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
-        foreach (var enemy in EnemyDefinitions.Instance.All.OrderBy(em => em.EnemyId))
-        {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+        foreach (var enemy in EnemyDefinitions.Instance.All.OrderBy(em => em.EnemyId)) {
             var matchingModifiers = _enemySpecificDirectiveModifiers
                 .Where(modifier => modifier.Supports(enemy))
                 .ToArray();
 
-            if (matchingModifiers.Length == 0)
-            {
+            if (matchingModifiers.Length == 0) {
                 continue;
             }
 
             logger.Push($"{enemy.EnemyId} -- {enemy.Name}");
-            if (matchingModifiers.Length == 1)
-            {
+            if (matchingModifiers.Length == 1) {
                 matchingModifiers[0].Apply(enemy, randomizer, logger);
-            }
-            else
-            {
-                foreach (var enemySpecificModifier in matchingModifiers)
-                {
+            } else {
+                foreach (var enemySpecificModifier in matchingModifiers) {
                     logger.Push(enemySpecificModifier.GetLogLabel());
                     enemySpecificModifier.Apply(enemy, randomizer, logger);
                     logger.Pop();
                 }
             }
+
             logger.Pop();
         }
 
-        foreach (var modifier in _genericDirectiveModifiers)
-        {
+        foreach (var modifier in _genericDirectiveModifiers) {
             logger.Push($"Generic -- {modifier.GetLogLabel()}");
             modifier.Apply(null!, randomizer, logger);
             logger.Pop();
@@ -65,19 +55,16 @@ internal class EnemyDirectiveModifier : Modifier
     }
 }
 
-internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
-{
+internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier {
     private const string EnemyRankParameterHolderPath =
         "prefab/character/misc/parameter/battle/enemyrankparameterholder.user";
 
     public bool Supports(IEnemyDefinition enemy) => true;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
         var applyDamage = randomizer.GetConfigOption<bool>("random-enemy-damage");
 
-        if (!applyDamage)
-        {
+        if (!applyDamage) {
             logger.LogSkip("Enemy damage randomization is disabled.");
             return;
         }
@@ -89,26 +76,23 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
         var holderPath = PakPath.UserFile(EnemyRankParameterHolderPath);
         var holder = randomizer.FileRepository.DeserializeUserFile<app.EnemyRankParameterHolder>(holderPath);
 
-        foreach (var unit in holder.Units)
-        {
+        foreach (var unit in holder.Units) {
             var rank = unit.Rank;
             var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
 
-            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param =>
-            {
-                var oldRate = param.DamageRate;
-                param.DamageRate *= damageMultiplier;
-                logger.LogChange("Damage rate", oldRate, param.DamageRate);
+            logger.LogDirectiveFile(rank, userFilePath, () =>
+                randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param => {
+                    var oldRate = param.DamageRate;
+                    param.DamageRate *= damageMultiplier;
+                    logger.LogChange("Damage rate", oldRate, param.DamageRate);
 
-                return param;
-            }));
+                    return param;
+                }));
         }
     }
 
-    private static float GetDamageMultiplier(Randomizer randomizer, Rng rng)
-    {
-        if (randomizer.GetConfigOption<bool>("enemy-insta-death"))
-        {
+    private static float GetDamageMultiplier(Randomizer randomizer, Rng rng) {
+        if (randomizer.GetConfigOption<bool>("enemy-insta-death")) {
             return 9999f;
         }
 
@@ -117,4 +101,3 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier
             randomizer.GetConfigOption<double>("enemy-damage-max"));
     }
 }
-

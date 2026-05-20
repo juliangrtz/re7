@@ -4,12 +4,10 @@ using IntelOrca.Biohazard.REE.Messages;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class MessageModifier : Modifier
-{
+internal class MessageModifier : Modifier {
     private const string RandomizerKey = "modifier/messages";
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         if (!randomizer.GetConfigOption<bool>("randomized-messages"))
             return;
 
@@ -23,8 +21,7 @@ internal class MessageModifier : Modifier
 
         var normalized = new List<TextReplacementModel>();
 
-        foreach (var row in csv)
-        {
+        foreach (var row in csv) {
             if (!string.IsNullOrWhiteSpace(row.MsgFileName))
                 currentFile = row.MsgFileName;
 
@@ -34,7 +31,7 @@ internal class MessageModifier : Modifier
             if (currentFile == null || currentName == null)
                 continue;
 
-            normalized.Add(new TextReplacementModel() {
+            normalized.Add(new TextReplacementModel(){
                 MsgFileName = currentFile,
                 TextName = currentName,
                 OriginalText = row.OriginalText,
@@ -46,8 +43,7 @@ internal class MessageModifier : Modifier
             .GroupBy(x => (x.MsgFileName, x.TextName))
             .ToList();
 
-        string ReplaceVariables(string input)
-        {
+        string ReplaceVariables(string input) {
             input = input.Replace("${seed}", randomizer.Seed.ToString());
             input = input.Replace("${user.name}", randomizer.User);
             input = input.Replace("${profile.name}", randomizer.Input.ProfileName);
@@ -57,15 +53,13 @@ internal class MessageModifier : Modifier
         }
 
         var chosenReplacements = groups
-            .Select(group =>
-            {
+            .Select(group => {
                 var replacements = group
                     .Select(x => x.Replacement)
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .ToList();
 
-                return new
-                {
+                return new{
                     group.Key.MsgFileName,
                     group.Key.TextName,
                     Chosen = replacements.Count == 0 ? null : rng.Next(replacements)
@@ -74,29 +68,25 @@ internal class MessageModifier : Modifier
             .Where(x => x.Chosen != null)
             .ToList();
 
-        foreach (var fileGroup in chosenReplacements.GroupBy(x => x.MsgFileName))
-        {
-            randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile($"message/{fileGroup.Key}"), message =>
-            {
-                foreach (var replacement in fileGroup)
-                {
+        foreach (var fileGroup in chosenReplacements.GroupBy(x => x.MsgFileName)) {
+            randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile($"message/{fileGroup.Key}"), message => {
+                foreach (var replacement in fileGroup) {
                     var msg = message.FindMessage(replacement.TextName);
-                    if (msg == null)
-                    {
+                    if (msg == null) {
                         logger.LogLine($"Message \"{replacement.TextName}\" in {replacement.MsgFileName} not found!");
                         continue;
                     }
 
                     var chosen = replacement.Chosen!;
                     message.SetString(msg.Guid, LanguageId.English, ReplaceVariables(chosen));
-                    logger.LogLine($"Replaced message \"{replacement.TextName}\" with \"{chosen.Truncate(100)}\" in {replacement.MsgFileName}");
+                    logger.LogLine(
+                        $"Replaced message \"{replacement.TextName}\" with \"{chosen.Truncate(100)}\" in {replacement.MsgFileName}");
                 }
             });
         }
     }
 
-    internal sealed class TextReplacementModel
-    {
+    internal sealed class TextReplacementModel {
         public string MsgFileName { get; init; } = "";
         public string TextName { get; init; } = "";
         public string OriginalText { get; init; } = "";

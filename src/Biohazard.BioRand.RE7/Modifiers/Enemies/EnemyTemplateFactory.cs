@@ -4,8 +4,7 @@ using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal sealed class EnemyTemplateFactory(Randomizer randomizer)
-{
+internal sealed class EnemyTemplateFactory(Randomizer randomizer) {
     internal const string ExplosiveEm3300Tag = "BioRandExplosiveEm3300";
     private readonly Dictionary<string, RszGameObject> _generatorTemplateCache = new();
     private readonly Dictionary<string, RszGameObject> _spawnInfoTemplateCache = new();
@@ -17,10 +16,8 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
         bool randomizeScale,
         ScaleOptions scaleOptions,
         Rng rng,
-        IEnemyDefinition? definition = null)
-    {
-        if (!_generatorTemplateCache.TryGetValue(enemyId, out var baseTemplate))
-        {
+        IEnemyDefinition? definition = null) {
+        if (!_generatorTemplateCache.TryGetValue(enemyId, out var baseTemplate)) {
             baseTemplate = randomizer.TemplateService
                 .GetEnemyTemplate(enemyId)
                 .WithName(enemyId);
@@ -30,17 +27,15 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
 
         var template = CloneGameObject(baseTemplate, rng);
         definition ??= EnemyDefinitions.Instance.FromId(enemyId)
-            ?? throw new InvalidOperationException($"Unknown enemy definition for '{enemyId}'.");
+                       ?? throw new InvalidOperationException($"Unknown enemy definition for '{enemyId}'.");
         template = definition.IndividualizeTemplate(rng, template);
 
-        if (updateTransform || randomizeScale)
-        {
+        if (updateTransform || randomizeScale) {
             var templateTransform = updateTransform
                 ? transform
                 : template.FindComponent<GeneratedViaTransform>()!;
 
-            if (randomizeScale)
-            {
+            if (randomizeScale) {
                 RandomizeScale(templateTransform, scaleOptions, rng);
             }
 
@@ -52,10 +47,8 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
 
     internal RszGameObject GetOrCreateSpawnInfoTemplate(
         string enemyId,
-        Rng rng)
-    {
-        if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template))
-        {
+        Rng rng) {
+        if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template)) {
             template = randomizer.TemplateService
                 .GetEnemySpawnInfo(enemyId)
                 .WithName(enemyId);
@@ -70,14 +63,11 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
     internal List<RszGameObject> CreatePoolInstancesForNestedSpawnInfos(
         RszGameObject template,
         ScaleOptions scaleOptions,
-        Rng rng)
-    {
+        Rng rng) {
         var nestedSpawnAliases = new List<string>();
-        template.VisitGameObjects(gameObject =>
-        {
+        template.VisitGameObjects(gameObject => {
             var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
-            if (spawnInfo?.Enabled == true && !string.IsNullOrWhiteSpace(spawnInfo.UnitAlias))
-            {
+            if (spawnInfo?.Enabled == true && !string.IsNullOrWhiteSpace(spawnInfo.UnitAlias)) {
                 nestedSpawnAliases.Add(spawnInfo.UnitAlias);
             }
         });
@@ -86,20 +76,17 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
             return [];
 
         var instances = new List<RszGameObject>(nestedSpawnAliases.Count);
-        var transform = new GeneratedViaTransform()
-        {
+        var transform = new GeneratedViaTransform(){
             Position = Vector3.Zero,
             Rotation = Quaternion.Identity,
             Scale = Vector3.One,
         };
 
-        foreach (var nestedSpawnAlias in nestedSpawnAliases)
-        {
+        foreach (var nestedSpawnAlias in nestedSpawnAliases) {
             var definition = EnemyDefinitions.Instance.FromId(nestedSpawnAlias)
-                ?? throw new InvalidOperationException(
-                    $"Enemy template '{template.Name}' contains a nested spawn info for unsupported enemy '{nestedSpawnAlias}'.");
-            if (!definition.UsesEnemyGenerator)
-            {
+                             ?? throw new InvalidOperationException(
+                                 $"Enemy template '{template.Name}' contains a nested spawn info for unsupported enemy '{nestedSpawnAlias}'.");
+            if (!definition.UsesEnemyGenerator) {
                 throw new InvalidOperationException(
                     $"Enemy template '{template.Name}' contains a nested spawn info for non-generator enemy '{nestedSpawnAlias}'.");
             }
@@ -117,11 +104,9 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
         return instances;
     }
 
-    internal static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng)
-    {
+    internal static RszGameObject CloneGameObject(RszGameObject rootGameObject, Rng rng) {
         var guidMap = new Dictionary<Guid, Guid>();
-        var root = rootGameObject.VisitGameObjects(gameObject =>
-        {
+        var root = rootGameObject.VisitGameObjects(gameObject => {
             var newGuid = rng.NextGuid();
             guidMap[gameObject.Guid] = newGuid;
             return gameObject.WithGuid(newGuid);
@@ -130,13 +115,10 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
         return ReplaceGameObjectRefs(root, guidMap);
     }
 
-    internal static RszGameObject DisableEnemyStampSerialization(RszGameObject gameObject)
-    {
-        return gameObject.VisitComponents(component =>
-        {
+    internal static RszGameObject DisableEnemyStampSerialization(RszGameObject gameObject) {
+        return gameObject.VisitComponents(component => {
             if (component.Type.Name == "app.StampController" &&
-                component.Type.FindFieldIndex("IsSerializeTexture") != -1)
-            {
+                component.Type.FindFieldIndex("IsSerializeTexture") != -1) {
                 return component.SetField("IsSerializeTexture", false);
             }
 
@@ -144,26 +126,21 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
         });
     }
 
-    private static RszGameObject MarkExplosiveEm3300Template(string enemyId, RszGameObject gameObject)
-    {
+    private static RszGameObject MarkExplosiveEm3300Template(string enemyId, RszGameObject gameObject) {
         if (!string.Equals(enemyId, EnemyID.Em3300.ToString(), StringComparison.Ordinal))
             return gameObject;
 
         return gameObject.WithSettings(gameObject.Settings.Set("Tag", ExplosiveEm3300Tag));
     }
 
-    internal static RszGameObject RefreshRuntimeGuids(RszGameObject gameObject, Rng rng)
-    {
+    internal static RszGameObject RefreshRuntimeGuids(RszGameObject gameObject, Rng rng) {
         return gameObject.VisitComponents(component => RefreshRuntimeGuids(component, rng));
     }
 
-    private static RszObjectNode RefreshRuntimeGuids(RszObjectNode objectNode, Rng rng)
-    {
-        for (var i = 0; i < objectNode.Children.Length; i++)
-        {
+    private static RszObjectNode RefreshRuntimeGuids(RszObjectNode objectNode, Rng rng) {
+        for (var i = 0; i < objectNode.Children.Length; i++) {
             var fieldName = objectNode.Type.Fields[i].Name;
-            if (fieldName is "SaveGUID" or "InstanceGuid" or "MyGUID")
-            {
+            if (fieldName is "SaveGUID" or "InstanceGuid" or "MyGUID") {
                 objectNode = objectNode.SetField(fieldName, rng.NextGuid());
             }
         }
@@ -171,11 +148,9 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
         return objectNode;
     }
 
-    private static void RandomizeScale(GeneratedViaTransform transform, ScaleOptions scaleOptions, Rng rng)
-    {
+    private static void RandomizeScale(GeneratedViaTransform transform, ScaleOptions scaleOptions, Rng rng) {
         var unusualScaleChance = GetScaleProbabilityPercent(scaleOptions.Probability);
-        if (!rng.NextProbability(unusualScaleChance))
-        {
+        if (!rng.NextProbability(unusualScaleChance)) {
             return;
         }
 
@@ -188,15 +163,11 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer)
 
     private static RszGameObject ReplaceGameObjectRefs(
         RszGameObject gameObject,
-        Dictionary<Guid, Guid> guidMap)
-    {
-        return gameObject.Visit(node =>
-        {
-            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
-            {
+        Dictionary<Guid, Guid> guidMap) {
+        return gameObject.Visit(node => {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef) {
                 var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                if (guidMap.TryGetValue(refGuid, out var newGuid))
-                {
+                if (guidMap.TryGetValue(refGuid, out var newGuid)) {
                     return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
                 }
             }

@@ -18,20 +18,16 @@ internal sealed record ScaleOptions(
     float Max
 );
 
-internal sealed class EnemyHealthResolver(Randomizer randomizer, EnemyRandomizerOptions options, Rng healthRng)
-{
+internal sealed class EnemyHealthResolver(Randomizer randomizer, EnemyRandomizerOptions options, Rng healthRng) {
     private readonly HashSet<float> _assignedHealthValues = [];
 
-    public float GetHealth(IEnemyDefinition enemy)
-    {
+    public float GetHealth(IEnemyDefinition enemy) {
         var health = enemy.GetHealth(randomizer, healthRng);
-        if (!options.DebugUniqueHp)
-        {
+        if (!options.DebugUniqueHp) {
             return health;
         }
 
-        while (!_assignedHealthValues.Add(health))
-        {
+        while (!_assignedHealthValues.Add(health)) {
             health += 1f;
         }
 
