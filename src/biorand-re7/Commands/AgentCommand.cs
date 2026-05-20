@@ -1,34 +1,28 @@
 using IntelOrca.Biohazard.BioRand;
 using Spectre.Console;
 using Spectre.Console.Cli;
-
 using System.ComponentModel;
 
 namespace Biohazard.BioRand.RE7.Commands;
 
-internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
-{
-    public sealed class Settings : CommandSettings
-    {
+internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings> {
+    public sealed class Settings : CommandSettings {
         [Description("Host")]
         [CommandArgument(0, "<host>")]
-        public string Host { get; init; }
+        public required string Host { get; init; }
 
         [Description("Seed to generate")]
         [CommandOption("-k|--key")]
-        public string ApiKey { get; init; }
+        public required string ApiKey { get; init; }
 
-        [CommandOption("-i|--input")]
-        public string InputPath { get; init; }
+        [CommandOption("-i|--input")] public required string InputPath { get; init; }
 
-        [CommandOption("-b|--beta")]
-        public bool Beta { get; init; }
+        [CommandOption("-b|--beta")] public required bool Beta { get; init; }
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token)
-    {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var gameId = await GetGameIdAsync(settings.Host, "re7")
-            ?? throw new Exception("re7 game moniker not found.");
+                     ?? throw new Exception("re7 game moniker not found.");
 
         var agent = new RandomizerAgent(
             settings.Host,
@@ -36,57 +30,49 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
             gameId,
             new RandomizerAgentHandler(settings.InputPath, settings.Beta));
         var cts = new CancellationTokenSource();
-        Console.CancelKeyPress += (sender, e) =>
-        {
+        Console.CancelKeyPress += (sender, e) => {
             e.Cancel = true;
             cts.Cancel();
         };
-        try
-        {
+        try {
             await agent.RunAsync(cts.Token);
         }
-        catch (TaskCanceledException)
-        {
-        }
+        catch (TaskCanceledException) { }
+
         return 0;
     }
 
-    private static async Task<int?> GetGameIdAsync(string uri, string moniker)
-    {
+    private static async Task<int?> GetGameIdAsync(string uri, string moniker) {
         var client = new RandomizerClient(uri);
         var games = await client.GetGamesAsync();
         var game = games.FirstOrDefault(x => x.Moniker == moniker);
         return game?.Id;
     }
 
-    private class RandomizerAgentHandler(string gameInputPath, bool beta) : IRandomizerAgentHandler
-    {
+    private class RandomizerAgentHandler(string gameInputPath, bool beta) : IRandomizerAgentHandler {
         public string BuildVersion => RandomizerExecutor.BuildVersion;
         public RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerExecutor.ConfigurationDefinition;
         public RandomizerConfiguration DefaultConfiguration => RandomizerExecutor.DefaultConfiguration;
 
-        public Task<bool> CanGenerateAsync(RandomizerAgent.QueueResponseItem queueItem)
-        {
+        public Task<bool> CanGenerateAsync(RandomizerAgent.QueueResponseItem queueItem) {
             return Task.FromResult(true);
         }
 
-        public Task<IntelOrca.Biohazard.BioRand.RandomizerOutput> GenerateAsync(RandomizerAgent.QueueResponseItem queueItem, RandomizerInput input)
-        {
+        public Task<IntelOrca.Biohazard.BioRand.RandomizerOutput> GenerateAsync(
+            RandomizerAgent.QueueResponseItem queueItem, RandomizerInput input) {
             var config = input.Configuration;
 
             // Special things for specific users
-            if (beta)
-            {
-                if (!queueItem.UserTags.Contains("re7:tester"))
-                {
-                    throw new RandomizerUserException("The RE7 beta randomizer is currently only available to testers.");
+            if (beta) {
+                if (!queueItem.UserTags.Contains("re7:tester")) {
+                    throw new RandomizerUserException(
+                        "The RE7 beta randomizer is currently only available to testers.");
                 }
             }
 
             var specials = new List<string>();
             var userName = queueItem.UserName ?? "";
-            if (userName.Equals("bawkbasoup", StringComparison.OrdinalIgnoreCase))
-            {
+            if (userName.Equals("bawkbasoup", StringComparison.OrdinalIgnoreCase)) {
                 specials.Add("bawk");
             }
 
@@ -100,7 +86,8 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings>
 
         public void LogInfo(string message) => AnsiConsole.MarkupLine($"[gray]{Timestamp} {message}[/]");
 
-        public void LogError(Exception ex, string message) => AnsiConsole.MarkupLine($"[red]{Timestamp} {message} ({ex.Message})[/]");
+        public void LogError(Exception ex, string message) =>
+            AnsiConsole.MarkupLine($"[red]{Timestamp} {message} ({ex.Message})[/]");
 
         private static string Timestamp => DateTime.Now.ToString("[[yyyy-MM-dd HH:mm]]");
     }

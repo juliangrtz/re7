@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7;
 
-public class AreaDefinitionRepository
-{
+public class AreaDefinitionRepository {
     private static AreaDefinitionRepository? _default;
     private static readonly object _defaultLock = new();
     private Dictionary<string, AreaDefinition> _areasByPath = new(StringComparer.OrdinalIgnoreCase);
@@ -13,8 +12,7 @@ public class AreaDefinitionRepository
     public List<AreaDefinition> Items { get; set; } = [];
     public List<AreaDefinition> Enemies { get; set; } = [];
 
-    private void Initialize()
-    {
+    private void Initialize() {
         All = EmbeddedData.GetFile("areas.json").DeserializeJson<List<AreaDefinition>>();
         ApplyCsvDescriptions(All);
         General = All.Where(area => area.Kind == AreaKind.General).ToList();
@@ -26,18 +24,15 @@ public class AreaDefinitionRepository
             .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
     }
 
-    public string FormatScenePath(string path)
-    {
-        if (_areasByPath.TryGetValue(path, out var area) && !string.IsNullOrWhiteSpace(area.Description))
-        {
+    public string FormatScenePath(string path) {
+        if (_areasByPath.TryGetValue(path, out var area) && !string.IsNullOrWhiteSpace(area.Description)) {
             return $"{NormalizeDescription(area.Description)} :: {path}";
         }
 
         return path;
     }
 
-    private static void ApplyCsvDescriptions(List<AreaDefinition> areas)
-    {
+    private static void ApplyCsvDescriptions(List<AreaDefinition> areas) {
         var csv = EmbeddedData.TryGetFile("areas.csv");
         if (csv == null)
             return;
@@ -50,38 +45,31 @@ public class AreaDefinitionRepository
                 group => NormalizeDescription(group.First().Description!),
                 StringComparer.OrdinalIgnoreCase);
 
-        foreach (var area in areas)
-        {
-            if (descriptionsByPath.TryGetValue(area.Path, out var description))
-            {
+        foreach (var area in areas) {
+            if (descriptionsByPath.TryGetValue(area.Path, out var description)) {
                 area.Description = description;
             }
         }
     }
 
-    private static string NormalizeDescription(string description)
-    {
+    private static string NormalizeDescription(string description) {
         var parts = description
             .Split('/', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         return parts.Length == 0 ? description.Trim() : string.Join(" / ", parts);
     }
 
-    public static AreaDefinitionRepository Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                lock (_defaultLock)
-                {
-                    if (_default == null)
-                    {
+    public static AreaDefinitionRepository Default {
+        get {
+            if (_default == null) {
+                lock (_defaultLock) {
+                    if (_default == null) {
                         var repository = new AreaDefinitionRepository();
                         repository.Initialize();
                         _default = repository;
                     }
                 }
             }
+
             return _default;
         }
     }

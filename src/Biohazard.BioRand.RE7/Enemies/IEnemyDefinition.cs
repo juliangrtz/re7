@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-public interface IEnemyDefinition
-{
-    [Key]
-    public string Id { get; }
+public interface IEnemyDefinition {
+    [Key] public string Id { get; }
 
     public EnemyID EnemyId { get; }
 
@@ -38,17 +36,14 @@ public interface IEnemyDefinition
 
     public RszGameObject IndividualizeTemplate(Rng rng, RszGameObject template) => template;
 
-    internal bool ShouldRandomizeHealth(Randomizer randomizer)
-    {
+    internal bool ShouldRandomizeHealth(Randomizer randomizer) {
         var randomEnemyHealth = randomizer.GetConfigOption<bool>("enemy-random-health");
         var randomBossHealth = randomizer.GetConfigOption<bool>("boss-random-health");
         return (randomEnemyHealth && !IsBoss) || (randomBossHealth && IsBoss);
     }
 
-    internal float GetHealth(Randomizer randomizer, Rng rng, EnemyHealthPart healthPart)
-    {
-        if (!ShouldRandomizeHealth(randomizer))
-        {
+    internal float GetHealth(Randomizer randomizer, Rng rng, EnemyHealthPart healthPart) {
+        if (!ShouldRandomizeHealth(randomizer)) {
             return healthPart.BaseHealth;
         }
 
@@ -56,21 +51,18 @@ public interface IEnemyDefinition
         var healthConfigId = healthPart.ConfigId.ToLowerInvariant();
         var min = randomizer.GetConfigOption($"{healthPrefix}-health-min-{healthConfigId}", healthPart.BaseHealth);
         var max = randomizer.GetConfigOption($"{healthPrefix}-health-max-{healthConfigId}", healthPart.BaseHealth);
-        if (max < min)
-        {
+        if (max < min) {
             (min, max) = (max, min);
         }
 
         return (float)rng.NextDouble(min, max);
     }
 
-    internal float GetHealth(Randomizer randomizer, Rng rng)
-    {
+    internal float GetHealth(Randomizer randomizer, Rng rng) {
         return GetHealth(randomizer, rng, HealthParts[0]);
     }
 
-    internal bool ShouldRandomizeSpeed(Randomizer randomizer)
-    {
+    internal bool ShouldRandomizeSpeed(Randomizer randomizer) {
         if (!SupportsSpeedRandomization || !randomizer.GetConfigOption<bool>("random-enemy-speed"))
             return false;
 
@@ -79,8 +71,7 @@ public interface IEnemyDefinition
         return randomizer.GetRng("enemy/speed/probability", speedConfigId).NextProbability(probability);
     }
 
-    internal float GetSpeedMultiplier(Randomizer randomizer)
-    {
+    internal float GetSpeedMultiplier(Randomizer randomizer) {
         if (!ShouldRandomizeSpeed(randomizer))
             return 1f;
 

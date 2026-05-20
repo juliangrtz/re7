@@ -3,19 +3,16 @@ using Enums.app.Item;
 
 namespace Biohazard.BioRand.RE7.Tests.Repositories;
 
-public class ItemDefinitionRepositoryTests
-{
+public class ItemDefinitionRepositoryTests {
     private readonly ItemDefinitionRepository repository = ItemDefinitionRepository.Default;
 
     [Fact]
-    public void Repository_Should_Not_Be_Empty()
-    {
+    public void Repository_Should_Not_Be_Empty() {
         Assert.NotEmpty(repository.Items);
     }
 
     [Fact]
-    public void All_Items_Must_Have_Id()
-    {
+    public void All_Items_Must_Have_Id() {
         var invalid = repository
             .Items
             .Where(i => string.IsNullOrWhiteSpace(i.Id))
@@ -26,8 +23,7 @@ public class ItemDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Ids_Must_Be_Unique()
-    {
+    public void Ids_Must_Be_Unique() {
         var duplicates = repository
             .Items
             .GroupBy(i => i.Id)
@@ -40,8 +36,7 @@ public class ItemDefinitionRepositoryTests
     }
 
     [Fact]
-    public void WeaponIds_Must_Be_Unique()
-    {
+    public void WeaponIds_Must_Be_Unique() {
         var duplicates = repository
             .Items
             .Where(i => i.WeaponId != null)
@@ -55,8 +50,7 @@ public class ItemDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Unlockables_Must_Not_Be_Stackable()
-    {
+    public void Unlockables_Must_Not_Be_Stackable() {
         var invalid = repository
             .Items
             .Where(i => i.IsUnlockable && i.MaxStack > 1)
@@ -68,8 +62,7 @@ public class ItemDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Weapons_Must_Have_MaxStack_Of_One()
-    {
+    public void Weapons_Must_Have_MaxStack_Of_One() {
         var invalid = repository
             .Items
             .Where(i => i.CategoryType == ItemCategoryType.Weapon && i.MaxStack != 1)
@@ -81,8 +74,7 @@ public class ItemDefinitionRepositoryTests
     }
 
     [Fact]
-    public void Named_Items_Should_Not_Have_Empty_Names()
-    {
+    public void Named_Items_Should_Not_Have_Empty_Names() {
         var invalid = repository
             .Items
             .Where(i => i.Name != null && string.IsNullOrWhiteSpace(i.Name))

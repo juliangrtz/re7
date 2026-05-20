@@ -3,8 +3,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class JackShears : IEnemyDefinition
-{
+internal class JackShears : IEnemyDefinition {
     public string Id => "JackShears";
 
     public EnemyID EnemyId => EnemyID.Em8001;
@@ -17,7 +16,7 @@ internal class JackShears : IEnemyDefinition
 
     public int BaseHealth => 4500;
 
-    public List<string> RcolPaths => [
+    public List<string> RcolPaths =>[
         PakPath.RcolFile("collision/collider/enemy/em8000/em8000.rcol"),
         PakPath.RcolFile("collision/collider/enemy/em8000/em8000chainsawsensor.rcol"),
         PakPath.RcolFile("collision/collider/enemy/em8000/em8100deadbody.rcol.20"),
@@ -35,15 +34,12 @@ internal class JackShears : IEnemyDefinition
     public bool UsesEnemyGenerator => true;
 }
 
-internal class JackShearsDirectiveModifier : IDirectiveModifier
-{
+internal class JackShearsDirectiveModifier : IDirectiveModifier {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em8001;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
-        if (!enemy.ShouldRandomizeHealth(randomizer))
-        {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
+        if (!enemy.ShouldRandomizeHealth(randomizer)) {
             logger.LogSkip("Boss health randomization is disabled.");
             return;
         }
@@ -51,13 +47,14 @@ internal class JackShearsDirectiveModifier : IDirectiveModifier
         var rng = randomizer.GetRng("enemy/em8001");
         var newInitHp = enemy.GetHealth(randomizer, rng);
         logger.LogHealthAssignment("Common.InitHP", enemy.BaseHealth, newInitHp);
-        var userFilePath = PakPath.UserFile("prefab/character/em8001/parameter/directive/em8001battledirective_default.user");
-        logger.LogDirectiveFile("Default", userFilePath, () => randomizer.FileRepository.ModifyUserFile(userFilePath, directive =>
-        {
-            var oldInitHp = directive.Get<float>("Common.InitHP");
-            logger.LogChange("Common.InitHP", oldInitHp, newInitHp);
-            directive = directive.Set("Common.InitHP", newInitHp);
-            return directive;
-        }));
+        var userFilePath =
+            PakPath.UserFile("prefab/character/em8001/parameter/directive/em8001battledirective_default.user");
+        logger.LogDirectiveFile("Default", userFilePath, () => randomizer.FileRepository.ModifyUserFile(userFilePath,
+            directive => {
+                var oldInitHp = directive.Get<float>("Common.InitHP");
+                logger.LogChange("Common.InitHP", oldInitHp, newInitHp);
+                directive = directive.Set("Common.InitHP", newInitHp);
+                return directive;
+            }));
     }
 }

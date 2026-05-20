@@ -9,14 +9,12 @@ internal class FileService(Randomizer randomizer)
 
     public List<FilePlacement> FilePlacements { get; private set; } = [];
 
-    internal int GetNextId()
-    {
+    internal int GetNextId() {
         return _id++;
     }
 }
 
-internal class FilePlacement
-{
+internal class FilePlacement {
     public int TemplateId { get; set; }
     public int Id { get; set; }
     public string Content { get; set; } = "";

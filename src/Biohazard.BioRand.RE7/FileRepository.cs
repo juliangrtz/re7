@@ -6,8 +6,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7;
 
-internal class FileRepository : IPatchContext, IDisposable
-{
+internal class FileRepository : IPatchContext, IDisposable {
     private readonly record struct FileCacheEntry(bool Exists, byte[] Data);
 
     private static readonly Lazy<RszTypeRepository> _rszRepository = new(LoadRszRepository);
@@ -24,50 +23,40 @@ internal class FileRepository : IPatchContext, IDisposable
     private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
 
     public Randomizer? Randomizer => _randomizer;
-    public DynamicData DynamicData { get; } = new DynamicData(download: false);
+    public DynamicData DynamicData { get; } = new(download: false);
 
-    public FileRepository()
-    {
-    }
+    public FileRepository() { }
 
-    public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData)
-    {
+    public FileRepository(PatchedPakFile inputPakFile, DynamicData dynamicData) {
         _inputPakFile = inputPakFile;
         DynamicData = dynamicData;
     }
 
-    public FileRepository(Randomizer randomizer, string inputGamePath, DynamicData dynamicData)
-    {
+    public FileRepository(Randomizer randomizer, string inputGamePath, DynamicData dynamicData) {
         _randomizer = randomizer;
-        if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase))
-        {
+        if (inputGamePath.EndsWith(".pak", System.StringComparison.OrdinalIgnoreCase)) {
             _inputPakFile = new PatchedPakFile(inputGamePath);
-        }
-        else
-        {
+        } else {
             _inputGamePath = inputGamePath;
         }
+
         DynamicData = dynamicData;
     }
 
-    private static RszTypeRepository LoadRszRepository()
-    {
+    private static RszTypeRepository LoadRszRepository() {
         var rszJson = EmbeddedData.GetFile("rszre7rt.json.gz").Ungzip();
         return RszRepositorySerializer.Default.FromJson(rszJson);
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         _inputPakFile?.Dispose();
     }
 
-    public byte[] GetSupplementFile(string path)
-    {
+    public byte[] GetSupplementFile(string path) {
         return EmbeddedData.GetFile(path);
     }
 
-    public byte[]? GetFile(string path)
-    {
+    public byte[]? GetFile(string path) {
         if (_outputFiles.TryGetValue(path, out var data))
             return data;
 
@@ -75,13 +64,11 @@ internal class FileRepository : IPatchContext, IDisposable
         return entry.Exists ? entry.Data : null;
     }
 
-    public void SetFile(string path, byte[] data)
-    {
+    public void SetFile(string path, byte[] data) {
         _outputFiles[path] = data;
     }
 
-    internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot()
-    {
+    internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot() {
         return _outputFiles.ToImmutableDictionary(
             x => x.Key,
             x => x.Value.ToArray(),
@@ -89,35 +76,30 @@ internal class FileRepository : IPatchContext, IDisposable
         );
     }
 
-    public void WriteOutputPakFile(string path)
-    {
+    public void WriteOutputPakFile(string path) {
         var builder = new PakFileBuilder();
-        foreach (var outputFile in GetOrderedOutputFiles())
-        {
+        foreach (var outputFile in GetOrderedOutputFiles()) {
             AddOutputFile(builder, outputFile);
         }
+
         builder.Save(path, CompressionKind.Zstd);
     }
 
-    public PakFileBuilder GetOutputPakFile()
-    {
+    public PakFileBuilder GetOutputPakFile() {
         var builder = new PakFileBuilder();
-        foreach (var outputFile in GetOrderedOutputFiles())
-        {
+        foreach (var outputFile in GetOrderedOutputFiles()) {
             AddOutputFile(builder, outputFile);
         }
+
         return builder;
     }
 
-    private static void AddOutputFile(PakFileBuilder builder, KeyValuePair<string, byte[]> outputFile)
-    {
+    private static void AddOutputFile(PakFileBuilder builder, KeyValuePair<string, byte[]> outputFile) {
         builder.Entries[outputFile.Key] = outputFile.Value;
     }
 
-    public void WriteOutputFolder(string path)
-    {
-        foreach (var outputFile in GetOrderedOutputFiles())
-        {
+    public void WriteOutputFolder(string path) {
+        foreach (var outputFile in GetOrderedOutputFiles()) {
             var fullPath = Path.Combine(path, outputFile.Key);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
             File.WriteAllBytes(fullPath, outputFile.Value);
@@ -127,16 +109,13 @@ internal class FileRepository : IPatchContext, IDisposable
     private IOrderedEnumerable<KeyValuePair<string, byte[]>> GetOrderedOutputFiles()
         => _outputFiles.OrderBy(outputFile => outputFile.Key, StringComparer.Ordinal);
 
-    public T? GetConfigOption<T>(string key, T? defaultValue = default)
-    {
+    public T? GetConfigOption<T>(string key, T? defaultValue = default) {
         var randomizer = _randomizer;
         return randomizer == null ? defaultValue : randomizer.GetConfigOption(key, defaultValue);
     }
 
-    private FileCacheEntry LoadInputFile(string path)
-    {
-        if (_inputGamePath == null)
-        {
+    private FileCacheEntry LoadInputFile(string path) {
+        if (_inputGamePath == null) {
             var data = _inputPakFile?.GetEntryData(path);
             return data == null
                 ? new FileCacheEntry(false, Array.Empty<byte>())
@@ -144,8 +123,7 @@ internal class FileRepository : IPatchContext, IDisposable
         }
 
         var fullPath = Path.Combine(_inputGamePath, path);
-        if (!File.Exists(fullPath))
-        {
+        if (!File.Exists(fullPath)) {
             return new FileCacheEntry(false, Array.Empty<byte>());
         }
 

@@ -6,8 +6,7 @@ using System.Globalization;
 
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
-public partial class REFPlugin
-{
+public partial class REFPlugin {
     private const double RandomEventDefaultMinIntervalSeconds = 90.0;
     private const double RandomEventDefaultMaxIntervalSeconds = 210.0;
     private const double ExplosiveAmmoMinIntervalSeconds = 0.25;
@@ -24,17 +23,13 @@ public partial class REFPlugin
     private static bool activeRandomEventStartedFromUi;
     private static bool randomEventBlindnessFadeRequested;
 
-    [ThreadStatic]
-    private static WeaponGun? pendingInfiniteAmmoGun;
+    [ThreadStatic] private static WeaponGun? pendingInfiniteAmmoGun;
 
-    [ThreadStatic]
-    private static int pendingInfiniteAmmoLoadNum;
+    [ThreadStatic] private static int pendingInfiniteAmmoLoadNum;
 
-    [ThreadStatic]
-    private static bool pendingInfiniteAmmoActive;
+    [ThreadStatic] private static bool pendingInfiniteAmmoActive;
 
-    private enum RandomEventKind
-    {
+    private enum RandomEventKind {
         PlayerStatus,
         PlayerBlindness,
         PlayerFreeze,
@@ -59,11 +54,9 @@ public partial class REFPlugin
         float MoveSpeedChangeRate,
         float DyingMoveSpeedChangeRate,
         float ReloadSpeedChangeRate,
-        int BulletStackNumInfinityCount)
-    {
+        int BulletStackNumInfinityCount) {
         public PassiveSkillEventDelta Negated()
-            => this with
-            {
+            => this with{
                 AttackChangeRate = -AttackChangeRate,
                 DamageChangeRate = -DamageChangeRate,
                 WalkSpeedChangeRate = -WalkSpeedChangeRate,
@@ -84,8 +77,7 @@ public partial class REFPlugin
         0,
         1);
 
-    private static readonly PassiveSkillEventDelta[] RandomStatusEffectDeltas =
-    [
+    private static readonly PassiveSkillEventDelta[] RandomStatusEffectDeltas =[
         new("firepower up", 0.35f, 0, 0, 0, 0, 0, 0),
         new("firepower down", -0.30f, 0, 0, 0, 0, 0, 0),
         new("toughness up", 0, -0.25f, 0, 0, 0, 0, 0),
@@ -96,8 +88,7 @@ public partial class REFPlugin
         new("bottomless pockets", 0, 0, 0, 0, 0, 0, 1),
     ];
 
-    private sealed class RandomEventInstance
-    {
+    private sealed class RandomEventInstance {
         public required RandomEventKind Kind { get; init; }
         public required long StartedAt { get; init; }
         public required long EndsAt { get; init; }
@@ -108,8 +99,7 @@ public partial class REFPlugin
         public float EnemyHealthMultiplier { get; init; } = 1.0f;
     }
 
-    private sealed class PlayerMovementEventState
-    {
+    private sealed class PlayerMovementEventState {
         public required PlayerMovement Movement { get; init; }
         public required float ExternalWalkSpeedRate { get; init; }
         public required float ExternalJogSpeedRate { get; init; }
@@ -119,20 +109,17 @@ public partial class REFPlugin
         public required bool IsForbidTerrainMove { get; init; }
     }
 
-    private sealed class PlayerScaleEventState
-    {
+    private sealed class PlayerScaleEventState {
         public required via.GameObject PlayerObject { get; init; }
         public required via.vec3 LocalScale { get; init; }
     }
 
-    private sealed class PassiveSkillEventState
-    {
+    private sealed class PassiveSkillEventState {
         public required PlayerPassiveSkillManager Manager { get; init; }
         public required PassiveSkillEventDelta Delta { get; init; }
     }
 
-    private sealed class EnemyRuntimeEventState
-    {
+    private sealed class EnemyRuntimeEventState {
         public required via.GameObject GameObject { get; init; }
         public float? TimeScale { get; set; }
         public bool? DrawSelf { get; set; }
@@ -146,35 +133,31 @@ public partial class REFPlugin
         EnemyDamageController? DamageController,
         float DistanceSquared);
 
-    private static bool HasRandomEventState()
-    {
-        lock (randomEventStateLock)
-        {
+    private static bool HasRandomEventState() {
+        lock (randomEventStateLock) {
             return HasRandomEventStateLocked();
         }
     }
 
     private static bool HasRandomEventStateLocked()
         => randomEventRng != null
-            || randomEventSeed != null
-            || nextRandomEventAt != 0
-            || activeRandomEvent != null
-            || activeRandomEventStartedFromUi
-            || randomEventMovementStates.Count != 0
-            || randomEventPlayerScaleStates.Count != 0
-            || randomEventPassiveSkillStates.Count != 0
-            || randomEventEnemyStates.Count != 0
-            || explosiveAmmoLastShotTimestamps.Count != 0
-            || randomEventBlindnessFadeRequested;
+           || randomEventSeed != null
+           || nextRandomEventAt != 0
+           || activeRandomEvent != null
+           || activeRandomEventStartedFromUi
+           || randomEventMovementStates.Count != 0
+           || randomEventPlayerScaleStates.Count != 0
+           || randomEventPassiveSkillStates.Count != 0
+           || randomEventEnemyStates.Count != 0
+           || explosiveAmmoLastShotTimestamps.Count != 0
+           || randomEventBlindnessFadeRequested;
 
     private static bool IsRandomEventsEnabled()
-        => config.ReadOrDefault("random-events", false);
+        => Config.ReadOrDefault("random-events", false);
 
-    private static bool IsRandomEventActive(RandomEventKind kind)
-    {
+    private static bool IsRandomEventActive(RandomEventKind kind) {
         var now = Stopwatch.GetTimestamp();
-        lock (randomEventStateLock)
-        {
+        lock (randomEventStateLock) {
             return activeRandomEvent?.Kind == kind && now < activeRandomEvent.EndsAt;
         }
     }
@@ -182,38 +165,33 @@ public partial class REFPlugin
     private static long SecondsToTimestampTicks(double seconds)
         => Math.Max(1, (long)Math.Round(Math.Max(0.0, seconds) * Stopwatch.Frequency));
 
-    private static Random CreateRandomEventRandom(int seed)
-    {
+    private static Random CreateRandomEventRandom(int seed) {
         ulong hash = (uint)seed;
         hash = (hash * 16777619UL) ^ 0x42696F52616E6437UL;
         hash = (hash * 16777619UL) ^ 0x6576656E7473UL;
         return new Random(unchecked((int)(hash ^ (hash >> 32))));
     }
 
-    private static void EnsureRandomEventRandomLocked()
-    {
-        var seed = config.ReadOrDefault(PluginSeedConfigKey, 0);
+    private static void EnsureRandomEventRandomLocked() {
+        var seed = Config.ReadOrDefault(PluginSeedConfigKey, 0);
         if (randomEventRng != null && randomEventSeed == seed)
             return;
 
         randomEventSeed = seed;
         randomEventRng = CreateRandomEventRandom(seed);
         nextRandomEventAt = 0;
-        logger.Log($"Initialized random event scheduler with seed {seed}.", isVerbose: true);
+        Logger.Log($"Initialized random event scheduler with seed {seed}.", isVerbose: true);
     }
 
-    private static Random GetRandomEventRandomLocked()
-    {
+    private static Random GetRandomEventRandomLocked() {
         EnsureRandomEventRandomLocked();
         return randomEventRng!;
     }
 
-    private static double GetRandomEventIntervalSeconds()
-    {
-        var min = config.ReadOrDefault("random-events-interval-min", RandomEventDefaultMinIntervalSeconds);
-        var max = config.ReadOrDefault("random-events-interval-max", RandomEventDefaultMaxIntervalSeconds);
-        if (max < min)
-        {
+    private static double GetRandomEventIntervalSeconds() {
+        var min = Config.ReadOrDefault("random-events-interval-min", RandomEventDefaultMinIntervalSeconds);
+        var max = Config.ReadOrDefault("random-events-interval-max", RandomEventDefaultMaxIntervalSeconds);
+        if (max < min) {
             (min, max) = (max, min);
         }
 
@@ -222,76 +200,84 @@ public partial class REFPlugin
         return min + (GetRandomEventRandomLocked().NextDouble() * (max - min));
     }
 
-    private static void ScheduleNextRandomEventLocked(long now)
-    {
+    private static void ScheduleNextRandomEventLocked(long now) {
         var intervalSeconds = GetRandomEventIntervalSeconds();
         nextRandomEventAt = now + SecondsToTimestampTicks(intervalSeconds);
-        logger.Log($"Next random event scheduled in {intervalSeconds:0.###}s.", isVerbose: true);
+        Logger.Log($"Next random event scheduled in {intervalSeconds:0.###}s.", isVerbose: true);
     }
 
     private static double GetRandomEventDurationSeconds(RandomEventKind kind)
-        => kind switch
-        {
-            RandomEventKind.PlayerStatus => config.ReadOrDefault("event-player-status-duration", 30.0),
-            RandomEventKind.PlayerBlindness => config.ReadOrDefault("event-player-blindness-duration", 4.0),
-            RandomEventKind.PlayerFreeze => config.ReadOrDefault("event-player-freeze-duration", 5.0),
-            RandomEventKind.PlayerScale => config.ReadOrDefault("event-player-scale-duration", 25.0),
-            RandomEventKind.WeaponInfiniteAmmo => config.ReadOrDefault("event-weapon-infinite-ammo-duration", 25.0),
-            RandomEventKind.WeaponNeuroAmmo => config.ReadOrDefault("event-weapon-neuro-ammo-duration", 20.0),
-            RandomEventKind.WeaponExplosiveAmmo => config.ReadOrDefault("event-weapon-explosive-ammo-duration", 20.0),
-            RandomEventKind.EnemySpeed => config.ReadOrDefault("event-enemy-speed-duration", 25.0),
-            RandomEventKind.EnemyInvisible => config.ReadOrDefault("event-enemy-invisible-duration", 15.0),
-            RandomEventKind.EnemyWeak => config.ReadOrDefault("event-enemy-weak-duration", 25.0),
-            RandomEventKind.EnemyStrong => config.ReadOrDefault("event-enemy-strong-duration", 25.0),
-            RandomEventKind.EnemyPaused => config.ReadOrDefault("event-enemy-paused-duration", 8.0),
+        => kind switch{
+            RandomEventKind.PlayerStatus => Config.ReadOrDefault("event-player-status-duration", 30.0),
+            RandomEventKind.PlayerBlindness => Config.ReadOrDefault("event-player-blindness-duration", 4.0),
+            RandomEventKind.PlayerFreeze => Config.ReadOrDefault("event-player-freeze-duration", 5.0),
+            RandomEventKind.PlayerScale => Config.ReadOrDefault("event-player-scale-duration", 25.0),
+            RandomEventKind.WeaponInfiniteAmmo => Config.ReadOrDefault("event-weapon-infinite-ammo-duration", 25.0),
+            RandomEventKind.WeaponNeuroAmmo => Config.ReadOrDefault("event-weapon-neuro-ammo-duration", 20.0),
+            RandomEventKind.WeaponExplosiveAmmo => Config.ReadOrDefault("event-weapon-explosive-ammo-duration", 20.0),
+            RandomEventKind.EnemySpeed => Config.ReadOrDefault("event-enemy-speed-duration", 25.0),
+            RandomEventKind.EnemyInvisible => Config.ReadOrDefault("event-enemy-invisible-duration", 15.0),
+            RandomEventKind.EnemyWeak => Config.ReadOrDefault("event-enemy-weak-duration", 25.0),
+            RandomEventKind.EnemyStrong => Config.ReadOrDefault("event-enemy-strong-duration", 25.0),
+            RandomEventKind.EnemyPaused => Config.ReadOrDefault("event-enemy-paused-duration", 8.0),
             _ => 30.0
         };
 
-    private static List<RandomEventCandidate> GetRandomEventCandidates()
-    {
+    private static List<RandomEventCandidate> GetRandomEventCandidates() {
         var result = new List<RandomEventCandidate>();
 
-        if (config.ReadOrDefault("event-player-status-effects", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.PlayerStatus, GetRandomEventDurationSeconds(RandomEventKind.PlayerStatus)));
+        if (Config.ReadOrDefault("event-player-status-effects", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.PlayerStatus,
+                GetRandomEventDurationSeconds(RandomEventKind.PlayerStatus)));
 
-        if (config.ReadOrDefault("event-player-blindness", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.PlayerBlindness, GetRandomEventDurationSeconds(RandomEventKind.PlayerBlindness)));
+        if (Config.ReadOrDefault("event-player-blindness", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.PlayerBlindness,
+                GetRandomEventDurationSeconds(RandomEventKind.PlayerBlindness)));
 
-        if (config.ReadOrDefault("event-player-freeze", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.PlayerFreeze, GetRandomEventDurationSeconds(RandomEventKind.PlayerFreeze)));
+        if (Config.ReadOrDefault("event-player-freeze", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.PlayerFreeze,
+                GetRandomEventDurationSeconds(RandomEventKind.PlayerFreeze)));
 
-        if (config.ReadOrDefault("event-player-scale", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.PlayerScale, GetRandomEventDurationSeconds(RandomEventKind.PlayerScale)));
+        if (Config.ReadOrDefault("event-player-scale", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.PlayerScale,
+                GetRandomEventDurationSeconds(RandomEventKind.PlayerScale)));
 
-        if (config.ReadOrDefault("event-weapon-infinite-ammo", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.WeaponInfiniteAmmo, GetRandomEventDurationSeconds(RandomEventKind.WeaponInfiniteAmmo)));
+        if (Config.ReadOrDefault("event-weapon-infinite-ammo", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.WeaponInfiniteAmmo,
+                GetRandomEventDurationSeconds(RandomEventKind.WeaponInfiniteAmmo)));
 
-        if (config.ReadOrDefault("event-weapon-neuro-ammo", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.WeaponNeuroAmmo, GetRandomEventDurationSeconds(RandomEventKind.WeaponNeuroAmmo)));
+        if (Config.ReadOrDefault("event-weapon-neuro-ammo", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.WeaponNeuroAmmo,
+                GetRandomEventDurationSeconds(RandomEventKind.WeaponNeuroAmmo)));
 
-        if (config.ReadOrDefault("event-weapon-explosive-ammo", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.WeaponExplosiveAmmo, GetRandomEventDurationSeconds(RandomEventKind.WeaponExplosiveAmmo)));
+        if (Config.ReadOrDefault("event-weapon-explosive-ammo", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.WeaponExplosiveAmmo,
+                GetRandomEventDurationSeconds(RandomEventKind.WeaponExplosiveAmmo)));
 
-        if (config.ReadOrDefault("event-enemy-speed", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.EnemySpeed, GetRandomEventDurationSeconds(RandomEventKind.EnemySpeed)));
+        if (Config.ReadOrDefault("event-enemy-speed", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.EnemySpeed,
+                GetRandomEventDurationSeconds(RandomEventKind.EnemySpeed)));
 
-        if (config.ReadOrDefault("event-enemy-invisible", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.EnemyInvisible, GetRandomEventDurationSeconds(RandomEventKind.EnemyInvisible)));
+        if (Config.ReadOrDefault("event-enemy-invisible", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.EnemyInvisible,
+                GetRandomEventDurationSeconds(RandomEventKind.EnemyInvisible)));
 
-        if (config.ReadOrDefault("event-enemy-weak", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.EnemyWeak, GetRandomEventDurationSeconds(RandomEventKind.EnemyWeak)));
+        if (Config.ReadOrDefault("event-enemy-weak", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.EnemyWeak,
+                GetRandomEventDurationSeconds(RandomEventKind.EnemyWeak)));
 
-        if (config.ReadOrDefault("event-enemy-strong", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.EnemyStrong, GetRandomEventDurationSeconds(RandomEventKind.EnemyStrong)));
+        if (Config.ReadOrDefault("event-enemy-strong", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.EnemyStrong,
+                GetRandomEventDurationSeconds(RandomEventKind.EnemyStrong)));
 
-        if (config.ReadOrDefault("event-enemy-paused", true))
-            result.Add(new RandomEventCandidate(RandomEventKind.EnemyPaused, GetRandomEventDurationSeconds(RandomEventKind.EnemyPaused)));
+        if (Config.ReadOrDefault("event-enemy-paused", true))
+            result.Add(new RandomEventCandidate(RandomEventKind.EnemyPaused,
+                GetRandomEventDurationSeconds(RandomEventKind.EnemyPaused)));
 
         return result;
     }
 
-    private static RandomEventCandidate? SelectRandomEventCandidate()
-    {
+    private static RandomEventCandidate? SelectRandomEventCandidate() {
         var candidates = GetRandomEventCandidates();
         if (candidates.Count == 0)
             return null;
@@ -299,10 +285,8 @@ public partial class REFPlugin
         return candidates[GetRandomEventRandomLocked().Next(candidates.Count)];
     }
 
-    private static float NextFloat(double min, double max)
-    {
-        if (max < min)
-        {
+    private static float NextFloat(double min, double max) {
+        if (max < min) {
             (min, max) = (max, min);
         }
 
@@ -312,55 +296,53 @@ public partial class REFPlugin
     private static PassiveSkillEventDelta CreateRandomStatusDelta()
         => RandomStatusEffectDeltas[GetRandomEventRandomLocked().Next(RandomStatusEffectDeltas.Length)];
 
-    private static RandomEventInstance CreateRandomEventInstance(RandomEventCandidate candidate, long now)
-    {
+    private static RandomEventInstance CreateRandomEventInstance(RandomEventCandidate candidate, long now) {
         var durationSeconds = Math.Clamp(candidate.DurationSeconds, 1.0, 600.0);
-        var playerScaleMin = config.ReadOrDefault("event-player-scale-min", 0.65);
-        var playerScaleMax = config.ReadOrDefault("event-player-scale-max", 1.55);
-        var enemySpeedMin = config.ReadOrDefault("event-enemy-speed-min", 0.4);
-        var enemySpeedMax = config.ReadOrDefault("event-enemy-speed-max", 2.5);
-        var enemyHealthMultiplier = candidate.Kind switch
-        {
+        var playerScaleMin = Config.ReadOrDefault("event-player-scale-min", 0.65);
+        var playerScaleMax = Config.ReadOrDefault("event-player-scale-max", 1.55);
+        var enemySpeedMin = Config.ReadOrDefault("event-enemy-speed-min", 0.4);
+        var enemySpeedMax = Config.ReadOrDefault("event-enemy-speed-max", 2.5);
+        var enemyHealthMultiplier = candidate.Kind switch{
             RandomEventKind.EnemyWeak => 0.35f,
             RandomEventKind.EnemyStrong => 2.25f,
             _ => 1.0f
         };
 
-        return new RandomEventInstance()
-        {
+        return new RandomEventInstance(){
             Kind = candidate.Kind,
             StartedAt = now,
             EndsAt = now + SecondsToTimestampTicks(durationSeconds),
             DurationSeconds = durationSeconds,
             StatusDelta = candidate.Kind == RandomEventKind.PlayerStatus ? CreateRandomStatusDelta() : default,
-            PlayerScaleMultiplier = candidate.Kind == RandomEventKind.PlayerScale ? NextFloat(playerScaleMin, playerScaleMax) : 1.0f,
-            EnemySpeedMultiplier = candidate.Kind == RandomEventKind.EnemySpeed ? NextFloat(enemySpeedMin, enemySpeedMax) : 1.0f,
+            PlayerScaleMultiplier = candidate.Kind == RandomEventKind.PlayerScale
+                ? NextFloat(playerScaleMin, playerScaleMax)
+                : 1.0f,
+            EnemySpeedMultiplier = candidate.Kind == RandomEventKind.EnemySpeed
+                ? NextFloat(enemySpeedMin, enemySpeedMax)
+                : 1.0f,
             EnemyHealthMultiplier = enemyHealthMultiplier,
         };
     }
 
-    private static void StartRandomEventLocked(RandomEventCandidate candidate, long now)
-    {
+    private static void StartRandomEventLocked(RandomEventCandidate candidate, long now) {
         activeRandomEvent = CreateRandomEventInstance(candidate, now);
         activeRandomEventStartedFromUi = false;
         var suffix = GetRandomEventInstanceSuffix(activeRandomEvent);
-        logger.Log($"Random event started: {GetRandomEventDisplayName(activeRandomEvent.Kind)}{suffix} for {activeRandomEvent.DurationSeconds:0.###}s.");
+        Logger.Log(
+            $"Random event started: {GetRandomEventDisplayName(activeRandomEvent.Kind)}{suffix} for {activeRandomEvent.DurationSeconds:0.###}s.");
     }
 
     private static string GetRandomEventInstanceSuffix(RandomEventInstance randomEvent)
-        => randomEvent.Kind switch
-        {
+        => randomEvent.Kind switch{
             RandomEventKind.PlayerStatus => $" ({randomEvent.StatusDelta.Label})",
             RandomEventKind.PlayerScale => $" (x{randomEvent.PlayerScaleMultiplier:0.##})",
             RandomEventKind.EnemySpeed => $" (x{randomEvent.EnemySpeedMultiplier:0.##})",
             _ => string.Empty
         };
 
-    private static void FinishRandomEventLocked()
-    {
-        if (activeRandomEvent != null)
-        {
-            logger.Log($"Random event ended: {GetRandomEventDisplayName(activeRandomEvent.Kind)}.", isVerbose: true);
+    private static void FinishRandomEventLocked() {
+        if (activeRandomEvent != null) {
+            Logger.Log($"Random event ended: {GetRandomEventDisplayName(activeRandomEvent.Kind)}.", isVerbose: true);
         }
 
         RestoreRandomEventRuntimeStateLocked();
@@ -368,17 +350,13 @@ public partial class REFPlugin
         activeRandomEventStartedFromUi = false;
     }
 
-    private static void UpdateRandomEvents(ObjectManager? objectManager)
-    {
+    private static void UpdateRandomEvents(ObjectManager? objectManager) {
         RandomEventInstance? eventToApply = null;
         var now = Stopwatch.GetTimestamp();
 
-        if (!IsRandomEventsEnabled())
-        {
-            lock (randomEventStateLock)
-            {
-                if (activeRandomEventStartedFromUi && activeRandomEvent != null)
-                {
+        if (!IsRandomEventsEnabled()) {
+            lock (randomEventStateLock) {
+                if (activeRandomEventStartedFromUi && activeRandomEvent != null) {
                     if (now >= activeRandomEvent.EndsAt)
                         FinishRandomEventLocked();
                     else
@@ -394,29 +372,22 @@ public partial class REFPlugin
             return;
         }
 
-        lock (randomEventStateLock)
-        {
+        lock (randomEventStateLock) {
             EnsureRandomEventRandomLocked();
-            if (activeRandomEvent != null && now >= activeRandomEvent.EndsAt)
-            {
+            if (activeRandomEvent != null && now >= activeRandomEvent.EndsAt) {
                 FinishRandomEventLocked();
                 ScheduleNextRandomEventLocked(now);
             }
 
-            if (activeRandomEvent == null)
-            {
+            if (activeRandomEvent == null) {
                 if (nextRandomEventAt == 0)
                     ScheduleNextRandomEventLocked(now);
 
-                if (now >= nextRandomEventAt)
-                {
+                if (now >= nextRandomEventAt) {
                     var candidate = SelectRandomEventCandidate();
-                    if (candidate == null)
-                    {
+                    if (candidate == null) {
                         ScheduleNextRandomEventLocked(now);
-                    }
-                    else
-                    {
+                    } else {
                         StartRandomEventLocked(candidate.Value, now);
                     }
                 }
@@ -429,12 +400,9 @@ public partial class REFPlugin
             ApplyRandomEvent(eventToApply, objectManager);
     }
 
-    private static void ApplyRandomEvent(RandomEventInstance randomEvent, ObjectManager? objectManager)
-    {
-        try
-        {
-            switch (randomEvent.Kind)
-            {
+    private static void ApplyRandomEvent(RandomEventInstance randomEvent, ObjectManager? objectManager) {
+        try {
+            switch (randomEvent.Kind) {
                 case RandomEventKind.PlayerStatus:
                     ApplyPlayerStatusEvent(randomEvent);
                     break;
@@ -459,66 +427,53 @@ public partial class REFPlugin
                     break;
             }
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to apply random event {randomEvent.Kind}: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to apply random event {randomEvent.Kind}: {ex.GetType().Name}: {ex.Message}",
+                isVerbose: true);
         }
     }
 
     private static PlayerMovement? TryGetPlayerMovement()
         => TryGetComponent<PlayerMovement>(GetPlayerGameObject(), PlayerMovement.REFType);
 
-    private static PlayerPassiveSkillManager? TryGetPlayerPassiveSkillManager()
-    {
+    private static PlayerPassiveSkillManager? TryGetPlayerPassiveSkillManager() {
         var playerObject = GetPlayerGameObject();
         var manager = TryGetComponent<PlayerPassiveSkillManager>(playerObject, PlayerPassiveSkillManager.REFType);
         if (manager != null)
             return manager;
 
-        try
-        {
+        try {
             manager = TryGetComponent<PlayerOrder>(playerObject, PlayerOrder.REFType)?.PlayerPassiveSkillManager;
             if (manager != null)
                 return manager;
         }
-        catch
-        {
-        }
+        catch { }
 
-        try
-        {
+        try {
             return TryGetComponent<PlayerStatus>(playerObject, PlayerStatus.REFType)?.PlayerPassiveSkillManager;
         }
-        catch
-        {
+        catch {
             return null;
         }
     }
 
-    private static BlackOutManager? TryGetBlackOutManager()
-    {
-        try
-        {
+    private static BlackOutManager? TryGetBlackOutManager() {
+        try {
             var manager = API.GetManagedSingleton("app.BlackOutManager")?.As<BlackOutManager>();
             if (manager != null)
                 return manager;
         }
-        catch
-        {
-        }
+        catch { }
 
-        try
-        {
+        try {
             var objectManager = API.GetManagedSingleton("app.ObjectManager")?.As<ObjectManager>();
             var blackOutObject = objectManager?.findObject("BlackOutManager")
-                ?? ObjectManager.findObjectInCurrentScene("BlackOutManager");
+                                 ?? ObjectManager.findObjectInCurrentScene("BlackOutManager");
             var manager = TryGetComponent<BlackOutManager>(blackOutObject, BlackOutManager.REFType);
             if (manager != null)
                 return manager;
         }
-        catch
-        {
-        }
+        catch { }
 
         return TryGetComponent<BlackOutManager>(GetPlayerGameObject(), BlackOutManager.REFType);
     }
@@ -529,31 +484,26 @@ public partial class REFPlugin
     private static void ApplyWeaponInfiniteAmmoEvent()
         => ApplyPassiveSkillEvent(InfiniteAmmoPassiveSkillDelta);
 
-    private static void ApplyPassiveSkillEvent(PassiveSkillEventDelta delta)
-    {
+    private static void ApplyPassiveSkillEvent(PassiveSkillEventDelta delta) {
         var manager = TryGetPlayerPassiveSkillManager();
         if (manager == null)
             return;
 
         var address = manager.Address();
-        lock (randomEventStateLock)
-        {
+        lock (randomEventStateLock) {
             if (randomEventPassiveSkillStates.ContainsKey(address))
                 return;
 
             ApplyPassiveSkillDelta(manager, delta);
-            randomEventPassiveSkillStates[address] = new PassiveSkillEventState()
-            {
+            randomEventPassiveSkillStates[address] = new PassiveSkillEventState(){
                 Manager = manager,
                 Delta = delta
             };
         }
     }
 
-    private static void ApplyPassiveSkillDelta(PlayerPassiveSkillManager manager, PassiveSkillEventDelta delta)
-    {
-        try
-        {
+    private static void ApplyPassiveSkillDelta(PlayerPassiveSkillManager manager, PassiveSkillEventDelta delta) {
+        try {
             manager.AttackChangeRate += delta.AttackChangeRate;
             manager.DamageChangeRate += delta.DamageChangeRate;
             manager.WalkSpeedChangeRate += delta.WalkSpeedChangeRate;
@@ -564,16 +514,14 @@ public partial class REFPlugin
                 0,
                 manager.BulletStackNumInfinityCount + delta.BulletStackNumInfinityCount);
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to apply random status effect '{delta.Label}': {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to apply random status effect '{delta.Label}': {ex.GetType().Name}: {ex.Message}",
+                isVerbose: true);
         }
     }
 
-    private static void ApplyPlayerBlindnessEvent()
-    {
-        lock (randomEventStateLock)
-        {
+    private static void ApplyPlayerBlindnessEvent() {
+        lock (randomEventStateLock) {
             if (randomEventBlindnessFadeRequested)
                 return;
 
@@ -581,32 +529,26 @@ public partial class REFPlugin
             if (blackOutManager == null)
                 return;
 
-            try
-            {
+            try {
                 blackOutManager.setupFadeTime(0.1f);
                 blackOutManager.requestFadeOut_forEvent(BlackOutManager.FadeColorEnum.Black, hideLoading: true);
                 randomEventBlindnessFadeRequested = true;
             }
-            catch (Exception ex)
-            {
-                logger.Log($"Unable to request blindness blackout: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            catch (Exception ex) {
+                Logger.Log($"Unable to request blindness blackout: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
             }
         }
     }
 
-    private static void ApplyPlayerFreezeEvent()
-    {
+    private static void ApplyPlayerFreezeEvent() {
         var movement = TryGetPlayerMovement();
         if (movement == null)
             return;
 
         var address = movement.Address();
-        lock (randomEventStateLock)
-        {
-            if (!randomEventMovementStates.ContainsKey(address))
-            {
-                randomEventMovementStates[address] = new PlayerMovementEventState()
-                {
+        lock (randomEventStateLock) {
+            if (!randomEventMovementStates.ContainsKey(address)) {
+                randomEventMovementStates[address] = new PlayerMovementEventState(){
                     Movement = movement,
                     ExternalWalkSpeedRate = movement.ExternalWalkSpeedRate,
                     ExternalJogSpeedRate = movement.ExternalJogSpeedRate,
@@ -626,20 +568,16 @@ public partial class REFPlugin
         }
     }
 
-    private static void ApplyPlayerScaleEvent(RandomEventInstance randomEvent)
-    {
+    private static void ApplyPlayerScaleEvent(RandomEventInstance randomEvent) {
         var playerObject = GetPlayerGameObject();
         var transform = playerObject?.Transform;
         if (!IsValidGameObject(playerObject) || transform == null)
             return;
 
         var address = playerObject!.Address();
-        lock (randomEventStateLock)
-        {
-            if (!randomEventPlayerScaleStates.TryGetValue(address, out var state))
-            {
-                state = new PlayerScaleEventState()
-                {
+        lock (randomEventStateLock) {
+            if (!randomEventPlayerScaleStates.TryGetValue(address, out var state)) {
+                state = new PlayerScaleEventState(){
                     PlayerObject = playerObject!,
                     LocalScale = transform.LocalScale
                 };
@@ -652,40 +590,33 @@ public partial class REFPlugin
 
     private static EnemyDamageController? TryGetEnemyDamageController(
         via.GameObject gameObject,
-        EnemyActionController controller)
-    {
-        try
-        {
+        EnemyActionController controller) {
+        try {
             if (controller.enemyDamageController != null)
                 return controller.enemyDamageController;
         }
-        catch
-        {
-        }
+        catch { }
 
         return TryGetComponent<EnemyDamageController>(gameObject, EnemyDamageController.REFType);
     }
 
-    private static List<EnemyEventTarget> GetEnemyEventTargets(ObjectManager? objectManager)
-    {
+    private static List<EnemyEventTarget> GetEnemyEventTargets(ObjectManager? objectManager) {
         var result = new List<EnemyEventTarget>();
         var managedObjects = GetManagedObjects(objectManager);
         if (managedObjects == null || !TryGetPlayerPosition(out var playerPosition))
             return result;
 
-        var radius = config.ReadOrDefault("event-enemy-radius", 25.0);
-        var maxTargets = Math.Max(1, (int)Math.Round(config.ReadOrDefault("event-enemy-max-targets", 8.0)));
+        var radius = Config.ReadOrDefault("event-enemy-radius", 25.0);
+        var maxTargets = Math.Max(1, (int)Math.Round(Config.ReadOrDefault("event-enemy-max-targets", 8.0)));
         var radiusSq = (float)(radius * radius);
         var seen = new HashSet<ulong>();
 
-        for (var groupIndex = 0; groupIndex < managedObjects.Count; groupIndex++)
-        {
+        for (var groupIndex = 0; groupIndex < managedObjects.Count; groupIndex++) {
             var objects = managedObjects[groupIndex];
             if (objects == null)
                 continue;
 
-            for (var objectIndex = 0; objectIndex < objects.Count; objectIndex++)
-            {
+            for (var objectIndex = 0; objectIndex < objects.Count; objectIndex++) {
                 var gameObject = objects[objectIndex];
                 if (!IsValidGameObject(gameObject))
                     continue;
@@ -719,13 +650,10 @@ public partial class REFPlugin
         return result;
     }
 
-    private static EnemyRuntimeEventState GetEnemyRuntimeEventState(EnemyEventTarget target)
-    {
+    private static EnemyRuntimeEventState GetEnemyRuntimeEventState(EnemyEventTarget target) {
         var address = target.GameObject.Address();
-        if (!randomEventEnemyStates.TryGetValue(address, out var state))
-        {
-            state = new EnemyRuntimeEventState()
-            {
+        if (!randomEventEnemyStates.TryGetValue(address, out var state)) {
+            state = new EnemyRuntimeEventState(){
                 GameObject = target.GameObject
             };
             randomEventEnemyStates[address] = state;
@@ -735,19 +663,15 @@ public partial class REFPlugin
         return state;
     }
 
-    private static void ApplyEnemyRuntimeEvent(RandomEventInstance randomEvent, ObjectManager? objectManager)
-    {
+    private static void ApplyEnemyRuntimeEvent(RandomEventInstance randomEvent, ObjectManager? objectManager) {
         var targets = GetEnemyEventTargets(objectManager);
-        lock (randomEventStateLock)
-        {
-            foreach (var target in targets)
-            {
+        lock (randomEventStateLock) {
+            foreach (var target in targets) {
                 var state = GetEnemyRuntimeEventState(target);
-                if (randomEvent.Kind is RandomEventKind.EnemySpeed or RandomEventKind.EnemyPaused or RandomEventKind.EnemyWeak or RandomEventKind.EnemyStrong)
-                {
+                if (randomEvent.Kind is RandomEventKind.EnemySpeed or RandomEventKind.EnemyPaused
+                    or RandomEventKind.EnemyWeak or RandomEventKind.EnemyStrong) {
                     state.TimeScale ??= target.GameObject.TimeScale;
-                    var multiplier = randomEvent.Kind switch
-                    {
+                    var multiplier = randomEvent.Kind switch{
                         RandomEventKind.EnemyPaused => 0.0f,
                         RandomEventKind.EnemyWeak => 0.85f,
                         RandomEventKind.EnemyStrong => 1.2f,
@@ -756,28 +680,24 @@ public partial class REFPlugin
                     target.GameObject.TimeScale = state.TimeScale.Value * multiplier;
                 }
 
-                if (randomEvent.Kind == RandomEventKind.EnemyInvisible)
-                {
+                if (randomEvent.Kind == RandomEventKind.EnemyInvisible) {
                     state.DrawSelf ??= target.GameObject.DrawSelf;
                     target.GameObject.DrawSelf = false;
                 }
 
                 if (randomEvent.Kind is RandomEventKind.EnemyWeak or RandomEventKind.EnemyStrong
-                    && state.DamageController != null)
-                {
+                    && state.DamageController != null) {
                     state.DefaultMaxHealth ??= state.DamageController.defaultMaxHealth;
-                    state.DamageController.defaultMaxHealth = Math.Max(1.0f, state.DefaultMaxHealth.Value * randomEvent.EnemyHealthMultiplier);
+                    state.DamageController.defaultMaxHealth = Math.Max(1.0f,
+                        state.DefaultMaxHealth.Value * randomEvent.EnemyHealthMultiplier);
                 }
             }
         }
     }
 
-    private static void RestoreRandomEventRuntimeStateLocked()
-    {
-        foreach (var state in randomEventMovementStates.Values)
-        {
-            try
-            {
+    private static void RestoreRandomEventRuntimeStateLocked() {
+        foreach (var state in randomEventMovementStates.Values) {
+            try {
                 state.Movement.ExternalWalkSpeedRate = state.ExternalWalkSpeedRate;
                 state.Movement.ExternalJogSpeedRate = state.ExternalJogSpeedRate;
                 state.Movement.ExternalDyingWalkSpeedRate = state.ExternalDyingWalkSpeedRate;
@@ -785,40 +705,37 @@ public partial class REFPlugin
                 state.Movement.ActionSpeedRate = state.ActionSpeedRate;
                 state.Movement.IsForbidTerrainMove = state.IsForbidTerrainMove;
             }
-            catch (Exception ex)
-            {
-                logger.Log($"Unable to restore player movement random event state: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            catch (Exception ex) {
+                Logger.Log($"Unable to restore player movement random event state: {ex.GetType().Name}: {ex.Message}",
+                    isVerbose: true);
             }
         }
+
         randomEventMovementStates.Clear();
 
-        foreach (var state in randomEventPlayerScaleStates.Values)
-        {
-            try
-            {
+        foreach (var state in randomEventPlayerScaleStates.Values) {
+            try {
                 var transform = state.PlayerObject.Transform;
                 if (IsValidGameObject(state.PlayerObject) && transform != null)
                     transform.LocalScale = state.LocalScale;
             }
-            catch (Exception ex)
-            {
-                logger.Log($"Unable to restore player scale random event state: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            catch (Exception ex) {
+                Logger.Log($"Unable to restore player scale random event state: {ex.GetType().Name}: {ex.Message}",
+                    isVerbose: true);
             }
         }
+
         randomEventPlayerScaleStates.Clear();
 
-        foreach (var state in randomEventPassiveSkillStates.Values)
-        {
+        foreach (var state in randomEventPassiveSkillStates.Values) {
             ApplyPassiveSkillDelta(state.Manager, state.Delta.Negated());
         }
+
         randomEventPassiveSkillStates.Clear();
 
-        foreach (var state in randomEventEnemyStates.Values)
-        {
-            try
-            {
-                if (IsValidGameObject(state.GameObject))
-                {
+        foreach (var state in randomEventEnemyStates.Values) {
+            try {
+                if (IsValidGameObject(state.GameObject)) {
                     if (state.TimeScale.HasValue)
                         state.GameObject.TimeScale = state.TimeScale.Value;
 
@@ -829,39 +746,35 @@ public partial class REFPlugin
                 if (state.DamageController != null && state.DefaultMaxHealth.HasValue)
                     state.DamageController.defaultMaxHealth = state.DefaultMaxHealth.Value;
             }
-            catch (Exception ex)
-            {
-                logger.Log($"Unable to restore enemy random event state: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            catch (Exception ex) {
+                Logger.Log($"Unable to restore enemy random event state: {ex.GetType().Name}: {ex.Message}",
+                    isVerbose: true);
             }
         }
+
         randomEventEnemyStates.Clear();
 
-        if (randomEventBlindnessFadeRequested)
-        {
-            try
-            {
+        if (randomEventBlindnessFadeRequested) {
+            try {
                 var blackOutManager = TryGetBlackOutManager();
                 blackOutManager?.setupFadeTime(0.25f);
                 blackOutManager?.requestFadeIn_forEvent();
             }
-            catch (Exception ex)
-            {
-                logger.Log($"Unable to clear blindness blackout: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+            catch (Exception ex) {
+                Logger.Log($"Unable to clear blindness blackout: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
             }
+
             randomEventBlindnessFadeRequested = false;
         }
     }
 
-    private static void ClearRandomEventState(bool restore)
-    {
-        lock (randomEventStateLock)
-        {
+    private static void ClearRandomEventState(bool restore) {
+        lock (randomEventStateLock) {
             ClearRandomEventStateLocked(restore);
         }
     }
 
-    private static void ClearRandomEventStateLocked(bool restore)
-    {
+    private static void ClearRandomEventStateLocked(bool restore) {
         if (restore)
             RestoreRandomEventRuntimeStateLocked();
         else
@@ -876,8 +789,7 @@ public partial class REFPlugin
     }
 
     private static string GetRandomEventDisplayName(RandomEventKind kind)
-        => kind switch
-        {
+        => kind switch{
             RandomEventKind.PlayerStatus => "player status effect",
             RandomEventKind.PlayerBlindness => "brief blindness",
             RandomEventKind.PlayerFreeze => "movement lock",
@@ -893,21 +805,17 @@ public partial class REFPlugin
             _ => kind.ToString()
         };
 
-    private static string GetRandomEventStateLabel()
-    {
-        lock (randomEventStateLock)
-        {
+    private static string GetRandomEventStateLabel() {
+        lock (randomEventStateLock) {
             var now = Stopwatch.GetTimestamp();
-            if (activeRandomEvent != null)
-            {
+            if (activeRandomEvent != null) {
                 var remaining = Math.Max(0.0, ElapsedSeconds(now, activeRandomEvent.EndsAt));
                 return string.Create(
                     CultureInfo.InvariantCulture,
                     $"{GetRandomEventDisplayName(activeRandomEvent.Kind)}{GetRandomEventInstanceSuffix(activeRandomEvent)} active, {remaining:0.#}s left");
             }
 
-            if (nextRandomEventAt != 0)
-            {
+            if (nextRandomEventAt != 0) {
                 var remaining = Math.Max(0.0, ElapsedSeconds(now, nextRandomEventAt));
                 return string.Create(CultureInfo.InvariantCulture, $"next in {remaining:0.#}s");
             }
@@ -916,13 +824,10 @@ public partial class REFPlugin
         }
     }
 
-    private static bool TryGetRandomEventOverlayLabel(out string label)
-    {
-        lock (randomEventStateLock)
-        {
+    private static bool TryGetRandomEventOverlayLabel(out string label) {
+        lock (randomEventStateLock) {
             var now = Stopwatch.GetTimestamp();
-            if (activeRandomEvent == null || now >= activeRandomEvent.EndsAt)
-            {
+            if (activeRandomEvent == null || now >= activeRandomEvent.EndsAt) {
                 label = string.Empty;
                 return false;
             }
@@ -935,30 +840,24 @@ public partial class REFPlugin
         }
     }
 
-    private static void ClearRandomEventStateFromUi()
-    {
+    private static void ClearRandomEventStateFromUi() {
         ClearRandomEventState(restore: true);
-        logger.Log("Cleared random event state from UI.");
+        Logger.Log("Cleared random event state from UI.");
     }
 
-    private static ObjectManager? TryGetRandomEventObjectManager()
-    {
-        try
-        {
+    private static ObjectManager? TryGetRandomEventObjectManager() {
+        try {
             return API.GetManagedSingleton("app.ObjectManager")?.As<ObjectManager>();
         }
-        catch
-        {
+        catch {
             return null;
         }
     }
 
-    private static void StartRandomEventFromUi(RandomEventKind kind)
-    {
+    private static void StartRandomEventFromUi(RandomEventKind kind) {
         var now = Stopwatch.GetTimestamp();
         RandomEventInstance eventToApply;
-        lock (randomEventStateLock)
-        {
+        lock (randomEventStateLock) {
             EnsureRandomEventRandomLocked();
             eventToApply = CreateRandomEventInstance(
                 new RandomEventCandidate(kind, GetRandomEventDurationSeconds(kind)),
@@ -967,15 +866,14 @@ public partial class REFPlugin
         }
 
         ApplyRandomEvent(eventToApply, TryGetRandomEventObjectManager());
-        logger.Log($"Debug random event started: {GetRandomEventDisplayName(eventToApply.Kind)}{GetRandomEventInstanceSuffix(eventToApply)} for {eventToApply.DurationSeconds:0.###}s.");
+        Logger.Log(
+            $"Debug random event started: {GetRandomEventDisplayName(eventToApply.Kind)}{GetRandomEventInstanceSuffix(eventToApply)} for {eventToApply.DurationSeconds:0.###}s.");
     }
 
-    private static void StartRandomStatusEffectFromUi(PassiveSkillEventDelta delta)
-    {
+    private static void StartRandomStatusEffectFromUi(PassiveSkillEventDelta delta) {
         var now = Stopwatch.GetTimestamp();
         var durationSeconds = Math.Clamp(GetRandomEventDurationSeconds(RandomEventKind.PlayerStatus), 1.0, 600.0);
-        var eventToApply = new RandomEventInstance()
-        {
+        var eventToApply = new RandomEventInstance(){
             Kind = RandomEventKind.PlayerStatus,
             StartedAt = now,
             EndsAt = now + SecondsToTimestampTicks(durationSeconds),
@@ -983,17 +881,16 @@ public partial class REFPlugin
             StatusDelta = delta
         };
 
-        lock (randomEventStateLock)
-        {
+        lock (randomEventStateLock) {
             StartRandomEventFromUiLocked(eventToApply);
         }
 
         ApplyRandomEvent(eventToApply, TryGetRandomEventObjectManager());
-        logger.Log($"Debug random event started: {GetRandomEventDisplayName(eventToApply.Kind)} ({delta.Label}) for {durationSeconds:0.###}s.");
+        Logger.Log(
+            $"Debug random event started: {GetRandomEventDisplayName(eventToApply.Kind)} ({delta.Label}) for {durationSeconds:0.###}s.");
     }
 
-    private static void StartRandomEventFromUiLocked(RandomEventInstance randomEvent)
-    {
+    private static void StartRandomEventFromUiLocked(RandomEventInstance randomEvent) {
         RestoreRandomEventRuntimeStateLocked();
         activeRandomEvent = randomEvent;
         activeRandomEventStartedFromUi = true;
@@ -1002,8 +899,7 @@ public partial class REFPlugin
     }
 
     [MethodHook(typeof(WeaponGun), nameof(WeaponGun.expendBullet), MethodHookType.Pre)]
-    private static PreHookResult WeaponGun_expendBullet_Pre(Span<ulong> args)
-    {
+    private static PreHookResult WeaponGun_expendBullet_Pre(Span<ulong> args) {
         pendingInfiniteAmmoGun = null;
         pendingInfiniteAmmoLoadNum = 0;
         pendingInfiniteAmmoActive = false;
@@ -1015,25 +911,22 @@ public partial class REFPlugin
         if (gun == null)
             return PreHookResult.Continue;
 
-        try
-        {
+        try {
             pendingInfiniteAmmoGun = gun;
             pendingInfiniteAmmoLoadNum = gun.loadNum;
             pendingInfiniteAmmoActive = true;
             if (gun.loadNum <= 0)
                 gun.loadNum = 1;
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to prepare infinite ammo event: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to prepare infinite ammo event: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
         }
 
         return PreHookResult.Continue;
     }
 
     [MethodHook(typeof(WeaponGun), nameof(WeaponGun.expendBullet), MethodHookType.Post)]
-    private static void WeaponGun_expendBullet_Post(ref ulong retval)
-    {
+    private static void WeaponGun_expendBullet_Post(ref ulong retval) {
         var gun = pendingInfiniteAmmoGun;
         var loadNum = pendingInfiniteAmmoLoadNum;
         var wasActive = pendingInfiniteAmmoActive;
@@ -1044,20 +937,18 @@ public partial class REFPlugin
         if (!wasActive || gun == null)
             return;
 
-        try
-        {
+        try {
             gun.loadNum = Math.Max(1, loadNum);
             retval = 1;
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to restore infinite ammo event load count: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to restore infinite ammo event load count: {ex.GetType().Name}: {ex.Message}",
+                isVerbose: true);
         }
     }
 
     [MethodHook(typeof(WeaponGun), "set_loadNum", MethodHookType.Pre)]
-    private static PreHookResult WeaponGun_set_loadNum_Pre(Span<ulong> args)
-    {
+    private static PreHookResult WeaponGun_set_loadNum_Pre(Span<ulong> args) {
         if (!IsRandomEventActive(RandomEventKind.WeaponInfiniteAmmo))
             return PreHookResult.Continue;
 
@@ -1068,23 +959,21 @@ public partial class REFPlugin
         if (gun == null)
             return PreHookResult.Continue;
 
-        try
-        {
+        try {
             var requestedLoadNum = unchecked((int)args[2]);
             return requestedLoadNum < gun.loadNum
                 ? PreHookResult.Skip
                 : PreHookResult.Continue;
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to check infinite ammo load count setter: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to check infinite ammo load count setter: {ex.GetType().Name}: {ex.Message}",
+                isVerbose: true);
             return PreHookResult.Continue;
         }
     }
 
     [MethodHook(typeof(WeaponGun), nameof(WeaponGun.setupBullet), MethodHookType.Pre)]
-    private static PreHookResult WeaponGun_setupBullet_Pre(Span<ulong> args)
-    {
+    private static PreHookResult WeaponGun_setupBullet_Pre(Span<ulong> args) {
         if (args.Length > 2 && IsRandomEventActive(RandomEventKind.WeaponNeuroAmmo))
             args[2] = (ulong)ShellManager.BulletType.AcidBulletS;
 
@@ -1092,8 +981,7 @@ public partial class REFPlugin
     }
 
     [MethodHook(typeof(WeaponGun), nameof(WeaponGun.shoot), MethodHookType.Pre)]
-    private static PreHookResult WeaponGun_shoot_Pre(Span<ulong> args)
-    {
+    private static PreHookResult WeaponGun_shoot_Pre(Span<ulong> args) {
         if (!IsRandomEventActive(RandomEventKind.WeaponExplosiveAmmo))
             return PreHookResult.Continue;
 
@@ -1108,18 +996,14 @@ public partial class REFPlugin
         return PreHookResult.Continue;
     }
 
-    private static void TryRequestExplosiveAmmoBomb(WeaponGun gun)
-    {
-        try
-        {
+    private static void TryRequestExplosiveAmmoBomb(WeaponGun gun) {
+        try {
             var gunObject = gun.GameObject;
             var address = gunObject?.Address() ?? gun.Address();
             var now = Stopwatch.GetTimestamp();
-            lock (randomEventStateLock)
-            {
+            lock (randomEventStateLock) {
                 if (explosiveAmmoLastShotTimestamps.TryGetValue(address, out var lastShot)
-                    && ElapsedSeconds(lastShot, now) < ExplosiveAmmoMinIntervalSeconds)
-                {
+                    && ElapsedSeconds(lastShot, now) < ExplosiveAmmoMinIntervalSeconds) {
                     return;
                 }
 
@@ -1132,12 +1016,12 @@ public partial class REFPlugin
             if (owner == null || targetTransform == null || shellManager == null)
                 return;
 
-            var bomb = shellManager.createBomb(owner, targetTransform, CreateVec3(0.0f, 0.0f, 1.25f), via.Quaternion.Identity);
+            var bomb = shellManager.createBomb(owner, targetTransform, CreateVec3(0.0f, 0.0f, 1.25f),
+                via.Quaternion.Identity);
             bomb?.requestExplosion();
         }
-        catch (Exception ex)
-        {
-            logger.Log($"Unable to request explosive ammo bomb: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
+        catch (Exception ex) {
+            Logger.Log($"Unable to request explosive ammo bomb: {ex.GetType().Name}: {ex.Message}", isVerbose: true);
         }
     }
 }

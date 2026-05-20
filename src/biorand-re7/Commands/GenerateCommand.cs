@@ -13,68 +13,53 @@ using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.Commands;
 
-internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
-{
-    public sealed class Settings : CommandSettings
-    {
+internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
+    public sealed class Settings : CommandSettings {
         [Description("URL to generate")]
         [CommandOption("--url")]
         public string? Url { get; init; }
 
         [Description("Seed to generate")]
         [CommandOption("-s|--seed")]
-        public string Seed { get; init; }
+        public required string Seed { get; init; }
 
         [Description("Configuration to use")]
         [CommandOption("-c|--config")]
         public string? ConfigPath { get; init; }
 
-        [CommandOption("-i|--input")]
-        public string? InputPath { get; init; }
+        [CommandOption("-i|--input")] public string? InputPath { get; init; }
 
-        [CommandOption("-o|--output")]
-        public string? OutputPath { get; init; }
+        [CommandOption("-o|--output")] public string? OutputPath { get; init; }
 
-        [CommandOption("-k|--kill")]
-        public bool Kill { get; init; }
+        [CommandOption("-k|--kill")] public bool Kill { get; init; }
     }
 
-    public override ValidationResult Validate(CommandContext context, Settings settings)
-    {
-        if (settings.OutputPath == null)
-        {
+    public override ValidationResult Validate(CommandContext context, Settings settings) {
+        if (settings.OutputPath == null) {
             return ValidationResult.Error($"Output path not specified");
         }
+
         return base.Validate(context, settings);
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token)
-    {
+    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var reporter = new ConsoleReporter();
-        if (settings.Kill)
-        {
+        if (settings.Kill) {
             reporter.RunTask("Killing re7.exe", KillRe7);
         }
 
         var randomizer = new RandomizerExecutor(settings.InputPath ?? "", reporter);
         RandomizerInput input;
-        if (settings.Url is string url)
-        {
+        if (settings.Url is string url) {
             input = await FromUrl(new Uri(url));
-        }
-        else
-        {
-            input = new RandomizerInput
-            {
+        } else {
+            input = new RandomizerInput{
                 Seed = (settings.Seed == "random") ? Random.Shared.Next() : int.Parse(settings.Seed)
             };
-            if (!string.IsNullOrEmpty(settings.ConfigPath))
-            {
+            if (!string.IsNullOrEmpty(settings.ConfigPath)) {
                 var configJson = File.ReadAllText(settings.ConfigPath);
                 input.Configuration = RandomizerConfiguration.FromJson(configJson);
-            }
-            else
-            {
+            } else {
                 AnsiConsole.MarkupLine("[yellow]No configuration path provided. Using the default configuration.[/]");
                 input.Configuration = RandomizerExecutor.DefaultConfiguration;
             }
@@ -82,11 +67,9 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
 
         AnsiConsole.MarkupLine($"Generating seed {input.Seed}...");
 
-        try
-        {
+        try {
             var output = randomizer.Randomize(input);
-            foreach (var asset in output.Assets)
-            {
+            foreach (var asset in output.Assets) {
                 asset.Data.WriteToFile(asset.FileName);
             }
 
@@ -94,16 +77,12 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             var pakFile = GetPakFile(output.Assets.First(x => x.Key == "1-patch").Data);
             var zipFile = output.Assets.First(x => x.Key == "2-fluffy").Data;
 
-            reporter.RunTask($"Extracting log files", () =>
-            {
-                ExtractLogFiles(zipFile, Environment.CurrentDirectory);
-            });
+            reporter.RunTask($"Extracting log files",
+                () => { ExtractLogFiles(zipFile, Environment.CurrentDirectory); });
 
             var outputPath = settings.OutputPath!;
-            if (outputPath.EndsWith(".pak"))
-            {
-                reporter.RunTask($"Writing {outputPath}", () =>
-                {
+            if (outputPath.EndsWith(".pak")) {
+                reporter.RunTask($"Writing {outputPath}", () => {
 #if DEBUG
                     if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
                         return;
@@ -112,48 +91,43 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
                     pakFile.WriteToFile(outputPath);
                 });
 #if DEBUG
-                reporter.RunTask($"Extracting files", () =>
-                {
+                reporter.RunTask($"Extracting files", () => {
                     var nativesDir = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                         ".biorand",
                         "extract"
-                        );
+                    );
 
-                    if (Directory.Exists(nativesDir))
-                    {
+                    if (Directory.Exists(nativesDir)) {
                         Directory.Delete(nativesDir, true);
                     }
 
                     ExtractNatives(zipFile, Path.GetDirectoryName(nativesDir)!);
                 });
 #endif
-            }
-            else if (outputPath.EndsWith(".zip"))
-            {
-                reporter.RunTask($"Writing {outputPath}", () =>
-                {
+            } else if (outputPath.EndsWith(".zip")) {
+                reporter.RunTask($"Writing {outputPath}", () => {
                     Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
                     zipFile.WriteToFile(outputPath);
                 });
-            }
-            else
-            {
-                reporter.RunTask($"Writing {outputPath}", () =>
-                {
-                    ExtractEntries(zipFile, outputPath, entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
-                });
+            } else {
+                reporter.RunTask($"Writing {outputPath}",
+                    () => {
+                        ExtractEntries(zipFile, outputPath,
+                            entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
+                    });
             }
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             throw new RandomizerUserException("Randomization failed: " + ex);
         }
+
         return 0;
     }
 
     private static void ExtractNatives(byte[] zipFile, string outputPath)
-        => ExtractEntries(zipFile, outputPath, entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
+        => ExtractEntries(zipFile, outputPath,
+            entry => entry.FullName.StartsWith("natives/", StringComparison.OrdinalIgnoreCase));
 
     private static void ExtractLogFiles(byte[] zipFile, string outputPath)
         => ExtractEntries(zipFile, outputPath, entry =>
@@ -161,11 +135,9 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             entry.FullName != "modinfo.ini" &&
             entry.FullName != "pic.jpg");
 
-    private static void ExtractEntries(byte[] zipFile, string outputPath, Func<ZipArchiveEntry, bool> includeEntry)
-    {
+    private static void ExtractEntries(byte[] zipFile, string outputPath, Func<ZipArchiveEntry, bool> includeEntry) {
         using var zip = new ZipArchive(new MemoryStream(zipFile));
-        foreach (var entry in zip.Entries)
-        {
+        foreach (var entry in zip.Entries) {
             if (!includeEntry(entry))
                 continue;
 
@@ -173,15 +145,12 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         }
     }
 
-    internal static void ExtractEntryToDirectory(ZipArchiveEntry entry, string outputPath)
-    {
-        if (string.IsNullOrEmpty(entry.Name))
-        {
+    internal static void ExtractEntryToDirectory(ZipArchiveEntry entry, string outputPath) {
+        if (string.IsNullOrEmpty(entry.Name)) {
             return;
         }
 
-        if (HasParentDirectorySegment(entry.FullName))
-        {
+        if (HasParentDirectorySegment(entry.FullName)) {
             throw new InvalidDataException($"Archive entry '{entry.FullName}' contains a parent-directory segment.");
         }
 
@@ -194,8 +163,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
             ? StringComparison.OrdinalIgnoreCase
             : StringComparison.Ordinal;
 
-        if (!destinationPath.StartsWith(rootWithSeparator, comparison))
-        {
+        if (!destinationPath.StartsWith(rootWithSeparator, comparison)) {
             throw new InvalidDataException($"Archive entry '{entry.FullName}' would extract outside '{outputPath}'.");
         }
 
@@ -203,14 +171,12 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         entry.ExtractToFile(destinationPath, overwrite: true);
     }
 
-    private static bool HasParentDirectorySegment(string path)
-    {
+    private static bool HasParentDirectorySegment(string path) {
         var segments = path.Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries);
         return segments.Any(segment => segment == "..");
     }
 
-    private static byte[] GetPakFile(byte[] zip)
-    {
+    private static byte[] GetPakFile(byte[] zip) {
         var archive = new ZipArchive(new MemoryStream(zip));
         var entry = archive.Entries.First(x => x.FullName.EndsWith(".pak"));
         var output = new MemoryStream();
@@ -218,26 +184,21 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         return output.ToArray();
     }
 
-    private static void KillRe7()
-    {
+    private static void KillRe7() {
         // Kill RE7 process if running / don't wait for him to close
         // There is only 1 process
         var process = System.Diagnostics.Process.GetProcessesByName("re7").FirstOrDefault();
-        if (process != null)
-        {
-            try
-            {
+        if (process != null) {
+            try {
                 process.Kill(entireProcessTree: false);
             }
-            catch
-            {
+            catch {
                 // Ignore
             }
         }
     }
 
-    private static async Task<RandomizerInput> FromUrl(Uri url)
-    {
+    private static async Task<RandomizerInput> FromUrl(Uri url) {
         var settings = LocalSettings.Default;
 
         var pathMatch = Regex.Match(url.LocalPath, @".*/(\d+)/?$");
@@ -272,8 +233,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         return result;
     }
 
-    private class RandoResponse
-    {
+    private class RandoResponse {
         public int Id { get; init; }
         public string UserName { get; init; } = "";
         public long Created { get; init; }
@@ -292,17 +252,14 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         public string FailReason { get; init; } = "";
     }
 
-    private class ConsoleReporter() : IProgressReporter
-    {
-        public void RunTask(string text, Action cb)
-        {
+    private class ConsoleReporter() : IProgressReporter {
+        public void RunTask(string text, Action cb) {
             long timeInMs = 0;
             AnsiConsole
                 .Status()
                 .Spinner(Spinner.Known.Dots2)
                 .SpinnerStyle(Style.Parse("teal"))
-                .Start(text, ctx =>
-                {
+                .Start(text, ctx => {
                     var sw = new Stopwatch();
                     sw.Start();
                     cb();
@@ -313,40 +270,33 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings>
         }
     }
 
-    private class LocalSettings
-    {
+    private class LocalSettings {
         private static LocalSettings? _default;
 
         public ImmutableArray<Server> Servers { get; set; } = [];
 
-        public static LocalSettings Default
-        {
-            get
-            {
-                if (_default == null)
-                {
-                    try
-                    {
+        public static LocalSettings Default {
+            get {
+                if (_default == null) {
+                    try {
                         var homePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
                         var settingsPath = Path.Combine(homePath, ".biorand", "local.json");
                         var settings = File.ReadAllText(settingsPath);
-                        _default = JsonSerializer.Deserialize<LocalSettings>(settings, new JsonSerializerOptions()
-                        {
+                        _default = JsonSerializer.Deserialize<LocalSettings>(settings, new JsonSerializerOptions(){
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                         })!;
                     }
-                    catch
-                    {
+                    catch {
                         _default = new LocalSettings();
                     }
                 }
+
                 return _default;
             }
         }
     }
 
-    private class Server
-    {
+    private class Server {
         public string Name { get; set; } = "";
         public string ApiUrl { get; set; } = "";
         public string AuthToken { get; set; } = "";

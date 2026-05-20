@@ -6,13 +6,10 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerWeaponModifierBehaviorTests
-{
+public class RandomizerWeaponModifierBehaviorTests {
     [Fact]
-    public void WeaponModifier_ReloadSpeed_DoesNotModifySharedReloadSpeedTable()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void WeaponModifier_ReloadSpeed_DoesNotModifySharedReloadSpeedTable() {
+        using var result = RandomizerTest.RunState(config => {
             config["weapon-mod-reload-speed"] = true;
             config["weapon-mod-reload-speed-include-stabilizers"] = false;
             config["weapon-reload-speed-min-handgun-g17"] = 0.5;
@@ -26,10 +23,8 @@ public class RandomizerWeaponModifierBehaviorTests
     }
 
     [Fact]
-    public void WeaponModifier_ReloadSpeed_IncludesREFrameworkConfigWithPerWeaponRanges()
-    {
-        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
-        {
+    public void WeaponModifier_ReloadSpeed_IncludesREFrameworkConfigWithPerWeaponRanges() {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
             config["allow-dlc-items"] = false;
             config["random-enemy-drops"] = false;
             config["recipes-add-new"] = false;
@@ -57,13 +52,11 @@ public class RandomizerWeaponModifierBehaviorTests
     }
 
     [Fact]
-    public void WeaponModifier_Damage_ModifiesMatchingAttackUserData()
-    {
+    public void WeaponModifier_Damage_ModifiesMatchingAttackUserData() {
         var weapon = WeaponDefinitionRepository.Default.FromWeaponId("Handgun_G17");
         var rcolPath = weapon.RcolPaths.Single();
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["weapon-mod-damage"] = true;
             config["weapon-mod-damage-include-stun"] = false;
             config["weapon-mod-damage-include-player-damage"] = false;
@@ -83,10 +76,8 @@ public class RandomizerWeaponModifierBehaviorTests
     }
 
     [Fact]
-    public void WeaponModifier_ReplacesWeaponDescriptionWithRandomizedRolls()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void WeaponModifier_ReplacesWeaponDescriptionWithRandomizedRolls() {
+        using var result = RandomizerTest.RunState(config => {
             config["weapon-mod-damage"] = true;
             config["weapon-mod-damage-include-stun"] = false;
             config["weapon-mod-damage-include-player-damage"] = false;

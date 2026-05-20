@@ -8,40 +8,47 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerBehaviorTests
-{
-    private static readonly string EthanInventoryPath = PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user");
-    private static readonly string ClancyInventoryPath = PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user");
-    private static readonly string MiaInventoryPath = PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user");
-    private static readonly string MiaVhsInventoryPath = PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user");
+public class RandomizerBehaviorTests {
+    private static readonly string EthanInventoryPath =
+        PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user");
+
+    private static readonly string ClancyInventoryPath =
+        PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user");
+
+    private static readonly string MiaInventoryPath =
+        PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user");
+
+    private static readonly string MiaVhsInventoryPath =
+        PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user");
+
     private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
-    private static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+
+    private static readonly string DictionaryCombineDataPath =
+        PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+
     private static readonly string UiMenuMessagePath = PakPath.MessageFile("message/ui_menu_mes.msg");
-    private static readonly string ChainSawDoorScenePath = PakPath.SceneFile("environment/scene/chapter3/c03_rightareab1ffreezer.scn");
+
+    private static readonly string ChainSawDoorScenePath =
+        PakPath.SceneFile("environment/scene/chapter3/c03_rightareab1ffreezer.scn");
 
     [Fact]
-    public void StartingInventory_Disabled_DoesNotModifyStartingInventoryFiles()
-    {
+    public void StartingInventory_Disabled_DoesNotModifyStartingInventoryFiles() {
         using var result = RandomizerTest.RunState();
 
-        foreach (var path in new[] { EthanInventoryPath, ClancyInventoryPath, MiaInventoryPath, MiaVhsInventoryPath })
-        {
+        foreach (var path in new[]{ EthanInventoryPath, ClancyInventoryPath, MiaInventoryPath, MiaVhsInventoryPath }) {
             Assert.False(result.WasFileModified(path));
             Assert.Equal(result.ReadBeforeBytes(path), result.ReadAfterBytes(path));
         }
     }
 
     [Fact]
-    public void StartingInventory_EnabledForEthan_AppendsAllowedWeaponsAndAmmo()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void StartingInventory_EnabledForEthan_AppendsAllowedWeaponsAndAmmo() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = true;
             config["random-starting-inventory-mia"] = false;
             config["random-starting-inventory-vhs"] = false;
 
-            foreach (var category in Enum.GetValues<StartingWeaponCategory>())
-            {
+            foreach (var category in Enum.GetValues<StartingWeaponCategory>()) {
                 config[$"inventory-weapon-{category.ToString().ToLowerInvariant()}-ethan"] = false;
             }
 
@@ -77,16 +84,12 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void ItemStackModifier_CustomStackSize_ChangesConfiguredItemOnly()
-    {
+    public void ItemStackModifier_CustomStackSize_ChangesConfiguredItemOnly() {
         var handgunBullets = ItemDefinitionRepository.Default.FromId("HandgunBullet")!;
         var shotgunShells = ItemDefinitionRepository.Default.FromId("ShotgunBullet")!;
         var itemSettingsPath = $"{PakPath.Of("prefab/item")}/{handgunBullets.SourceUserFile}";
 
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config[handgunBullets.StackLimitConfigId] = 99;
-        });
+        using var result = RandomizerTest.RunState(config => { config[handgunBullets.StackLimitConfigId] = 99; });
 
         var before = result.ReadBeforeUserFile<app.ItemSettings>(itemSettingsPath);
         var after = result.ReadAfterUserFile<app.ItemSettings>(itemSettingsPath);
@@ -103,16 +106,12 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void ItemStackModifier_CustomStackSize_ChangesConfiguredNonStackableItem()
-    {
+    public void ItemStackModifier_CustomStackSize_ChangesConfiguredNonStackableItem() {
         var chemFluid = ItemDefinitionRepository.Default.FromId("ChemicalS")!;
         var strongChemFluid = ItemDefinitionRepository.Default.FromId("ChemicalM")!;
         var itemSettingsPath = $"{PakPath.Of("prefab/item")}/{chemFluid.SourceUserFile}";
 
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config[chemFluid.StackLimitConfigId] = 5;
-        });
+        using var result = RandomizerTest.RunState(config => { config[chemFluid.StackLimitConfigId] = 5; });
 
         var before = result.ReadBeforeUserFile<app.ItemSettings>(itemSettingsPath);
         var after = result.ReadAfterUserFile<app.ItemSettings>(itemSettingsPath);
@@ -129,8 +128,7 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void WeaponSoftlockPatch_PreservesBasementChainsawAfterDoorCut()
-    {
+    public void WeaponSoftlockPatch_PreservesBasementChainsawAfterDoorCut() {
         using var result = RandomizerTest.RunState();
 
         var beforeChainSawReductions = FindActions(result.ReadBeforeScene(ChainSawDoorScenePath), "app.fsm.ItemReduce")
@@ -147,10 +145,8 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void RecipeModifier_NoCrafting_ClearsRecipesAndDictionary()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RecipeModifier_NoCrafting_ClearsRecipesAndDictionary() {
+        using var result = RandomizerTest.RunState(config => {
             config["recipes-add-new"] = true;
             config["recipes-randomization-mode"] = "No crafting";
         });
@@ -169,13 +165,11 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void WeaponModifier_AmmoCapacity_ChangesSpecificWeaponParameter()
-    {
+    public void WeaponModifier_AmmoCapacity_ChangesSpecificWeaponParameter() {
         var handgun = WeaponDefinitionRepository.Default.FromWeaponId("Handgun_G17");
         Assert.NotNull(handgun.UserParamsPath);
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["weapon-mod-ammo-capacity"] = true;
             config["weapon-mod-ammo-capacity-prevent-zero"] = true;
             config["weapon-ammo-capacity-min-handgun-g17"] = 2.0;
@@ -190,12 +184,8 @@ public class RandomizerBehaviorTests
     }
 
     [Fact]
-    public void MessageModifier_ReplacesKnownUiMessage()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config["randomized-messages"] = true;
-        });
+    public void MessageModifier_ReplacesKnownUiMessage() {
+        using var result = RandomizerTest.RunState(config => { config["randomized-messages"] = true; });
 
         var beforeMessage = result.ReadBeforeMsgFile(UiMenuMessagePath).FindMessage("Menu_Pause_Restart_Desc");
         var afterMessage = result.ReadAfterMsgFile(UiMenuMessagePath).FindMessage("Menu_Pause_Restart_Desc");
@@ -210,22 +200,18 @@ public class RandomizerBehaviorTests
         Assert.NotEqual(beforeEnglish, afterEnglish);
     }
 
-    private static List<RszObjectNode> FindActions(RszScene scene, string typeName)
-    {
+    private static List<RszObjectNode> FindActions(RszScene scene, string typeName) {
         var result = new List<RszObjectNode>();
-        scene.VisitComponents(component => component.Visit(node =>
-        {
+        scene.VisitComponents(component => component.Visit(node => {
             if (node is RszObjectNode objectNode &&
-                objectNode.Type.Name == typeName)
-            {
+                objectNode.Type.Name == typeName) {
                 result.Add(objectNode);
             }
         }));
         return result;
     }
 
-    private static bool IsChainSawReduction(RszObjectNode action)
-    {
+    private static bool IsChainSawReduction(RszObjectNode action) {
         return action.Get<string>("ItemID") == "ChainSaw";
     }
 }

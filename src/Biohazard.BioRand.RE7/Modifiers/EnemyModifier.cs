@@ -5,8 +5,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class EnemyModifier : Modifier
-{
+internal class EnemyModifier : Modifier {
     private const string RandomizerKey = "modifier/enemies";
     internal const string EnemyForceTargetingProbabilityConfigKey = "enemy-force-targeting-probability";
     internal const string ExtraEnemyGeneratorName = ExtraEnemySceneBuilder.GeneratorName;
@@ -15,15 +14,13 @@ internal class EnemyModifier : Modifier
     internal const string ExtraEnemySpawnInfoPrefix = ExtraEnemySceneBuilder.SpawnInfoPrefix;
     internal const string ExtraEnemyGeneratePrefix = ExtraEnemySceneBuilder.GeneratePrefix;
 
-    private static EnemyRandomizerOptions BuildOptions(Randomizer randomizer)
-    {
+    private static EnemyRandomizerOptions BuildOptions(Randomizer randomizer) {
         return new EnemyRandomizerOptions(
             EnemyVariety: randomizer.GetConfigOption<int>("enemy-variety"),
             MaxPackSize: randomizer.GetConfigOption<int>("enemy-pack-max-size"),
             DebugUniqueHp: randomizer.GetConfigOption<bool>("debug-unique-enemy-hp"),
             IsBalanced: randomizer.GetConfigOption<bool>("balanced-enemies"),
             ProgressiveDifficulty: randomizer.GetConfigOption("enemy-health-progressive-difficulty", false),
-
             ScaleOptions: new ScaleOptions(
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),
@@ -39,11 +36,9 @@ internal class EnemyModifier : Modifier
     private static RszObjectNode RandomizeForceTargetingOption(
         RszObjectNode component,
         EnemyRandomizerOptions options,
-        Rng rng)
-    {
+        Rng rng) {
         if (options.ForceTargetingProbability <= 0 ||
-            !EnemySpawnInfoRules.SupportsForceTargetingOption(component))
-        {
+            !EnemySpawnInfoRules.SupportsForceTargetingOption(component)) {
             return component;
         }
 
@@ -54,34 +49,31 @@ internal class EnemyModifier : Modifier
 
     private static void CopySpecifiedRankParameter(
         app.EnemySpawnInfo target,
-        app.EnemySpawnInfo source)
-    {
+        app.EnemySpawnInfo source) {
         if (target.specifiedRankParameter == null || source.specifiedRankParameter == null)
             return;
 
         target.specifiedRankParameter.SpecifiedDirectivesName = source.specifiedRankParameter.SpecifiedDirectivesName;
-        target.specifiedRankParameter.SpecifiedResistParameterName = source.specifiedRankParameter.SpecifiedResistParameterName;
-        target.specifiedRankParameter.SpecifiedSlipParameterName = source.specifiedRankParameter.SpecifiedSlipParameterName;
+        target.specifiedRankParameter.SpecifiedResistParameterName =
+            source.specifiedRankParameter.SpecifiedResistParameterName;
+        target.specifiedRankParameter.SpecifiedSlipParameterName =
+            source.specifiedRankParameter.SpecifiedSlipParameterName;
     }
 
     private static RszScene RandomizeForceTargetingOptions(
         RszScene scene,
         EnemyRandomizerOptions options,
         Rng rng,
-        out int changedCount)
-    {
-        if (options.ForceTargetingProbability <= 0)
-        {
+        out int changedCount) {
+        if (options.ForceTargetingProbability <= 0) {
             changedCount = 0;
             return scene;
         }
 
         var updatedCount = 0;
-        var updatedScene = scene.VisitComponents((gameObject, component) =>
-        {
+        var updatedScene = scene.VisitComponents((gameObject, component) => {
             if (gameObject.FindComponent<app.EnemySpawnInfo>() == null ||
-                !EnemySpawnInfoRules.SupportsForceTargetingOption(component))
-            {
+                !EnemySpawnInfoRules.SupportsForceTargetingOption(component)) {
                 return component;
             }
 
@@ -101,22 +93,20 @@ internal class EnemyModifier : Modifier
         IEnumerable<(Guid spawnGuid, IEnemyDefinition enemy)> replacements,
         EnemyRandomizerOptions options,
         Rng rng,
-        EnemyHealthResolver healthResolver)
-    {
+        EnemyHealthResolver healthResolver) {
         var pooledObjects = new List<RszGameObject>();
 
-        foreach (var (spawnGuid, newEnemy) in replacements)
-        {
+        foreach (var (spawnGuid, newEnemy) in replacements) {
             var enemyId = newEnemy.EnemyId.ToString();
 
             var originalSpawnInfoGameObject = scene.FindGameObject(spawnGuid)!;
             var originalTransform = originalSpawnInfoGameObject.FindComponent<GeneratedViaTransform>()!;
             var originalSpawnInfoComponent = originalSpawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
 
-            if (newEnemy.UsesEnemyGenerator)
-            {
+            if (newEnemy.UsesEnemyGenerator) {
                 // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
-                var originalSpawnOptions = originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
+                var originalSpawnOptions =
+                    originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
                 var spawnInfoTemplate = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng);
                 var spawnInfoTemplateComponent = spawnInfoTemplate.FindComponent<app.EnemySpawnInfo>()!;
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
@@ -124,10 +114,9 @@ internal class EnemyModifier : Modifier
                 originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
                     originalSpawnInfoGameObject.Components
-                    .Remove(originalSpawnOptions)
-                    .Add(newSpawnOptions));
-                if (dlcSpawnOptions != null)
-                {
+                        .Remove(originalSpawnOptions)
+                        .Add(newSpawnOptions));
+                if (dlcSpawnOptions != null) {
                     originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
                     originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
                         originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions));
@@ -152,26 +141,25 @@ internal class EnemyModifier : Modifier
                     $"PreviousAlias={oldUnitAlias}");
 
                 var template = templateFactory.GetOrCreateEnemyTemplate(
-                        enemyId,
-                        originalTransform,
-                        updateTransform: false,
-                        randomizeScale: true,
-                        options.ScaleOptions,
-                        rng
-                );
-                pooledObjects.Add(template);
-                pooledObjects.AddRange(templateFactory.CreatePoolInstancesForNestedSpawnInfos(template, options.ScaleOptions, rng));
-            }
-            else
-            {
-                // Static enemy: remove SpawnInfo and insert template
-                var template = templateFactory.GetOrCreateEnemyTemplate(
                     enemyId,
                     originalTransform,
-                    updateTransform: true,
+                    updateTransform: false,
                     randomizeScale: true,
                     options.ScaleOptions,
-                    rng)
+                    rng
+                );
+                pooledObjects.Add(template);
+                pooledObjects.AddRange(
+                    templateFactory.CreatePoolInstancesForNestedSpawnInfos(template, options.ScaleOptions, rng));
+            } else {
+                // Static enemy: remove SpawnInfo and insert template
+                var template = templateFactory.GetOrCreateEnemyTemplate(
+                        enemyId,
+                        originalTransform,
+                        updateTransform: true,
+                        randomizeScale: true,
+                        options.ScaleOptions,
+                        rng)
                     .WithName($"{enemyId}_Static");
 
                 scene = scene.RemoveGameObject(spawnGuid);
@@ -182,7 +170,7 @@ internal class EnemyModifier : Modifier
         var generator = scene.FindGameObject(enemyGenerator.GameObject.Guid)!;
 
         var poolObject = generator.Children
-            .Select(child => new { Child = child, Pool = child.FindComponent<app.EnemyPool>() })
+            .Select(child => new{ Child = child, Pool = child.FindComponent<app.EnemyPool>() })
             .Where(x => x.Pool != null)
             .Select(x => x.Child)
             .Single();
@@ -192,10 +180,8 @@ internal class EnemyModifier : Modifier
 
         var newChildren = poolObject.Children.ToList();
 
-        foreach (var pooled in pooledObjects)
-        {
-            if (!newChildren.Any(c => c.Guid == pooled.Guid))
-            {
+        foreach (var pooled in pooledObjects) {
+            if (!newChildren.Any(c => c.Guid == pooled.Guid)) {
                 newChildren.Add(pooled);
             }
         }
@@ -217,26 +203,25 @@ internal class EnemyModifier : Modifier
         IReadOnlyList<EnemyTableEntry> enemyPool,
         EnemyRandomizerOptions options,
         Rng rng,
-        EnemyHealthResolver healthResolver)
-    {
+        EnemyHealthResolver healthResolver) {
         logger.Push(area.Path);
 
         var balancedEnemyPool = options.IsBalanced
             ? BalancedEnemyPoolSelector.Select(enemyPool, area.Definition.Chapter, area.Path)
             : enemyPool.ToImmutableArray();
-        if (balancedEnemyPool.IsDefaultOrEmpty)
-        {
+        if (balancedEnemyPool.IsDefaultOrEmpty) {
             logger.LogLine("Balanced enemy pool is empty for this area. Skipping enemy replacement.");
             logger.Pop();
             return;
         }
 
         var areaEnemyPool = EnemyPoolSelector.SelectAreaEnemyPool(balancedEnemyPool, options.EnemyVariety, rng);
-        logger.LogLine($"Area enemy pool ({areaEnemyPool.Length}/{enemyPool.Count}): {string.Join(", ", areaEnemyPool.Select(entry => entry.Enemy.Name))}");
+        logger.LogLine(
+            $"Area enemy pool ({areaEnemyPool.Length}/{enemyPool.Count}): {string.Join(", ", areaEnemyPool.Select(entry => entry.Enemy.Name))}");
 
-        var generatorChanges = new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
-        foreach (var enemyGenerator in area.EnemyGenerators)
-        {
+        var generatorChanges =
+            new List<(EnemyGeneratorWrapper Generator, List<(Guid, IEnemyDefinition)> Replacements)>();
+        foreach (var enemyGenerator in area.EnemyGenerators) {
             var spawnInfos = enemyGenerator.EnemySpawnInfos;
 
             if (spawnInfos.Length == 0)
@@ -246,15 +231,14 @@ internal class EnemyModifier : Modifier
 
             var packSelectors = new Dictionary<string, EnemyPackSelector>(StringComparer.Ordinal);
             var replacements = new List<(Guid, IEnemyDefinition)>();
-            foreach (var spawnInfo in spawnInfos)
-            {
+            foreach (var spawnInfo in spawnInfos) {
                 if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(spawnInfo))
                     continue;
 
                 var component = spawnInfo.FindComponent<app.EnemySpawnInfo>()!;
-                var compatibleEnemyPool = SelectCompatibleEnemyPool(area.Path, spawnInfo, areaEnemyPool, balancedEnemyPool);
-                if (compatibleEnemyPool.IsDefaultOrEmpty)
-                {
+                var compatibleEnemyPool =
+                    SelectCompatibleEnemyPool(area.Path, spawnInfo, areaEnemyPool, balancedEnemyPool);
+                if (compatibleEnemyPool.IsDefaultOrEmpty) {
                     logger.LogLine($"Keeping {component.UnitAlias} ({spawnInfo.Name}): no compatible replacement.");
                     continue;
                 }
@@ -266,20 +250,18 @@ internal class EnemyModifier : Modifier
                 replacements.Add((spawnInfo.Guid, replacement));
             }
 
-            if (replacements.Count > 0)
-            {
+            if (replacements.Count > 0) {
                 generatorChanges.Add((enemyGenerator, replacements));
             }
 
             logger.Pop();
         }
 
-        if (generatorChanges.Count > 0)
-        {
+        if (generatorChanges.Count > 0) {
             var scene = area.Scene;
-            foreach (var (generator, replacements) in generatorChanges)
-            {
-                scene = ProcessGeneratorScene(scene, logger, templateFactory, generator, replacements, options, rng, healthResolver);
+            foreach (var (generator, replacements) in generatorChanges) {
+                scene = ProcessGeneratorScene(scene, logger, templateFactory, generator, replacements, options, rng,
+                    healthResolver);
             }
 
             area.Scene = scene;
@@ -293,8 +275,7 @@ internal class EnemyModifier : Modifier
         string scenePath,
         RszGameObject spawnInfo,
         ImmutableArray<EnemyTableEntry> areaEnemyPool,
-        ImmutableArray<EnemyTableEntry> fallbackEnemyPool)
-    {
+        ImmutableArray<EnemyTableEntry> fallbackEnemyPool) {
         if (!EnemySpawnInfoRules.RequiresInsectReplacement(scenePath, spawnInfo))
             return areaEnemyPool;
 
@@ -313,11 +294,9 @@ internal class EnemyModifier : Modifier
         Dictionary<string, EnemyPackSelector> packSelectors,
         ImmutableArray<EnemyTableEntry> enemyPool,
         int maxPackSize,
-        Rng rng)
-    {
+        Rng rng) {
         var key = string.Join("|", enemyPool.Select(entry => entry.Enemy.Id));
-        if (!packSelectors.TryGetValue(key, out var packSelector))
-        {
+        if (!packSelectors.TryGetValue(key, out var packSelector)) {
             packSelector = new EnemyPackSelector(enemyPool, maxPackSize, rng);
             packSelectors.Add(key, packSelector);
         }
@@ -325,17 +304,14 @@ internal class EnemyModifier : Modifier
         return packSelector;
     }
 
-    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true)
-    {
+    private ImmutableArray<EnemyTableEntry> CreateEnemyPool(Randomizer randomizer, bool includeBosses = true) {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
-        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
-        {
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable) {
             if (!includeBosses && enemy.IsBoss)
                 continue;
 
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
-            if (ratio != 0)
-            {
+            if (ratio != 0) {
                 enemyPool.Add(new EnemyTableEntry(enemy, ratio));
             }
         }
@@ -343,11 +319,9 @@ internal class EnemyModifier : Modifier
         return enemyPool.ToImmutable();
     }
 
-    private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer)
-    {
+    private ImmutableArray<EnemyTableEntry> CreateExtraEnemyPool(Randomizer randomizer) {
         var enemyPool = ImmutableArray.CreateBuilder<EnemyTableEntry>();
-        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
-        {
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable) {
             if (enemy.EnemyId is EnemyID.Em4000) // TODO: Fix stale Molded in idle animations
                 continue;
 
@@ -355,8 +329,7 @@ internal class EnemyModifier : Modifier
                 continue;
 
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
-            if (ratio != 0)
-            {
+            if (ratio != 0) {
                 enemyPool.Add(new EnemyTableEntry(enemy, ratio));
             }
         }
@@ -369,27 +342,22 @@ internal class EnemyModifier : Modifier
         RandomizerLogger logger,
         EnemyTemplateFactory templateFactory,
         EnemyRandomizerOptions options,
-        EnemyHealthResolver healthResolver)
-    {
+        EnemyHealthResolver healthResolver) {
         if (!randomizer.GetConfigOption<bool>("random-enemies"))
             return;
 
         var rng = randomizer.GetRng(RandomizerKey);
         var enemyPool = CreateEnemyPool(randomizer);
 
-        if (enemyPool.IsDefaultOrEmpty)
-        {
+        if (enemyPool.IsDefaultOrEmpty) {
             logger.LogLine("Constructed an empty enemy table! Aborting...");
             return;
-        }
-        else
-        {
+        } else {
             logger.LogLine($"Constructed an enemy table of size {enemyPool.Length}:");
             logger.LogLine(string.Join(", ", enemyPool.Select(entry => entry.Enemy.Name)));
         }
 
-        foreach (var area in randomizer.AreaService.EnemyAreas)
-        {
+        foreach (var area in randomizer.AreaService.EnemyAreas) {
             ProcessArea(area, randomizer, logger, templateFactory, enemyPool, options, rng, healthResolver);
         }
     }
@@ -397,8 +365,7 @@ internal class EnemyModifier : Modifier
     private void RandomizeEnemyForceTargeting(
         Randomizer randomizer,
         RandomizerLogger logger,
-        EnemyRandomizerOptions options)
-    {
+        EnemyRandomizerOptions options) {
         if (options.ForceTargetingProbability <= 0)
             return;
 
@@ -406,8 +373,7 @@ internal class EnemyModifier : Modifier
         var updatedSceneCount = 0;
         var updatedSpawnInfoCount = 0;
 
-        foreach (var area in randomizer.AreaService.Areas)
-        {
+        foreach (var area in randomizer.AreaService.Areas) {
             var scnFile = randomizer.FileRepository
                 .GetScnFile(area.Path)
                 .ToBuilder(randomizer.FileRepository.TypeRepository);
@@ -420,7 +386,8 @@ internal class EnemyModifier : Modifier
             randomizer.FileRepository.SetScnFile(area.Path, scnFile.AddMissingResources().Build());
         }
 
-        logger.LogLine($"Force targeting randomized for {updatedSpawnInfoCount} enemy spawn infos in {updatedSceneCount} scenes.");
+        logger.LogLine(
+            $"Force targeting randomized for {updatedSpawnInfoCount} enemy spawn infos in {updatedSceneCount} scenes.");
     }
 
     private void PlaceExtraEnemies(
@@ -428,8 +395,7 @@ internal class EnemyModifier : Modifier
         RandomizerLogger logger,
         ExtraEnemySceneBuilder extraEnemySceneBuilder,
         EnemyRandomizerOptions options,
-        EnemyHealthResolver healthResolver)
-    {
+        EnemyHealthResolver healthResolver) {
         var extraEnemyPct = randomizer.GetConfigOption<double>("extra-enemy-amount");
         if (extraEnemyPct == 0)
             return;
@@ -437,36 +403,38 @@ internal class EnemyModifier : Modifier
         var rng = randomizer.GetRng("modifier/extra-enemies");
         var enemyMultiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
 
-        var enabledExtraEnemies = Csv.Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
+        var enabledExtraEnemies = Csv
+            .Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
             .Where(extraEnemy => extraEnemy.Enabled)
             .ToList();
         var subsetCount = ExtraEnemyPlanner.GetSubsetCount(enabledExtraEnemies.Count, extraEnemyPct);
         if (subsetCount == 0)
             return;
 
-        var extraEnemies = ExtraEnemyPlanner.SelectRandomPlacementsWithoutReplacement(enabledExtraEnemies, subsetCount, rng)
+        var extraEnemies = ExtraEnemyPlanner
+            .SelectRandomPlacementsWithoutReplacement(enabledExtraEnemies, subsetCount, rng)
             .GroupBy(extraEnemy => extraEnemy.SceneFile)
             .ToList();
 
         logger.Push("Additional enemies");
-        var hasRandomExtraEnemies = extraEnemies.Any(group => group.Any(extraEnemy => ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id)));
+        var hasRandomExtraEnemies =
+            extraEnemies.Any(group => group.Any(extraEnemy => ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id)));
         var randomEnemyPool = hasRandomExtraEnemies
             ? CreateExtraEnemyPool(randomizer)
             : [];
-        if (hasRandomExtraEnemies && randomEnemyPool.IsDefaultOrEmpty)
-        {
+        if (hasRandomExtraEnemies && randomEnemyPool.IsDefaultOrEmpty) {
             logger.LogLine("Constructed an empty enemy table! Random extra enemies will be skipped.");
         }
 
         var generatorBuilds = new Dictionary<string, ExtraEnemyGeneratorBuild>(StringComparer.OrdinalIgnoreCase);
         var fsmGeneratorsByScene = new Dictionary<string, List<RszGameObject>>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var enemySceneGroup in extraEnemies)
-        {
+        foreach (var enemySceneGroup in extraEnemies) {
             var scene = enemySceneGroup.Key;
             var scenePlacements = enemySceneGroup.ToList();
             var sceneLimit = randomizer.EnemySceneLimitService.GetMaxEnemiesForExtraScene(scene);
-            var uncappedTargetEnemyCount = EnemyMultiplierModifier.GetTargetEnemyCount(scenePlacements.Count, enemyMultiplier);
+            var uncappedTargetEnemyCount =
+                EnemyMultiplierModifier.GetTargetEnemyCount(scenePlacements.Count, enemyMultiplier);
             var targetEnemyCount = sceneLimit == null
                 ? uncappedTargetEnemyCount
                 : Math.Min(uncappedTargetEnemyCount, sceneLimit.Value);
@@ -477,13 +445,15 @@ internal class EnemyModifier : Modifier
                 scenePlacements,
                 Math.Min(targetEnemyCount, scenePlacements.Count),
                 rng);
-            var sceneHasRandomExtraEnemies = selectedPlacements.Any(extraEnemy => ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id));
+            var sceneHasRandomExtraEnemies =
+                selectedPlacements.Any(extraEnemy => ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id));
             var sceneChapter = ExtraEnemyPlanner.GetSharedChapter(selectedPlacements);
             var sceneRandomEnemyPool = options.IsBalanced && sceneHasRandomExtraEnemies
                 ? BalancedEnemyPoolSelector.Select(randomEnemyPool, sceneChapter, scene)
                 : randomEnemyPool;
 
-            logger.Push(ExtraEnemySceneBuilder.FormatSceneLog(scene, scenePlacements.Count, uncappedTargetEnemyCount, targetEnemyCount, sceneLimit));
+            logger.Push(ExtraEnemySceneBuilder.FormatSceneLog(scene, scenePlacements.Count, uncappedTargetEnemyCount,
+                targetEnemyCount, sceneLimit));
             var extraEnemyRequests = new List<ResolvedExtraEnemyPlacement>(targetEnemyCount);
             var areaEnemyPool = !sceneHasRandomExtraEnemies || sceneRandomEnemyPool.IsDefaultOrEmpty
                 ? []
@@ -492,61 +462,54 @@ internal class EnemyModifier : Modifier
                 ? null
                 : new EnemyPackSelector(areaEnemyPool, options.MaxPackSize, rng);
 
-            foreach (var extraEnemy in selectedPlacements)
-            {
+            foreach (var extraEnemy in selectedPlacements) {
                 IEnemyDefinition definition;
-                if (ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id))
-                {
-                    if (packSelector == null)
-                    {
-                        logger.LogLine($"Skipping random extra enemy at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: empty enemy table.");
+                if (ExtraEnemyPlanner.IsRandomEnemyId(extraEnemy.Id)) {
+                    if (packSelector == null) {
+                        logger.LogLine(
+                            $"Skipping random extra enemy at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: empty enemy table.");
                         continue;
                     }
 
                     definition = packSelector.Next();
-                }
-                else
-                {
-                    var possibleEnemies = extraEnemy.Id.Split('|', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-                    var selectedEnemyId = possibleEnemies.Length switch
-                    {
+                } else {
+                    var possibleEnemies = extraEnemy.Id.Split('|',
+                        StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                    var selectedEnemyId = possibleEnemies.Length switch{
                         0 => extraEnemy.Id.Trim(),
                         1 => possibleEnemies[0],
                         _ => rng.Next(possibleEnemies),
                     };
                     definition = EnemyDefinitions.Instance.FromId(selectedEnemyId)
-                        ?? throw new InvalidOperationException($"Unknown extra enemy id '{extraEnemy.Id}' (selected '{selectedEnemyId}').");
+                                 ?? throw new InvalidOperationException(
+                                     $"Unknown extra enemy id '{extraEnemy.Id}' (selected '{selectedEnemyId}').");
                 }
 
-                if (ExtraEnemyPlanner.TryCreateRequest(logger, extraEnemy, definition, out var request))
-                {
+                if (ExtraEnemyPlanner.TryCreateRequest(logger, extraEnemy, definition, out var request)) {
                     extraEnemyRequests.Add(request);
                 }
             }
 
-            while (extraEnemyRequests.Count < targetEnemyCount && extraEnemyRequests.Count != 0)
-            {
+            while (extraEnemyRequests.Count < targetEnemyCount && extraEnemyRequests.Count != 0) {
                 var source = rng.Next(extraEnemyRequests);
-                logger.LogLine($"Duplicating {source.Enemy.Name} at {source.Placement.PosX}/{source.Placement.PosY}/{source.Placement.PosZ}");
+                logger.LogLine(
+                    $"Duplicating {source.Enemy.Name} at {source.Placement.PosX}/{source.Placement.PosY}/{source.Placement.PosZ}");
                 extraEnemyRequests.Add(source);
             }
 
-            if (extraEnemyRequests.Count == 0)
-            {
+            if (extraEnemyRequests.Count == 0) {
                 logger.Pop();
                 continue;
             }
 
             var fsmGenerators = new List<RszGameObject>(extraEnemyRequests.Count);
             var generatorScene = ExtraEnemySceneBuilder.GetGeneratorScene(scene, extraEnemyRequests);
-            if (!generatorBuilds.TryGetValue(generatorScene, out var generatorBuild))
-            {
+            if (!generatorBuilds.TryGetValue(generatorScene, out var generatorBuild)) {
                 generatorBuild = new ExtraEnemyGeneratorBuild();
                 generatorBuilds.Add(generatorScene, generatorBuild);
             }
 
-            for (var i = 0; i < extraEnemyRequests.Count; i++)
-            {
+            for (var i = 0; i < extraEnemyRequests.Count; i++) {
                 var request = extraEnemyRequests[i];
                 var generatorSpawnInfoIndex = generatorBuild.SpawnInfos.Count;
                 var spawnInfo = extraEnemySceneBuilder.CreateSpawnInfo(
@@ -556,15 +519,15 @@ internal class EnemyModifier : Modifier
                     generatorSpawnInfoIndex,
                     rng);
                 var requestInstances = extraEnemySceneBuilder.CreateInstances(request, options, rng);
-                var fsmGenerator = extraEnemySceneBuilder.CreateFsmGenerator(request, spawnInfo, generatorSpawnInfoIndex, rng);
+                var fsmGenerator =
+                    extraEnemySceneBuilder.CreateFsmGenerator(request, spawnInfo, generatorSpawnInfoIndex, rng);
 
                 fsmGenerators.Add(fsmGenerator);
                 generatorBuild.SpawnInfos.Add(spawnInfo);
                 generatorBuild.Instances.AddRange(requestInstances);
             }
 
-            if (!fsmGeneratorsByScene.TryGetValue(scene, out var sceneFsmGenerators))
-            {
+            if (!fsmGeneratorsByScene.TryGetValue(scene, out var sceneFsmGenerators)) {
                 sceneFsmGenerators = [];
                 fsmGeneratorsByScene.Add(scene, sceneFsmGenerators);
             }
@@ -573,14 +536,13 @@ internal class EnemyModifier : Modifier
             logger.Pop();
         }
 
-        foreach (var (generatorScene, generatorBuild) in generatorBuilds.OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase))
-        {
-            var generator = extraEnemySceneBuilder.CreateGenerator(generatorBuild.SpawnInfos, generatorBuild.Instances, rng);
-            randomizer.FileRepository.ModifyScnFile(generatorScene, root =>
-            {
+        foreach (var (generatorScene, generatorBuild) in generatorBuilds.OrderBy(pair => pair.Key,
+                     StringComparer.OrdinalIgnoreCase)) {
+            var generator =
+                extraEnemySceneBuilder.CreateGenerator(generatorBuild.SpawnInfos, generatorBuild.Instances, rng);
+            randomizer.FileRepository.ModifyScnFile(generatorScene, root => {
                 root = root.Add(generator);
-                if (fsmGeneratorsByScene.Remove(generatorScene, out var fsmGenerators))
-                {
+                if (fsmGeneratorsByScene.Remove(generatorScene, out var fsmGenerators)) {
                     root = ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators);
                 }
 
@@ -588,19 +550,18 @@ internal class EnemyModifier : Modifier
             });
         }
 
-        foreach (var (scene, fsmGenerators) in fsmGeneratorsByScene.OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase))
-        {
-            randomizer.FileRepository.ModifyScnFile(scene, root => ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators));
+        foreach (var (scene, fsmGenerators) in fsmGeneratorsByScene.OrderBy(pair => pair.Key,
+                     StringComparer.OrdinalIgnoreCase)) {
+            randomizer.FileRepository.ModifyScnFile(scene,
+                root => ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators));
         }
 
         logger.Pop();
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var options = BuildOptions(randomizer);
-        if (options.DebugUniqueHp)
-        {
+        if (options.DebugUniqueHp) {
             logger.LogUniqueSpawnHpHelp();
         }
 

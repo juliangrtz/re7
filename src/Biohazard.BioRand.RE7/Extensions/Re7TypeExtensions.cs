@@ -4,25 +4,21 @@ using Enums.app.GameManager;
 
 namespace Biohazard.BioRand.RE7.Extensions;
 
-public static class Re7TypeExtensions
-{
+public static class Re7TypeExtensions {
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
-    public static string Format(this Recipe recipe)
-    {
+    public static string Format(this Recipe recipe) {
         var readableSrc1 = _itemDefinitions.FromId(recipe.SrcItemID1)?.Name ?? recipe.SrcItemID1;
         var readableSrc2 = _itemDefinitions.FromId(recipe.SrcItemID2)?.Name ?? recipe.SrcItemID2;
         var readableResult = _itemDefinitions.FromId(recipe.ResultItemID)?.Name ?? recipe.ResultItemID;
 
         return $"{recipe.SrcItemNum1,3}x {readableSrc1,-30} + " +
-            $"{recipe.SrcItemNum2,3}x {readableSrc2,-30} -> " +
-            $"{recipe.ResultItemNum,3}x {readableResult,-30}";
+               $"{recipe.SrcItemNum2,3}x {readableSrc2,-30} -> " +
+               $"{recipe.ResultItemNum,3}x {readableResult,-30}";
     }
 
-    public static void Log(this ItemDropTable table, RandomizerLogger logger)
-    {
-        foreach (var item in table.DataList)
-        {
+    public static void Log(this ItemDropTable table, RandomizerLogger logger) {
+        foreach (var item in table.DataList) {
             var name = _itemDefinitions.FromId(item.ItemID)?.Name ?? item.ItemID;
             logger.Push(name);
             logger.LogLine($"Easy drop rate: {item.EasyDropRate} %");
@@ -35,8 +31,7 @@ public static class Re7TypeExtensions
         }
     }
 
-    public static string ToReadableString(this ChapterNo chapter) => chapter switch
-    {
+    public static string ToReadableString(this ChapterNo chapter) => chapter switch{
         ChapterNo.BootLogo => "Boot Logo",
         ChapterNo.FirstMenu => "Main Menu",
         ChapterNo.Title => "Title Screen",
@@ -77,8 +72,8 @@ public static class Re7TypeExtensions
 
     public static string Format(this WeaponGunParameter @params)
         => $"{@params.MaxLoadNum} max. bullets, " +
-            $"{(@params.IsLoadNumInfinity ? "infinite bullets, " : "")}" +
-            $"{(@params.IsBulletStackNumInfinity ? "infinite stack" : "")}" +
-            $"{@params.Range} range, " +
-            $"{@params.Radius} radius";
+           $"{(@params.IsLoadNumInfinity ? "infinite bullets, " : "")}" +
+           $"{(@params.IsBulletStackNumInfinity ? "infinite stack" : "")}" +
+           $"{@params.Range} range, " +
+           $"{@params.Radius} radius";
 }

@@ -9,8 +9,7 @@ using static Biohazard.BioRand.RE7.DataGen.Commands.GenerateCommand;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-internal class GameObjectTemplateGenerator : IFileGenerator
-{
+internal class GameObjectTemplateGenerator : IFileGenerator {
     public string Id => "templates";
 
     public bool CopyToDataDirectory => false;
@@ -22,8 +21,7 @@ internal class GameObjectTemplateGenerator : IFileGenerator
 
     private readonly PakFile _pakFile = Constants.BioRandPakFile;
 
-    private readonly JsonSerializerOptions _serializationOptions = new()
-    {
+    private readonly JsonSerializerOptions _serializationOptions = new(){
         WriteIndented = true,
         Converters = { new JsonStringEnumConverter() },
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
@@ -31,44 +29,42 @@ internal class GameObjectTemplateGenerator : IFileGenerator
     };
 
     public RszFolder CreateFolder(string name, string tag = "") =>
-        new RszFolder(_rszRepository
+        new(_rszRepository
                 .Create("via.Folder")
-                    .Set("Name", name)
-                    .Set("Tag", tag)
-                    .Set("Update", true)
-                    .Set("Draw", true)
-                    .Set("Standby", true), []
+                .Set("Name", name)
+                .Set("Tag", tag)
+                .Set("Update", true)
+                .Set("Draw", true)
+                .Set("Standby", true), []
         );
 
-    private ScnFile BuildScene()
-    {
-        var areas = JsonSerializer.Deserialize<List<AreaDefinition>>(EmbeddedData.GetFile("areas.json"), _serializationOptions)!;
+    private ScnFile BuildScene() {
+        var areas = JsonSerializer.Deserialize<List<AreaDefinition>>(EmbeddedData.GetFile("areas.json"),
+            _serializationOptions)!;
         var itemTemplates = new Dictionary<string, RszGameObject>(); // item id -> GameObject
 
-        foreach (var area in areas)
-        {
-            var scene = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(area.Path)).ReadScene(_rszRepository);
+        foreach (var area in areas) {
+            var scene =
+                new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(area.Path)).ReadScene(_rszRepository);
 
-            scene.VisitGameObjects(gameObject =>
-            {
+            scene.VisitGameObjects(gameObject => {
                 var item = gameObject.FindComponent<app.Item>();
                 var melee = gameObject.FindComponent<app.Weapon>();
                 var gun = gameObject.FindComponent<app.WeaponGun>();
 
-                if (item != null)
-                {
+                if (item != null) {
                     itemTemplates.TryAdd(item.ItemDataID, gameObject);
                 }
             });
         }
 
-        var resultSceneBuilder = new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(areas[0].Path)).ToBuilder(_rszRepository);
+        var resultSceneBuilder =
+            new ScnFile(FileVersions.SceneFileVersion, _pakFile.GetEntryData(areas[0].Path)).ToBuilder(_rszRepository);
         resultSceneBuilder.Scene = resultSceneBuilder.Scene.WithChildren([]);
 
         // Items
         var itemTemplatesFolder = CreateFolder("ItemTemplates");
-        foreach (var (id, go) in itemTemplates.OrderBy(t => t.Key))
-        {
+        foreach (var (id, go) in itemTemplates.OrderBy(t => t.Key)) {
             var enrichedGo = NormalizeItemTemplateInteractions(go)
                 .WithSettings(go.Settings
                     .Set("Name", $"ItemTemplate_{id}")
@@ -78,6 +74,7 @@ internal class GameObjectTemplateGenerator : IFileGenerator
                 );
             itemTemplatesFolder = itemTemplatesFolder.Add(enrichedGo);
         }
+
         resultSceneBuilder.Scene = resultSceneBuilder.Scene.Add(itemTemplatesFolder);
 
         var built = resultSceneBuilder.AddMissingResources().Build();
@@ -89,14 +86,10 @@ internal class GameObjectTemplateGenerator : IFileGenerator
             .PreparePickupInteractionsForPlacement()
             .PrepareWeaponPickupInteractionGameObjects();
 
-    public object Generate(GenerateSettings settings)
-    {
+    public object Generate(GenerateSettings settings) {
         var scene = BuildScene();
         var goCount = 0;
-        scene.ReadScene(_rszRepository).VisitGameObjects(go =>
-        {
-            goCount++;
-        });
+        scene.ReadScene(_rszRepository).VisitGameObjects(go => { goCount++; });
         AnsiConsole.MarkupLine($"[green]Generated GameObject template scene with {goCount} objects.[/]");
         return scene.Data.ToArray();
     }

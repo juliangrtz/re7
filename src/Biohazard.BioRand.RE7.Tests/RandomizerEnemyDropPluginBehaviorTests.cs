@@ -4,13 +4,10 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerEnemyDropPluginBehaviorTests
-{
+public class RandomizerEnemyDropPluginBehaviorTests {
     [Fact]
-    public void EnemyDrops_EnableREFrameworkConfigAndInjectPluginSeedMetadata()
-    {
-        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config =>
-        {
+    public void EnemyDrops_EnableREFrameworkConfigAndInjectPluginSeedMetadata() {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
             config["random-enemy-drops"] = true;
             config["enemy-drop-probability"] = 0.25;
             config["enemy-drop-probability-flyingbug"] = 0.1;

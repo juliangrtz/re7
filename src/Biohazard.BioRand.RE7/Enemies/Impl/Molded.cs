@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class Molded : IEnemyDefinition
-{
+internal class Molded : IEnemyDefinition {
     public string Id => "Molded";
 
     public EnemyID EnemyId => EnemyID.Em4000;
@@ -32,8 +31,7 @@ internal class Molded : IEnemyDefinition
     public bool SupportsSpeedRandomization => true;
 }
 
-internal class MoldedBlade : IEnemyDefinition
-{
+internal class MoldedBlade : IEnemyDefinition {
     public string Id => "MoldedBlade";
 
     public EnemyID EnemyId => EnemyID.Em4000;
@@ -57,7 +55,7 @@ internal class MoldedBlade : IEnemyDefinition
         => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000bladeresistparameterholder.user");
 
     public string OriginalPrefabPath
-    => PakPath.SceneFile($"scenes/enemy/em4000.scn");
+        => PakPath.SceneFile($"scenes/enemy/em4000.scn");
 
     public bool UsesEnemyGenerator => true;
 
@@ -65,45 +63,39 @@ internal class MoldedBlade : IEnemyDefinition
 }
 
 // TODO Molded common params
-internal class MoldedDirectiveModifier : IDirectiveModifier
-{
+internal class MoldedDirectiveModifier : IDirectiveModifier {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em4000;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
 
         // Speed
         var newSpeed = enemy.GetSpeedMultiplier(randomizer);
-        if (applySpeed)
-        {
+        if (applySpeed) {
             logger.LogMultiplier("Animation speed multiplier", newSpeed);
-        }
-        else
-        {
+        } else {
             logger.LogLine("Animation speed multiplier: 1x (enemy speed randomization disabled)");
         }
 
-        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
-        foreach (var directive in holder.holder.Units)
-        {
+        var holder =
+            randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
+        foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em4000BattleDirective>(
-                userFilePath,
-                d => ModifyDirective(d, logger, newSpeed)));
+            logger.LogDirectiveFile(rank, userFilePath, () =>
+                randomizer.FileRepository.ModifyUserFile<app.Em4000BattleDirective>(
+                    userFilePath,
+                    d => ModifyDirective(d, logger, newSpeed)));
         }
     }
 
     private app.Em4000BattleDirective ModifyDirective(
         app.Em4000BattleDirective directive,
         RandomizerLogger logger,
-        float speed)
-    {
-        if (speed == 1f)
-        {
+        float speed) {
+        if (speed == 1f) {
             logger.LogLine("No speed changes.");
             return directive;
         }

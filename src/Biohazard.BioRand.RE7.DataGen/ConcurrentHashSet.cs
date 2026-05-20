@@ -4,98 +4,84 @@
 
 namespace Biohazard.BioRand.RE7.DataGen;
 
-public class ConcurrentHashSet<T> : IDisposable
-{
-    private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
-    private readonly HashSet<T> _hashSet = new HashSet<T>();
+public class ConcurrentHashSet<T> : IDisposable {
+    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
+    private readonly HashSet<T> _hashSet = new();
 
     public List<T> Items => _hashSet.ToList();
 
     #region Implementation of ICollection<T> ...ish
-    public bool Add(T item)
-    {
+
+    public bool Add(T item) {
         _lock.EnterWriteLock();
-        try
-        {
+        try {
             return _hashSet.Add(item);
         }
-        finally
-        {
+        finally {
             if (_lock.IsWriteLockHeld) _lock.ExitWriteLock();
         }
     }
 
-    public void Clear()
-    {
+    public void Clear() {
         _lock.EnterWriteLock();
-        try
-        {
+        try {
             _hashSet.Clear();
         }
-        finally
-        {
+        finally {
             if (_lock.IsWriteLockHeld) _lock.ExitWriteLock();
         }
     }
 
-    public bool Contains(T item)
-    {
+    public bool Contains(T item) {
         _lock.EnterReadLock();
-        try
-        {
+        try {
             return _hashSet.Contains(item);
         }
-        finally
-        {
+        finally {
             if (_lock.IsReadLockHeld) _lock.ExitReadLock();
         }
     }
 
-    public bool Remove(T item)
-    {
+    public bool Remove(T item) {
         _lock.EnterWriteLock();
-        try
-        {
+        try {
             return _hashSet.Remove(item);
         }
-        finally
-        {
+        finally {
             if (_lock.IsWriteLockHeld) _lock.ExitWriteLock();
         }
     }
 
-    public int Count
-    {
-        get
-        {
+    public int Count {
+        get {
             _lock.EnterReadLock();
-            try
-            {
+            try {
                 return _hashSet.Count;
             }
-            finally
-            {
+            finally {
                 if (_lock.IsReadLockHeld) _lock.ExitReadLock();
             }
         }
     }
+
     #endregion
 
     #region Dispose
-    public void Dispose()
-    {
+
+    public void Dispose() {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-    protected virtual void Dispose(bool disposing)
-    {
+
+    protected virtual void Dispose(bool disposing) {
         if (disposing)
             if (_lock != null)
                 _lock.Dispose();
     }
-    ~ConcurrentHashSet()
-    {
+
+    ~ConcurrentHashSet() {
         Dispose(false);
     }
+
     #endregion
 }

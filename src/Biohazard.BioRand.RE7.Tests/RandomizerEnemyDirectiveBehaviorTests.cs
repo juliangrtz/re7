@@ -5,15 +5,12 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerEnemyDirectiveBehaviorTests
-{
+public class RandomizerEnemyDirectiveBehaviorTests {
     [Fact]
-    public void EnemyDirectiveModifier_MoldedSpeed_ConfigUpdatesDirectiveFiles()
-    {
+    public void EnemyDirectiveModifier_MoldedSpeed_ConfigUpdatesDirectiveFiles() {
         var enemy = EnemyDefinitions.Instance.All.First(x => x.Id == "Molded");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemy-speed"] = true;
             config["enemy-speed-min-molded"] = 2.0;
             config["enemy-speed-max-molded"] = 2.0;
@@ -30,13 +27,11 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_MoldedSpeed_UsesPerEnemyConfig()
-    {
+    public void EnemyDirectiveModifier_MoldedSpeed_UsesPerEnemyConfig() {
         var molded = EnemyDefinitions.Instance.All.First(x => x.Id == "Molded");
         var blade = EnemyDefinitions.Instance.All.First(x => x.Id == "MoldedBlade");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemy-speed"] = true;
             config["enemy-speed-min-molded"] = 2.0;
             config["enemy-speed-max-molded"] = 2.0;
@@ -57,12 +52,10 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_MoldedSpeed_ProbabilityZeroSkipsSpeedChanges()
-    {
+    public void EnemyDirectiveModifier_MoldedSpeed_ProbabilityZeroSkipsSpeedChanges() {
         var enemy = EnemyDefinitions.Instance.All.First(x => x.Id == "Molded");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemy-speed"] = true;
             config["enemy-speed-probability"] = 0.0;
             config["enemy-speed-min-molded"] = 2.0;
@@ -78,10 +71,8 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_EnemySpeed_DoesNotModifySharedRankSpeed()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void EnemyDirectiveModifier_EnemySpeed_DoesNotModifySharedRankSpeed() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemy-speed"] = true;
             config["enemy-speed-min-molded"] = 2.0;
             config["enemy-speed-max-molded"] = 2.0;
@@ -89,20 +80,17 @@ public class RandomizerEnemyDirectiveBehaviorTests
 
         var holderPath = PakPath.UserFile("prefab/character/misc/parameter/battle/enemyrankparameterholder.user");
         var holder = result.ReadBeforeUserFile<app.EnemyRankParameterHolder>(holderPath);
-        foreach (var unit in holder.Units)
-        {
+        foreach (var unit in holder.Units) {
             var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
             Assert.False(result.WasFileModified(userFilePath));
         }
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_JackMutatedHealth_UsesIndividualAbsolutePartValues()
-    {
+    public void EnemyDirectiveModifier_JackMutatedHealth_UsesIndividualAbsolutePartValues() {
         var directivePath = PakPath.UserFile("prefab/character/em8100/parameter/directive/em8100battledirective.user");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["boss-random-health"] = true;
             config["boss-health-min-jackmutated-eye-1"] = 1700.0;
             config["boss-health-max-jackmutated-eye-1"] = 1700.0;
@@ -119,12 +107,10 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_MargeMutatedHealth_UsesSecondaryAbsolutePartValues()
-    {
+    public void EnemyDirectiveModifier_MargeMutatedHealth_UsesSecondaryAbsolutePartValues() {
         var resistPath = PakPath.UserFile("prefab/character/em3600/resistparameters/em3600resistparameter_normal.user");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["boss-random-health"] = true;
             config["boss-health-min-margemutated-escape-resist"] = 1111.0;
             config["boss-health-max-margemutated-escape-resist"] = 1111.0;
@@ -145,12 +131,10 @@ public class RandomizerEnemyDirectiveBehaviorTests
     }
 
     [Fact]
-    public void EnemyDirectiveModifier_MoldedFatHealth_UsesLostPartAbsoluteValues()
-    {
+    public void EnemyDirectiveModifier_MoldedFatHealth_UsesLostPartAbsoluteValues() {
         var resistPath = PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameter_04.user");
 
-        using var result = RandomizerTest.RunState(config =>
-        {
+        using var result = RandomizerTest.RunState(config => {
             config["enemy-random-health"] = true;
             config["enemy-health-min-moldedfat-lost-head"] = 2100.0;
             config["enemy-health-max-moldedfat-lost-head"] = 2100.0;
@@ -176,8 +160,7 @@ public class RandomizerEnemyDirectiveBehaviorTests
         Assert.Equal(2300.0f, after.Get<float>("units[2].parts[4].healthUnits[0].healthMax"));
     }
 
-    private static string GetFirstMoldedDirectivePath(RandomizerRunResult result, IEnemyDefinition enemy)
-    {
+    private static string GetFirstMoldedDirectivePath(RandomizerRunResult result, IEnemyDefinition enemy) {
         var holder = result.ReadAfterUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         return PakPath.UserFile(holder.holder.Units.First().Directive.Path);
     }

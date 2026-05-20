@@ -5,14 +5,12 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class ItemModifier : Modifier
-{
-    private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private readonly static AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
-    private readonly static HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
+internal class ItemModifier : Modifier {
+    private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
+    private static readonly HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         if (!randomizer.GetConfigOption<bool>("random-items"))
             return;
 
@@ -22,14 +20,15 @@ internal class ItemModifier : Modifier
         var itemPlacementService = randomizer.ItemPlacementService;
         var templateService = randomizer.TemplateService;
         var replaceMadhouseTapes = randomizer.GetConfigOption<bool>("replace-madhouse-tapes")
-            || MadhouseSaveModifier.IsEnabled(randomizer);
+                                   || MadhouseSaveModifier.IsEnabled(randomizer);
         var replaceWeapons = randomizer.GetConfigOption<bool>("replace-weapons");
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         var randomItemSettings = context.RandomItemSettings;
         var templateInstanceRng = randomizer.GetRng("modifier/static-items/template-instances");
 
         var candidates = GetIndexedItemPlacements(randomizer, itemPlacementService)
-            .SelectMany(placement => CreateCandidate(logger, itemRandomizer, placement, replaceMadhouseTapes, replaceWeapons))
+            .SelectMany(placement =>
+                CreateCandidate(logger, itemRandomizer, placement, replaceMadhouseTapes, replaceWeapons))
             .DistinctBy(candidate => candidate.Key)
             .ToList();
         if (candidates.Count == 0)
@@ -37,8 +36,7 @@ internal class ItemModifier : Modifier
 
         var replacements = CreateReplacementMap(candidates, itemRandomizer, rng, randomItemSettings);
 
-        foreach (var areaGroup in candidates.GroupBy(candidate => candidate.AreaPath))
-        {
+        foreach (var areaGroup in candidates.GroupBy(candidate => candidate.AreaPath)) {
             var itemsToReplace = areaGroup
                 .Where(candidate => replacements.ContainsKey(candidate.Key))
                 .ToList();
@@ -47,16 +45,14 @@ internal class ItemModifier : Modifier
 
             logger.Push(FormatScenePath(areaGroup.Key));
 
-            randomizer.FileRepository.ModifyScnFile(areaGroup.Key, scene =>
-            {
+            randomizer.FileRepository.ModifyScnFile(areaGroup.Key, scene => {
                 var targetGuids = itemsToReplace
                     .Select(candidate => candidate.Placement.Guid)
                     .ToHashSet();
                 var originalGameObjects = scene.FindGameObjectsByGuidWithFsmContext(targetGuids);
                 var replacementGameObjects = new Dictionary<Guid, RszGameObject>();
 
-                foreach (var candidate in itemsToReplace)
-                {
+                foreach (var candidate in itemsToReplace) {
                     var definition = candidate.Definition;
                     var placement = candidate.Placement;
                     var originalMatch = originalGameObjects[placement.Guid];
@@ -65,13 +61,14 @@ internal class ItemModifier : Modifier
                     var itemComponent = originalGameObject.FindComponent<app.Item>()!;
                     var drop = replacements[candidate.Key];
 
-                    var replaceeName = _itemDefinitions.FromId(itemComponent.ItemDataID)?.Name ?? definition.Name ?? itemComponent.ItemDataID;
+                    var replaceeName = _itemDefinitions.FromId(itemComponent.ItemDataID)?.Name ??
+                                       definition.Name ?? itemComponent.ItemDataID;
                     var replacerName = _itemDefinitions.FromId(drop.Id)?.Name ?? drop.Id;
                     var quantity = itemComponent._IsOverwriteDifficultItemNumSetting
                         ? $"[{itemComponent._DifficultItemNumSetting.EasyNum}, {itemComponent.ItemStackNum}, {itemComponent._DifficultItemNumSetting.HardNum}]"
                         : itemComponent.ItemStackNum.ToString();
                     logger.LogLine($"Replacing {quantity}x {replaceeName} at {placement.Position} with " +
-                        $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}...");
+                                   $"[{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {replacerName}...");
                     logger.LogLine($"GUID: {originalGameObject.Guid}");
                     logger.LogLine($"Scene: {FormatScenePath(placement.SceneFile)}");
 
@@ -86,14 +83,13 @@ internal class ItemModifier : Modifier
                     var templateItemId = itemRandomizer.GetItemTemplateIdForDrop(drop.Id, rng, randomItemSettings);
                     var template = templateService.GetItemTemplate(templateItemId);
 
-                    if (originalMatch.HasFsmInHierarchy)
-                    {
-                        if (!preserveItemModels)
-                        {
+                    if (originalMatch.HasFsmInHierarchy) {
+                        if (!preserveItemModels) {
                             originalGameObject = originalGameObject.ApplyVisualResourcesFromTemplate(template);
                         }
 
-                        logger.LogLine("Preserving original pickup object shape because this placement is FSM-controlled.");
+                        logger.LogLine(
+                            "Preserving original pickup object shape because this placement is FSM-controlled.");
                         replacementGameObjects[originalGameObject.Guid] = originalGameObject;
                         continue;
                     }
@@ -102,11 +98,9 @@ internal class ItemModifier : Modifier
                     newGameObject = newGameObject.AddOrUpdateComponent(originalTransform);
                     newGameObject = newGameObject.AddOrUpdateComponent(itemComponent);
 
-                    if (preserveItemModels)
-                    {
+                    if (preserveItemModels) {
                         var mesh = originalGameObject.FindComponent("via.render.Mesh");
-                        if (mesh != null)
-                        {
+                        if (mesh != null) {
                             newGameObject = newGameObject.AddOrUpdateComponent(mesh);
                         }
                     }
@@ -132,20 +126,16 @@ internal class ItemModifier : Modifier
     }
 
     private static T ReplaceGameObjects<T>(T node, IReadOnlyDictionary<Guid, RszGameObject> replacements)
-        where T : IRszSceneNode
-    {
+        where T : IRszSceneNode {
         if (node.Children.IsDefaultOrEmpty)
             return node;
 
         var children = node.Children.ToBuilder();
-        for (var i = 0; i < children.Count; i++)
-        {
-            if (children[i] is RszGameObject oldGameObject && replacements.TryGetValue(oldGameObject.Guid, out var replacement))
-            {
+        for (var i = 0; i < children.Count; i++) {
+            if (children[i] is RszGameObject oldGameObject &&
+                replacements.TryGetValue(oldGameObject.Guid, out var replacement)) {
                 children[i] = replacement.WithGuid(oldGameObject.Guid);
-            }
-            else
-            {
+            } else {
                 children[i] = ReplaceGameObjects(children[i], replacements);
             }
         }
@@ -153,17 +143,13 @@ internal class ItemModifier : Modifier
         return (T)node.WithChildren(children.ToImmutable());
     }
 
-    private static IEnumerable<ItemPlacement> GetIndexedItemPlacements(Randomizer randomizer, ItemPlacementService itemPlacementService)
-    {
+    private static IEnumerable<ItemPlacement> GetIndexedItemPlacements(Randomizer randomizer,
+        ItemPlacementService itemPlacementService) {
         var targetRepository = AreaSceneTargetRepository.Default;
-        if (targetRepository.All.Count == 0)
-        {
-            foreach (var area in randomizer.AreaService.Areas)
-            {
-                foreach (var itemGameObject in area.Items)
-                {
-                    foreach (var placement in itemPlacementService.FromSceneGuid(area.Path, itemGameObject.Guid))
-                    {
+        if (targetRepository.All.Count == 0) {
+            foreach (var area in randomizer.AreaService.Areas) {
+                foreach (var itemGameObject in area.Items) {
+                    foreach (var placement in itemPlacementService.FromSceneGuid(area.Path, itemGameObject.Guid)) {
                         yield return placement;
                     }
                 }
@@ -176,18 +162,15 @@ internal class ItemModifier : Modifier
             .Where(area => area.Dlc == null)
             .Select(area => area.Path)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var targets in targetRepository.All)
-        {
+        foreach (var targets in targetRepository.All) {
             if (!eligibleScenePaths.Contains(targets.Path))
                 continue;
 
-            foreach (var itemGuid in targets.GetItemGuids())
-            {
+            foreach (var itemGuid in targets.GetItemGuids()) {
                 if (!itemPlacementService.HasItem(itemGuid))
                     continue;
 
-                foreach (var placement in itemPlacementService.FromSceneGuid(targets.Path, itemGuid))
-                {
+                foreach (var placement in itemPlacementService.FromSceneGuid(targets.Path, itemGuid)) {
                     yield return placement;
                 }
             }
@@ -199,14 +182,12 @@ internal class ItemModifier : Modifier
         ItemRandomizer itemRandomizer,
         ItemPlacement placement,
         bool replaceMadhouseTapes,
-        bool replaceWeapons)
-    {
+        bool replaceWeapons) {
         if (placement.Dlc != null
             || placement.IsExtra
             || !placement.Enabled
             || placement.Tags.Contains(ItemPlacement.ExcludeTag)
-            || _birdCageGuids.Contains(placement.Guid))
-        {
+            || _birdCageGuids.Contains(placement.Guid)) {
             yield break;
         }
 
@@ -214,16 +195,16 @@ internal class ItemModifier : Modifier
         if (definition == null || !itemRandomizer.IsItemAllowed(definition))
             yield break;
 
-        if (!replaceMadhouseTapes && definition.Id == "SaveTape")
-        {
-            logger.LogLine($"NOT replacing Madhouse cassette tape at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
+        if (!replaceMadhouseTapes && definition.Id == "SaveTape") {
+            logger.LogLine(
+                $"NOT replacing Madhouse cassette tape at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
             logger.LogLine($"GUID: {placement.Guid}");
             yield break;
         }
 
-        if (!replaceWeapons && definition.IsWeapon)
-        {
-            logger.LogLine($"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
+        if (!replaceWeapons && definition.IsWeapon) {
+            logger.LogLine(
+                $"NOT replacing weapon \"{definition.Name}\" at {placement.Position} in {FormatScenePath(placement.SceneFile)}");
             logger.LogLine($"GUID: {placement.Guid}");
             yield break;
         }
@@ -238,26 +219,22 @@ internal class ItemModifier : Modifier
         IReadOnlyList<ItemReplacementCandidate> candidates,
         ItemRandomizer itemRandomizer,
         Rng rng,
-        RandomItemSettings randomItemSettings)
-    {
+        RandomItemSettings randomItemSettings) {
         var result = new Dictionary<ReplacementKey, Item>();
 
-        foreach (var chapterGroup in candidates.GroupBy(candidate => candidate.Placement.Chapter).OrderBy(group => group.Key))
-        {
+        foreach (var chapterGroup in candidates.GroupBy(candidate => candidate.Placement.Chapter)
+                     .OrderBy(group => group.Key)) {
             var availableCandidates = chapterGroup.ToList();
-            foreach (var valuableDrop in itemRandomizer.GetValuableDrops(rng, "item-drop"))
-            {
+            foreach (var valuableDrop in itemRandomizer.GetValuableDrops(rng, "item-drop")) {
                 var target = TakeRandomHighValueItem(availableCandidates, rng);
-                if (target == null)
-                {
+                if (target == null) {
                     break;
                 }
 
                 result[target.Key] = valuableDrop.Item;
             }
 
-            foreach (var candidate in availableCandidates)
-            {
+            foreach (var candidate in availableCandidates) {
                 result[candidate.Key] = itemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
             }
         }
@@ -265,10 +242,9 @@ internal class ItemModifier : Modifier
         return result;
     }
 
-    private static ItemReplacementCandidate? TakeRandomHighValueItem(List<ItemReplacementCandidate> candidates, Rng rng)
-    {
-        if (candidates.Count == 0)
-        {
+    private static ItemReplacementCandidate?
+        TakeRandomHighValueItem(List<ItemReplacementCandidate> candidates, Rng rng) {
+        if (candidates.Count == 0) {
             return null;
         }
 
@@ -281,11 +257,9 @@ internal class ItemModifier : Modifier
         return target;
     }
 
-    private static int GetValuablePlacementScore(ItemReplacementCandidate candidate)
-    {
+    private static int GetValuablePlacementScore(ItemReplacementCandidate candidate) {
         var definition = candidate.Definition;
-        return definition.Id switch
-        {
+        return definition.Id switch{
             "RepairKit" or "CylinderKey" => 100,
             "PowerUpCoin01A" or "PowerUpCoin01B" => 90,
             "Stimulant" or "Depressant" => 70,
@@ -304,8 +278,7 @@ internal class ItemModifier : Modifier
     private sealed record ItemReplacementCandidate(
         string AreaPath,
         ItemDefinition Definition,
-        ItemPlacement Placement)
-    {
+        ItemPlacement Placement) {
         public ReplacementKey Key => new(AreaPath, Placement.Guid);
     }
 }

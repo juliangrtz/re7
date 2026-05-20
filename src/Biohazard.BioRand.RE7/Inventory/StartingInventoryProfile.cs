@@ -1,14 +1,12 @@
 ﻿namespace Biohazard.BioRand.RE7.Inventory;
 
-internal enum WeaponTier
-{
+internal enum WeaponTier {
     Low = 0,
     Medium = 1,
     High = 2
 }
 
-internal class StartingInventoryProfile
-{
+internal class StartingInventoryProfile {
     public WeaponTier MinTier { get; set; }
     public WeaponTier MaxTier { get; set; }
     public int MinAmmo { get; set; }

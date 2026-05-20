@@ -6,95 +6,89 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-
 /// <summary>
 /// Using this modifier properly requires REFramework (_Data/REF_Scripts/RecipeMods.lua).
 /// This is because the game has very strict limitations for what is shown in the combine GUI.
 /// </summary>
-internal class RecipeModifier : Modifier
-{
+internal class RecipeModifier : Modifier {
     // The combine GUI only allows 20 slots, even in a modded state (4 cols, 5 rows).
     public const int MaxRecipeCount = 20;
 
     private const string RandomizerKey = "modifier/recipes";
 
-    private static readonly string DictionaryCombineDataPath = PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+    private static readonly string DictionaryCombineDataPath =
+        PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+
     private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
 
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private List<Recipe> _originalRecipes = new();
     private List<DictionaryCombineData.Data> _originalDictCombineData = new();
 
-    private static void LogRecipeState(RandomizerLogger logger, List<Recipe> recipes, List<DictionaryCombineData.Data> dict, bool beforeModifications)
-    {
+    private static void LogRecipeState(RandomizerLogger logger, List<Recipe> recipes,
+        List<DictionaryCombineData.Data> dict, bool beforeModifications) {
         var adjective = beforeModifications ? "Original" : "Modded";
         logger.Push($"{adjective} crafting recipes");
 
-        foreach (var recipe in recipes)
-        {
+        foreach (var recipe in recipes) {
             logger.LogLine(recipe.Format());
         }
 
         logger.Pop();
 
         logger.Push($"{adjective} crafting dictionary");
-        foreach (var itemId in dict.Select(d => _itemDefinitions.FromId(d.ItemDataID)?.Name).Choose())
-        {
+        foreach (var itemId in dict.Select(d => _itemDefinitions.FromId(d.ItemDataID)?.Name).Choose()) {
             logger.LogLine(itemId);
         }
+
         logger.Pop();
     }
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
         _originalRecipes = randomizer.FileRepository.DeserializeUserFile<ItemCombineData>(ItemCombineDataPath)._Datas;
-        _originalDictCombineData = randomizer.FileRepository.DeserializeUserFile<DictionaryCombineData>(DictionaryCombineDataPath)._Datas;
+        _originalDictCombineData = randomizer.FileRepository
+            .DeserializeUserFile<DictionaryCombineData>(DictionaryCombineDataPath)._Datas;
         LogRecipeState(logger, _originalRecipes, _originalDictCombineData, beforeModifications: true);
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var addNewRecipes = randomizer.GetConfigOption<bool>("recipes-add-new");
 
-        if (!addNewRecipes)
-        {
+        if (!addNewRecipes) {
             return;
         }
 
         var mode = randomizer.GetConfigOption<string>("recipes-randomization-mode");
         var rng = randomizer.GetRng(RandomizerKey);
-        if (mode == "No crafting")
-        {
+        if (mode == "No crafting") {
             logger.LogLine("User chose to disable crafting entirely. Removing all recipes now.");
             AddRecipes(randomizer, [], clear: true);
             RebuildDictionary(randomizer, []);
             return;
         }
 
-        var csv = randomizer.DynamicData.GetData(DynamicDataName.Recipes) ?? throw new Exception("Unable to get recipe data");
+        var csv = randomizer.DynamicData.GetData(DynamicDataName.Recipes) ??
+                  throw new Exception("Unable to get recipe data");
         var recipes = Csv.Deserialize<RecipeModel>(csv)
             .Where(r => r.Enabled)
             .ToImmutableList();
 
-        recipes.ForEach(r =>
-        {
-            if(!(r.Count1_Min > 0
-            && r.Count1_Max > 0
-            && r.Count2_Min > 0
-            && r.Count2_Max > 0
-            && r.OutputCount_Min > 0
-            && r.OutputCount_Max > 0
-            && _itemDefinitions.NameToId(r.Item1) != null
-            && _itemDefinitions.NameToId(r.Item2) != null
-            && _itemDefinitions.NameToId(r.OutputItem) != null))
-            {
+        recipes.ForEach(r => {
+            if (!(r.Count1_Min > 0
+                  && r.Count1_Max > 0
+                  && r.Count2_Min > 0
+                  && r.Count2_Max > 0
+                  && r.OutputCount_Min > 0
+                  && r.OutputCount_Max > 0
+                  && _itemDefinitions.NameToId(r.Item1) != null
+                  && _itemDefinitions.NameToId(r.Item2) != null
+                  && _itemDefinitions.NameToId(r.OutputItem) != null)) {
                 logger.LogLine("Bad CSV recipe! Please report this. Recipe: " + r);
             }
         });
 
         // Apply config
-        var recipePool = (mode switch
-        {
+        var recipePool = (mode switch{
             "Easy" => recipes.Where(r => r.Pool == RecipePool.Easy),
             "Balanced" => recipes.Where(r => r.Pool == RecipePool.Balanced),
             "Chaos" => recipes.Where(r => r.Pool == RecipePool.Chaos),
@@ -102,8 +96,7 @@ internal class RecipeModifier : Modifier
             _ => throw new ArgumentException($"Invalid recipe randomization mode '{mode}' supplied!")
         }).ToList();
 
-        if (!randomizer.GetConfigOption<bool>("recipes-allow-stabilizers-and-steroids"))
-        {
+        if (!randomizer.GetConfigOption<bool>("recipes-allow-stabilizers-and-steroids")) {
             recipePool.RemoveAll(recipe => _itemDefinitions.NameToId(recipe.OutputItem) is "Depressant" or "Stimulant");
         }
 
@@ -124,15 +117,13 @@ internal class RecipeModifier : Modifier
             .Select(r => CreateRecipe(r, rng))
             .ToList();
 
-        if (randomizer.GetConfigOption<bool>("recipes-random-item-quantities"))
-        {
+        if (randomizer.GetConfigOption<bool>("recipes-random-item-quantities")) {
             var minQuantity = randomizer.GetConfigOption<double>("recipes-count-min");
             var maxQuantity = randomizer.GetConfigOption<double>("recipes-count-max");
 
             double Scale() => Math.Round(rng.NextDouble(minQuantity, maxQuantity), 1);
 
-            foreach (var r in toBeAdded)
-            {
+            foreach (var r in toBeAdded) {
                 var src1 = r.SrcItemNum1;
                 var src2 = r.SrcItemNum2;
                 var result = r.ResultItemNum;
@@ -154,24 +145,21 @@ internal class RecipeModifier : Modifier
         LogRecipeState(logger, addedRecipes, newDict, beforeModifications: false);
     }
 
-    private static List<DictionaryCombineData.Data> RebuildDictionary(Randomizer randomizer, List<Recipe> newRecipes)
-    {
+    private static List<DictionaryCombineData.Data> RebuildDictionary(Randomizer randomizer, List<Recipe> newRecipes) {
         var result = new List<DictionaryCombineData.Data>();
         randomizer.FileRepository.ModifyUserFile<DictionaryCombineData>(
             DictionaryCombineDataPath,
-            root =>
-            {
+            root => {
                 root._Datas.Clear();
 
-                for (int i = 0; i < newRecipes.Count && i < MaxRecipeCount; i++)
-                {
-                    root._Datas.Add(new() { ItemDataID = newRecipes[i].ResultItemID });
+                for (int i = 0; i < newRecipes.Count && i < MaxRecipeCount; i++) {
+                    root._Datas.Add(new(){ ItemDataID = newRecipes[i].ResultItemID });
                 }
 
                 root._Datas = root._Datas
-                                .DistinctBy(d => d.ItemDataID)
-                                //.OrderBy(d => _itemDefinitions.FromId(d.ItemDataID)!.CategoryType)
-                                .ToList();
+                    .DistinctBy(d => d.ItemDataID)
+                    //.OrderBy(d => _itemDefinitions.FromId(d.ItemDataID)!.CategoryType)
+                    .ToList();
                 result = root._Datas;
                 return root;
             });
@@ -179,8 +167,7 @@ internal class RecipeModifier : Modifier
     }
 
     private static Recipe CreateRecipe(RecipeModel model, Rng rng)
-        => new Recipe()
-        {
+        => new(){
             _Comment = model.Comment,
             DataID = model.OutputItem,
             SrcItemID1 = _itemDefinitions.NameToId(model.Item1),
@@ -194,12 +181,9 @@ internal class RecipeModifier : Modifier
             IsTrophyTarget = false,
         };
 
-    private static void AddRecipes(Randomizer randomizer, List<Recipe> recipes, bool clear)
-    {
-        randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root =>
-        {
-            if (clear)
-            {
+    private static void AddRecipes(Randomizer randomizer, List<Recipe> recipes, bool clear) {
+        randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root => {
+            if (clear) {
                 root._Datas.Clear();
             }
 
@@ -210,8 +194,7 @@ internal class RecipeModifier : Modifier
         });
     }
 
-    internal enum RecipePool
-    {
+    internal enum RecipePool {
         AlwaysEnabled,
         Easy,
         Balanced,
@@ -219,8 +202,7 @@ internal class RecipeModifier : Modifier
         Crazy
     }
 
-    internal sealed class RecipeModel
-    {
+    internal sealed class RecipeModel {
         public bool Enabled { get; init; }
         public RecipePool Pool { get; init; }
         public int Count1_Min { get; init; }
@@ -235,6 +217,7 @@ internal class RecipeModifier : Modifier
         public string Comment { get; init; } = "";
 
         public override string ToString()
-            => $"[{Count1_Min}-{Count1_Max}]x {Item1} + [{Count2_Min}-{Count2_Max}]x {Item2} -> [{OutputCount_Min}-{OutputCount_Max}]x {OutputItem} ({Pool})";
+            =>
+                $"[{Count1_Min}-{Count1_Max}]x {Item1} + [{Count2_Min}-{Count2_Max}]x {Item2} -> [{OutputCount_Min}-{OutputCount_Max}]x {OutputItem} ({Pool})";
     }
 }

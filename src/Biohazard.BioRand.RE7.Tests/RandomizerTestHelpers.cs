@@ -5,15 +5,13 @@ using IntelOrca.Biohazard.REE.Variables;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
-internal static class RandomizerTestHelpers
-{
-    public static void ConfigureSingleDropRate(RandomizerConfiguration configuration, string id, double value)
-    {
+internal static class RandomizerTestHelpers {
+    public static void ConfigureSingleDropRate(RandomizerConfiguration configuration, string id, double value) {
         configuration[$"item-drop-ratio-{id.ToLowerInvariant()}"] = value;
     }
 
-    public static Dictionary<string, app.Collision.AttackUserData> ReadAttackUserDataByRequestSet(RandomizerRunResult result, string path, bool before)
-    {
+    public static Dictionary<string, app.Collision.AttackUserData> ReadAttackUserDataByRequestSet(
+        RandomizerRunResult result, string path, bool before) {
         var bytes = before ? result.ReadBeforeBytes(path) : result.ReadAfterBytes(path);
         var builder = new RcolFile(FileVersions.RcolFileVersion, bytes)
             .ToBuilder(result.Randomizer.FileRepository.TypeRepository);
@@ -25,8 +23,7 @@ internal static class RandomizerTestHelpers
                 x => RszSerializer.Deserialize<app.Collision.AttackUserData>(x.UserData!)!);
     }
 
-    public static app.ChapterJumpData GetChapterJump(RszScene scene, Guid guid)
-    {
+    public static app.ChapterJumpData GetChapterJump(RszScene scene, Guid guid) {
         var gameObject = scene.FindGameObject(guid);
         Assert.NotNull(gameObject);
         var jump = gameObject!.FindComponent<app.ChapterJumpData>();
@@ -34,33 +31,27 @@ internal static class RandomizerTestHelpers
         return jump!;
     }
 
-    public static IReadOnlyList<(Guid Guid, ChapterNo JumpChapter)> GetChapterJumps(RszScene scene)
-    {
+    public static IReadOnlyList<(Guid Guid, ChapterNo JumpChapter)> GetChapterJumps(RszScene scene) {
         var result = new List<(Guid, ChapterNo)>();
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             var jump = gameObject.FindComponent<app.ChapterJumpData>();
-            if (jump != null)
-            {
+            if (jump != null) {
                 result.Add((gameObject.Guid, jump.JumpChapter));
             }
         });
         return result;
     }
 
-    public static RszGameObject GetDynamicParent(RszScene scene)
-    {
+    public static RszGameObject GetDynamicParent(RszScene scene) {
         var gameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic", StringComparison.Ordinal));
         Assert.NotNull(gameObject);
         return gameObject!;
     }
 
-    public static List<BirdCageState> GetBirdCageStates(RszScene scene)
-    {
+    public static List<BirdCageState> GetBirdCageStates(RszScene scene) {
         var states = new List<BirdCageState>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             if (!gameObject.Name.Contains("CoinBox", StringComparison.OrdinalIgnoreCase))
                 return;
 
@@ -79,21 +70,18 @@ internal static class RandomizerTestHelpers
         return states;
     }
 
-    public static List<UvarGroupState> ReadGlobalVariableGroups(RandomizerRunResult result, bool before)
-    {
+    public static List<UvarGroupState> ReadGlobalVariableGroups(RandomizerRunResult result, bool before) {
         var bytes = before
             ? result.ReadBeforeBytes(RandomizerTestPaths.GlobalVariablesPath)
             : result.ReadAfterBytes(RandomizerTestPaths.GlobalVariablesPath);
         return ReadGlobalVariableGroups(bytes);
     }
 
-    public static List<UvarGroupState> ReadGlobalVariableGroups(byte[] bytes)
-    {
+    public static List<UvarGroupState> ReadGlobalVariableGroups(byte[] bytes) {
         var uvar = new UvarFile(bytes);
         var result = new List<UvarGroupState>();
 
-        for (int i = 0; i < uvar.EmbeddedCount; i++)
-        {
+        for (int i = 0; i < uvar.EmbeddedCount; i++) {
             var embeddedFile = uvar.GetEmbedded(i);
             var variables = embeddedFile
                 .ToBuilder()
@@ -114,8 +102,9 @@ internal static class RandomizerTestHelpers
 }
 
 internal sealed record BirdCageState(Guid ContainerGuid, string ItemId, int ItemCount, int CoinCount);
+
 internal sealed record UvarGroupState(string Name, IReadOnlyList<UvarVariableState> Variables);
-internal sealed record UvarVariableState(string GroupName, Guid Guid, string Name, float Value, int TypeVal)
-{
+
+internal sealed record UvarVariableState(string GroupName, Guid Guid, string Name, float Value, int TypeVal) {
     public bool BooleanValue => Value != 0;
 }

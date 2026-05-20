@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Enemies;
 
-public sealed class EnemyDefinitions
-{
+public sealed class EnemyDefinitions {
     private static readonly Lazy<EnemyDefinitions> _instance = new(Create, isThreadSafe: true);
 
     public List<IEnemyDefinition> All { get; private set; } = [];
@@ -13,16 +12,14 @@ public sealed class EnemyDefinitions
 
     public static EnemyDefinitions Instance => _instance.Value;
 
-    private static EnemyDefinitions Create()
-    {
+    private static EnemyDefinitions Create() {
         var instance = new EnemyDefinitions();
         instance.Initialize();
         return instance;
     }
 
-    private void Initialize()
-    {
-        All = [
+    private void Initialize() {
+        All =[
             //new EvelineFinalBoss(),
             new EvelineGrandmother(),
             new FlyingBug(),
@@ -49,5 +46,6 @@ public sealed class EnemyDefinitions
         => All.FirstOrDefault(em => em?.EnemyId == id, null);
 
     public IEnemyDefinition? FromId(string id)
-        => All.FirstOrDefault(em => em?.EnemyId.ToString().Equals(id, StringComparison.InvariantCultureIgnoreCase) == true, null);
+        => All.FirstOrDefault(
+            em => em?.EnemyId.ToString().Equals(id, StringComparison.InvariantCultureIgnoreCase) == true, null);
 }

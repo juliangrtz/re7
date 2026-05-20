@@ -6,19 +6,17 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerEnemyModifierBehaviorTests
-{
+public class RandomizerEnemyModifierBehaviorTests {
     private const string OldHouseBugEnemyScenePath = "natives/stm/scenes/chapter/chapter3/enemy_c03_3.scn.20";
     private const string MiaPastVhsEnemyScenePath = "natives/stm/scenes/chapter/ff050/enemy_ff050.scn.20";
 
-    private static readonly string[] GeneratorEnemyIds =
-    [
+    private static readonly string[] GeneratorEnemyIds =[
         "Molded",
         "MoldedFat",
         "MoldedQuick"
     ];
-    private static readonly Guid[] MargueritePitFightSpawnInfoGuids =
-    [
+
+    private static readonly Guid[] MargueritePitFightSpawnInfoGuids =[
         new("d484bae0-a8bf-4633-a917-d0aade800111"),
         new("28c36110-42dd-4a12-b6ed-389c1d97c779"),
         new("d3f157fa-68b6-0270-1678-e3ab4e066613"),
@@ -37,10 +35,8 @@ public class RandomizerEnemyModifierBehaviorTests
     ];
 
     [Fact]
-    public void SelectAreaEnemyPool_RespectsEnemyVarietyLimit()
-    {
-        var enemyPool = new[]
-        {
+    public void SelectAreaEnemyPool_RespectsEnemyVarietyLimit() {
+        var enemyPool = new[]{
             new EnemyTableEntry(new TestEnemyDefinition("A", EnemyID.Em4000), 1.0),
             new EnemyTableEntry(new TestEnemyDefinition("B", EnemyID.Em4100), 1.0),
             new EnemyTableEntry(new TestEnemyDefinition("C", EnemyID.Em4200), 1.0),
@@ -51,14 +47,13 @@ public class RandomizerEnemyModifierBehaviorTests
 
         Assert.Equal(2, selectedEnemies.Length);
         Assert.Equal(2, selectedEnemies.Select(x => x.Enemy.Id).Distinct(StringComparer.Ordinal).Count());
-        Assert.All(selectedEnemies, selected => Assert.Contains(enemyPool, entry => entry.Enemy.Id == selected.Enemy.Id));
+        Assert.All(selectedEnemies,
+            selected => Assert.Contains(enemyPool, entry => entry.Enemy.Id == selected.Enemy.Id));
     }
 
     [Fact]
-    public void RandomizeEnemies_EnemyVarietyOne_UsesSingleEligibleAliasPerScene()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_EnemyVarietyOne_UsesSingleEligibleAliasPerScene() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["enemy-variety"] = 1;
             config["enemy-pack-max-size"] = 1;
@@ -69,8 +64,7 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.NotEmpty(changedScenePaths);
 
         var scenesWithEligibleSpawns = 0;
-        foreach (var path in changedScenePaths)
-        {
+        foreach (var path in changedScenePaths) {
             var aliases = GetEligibleGeneratorAliases(result.ReadAfterScene(path))
                 .SelectMany(x => x)
                 .ToList();
@@ -85,10 +79,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_PackMaxSizeOne_AvoidsAdjacentDuplicateAliasesWithinGenerators()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_PackMaxSizeOne_AvoidsAdjacentDuplicateAliasesWithinGenerators() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["enemy-variety"] = GeneratorEnemyIds.Length;
             config["enemy-pack-max-size"] = 1;
@@ -99,16 +91,13 @@ public class RandomizerEnemyModifierBehaviorTests
         Assert.NotEmpty(changedScenePaths);
 
         var generatorsWithMultipleEligibleSpawns = 0;
-        foreach (var path in changedScenePaths)
-        {
-            foreach (var aliases in GetEligibleGeneratorAliases(result.ReadAfterScene(path)))
-            {
+        foreach (var path in changedScenePaths) {
+            foreach (var aliases in GetEligibleGeneratorAliases(result.ReadAfterScene(path))) {
                 if (aliases.Count < 2)
                     continue;
 
                 generatorsWithMultipleEligibleSpawns++;
-                for (var i = 1; i < aliases.Count; i++)
-                {
+                for (var i = 1; i < aliases.Count; i++) {
                     Assert.False(
                         string.Equals(aliases[i - 1], aliases[i], StringComparison.OrdinalIgnoreCase),
                         $"Found adjacent duplicate aliases in '{path}': {aliases[i - 1]} then {aliases[i]}.");
@@ -120,8 +109,7 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void IsBalancedCompatibleReplacement_UsesChapterProgressionStrengthCaps()
-    {
+    public void IsBalancedCompatibleReplacement_UsesChapterProgressionStrengthCaps() {
         var molded = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "Molded");
         var moldedQuick = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedQuick");
         var moldedFat = EnemyDefinitions.Instance.All.Single(enemy => enemy.Id == "MoldedFat");
@@ -163,11 +151,9 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_Balanced_PreservesOldHouseInsectsWhenPoolHasNoCompatibleInsects()
-    {
+    public void RandomizeEnemies_Balanced_PreservesOldHouseInsectsWhenPoolHasNoCompatibleInsects() {
         using var result = RandomizerTest.RunState(
-            config =>
-            {
+            config => {
                 config["random-enemies"] = true;
                 config["balanced-enemies"] = true;
                 config["enemy-variety"] = 3;
@@ -186,11 +172,10 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_Unbalanced_RestrictsOldHouseInsectsToInsectReplacements_AndDisablesStampSerialization()
-    {
+    public void
+        RandomizeEnemies_Unbalanced_RestrictsOldHouseInsectsToInsectReplacements_AndDisablesStampSerialization() {
         using var result = RandomizerTest.RunState(
-            config =>
-            {
+            config => {
                 config["random-enemies"] = true;
                 config["balanced-enemies"] = false;
                 config["enemy-variety"] = 4;
@@ -218,11 +203,9 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_ReplacingOldHouseInsectsWithHives_PreservesHiveInsectSpawnSlots()
-    {
+    public void RandomizeEnemies_ReplacingOldHouseInsectsWithHives_PreservesHiveInsectSpawnSlots() {
         using var result = RandomizerTest.RunState(
-            config =>
-            {
+            config => {
                 config["random-enemies"] = true;
                 config["enemy-variety"] = 1;
                 config["enemy-pack-max-size"] = 1;
@@ -231,7 +214,8 @@ public class RandomizerEnemyModifierBehaviorTests
             seed: 410980);
 
         var afterScene = result.ReadAfterScene(OldHouseBugEnemyScenePath);
-        var nestedSpawnAliases = GetSpawnAliasesByGameObjectNamePrefix(afterScene, "Em5400SpawnInfo", "Em5520SpawnInfo");
+        var nestedSpawnAliases =
+            GetSpawnAliasesByGameObjectNamePrefix(afterScene, "Em5400SpawnInfo", "Em5520SpawnInfo");
 
         Assert.NotEmpty(nestedSpawnAliases);
         Assert.All(nestedSpawnAliases["Em5400SpawnInfo"], alias => Assert.Equal("Em5400", alias));
@@ -239,11 +223,9 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_MargueriteInsectFallPitFightSpawns_AreNotRandomized()
-    {
+    public void RandomizeEnemies_MargueriteInsectFallPitFightSpawns_AreNotRandomized() {
         using var result = RandomizerTest.RunState(
-            config =>
-            {
+            config => {
                 config["random-enemies"] = true;
                 config["enemy-variety"] = 1;
                 config["enemy-pack-max-size"] = 1;
@@ -265,10 +247,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_MiaPastVhsEnemyScene_IsLoadedAndRandomized()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_MiaPastVhsEnemyScene_IsLoadedAndRandomized() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["enemy-variety"] = 1;
             config["enemy-pack-max-size"] = 1;
@@ -293,10 +273,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_GeneratorReplacementsUseTargetSpecifiedRankParameters()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_GeneratorReplacementsUseTargetSpecifiedRankParameters() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["balanced-enemies"] = false;
             config["enemy-variety"] = 1;
@@ -306,13 +284,12 @@ public class RandomizerEnemyModifierBehaviorTests
 
         var replacementsFromExplicitSpawnInfos = 0;
         foreach (var path in GetChangedScenePaths(result)
-            .Where(path => path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase)))
-        {
+                     .Where(path =>
+                         path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase))) {
             var beforeScene = result.ReadBeforeScene(path);
             var afterScene = result.ReadAfterScene(path);
 
-            afterScene.VisitGameObjects(afterGameObject =>
-            {
+            afterScene.VisitGameObjects(afterGameObject => {
                 var afterSpawnInfo = afterGameObject.FindComponent<app.EnemySpawnInfo>();
                 if (afterSpawnInfo?.UnitAlias != "Em4100")
                     return;
@@ -333,10 +310,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_Em3300ReplacementsAreMarkedForExplosiveBehavior()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_Em3300ReplacementsAreMarkedForExplosiveBehavior() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["balanced-enemies"] = false;
             config["enemy-variety"] = 1;
@@ -345,12 +320,9 @@ public class RandomizerEnemyModifierBehaviorTests
         });
 
         var replacements = new List<RszGameObject>();
-        foreach (var path in GetChangedScenePaths(result))
-        {
-            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
-            {
-                if (gameObject.Name == "Em3300_Static")
-                {
+        foreach (var path in GetChangedScenePaths(result)) {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject => {
+                if (gameObject.Name == "Em3300_Static") {
                     replacements.Add(gameObject);
                 }
             });
@@ -365,17 +337,14 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_VanillaEm3300sDoNotHaveExplosionMarker()
-    {
+    public void RandomizeEnemies_VanillaEm3300sDoNotHaveExplosionMarker() {
         using var result = RandomizerTest.RunState();
         var scene = result.ReadAfterScene("natives/stm/scenes/enemy/em3300.scn.20");
         var vanillaEm3300s = new List<RszGameObject>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             if (string.Equals(gameObject.Name, "Em3300", StringComparison.OrdinalIgnoreCase)
-                || gameObject.Name.StartsWith("Em3300_", StringComparison.OrdinalIgnoreCase))
-            {
+                || gameObject.Name.StartsWith("Em3300_", StringComparison.OrdinalIgnoreCase)) {
                 vanillaEm3300s.Add(gameObject);
             }
         });
@@ -387,10 +356,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void RandomizeEnemies_ForceTargetingProbability_AppliesToEligibleSpawnOptions() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["enemy-variety"] = 1;
             config["enemy-pack-max-size"] = 1;
@@ -399,16 +366,13 @@ public class RandomizerEnemyModifierBehaviorTests
         });
 
         var forceTargetingOptions = new List<RszObjectNode>();
-        foreach (var path in GetChangedScenePaths(result))
-        {
-            result.ReadAfterScene(path).VisitGameObjects(gameObject =>
-            {
+        foreach (var path in GetChangedScenePaths(result)) {
+            result.ReadAfterScene(path).VisitGameObjects(gameObject => {
                 var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
                 if (enemyGenerator?.Enabled != true)
                     return;
 
-                foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
-                {
+                foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject)) {
                     if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                         continue;
 
@@ -416,7 +380,8 @@ public class RandomizerEnemyModifierBehaviorTests
                     if (spawnInfo?.UnitAlias != "Em4200")
                         continue;
 
-                    forceTargetingOptions.AddRange(child.Components.Where(EnemySpawnInfoRules.SupportsForceTargetingOption));
+                    forceTargetingOptions.AddRange(
+                        child.Components.Where(EnemySpawnInfoRules.SupportsForceTargetingOption));
                 }
             });
         }
@@ -427,10 +392,8 @@ public class RandomizerEnemyModifierBehaviorTests
     }
 
     [Fact]
-    public void ForceTargetingProbability_AppliesWithoutEnemyReplacement()
-    {
-        using var result = RandomizerTest.RunState(config =>
-        {
+    public void ForceTargetingProbability_AppliesWithoutEnemyReplacement() {
+        using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = false;
             config[EnemyModifier.EnemyForceTargetingProbabilityConfigKey] = 1.0;
         });
@@ -444,11 +407,10 @@ public class RandomizerEnemyModifierBehaviorTests
             Assert.True(RszSerializer.Deserialize<bool>(component["IsForceTargetingToPlayer"])));
     }
 
-    private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration, IEnumerable<string> enabledEnemyIds)
-    {
+    private static void ConfigureGeneratorEnemyPool(RandomizerConfiguration configuration,
+        IEnumerable<string> enabledEnemyIds) {
         var enabledSet = enabledEnemyIds.ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var enemy in EnemyDefinitions.Instance.Randomizable)
-        {
+        foreach (var enemy in EnemyDefinitions.Instance.Randomizable) {
             configuration[$"enemy-ratio-{enemy.Id.ToLowerInvariant()}"] = enabledSet.Contains(enemy.Id) ? 1.0 : 0.0;
         }
     }
@@ -459,31 +421,26 @@ public class RandomizerEnemyModifierBehaviorTests
             .OrderBy(path => path, StringComparer.Ordinal)
             .ToList();
 
-    private static List<List<string>> GetEligibleGeneratorAliases(RszScene scene)
-    {
+    private static List<List<string>> GetEligibleGeneratorAliases(RszScene scene) {
         var result = new List<List<string>>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
             if (enemyGenerator?.Enabled != true)
                 return;
 
             var aliases = new List<string>();
-            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
-            {
+            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject)) {
                 if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
-                if (spawnInfo != null)
-                {
+                if (spawnInfo != null) {
                     aliases.Add(spawnInfo.UnitAlias);
                 }
             }
 
-            if (aliases.Count > 0)
-            {
+            if (aliases.Count > 0) {
                 result.Add(aliases);
             }
         });
@@ -491,14 +448,11 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static List<RszObjectNode> GetForceTargetingOptions(RszScene scene)
-    {
+    private static List<RszObjectNode> GetForceTargetingOptions(RszScene scene) {
         var result = new List<RszObjectNode>();
-        scene.VisitComponents((gameObject, component) =>
-        {
+        scene.VisitComponents((gameObject, component) => {
             if (gameObject.FindComponent<app.EnemySpawnInfo>() != null &&
-                EnemySpawnInfoRules.SupportsForceTargetingOption(component))
-            {
+                EnemySpawnInfoRules.SupportsForceTargetingOption(component)) {
                 result.Add(component);
             }
         });
@@ -506,24 +460,20 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static List<string> GetGeneratorSpawnAliases(RszScene scene, string generatorAlias)
-    {
+    private static List<string> GetGeneratorSpawnAliases(RszScene scene, string generatorAlias) {
         var result = new List<string>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
             if (!string.Equals(enemyGenerator?.Alias, generatorAlias, StringComparison.Ordinal))
                 return;
 
-            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject))
-            {
+            foreach (var child in GetGeneratorSpawnInfoGameObjects(gameObject)) {
                 if (!EnemySpawnInfoRules.ShouldReplaceSpawnInfo(child))
                     continue;
 
                 var spawnInfo = child.FindComponent<app.EnemySpawnInfo>();
-                if (spawnInfo != null)
-                {
+                if (spawnInfo != null) {
                     result.Add(spawnInfo.UnitAlias);
                 }
             }
@@ -532,20 +482,15 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static List<RszGameObject> GetGeneratorSpawnInfoGameObjects(RszGameObject generator)
-    {
+    private static List<RszGameObject> GetGeneratorSpawnInfoGameObjects(RszGameObject generator) {
         var result = new List<RszGameObject>();
-        foreach (var pool in generator.Children.Where(child => child.FindComponent<app.EnemyPool>() != null))
-        {
-            foreach (var poolChild in pool.Children)
-            {
+        foreach (var pool in generator.Children.Where(child => child.FindComponent<app.EnemyPool>() != null)) {
+            foreach (var poolChild in pool.Children) {
                 if (ContainsEnemyMesh(poolChild))
                     continue;
 
-                poolChild.VisitGameObjects(gameObject =>
-                {
-                    if (gameObject.FindComponent<app.EnemySpawnInfo>() != null)
-                    {
+                poolChild.VisitGameObjects(gameObject => {
+                    if (gameObject.FindComponent<app.EnemySpawnInfo>() != null) {
                         result.Add(gameObject);
                     }
                 });
@@ -555,12 +500,10 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static List<RszGameObject> GetGeneratorPoolInstances(RszScene scene, string generatorAlias)
-    {
+    private static List<RszGameObject> GetGeneratorPoolInstances(RszScene scene, string generatorAlias) {
         var result = new List<RszGameObject>();
 
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             var enemyGenerator = gameObject.FindComponent<app.EnemyGenerator>();
             if (!string.Equals(enemyGenerator?.Alias, generatorAlias, StringComparison.Ordinal))
                 return;
@@ -572,16 +515,14 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static bool ContainsEnemyMesh(RszGameObject gameObject)
-    {
+    private static bool ContainsEnemyMesh(RszGameObject gameObject) {
         var result = false;
-        gameObject.VisitGameObjects(child =>
-        {
+        gameObject.VisitGameObjects(child => {
             var mesh = child.FindComponent("via.render.Mesh");
             if (mesh != null &&
                 mesh.Children.Length > 2 &&
-                mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true)
-            {
+                mesh.Children[2]?.ToString()
+                    ?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true) {
                 result = true;
             }
         });
@@ -589,15 +530,11 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static void AssertStampSerializationDisabled(IReadOnlyCollection<RszGameObject> instances)
-    {
+    private static void AssertStampSerializationDisabled(IReadOnlyCollection<RszGameObject> instances) {
         var stampControllers = new List<RszObjectNode>();
-        foreach (var instance in instances)
-        {
-            instance.VisitComponents(component =>
-            {
-                if (component.Type.Name == "app.StampController")
-                {
+        foreach (var instance in instances) {
+            instance.VisitComponents(component => {
+                if (component.Type.Name == "app.StampController") {
                     stampControllers.Add(component);
                 }
             });
@@ -608,19 +545,17 @@ public class RandomizerEnemyModifierBehaviorTests
             Assert.False(RszSerializer.Deserialize<bool>(component["IsSerializeTexture"])));
     }
 
-    private static Dictionary<string, List<string>> GetSpawnAliasesByGameObjectNamePrefix(RszScene scene, params string[] prefixes)
-    {
+    private static Dictionary<string, List<string>> GetSpawnAliasesByGameObjectNamePrefix(RszScene scene,
+        params string[] prefixes) {
         var result = prefixes.ToDictionary(prefix => prefix, _ => new List<string>(), StringComparer.Ordinal);
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             var matchingPrefix = prefixes.FirstOrDefault(prefix =>
                 gameObject.Name.StartsWith(prefix, StringComparison.Ordinal));
             if (matchingPrefix == null)
                 return;
 
             var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
-            if (spawnInfo != null)
-            {
+            if (spawnInfo != null) {
                 result[matchingPrefix].Add(spawnInfo.UnitAlias);
             }
         });
@@ -628,18 +563,16 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static Dictionary<Guid, string> GetSpawnAliasesByGameObjectGuid(RszScene scene, IReadOnlyCollection<Guid> guids)
-    {
+    private static Dictionary<Guid, string> GetSpawnAliasesByGameObjectGuid(RszScene scene,
+        IReadOnlyCollection<Guid> guids) {
         var result = new Dictionary<Guid, string>();
         var guidSet = guids.ToHashSet();
-        scene.VisitGameObjects(gameObject =>
-        {
+        scene.VisitGameObjects(gameObject => {
             if (!guidSet.Contains(gameObject.Guid))
                 return;
 
             var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
-            if (spawnInfo != null)
-            {
+            if (spawnInfo != null) {
                 result.Add(gameObject.Guid, spawnInfo.UnitAlias);
             }
         });
@@ -647,20 +580,18 @@ public class RandomizerEnemyModifierBehaviorTests
         return result;
     }
 
-    private static bool IsSpecifiedRankParameterEmpty(app.EnemySpawnInfo spawnInfo)
-    {
+    private static bool IsSpecifiedRankParameterEmpty(app.EnemySpawnInfo spawnInfo) {
         var specified = spawnInfo.specifiedRankParameter;
         return string.IsNullOrEmpty(specified.SpecifiedDirectivesName) &&
-            string.IsNullOrEmpty(specified.SpecifiedResistParameterName) &&
-            string.IsNullOrEmpty(specified.SpecifiedSlipParameterName);
+               string.IsNullOrEmpty(specified.SpecifiedResistParameterName) &&
+               string.IsNullOrEmpty(specified.SpecifiedSlipParameterName);
     }
 
-    private sealed class TestEnemyDefinition(string id, EnemyID enemyId) : IEnemyDefinition
-    {
+    private sealed class TestEnemyDefinition(string id, EnemyID enemyId) : IEnemyDefinition {
         public string Id { get; } = id;
         public EnemyID EnemyId { get; } = enemyId;
         public EnemyCategory Category => EnemyCategory.Molded;
-        public string Name => id;
+        public string Name => Id;
         public bool IsBoss => false;
         public int BaseHealth => 100;
         public string DirectivesHolderPath => string.Empty;

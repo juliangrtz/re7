@@ -8,13 +8,11 @@ internal sealed record EnemyTableEntry(
     double Weight
 );
 
-internal static class EnemyPoolSelector
-{
+internal static class EnemyPoolSelector {
     internal static ImmutableArray<EnemyTableEntry> SelectAreaEnemyPool(
         IReadOnlyList<EnemyTableEntry> enemyPool,
         int enemyVariety,
-        Rng rng)
-    {
+        Rng rng) {
         if (enemyPool.Count == 0)
             return [];
 
@@ -24,8 +22,7 @@ internal static class EnemyPoolSelector
 
         var remainingEntries = enemyPool.ToList();
         var selectedEntries = ImmutableArray.CreateBuilder<EnemyTableEntry>(desiredCount);
-        while (selectedEntries.Count < desiredCount)
-        {
+        while (selectedEntries.Count < desiredCount) {
             var selectedEnemy = ChooseWeightedEnemy(remainingEntries, rng);
             var selectedEntry = remainingEntries.First(entry => entry.Enemy == selectedEnemy);
             selectedEntries.Add(selectedEntry);
@@ -37,8 +34,7 @@ internal static class EnemyPoolSelector
 
     internal static IEnemyDefinition ChooseWeightedEnemy(
         IReadOnlyList<EnemyTableEntry> enemyPool,
-        Rng rng)
-    {
+        Rng rng) {
         if (enemyPool.Count == 0)
             throw new InvalidOperationException("No enemy entries are available.");
 
@@ -49,8 +45,7 @@ internal static class EnemyPoolSelector
         var roll = rng.NextDouble(0, totalWeight);
         var cumulativeWeight = 0.0;
 
-        for (var i = 0; i < enemyPool.Count - 1; i++)
-        {
+        for (var i = 0; i < enemyPool.Count - 1; i++) {
             cumulativeWeight += enemyPool[i].Weight;
             if (roll < cumulativeWeight)
                 return enemyPool[i].Enemy;
@@ -60,18 +55,15 @@ internal static class EnemyPoolSelector
     }
 }
 
-internal sealed class EnemyPackSelector(IEnumerable<EnemyTableEntry> enemyPool, int maxPackSize, Rng rng)
-{
+internal sealed class EnemyPackSelector(IEnumerable<EnemyTableEntry> enemyPool, int maxPackSize, Rng rng) {
     private readonly List<EnemyTableEntry> _enemyPool = [.. enemyPool];
     private readonly int _maxPackSize = Math.Max(1, maxPackSize);
     private readonly Rng _rng = rng;
     private IEnemyDefinition? _currentEnemy;
     private int _remainingPackSize;
 
-    public IEnemyDefinition Next()
-    {
-        if (_currentEnemy == null || _remainingPackSize == 0)
-        {
+    public IEnemyDefinition Next() {
+        if (_currentEnemy == null || _remainingPackSize == 0) {
             _currentEnemy = ChooseNextEnemy();
             _remainingPackSize = _rng.Next(1, _maxPackSize + 1);
         }
@@ -80,8 +72,7 @@ internal sealed class EnemyPackSelector(IEnumerable<EnemyTableEntry> enemyPool, 
         return _currentEnemy;
     }
 
-    private IEnemyDefinition ChooseNextEnemy()
-    {
+    private IEnemyDefinition ChooseNextEnemy() {
         if (_enemyPool.Count == 0)
             throw new InvalidOperationException("Cannot choose an enemy from an empty pack selector.");
 

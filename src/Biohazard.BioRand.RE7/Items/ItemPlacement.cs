@@ -7,13 +7,12 @@ using System.Diagnostics;
 namespace Biohazard.BioRand.RE7.Items;
 
 [DebuggerDisplay("{GuidOrAuto}")]
-public class ItemPlacement
-{
+public class ItemPlacement {
     public bool IsExtra { get; set; }
     public string? Comment { get; set; } = "";
     public ImmutableArray<string> Tags { get; set; } = [];
     public required string Id { get; set; }
- 
+
     public bool Enabled { get; set; }
     public int StackNum { get; set; }
     public int EasyNum { get; set; } = -1;
@@ -31,8 +30,7 @@ public class ItemPlacement
     public float RotZ { get; set; }
     public float RotW { get; set; }
 
-    [Key]
-    public Guid Guid { get; set; }
+    [Key] public Guid Guid { get; set; }
 
     public Guid SaveGuid { get; set; }
     public string GameObjectName { get; set; } = "";
@@ -42,10 +40,12 @@ public class ItemPlacement
     public DlcType? Dlc { get; set; }
 
     public Guid GuidOrAuto => Guid == default ? $"item_{Id}".GetGuidHash() : Guid;
-    public SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
+    public SerializablePosition Position => new(PosX, PosY, PosZ);
+
     public SerializableRotation Rotation => HasZeroRotation
         ? new SerializableRotation(0, 0, 0, 1)
         : new SerializableRotation(RotX, RotY, RotZ, RotW);
+
     public EulerAngles Euler => new(Rotation);
 
     public const string ExcludeTag = "exclude";

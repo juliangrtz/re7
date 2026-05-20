@@ -5,31 +5,28 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class RandomizerEnemyMultiplierBehaviorTests
-{
+public class RandomizerEnemyMultiplierBehaviorTests {
     private const string TestScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
     private const string ExternalGenerateScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20";
 
     [Fact]
-    public void CollectMultipliableSpawnSlots_FindsFsmGeneratedSpawnInfos()
-    {
+    public void CollectMultipliableSpawnSlots_FindsFsmGeneratedSpawnInfos() {
         using var result = RandomizerTest.RunState();
         var (_, scene, slots) = FindSceneWithSlots(result, minSlots: 2);
 
         Assert.NotEmpty(slots);
-        Assert.All(slots, slot =>
-        {
+        Assert.All(slots, slot => {
             Assert.NotEqual(Guid.Empty, slot.SpawnInfoGuid);
             Assert.NotEqual(Guid.Empty, slot.GenerationGameObjectGuid);
-            Assert.Contains(slot.SpawnInfoGuid, EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(slot.GenerationGameObject));
+            Assert.Contains(slot.SpawnInfoGuid,
+                EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(slot.GenerationGameObject));
             Assert.NotNull(scene.FindGameObject(slot.SpawnInfoGuid));
             Assert.NotNull(scene.FindGameObject(slot.GenerationGameObjectGuid));
         });
     }
 
     [Fact]
-    public void MoldedsScene_CollectsGenerationObjectsWithMultipleSpawnInfos()
-    {
+    public void MoldedsScene_CollectsGenerationObjectsWithMultipleSpawnInfos() {
         using var result = RandomizerTest.RunState();
         var scene = result.ReadBeforeScene(TestScenePath);
         var groups = EnemyMultiplierModifier.CollectMultipliableSpawnGroups(scene);
@@ -38,16 +35,15 @@ public class RandomizerEnemyMultiplierBehaviorTests
         Assert.NotEmpty(groups);
         Assert.Contains(groups, group => group.SpawnSlots.Length > 1);
         Assert.Equal(groups.Sum(group => group.SpawnSlots.Length), slots.Length);
-        Assert.All(groups, group =>
-        {
-            var activeSpawnInfoRefs = EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(group.GenerationGameObject);
+        Assert.All(groups, group => {
+            var activeSpawnInfoRefs =
+                EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(group.GenerationGameObject);
             Assert.All(group.SpawnSlots, slot => Assert.Contains(slot.SpawnInfoGuid, activeSpawnInfoRefs));
         });
     }
 
     [Fact]
-    public void ProcessScene_MultiplierBelowOne_RemovesSpawnInfosAndDisablesGenerationActions()
-    {
+    public void ProcessScene_MultiplierBelowOne_RemovesSpawnInfosAndDisablesGenerationActions() {
         using var result = RandomizerTest.RunState();
         var (scenePath, scene, beforeSlots) = FindSceneWithSlots(result, minSlots: 2);
         var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, 0.5);
@@ -68,16 +64,14 @@ public class RandomizerEnemyMultiplierBehaviorTests
         var removedSlots = beforeSlots.Where(slot => !afterSpawnGuids.Contains(slot.SpawnInfoGuid)).ToList();
 
         Assert.Equal(beforeSlots.Length - targetCount, removedSlots.Count);
-        foreach (var removedSlot in removedSlots)
-        {
+        foreach (var removedSlot in removedSlots) {
             Assert.Null(afterScene.FindGameObject(removedSlot.SpawnInfoGuid));
             AssertNoActiveGenerationObjectReferences(afterScene, removedSlot.SpawnInfoGuid);
         }
     }
 
     [Fact]
-    public void ProcessScene_MultiplierAboveOne_DuplicatesSpawnInfosGenerationObjectsAndPoolInstances()
-    {
+    public void ProcessScene_MultiplierAboveOne_DuplicatesSpawnInfosGenerationObjectsAndPoolInstances() {
         using var result = RandomizerTest.RunState();
         var (scenePath, scene, beforeSlots) = FindSceneWithSlots(result, minSlots: 2);
         var beforeSpawnGuids = beforeSlots.Select(slot => slot.SpawnInfoGuid).ToHashSet();
@@ -110,8 +104,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
 
         Assert.Equal(beforeSlots.Length, newSlots.Count);
         Assert.Equal(beforePooledEnemyCount + newSlots.Count, afterPooledEnemyCount);
-        foreach (var newSlot in newSlots)
-        {
+        foreach (var newSlot in newSlots) {
             Assert.DoesNotContain(newSlot.GenerationGameObjectGuid, beforeGenerationGuids);
             Assert.Contains("_BioRandMultiplier", newSlot.SpawnInfoGameObject.Name);
             Assert.Contains("_BioRandMultiplier", newSlot.GenerationGameObject.Name);
@@ -128,8 +121,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void ApplyMaxEnemyCount_BelowCurrentLimit_PreservesCurrentForNeutralOrIncrease()
-    {
+    public void ApplyMaxEnemyCount_BelowCurrentLimit_PreservesCurrentForNeutralOrIncrease() {
         Assert.Equal(7, EnemyMultiplierModifier.ApplyMaxEnemyCount(
             currentEnemyCount: 7,
             uncappedTargetCount: 7,
@@ -142,8 +134,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void ApplyMaxEnemyCount_CapsReducedTarget()
-    {
+    public void ApplyMaxEnemyCount_CapsReducedTarget() {
         Assert.Equal(1, EnemyMultiplierModifier.ApplyMaxEnemyCount(
             currentEnemyCount: 7,
             uncappedTargetCount: 4,
@@ -151,8 +142,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void MoldedsScene_MultiplierAboveOne_DuplicatesFilteredGenerationClones()
-    {
+    public void MoldedsScene_MultiplierAboveOne_DuplicatesFilteredGenerationClones() {
         using var result = RandomizerTest.RunState();
         var scene = result.ReadBeforeScene(TestScenePath);
         var beforeGroups = EnemyMultiplierModifier.CollectMultipliableSpawnGroups(scene);
@@ -176,9 +166,9 @@ public class RandomizerEnemyMultiplierBehaviorTests
 
         Assert.Equal(targetCount, afterSlots.Length);
         Assert.Equal(beforeSlots.Count, newSlots.Count);
-        Assert.All(newSlots, slot =>
-        {
-            var activeSpawnInfoRefs = EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(slot.GenerationGameObject);
+        Assert.All(newSlots, slot => {
+            var activeSpawnInfoRefs =
+                EnemyMultiplierModifier.GetEnabledEnemyGenerateSpawnInfoRefs(slot.GenerationGameObject);
 
             Assert.Equal([slot.SpawnInfoGuid], activeSpawnInfoRefs.Distinct());
             Assert.DoesNotContain(slot.SpawnInfoGuid, beforeSpawnGuids);
@@ -186,20 +176,15 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void Randomizer_EnemyMultiplierAboveOne_UpdatesChangedSceneCounts()
-    {
+    public void Randomizer_EnemyMultiplierAboveOne_UpdatesChangedSceneCounts() {
         const double multiplier = 1.5;
 
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config["enemy-multiplier"] = multiplier;
-        });
+        using var result = RandomizerTest.RunState(config => { config["enemy-multiplier"] = multiplier; });
 
         var changedScenePaths = GetChangedScenePaths(result, multiplier);
 
         Assert.NotEmpty(changedScenePaths);
-        foreach (var path in changedScenePaths)
-        {
+        foreach (var path in changedScenePaths) {
             var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
             var afterSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadAfterScene(path));
             var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
@@ -210,20 +195,15 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void Randomizer_EnemyMultiplierBelowOne_UpdatesChangedSceneCounts()
-    {
+    public void Randomizer_EnemyMultiplierBelowOne_UpdatesChangedSceneCounts() {
         const double multiplier = 0.5;
 
-        using var result = RandomizerTest.RunState(config =>
-        {
-            config["enemy-multiplier"] = multiplier;
-        });
+        using var result = RandomizerTest.RunState(config => { config["enemy-multiplier"] = multiplier; });
 
         var changedScenePaths = GetChangedScenePaths(result, multiplier);
 
         Assert.NotEmpty(changedScenePaths);
-        foreach (var path in changedScenePaths)
-        {
+        foreach (var path in changedScenePaths) {
             var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
             var afterSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadAfterScene(path));
             var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
@@ -234,11 +214,9 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DoesNotDisableVanillaWithDefaultMultiplier()
-    {
+    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DoesNotDisableVanillaWithDefaultMultiplier() {
         using var result = RandomizerTest.RunState(
-            prepareRandomizer: randomizer =>
-            {
+            prepareRandomizer: randomizer => {
                 randomizer.DynamicData.SetData(
                     DynamicDataName.EnemyLimits,
                     System.Text.Encoding.UTF8.GetBytes(BuildEnemyLimitCsv(
@@ -259,15 +237,10 @@ public class RandomizerEnemyMultiplierBehaviorTests
     }
 
     [Fact]
-    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DisablesExcessWhenMultiplierReduces()
-    {
+    public void Randomizer_EnemyLimitExternalSpawnInfoMapping_DisablesExcessWhenMultiplierReduces() {
         using var result = RandomizerTest.RunState(
-            config =>
-            {
-                config["enemy-multiplier"] = 0.5;
-            },
-            prepareRandomizer: randomizer =>
-            {
+            config => { config["enemy-multiplier"] = 0.5; },
+            prepareRandomizer: randomizer => {
                 randomizer.DynamicData.SetData(
                     DynamicDataName.EnemyLimits,
                     System.Text.Encoding.UTF8.GetBytes(BuildEnemyLimitCsv(
@@ -291,8 +264,7 @@ public class RandomizerEnemyMultiplierBehaviorTests
         => result.ChangedFiles.Keys
             .Where(path => path.EndsWith(".scn.20", StringComparison.OrdinalIgnoreCase))
             .Where(path => !path.StartsWith("natives/stm/scenes/items/resources/skl")) // Birthday skills
-            .Where(path =>
-            {
+            .Where(path => {
                 var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(result.ReadBeforeScene(path));
                 var targetCount = EnemyMultiplierModifier.GetTargetEnemyCount(beforeSlots.Length, multiplier);
                 return beforeSlots.Length > 0 && beforeSlots.Length != targetCount;
@@ -300,20 +272,19 @@ public class RandomizerEnemyMultiplierBehaviorTests
             .OrderBy(path => path, StringComparer.Ordinal)
             .ToList();
 
-    private static (string Path, RszScene Scene, System.Collections.Immutable.ImmutableArray<EnemyMultiplierModifier.EnemySpawnSlot> Slots) FindSceneWithSlots(
-        RandomizerRunResult result,
-        int minSlots)
-    {
-        foreach (var area in result.AreaService.Areas)
-        {
+    private static (string Path, RszScene Scene,
+        System.Collections.Immutable.ImmutableArray<EnemyMultiplierModifier.EnemySpawnSlot> Slots) FindSceneWithSlots(
+            RandomizerRunResult result,
+            int minSlots) {
+        foreach (var area in result.AreaService.Areas) {
             var slots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(area.Scene);
-            if (slots.Length >= minSlots)
-            {
+            if (slots.Length >= minSlots) {
                 return (area.Path, area.Scene, slots);
             }
         }
 
-        throw new InvalidOperationException($"No test scene found with at least {minSlots} multipliable enemy spawn slots.");
+        throw new InvalidOperationException(
+            $"No test scene found with at least {minSlots} multipliable enemy spawn slots.");
     }
 
     private static int CountPooledEnemyInstances(
@@ -327,36 +298,30 @@ public class RandomizerEnemyMultiplierBehaviorTests
             .SelectMany(pool => pool!.Children)
             .Count(IsEnemyInstance);
 
-    private static bool IsEnemyInstance(RszGameObject gameObject)
-    {
+    private static bool IsEnemyInstance(RszGameObject gameObject) {
         var result = false;
-        gameObject.VisitGameObjects(child =>
-        {
+        gameObject.VisitGameObjects(child => {
             var mesh = child.FindComponent("via.render.Mesh");
             if (mesh != null &&
                 mesh.Children.Length > 2 &&
-                mesh.Children[2]?.ToString()?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true)
-            {
+                mesh.Children[2]?.ToString()
+                    ?.StartsWith("Character/Enemy/", StringComparison.InvariantCultureIgnoreCase) == true) {
                 result = true;
             }
         });
         return result;
     }
 
-    private static Guid GetComponentGuid(RszGameObject gameObject, string componentType, string fieldName)
-    {
+    private static Guid GetComponentGuid(RszGameObject gameObject, string componentType, string fieldName) {
         var component = gameObject.FindComponent(componentType);
         Assert.NotNull(component);
         return RszSerializer.Deserialize<Guid>(component![fieldName]);
     }
 
-    private static void AssertNoActiveGenerationObjectReferences(RszScene scene, Guid guid)
-    {
-        scene.VisitGameObjects(gameObject =>
-        {
+    private static void AssertNoActiveGenerationObjectReferences(RszScene scene, Guid guid) {
+        scene.VisitGameObjects(gameObject => {
             if (gameObject.FindComponent("via.fsm.Fsm") == null ||
-                gameObject.FindComponent("app.TriggerInAction") == null)
-            {
+                gameObject.FindComponent("app.TriggerInAction") == null) {
                 return;
             }
 

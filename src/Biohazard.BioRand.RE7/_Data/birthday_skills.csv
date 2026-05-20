@@ -1,24 +1,24 @@
-ItemDataID,Name,PassiveSkillUserPath,AttackChangeRate,MeleeAttackChangeRate,DyingAttackChangeRate,StunChangeRate,MaxHealthChangeValue,DamageChangeRate,IdleAutoRecoverySpeedChangeValue,GuardDamageCutRateChangeValue,WalkSpeedChangeRate,MoveSpeedChangeRate,DyingMoveSpeedChangeRate,ReloadSpeedChangeRate,HitTimeBonusChangeRate,KillTimeBonusChangeRate,DamageTimeBonusChangeRate,IsBulletStackNumInfinity,IsPsychostimulantEffectInfinity
-skl001,Infinite Ammo,Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE
-skl002,Health Regen,Prefab/Skill/skl002/Skl002PassiveSkill.user,0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl003,Clairvoyance,Prefab/Skill/skl003/Skl003PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,TRUE
-skl004,Time Bonus Alpha-II,Prefab/Skill/skl004/Skl004PassiveSkill.user,0,0,0,0,0,0,0,0,0,-0.25,0,0,0.3,0,0,FALSE,FALSE
-skl005,Time Bonus Alpha-I,Prefab/Skill/skl005/Skl005PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0,0,FALSE,FALSE
-skl006,Time Bonus Beta-II,Prefab/Skill/skl006/Skl006PassiveSkill.user,0,0,0,0,0,0,0,0,0,-0.25,0,0,0,0.3,0,FALSE,FALSE
-skl007,Time Bonus Beta-I,Prefab/Skill/skl007/Skl007PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0,FALSE,FALSE
-skl008,Defense II,Prefab/Skill/skl008/Skl008PassiveSkill.user,0,0,0,-0.2,0,-0.4,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl009,Defense I,Prefab/Skill/skl009/Skl009PassiveSkill.user,0,0,0,0,0,-0.2,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl010,Speed Up II,Prefab/Skill/skl010/Skl010PassiveSkill.user,0,0,0,0,0,1,0,0,0,0.25,0,0,0,0,0,FALSE,FALSE
-skl011,Speed Up I,Prefab/Skill/skl011/Skl011PassiveSkill.user,0,0,0,0,0,0.5,0,0,0,0.1,0,0,0,0,0,FALSE,FALSE
-skl012,Firepower Up II,Prefab/Skill/skl012/Skl012PassiveSkill.user,0.5,0,0,0,0,0,0,0,0,0,0,-0.25,0,0,0,FALSE,FALSE
-skl013,Firepower Up I,Prefab/Skill/skl013/Skl013PassiveSkill.user,0.25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl014,Impact II,Prefab/Skill/skl014/Skl014PassiveSkill.user,0,0,0,0.5,-300,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl015,Impact I,Prefab/Skill/skl015/Skl015PassiveSkill.user,0,0,0,0.25,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl016,Toughness II,Prefab/Skill/skl016/Skl016PassiveSkill.user,-0.2,0,0,0,500,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl017,Toughness I,Prefab/Skill/skl017/Skl017PassiveSkill.user,0,0,0,0,250,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl018,Guard Up,Prefab/Skill/skl018/Skl018PassiveSkill.user,0,0,0,0,0,0,0,0.15,0,0,0,0,0,0,0,FALSE,FALSE
-skl019,Quick Reload,Prefab/Skill/skl019/Skl019PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,0,0,0,FALSE,FALSE
-skl020,Masochist,Prefab/Skill/skl020/Skl020PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.03,FALSE,FALSE
-skl021,Vengeance,Prefab/Skill/skl021/Skl021PassiveSkill.user,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
-skl022,Narrow Escape,Prefab/Skill/skl022/Skl022PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0.5,0,0,0,0,FALSE,FALSE
-skl023,Brawler,Prefab/Skill/skl023/Skl023PassiveSkill.user,0,6,0,0,0,1,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+ItemDataID,Name,InventoryDescription,PassiveSkillUserPath,AttackChangeRate,MeleeAttackChangeRate,DyingAttackChangeRate,StunChangeRate,MaxHealthChangeValue,DamageChangeRate,IdleAutoRecoverySpeedChangeValue,GuardDamageCutRateChangeValue,WalkSpeedChangeRate,MoveSpeedChangeRate,DyingMoveSpeedChangeRate,ReloadSpeedChangeRate,HitTimeBonusChangeRate,KillTimeBonusChangeRate,DamageTimeBonusChangeRate,IsBulletStackNumInfinity,IsPsychostimulantEffectInfinity
+skl001,Infinite Ammo,"Infinite ammo. Reload your weapon\r\nas many times as you want...but\r\ntime bonuses are greatly decreased.",Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE
+skl002,Health Regen,"Stand still and watch that health\r\nrecover!",Prefab/Skill/skl002/Skl002PassiveSkill.user,0,0,0,0,0,0,30,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl003,Clairvoyance,"Lets you see where items are.",Prefab/Skill/skl003/Skl003PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,TRUE
+skl004,Time Bonus Alpha-II,"Greatly increases the time bonus\r\nwhen you land an attack...but greatly\r\nreduces your movement speed.",Prefab/Skill/skl004/Skl004PassiveSkill.user,0,0,0,0,0,0,0,0,0,-0.25,0,0,0.3,0,0,FALSE,FALSE
+skl005,Time Bonus Alpha-I,"Increases your time bonus when you\r\nland an attack!",Prefab/Skill/skl005/Skl005PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0,0,FALSE,FALSE
+skl006,Time Bonus Beta-II,"Greatly increases your time bonus\r\nwhen you kill an enemy...but greatly\r\nreduces your movement speed.",Prefab/Skill/skl006/Skl006PassiveSkill.user,0,0,0,0,0,0,0,0,0,-0.25,0,0,0,0.3,0,FALSE,FALSE
+skl007,Time Bonus Beta-I,"Increases your time bonus when\r\nyou kill an enemy!",Prefab/Skill/skl007/Skl007PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0.1,0,FALSE,FALSE
+skl008,Defense II,"Greatly increases your defense...\r\nbut makes it much harder to\r\nknock back the enemy.",Prefab/Skill/skl008/Skl008PassiveSkill.user,0,0,0,-0.2,0,-0.4,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl009,Defense I,"Increases your defense!",Prefab/Skill/skl009/Skl009PassiveSkill.user,0,0,0,0,0,-0.2,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl010,Speed Up II,"Greatly increases your movement speed...\r\nbut greatly reduces your defense.",Prefab/Skill/skl010/Skl010PassiveSkill.user,0,0,0,0,0,1,0,0,0,0.25,0,0,0,0,0,FALSE,FALSE
+skl011,Speed Up I,"Increases your movement speed...\r\nbut reduces your defense.",Prefab/Skill/skl011/Skl011PassiveSkill.user,0,0,0,0,0,0.5,0,0,0,0.1,0,0,0,0,0,FALSE,FALSE
+skl012,Firepower Up II,"Greatly increases your attack power...\r\nbut greatly reduces your reload speed.",Prefab/Skill/skl012/Skl012PassiveSkill.user,0.5,0,0,0,0,0,0,0,0,0,0,-0.25,0,0,0,FALSE,FALSE
+skl013,Firepower Up I,"Increases your attack power!",Prefab/Skill/skl013/Skl013PassiveSkill.user,0.25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl014,Impact II,"Makes it much easier to knock\r\nback the enemy...but greatly\r\nreduces your max health.",Prefab/Skill/skl014/Skl014PassiveSkill.user,0,0,0,0.5,-300,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl015,Impact I,"Makes it easier to knock back\r\nthe enemy!",Prefab/Skill/skl015/Skl015PassiveSkill.user,0,0,0,0.25,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl016,Toughness II,"Greatly increases your max health...\r\nbut greatly reduces your attack power.",Prefab/Skill/skl016/Skl016PassiveSkill.user,-0.2,0,0,0,500,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl017,Toughness I,"Increases your max health!",Prefab/Skill/skl017/Skl017PassiveSkill.user,0,0,0,0,250,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl018,Guard Up,"Makes guarding more effective!",Prefab/Skill/skl018/Skl018PassiveSkill.user,0,0,0,0,0,0,0,0.15,0,0,0,0,0,0,0,FALSE,FALSE
+skl019,Quick Reload,"Increases your reload speed!",Prefab/Skill/skl019/Skl019PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,0,0,0,FALSE,FALSE
+skl020,Masochist,"Gives you a time bonus when\r\nyou're attacked.",Prefab/Skill/skl020/Skl020PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.03,FALSE,FALSE
+skl021,Vengeance,"Greatly increases your attack\r\npower when you're near death.",Prefab/Skill/skl021/Skl021PassiveSkill.user,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,FALSE,FALSE
+skl022,Narrow Escape,"Greatly increases your movement\r\nspeed when you're near death.",Prefab/Skill/skl022/Skl022PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0.5,0,0,0,0,FALSE,FALSE
+skl023,Brawler,"Maxes out your melee attack power...\r\nbut greatly reduces your defense.",Prefab/Skill/skl023/Skl023PassiveSkill.user,0,6,0,0,0,1,0,0,0,0,0,0,0,0,0,FALSE,FALSE

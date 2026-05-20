@@ -4,8 +4,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal sealed class ExtraEnemyPlacement
-{
+internal sealed class ExtraEnemyPlacement {
     public bool Enabled { get; init; }
     public string Id { get; init; } = "";
     public string Comment { get; init; } = "";
@@ -25,19 +24,16 @@ internal sealed record ResolvedExtraEnemyPlacement(
     IEnemyDefinition Enemy
 );
 
-internal sealed class ExtraEnemyGeneratorBuild
-{
+internal sealed class ExtraEnemyGeneratorBuild {
     public List<RszGameObject> SpawnInfos { get; } = [];
     public List<RszGameObject> Instances { get; } = [];
 }
 
-internal static class ExtraEnemyPlanner
-{
+internal static class ExtraEnemyPlanner {
     internal static bool IsRandomEnemyId(string id)
         => id.Equals("random", StringComparison.OrdinalIgnoreCase);
 
-    internal static int? GetSharedChapter(IEnumerable<ExtraEnemyPlacement> placements)
-    {
+    internal static int? GetSharedChapter(IEnumerable<ExtraEnemyPlacement> placements) {
         var chapters = placements
             .Select(extraEnemy => extraEnemy.Chapter)
             .Distinct()
@@ -51,8 +47,7 @@ internal static class ExtraEnemyPlanner
     internal static ImmutableArray<ExtraEnemyPlacement> SelectRandomPlacementsWithoutReplacement(
         List<ExtraEnemyPlacement> placements,
         int count,
-        Rng rng)
-    {
+        Rng rng) {
         if (count <= 0)
             return [];
 
@@ -61,8 +56,7 @@ internal static class ExtraEnemyPlanner
 
         var remainingPlacements = placements.ToList();
         var selectedPlacements = ImmutableArray.CreateBuilder<ExtraEnemyPlacement>(Math.Max(0, count));
-        while (selectedPlacements.Count < count && remainingPlacements.Count > 0)
-        {
+        while (selectedPlacements.Count < count && remainingPlacements.Count > 0) {
             var selectedPlacement = rng.Next(remainingPlacements);
             selectedPlacements.Add(selectedPlacement);
             remainingPlacements.Remove(selectedPlacement);
@@ -71,8 +65,7 @@ internal static class ExtraEnemyPlanner
         return selectedPlacements.ToImmutable();
     }
 
-    internal static int GetSubsetCount(int placementCount, double percentage)
-    {
+    internal static int GetSubsetCount(int placementCount, double percentage) {
         if (placementCount <= 0)
             return 0;
 
@@ -86,11 +79,10 @@ internal static class ExtraEnemyPlanner
         RandomizerLogger logger,
         ExtraEnemyPlacement extraEnemy,
         IEnemyDefinition definition,
-        out ResolvedExtraEnemyPlacement request)
-    {
-        if (!definition.UsesEnemyGenerator)
-        {
-            logger.LogLine($"Skipping {definition.Name} at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: enemy has no generator spawn-info template.");
+        out ResolvedExtraEnemyPlacement request) {
+        if (!definition.UsesEnemyGenerator) {
+            logger.LogLine(
+                $"Skipping {definition.Name} at {extraEnemy.PosX}/{extraEnemy.PosY}/{extraEnemy.PosZ}: enemy has no generator spawn-info template.");
             request = null!;
             return false;
         }

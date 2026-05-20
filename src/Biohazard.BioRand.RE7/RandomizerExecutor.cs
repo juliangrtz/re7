@@ -6,33 +6,32 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
 
-public class RandomizerExecutor(string inputGamePath, IProgressReporter reporter)
-{
+public class RandomizerExecutor(string inputGamePath, IProgressReporter reporter) {
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
-    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
-    public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
 
-    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize(RandomizerInput input)
-    {
+    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition =>
+        RandomizerConfigurationDefinition.Create();
+
+    public static RandomizerConfiguration DefaultConfiguration =>
+        RandomizerConfigurationDefinition.Create().GetDefault();
+
+    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize(RandomizerInput input) {
         // We swap to invariant culture so , is decimal point
         var backupCulture = Thread.CurrentThread.CurrentCulture;
         var backupCultureUi = Thread.CurrentThread.CurrentUICulture;
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-        try
-        {
+        try {
             using var randomizer = new Randomizer(input, inputGamePath, reporter);
             return randomizer.Randomize();
         }
-        finally
-        {
+        finally {
             Thread.CurrentThread.CurrentCulture = backupCulture;
             Thread.CurrentThread.CurrentUICulture = backupCultureUi;
         }
     }
 
-    public static PakList GetDefaultPakList()
-    {
+    public static PakList GetDefaultPakList() {
         var pakListBytes = EmbeddedData.GetFile("pakcontentsrt.txt.gz").Ungzip();
         var pakListText = Encoding.UTF8.GetString(pakListBytes);
         return new PakList(pakListText);

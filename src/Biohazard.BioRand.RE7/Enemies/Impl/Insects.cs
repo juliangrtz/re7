@@ -2,19 +2,16 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class FlyingBug : InsectBase
-{
+internal class FlyingBug : InsectBase {
     public FlyingBug() : base("FlyingBug", EnemyID.Em5400, "Flying Bug", 150) { }
 }
 
-internal class InsectHive : InsectBase
-{
+internal class InsectHive : InsectBase {
     public InsectHive() : base("InsectHive", EnemyID.Em5510, "Insect Hive", 2400) { }
     // Also has variants Em5511 and Em5512, but they only differ in their appearance.
 }
 
-internal class InsectSwarm : InsectBase
-{
+internal class InsectSwarm : InsectBase {
     public InsectSwarm() : base("InsectSwarm", EnemyID.Em5520, "Insect Swarm", 800) { }
 }
 
@@ -24,8 +21,7 @@ internal class InsectSwarm : InsectBase
 //    public InsectSwarm2() : base("InsectSwarm2", EnemyID.Em5540, "Insect Swarm 2", 999999) { }
 //}
 
-internal abstract class InsectBase(string id, EnemyID enemyId, string name, int health) : IEnemyDefinition
-{
+internal abstract class InsectBase(string id, EnemyID enemyId, string name, int health) : IEnemyDefinition {
     public string Id => id;
 
     public EnemyID EnemyId => enemyId;
@@ -39,7 +35,8 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
     public int BaseHealth => health;
 
     private string SanitizedId => EnemyId.ToString().ToLower();
-    public List<string> RcolPaths => [
+
+    public List<string> RcolPaths =>[
         PakPath.RcolFile($"collision/collider/enemy/{SanitizedId}/{SanitizedId}.rcol"),
     ];
 
@@ -57,15 +54,12 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
     public bool SupportsSpeedRandomization => true;
 }
 
-internal class InsectsDirectiveModifier : IDirectiveModifier
-{
+internal class InsectsDirectiveModifier : IDirectiveModifier {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId is EnemyID.Em5400 or EnemyID.Em5510 or EnemyID.Em5520;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
-        if (!enemy.ShouldRandomizeSpeed(randomizer))
-        {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
+        if (!enemy.ShouldRandomizeSpeed(randomizer)) {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
@@ -74,43 +68,41 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
 
         logger.LogMultiplier("Speed multiplier", speedMultiplier);
 
-        if (enemy is FlyingBug)
-        {
-            var holder = randomizer.FileRepository.DeserializeUserFile<app.Em5400DirectivesHolder>(enemy.DirectivesHolderPath);
-            foreach (var directive in holder.holder.Units)
-            {
+        if (enemy is FlyingBug) {
+            var holder =
+                randomizer.FileRepository.DeserializeUserFile<app.Em5400DirectivesHolder>(enemy.DirectivesHolderPath);
+            foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5400Directive>(
-                    userFilePath,
-                    directive => ModifyDirective(directive, logger, speedMultiplier)));
+                logger.LogDirectiveFile(rank, userFilePath, () =>
+                    randomizer.FileRepository.ModifyUserFile<app.Em5400Directive>(
+                        userFilePath,
+                        directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
-        }
-        else if (enemy is InsectHive)
-        {
-            var holder = randomizer.FileRepository.DeserializeUserFile<app.Em5510DirectivesHolder>(enemy.DirectivesHolderPath);
-            foreach (var directive in holder.holder.Units)
-            {
+        } else if (enemy is InsectHive) {
+            var holder =
+                randomizer.FileRepository.DeserializeUserFile<app.Em5510DirectivesHolder>(enemy.DirectivesHolderPath);
+            foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5510UserData>(
-                    userFilePath,
-                    directive => ModifyDirective(directive, logger, speedMultiplier)));
+                logger.LogDirectiveFile(rank, userFilePath, () =>
+                    randomizer.FileRepository.ModifyUserFile<app.Em5510UserData>(
+                        userFilePath,
+                        directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
-        }
-        else if (enemy is InsectSwarm)
-        {
-            var holder = randomizer.FileRepository.DeserializeUserFile<app.Em5520DirectivesHolder>(enemy.DirectivesHolderPath);
-            foreach (var directive in holder.holder.Units)
-            {
+        } else if (enemy is InsectSwarm) {
+            var holder =
+                randomizer.FileRepository.DeserializeUserFile<app.Em5520DirectivesHolder>(enemy.DirectivesHolderPath);
+            foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
                 var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-                logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em5520Directive>(
-                    userFilePath,
-                    directive => ModifyDirective(directive, logger, speedMultiplier)));
+                logger.LogDirectiveFile(rank, userFilePath, () =>
+                    randomizer.FileRepository.ModifyUserFile<app.Em5520Directive>(
+                        userFilePath,
+                        directive => ModifyDirective(directive, logger, speedMultiplier)));
             }
         }
     }
@@ -118,8 +110,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
     private static app.Em5400Directive ModifyDirective(
         app.Em5400Directive directive,
         RandomizerLogger logger,
-        float speedMultiplier)
-    {
+        float speedMultiplier) {
         var oldDefaultSpeed = directive.MyCommonParam.DefaultSpeed;
         directive.MyCommonParam.DefaultSpeed *= speedMultiplier;
         logger.LogChange("Default speed", oldDefaultSpeed, directive.MyCommonParam.DefaultSpeed);
@@ -142,8 +133,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
     private static app.Em5510UserData ModifyDirective(
         app.Em5510UserData directive,
         RandomizerLogger logger,
-        float speedMultiplier)
-    {
+        float speedMultiplier) {
         var oldIntervalTime = directive.MyGenerateParam.IntervalTime;
         directive.MyGenerateParam.IntervalTime /= speedMultiplier;
         logger.LogChange("Generate interval", oldIntervalTime, directive.MyGenerateParam.IntervalTime);
@@ -158,8 +148,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier
     private static app.Em5520Directive ModifyDirective(
         app.Em5520Directive directive,
         RandomizerLogger logger,
-        float speedMultiplier)
-    {
+        float speedMultiplier) {
         var oldDefaultSpeed = directive.MyMoveParam.DefaultSpeed;
         directive.MyMoveParam.DefaultSpeed *= speedMultiplier;
         logger.LogChange("Default speed", oldDefaultSpeed, directive.MyMoveParam.DefaultSpeed);

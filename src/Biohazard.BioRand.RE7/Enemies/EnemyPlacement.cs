@@ -5,8 +5,7 @@ using System.Diagnostics;
 namespace Biohazard.BioRand.RE7.Enemies;
 
 [DebuggerDisplay("{Guid}")]
-public class EnemyPlacement
-{
+public class EnemyPlacement {
     public required EnemyID EnemyID { get; set; }
     public string Name { get; set; } = "";
     public string Tags { get; set; } = "";
@@ -29,7 +28,7 @@ public class EnemyPlacement
 
     public string SceneFile { get; set; } = "";
 
-    internal SerializablePosition Position => new SerializablePosition(PosX, PosY, PosZ);
-    internal SerializableRotation Rotation => new SerializableRotation(RotX, RotY, RotZ, RotW);
+    internal SerializablePosition Position => new(PosX, PosY, PosZ);
+    internal SerializableRotation Rotation => new(RotX, RotY, RotZ, RotW);
     internal EulerAngles Euler => new(Rotation);
 }

@@ -2,18 +2,15 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class MiaChainsaw : MiaBase
-{
+internal class MiaChainsaw : MiaBase {
     public MiaChainsaw() : base("MiaChainsaw", "Mia Winters (Chainsaw)", true, 2300) { }
 }
 
-internal class MiaKnife : MiaBase
-{
+internal class MiaKnife : MiaBase {
     public MiaKnife() : base("MiaKnife", "Mia Winters (Knife)", false, 700) { }
 }
 
-internal abstract class MiaBase(string id, string name, bool isBoss, int health) : IEnemyDefinition
-{
+internal abstract class MiaBase(string id, string name, bool isBoss, int health) : IEnemyDefinition {
     public string Id => id;
     public EnemyID EnemyId => EnemyID.Em2000;
     public EnemyCategory Category => EnemyCategory.Mia;
@@ -38,51 +35,43 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
     public bool SupportsSpeedRandomization => true;
 }
 
-internal class MiaDirectiveModifier : IDirectiveModifier
-{
+internal class MiaDirectiveModifier : IDirectiveModifier {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em2000;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
         var rng = randomizer.GetRng("enemy/em2000");
         var applySpeed = enemy.ShouldRandomizeSpeed(randomizer);
         var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
 
         var shouldRandomizeHealth = enemy.ShouldRandomizeHealth(randomizer);
         var health = shouldRandomizeHealth ? enemy.GetHealth(randomizer, rng) : (float?)null;
-        if (health.HasValue)
-        {
+        if (health.HasValue) {
             logger.LogHealthAssignment("Health", enemy.BaseHealth, health.Value);
-        }
-        else
-        {
+        } else {
             logger.LogLine("Health: unchanged (enemy health randomization disabled)");
         }
 
-        if (enemy.IsBoss)
-        {
-            if (applySpeed)
-            {
+        if (enemy.IsBoss) {
+            if (applySpeed) {
                 logger.LogMultiplier("Walk speed multiplier", speedMultiplier);
-            }
-            else
-            {
+            } else {
                 logger.LogLine("Walk speed multiplier: 1x (enemy speed randomization disabled)");
             }
         }
 
-        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
+        var holder =
+            randomizer.FileRepository.DeserializeUserFile<app.Em2000DirectivesHolder>(enemy.DirectivesHolderPath);
 
-        foreach (var directive in holder.holder.Units)
-        {
+        foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
-                userFilePath,
-                d => ModifyDirective(enemy, d, logger, health, speedMultiplier)
-            ));
+            logger.LogDirectiveFile(rank, userFilePath, () =>
+                randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(
+                    userFilePath,
+                    d => ModifyDirective(enemy, d, logger, health, speedMultiplier)
+                ));
         }
     }
 
@@ -91,39 +80,34 @@ internal class MiaDirectiveModifier : IDirectiveModifier
         app.Em2000BattleDirective directive,
         RandomizerLogger logger,
         float? health,
-        float speedMultiplier)
-    {
-        if (enemy.IsBoss)
-        {
-            if (health.HasValue)
-            {
+        float speedMultiplier) {
+        if (enemy.IsBoss) {
+            if (health.HasValue) {
                 var oldHealth = directive.chapter1Battle4.Health;
                 directive.chapter1Battle4.Health = health.Value;
                 logger.LogChange("Chapter 1 battle 4 health", oldHealth, directive.chapter1Battle4.Health);
             }
 
-            if (speedMultiplier == 1f)
-            {
+            if (speedMultiplier == 1f) {
                 logger.LogLine("No walk speed changes.");
                 return directive;
             }
 
             var oldWalkSpeedThird = directive.chapter1Battle4.WalkSpeedRateThird;
             directive.chapter1Battle4.WalkSpeedRateThird *= speedMultiplier;
-            logger.LogChange("Walk speed rate (third)", oldWalkSpeedThird, directive.chapter1Battle4.WalkSpeedRateThird);
+            logger.LogChange("Walk speed rate (third)", oldWalkSpeedThird,
+                directive.chapter1Battle4.WalkSpeedRateThird);
 
             var oldWalkSpeedForRank = directive.chapter1Battle4.WalkSpeedRateForRank;
             directive.chapter1Battle4.WalkSpeedRateForRank *= speedMultiplier;
-            logger.LogChange("Walk speed rate (rank)", oldWalkSpeedForRank, directive.chapter1Battle4.WalkSpeedRateForRank);
+            logger.LogChange("Walk speed rate (rank)", oldWalkSpeedForRank,
+                directive.chapter1Battle4.WalkSpeedRateForRank);
 
             var oldEvasiveWalkRate = directive.chapter1Battle4.EvasiveWalkRate;
             directive.chapter1Battle4.EvasiveWalkRate *= speedMultiplier;
             logger.LogChange("Evasive walk rate", oldEvasiveWalkRate, directive.chapter1Battle4.EvasiveWalkRate);
-        }
-        else
-        {
-            if (health.HasValue)
-            {
+        } else {
+            if (health.HasValue) {
                 var oldHealth = directive.chapter1Battle2.Health;
                 directive.chapter1Battle2.Health = health.Value;
                 logger.LogChange("Chapter 1 battle 2 health", oldHealth, directive.chapter1Battle2.Health);

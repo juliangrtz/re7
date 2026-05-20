@@ -1,7 +1,6 @@
 ﻿namespace Biohazard.BioRand.RE7;
 
-public enum MainCampaignCharacter
-{
+public enum MainCampaignCharacter {
     Ethan,
     ClancyVHS,
     Mia,

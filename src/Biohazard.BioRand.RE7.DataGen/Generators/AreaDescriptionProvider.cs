@@ -5,58 +5,83 @@ using System.Text.RegularExpressions;
 
 namespace Biohazard.BioRand.RE7.DataGen.Generators;
 
-internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, RszTypeRepository rszRepository)
-{
+internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, RszTypeRepository rszRepository) {
     private readonly Lazy<Dictionary<string, string>> _mapZoneDescriptions =
         new(() => LoadMapZoneDescriptions(pakFile, pakList, rszRepository));
 
-    private static readonly Regex SceneVersionRegex = new(@"\.scn\.\d+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex LeadingChapterRegex = new(@"^(?:c|ch|chapter)\d+_?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-    private static readonly Regex WordRegex = new(@"b\d+f|\d+f|s\d+|[a-z]+|\d+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex SceneVersionRegex =
+        new(@"\.scn\.\d+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    private static readonly (Regex Pattern, string Prefix, string Replacement)[] DescriptionRules =
-    [
-        (new Regex(@"^c08_shieldmachine", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Shield Machine", "shieldmachine"),
-        (new Regex(@"^c08_storageunderlayer", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Storage Area S1", "storageunderlayer"),
-        (new Regex(@"^c08_storage", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Storage Area", "storage"),
-        (new Regex(@"^c08_labopassage", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Research Facility", "labopassage"),
-        (new Regex(@"^c08_labo", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Research Facility", "labo"),
-        (new Regex(@"^c08_mining", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Mining Work Area", "mining"),
-        (new Regex(@"^c08_mine", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Central Cavern", "mine"),
-        (new Regex(@"^c08_train", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Mine Cart Yard", "train"),
-        (new Regex(@"^c08_caveev", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Elevator Hall", "caveev"),
-        (new Regex(@"^c08_cave", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Abandoned Mine", "cave"),
+    private static readonly Regex LeadingChapterRegex =
+        new(@"^(?:c|ch|chapter)\d+_?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        (new Regex(@"^c09_joehouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Joe's House", "joehouse"),
-        (new Regex(@"^c09_camp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Base", "camp"),
-        (new Regex(@"^c09_steamboat", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Paddle Boat", "steamboat"),
-        (new Regex(@"^c09_moldswamp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Quarantine Area", "moldswamp"),
-        (new Regex(@"^c09_church", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Abandoned Church", "church"),
-        (new Regex(@"^c09_cemetery", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Abandoned Church / Cemetery", "cemetery"),
-        (new Regex(@"^c09_climbinghut", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Abandoned Church", "climbinghut"),
-        (new Regex(@"^c09_bakerroad", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Swamp", "bakerroad"),
-        (new Regex(@"^c09_alligatorswamp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Swamp", "alligatorswamp"),
-        (new Regex(@"^c09_waterway", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Base / Waterway", "waterway"),
-        (new Regex(@"^c09_oldhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Old House", "oldhouse"),
-        (new Regex(@"^c09_mainhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Main House", "mainhouse"),
-        (new Regex(@"^c09_garden", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Yard", "garden"),
-        (new Regex(@"^c09_ghoutside", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Old House", "ghoutside"),
-        (new Regex(@"^c09_trailerhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Yard / Trailer", "trailerhouse"),
+    private static readonly Regex WordRegex = new(@"b\d+f|\d+f|s\d+|[a-z]+|\d+",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        (new Regex(@"^c01_", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Guest House", ""),
-        (new Regex(@"^c03_boat", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Boat House", "boat"),
-        (new Regex(@"^c03_cow|^c03_leftarea", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Testing Area", ""),
-        (new Regex(@"^c03_garden", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Yard", "garden"),
-        (new Regex(@"^c03_gh", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Greenhouse", "gh"),
-        (new Regex(@"^c03_mainhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Main House", "mainhouse"),
-        (new Regex(@"^c03_oldhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Old House", "oldhouse"),
-        (new Regex(@"^c04_ship", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Wrecked Ship", "ship"),
-        (new Regex(@"^c04_cave", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Salt Mine", "cave"),
-        (new Regex(@"^c04_c01", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Guest House", "c01"),
+    private static readonly (Regex Pattern, string Prefix, string Replacement)[] DescriptionRules =[
+        (new Regex("^c08_shieldmachine", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            "Not a Hero / Shield Machine", "shieldmachine"),
+        (new Regex("^c08_storageunderlayer", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            "Not a Hero / Storage Area S1", "storageunderlayer"),
+        (new Regex("^c08_storage", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Storage Area",
+            "storage"),
+        (new Regex("^c08_labopassage", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            "Not a Hero / Research Facility", "labopassage"),
+        (new Regex("^c08_labo", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Research Facility",
+            "labo"),
+        (new Regex("^c08_mining", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Mining Work Area",
+            "mining"),
+        (new Regex("^c08_mine", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Central Cavern",
+            "mine"),
+        (new Regex("^c08_train", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Mine Cart Yard",
+            "train"),
+        (new Regex("^c08_caveev", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Elevator Hall",
+            "caveev"),
+        (new Regex("^c08_cave", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Not a Hero / Abandoned Mine",
+            "cave"),
+
+        (new Regex("^c09_joehouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Joe's House",
+            "joehouse"),
+        (new Regex("^c09_camp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Base", "camp"),
+        (new Regex("^c09_steamboat", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Paddle Boat",
+            "steamboat"),
+        (new Regex("^c09_moldswamp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Quarantine Area",
+            "moldswamp"),
+        (new Regex("^c09_church", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Abandoned Church",
+            "church"),
+        (new Regex("^c09_cemetery", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            "End of Zoe / Abandoned Church / Cemetery", "cemetery"),
+        (new Regex("^c09_climbinghut", RegexOptions.IgnoreCase | RegexOptions.Compiled),
+            "End of Zoe / Abandoned Church", "climbinghut"),
+        (new Regex("^c09_bakerroad", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Swamp",
+            "bakerroad"),
+        (new Regex("^c09_alligatorswamp", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Swamp",
+            "alligatorswamp"),
+        (new Regex("^c09_waterway", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Base / Waterway",
+            "waterway"),
+        (new Regex("^c09_oldhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Old House",
+            "oldhouse"),
+        (new Regex("^c09_mainhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Main House",
+            "mainhouse"),
+        (new Regex("^c09_garden", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Yard", "garden"),
+        (new Regex("^c09_ghoutside", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Old House",
+            "ghoutside"),
+        (new Regex("^c09_trailerhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "End of Zoe / Yard / Trailer",
+            "trailerhouse"),
+
+        (new Regex("^c01_", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Guest House", ""),
+        (new Regex("^c03_boat", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Boat House", "boat"),
+        (new Regex("^c03_cow|^c03_leftarea", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Testing Area", ""),
+        (new Regex("^c03_garden", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Yard", "garden"),
+        (new Regex("^c03_gh", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Greenhouse", "gh"),
+        (new Regex("^c03_mainhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Main House", "mainhouse"),
+        (new Regex("^c03_oldhouse", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Old House", "oldhouse"),
+        (new Regex("^c04_ship", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Wrecked Ship", "ship"),
+        (new Regex("^c04_cave", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Salt Mine", "cave"),
+        (new Regex("^c04_c01", RegexOptions.IgnoreCase | RegexOptions.Compiled), "Guest House", "c01"),
     ];
 
-    private static readonly Dictionary<string, string> WordReplacements = new(StringComparer.OrdinalIgnoreCase)
-    {
+    private static readonly Dictionary<string, string> WordReplacements = new(StringComparer.OrdinalIgnoreCase){
         ["ai"] = "AI",
         ["aimap"] = "AI Map",
         ["asset"] = "Asset",
@@ -144,15 +169,13 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         ["workshop"] = "Workshop",
     };
 
-    public string? Describe(string path, int? chapter, DlcType? dlc, AreaKind kind)
-    {
+    public string? Describe(string path, int? chapter, DlcType? dlc, AreaKind kind) {
         var sceneName = GetBestSceneName(path);
         var mapDescription = GetMapDescription(sceneName);
         if (!string.IsNullOrWhiteSpace(mapDescription))
             return mapDescription;
 
-        foreach (var (pattern, prefix, replacement) in DescriptionRules)
-        {
+        foreach (var (pattern, prefix, replacement) in DescriptionRules) {
             if (!pattern.IsMatch(sceneName))
                 continue;
 
@@ -165,8 +188,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
             return string.IsNullOrWhiteSpace(detail) ? prefix : $"{prefix} / {detail}";
         }
 
-        var fallbackPrefix = dlc switch
-        {
+        var fallbackPrefix = dlc switch{
             DlcType.NotAHero => "Not a Hero",
             DlcType.EndOfZoe => "End of Zoe",
             DlcType.Jacks55thBirthday => "Jack's 55th Birthday",
@@ -189,13 +211,11 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return $"{fallbackPrefix} / {fallbackDetail}";
     }
 
-    private string? GetMapDescription(string sceneName)
-    {
+    private string? GetMapDescription(string sceneName) {
         if (_mapZoneDescriptions.Value.TryGetValue(sceneName, out var exact))
             return exact;
 
-        foreach (var (prefix, description) in _mapZoneDescriptions.Value.OrderByDescending(x => x.Key.Length))
-        {
+        foreach (var (prefix, description) in _mapZoneDescriptions.Value.OrderByDescending(x => x.Key.Length)) {
             if (!sceneName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 continue;
 
@@ -208,42 +228,36 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return null;
     }
 
-    private static Dictionary<Guid, string> LoadMessageLabels(PakFile pakFile)
-    {
+    private static Dictionary<Guid, string> LoadMessageLabels(PakFile pakFile) {
         var result = new Dictionary<Guid, string>();
         AddMessageFile("natives/stm/message/ui_map_mes.msg.17");
         AddMessageFile("natives/stm/ch8/message/ch8_map_mes.msg.17");
         AddMessageFile("natives/stm/message/ch9_map_mes.msg.17");
         return result;
 
-        void AddMessageFile(string path)
-        {
+        void AddMessageFile(string path) {
             var data = pakFile.GetEntryData(path);
             if (data == null)
                 return;
 
             var msgFile = new MsgFile(data).ToBuilder();
-            foreach (var message in msgFile.Messages)
-            {
+            foreach (var message in msgFile.Messages) {
                 var text = message[LanguageId.English].Trim();
-                if (text.Length != 0)
-                {
+                if (text.Length != 0) {
                     result[message.Guid] = text;
                 }
             }
         }
     }
 
-    private static List<MapSheet> LoadMapSheets(PakFile pakFile, RszTypeRepository rszRepository)
-    {
+    private static List<MapSheet> LoadMapSheets(PakFile pakFile, RszTypeRepository rszRepository) {
         var result = new List<MapSheet>();
         Add("natives/stm/prefab/gui/mapsheetsettings.user.2", AreaSource.MainGame);
         Add("natives/stm/ch8/prefab/gui/ch8mapsheetsettings.user.2", AreaSource.NotAHero);
         Add("natives/stm/ch9/prefab/gui/mapsheetsettings.user.2", AreaSource.EndOfZoe);
         return result;
 
-        void Add(string path, AreaSource source)
-        {
+        void Add(string path, AreaSource source) {
             var data = pakFile.GetEntryData(path);
             if (data == null)
                 return;
@@ -252,8 +266,8 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
             if (root?.Children.SingleOrDefault() is not RszArrayNode settings)
                 return;
 
-            foreach (var node in settings.Children.OfType<RszObjectNode>().Where(node => node.Type.Name == "app.MapSheetData"))
-            {
+            foreach (var node in settings.Children.OfType<RszObjectNode>()
+                         .Where(node => node.Type.Name == "app.MapSheetData")) {
                 var ranges = GetArray(node, "FloorIdList")
                     .Children
                     .OfType<RszObjectNode>()
@@ -270,14 +284,13 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         }
     }
 
-    private static Dictionary<string, string> LoadMapZoneDescriptions(PakFile pakFile, PakList pakList, RszTypeRepository rszRepository)
-    {
+    private static Dictionary<string, string> LoadMapZoneDescriptions(PakFile pakFile, PakList pakList,
+        RszTypeRepository rszRepository) {
         var sheets = LoadMapSheets(pakFile, rszRepository);
         var labels = LoadMessageLabels(pakFile);
         var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var path in pakList.Entries.Where(IsMapZoneScene))
-        {
+        foreach (var path in pakList.Entries.Where(IsMapZoneScene)) {
             var data = pakFile.GetEntryData(path);
             if (data == null)
                 continue;
@@ -289,8 +302,8 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
             var matches = sheets
                 .Where(sheet => sheet.Source == source)
                 .Where(sheet => chapterHint == null ||
-                    sheet.MapSheetName.StartsWith(chapterHint, StringComparison.OrdinalIgnoreCase) ||
-                    sheet.Category.StartsWith(chapterHint, StringComparison.OrdinalIgnoreCase))
+                                sheet.MapSheetName.StartsWith(chapterHint, StringComparison.OrdinalIgnoreCase) ||
+                                sheet.Category.StartsWith(chapterHint, StringComparison.OrdinalIgnoreCase))
                 .Where(sheet => roomIds.Any(sheet.Contains))
                 .Select(sheet => GetSheetDescription(sheet, labels))
                 .Where(description => !string.IsNullOrWhiteSpace(description))
@@ -299,8 +312,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
                 .ThenBy(group => group.Key, StringComparer.OrdinalIgnoreCase)
                 .FirstOrDefault();
 
-            if (matches != null)
-            {
+            if (matches != null) {
                 result[sceneName] = matches.Key;
             }
         }
@@ -312,8 +324,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         path.EndsWith($".scn.{FileVersions.SceneFileVersion}", StringComparison.OrdinalIgnoreCase) &&
         path.Contains("mapzone", StringComparison.OrdinalIgnoreCase);
 
-    private static AreaSource GetAreaSource(string path)
-    {
+    private static AreaSource GetAreaSource(string path) {
         if (path.Contains("/ch8/", StringComparison.OrdinalIgnoreCase))
             return AreaSource.NotAHero;
         if (path.Contains("/ch9/", StringComparison.OrdinalIgnoreCase))
@@ -321,8 +332,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return AreaSource.MainGame;
     }
 
-    private static string? GetChapterHint(string sceneName)
-    {
+    private static string? GetChapterHint(string sceneName) {
         if (sceneName.StartsWith("c01", StringComparison.OrdinalIgnoreCase))
             return "Chapter1";
         if (sceneName.StartsWith("c03", StringComparison.OrdinalIgnoreCase))
@@ -337,14 +347,12 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return null;
     }
 
-    private static string GetSheetDescription(MapSheet sheet, Dictionary<Guid, string> labels)
-    {
+    private static string GetSheetDescription(MapSheet sheet, Dictionary<Guid, string> labels) {
         var label = labels.TryGetValue(sheet.AreaName, out var value)
             ? value
             : GetMapSheetFallbackLabel(sheet.MapSheetName);
 
-        return sheet.Source switch
-        {
+        return sheet.Source switch{
             AreaSource.NotAHero => $"Not a Hero / {label}",
             AreaSource.EndOfZoe => $"End of Zoe / {label}",
             _ => label,
@@ -352,43 +360,38 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
     }
 
     private static string GetMapSheetFallbackLabel(string mapSheetName) =>
-        mapSheetName switch
-        {
+        mapSheetName switch{
             "Chapter1_Out" => "Outside",
             _ => HumanizeIdentifier(mapSheetName),
         };
 
-    private static int[] ReadRoomIds(byte[] data, RszTypeRepository rszRepository)
-    {
+    private static int[] ReadRoomIds(byte[] data, RszTypeRepository rszRepository) {
         var scene = new ScnFile(FileVersions.SceneFileVersion, data).ReadScene(rszRepository);
         var result = new List<int>();
-        scene.Visit(node =>
-        {
+        scene.Visit(node => {
             if (node is RszObjectNode objectNode &&
-                (objectNode.Type.Name == "app.cutin.MapZoneCollider" || objectNode.Type.Name == "app.CH8MapZoneCollider"))
-            {
+                (objectNode.Type.Name == "app.cutin.MapZoneCollider" ||
+                 objectNode.Type.Name == "app.CH8MapZoneCollider")) {
                 result.Add(GetInt32(objectNode, "RoomId"));
             }
         });
         return [.. result];
     }
 
-    private static string GetMapZoneSceneName(string path)
-    {
+    private static string GetMapZoneSceneName(string path) {
         var sceneName = GetSceneName(path);
-        if (sceneName.StartsWith("mapzone_", StringComparison.OrdinalIgnoreCase))
-        {
+        if (sceneName.StartsWith("mapzone_", StringComparison.OrdinalIgnoreCase)) {
             sceneName = sceneName["mapzone_".Length..];
         }
-        if (sceneName.EndsWith("_mapzone", StringComparison.OrdinalIgnoreCase))
-        {
+
+        if (sceneName.EndsWith("_mapzone", StringComparison.OrdinalIgnoreCase)) {
             sceneName = sceneName[..^"_mapzone".Length];
         }
+
         return sceneName;
     }
 
-    private static string GetBestSceneName(string path)
-    {
+    private static string GetBestSceneName(string path) {
         var sceneNames = path
             .Split(['/', '\\'], StringSplitOptions.RemoveEmptyEntries)
             .Select(GetSceneName)
@@ -400,28 +403,24 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
             .FirstOrDefault(IsSpecificSceneName) ?? GetFallbackSceneName(sceneNames);
     }
 
-    private static string GetFallbackSceneName(string[] sceneNames)
-    {
+    private static string GetFallbackSceneName(string[] sceneNames) {
         if (sceneNames.Length == 0)
             return "";
 
         var last = sceneNames[^1];
-        if (IsGenericSceneName(last) && sceneNames.Length >= 2)
-        {
+        if (IsGenericSceneName(last) && sceneNames.Length >= 2) {
             return $"{sceneNames[^2]}_{last}";
         }
 
         return last;
     }
 
-    private static string GetSceneName(string path)
-    {
+    private static string GetSceneName(string path) {
         var name = Path.GetFileName(path).ToLowerInvariant();
         return SceneVersionRegex.Replace(name, "");
     }
 
-    private static bool IsSpecificSceneName(string name)
-    {
+    private static bool IsSpecificSceneName(string name) {
         if (IsGenericSceneName(name))
             return false;
         if (name.StartsWith("resources_", StringComparison.OrdinalIgnoreCase))
@@ -430,14 +429,13 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
             name.All(ch => char.IsAsciiLetterOrDigit(ch) || ch == '_'))
             return false;
         return name.StartsWith("c0", StringComparison.OrdinalIgnoreCase) ||
-            name.StartsWith("ch", StringComparison.OrdinalIgnoreCase);
+               name.StartsWith("ch", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool IsGenericSceneName(string name) =>
         name is "normal" or "hard" or "casual" or "easy";
 
-    private static string HumanizeIdentifier(string identifier)
-    {
+    private static string HumanizeIdentifier(string identifier) {
         if (string.IsNullOrWhiteSpace(identifier))
             return "";
 
@@ -467,8 +465,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return string.Join(" ", words);
     }
 
-    private static string TrimRepeatedDetail(string prefix, string detail)
-    {
+    private static string TrimRepeatedDetail(string prefix, string detail) {
         if (string.IsNullOrWhiteSpace(detail))
             return "";
 
@@ -488,8 +485,7 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
         return detail;
     }
 
-    private static string HumanizeWord(string word)
-    {
+    private static string HumanizeWord(string word) {
         if (WordReplacements.TryGetValue(word, out var replacement))
             return replacement;
 
@@ -506,18 +502,25 @@ internal sealed class AreaDescriptionProvider(PakFile pakFile, PakList pakList, 
     private static RszArrayNode GetArray(RszObjectNode node, string field) => (RszArrayNode)node[field];
     private static string GetString(RszObjectNode node, string field) => ((RszStringNode)node[field]).Value;
     private static Guid GetGuid(RszObjectNode node, string field) => new(((RszValueNode)node[field]).Data.ToArray());
-    private static int GetInt32(RszObjectNode node, string field) => BitConverter.ToInt32(((RszValueNode)node[field]).Data.Span);
-    private static uint GetUInt32(RszObjectNode node, string field) => BitConverter.ToUInt32(((RszValueNode)node[field]).Data.Span);
 
-    private sealed record MapSheet(AreaSource Source, string MapSheetName, Guid AreaName, string Category, RoomRange[] Ranges)
-    {
+    private static int GetInt32(RszObjectNode node, string field) =>
+        BitConverter.ToInt32(((RszValueNode)node[field]).Data.Span);
+
+    private static uint GetUInt32(RszObjectNode node, string field) =>
+        BitConverter.ToUInt32(((RszValueNode)node[field]).Data.Span);
+
+    private sealed record MapSheet(
+        AreaSource Source,
+        string MapSheetName,
+        Guid AreaName,
+        string Category,
+        RoomRange[] Ranges) {
         public bool Contains(int roomId) => Ranges.Any(range => roomId >= range.Start && roomId <= range.End);
     }
 
     private sealed record RoomRange(uint Start, uint End);
 
-    private enum AreaSource
-    {
+    private enum AreaSource {
         MainGame,
         NotAHero,
         EndOfZoe,

@@ -2,8 +2,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Extensions;
 
-public static class RszExtensions
-{
+public static class RszExtensions {
     public readonly record struct GameObjectMatch(
         RszGameObject GameObject,
         bool HasFsmInHierarchy,
@@ -12,12 +11,10 @@ public static class RszExtensions
     public static RszGameObject CloneWithNewGuids(
         this RszGameObject rootGameObject,
         Rng rng,
-        Guid? rootGuid = null)
-    {
+        Guid? rootGuid = null) {
         var guidMap = new Dictionary<Guid, Guid>();
         var isRoot = true;
-        var root = rootGameObject.VisitGameObjects(gameObject =>
-        {
+        var root = rootGameObject.VisitGameObjects(gameObject => {
             var newGuid = rootGuid.HasValue && isRoot
                 ? rootGuid.Value
                 : rng.NextGuid();
@@ -33,28 +30,20 @@ public static class RszExtensions
         RszGameObject gameObject,
         IReadOnlyDictionary<Guid, Guid> guidMap,
         IDictionary<Guid, Guid> saveGuidMap,
-        Rng rng)
-    {
-        return gameObject.Visit(node =>
-        {
-            if (node is RszObjectNode objectNode)
-            {
+        Rng rng) {
+        return gameObject.Visit(node => {
+            if (node is RszObjectNode objectNode) {
                 return ReplaceSaveGuid(objectNode, saveGuidMap, rng);
             }
 
-            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef)
-            {
+            if (node is RszValueNode valueNode && valueNode.Type == RszFieldType.GameObjectRef) {
                 var refGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                if (guidMap.TryGetValue(refGuid, out var newGuid))
-                {
+                if (guidMap.TryGetValue(refGuid, out var newGuid)) {
                     return RszSerializer.Serialize(RszFieldType.GameObjectRef, newGuid);
                 }
-            }
-            else if (node is RszValueNode guidValueNode && guidValueNode.Type == RszFieldType.Guid)
-            {
+            } else if (node is RszValueNode guidValueNode && guidValueNode.Type == RszFieldType.Guid) {
                 var guid = RszSerializer.Deserialize<Guid>(guidValueNode);
-                if (guidMap.TryGetValue(guid, out var newGuid))
-                {
+                if (guidMap.TryGetValue(guid, out var newGuid)) {
                     return RszSerializer.Serialize(RszFieldType.Guid, newGuid);
                 }
             }
@@ -66,24 +55,20 @@ public static class RszExtensions
     private static RszObjectNode ReplaceSaveGuid(
         RszObjectNode objectNode,
         IDictionary<Guid, Guid> saveGuidMap,
-        Rng rng)
-    {
+        Rng rng) {
         var saveGuidIndex = objectNode.Type.FindFieldIndex("SaveGUID");
         if (saveGuidIndex == -1 ||
             objectNode.Children[saveGuidIndex] is not RszValueNode saveGuidNode ||
-            saveGuidNode.Type != RszFieldType.Guid)
-        {
+            saveGuidNode.Type != RszFieldType.Guid) {
             return objectNode;
         }
 
         var saveGuid = RszSerializer.Deserialize<Guid>(saveGuidNode);
-        if (saveGuid == Guid.Empty)
-        {
+        if (saveGuid == Guid.Empty) {
             return objectNode;
         }
 
-        if (!saveGuidMap.TryGetValue(saveGuid, out var newSaveGuid))
-        {
+        if (!saveGuidMap.TryGetValue(saveGuid, out var newSaveGuid)) {
             newSaveGuid = rng.NextGuid();
             saveGuidMap[saveGuid] = newSaveGuid;
         }
@@ -91,93 +76,80 @@ public static class RszExtensions
         return objectNode.SetField("SaveGUID", newSaveGuid);
     }
 
-    public static RszGameObject PreparePickupInteractionsForPlacement(this RszGameObject gameObject)
-    {
-        return gameObject.VisitGameObjects(child =>
-        {
-            var components = child.Components.ToBuilder();
-            var changed = false;
+    extension(RszGameObject gameObject) {
+        public RszGameObject PreparePickupInteractionsForPlacement() {
+            return gameObject.VisitGameObjects(child => {
+                var components = child.Components.ToBuilder();
+                var changed = false;
 
-            for (var i = 0; i < components.Count; i++)
-            {
-                var component = components[i];
-                if (!IsPickupInteraction(component) &&
-                    !IsWeaponPickupInteraction(component))
-                {
-                    continue;
+                for (var i = 0; i < components.Count; i++) {
+                    var component = components[i];
+                    if (!IsPickupInteraction(component) &&
+                        !IsWeaponPickupInteraction(component)) {
+                        continue;
+                    }
+
+                    var updated = component;
+                    updated = SetBoolFieldIfPresent(updated, "IsCheckAngle", false);
+                    updated = SetBoolFieldIfPresent(updated, "IsItemGet", false);
+                    updated = SetBoolFieldIfPresent(updated, "IsGetEventEnabled", false);
+                    updated = SetBoolFieldIfPresent(updated, "IsForceEquip", false);
+                    updated = SetBoolFieldIfPresent(updated, "UsePickupSE", true);
+
+                    if (!ReferenceEquals(updated, component)) {
+                        components[i] = updated;
+                        changed = true;
+                    }
                 }
 
-                var updated = component;
-                updated = SetBoolFieldIfPresent(updated, "IsCheckAngle", false);
-                updated = SetBoolFieldIfPresent(updated, "IsItemGet", false);
-                updated = SetBoolFieldIfPresent(updated, "IsGetEventEnabled", false);
-                updated = SetBoolFieldIfPresent(updated, "IsForceEquip", false);
-                updated = SetBoolFieldIfPresent(updated, "UsePickupSE", true);
+                return changed
+                    ? child.WithComponents(components.ToImmutable())
+                    : child;
+            });
+        }
 
-                if (!ReferenceEquals(updated, component))
-                {
-                    components[i] = updated;
-                    changed = true;
+        public RszGameObject PrepareWeaponPickupInteractionGameObjects() {
+            return gameObject.VisitGameObjects(child => {
+                if (!child.Components.Any(IsWeaponPickupInteraction)) {
+                    return child;
                 }
-            }
 
-            return changed
-                ? child.WithComponents(components.ToImmutable())
-                : child;
-        });
-    }
-
-    public static RszGameObject PrepareWeaponPickupInteractionGameObjects(this RszGameObject gameObject)
-    {
-        return gameObject.VisitGameObjects(child =>
-        {
-            if (!child.Components.Any(IsWeaponPickupInteraction))
-            {
-                return child;
-            }
-
-            return child.WithSettings(
-                child.Settings
-                    .Set("Update", true)
-                    .Set("Draw", false));
-        });
-    }
-
-    public static RszGameObject ApplyVisualResourcesFromTemplate(this RszGameObject gameObject, RszGameObject template)
-    {
-        var templateMesh = template.FindComponent("via.render.Mesh");
-        if (templateMesh == null)
-        {
-            return gameObject;
+                return child.WithSettings(
+                    child.Settings
+                        .Set("Update", true)
+                        .Set("Draw", false));
+            });
         }
 
-        var mesh = gameObject.FindComponent("via.render.Mesh");
-        if (mesh == null)
-        {
-            return gameObject.AddOrUpdateComponent(templateMesh);
-        }
+        public RszGameObject ApplyVisualResourcesFromTemplate(RszGameObject template) {
+            var templateMesh = template.FindComponent("via.render.Mesh");
+            if (templateMesh == null) {
+                return gameObject;
+            }
 
-        mesh = CopyFieldIfPresent(mesh, templateMesh, "Mesh");
-        mesh = CopyFieldIfPresent(mesh, templateMesh, "Material");
-        return gameObject.AddOrUpdateComponent(mesh);
+            var mesh = gameObject.FindComponent("via.render.Mesh");
+            if (mesh == null) {
+                return gameObject.AddOrUpdateComponent(templateMesh);
+            }
+
+            mesh = CopyFieldIfPresent(mesh, templateMesh, "Mesh");
+            mesh = CopyFieldIfPresent(mesh, templateMesh, "Material");
+            return gameObject.AddOrUpdateComponent(mesh);
+        }
     }
 
     public static Dictionary<Guid, GameObjectMatch> FindGameObjectsByGuidWithFsmContext(
         this RszScene scene,
-        IEnumerable<Guid> targetGuids)
-    {
+        IEnumerable<Guid> targetGuids) {
         var remaining = targetGuids.ToHashSet();
         var result = new Dictionary<Guid, GameObjectMatch>();
-        if (remaining.Count == 0)
-        {
+        if (remaining.Count == 0) {
             return result;
         }
 
-        foreach (var child in scene.Children)
-        {
+        foreach (var child in scene.Children) {
             VisitSceneNode(child, hasFsmInHierarchy: false, hasDrawerInHierarchy: false, remaining, result);
-            if (remaining.Count == 0)
-            {
+            if (remaining.Count == 0) {
                 break;
             }
         }
@@ -192,56 +164,48 @@ public static class RszExtensions
         bool hasFsmInHierarchy,
         bool hasDrawerInHierarchy,
         ISet<Guid> remaining,
-        IDictionary<Guid, GameObjectMatch> result)
-    {
-        switch (node)
-        {
+        IDictionary<Guid, GameObjectMatch> result) {
+        switch (node) {
             case RszFolder folder:
-                foreach (var child in folder.Children)
-                {
+                foreach (var child in folder.Children) {
                     VisitSceneNode(child, hasFsmInHierarchy, hasDrawerInHierarchy, remaining, result);
-                    if (remaining.Count == 0)
-                    {
+                    if (remaining.Count == 0) {
                         break;
                     }
                 }
+
                 break;
 
             case RszGameObject gameObject:
                 var hasFsmHere = hasFsmInHierarchy || HasFsmComponent(gameObject);
                 var hasDrawerHere = hasDrawerInHierarchy || HasDrawerComponent(gameObject);
-                if (remaining.Remove(gameObject.Guid))
-                {
+                if (remaining.Remove(gameObject.Guid)) {
                     result[gameObject.Guid] = new GameObjectMatch(gameObject, hasFsmHere, hasDrawerHere);
                 }
 
-                if (remaining.Count == 0)
-                {
+                if (remaining.Count == 0) {
                     break;
                 }
 
-                foreach (var child in gameObject.Children)
-                {
+                foreach (var child in gameObject.Children) {
                     VisitSceneNode(child, hasFsmHere, hasDrawerHere, remaining, result);
-                    if (remaining.Count == 0)
-                    {
+                    if (remaining.Count == 0) {
                         break;
                     }
                 }
+
                 break;
         }
     }
 
-    private static bool IsPickupInteraction(RszObjectNode component)
-    {
+    private static bool IsPickupInteraction(RszObjectNode component) {
         return component.Type.Name.Contains("InteractDetailSearch", StringComparison.Ordinal) &&
-            component.Type.FindFieldIndex("IsCheckAngle") != -1;
+               component.Type.FindFieldIndex("IsCheckAngle") != -1;
     }
 
-    private static bool IsWeaponPickupInteraction(RszObjectNode component)
-    {
+    private static bool IsWeaponPickupInteraction(RszObjectNode component) {
         return component.Type.Name.Contains("InteractWeapon", StringComparison.Ordinal) &&
-            component.Type.FindFieldIndex("IsForceEquip") != -1;
+               component.Type.FindFieldIndex("IsForceEquip") != -1;
     }
 
     private static bool HasFsmComponent(RszGameObject gameObject)
@@ -251,90 +215,76 @@ public static class RszExtensions
 
     private static bool HasDrawerComponent(RszGameObject gameObject)
         => gameObject.Name.Contains("Drawer", StringComparison.OrdinalIgnoreCase) ||
-            gameObject.Components.Any(component =>
-                component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal));
+           gameObject.Components.Any(component =>
+               component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal));
 
     private static void MarkDrawerReferencedTargets(
         RszScene scene,
-        IDictionary<Guid, GameObjectMatch> result)
-    {
+        IDictionary<Guid, GameObjectMatch> result) {
         var targetGuids = result.Keys.ToHashSet();
-        if (targetGuids.Count == 0)
-        {
+        if (targetGuids.Count == 0) {
             return;
         }
 
-        scene.VisitGameObjects(gameObject =>
-        {
-            foreach (var component in gameObject.Components)
-            {
-                if (!component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal))
-                {
+        scene.VisitGameObjects(gameObject => {
+            foreach (var component in gameObject.Components) {
+                if (!component.Type.Name.Contains("InteractDrawer", StringComparison.Ordinal)) {
                     continue;
                 }
 
-                foreach (var targetGuid in FindReferencedTargets(component, targetGuids))
-                {
+                foreach (var targetGuid in FindReferencedTargets(component, targetGuids)) {
                     var match = result[targetGuid];
-                    result[targetGuid] = match with { HasDrawerContext = true };
+                    result[targetGuid] = match with{ HasDrawerContext = true };
                 }
             }
         });
     }
 
-    private static IEnumerable<Guid> FindReferencedTargets(IRszNode node, IReadOnlySet<Guid> targetGuids)
-    {
-        switch (node)
-        {
+    private static IEnumerable<Guid> FindReferencedTargets(IRszNode node, IReadOnlySet<Guid> targetGuids) {
+        switch (node) {
             case RszValueNode valueNode when valueNode.Type == RszFieldType.GameObjectRef:
                 var referencedGuid = RszSerializer.Deserialize<Guid>(valueNode);
-                if (targetGuids.Contains(referencedGuid))
-                {
+                if (targetGuids.Contains(referencedGuid)) {
                     yield return referencedGuid;
                 }
+
                 break;
 
             case RszObjectNode objectNode:
-                foreach (var child in objectNode.Children)
-                {
-                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids))
-                    {
+                foreach (var child in objectNode.Children) {
+                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids)) {
                         yield return matchedGuid;
                     }
                 }
+
                 break;
 
             case RszArrayNode arrayNode:
-                foreach (var child in arrayNode.Children)
-                {
-                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids))
-                    {
+                foreach (var child in arrayNode.Children) {
+                    foreach (var matchedGuid in FindReferencedTargets(child, targetGuids)) {
                         yield return matchedGuid;
                     }
                 }
+
                 break;
         }
     }
 
-    private static RszObjectNode SetBoolFieldIfPresent(RszObjectNode component, string fieldName, bool value)
-    {
+    private static RszObjectNode SetBoolFieldIfPresent(RszObjectNode component, string fieldName, bool value) {
         var index = component.Type.FindFieldIndex(fieldName);
         if (index == -1 ||
             component.Children[index] is not RszValueNode valueNode ||
             valueNode.Type != RszFieldType.Bool ||
-            RszSerializer.Deserialize<bool>(valueNode) == value)
-        {
+            RszSerializer.Deserialize<bool>(valueNode) == value) {
             return component;
         }
 
         return component.SetField(fieldName, value);
     }
 
-    private static RszObjectNode CopyFieldIfPresent(RszObjectNode target, RszObjectNode source, string fieldName)
-    {
+    private static RszObjectNode CopyFieldIfPresent(RszObjectNode target, RszObjectNode source, string fieldName) {
         if (target.Type.FindFieldIndex(fieldName) == -1 ||
-            source.Type.FindFieldIndex(fieldName) == -1)
-        {
+            source.Type.FindFieldIndex(fieldName) == -1) {
             return target;
         }
 
@@ -384,62 +334,57 @@ public static class RszExtensions
     }
 #endif
 
-    public static RszObjectNode Serialize<T>(this RszTypeRepository repo, T obj)
-    {
+    public static RszObjectNode Serialize<T>(this RszTypeRepository repo, T obj) {
         return (RszObjectNode)RszSerializer.Serialize(
             repo.FromName(obj!.GetType().FullName!)!,
             obj);
     }
 
-    public static RszScene Add(
-        this RszScene scene,
-        RszTypeRepository repo,
-        SceneHierachyPath hier,
-        RszGameObject gameObject)
-    {
-        var folders = hier.Folders;
-        var updatedRoot = AddToNode(scene, 0);
-        return (RszScene)updatedRoot;
+    extension(RszScene scene) {
+        public RszScene Add(RszTypeRepository repo,
+            SceneHierachyPath hier,
+            RszGameObject gameObject) {
+            var folders = hier.Folders;
+            var updatedRoot = AddToNode(scene, 0);
+            return (RszScene)updatedRoot;
 
-        IRszSceneNode AddToNode(
-            IRszSceneNode node,
-            int index)
-        {
-            if (index >= folders.Count)
-            {
-                // No more folders, add the game object here
-                return node.WithChildren(node.Children.Add(gameObject));
+            IRszSceneNode AddToNode(
+                IRszSceneNode node,
+                int index) {
+                if (index >= folders.Count) {
+                    // No more folders, add the game object here
+                    return node.WithChildren(node.Children.Add(gameObject));
+                }
+
+                // Find or add folder
+                var folderName = folders[index];
+                var childIndex = node.Children
+                    .FindIndex(x => x is RszFolder f && f.Name == folderName);
+                var child = childIndex != -1
+                    ? node.Children[childIndex]
+                    : new RszFolder(
+                        repo.Create("via.Folder")
+                            .Set("Name", folderName)
+                            .Set("Update", true)
+                            .Set("Draw", true)
+                            .Set("Startup", true),
+                        []);
+
+                // Add sub folders/game object
+                child = AddToNode(child, index + 1);
+
+                // Rebuild root
+                return childIndex != -1
+                    ? node.WithChildren(node.Children.SetItem(childIndex, child))
+                    : node.WithChildren(node.Children.Add(child));
             }
-
-            // Find or add folder
-            var folderName = folders[index];
-            var childIndex = node.Children
-                .FindIndex(x => x is RszFolder f && f.Name == folderName);
-            var child = childIndex != -1
-                ? node.Children[childIndex]
-                : new RszFolder(
-                    repo.Create("via.Folder")
-                        .Set("Name", folderName)
-                        .Set("Update", true)
-                        .Set("Draw", true)
-                        .Set("Startup", true),
-                    []);
-
-            // Add sub folders/game object
-            child = AddToNode(child, index + 1);
-
-            // Rebuild root
-            return childIndex != -1
-                ? node.WithChildren(node.Children.SetItem(childIndex, child))
-                : node.WithChildren(node.Children.Add(child));
         }
-    }
 
-    public static List<RszGameObject> GetGameObjects(this RszScene scene)
-    {
-        var result = new List<RszGameObject>();
-        scene.VisitGameObjects(go => result.Add(go));
-        return result;
+        public List<RszGameObject> GetGameObjects() {
+            var result = new List<RszGameObject>();
+            scene.VisitGameObjects(go => result.Add(go));
+            return result;
+        }
     }
 
     public static T ReplaceGameObject<T>(
@@ -447,30 +392,24 @@ public static class RszExtensions
         Guid targetGuid,
         RszGameObject replacement,
         bool keepChildren = true)
-    where T : IRszSceneNode
-    {
+        where T : IRszSceneNode {
         if (node.Children.IsDefaultOrEmpty)
             return node;
 
         var children = node.Children.ToBuilder();
 
-        for (var i = 0; i < children.Count; i++)
-        {
-            if (children[i] is RszGameObject oldGameObject && oldGameObject.Guid == targetGuid)
-            {
+        for (var i = 0; i < children.Count; i++) {
+            if (children[i] is RszGameObject oldGameObject && oldGameObject.Guid == targetGuid) {
                 var newGameObject = replacement;
 
-                if (keepChildren)
-                {
+                if (keepChildren) {
                     newGameObject = newGameObject.WithChildren(oldGameObject.Children);
                 }
 
                 newGameObject = newGameObject.WithGuid(oldGameObject.Guid);
 
                 children[i] = newGameObject;
-            }
-            else
-            {
+            } else {
                 children[i] = children[i].ReplaceGameObject(targetGuid, replacement, keepChildren);
             }
         }

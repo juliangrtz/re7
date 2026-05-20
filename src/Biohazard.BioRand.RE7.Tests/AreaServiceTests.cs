@@ -3,11 +3,9 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
-public class AreaServiceTests
-{
+public class AreaServiceTests {
     [Fact]
-    public void FindAreaContainingGameObject_ReturnsOwningAreaForLoadedSceneGuid()
-    {
+    public void FindAreaContainingGameObject_ReturnsOwningAreaForLoadedSceneGuid() {
         using var result = RandomizerTest.RunState();
 
         var area = result.AreaService.Areas.FirstOrDefault(x => TryGetFirstGuid(x.Scene, out _));
@@ -20,13 +18,10 @@ public class AreaServiceTests
         Assert.NotNull(resolvedArea!.Scene.FindGameObject(guid));
     }
 
-    private static bool TryGetFirstGuid(IRszSceneNode node, out Guid guid)
-    {
+    private static bool TryGetFirstGuid(IRszSceneNode node, out Guid guid) {
         Guid? firstGuid = null;
-        node.VisitGameObjects(gameObject =>
-        {
-            if (firstGuid == null)
-            {
+        node.VisitGameObjects(gameObject => {
+            if (firstGuid == null) {
                 firstGuid = gameObject.Guid;
             }
         });

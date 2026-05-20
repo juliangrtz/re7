@@ -1,8 +1,7 @@
 ﻿namespace Biohazard.BioRand.RE7.Enemies;
 
 // cf. Enums.app.EmLoadControl.EmLoadTypeEnum
-public enum EnemyID
-{
+public enum EnemyID {
     Em2000 = 0,
     Em2000Chapter4 = 1,
     Em3001 = 2,

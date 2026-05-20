@@ -8,18 +8,21 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Patches;
 
-internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
-{
+internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
     private readonly string _birthdaySkillSettingsPath = PakPath.UserFile("prefab/item/birthdayskillitemsetting.user");
     private readonly string _keyItemSettingsPath = PakPath.UserFile("prefab/item/keyitemsettings.user");
     private readonly string _itemResourcesScenePath = PakPath.SceneFile("scenes/items/itemresources.scn");
-    private readonly string _itemResourceTemplateScenePath = PakPath.SceneFile("scenes/items/resources/powerupcoin01a.scn");
-    private readonly string _skillDropPrefabTemplatePath = GetPrefabPakPath("Prefab/Props_Dynamic/sm2479_PowerUpCoin01A/Get/sm2479_PowerUpCoin01A_Get.pfb");
+
+    private readonly string _itemResourceTemplateScenePath =
+        PakPath.SceneFile("scenes/items/resources/powerupcoin01a.scn");
+
+    private readonly string _skillDropPrefabTemplatePath =
+        GetPrefabPakPath("Prefab/Props_Dynamic/sm2479_PowerUpCoin01A/Get/sm2479_PowerUpCoin01A_Get.pfb");
+
     private readonly string _uiItemMessagePath = PakPath.MessageFile("message/ui_item_mes.msg");
     private readonly string _uiBirthdayMessagePath = PakPath.MessageFile("message/ui_birthday_mes.msg");
 
-    public void Apply()
-    {
+    public void Apply() {
         var birthdaySkills = context
             .DeserializeUserFile<app.ItemSettings>(_birthdaySkillSettingsPath)
             ._Settings
@@ -32,13 +35,13 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         ApplyKeyItemSettings(birthdaySkills);
         ApplyDropPrefabs(birthdaySkills);
         ApplyItemResources(birthdaySkills);
-        ApplyBirthdayMessages(birthdaySkills);
+        ApplyBirthdayMessages(birthdaySkills, birthdaySkillValues);
     }
 
-    private IReadOnlyDictionary<string, BirthdaySkillValueRow> LoadBirthdaySkillValues(IReadOnlyList<app.ItemData> birthdaySkills)
-    {
+    private IReadOnlyDictionary<string, BirthdaySkillValueRow> LoadBirthdaySkillValues(
+        IReadOnlyList<app.ItemData> birthdaySkills) {
         var csv = context.DynamicData.GetData(DynamicDataName.BirthdaySkills)
-            ?? throw new RandomizerUserException("Unable to load Birthday skill CSV data.");
+                  ?? throw new RandomizerUserException("Unable to load Birthday skill CSV data.");
         var rows = Serialization.Csv.Deserialize<BirthdaySkillValueRow>(csv)
             .Where(x => !string.IsNullOrWhiteSpace(x.ItemDataID))
             .ToArray();
@@ -49,8 +52,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             .Select(x => x.Key)
             .Order(StringComparer.OrdinalIgnoreCase)
             .ToArray();
-        if (duplicateIds.Length != 0)
-        {
+        if (duplicateIds.Length != 0) {
             throw new RandomizerUserException($"Duplicate Birthday skill CSV rows: {string.Join(", ", duplicateIds)}.");
         }
 
@@ -62,8 +64,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             .Where(x => !result.ContainsKey(x))
             .Order(StringComparer.OrdinalIgnoreCase)
             .ToArray();
-        if (missingIds.Length != 0)
-        {
+        if (missingIds.Length != 0) {
             throw new RandomizerUserException($"Missing Birthday skill CSV rows: {string.Join(", ", missingIds)}.");
         }
 
@@ -71,8 +72,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             .Where(x => !expectedIds.Contains(x))
             .Order(StringComparer.OrdinalIgnoreCase)
             .ToArray();
-        if (unknownIds.Length != 0)
-        {
+        if (unknownIds.Length != 0) {
             throw new RandomizerUserException($"Unknown Birthday skill CSV rows: {string.Join(", ", unknownIds)}.");
         }
 
@@ -81,71 +81,62 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
 
     private void CopySkillInventoryAssets(
         IReadOnlyList<app.ItemData> birthdaySkills,
-        IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues)
-    {
-        foreach (var skill in birthdaySkills)
-        {
+        IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues) {
+        foreach (var skill in birthdaySkills) {
             CopyRequiredFile(GetSkillItemPrefabPath(skill), $"Birthday skill '{skill.ItemDataID}' item prefab");
-            CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill, birthdaySkillValues[skill.ItemDataID]), birthdaySkillValues[skill.ItemDataID]);
+            CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill, birthdaySkillValues[skill.ItemDataID]),
+                birthdaySkillValues[skill.ItemDataID]);
         }
     }
 
-    private void CopyRequiredFile(string path, string description)
-    {
-        var data = context.GetFile(path) ?? throw new RandomizerUserException($"Unable to read {description} at '{path}'.");
+    private void CopyRequiredFile(string path, string description) {
+        var data = context.GetFile(path) ??
+                   throw new RandomizerUserException($"Unable to read {description} at '{path}'.");
         context.SetFile(path, data);
     }
 
-    private void CopyConfiguredPassiveSkillFile(app.ItemData skill, string path, BirthdaySkillValueRow values)
-    {
+    private void CopyConfiguredPassiveSkillFile(app.ItemData skill, string path, BirthdaySkillValueRow values) {
         ValidatePassiveSkillPath(skill, path, values.PassiveSkillUserPath);
-        context.ModifyUserFile(path, root =>
-        {
-            if (!string.Equals(root.Type.Name, "app.PlayerPassiveSkill", StringComparison.Ordinal))
-            {
-                throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' passive userdata is '{root.Type.Name}', expected 'app.PlayerPassiveSkill'.");
+        context.ModifyUserFile(path, root => {
+            if (!string.Equals(root.Type.Name, "app.PlayerPassiveSkill", StringComparison.Ordinal)) {
+                throw new RandomizerUserException(
+                    $"Birthday skill '{skill.ItemDataID}' passive userdata is '{root.Type.Name}', expected 'app.PlayerPassiveSkill'.");
             }
 
             return ApplyBirthdaySkillValues(root, values);
         });
     }
 
-    private static void ValidatePassiveSkillPath(app.ItemData skill, string path, string csvPath)
-    {
-        if (string.IsNullOrWhiteSpace(csvPath))
-        {
+    private static void ValidatePassiveSkillPath(app.ItemData skill, string path, string csvPath) {
+        if (string.IsNullOrWhiteSpace(csvPath)) {
             return;
         }
 
         if (!string.Equals(
-            NormalizeUserFilePath(path),
-            NormalizeUserFilePath(csvPath),
-            StringComparison.OrdinalIgnoreCase))
-        {
-            throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' CSV row points to '{csvPath}', expected '{path}'.");
+                NormalizeUserFilePath(path),
+                NormalizeUserFilePath(csvPath),
+                StringComparison.OrdinalIgnoreCase)) {
+            throw new RandomizerUserException(
+                $"Birthday skill '{skill.ItemDataID}' CSV row points to '{csvPath}', expected '{path}'.");
         }
     }
 
-    private static string NormalizeUserFilePath(string path)
-    {
+    private static string NormalizeUserFilePath(string path) {
         var result = path.Trim().Replace('\\', '/');
         const string prefix = "natives/stm/";
-        if (result.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-        {
+        if (result.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) {
             result = result[prefix.Length..];
         }
 
         var versionSuffix = $".{FileVersions.UserFileVersion}";
-        if (result.EndsWith(versionSuffix, StringComparison.OrdinalIgnoreCase))
-        {
+        if (result.EndsWith(versionSuffix, StringComparison.OrdinalIgnoreCase)) {
             result = result[..^versionSuffix.Length];
         }
 
         return result;
     }
 
-    private static RszObjectNode ApplyBirthdaySkillValues(RszObjectNode root, BirthdaySkillValueRow values)
-    {
+    private static RszObjectNode ApplyBirthdaySkillValues(RszObjectNode root, BirthdaySkillValueRow values) {
         return root
             .Set("AttackChangeRate", values.AttackChangeRate)
             .Set("MeleeAttackChangeRate", values.MeleeAttackChangeRate)
@@ -166,16 +157,13 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             .Set("IsPsychostimulantEffectInfinity", values.IsPsychostimulantEffectInfinity);
     }
 
-    private void ApplyKeyItemSettings(IReadOnlyList<app.ItemData> birthdaySkills)
-    {
+    private void ApplyKeyItemSettings(IReadOnlyList<app.ItemData> birthdaySkills) {
         var transformedSkillSettings = birthdaySkills
             .Select(CreateCampaignInventorySkill)
             .ToArray();
 
-        context.ModifyUserFile<app.ItemSettings>(_keyItemSettingsPath, root =>
-        {
-            root._Settings =
-            [
+        context.ModifyUserFile<app.ItemSettings>(_keyItemSettingsPath, root => {
+            root._Settings =[
                 .. root._Settings.Where(x => !IsBirthdaySkill(x)),
                 .. transformedSkillSettings
             ];
@@ -183,10 +171,8 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         });
     }
 
-    private void ApplyItemResources(IReadOnlyList<app.ItemData> birthdaySkills)
-    {
-        context.ModifyScnFile(_itemResourcesScenePath, scene =>
-        {
+    private void ApplyItemResources(IReadOnlyList<app.ItemData> birthdaySkills) {
+        context.ModifyScnFile(_itemResourcesScenePath, scene => {
             var templateFolder = scene.Children
                 .OfType<RszFolder>()
                 .First(x => x.Name == "PowerUpCoin01A");
@@ -197,8 +183,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             var children = scene.Children
                 .Where(child => child is not RszFolder folder || !resourceIds.Contains(folder.Name))
                 .ToList();
-            foreach (var skill in birthdaySkills)
-            {
+            foreach (var skill in birthdaySkills) {
                 children.Add(CreateResourceFolder(templateFolder, skill.ItemDataID));
             }
 
@@ -206,8 +191,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         });
 
         var itemResourceTemplate = context.GetScnFile(_itemResourceTemplateScenePath);
-        foreach (var skill in birthdaySkills)
-        {
+        foreach (var skill in birthdaySkills) {
             var template = itemResourceTemplate.ToBuilder(context.TypeRepository);
             template.Scene = template.Scene.VisitComponents((_, component) =>
                 component.Type.Name != "app.ItemResource"
@@ -220,24 +204,19 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         }
     }
 
-    private void ApplyDropPrefabs(IReadOnlyList<app.ItemData> birthdaySkills)
-    {
+    private void ApplyDropPrefabs(IReadOnlyList<app.ItemData> birthdaySkills) {
         var dropPrefabTemplate = context.GetPfbFile(_skillDropPrefabTemplatePath);
-        foreach (var skill in birthdaySkills)
-        {
+        foreach (var skill in birthdaySkills) {
             var template = dropPrefabTemplate.ToBuilder(context.TypeRepository);
 
             template.Scene = template.Scene
-                .VisitGameObjects(gameObject => gameObject.Name switch
-                {
+                .VisitGameObjects(gameObject => gameObject.Name switch{
                     "sm2479_PowerUpCoin01A_Get" => gameObject
                         .WithName($"{skill.ItemDataID}_Get"),
                     _ => gameObject
                 })
-                .VisitComponents((_, component) =>
-                {
-                    return component.Type.Name switch
-                    {
+                .VisitComponents((_, component) => {
+                    return component.Type.Name switch{
                         "app.Item" => component
                             .Set("SaveGUID", $"BirthdaySkillDrop:{skill.ItemDataID}:Item".GetGuidHash())
                             .Set("ItemDataID", skill.ItemDataID)
@@ -253,52 +232,53 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         }
     }
 
-    private string GetPassiveSkillUserPath(app.ItemData skill, BirthdaySkillValueRow values)
-    {
-        if (!string.IsNullOrWhiteSpace(values.PassiveSkillUserPath))
-        {
+    private string GetPassiveSkillUserPath(app.ItemData skill, BirthdaySkillValueRow values) {
+        if (!string.IsNullOrWhiteSpace(values.PassiveSkillUserPath)) {
             return PakPath.UserFile(NormalizeUserFilePath(values.PassiveSkillUserPath));
         }
 
         var itemPrefab = context.GetPfbFile(GetSkillItemPrefabPath(skill))
             .ReadScene(context.TypeRepository);
         var passiveSkillComponent = itemPrefab.GetGameObjects()
-            .Select(x => x.FindComponent("app.PassiveSkillItem"))
-            .FirstOrDefault(x => x != null)
-            ?? throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' item prefab has no app.PassiveSkillItem component.");
+                                        .Select(x => x.FindComponent("app.PassiveSkillItem"))
+                                        .FirstOrDefault(x => x != null)
+                                    ?? throw new RandomizerUserException(
+                                        $"Birthday skill '{skill.ItemDataID}' item prefab has no app.PassiveSkillItem component.");
 
-        if (passiveSkillComponent["PassiveSkill"] is not RszUserDataNode passiveSkill)
-        {
-            throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' passive component has no PlayerPassiveSkill userdata.");
+        if (passiveSkillComponent["PassiveSkill"] is not RszUserDataNode passiveSkill) {
+            throw new RandomizerUserException(
+                $"Birthday skill '{skill.ItemDataID}' passive component has no PlayerPassiveSkill userdata.");
         }
 
         return PakPath.UserFile(passiveSkill.Path);
     }
 
-    private void ApplyBirthdayMessages(IReadOnlyList<app.ItemData> birthdaySkills)
-    {
-        if (!context.Exists(_uiBirthdayMessagePath))
-        {
+    private void ApplyBirthdayMessages(
+        IReadOnlyList<app.ItemData> birthdaySkills,
+        IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues) {
+        if (!context.Exists(_uiBirthdayMessagePath)) {
             return;
         }
 
         var birthdayMessages = context.GetMsgFile(_uiBirthdayMessagePath);
-        context.ModifyMsgFile(_uiItemMessagePath, itemMessages =>
-        {
-            foreach (var skill in birthdaySkills)
-            {
+        context.ModifyMsgFile(_uiItemMessagePath, itemMessages => {
+            foreach (var skill in birthdaySkills) {
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.NameMsg);
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.ManualMsg);
+                ApplyInventoryDescriptionOverride(
+                    itemMessages,
+                    birthdayMessages,
+                    skill.ManualMsg,
+                    birthdaySkillValues[skill.ItemDataID].InventoryDescription);
             }
         });
     }
 
     private static bool IsBirthdaySkill(app.ItemData item)
         => item.ItemDataID.StartsWith("skl", StringComparison.OrdinalIgnoreCase)
-        && !item.ItemDataID.EndsWith("no", StringComparison.OrdinalIgnoreCase); // Exclude dummy skills
+           && !item.ItemDataID.EndsWith("no", StringComparison.OrdinalIgnoreCase); // Exclude dummy skills
 
-    private static app.ItemData CreateCampaignInventorySkill(app.ItemData source)
-    {
+    private static app.ItemData CreateCampaignInventorySkill(app.ItemData source) {
         var cloned = Clone(source);
 
         cloned.Category = Enums.app.Item.ItemCategoryType.KeyItem;
@@ -306,10 +286,8 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         cloned.SortPriority = 100 + ParseSkillNumber(source.ItemDataID);
         cloned.MaxStackNum = 1;
         cloned.CanStoreItembox = true;
-        cloned.DropItemSetting = new app.ItemData.DropItemData
-        {
-            DropItemPrefab = new via.Prefab
-            {
+        cloned.DropItemSetting = new app.ItemData.DropItemData{
+            DropItemPrefab = new via.Prefab{
                 Standby = true,
                 Path = GetSkillDropPrefabReference(source),
             }
@@ -321,8 +299,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
     private static int ParseSkillNumber(string itemDataId)
         => int.TryParse(itemDataId.AsSpan(3), out var value) ? value : 0;
 
-    private static RszFolder CreateResourceFolder(RszFolder template, string itemDataId)
-    {
+    private static RszFolder CreateResourceFolder(RszFolder template, string itemDataId) {
         return new RszFolder(
             template.Settings
                 .Set("Name", itemDataId)
@@ -330,51 +307,146 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
             []);
     }
 
-    private static void CopyMessageIfMissing(MsgFile.Builder destination, MsgFile source, Guid guid)
-    {
-        if (guid == Guid.Empty || destination.FindMessage(guid) != null)
-        {
+    private static void CopyMessageIfMissing(MsgFile.Builder destination, MsgFile source, Guid guid) {
+        if (guid == Guid.Empty || destination.FindMessage(guid) != null) {
             return;
         }
 
         var sourceMessage = source.FindMessage(guid);
-        if (sourceMessage == null)
-        {
+        if (sourceMessage == null) {
             return;
         }
 
         destination.Messages.Add(CreateDestinationMessage(destination, sourceMessage));
     }
 
-    private static Msg CreateDestinationMessage(MsgFile.Builder destination, Msg source)
-    {
+    private static Msg CreateDestinationMessage(MsgFile.Builder destination, Msg source) {
         var sourceValues = source.Values.ToDictionary(x => x.Language, x => x.Text);
         var englishFallback = sourceValues.TryGetValue(LanguageId.English, out var english)
             ? english
             : sourceValues.Values.FirstOrDefault() ?? string.Empty;
 
-        return new Msg
-        {
+        return new Msg{
             Guid = source.Guid,
             Crc = source.Crc,
             Name = source.Name,
-            Values =
-            [
+            Values =[
                 .. destination.Languages.Select(language => new MsgValue(
                     language,
                     sourceValues.TryGetValue(language, out var text) ? text : englishFallback))
             ],
-            Attributes =
-            [
+            Attributes =[
                 .. destination.Attributes.Select(CreateDefaultAttributeValue)
             ]
         };
     }
 
-    private static MsgAttributeValue CreateDefaultAttributeValue(MsgAttributeDefinition definition)
-    {
-        return definition.Type switch
-        {
+    private static void ApplyInventoryDescriptionOverride(
+        MsgFile.Builder destination,
+        MsgFile source,
+        Guid guid,
+        string? inventoryDescription) {
+        if (guid == Guid.Empty || inventoryDescription == null) {
+            return;
+        }
+
+        if (destination.FindMessage(guid) == null) {
+            return;
+        }
+
+        var normalizedInventoryDescription = NormalizeMessageText(DecodeCsvMessageText(inventoryDescription));
+        var sourceDescription = GetMessageText(source, guid, LanguageId.English);
+        if (sourceDescription != null &&
+            NormalizeMessageText(sourceDescription) == normalizedInventoryDescription) {
+            return;
+        }
+
+        destination.SetStringAll(guid, ToMsgLineEndings(normalizedInventoryDescription));
+    }
+
+    private static string? GetMessageText(MsgFile source, Guid guid, LanguageId language) {
+        var message = source.FindMessage(guid);
+        return message == null 
+            ? null 
+            : (from value in message.Values where value.Language == language select value.Text).FirstOrDefault();
+    }
+
+    private static string DecodeCsvMessageText(string text) {
+        if (!text.Contains('\\', StringComparison.Ordinal)) {
+            return text;
+        }
+
+        var result = new StringBuilder(text.Length);
+        for (var i = 0; i < text.Length; i++) {
+            var c = text[i];
+            if (c != '\\' || i + 1 >= text.Length) {
+                result.Append(c);
+                continue;
+            }
+
+            var escape = text[++i];
+            switch (escape) {
+                case 'r':
+                    result.Append('\r');
+                    break;
+                case 'n':
+                    result.Append('\n');
+                    break;
+                case 't':
+                    result.Append('\t');
+                    break;
+                case '"':
+                    result.Append('"');
+                    break;
+                case '\\':
+                    result.Append('\\');
+                    break;
+                case 'u' when i + 4 < text.Length && TryParseHex(text.AsSpan(i + 1, 4), out var value):
+                    result.Append((char)value);
+                    i += 4;
+                    break;
+                default:
+                    result.Append('\\');
+                    result.Append(escape);
+                    break;
+            }
+        }
+
+        return result.ToString();
+    }
+
+    private static bool TryParseHex(ReadOnlySpan<char> text, out int value) {
+        value = 0;
+        foreach (var c in text) {
+            var digit = HexValue(c);
+            if (digit < 0) {
+                value = 0;
+                return false;
+            }
+
+            value = (value << 4) | digit;
+        }
+
+        return true;
+    }
+
+    private static int HexValue(char c) {
+        return c switch{
+            >= '0' and <= '9' => c - '0',
+            >= 'a' and <= 'f' => c - 'a' + 10,
+            >= 'A' and <= 'F' => c - 'A' + 10,
+            _ => -1,
+        };
+    }
+
+    private static string NormalizeMessageText(string text)
+        => text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+
+    private static string ToMsgLineEndings(string normalizedText)
+        => normalizedText.Replace("\n", "\r\n", StringComparison.Ordinal);
+
+    private static MsgAttributeValue CreateDefaultAttributeValue(MsgAttributeDefinition definition) {
+        return definition.Type switch{
             MsgAttributeType.Wstring => new MsgAttributeValue(definition, string.Empty),
             MsgAttributeType.Int64 => new MsgAttributeValue(definition, 0L),
             MsgAttributeType.Double => new MsgAttributeValue(definition, 0d),
@@ -388,11 +460,10 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
     private static string GetItemResourceSceneReference(string itemDataId)
         => $"Scenes/Items/Resources/{itemDataId}.scn";
 
-    private static string GetSkillDropPrefabReference(app.ItemData skill)
-    {
-        var inventoryPrefabPath = skill.ItemPrefab.Path?.ToString();
-        if (string.IsNullOrWhiteSpace(inventoryPrefabPath) || !inventoryPrefabPath.EndsWith(".pfb", StringComparison.OrdinalIgnoreCase))
-        {
+    private static string GetSkillDropPrefabReference(app.ItemData skill) {
+        var inventoryPrefabPath = skill.ItemPrefab.Path.ToString();
+        if (string.IsNullOrWhiteSpace(inventoryPrefabPath) ||
+            !inventoryPrefabPath.EndsWith(".pfb", StringComparison.OrdinalIgnoreCase)) {
             return $"Prefab/Skill/{skill.ItemDataID}/{skill.ItemDataID}Get.pfb";
         }
 
@@ -402,11 +473,9 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
     private static string GetSkillDropPrefabPath(app.ItemData skill)
         => GetPrefabPakPath(GetSkillDropPrefabReference(skill));
 
-    private static string GetSkillItemPrefabPath(app.ItemData skill)
-    {
-        var itemPrefabPath = skill.ItemPrefab.Path?.ToString();
-        if (string.IsNullOrWhiteSpace(itemPrefabPath))
-        {
+    private static string GetSkillItemPrefabPath(app.ItemData skill) {
+        var itemPrefabPath = skill.ItemPrefab.Path.ToString();
+        if (string.IsNullOrWhiteSpace(itemPrefabPath)) {
             throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' has no item prefab.");
         }
 
@@ -417,15 +486,13 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
 
     private static via.Prefab CreatePrefabReference(object path)
-        => new()
-        {
+        => new(){
             Standby = true,
             Path = path,
         };
 
     private static app.ItemData.DropItemData CreateDropItemData(object path)
-        => new()
-        {
+        => new(){
             DropItemPrefab = CreatePrefabReference(path),
         };
 
@@ -436,8 +503,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         => CreateDropItemData(source.Path);
 
     private static app.ItemData Clone(app.ItemData source)
-        => new()
-        {
+        => new(){
             _Comment = source._Comment,
             ItemDataID = source.ItemDataID,
             NameMsg = source.NameMsg,
@@ -455,25 +521,23 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch
         };
 
     private static app.ItemData.WeaponData Clone(app.ItemData.WeaponData source)
-        => new()
-        {
+        => new(){
             ReticleType = source.ReticleType,
             WeaponInfoType = source.WeaponInfoType,
         };
 
     private static app.ItemData.UIData Clone(app.ItemData.UIData source)
-        => new()
-        {
+        => new(){
             IconFrameNo = source.IconFrameNo,
             RoomID = source.RoomID,
             MapIconFrameNo = source.MapIconFrameNo,
         };
 
-    private sealed class BirthdaySkillValueRow
-    {
+    private sealed class BirthdaySkillValueRow {
         public string ItemDataID { get; set; } = "";
         public string Name { get; set; } = "";
         public string PassiveSkillUserPath { get; set; } = "";
+        public string? InventoryDescription { get; set; }
         public float AttackChangeRate { get; set; }
         public float MeleeAttackChangeRate { get; set; }
         public float DyingAttackChangeRate { get; set; }

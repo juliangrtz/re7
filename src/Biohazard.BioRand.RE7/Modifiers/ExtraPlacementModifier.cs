@@ -7,15 +7,16 @@ using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
-internal class ExtraPlacementModifier : Modifier
-{
+internal class ExtraPlacementModifier : Modifier {
     #region Tags
+
     internal const string WoodenCrateTag = "crate";
     internal const string NotFakeCrateTag = "not_fake";
     internal const string FakeCrateTag = "fake";
     internal const string WeaponChestTag = "weapon_chest";
     internal const string ItemBoxTag = "item_box";
     internal const string RandomItemTag = "random";
+
     #endregion
 
     private const string WoodenCrateGameObjectName = "ItemBox_VLong";
@@ -23,10 +24,9 @@ internal class ExtraPlacementModifier : Modifier
     private const string ItemBoxGameObjectName = "ItemBox";
     private const int PreferredHealingDropProbability = 50; // TODO Config?
 
-    private readonly static ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
-    private enum ExtraPlacementKind
-    {
+    private enum ExtraPlacementKind {
         Item,
         WoodenCrate,
         WeaponChest,
@@ -35,12 +35,11 @@ internal class ExtraPlacementModifier : Modifier
 
     internal static bool IsPlainExtraItemPlacement(ItemPlacement placement)
         => placement.IsExtra &&
-            !placement.Tags.Contains(WoodenCrateTag) &&
-            !placement.Tags.Contains(WeaponChestTag) &&
-            !placement.Tags.Contains(ItemBoxTag);
+           !placement.Tags.Contains(WoodenCrateTag) &&
+           !placement.Tags.Contains(WeaponChestTag) &&
+           !placement.Tags.Contains(ItemBoxTag);
 
-    internal static Guid GetGeneratedItemGuid(ItemPlacement placement)
-    {
+    internal static Guid GetGeneratedItemGuid(ItemPlacement placement) {
         if (placement.Guid != Guid.Empty)
             return placement.Guid;
 
@@ -77,8 +76,7 @@ internal class ExtraPlacementModifier : Modifier
         RandomizerLogger logger,
         ItemPlacement placement,
         Rng rng,
-        RandomItemSettings randomItemSettings)
-    {
+        RandomItemSettings randomItemSettings) {
         var allowFakeCrates = randomizer.GetConfigOption<bool>("additional-wooden-crates-fakes");
         RszGameObject template;
         var isFake = false;
@@ -88,28 +86,28 @@ internal class ExtraPlacementModifier : Modifier
         var fakeProbability = rng.NextDouble(minFakePct, maxFakePct);
 
         if ((allowFakeCrates && placement.Tags.Contains(FakeCrateTag)) ||
-            (!placement.Tags.Contains(NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakeProbability)))
-        {
+            (!placement.Tags.Contains(NotFakeCrateTag) && allowFakeCrates && rng.NextProbability(fakeProbability))) {
             isFake = true;
             template = randomizer.TemplateService
                 .GetObject(FakeWoodenCrateGameObjectName)
                 .CloneWithNewGuids(
-                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile, placement.GuidOrAuto, true),
+                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile,
+                        placement.GuidOrAuto, true),
                     newGuid);
-        }
-        else
-        {
+        } else {
             template = randomizer.TemplateService
                 .GetObject(WoodenCrateGameObjectName)
                 .CloneWithNewGuids(
-                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile, placement.GuidOrAuto, false),
+                    randomizer.GetRng("modifier/extra-placement/crate-template-instances", placement.SceneFile,
+                        placement.GuidOrAuto, false),
                     newGuid);
             var drop = GetNextWoodenCrateDrop(randomizer.ItemRandomizer, rng, randomItemSettings);
             var itemDropDestruct = template.FindComponent<app.ItemDropDestruct>()!;
             itemDropDestruct.Enabled = true;
             itemDropDestruct.SetItemID = drop.Id;
             itemDropDestruct.ChangeStackNum = drop.CountNormal;
-            itemDropDestruct.SaveGUID = itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : rng.NextGuid();
+            itemDropDestruct.SaveGUID =
+                itemDropDestruct.SaveGUID != Guid.Empty ? itemDropDestruct.SaveGUID : rng.NextGuid();
             template = template.AddOrUpdateComponent(itemDropDestruct);
 
             var name = _itemDefinitions.FromId(drop.Id)?.Name ?? drop.Id;
@@ -122,7 +120,8 @@ internal class ExtraPlacementModifier : Modifier
         template = template.AddOrUpdateComponent(transform);
 
         parentGameObject = parentGameObject.AddOrUpdateChild(template);
-        logger.LogLine($"[EXTRA] {(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
+        logger.LogLine(
+            $"[EXTRA] {(isFake ? "FAKE " : "")}Wooden crate at {placement.Position} in {placement.SceneFile}");
         logger.LogLine($"GUID: {newGuid}");
 
         return parentGameObject;
@@ -131,17 +130,14 @@ internal class ExtraPlacementModifier : Modifier
     private static Item GetNextWoodenCrateDrop(
         ItemRandomizer itemRandomizer,
         Rng rng,
-        RandomItemSettings randomItemSettings)
-    {
-        if (!ItemDrops.GenericRuntimeDrops.Any(id => randomItemSettings.GetItemRatio(id) > 0))
-        {
+        RandomItemSettings randomItemSettings) {
+        if (!ItemDrops.GenericRuntimeDrops.Any(id => randomItemSettings.GetItemRatio(id) > 0)) {
             return new Item(ItemID.Herb.ToString(), 1);
         }
 
         return itemRandomizer.GetNextGeneralDrop(
             rng,
-            new RandomItemSettings
-            {
+            new RandomItemSettings{
                 MinAmmoQuantity = randomItemSettings.MinAmmoQuantity,
                 MaxAmmoQuantity = randomItemSettings.MaxAmmoQuantity,
                 ItemRatioKeyFunc = id => ItemDrops.GenericRuntimeDrops.Contains(id)
@@ -156,17 +152,17 @@ internal class ExtraPlacementModifier : Modifier
         Randomizer randomizer,
         RandomizerLogger logger,
         ItemPlacement placement,
-        Rng rng)
-    {
+        Rng rng) {
         var newGuid = rng.NextGuid();
         var template = randomizer.TemplateService
             .GetObject(ItemBoxGameObjectName)
             .CloneWithNewGuids(
-                randomizer.GetRng("modifier/extra-placement/item-box-template-instances", placement.SceneFile, placement.GuidOrAuto),
+                randomizer.GetRng("modifier/extra-placement/item-box-template-instances", placement.SceneFile,
+                    placement.GuidOrAuto),
                 newGuid);
-        var interactGameObject = template.Children.FirstOrDefault(child => child.FindComponent<app.InteractSendFsm>() != null);
-        if (interactGameObject != null)
-        {
+        var interactGameObject =
+            template.Children.FirstOrDefault(child => child.FindComponent<app.InteractSendFsm>() != null);
+        if (interactGameObject != null) {
             var interact = interactGameObject.FindComponent<app.InteractSendFsm>()!;
             interact.SaveGUID = rng.NextGuid();
             interactGameObject = interactGameObject.AddOrUpdateComponent(interact);
@@ -193,24 +189,20 @@ internal class ExtraPlacementModifier : Modifier
         ItemPlacement placement,
         Rng rng,
         bool isRandom,
-        RandomItemSettings randomItemSettings)
-    {
+        RandomItemSettings randomItemSettings) {
         RszGameObject template;
         Item drop;
         app.Item item;
         Guid newGuid;
 
-        if (isRandom)
-        {
+        if (isRandom) {
             var preferHealing = randomizer.GetConfigOption<bool>("additional-items-prefer-healing");
 
-            if (preferHealing && rng.NextProbability(PreferredHealingDropProbability))
-            {
-                var heal = randomizer.ItemRandomizer.GetRandomItemDefinition(rng, Enums.app.Item.ItemCategoryType.Drug, true);
+            if (preferHealing && rng.NextProbability(PreferredHealingDropProbability)) {
+                var heal = randomizer.ItemRandomizer.GetRandomItemDefinition(rng, Enums.app.Item.ItemCategoryType.Drug,
+                    true);
                 drop = new Item(heal?.Id ?? ItemID.Herb.ToString(), 1);
-            }
-            else
-            {
+            } else {
                 drop = randomizer.ItemRandomizer.GetNextGeneralDrop(rng, randomItemSettings);
             }
 
@@ -234,11 +226,10 @@ internal class ExtraPlacementModifier : Modifier
 
             var name = _itemDefinitions.FromId(drop.Id)!.Name;
             logger.LogLine($"[RANDOM EXTRA] [{drop.CountEasy}, {drop.CountNormal}, {drop.CountMadhouse}]x {name} " +
-                $"at {placement.Position} in {placement.SceneFile}");
-        }
-        else
-        {
-            var templateItemId = randomizer.ItemRandomizer.GetItemTemplateIdForDrop(placement.Id, rng, randomItemSettings);
+                           $"at {placement.Position} in {placement.SceneFile}");
+        } else {
+            var templateItemId =
+                randomizer.ItemRandomizer.GetItemTemplateIdForDrop(placement.Id, rng, randomItemSettings);
             newGuid = GetGeneratedItemGuid(placement);
             var templateInstanceRng = randomizer.GetRng(
                 "modifier/extra-placement/template-instances",
@@ -257,7 +248,8 @@ internal class ExtraPlacementModifier : Modifier
             item._DifficultItemNumSetting.HardNum = placement.HardNum;
 
             var name = _itemDefinitions.FromId(placement.Id)!.Name;
-            logger.LogLine($"[EXTRA] [{placement.EasyNum}, {placement.StackNum}, {placement.HardNum}]x {name} at {placement.Position} in {placement.SceneFile}");
+            logger.LogLine(
+                $"[EXTRA] [{placement.EasyNum}, {placement.StackNum}, {placement.HardNum}]x {name} at {placement.Position} in {placement.SceneFile}");
         }
 
         logger.LogLine($"GUID: {newGuid}");
@@ -279,24 +271,21 @@ internal class ExtraPlacementModifier : Modifier
         return parentGameObject;
     }
 
-    private static ExtraPlacementKind GetPlacementKind(ItemPlacement placement)
-    {
+    private static ExtraPlacementKind GetPlacementKind(ItemPlacement placement) {
         var specialKinds = new List<ExtraPlacementKind>(3);
-        if (placement.Tags.Contains(WoodenCrateTag))
-        {
+        if (placement.Tags.Contains(WoodenCrateTag)) {
             specialKinds.Add(ExtraPlacementKind.WoodenCrate);
         }
-        if (placement.Tags.Contains(WeaponChestTag))
-        {
+
+        if (placement.Tags.Contains(WeaponChestTag)) {
             specialKinds.Add(ExtraPlacementKind.WeaponChest);
         }
-        if (placement.Tags.Contains(ItemBoxTag))
-        {
+
+        if (placement.Tags.Contains(ItemBoxTag)) {
             specialKinds.Add(ExtraPlacementKind.ItemBox);
         }
 
-        return specialKinds.Count switch
-        {
+        return specialKinds.Count switch{
             0 => ExtraPlacementKind.Item,
             1 => specialKinds[0],
             _ => throw new Exception(
@@ -308,8 +297,7 @@ internal class ExtraPlacementModifier : Modifier
         ExtraPlacementKind kind,
         bool allowExtraItems,
         bool allowExtraCrates)
-        => kind switch
-        {
+        => kind switch{
             ExtraPlacementKind.ItemBox => true,
             ExtraPlacementKind.WoodenCrate => allowExtraCrates,
             ExtraPlacementKind.WeaponChest => allowExtraItems,
@@ -325,17 +313,18 @@ internal class ExtraPlacementModifier : Modifier
         ItemPlacement placement,
         RandomItemSettings randomItemSettings,
         bool allowExtraItems,
-        bool allowExtraCrates)
-    {
+        bool allowExtraCrates) {
         var kind = GetPlacementKind(placement);
         if (!IsPlacementEnabled(kind, allowExtraItems, allowExtraCrates))
             return (scene, parentGameObject, false);
 
-        return kind switch
-        {
-            ExtraPlacementKind.WoodenCrate => (scene, AddExtraCrate(parentGameObject, randomizer, logger, placement, rng, randomItemSettings), true),
-            ExtraPlacementKind.WeaponChest => (AddExtraChest(scene, randomizer, logger, placement), parentGameObject, false),
-            ExtraPlacementKind.ItemBox => (scene, AddExtraItemBox(parentGameObject, randomizer, logger, placement, rng), true),
+        return kind switch{
+            ExtraPlacementKind.WoodenCrate => (scene,
+                AddExtraCrate(parentGameObject, randomizer, logger, placement, rng, randomItemSettings), true),
+            ExtraPlacementKind.WeaponChest => (AddExtraChest(scene, randomizer, logger, placement), parentGameObject,
+                false),
+            ExtraPlacementKind.ItemBox => (scene, AddExtraItemBox(parentGameObject, randomizer, logger, placement, rng),
+                true),
             _ => AddPlacementItem(scene, parentGameObject, randomizer, logger, placement, rng, randomItemSettings)
         };
     }
@@ -347,18 +336,18 @@ internal class ExtraPlacementModifier : Modifier
         RandomizerLogger logger,
         ItemPlacement placement,
         Rng rng,
-        RandomItemSettings randomItemSettings)
-    {
+        RandomItemSettings randomItemSettings) {
         var isRandom = placement.Tags.Contains(RandomItemTag);
         var hasFixedItem = !string.IsNullOrWhiteSpace(placement.Id);
 
-        if (!isRandom && !hasFixedItem)
-        {
-            logger.LogLine($"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
+        if (!isRandom && !hasFixedItem) {
+            logger.LogLine(
+                $"[SKIP EXTRA] Placement at {placement.Position} in {placement.SceneFile} has no item id and is not marked random.");
             return (scene, parentGameObject, false);
         }
 
-        return (scene, AddExtraItem(parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings), true);
+        return (scene, AddExtraItem(parentGameObject, randomizer, logger, placement, rng, isRandom, randomItemSettings),
+            true);
     }
 
     private void HandleExtraItemsForScene(
@@ -368,19 +357,16 @@ internal class ExtraPlacementModifier : Modifier
         List<ItemPlacement> placements,
         RandomItemSettings randomItemSettings,
         bool allowExtraItems,
-        bool allowExtraCrates)
-    {
+        bool allowExtraCrates) {
         if (placements.Count == 0)
             return;
 
-        randomizer.FileRepository.ModifyScnFile(placements[0].SceneFile, scene =>
-        {
+        randomizer.FileRepository.ModifyScnFile(placements[0].SceneFile, scene => {
             var parentGameObject = scene.FindGameObject(go => go.Name.EndsWith("_dynamic"))
-                ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
+                                   ?? throw new Exception("Failed to obtain \"_dynamic\" parent GameObject!");
             var parentChanged = false;
 
-            foreach (var placement in placements)
-            {
+            foreach (var placement in placements) {
                 var result = ApplyPlacementToScene(
                     scene,
                     parentGameObject,
@@ -396,8 +382,7 @@ internal class ExtraPlacementModifier : Modifier
                 parentChanged |= result.ParentChanged;
             }
 
-            if (parentChanged)
-            {
+            if (parentChanged) {
                 scene = scene.UpdateGameObject(parentGameObject);
             }
 
@@ -405,8 +390,7 @@ internal class ExtraPlacementModifier : Modifier
         });
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger)
-    {
+    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var itemPlacementService = randomizer.ItemPlacementService;
         var context = randomizer.StaticItemRandomizationService;
         var randomItemsEnabled = randomizer.GetConfigOption<bool>("random-items");

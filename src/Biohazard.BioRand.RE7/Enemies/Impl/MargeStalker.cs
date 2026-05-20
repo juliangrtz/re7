@@ -2,8 +2,7 @@
 
 namespace Biohazard.BioRand.RE7.Enemies.Impl;
 
-internal class MargeStalker : IEnemyDefinition
-{
+internal class MargeStalker : IEnemyDefinition {
     public string Id => "MargeStalker";
 
     public EnemyID EnemyId => EnemyID.Em3100;
@@ -22,7 +21,7 @@ internal class MargeStalker : IEnemyDefinition
     public string DirectivesHolderPath
         => PakPath.UserFile("prefab/character/em3100/em3100directivesholder.user");
 
-    public string ResistParamsHolderPath 
+    public string ResistParamsHolderPath
         => PakPath.UserFile("prefab/character/em3100/em3100resistparameterholder.user");
 
     public string OriginalPrefabPath
@@ -33,15 +32,12 @@ internal class MargeStalker : IEnemyDefinition
     public bool SupportsSpeedRandomization => true;
 }
 
-internal class MargeStalkerDirectiveModifier : IDirectiveModifier
-{
+internal class MargeStalkerDirectiveModifier : IDirectiveModifier {
     public bool Supports(IEnemyDefinition enemy)
         => enemy.EnemyId == EnemyID.Em3100;
 
-    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger)
-    {
-        if (!enemy.ShouldRandomizeSpeed(randomizer))
-        {
+    public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
+        if (!enemy.ShouldRandomizeSpeed(randomizer)) {
             logger.LogSkip("Enemy speed randomization is disabled.");
             return;
         }
@@ -49,24 +45,24 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier
         var newSpeed = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", newSpeed);
 
-        var holder = randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);
-        foreach (var directive in holder.holder.Units)
-        {
+        var holder =
+            randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);
+        foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
             var userFilePath = PakPath.UserFile(directive.Directive.Path);
 
-            logger.LogDirectiveFile(rank, userFilePath, () => randomizer.FileRepository.ModifyUserFile<app.Em3100Directive>(
-                userFilePath,
-                d => ModifyDirective(d, logger, newSpeed)
-            ));
+            logger.LogDirectiveFile(rank, userFilePath, () =>
+                randomizer.FileRepository.ModifyUserFile<app.Em3100Directive>(
+                    userFilePath,
+                    d => ModifyDirective(d, logger, newSpeed)
+                ));
         }
     }
 
     private app.Em3100Directive ModifyDirective(
         app.Em3100Directive directive,
         RandomizerLogger logger,
-        float speed)
-    {
+        float speed) {
         // Speed
         var oldWalkSpeed = directive.FretWalkSpeed;
         directive.FretWalkSpeed *= speed;

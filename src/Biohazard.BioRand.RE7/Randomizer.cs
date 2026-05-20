@@ -8,10 +8,9 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
 
-internal class Randomizer : IDisposable
-{
+internal class Randomizer : IDisposable {
     private readonly string _inputGamePath;
-    private FileRepository _fileRepository = new FileRepository();
+    private FileRepository _fileRepository = new();
     private ImmutableArray<Modifier> _modifiers = GetModifiers();
     private readonly Dictionary<Type, object> _services = [];
     private readonly Lock _servicesLock = new();
@@ -26,10 +25,14 @@ internal class Randomizer : IDisposable
     internal RandomizerLoggerIO? LastLog { get; private set; }
 
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
-    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition => RandomizerConfigurationDefinition.Create();
-    public static RandomizerConfiguration DefaultConfiguration => RandomizerConfigurationDefinition.Create().GetDefault();
 
-    private static readonly string[] _optionsThatRequireREFramework = [
+    public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition =>
+        RandomizerConfigurationDefinition.Create();
+
+    public static RandomizerConfiguration DefaultConfiguration =>
+        RandomizerConfigurationDefinition.Create().GetDefault();
+
+    private static readonly string[] _optionsThatRequireREFramework =[
         "debug-force-reframework",
         "madhouse-normal-saves",
         "random-events",
@@ -41,14 +44,13 @@ internal class Randomizer : IDisposable
 
     private bool IsREFrameworkRequired()
         => GetConfigOption<bool>("random-enemies")
-                                        || GetConfigOption<bool>("random-enemy-drops")
-                                        || GetConfigOption<bool>("allow-dlc-items")
-                                        || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
-                                        || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
-                                        || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
+           || GetConfigOption<bool>("random-enemy-drops")
+           || GetConfigOption<bool>("allow-dlc-items")
+           || _optionsThatRequireREFramework.Any(option => GetConfigOption<bool>(option))
+           || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
+           || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
-    public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter)
-    {
+    public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
         Input = input;
         _inputGamePath = inputGamePath;
         Reporter = reporter;
@@ -56,13 +58,11 @@ internal class Randomizer : IDisposable
         DynamicData = new DynamicData(Input.Configuration.GetValueOrDefault<bool>("debug-download-data"));
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         _fileRepository?.Dispose();
     }
 
-    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize()
-    {
+    public IntelOrca.Biohazard.BioRand.RandomizerOutput Randomize() {
         var input = Input;
         _fileRepository = new FileRepository(this, _inputGamePath, DynamicData);
 
@@ -72,8 +72,7 @@ internal class Randomizer : IDisposable
         AddLogFile($"output.log", log.Output.Output);
 
         IntelOrca.Biohazard.BioRand.RandomizerOutput? result = null;
-        Reporter.RunTask("Building mod", () =>
-        {
+        Reporter.RunTask("Building mod", () => {
             var output = new RandomizerOutput(
                 input,
                 _fileRepository.GetOutputPakFile(),
@@ -107,47 +106,39 @@ internal class Randomizer : IDisposable
         return result!;
     }
 
-    public RandomizerLoggerIO Randomize(RandomizerInput input)
-    {
+    public RandomizerLoggerIO Randomize(RandomizerInput input) {
         _modifiers = GetModifiers();
 
         var logger = new RandomizerLoggerIO();
-        foreach (var l in new[] { logger.Input, logger.Process, logger.Output })
-        {
+        foreach (var l in new[]{ logger.Input, logger.Process, logger.Output }) {
             l.LogHr();
             l.LogVersion();
             l.LogLine($"Seed = {input.Seed}");
             l.LogHr();
         }
 
-        if (DynamicData.DownloadEnabled)
-        {
+        if (DynamicData.DownloadEnabled) {
             Reporter.RunTask("Downloading latest spreadsheet data from Google Sheets", DynamicData.PrefetchAll);
         }
 
         // Patches
         Reporter.RunTask("Applying patches", () => ExportedMods.ApplyAll(this, FileRepository));
 
-        if (CaptureStateLogs)
-        {
+        if (CaptureStateLogs) {
             // Input
-            IterateModifiers((n, m) =>
-            {
+            IterateModifiers((n, m) => {
                 logger.Input.Push(n);
                 m.LogState(this, logger.Input);
                 logger.Input.Pop();
                 logger.Input.LogHr();
             });
-        }
-        else
-        {
+        } else {
             logger.Input.LogLine("State logging disabled.");
             logger.Input.LogHr();
         }
 
         // Apply modifiers
-        IterateModifiers((n, m) =>
-        {
+        IterateModifiers((n, m) => {
             logger.Process.Push(n);
             Reporter.RunTask($"Running modifier: {n}", () => m.Apply(this, logger.Process));
             logger.Process.Pop();
@@ -157,19 +148,15 @@ internal class Randomizer : IDisposable
         // Save Flags
         FlagService.Save(logger.Process);
 
-        if (CaptureStateLogs)
-        {
+        if (CaptureStateLogs) {
             // Output
-            IterateModifiers((n, m) =>
-            {
+            IterateModifiers((n, m) => {
                 logger.Output.Push(n);
                 m.LogState(this, logger.Output);
                 logger.Output.Pop();
                 logger.Output.LogHr();
             });
-        }
-        else
-        {
+        } else {
             logger.Output.LogLine("State logging disabled.");
             logger.Output.LogHr();
         }
@@ -178,19 +165,15 @@ internal class Randomizer : IDisposable
         return logger;
     }
 
-    private void IterateModifiers(Action<string, Modifier> action)
-    {
-        foreach (var modifier in _modifiers)
-        {
+    private void IterateModifiers(Action<string, Modifier> action) {
+        foreach (var modifier in _modifiers) {
             var name = modifier.GetType().Name.Replace("Modifier", "");
             action(name, modifier);
         }
     }
 
-    private static ImmutableArray<Modifier> GetModifiers()
-    {
-        return
-        [
+    private static ImmutableArray<Modifier> GetModifiers() {
+        return[
             // Enemies
             new EnemyDirectiveModifier(),
             new EnemyModifier(),
@@ -225,22 +208,19 @@ internal class Randomizer : IDisposable
     public List<string> UserTags => GetConfigOption<string>("tags")?.Split(",")?.ToList() ?? [];
     public int Seed => Input.Seed;
 
-    public Rng GetRng(params object[] key)
-    {
+    public Rng GetRng(params object[] key) {
         var hashInput = string.Concat([Input.Seed, .. key]);
         var seed = MurMur3.HashData(hashInput);
         return new Rng(seed);
     }
 
-    public T? GetConfigOption<T>(string key, T? defaultValue = default)
-    {
+    public T? GetConfigOption<T>(string key, T? defaultValue = default) {
         if (Input.Configuration == null)
             return defaultValue;
         return Input.Configuration.GetValueOrDefault<T>(key, defaultValue);
     }
 
-    public T? GetEnumConfigOption<T>(string key) where T : struct, Enum
-    {
+    public T? GetEnumConfigOption<T>(string key) where T : struct, Enum {
         var value = Input.Configuration.GetValueOrDefault<string>(key);
         if (Input.Configuration == null || value == null)
             return default;
@@ -248,8 +228,7 @@ internal class Randomizer : IDisposable
         return EnumExtensions.ParseOrNull<T>(value);
     }
 
-    public bool HasSpecialTouch(string kind)
-    {
+    public bool HasSpecialTouch(string kind) {
         if (!GetConfigOption("enable-special", true))
             return false;
 
@@ -258,16 +237,15 @@ internal class Randomizer : IDisposable
         return present;
     }
 
-    public T GetService<T>()
-    {
+    public T GetService<T>() {
         using var scope = _servicesLock.EnterScope();
         var type = typeof(T);
         _services.TryGetValue(type, out var service);
-        if (service == null)
-        {
+        if (service == null) {
             service = Activator.CreateInstance(type, [this])!;
             _services[type] = service;
         }
+
         return (T)service;
     }
 
@@ -275,13 +253,15 @@ internal class Randomizer : IDisposable
     public AreaService AreaService => GetService<AreaService>();
     public ItemRandomizer ItemRandomizer => GetService<ItemRandomizer>();
     public ItemPlacementService ItemPlacementService => GetService<ItemPlacementService>();
-    public StaticItemRandomizationService StaticItemRandomizationService => GetService<StaticItemRandomizationService>();
+
+    public StaticItemRandomizationService StaticItemRandomizationService =>
+        GetService<StaticItemRandomizationService>();
+
     public FlagService FlagService => GetService<FlagService>();
     public ChestService ChestService => GetService<ChestService>();
     public EnemySceneLimitService EnemySceneLimitService => GetService<EnemySceneLimitService>();
 
-    public void AddLogFile(string name, string content)
-    {
+    public void AddLogFile(string name, string content) {
         _logFiles[name] = content;
     }
 }
