@@ -40,7 +40,7 @@ public class RandomizerRandomEventPluginBehaviorTests {
 
     [Fact]
     public void RandomEvents_InfiniteAmmo_UsesPassiveSkillInfinityFlag() {
-        var source = ReadPluginSource("REFPlugin.RandomEvents.cs");
+        var source = ReadPluginSource("Plugin.RandomEvents.cs");
 
         Assert.Contains("case RandomEventKind.WeaponInfiniteAmmo:", source);
         Assert.Contains("ApplyWeaponInfiniteAmmoEvent()", source);
@@ -54,9 +54,9 @@ public class RandomizerRandomEventPluginBehaviorTests {
 
     [Fact]
     public void RandomEvents_DebugUi_CanStartEverySupportedEffect() {
-        var pluginSource = ReadPluginSource("REFPlugin.cs");
-        var randomEventsSource = ReadPluginSource("REFPlugin.RandomEvents.cs");
-        var uiSource = ReadPluginSource("REFPlugin.UI.cs");
+        var pluginSource = ReadPluginSource("Plugin.cs");
+        var randomEventsSource = ReadPluginSource("Plugin.RandomEvents.cs");
+        var uiSource = ReadPluginSource("Plugin.UI.cs");
 
         Assert.Contains("activeRandomEventStartedFromUi", randomEventsSource);
         Assert.Contains("ImGuiRender.Post += OnImGuiRender", pluginSource);
