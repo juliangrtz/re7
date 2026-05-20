@@ -57,18 +57,18 @@ public class RandomizerBirdCageBehaviorTests {
                 randomizer.DynamicData.SetData(
                     DynamicDataName.BirdCages,
                     System.Text.Encoding.UTF8.GetBytes("""
-                                                           Enabled,Category,ItemId,MinAmount,MaxAmount,Coins,InputItemIds
-                                                           true,Drug,MachineGun,1,1,7,Coin CoinOld
-                                                           true,Drug,MiaKnife,1,1,3,Coin CoinOld
-                                                           true,Drug,Herb,3,6,2,Coin CoinOld
-                                                           true,Drug,RemedyM,2,4,2,Coin CoinOld
-                                                           true,Drug,RemedyL,1,3,3,Coin CoinOld
-                                                           true,Drug,Gunpowder,3,6,2,Coin CoinOld
-                                                           true,Drug,ChemicalS,2,4,2,Coin CoinOld
-                                                           true,Drug,ShotgunBullet,8,12,3,Coin CoinOld
-                                                           true,Drug,HandgunBullet,15,25,2,Coin CoinOld
-                                                           true,Drug,HandgunBulletL,10,15,2,Coin CoinOld
-                                                           true,Drug,MagnumBullet,4,6,7,Coin CoinOld
+                                                           Enabled,ItemId,MinAmount,MaxAmount,CoinsMin,CoinsMax,InputItemIds
+                                                           true,MachineGun,1,1,7,7,Coin CoinOld
+                                                           true,MiaKnife,1,1,3,3,Coin CoinOld
+                                                           true,Herb,3,6,2,2,Coin CoinOld
+                                                           true,RemedyM,2,4,2,2,Coin CoinOld
+                                                           true,RemedyL,1,3,3,3,Coin CoinOld
+                                                           true,Gunpowder,3,6,2,2,Coin CoinOld
+                                                           true,ChemicalS,2,4,2,2,Coin CoinOld
+                                                           true,ShotgunBullet,8,12,3,3,Coin CoinOld
+                                                           true,HandgunBullet,15,25,2,2,Coin CoinOld
+                                                           true,HandgunBulletL,10,15,2,2,Coin CoinOld
+                                                           true,MagnumBullet,4,6,7,7,Coin CoinOld
                                                        """));
             });
 
@@ -76,6 +76,28 @@ public class RandomizerBirdCageBehaviorTests {
 
         Assert.NotEmpty(changed);
         Assert.DoesNotContain(changed, state => state.ItemId == "MachineGun");
+    }
+
+    [Fact]
+    public void BirdCageModifier_UsesConfiguredCoinRange() {
+        using var result = RandomizerTest.RunState(
+            config => { config["random-bird-cage-magnum"] = true; },
+            prepareRandomizer: randomizer => {
+                randomizer.DynamicData.SetData(
+                    DynamicDataName.BirdCages,
+                    System.Text.Encoding.UTF8.GetBytes("""
+                                                       Enabled,ItemId,MinAmount,MaxAmount,CoinsMin,CoinsMax,InputItemIds
+                                                       true,Herb,1,1,4,6,Coin CoinOld
+                                                       """));
+            });
+
+        var changed = GetChangedBirdCageStates(result);
+
+        Assert.NotEmpty(changed);
+        Assert.All(changed, state => {
+            Assert.Equal("Herb", state.ItemId);
+            Assert.InRange(state.CoinCount, 4, 6);
+        });
     }
 
     private static List<BirdCageState> GetChangedBirdCageStates(RandomizerRunResult result) {

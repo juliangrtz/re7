@@ -264,6 +264,11 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         context.ModifyMsgFile(_uiItemMessagePath, itemMessages => {
             foreach (var skill in birthdaySkills) {
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.NameMsg);
+                ApplyInventoryNameOverride(
+                    itemMessages,
+                    birthdayMessages,
+                    skill.NameMsg,
+                    birthdaySkillValues[skill.ItemDataID].Name);
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.ManualMsg);
                 ApplyInventoryDescriptionOverride(
                     itemMessages,
@@ -341,6 +346,18 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         };
     }
 
+    private static void ApplyInventoryNameOverride(
+        MsgFile.Builder destination,
+        MsgFile source,
+        Guid guid,
+        string? inventoryName) {
+        if (string.IsNullOrWhiteSpace(inventoryName)) {
+            return;
+        }
+
+        ApplyMessageTextOverride(destination, source, guid, inventoryName);
+    }
+
     private static void ApplyInventoryDescriptionOverride(
         MsgFile.Builder destination,
         MsgFile source,
@@ -350,18 +367,30 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
             return;
         }
 
+        ApplyMessageTextOverride(destination, source, guid, inventoryDescription);
+    }
+
+    private static void ApplyMessageTextOverride(
+        MsgFile.Builder destination,
+        MsgFile source,
+        Guid guid,
+        string text) {
+        if (guid == Guid.Empty) {
+            return;
+        }
+
         if (destination.FindMessage(guid) == null) {
             return;
         }
 
-        var normalizedInventoryDescription = NormalizeMessageText(DecodeCsvMessageText(inventoryDescription));
-        var sourceDescription = GetMessageText(source, guid, LanguageId.English);
-        if (sourceDescription != null &&
-            NormalizeMessageText(sourceDescription) == normalizedInventoryDescription) {
+        var normalizedText = NormalizeMessageText(DecodeCsvMessageText(text));
+        var sourceText = GetMessageText(source, guid, LanguageId.English);
+        if (sourceText != null &&
+            NormalizeMessageText(sourceText) == normalizedText) {
             return;
         }
 
-        destination.SetStringAll(guid, ToMsgLineEndings(normalizedInventoryDescription));
+        destination.SetStringAll(guid, ToMsgLineEndings(normalizedText));
     }
 
     private static string? GetMessageText(MsgFile source, Guid guid, LanguageId language) {
