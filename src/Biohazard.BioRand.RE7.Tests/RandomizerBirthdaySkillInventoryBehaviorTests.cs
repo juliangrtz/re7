@@ -90,24 +90,41 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         Assert.NotNull(uiItemMessages.FindMessage(skillSetting.NameMsg));
         Assert.NotNull(uiItemMessages.FindMessage(skillSetting.ManualMsg));
         Assert.Equal("Infinite Ammo", uiItemMessages.GetString(skillSetting.NameMsg, LanguageId.English));
+        Assert.Equal(
+            "Infinite ammo. Reload your weapon\r\nas many times as you want...but\r\ntime bonuses are greatly decreased.",
+            uiItemMessages.GetString(skillSetting.ManualMsg, LanguageId.English));
     }
 
     [Fact]
-    public void BirthdaySkillPassiveValues_AreReadFromCsv() {
+    public void BirthdaySkillCsvValues_AreReadFromCsv() {
+        const string customDescriptionCsv =
+            "\"Custom birthday skill, line 1\\r\\nline 2 with \"\"quotes\"\" and \\u03b1.\"";
+        const string customDescription =
+            "Custom birthday skill, line 1\r\nline 2 with \"quotes\" and \u03b1.";
         var csv = System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile("birthday_skills.csv"))
             .Replace(
-                "skl001,Infinite Ammo,Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE",
-                "skl001,Infinite Ammo,Prefab/Skill/skl001/Skl001PassiveSkill.user,1.25,0,0,0,0,0,0,0,0,0,0,0.75,-0.4,-0.4,0,FALSE,TRUE");
+                "Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE",
+                "Prefab/Skill/skl001/Skl001PassiveSkill.user,1.25,0,0,0,0,0,0,0,0,0,0,0.75,-0.4,-0.4,0,FALSE,TRUE");
+        csv = csv.Replace(
+            "\"Infinite ammo. Reload your weapon\\r\\nas many times as you want...but\\r\\ntime bonuses are greatly decreased.\"",
+            customDescriptionCsv);
 
         using var result = RandomizerTest.RunState(prepareRandomizer: randomizer => {
             randomizer.DynamicData.SetData(DynamicDataName.BirthdaySkills, System.Text.Encoding.UTF8.GetBytes(csv));
         });
 
         var passiveSkill = ReadAfterPassiveSkillUser(result, Skl001PassiveSkillUserPath);
+        var skillSetting = result
+            .ReadAfterUserFile<app.ItemSettings>(RandomizerTestPaths.KeyItemSettingsPath)
+            ._Settings
+            .Single(x => x.ItemDataID == "skl001");
+        var uiItemMessages = result.ReadAfterMsgFile(RandomizerTestPaths.UiItemMessagePath);
+
         Assert.Equal(1.25f, passiveSkill.Get<float>("AttackChangeRate"));
         Assert.Equal(0.75f, passiveSkill.Get<float>("ReloadSpeedChangeRate"));
         Assert.False(passiveSkill.Get<bool>("IsBulletStackNumInfinity"));
         Assert.True(passiveSkill.Get<bool>("IsPsychostimulantEffectInfinity"));
+        Assert.Equal(customDescription, uiItemMessages.GetString(skillSetting.ManualMsg, LanguageId.English));
     }
 
     [Fact]

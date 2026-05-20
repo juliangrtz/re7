@@ -35,7 +35,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         ApplyKeyItemSettings(birthdaySkills);
         ApplyDropPrefabs(birthdaySkills);
         ApplyItemResources(birthdaySkills);
-        ApplyBirthdayMessages(birthdaySkills);
+        ApplyBirthdayMessages(birthdaySkills, birthdaySkillValues);
     }
 
     private IReadOnlyDictionary<string, BirthdaySkillValueRow> LoadBirthdaySkillValues(
@@ -253,7 +253,9 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         return PakPath.UserFile(passiveSkill.Path);
     }
 
-    private void ApplyBirthdayMessages(IReadOnlyList<app.ItemData> birthdaySkills) {
+    private void ApplyBirthdayMessages(
+        IReadOnlyList<app.ItemData> birthdaySkills,
+        IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues) {
         if (!context.Exists(_uiBirthdayMessagePath)) {
             return;
         }
@@ -263,6 +265,11 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
             foreach (var skill in birthdaySkills) {
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.NameMsg);
                 CopyMessageIfMissing(itemMessages, birthdayMessages, skill.ManualMsg);
+                ApplyInventoryDescriptionOverride(
+                    itemMessages,
+                    birthdayMessages,
+                    skill.ManualMsg,
+                    birthdaySkillValues[skill.ItemDataID].InventoryDescription);
             }
         });
     }
@@ -334,6 +341,110 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         };
     }
 
+    private static void ApplyInventoryDescriptionOverride(
+        MsgFile.Builder destination,
+        MsgFile source,
+        Guid guid,
+        string? inventoryDescription) {
+        if (guid == Guid.Empty || inventoryDescription == null) {
+            return;
+        }
+
+        if (destination.FindMessage(guid) == null) {
+            return;
+        }
+
+        var normalizedInventoryDescription = NormalizeMessageText(DecodeCsvMessageText(inventoryDescription));
+        var sourceDescription = GetMessageText(source, guid, LanguageId.English);
+        if (sourceDescription != null &&
+            NormalizeMessageText(sourceDescription) == normalizedInventoryDescription) {
+            return;
+        }
+
+        destination.SetStringAll(guid, ToMsgLineEndings(normalizedInventoryDescription));
+    }
+
+    private static string? GetMessageText(MsgFile source, Guid guid, LanguageId language) {
+        var message = source.FindMessage(guid);
+        return message == null 
+            ? null 
+            : (from value in message.Values where value.Language == language select value.Text).FirstOrDefault();
+    }
+
+    private static string DecodeCsvMessageText(string text) {
+        if (!text.Contains('\\', StringComparison.Ordinal)) {
+            return text;
+        }
+
+        var result = new StringBuilder(text.Length);
+        for (var i = 0; i < text.Length; i++) {
+            var c = text[i];
+            if (c != '\\' || i + 1 >= text.Length) {
+                result.Append(c);
+                continue;
+            }
+
+            var escape = text[++i];
+            switch (escape) {
+                case 'r':
+                    result.Append('\r');
+                    break;
+                case 'n':
+                    result.Append('\n');
+                    break;
+                case 't':
+                    result.Append('\t');
+                    break;
+                case '"':
+                    result.Append('"');
+                    break;
+                case '\\':
+                    result.Append('\\');
+                    break;
+                case 'u' when i + 4 < text.Length && TryParseHex(text.AsSpan(i + 1, 4), out var value):
+                    result.Append((char)value);
+                    i += 4;
+                    break;
+                default:
+                    result.Append('\\');
+                    result.Append(escape);
+                    break;
+            }
+        }
+
+        return result.ToString();
+    }
+
+    private static bool TryParseHex(ReadOnlySpan<char> text, out int value) {
+        value = 0;
+        foreach (var c in text) {
+            var digit = HexValue(c);
+            if (digit < 0) {
+                value = 0;
+                return false;
+            }
+
+            value = (value << 4) | digit;
+        }
+
+        return true;
+    }
+
+    private static int HexValue(char c) {
+        return c switch{
+            >= '0' and <= '9' => c - '0',
+            >= 'a' and <= 'f' => c - 'a' + 10,
+            >= 'A' and <= 'F' => c - 'A' + 10,
+            _ => -1,
+        };
+    }
+
+    private static string NormalizeMessageText(string text)
+        => text.Replace("\r\n", "\n", StringComparison.Ordinal).Replace('\r', '\n');
+
+    private static string ToMsgLineEndings(string normalizedText)
+        => normalizedText.Replace("\n", "\r\n", StringComparison.Ordinal);
+
     private static MsgAttributeValue CreateDefaultAttributeValue(MsgAttributeDefinition definition) {
         return definition.Type switch{
             MsgAttributeType.Wstring => new MsgAttributeValue(definition, string.Empty),
@@ -350,7 +461,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         => $"Scenes/Items/Resources/{itemDataId}.scn";
 
     private static string GetSkillDropPrefabReference(app.ItemData skill) {
-        var inventoryPrefabPath = skill.ItemPrefab.Path?.ToString();
+        var inventoryPrefabPath = skill.ItemPrefab.Path.ToString();
         if (string.IsNullOrWhiteSpace(inventoryPrefabPath) ||
             !inventoryPrefabPath.EndsWith(".pfb", StringComparison.OrdinalIgnoreCase)) {
             return $"Prefab/Skill/{skill.ItemDataID}/{skill.ItemDataID}Get.pfb";
@@ -363,7 +474,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         => GetPrefabPakPath(GetSkillDropPrefabReference(skill));
 
     private static string GetSkillItemPrefabPath(app.ItemData skill) {
-        var itemPrefabPath = skill.ItemPrefab.Path?.ToString();
+        var itemPrefabPath = skill.ItemPrefab.Path.ToString();
         if (string.IsNullOrWhiteSpace(itemPrefabPath)) {
             throw new RandomizerUserException($"Birthday skill '{skill.ItemDataID}' has no item prefab.");
         }
@@ -426,6 +537,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
         public string ItemDataID { get; set; } = "";
         public string Name { get; set; } = "";
         public string PassiveSkillUserPath { get; set; } = "";
+        public string? InventoryDescription { get; set; }
         public float AttackChangeRate { get; set; }
         public float MeleeAttackChangeRate { get; set; }
         public float DyingAttackChangeRate { get; set; }
