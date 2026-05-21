@@ -1,26 +1,35 @@
-Enabled,Category,ItemId,MinAmount,MaxAmount,Coins,InputItemIds
-TRUE,Magnum,HandgunBulletL,20,30,3,Coin CoinOld
-TRUE,Magnum,ShotgunBullet,12,18,4,Coin CoinOld
-TRUE,Magnum,Gunpowder,6,10,3,Coin CoinOld
-TRUE,Magnum,FlameBulletS,3,6,5,Coin CoinOld
-TRUE,Magnum,AcidBulletS,3,6,5,Coin CoinOld
-TRUE,Magnum,Stimulant,1,1,6,Coin CoinOld
-TRUE,Magnum,Depressant,1,1,6,Coin CoinOld
-TRUE,Drug,LiquidBomb,2,4,5,Coin CoinOld
-TRUE,Drug,RemedyM,2,4,2,Coin CoinOld
-TRUE,Drug,RemedyL,1,3,3,Coin CoinOld
-TRUE,Drug,Gunpowder,3,6,2,Coin CoinOld
-TRUE,Drug,ChemicalS,2,4,2,Coin CoinOld
-TRUE,Drug,MiaKnife,1,1,3,Coin CoinOld
-TRUE,Drug,ShotgunBullet,8,12,3,Coin CoinOld
-TRUE,Drug,HandgunBullet,15,25,2,Coin CoinOld
-TRUE,Drug,HandgunBulletL,10,15,2,Coin CoinOld
-TRUE,Drug,MagnumBullet,4,6,7,Coin CoinOld
-FALSE,Drug,MachineGun,1,1,1,Handgun_G17
-FALSE,Drug,Shotgun_DB,1,1,1,Handgun_G17
-FALSE,Drug,Shotgun_M37,1,1,1,Handgun_G17
-FALSE,Drug,Handgun_Albert_Reward,1,1,1,Handgun_G17
-FALSE,Drug,GrenadeLauncher,1,1,1,Handgun_G17
-FALSE,Drug,Handgun_M19,1,1,1,Handgun_G17
-FALSE,Drug,Burner,1,1,1,Handgun_G17
-FALSE,Magnum,Magnum,1,1,1,Handgun_G17
+Enabled,ItemId,MinAmount,MaxAmount,CoinsMin,CoinsMax,InputItemIds,Comment
+TRUE,skl002,1,1,3,5,Coin CoinOld,
+TRUE,skl003,1,1,3,5,Coin CoinOld,
+TRUE,skl008,1,1,5,7,Coin CoinOld,
+TRUE,skl009,1,1,3,5,Coin CoinOld,
+TRUE,skl010,1,1,5,7,Coin CoinOld,
+TRUE,skl011,1,1,3,5,Coin CoinOld,
+TRUE,skl012,1,1,5,7,Coin CoinOld,
+TRUE,skl013,1,1,3,5,Coin CoinOld,
+TRUE,skl014,1,1,5,7,Coin CoinOld,
+TRUE,skl015,1,1,3,5,Coin CoinOld,
+TRUE,skl016,1,1,5,7,Coin CoinOld,
+TRUE,skl017,1,1,3,5,Coin CoinOld,
+TRUE,skl018,1,1,3,5,Coin CoinOld,
+TRUE,skl019,1,1,3,5,Coin CoinOld,
+TRUE,skl021,1,1,3,5,Coin CoinOld,
+TRUE,skl022,1,1,3,5,Coin CoinOld,
+TRUE,skl023,1,1,3,5,Coin CoinOld,
+FALSE,MachineGun,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Shotgun_DB,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Shotgun_M37,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Handgun_Albert_Reward,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,GrenadeLauncher,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Handgun_M19,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Burner,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,Magnum,1,1,1,1,Coin CoinOld,Disabled until there is a way to display the input item
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,
+FALSE,,,,,,,

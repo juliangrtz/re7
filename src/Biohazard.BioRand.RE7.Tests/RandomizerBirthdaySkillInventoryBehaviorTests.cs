@@ -97,17 +97,25 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
 
     [Fact]
     public void BirthdaySkillCsvValues_AreReadFromCsv() {
+        const string customNameCsv = "\"Custom \"\"Ammo\"\" \\u03b1\"";
+        const string customName = "Custom \"Ammo\" \u03b1";
         const string customDescriptionCsv =
             "\"Custom birthday skill, line 1\\r\\nline 2 with \"\"quotes\"\" and \\u03b1.\"";
         const string customDescription =
             "Custom birthday skill, line 1\r\nline 2 with \"quotes\" and \u03b1.";
         var csv = System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile("birthday_skills.csv"))
-            .Replace(
-                "Prefab/Skill/skl001/Skl001PassiveSkill.user,0,0,0,0,0,0,0,0,0,0,0,0.5,-0.4,-0.4,0,TRUE,FALSE",
-                "Prefab/Skill/skl001/Skl001PassiveSkill.user,1.25,0,0,0,0,0,0,0,0,0,0,0.75,-0.4,-0.4,0,FALSE,TRUE");
-        csv = csv.Replace(
-            "\"Infinite ammo. Reload your weapon\\r\\nas many times as you want...but\\r\\ntime bonuses are greatly decreased.\"",
-            customDescriptionCsv);
+            .Replace("\r\n", "\n", StringComparison.Ordinal);
+        var lines = csv.Split('\n');
+        var header = lines[0].Split(',');
+        var skl001 = lines[1].Split(',');
+        SetCsvColumn("Name", customNameCsv);
+        SetCsvColumn("InventoryDescription", customDescriptionCsv);
+        SetCsvColumn("AttackChangeRate", "1.25");
+        SetCsvColumn("ReloadSpeedChangeRate", "0.75");
+        SetCsvColumn("IsBulletStackNumInfinity", "FALSE");
+        SetCsvColumn("IsPsychostimulantEffectInfinity", "TRUE");
+        lines[1] = string.Join(",", skl001);
+        csv = string.Join("\r\n", lines);
 
         using var result = RandomizerTest.RunState(prepareRandomizer: randomizer => {
             randomizer.DynamicData.SetData(DynamicDataName.BirthdaySkills, System.Text.Encoding.UTF8.GetBytes(csv));
@@ -124,7 +132,14 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         Assert.Equal(0.75f, passiveSkill.Get<float>("ReloadSpeedChangeRate"));
         Assert.False(passiveSkill.Get<bool>("IsBulletStackNumInfinity"));
         Assert.True(passiveSkill.Get<bool>("IsPsychostimulantEffectInfinity"));
+        Assert.Equal(customName, uiItemMessages.GetString(skillSetting.NameMsg, LanguageId.English));
         Assert.Equal(customDescription, uiItemMessages.GetString(skillSetting.ManualMsg, LanguageId.English));
+
+        void SetCsvColumn(string columnName, string value) {
+            var index = Array.IndexOf(header, columnName);
+            Assert.True(index >= 0, $"Missing CSV column '{columnName}'.");
+            skl001[index] = value;
+        }
     }
 
     [Fact]

@@ -7,7 +7,7 @@ using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using ReplacementData =
-    (Enums.app.ItemID Id, int Quantity, int Coins, System.Collections.Immutable.ImmutableArray<string> ValidItemIDs);
+    (string Id, int Quantity, int Coins, System.Collections.Immutable.ImmutableArray<string> ValidItemIDs);
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -43,19 +43,15 @@ internal class BirdCageModifier : Modifier {
     private static readonly ItemDefinitionRepository _items = ItemDefinitionRepository.Default;
     internal static readonly string[] _defaultInsertItems = ["Coin", "CoinOld"];
 
-    private enum ReplacementCategory {
-        Magnum,
-        Drug,
-    }
-
     private record BirdCageReplacement {
         public bool Enabled { get; init; }
-        public ReplacementCategory Category { get; init; }
-        public ItemID ItemId { get; init; }
+        public string ItemId { get; init; } = "";
         public int MinAmount { get; init; }
         public int MaxAmount { get; init; }
-        public int Coins { get; init; }
+        public int CoinsMin { get; init; }
+        public int CoinsMax { get; init; }
         public ImmutableArray<string> InputItemIds { get; init; }
+        public string? Comment { get; init; }
 
         public BirdCageReplacement() { }
     }
@@ -68,18 +64,14 @@ internal class BirdCageModifier : Modifier {
             _replacements = replacements;
         }
 
-        public bool TryGetReplacement(ReplacementCategory category, Rng rng, ItemRandomizer itemRandomizer,
-            out ReplacementData result) {
-            var categoryReplacements = _replacements
-                .Where(replacement => replacement.Category == category)
-                .ToList();
-            if (categoryReplacements.Count == 0) {
+        public bool TryGetReplacement(Rng rng, ItemRandomizer itemRandomizer, out ReplacementData result) {
+            if (_replacements.Count == 0) {
                 result = default;
                 return false;
             }
 
-            var candidates = categoryReplacements
-                .Where(replacement => !_selectedItemIds.Contains(replacement.ItemId.ToString()))
+            var candidates = _replacements
+                .Where(replacement => !_selectedItemIds.Contains(replacement.ItemId))
                 .ToList();
             var weaponSafeCandidates = candidates
                 .Where(replacement => !IsAlreadyPlacedWeapon(replacement, itemRandomizer))
@@ -88,37 +80,37 @@ internal class BirdCageModifier : Modifier {
             if (weaponSafeCandidates.Count > 0) {
                 candidates = weaponSafeCandidates;
             } else if (candidates.Count == 0) {
-                candidates = categoryReplacements
+                candidates = _replacements
                     .Where(replacement => !IsAlreadyPlacedWeapon(replacement, itemRandomizer))
                     .ToList();
             }
 
             if (candidates.Count == 0) {
-                candidates = categoryReplacements;
+                candidates = _replacements.ToList();
             }
 
             var replacement = rng.Next(candidates);
-            var itemId = replacement.ItemId.ToString();
+            var itemId = replacement.ItemId;
             _selectedItemIds.Add(itemId);
             itemRandomizer.MarkItemPlaced(itemId);
             result = (replacement.ItemId, rng.NextInclusive(replacement.MinAmount, replacement.MaxAmount),
-                replacement.Coins, replacement.InputItemIds);
+                rng.NextInclusive(replacement.CoinsMin, replacement.CoinsMax), replacement.InputItemIds);
             return true;
         }
 
         private static bool IsAlreadyPlacedWeapon(BirdCageReplacement replacement, ItemRandomizer itemRandomizer) {
-            var itemId = replacement.ItemId.ToString();
+            var itemId = replacement.ItemId;
             return _items.FromId(itemId)?.IsWeapon == true && itemRandomizer.IsItemPlaced(itemId);
         }
     }
 
     private bool RandomizeBirdCageContent(BirdCageReplacementPicker replacementPicker, Rng rng, BirdCage birdCage,
-        ReplacementCategory category, ItemRandomizer itemRandomizer) {
-        if (!replacementPicker.TryGetReplacement(category, rng, itemRandomizer, out var replacement))
+        ItemRandomizer itemRandomizer) {
+        if (!replacementPicker.TryGetReplacement(rng, itemRandomizer, out var replacement))
             return false;
 
         var (Id, Quantity, Coins, ValidItemIDs) = replacement;
-        birdCage.Item.ItemDataID = Id.ToString();
+        birdCage.Item.ItemDataID = Id;
         birdCage.Item.ItemStackNum = Quantity;
         birdCage.Item.SaveGUID = rng.NextGuid(); // IMPORTANT!
         birdCage.CoinCounter.CoinMax = Coins;
@@ -168,15 +160,13 @@ internal class BirdCageModifier : Modifier {
 
                     var isMagnum = birdCage.Item.ItemDataID == ItemID.Magnum.ToString();
                     if ((isMagnum && randomizeMagnum) || (!isMagnum && randomizeDrugsAndPowerCoins)) {
-                        var category = isMagnum ? ReplacementCategory.Magnum : ReplacementCategory.Drug;
                         var (beforeItemCount, beforeItemId, beforeCoinCounter) =
                             (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
                         var beforeName = _items.FromId(beforeItemId)!.Name;
 
-                        if (!RandomizeBirdCageContent(replacementPicker, rng, birdCage, category,
-                                randomizer.ItemRandomizer)) {
+                        if (!RandomizeBirdCageContent(replacementPicker, rng, birdCage, randomizer.ItemRandomizer)) {
                             logger.LogLine(
-                                $"Skipped {beforeItemCount}x {beforeName} bird cage reward because no enabled {category} replacements are available.");
+                                $"Skipped {beforeItemCount}x {beforeName} bird cage reward because no enabled replacements are available.");
                             return;
                         }
 

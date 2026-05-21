@@ -15,6 +15,10 @@ I've gathered this information while working on the randomizer.
 - key item prefabs
   - re_chunk_000/natives/stm/prefab/item/keyitemsettings.user.2
 
+- message text and markup
+  - re_chunk_000/natives/stm/message/*.msg.17
+  - See `docs/items/MessageMarkup.MD` for RE7 message tags such as `<COLOR RRGGBB>`, `<SIZE n>`, `<ICON NAME>`, `<PAGE>`, `<TIME ...>`, and engine-supported but unobserved tag types.
+
 ## DLC PAK file table
 
 The .pak files are found in the `dlc` directory.
