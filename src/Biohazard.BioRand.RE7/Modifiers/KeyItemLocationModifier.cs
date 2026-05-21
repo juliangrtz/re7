@@ -25,10 +25,12 @@ internal class KeyItemLocationModifier : Modifier {
         "HandAxe",
         "Fuse",
         "FuseCh4",
+        "3CrestKeyC",
         "Lantern",
         "LucasCardKey",
         "LucasCardKey2",
         "SerumComplete",
+        "Candle_Lighted",
     };
 
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;

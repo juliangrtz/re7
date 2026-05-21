@@ -19,6 +19,16 @@ I've gathered this information while working on the randomizer.
   - re_chunk_000/natives/stm/message/*.msg.17
   - See `docs/items/MessageMarkup.MD` for RE7 message tags such as `<COLOR RRGGBB>`, `<SIZE n>`, `<ICON NAME>`, `<PAGE>`, `<TIME ...>`, and engine-supported but unobserved tag types.
 
+## Key Item Location Randomizer
+
+- The key item location randomizer is intentionally conservative. If an item is tied to a boss reward, cutscene, or puzzle state rather than a plain inventory pickup, keep it vanilla until the full FSM sequence is understood and runtime-tested.
+- `RandomizerConfigurationDefinition.cs` is the source of truth for the `random-key-item-locations` option. Do not only edit profile JSON when changing the option.
+- Current unsafe preserved items include:
+  - Red Dog Head (`3CrestKeyC`): its `c03_2_Main_GetCrestInFreezerRoom` flag is the Jack 2/freezer reward progression state, not just an item-acquired flag.
+  - Candle (`Candle_Lighted`): its `c03_4_Main_PazzleRoom_CandleOn` flag is part of the Lucas birthday puzzle state machine.
+  - Lantern, Ox Statuette, keycards, Chapter 1 key items, Chapter 4 fuse, and complete serum remain vanilla until exact access-sphere and FSM side effects are proven safe.
+- The D-Series Arm is a real progression precondition for the Lucas/snake-room branch: `objectivefsm_c03` reads `c03_3_Main_GetEvlineArm`, and the attic ladder branch also depends on the resulting Lucas card-key flow. Keep the graph edge into snake-key rooms gated on both Snake Key and D-Series Arm.
+
 ## DLC PAK file table
 
 The .pak files are found in the `dlc` directory.
