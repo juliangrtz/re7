@@ -35,6 +35,7 @@ internal class Randomizer : IDisposable {
     private static readonly string[] _optionsThatRequireREFramework =[
         "debug-force-reframework",
         "madhouse-normal-saves",
+        "inventory-unrestricted-management",
         "random-events",
         "random-starting-inventory-skills-ethan",
         "random-starting-inventory-skills-mia",

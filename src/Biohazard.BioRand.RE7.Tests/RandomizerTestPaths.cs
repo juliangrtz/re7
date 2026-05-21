@@ -20,6 +20,9 @@ internal static class RandomizerTestPaths {
 
     public static readonly string KeyItemSettingsPath = PakPath.UserFile("prefab/item/keyitemsettings.user");
     public static readonly string ResourceItemSettingsPath = PakPath.UserFile("prefab/item/resourceitemsettings.user");
+    public static readonly string BirthdayResourceItemSettingsPath =
+        PakPath.UserFile("prefab/item/resourceitemsettings_birthday.user");
+
     public static readonly string ItemResourcesScenePath = PakPath.SceneFile("scenes/items/itemresources.scn");
     public static readonly string UiItemMessagePath = PakPath.MessageFile("message/ui_item_mes.msg");
 

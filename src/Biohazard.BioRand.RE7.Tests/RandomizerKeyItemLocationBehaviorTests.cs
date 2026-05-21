@@ -20,7 +20,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["FloorDoorKey"] = new(3, ExpectedScope.Chapter3Start),
             ["3CrestKeyB"] = new(3, ExpectedScope.BeforeDogDoor),
             ["3CrestKeyA"] = new(3, ExpectedScope.BeforeDogDoor),
-            ["3CrestKeyC"] = new(3, ExpectedScope.BeforeDogDoor),
             ["Battery"] = new(3, ExpectedScope.BeforeBarnBatterySocket),
             ["PendulumClock"] = new(3, ExpectedScope.AfterGarageBeforeShadowPuzzle),
             ["MorgueKey"] = new(3, ExpectedScope.BeforeShadowPuzzle),
@@ -29,9 +28,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
-            ["SerumMaterialA"] = new(3, ExpectedScope.BeforeJack3),
+            ["SerumMaterialA"] = new(3, ExpectedScope.BeforeSnakeRooms),
             ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
-            ["Candle_Lighted"] = new(3, ExpectedScope.BeforeLucasPuzzle),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
             ["SilhouettePazzlePiece"] = new(3, ExpectedScope.BeforeShadowPuzzle),
             ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
@@ -45,17 +43,18 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         "EntranceHallKey",
         "Fuse",
         "FuseCh4",
+        "3CrestKeyC",
         "HandAxe",
         "Lantern",
         "LucasCardKey",
         "LucasCardKey2",
         "SerumComplete",
+        "Candle_Lighted",
     };
 
     private static readonly IReadOnlyDictionary<string, ExpectedPickupFlag> ExpectedPickupFlags =
         new Dictionary<string, ExpectedPickupFlag>(StringComparer.OrdinalIgnoreCase){
             ["FloorDoorKey"] = new("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true),
-            ["3CrestKeyC"] = new("c03_2_Main_GetCrestInFreezerRoom", new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true),
             ["MasterKey"] = new("c03_2_Main_GetSnakeKey", new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true),
             ["Crank"] = new("c03_3_Main_GetCrank", new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true),
             ["TalismanKey"] = new("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true),
@@ -65,8 +64,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true),
             ["SerumMaterialA"] = new("c03_3_Main_GetEvlineArm", new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true),
             ["SerumMaterialB"] = new("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true),
-            ["Candle_Lighted"] = new("c03_4_Main_PazzleRoom_CandleOn", new("e8f18a82-943a-41dd-977b-f1d729499dee"),
-                true),
             ["EvCable"] = new("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"),
                 true),
         };
@@ -743,13 +740,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var puzzleCandle = FindPlacement(result, LucasPuzzleRoomScenePath, TestingAreaCandleGuid);
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "Battery"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "Candle_Lighted"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "SerumMaterialA"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "Candle_Lighted"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "SerumMaterialA"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(barnPlacement, "SerumMaterialB"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "Battery"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "Candle_Lighted"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "SerumMaterialA"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "SerumMaterialA"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(monitorRoomExtra, "SerumMaterialB"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesHead, "Battery"));
@@ -851,6 +848,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Lantern"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
+        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "SerumMaterialA"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "Lantern"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "MasterKey"));
@@ -924,6 +922,32 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
 
         Assert.DoesNotContain(randomizedKeyItems.Values,
             change => GetTargetGuid(change.Placement) == Jack2RedDogHeadGuid);
+    }
+
+    [Fact]
+    public void KeyItemLocations_LadderSoftlockSeedKeepsDSeriesArmBeforeSnakeRooms() {
+        using var result = RandomizerTest.RunState(
+            config => {
+                config["random-key-item-locations"] = true;
+                config["random-items"] = true;
+                config["replace-madhouse-tapes"] = true;
+                config["replace-weapons"] = true;
+                config["additional-items"] = true;
+                config["additional-wooden-crates"] = true;
+            },
+            seed: 100583);
+
+        var dSeriesArm = GetChangedPlacements(result)
+            .Where(change => change.AfterId == "SerumMaterialA")
+            .SingleOrDefault();
+
+        if (dSeriesArm != null) {
+            Assert.True(ScopeMatches(ExpectedScope.BeforeSnakeRooms, dSeriesArm.Placement),
+                $"D-Series Arm was placed after the snake-room ladder gate: {dSeriesArm.Placement.SceneFile}.");
+        }
+
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Main House snake-key rooms", result.ProcessLog);
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Testing Area", result.ProcessLog);
     }
 
     [Fact]
@@ -1287,6 +1311,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                                                         || IsOldHouseBeforeCrowDoor(placement.SceneFile),
             ExpectedScope.OldHouseAfterCrowDoor => IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
                                                    && !IsOldHouseAfterLanternDoor(placement.SceneFile),
+            ExpectedScope.BeforeSnakeRooms => IsBeforeSnakeRooms(placement),
             ExpectedScope.BeforeBarnBatterySocket => IsMainHouseBeforeGarage(placement)
                                                      || IsMainHouseAfterGarageBeforeShadowPuzzle(placement)
                                                      || IsMainHouseEastOrBasement(placement.SceneFile)
@@ -1426,6 +1451,20 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
            || IsOldHouseAfterLanternDoor(placement.SceneFile)
            || IsSnakeKeyBody(placement.SceneFile);
 
+    private static bool IsBeforeSnakeRooms(ItemPlacement placement)
+        => IsMainHouseBeforeGarage(placement)
+           || IsMainHouseAfterGarageBeforeShadowPuzzle(placement)
+           || IsMainHouseEastOrBasement(placement.SceneFile)
+           || IsYardOrTrailer(placement.SceneFile)
+           || IsOldHouseBeforeCrowDoor(placement.SceneFile)
+           || IsOldHouseStoneStatuettePickup(placement)
+           || IsOldHouseCrowKeyPickup(placement)
+           || IsOldHouseAfterStonePuzzleBeforeCrank(placement.SceneFile)
+           || IsOldHouseAfterCrankBeforeCrowDoor(placement.SceneFile)
+           || IsOldHouseAfterCrowDoorOrGreenHouse(placement.SceneFile)
+           || IsOldHouseAfterLanternDoor(placement.SceneFile)
+           || IsSnakeKeyBody(placement.SceneFile);
+
     private static bool IsYardOrTrailer(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/gardenarea/")
            || PathContains(path, "c03_gardenarea")
@@ -1551,6 +1590,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeDissectionRoom,
         BeforeOldHouseShadowPuzzle,
         OldHouseAfterCrowDoor,
+        BeforeSnakeRooms,
         BeforeTestingAreaGate,
         BeforeLucasPuzzle,
         BeforeBarnBatterySocket,

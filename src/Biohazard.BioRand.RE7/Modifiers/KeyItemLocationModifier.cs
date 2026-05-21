@@ -25,10 +25,12 @@ internal class KeyItemLocationModifier : Modifier {
         "HandAxe",
         "Fuse",
         "FuseCh4",
+        "3CrestKeyC",
         "Lantern",
         "LucasCardKey",
         "LucasCardKey2",
         "SerumComplete",
+        "Candle_Lighted",
     };
 
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
@@ -146,10 +148,10 @@ internal class KeyItemLocationModifier : Modifier {
         SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask;
 
     private const int KeycardSetupCarryMasks =
-        BatteryMask | DSeriesArmMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
+        BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;
 
-    private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesArmMask | DSeriesHeadMask | CandleMask;
-    private const int LucasAfterPuzzleCarryMasks = DSeriesArmMask | DSeriesHeadMask;
+    private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
+    private const int LucasAfterPuzzleCarryMasks = DSeriesHeadMask;
     private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
     private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
     private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
@@ -1347,7 +1349,7 @@ internal class KeyItemLocationModifier : Modifier {
             Door(_oldHouseAfterStonePuzzle, _oldHouseAfterCrank, RouteKeys("Crank"));
             Door(_oldHouseAfterCrank, _oldHouseAfterCrow, RouteKeys("TalismanKey"));
             Door(_oldHouseAfterCrow, _oldHouseAfterLantern, RouteKeys("Lantern"));
-            Door(_oldHouseAfterLantern, _snakeRooms, RouteKeys("MasterKey"));
+            Door(_oldHouseAfterLantern, _snakeRooms, RouteKeys("MasterKey", "SerumMaterialA"));
             Door(_snakeRooms, _testingArea, RouteKeys("LucasCardKey", "LucasCardKey2"));
             Door(_testingArea, _barn);
             Door(_barn, _lucasPuzzle, RouteKeys("Battery"));

@@ -5,6 +5,7 @@
   "randomized-messages": true,
   "main-menu-biorand-touch": true,
   "madhouse-normal-saves": true,
+  "inventory-unrestricted-management": true,
   "allow-bonus-items": false,
   "allow-dlc-items": true,
   "random-enemies": true,
