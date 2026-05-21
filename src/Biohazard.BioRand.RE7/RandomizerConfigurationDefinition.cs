@@ -124,6 +124,15 @@ internal static class RandomizerConfigurationDefinition {
             Default = true
         });
 
+        group.Items.Add(new GroupItem(){
+            Id = "inventory-unrestricted-management",
+            Label = "Flexible Inventory Management",
+            Description =
+                "Allow Birthday blasters to be moved to item boxes, and allow non-key items and found footage tapes to be discarded.",
+            Type = "switch",
+            Default = true
+        });
+
         group = page.CreateGroup("");
 
         group.Items.Add(new GroupItem(){

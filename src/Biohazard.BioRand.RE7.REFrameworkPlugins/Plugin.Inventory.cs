@@ -51,6 +51,34 @@ public partial class REFPlugin {
                && !itemDataId.EndsWith("no", StringComparison.OrdinalIgnoreCase);
     }
 
+    private static bool CanForceDiscard(Item? item) {
+        var itemData = item?.ItemData;
+        if (itemData == null) {
+            return false;
+        }
+
+        var itemDataId = item?.ItemDataID ?? itemData.ItemDataID;
+        if (itemDataId != null && itemDataId.StartsWith("FoundFootage", StringComparison.OrdinalIgnoreCase)) {
+            return true;
+        }
+
+        return itemData.Category is not Item.ItemCategoryType.KeyItem
+            and not Item.ItemCategoryType.UsableKeyItem;
+    }
+
+    [MethodHook(typeof(Item), nameof(Item.isCanDiscard), MethodHookType.Post)]
+    private static void Item_isCanDiscard_Post(Span<ulong> args, ref ulong retval) {
+        if (retval != 0 || !Config.ReadOrDefault("inventory-unrestricted-management", true)) {
+            return;
+        }
+
+        var item = ManagedObject.ToManagedObject(args[1]).As<Item>();
+        if (CanForceDiscard(item)) {
+            Logger.Log($"Patch Item.isCanDiscard for '{item?.ItemDataID}'.", isVerbose: true);
+            retval = 1;
+        }
+    }
+
     private static IPlayerOrder? GetPlayerOrder() {
         var objectManager = API.GetManagedSingleton("app.ObjectManager");
         if (objectManager == null)
