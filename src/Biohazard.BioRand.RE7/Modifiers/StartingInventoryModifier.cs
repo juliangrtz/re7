@@ -25,16 +25,6 @@ internal class StartingInventoryModifier : Modifier {
         "skl022", // Narrow Escape
     ];
 
-    private static readonly string[] StartingSkillLevelTwoIds =[
-        "skl002", // Health Regen
-        "skl008", // Defense II
-        "skl010", // Speed Up II
-        "skl012", // Firepower Up II
-        "skl014", // Impact II
-        "skl016", // Toughness II
-        "skl023", // Brawler
-    ];
-
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new(){
         { MainCampaignCharacter.Ethan, PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user") },{
             MainCampaignCharacter.ClancyVHS, PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user")
@@ -131,7 +121,7 @@ internal class StartingInventoryModifier : Modifier {
         Rng skillRng,
         MainCampaignCharacter character,
         bool randomizeInventory,
-        bool giveRandomSkills,
+        bool giveRandomSkill,
         List<StartingWeaponCategory> weapons,
         IReadOnlyList<StartingInventoryItem> debugItems
     ) {
@@ -196,13 +186,13 @@ internal class StartingInventoryModifier : Modifier {
             }
 #endif
 
-            if (giveRandomSkills) {
-                var skills = PickRandomStartingSkills(skillRng);
-                logger.LogLine($"Random starting skill(s): {string.Join(", ", skills)}");
-                root._AddItems.AddRange(skills.Select(id => new StartingInventoryItem(){
-                    ItemDataID = id,
+            if (giveRandomSkill) {
+                var skillId = skillRng.Next(StartingSkillLevelOneIds);
+                logger.LogLine($"Random starting skill: {skillId}");
+                root._AddItems.Add(new StartingInventoryItem{
+                    ItemDataID = skillId,
                     Num = 1,
-                }));
+                });
             }
 
             return root;
@@ -217,30 +207,14 @@ internal class StartingInventoryModifier : Modifier {
         };
     }
 
-    private static List<string> PickRandomStartingSkills(Rng rng) {
-        var result = new List<string>();
-
-        result.Add(rng.Next(StartingSkillLevelOneIds));
-
-        var skillCount = rng.Next(1, 3);
-        if (skillCount == 2) {
-            var secondPool = rng.CoinToss()
-                ? StartingSkillLevelOneIds.Where(id => !result.Contains(id)).ToArray()
-                : StartingSkillLevelTwoIds;
-            result.Add(rng.Next(secondPool));
-        }
-
-        return result;
-    }
-
     public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
         var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
         var randomizeVhs = randomizer.GetConfigOption<bool>("random-starting-inventory-vhs");
-        var giveRandomSkillsEthan = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-ethan");
-        var giveRandomSkillsMia = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-mia");
+        var giveRandomSkillEthan = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-ethan");
+        var giveRandomSkillMia = randomizer.GetConfigOption<bool>("random-starting-inventory-skills-mia");
 
-        if (!randomizeEthansInventory && !randomizeMiasInventory && !giveRandomSkillsEthan && !giveRandomSkillsMia) {
+        if (!randomizeEthansInventory && !randomizeMiasInventory && !giveRandomSkillEthan && !giveRandomSkillMia) {
             return;
         }
 
@@ -260,8 +234,8 @@ internal class StartingInventoryModifier : Modifier {
                 _ => false,
             };
             var shouldGiveRandomSkills = character switch{
-                MainCampaignCharacter.Ethan => giveRandomSkillsEthan,
-                MainCampaignCharacter.Mia => giveRandomSkillsMia,
+                MainCampaignCharacter.Ethan => giveRandomSkillEthan,
+                MainCampaignCharacter.Mia => giveRandomSkillMia,
                 _ => false,
             };
 

@@ -65,7 +65,7 @@ public class RandomizerStartingInventoryAdditionalBehaviorTests {
     }
 
     [Fact]
-    public void StartingInventory_EthanRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToEthan() {
+    public void StartingInventory_EthanRandomSkillsEnabled_AddsBirthdaySkillToEthan() {
         using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = false;
             config["random-starting-inventory-mia"] = false;
@@ -79,7 +79,7 @@ public class RandomizerStartingInventoryAdditionalBehaviorTests {
     }
 
     [Fact]
-    public void StartingInventory_MiaRandomSkillsEnabled_AddsOneOrTwoBirthdaySkillsToMia() {
+    public void StartingInventory_MiaRandomSkillsEnabled_AddsBirthdaySkillToMia() {
         using var result = RandomizerTest.RunState(config => {
             config["random-starting-inventory-ethan"] = false;
             config["random-starting-inventory-mia"] = false;

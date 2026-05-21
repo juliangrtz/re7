@@ -769,18 +769,18 @@ internal static class RandomizerConfigurationDefinition {
 
         group.Items.Add(new GroupItem(){
             Id = "random-starting-inventory-skills-ethan",
-            Label = "Ethan: Random starting skills",
+            Label = "Ethan: Random starting skill",
             Description =
-                "Whether to give Ethan 1 or 2 random Jack's 55th Birthday passive skills at the start. Requires RE Framework.",
+                "Whether to give Ethan a random Jack's 55th Birthday level 1 passive skill at the start. Requires RE Framework.",
             Type = "switch",
             Default = false
         });
 
         group.Items.Add(new GroupItem(){
             Id = "random-starting-inventory-skills-mia",
-            Label = "Mia: Random starting skills",
+            Label = "Mia: Random starting skill",
             Description =
-                "Whether to give Mia 1 or 2 random Jack's 55th Birthday passive skills at the start. Requires RE Framework.",
+                "Whether to give Mia a random Jack's 55th Birthday level 1 passive skill at the start. Requires RE Framework.",
             Type = "switch",
             Default = false
         });
