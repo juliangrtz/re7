@@ -58,6 +58,10 @@
   <ItemGroup>
     <PluginSourceFile Include="$(MSBuildProjectDirectory)\**\*.cs" Exclude="$(MSBuildProjectDirectory)\bin\**;$(MSBuildProjectDirectory)\obj\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="IntelOrca.Biohazard.REE" Version="1.4.6" />
+  </ItemGroup>
 
   <PropertyGroup>
     <RandomizerProjectDirectory>$(MSBuildProjectDirectory)\..\Biohazard.BioRand.RE7</RandomizerProjectDirectory>
