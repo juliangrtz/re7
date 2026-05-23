@@ -34,7 +34,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         [CommandOption("-k|--kill")] public bool Kill { get; init; }
     }
 
-    public override ValidationResult Validate(CommandContext context, Settings settings) {
+    protected override ValidationResult Validate(CommandContext context, Settings settings) {
         if (settings.OutputPath == null) {
             return ValidationResult.Error($"Output path not specified");
         }
@@ -42,7 +42,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         return base.Validate(context, settings);
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
+    protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var reporter = new ConsoleReporter();
         if (settings.Kill) {
             reporter.RunTask("Killing re7.exe", KillRe7);

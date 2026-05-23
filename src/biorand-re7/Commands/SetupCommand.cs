@@ -17,7 +17,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings> {
         [CommandOption("--full")] public bool Full { get; init; }
     }
 
-    public override ValidationResult Validate(CommandContext context, Settings settings) {
+    protected override ValidationResult Validate(CommandContext context, Settings settings) {
         if (settings.InputPath == null) {
             return ValidationResult.Error($"Input path not specified");
         }
@@ -29,7 +29,7 @@ internal sealed class SetupCommand : AsyncCommand<SetupCommand.Settings> {
         return base.Validate(context, settings);
     }
 
-    public override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
+    protected override Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var patternList = settings.Full ? FullPatterns : MiniPatterns;
         var gamePath = settings.InputPath!;
         using var pak = OpenGamePaks(gamePath);

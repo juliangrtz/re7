@@ -11,7 +11,7 @@ internal sealed class ModCommand : AsyncCommand<ModCommand.Settings> {
         [CommandOption("-o|--output")] public string? OutputPath { get; init; }
     }
 
-    public override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
+    protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         if (settings.Mods == null || settings.Mods.Length == 0) {
             PrintMods();
             return 2;

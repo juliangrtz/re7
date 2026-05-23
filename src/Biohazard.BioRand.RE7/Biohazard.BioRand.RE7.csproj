@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
-    <PackageReference Include="IntelOrca.Biohazard.BioRand.Common" Version="1.5.2" />
+    <PackageReference Include="IntelOrca.Biohazard.BioRand.Common" Version="1.5.9" />
     <PackageReference Include="IntelOrca.Biohazard.REE" Version="1.4.6" Condition="'$(UseReeutilsProjectReference)' != 'true'" />
     <PackageReference Include="RectangleBinPacking" Version="1.0.2" />
   </ItemGroup>
