@@ -15,7 +15,7 @@ internal sealed class RszToCsCommand : Command<Settings> {
         public bool WithEnums { get; set; }
     }
 
-    public override int Execute(CommandContext context, Settings settings, CancellationToken token) {
+    protected override int Execute(CommandContext context, Settings settings, CancellationToken token) {
         try {
             var output = RszCodeGenerator.Generate(settings.TypeName, settings.WithEnums);
             FileWriter.WriteOutput($"{settings.TypeName}.cs", output);

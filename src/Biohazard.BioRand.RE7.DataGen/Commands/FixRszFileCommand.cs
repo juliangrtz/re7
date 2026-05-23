@@ -14,7 +14,7 @@ internal sealed class FixRszFileCommand : Command<Settings> {
         [CommandArgument(2, "<typeName>")] public string OutputFileName { get; set; } = "";
     }
 
-    public override int Execute(CommandContext context, Settings settings, CancellationToken token) {
+    protected override int Execute(CommandContext context, Settings settings, CancellationToken token) {
         try {
             // TODO
             //AnsiConsole.MarkupLine($"[green]Generated[/] {settings.OutputFileName}");
