@@ -20,7 +20,7 @@
     <PackageReference Include="IntelOrca.Biohazard.REE" Version="1.4.6" />
     <PackageReference Include="SkiaSharp" Version="3.119.2" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.119.2" />
-    <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
+    <PackageReference Include="Spectre.Console.Cli" Version="0.55.0" />
   </ItemGroup>
 
   <Target Name="GenerateKeyItemRouteGraphDiagram"
