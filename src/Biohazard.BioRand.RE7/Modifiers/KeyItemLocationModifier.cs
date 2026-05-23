@@ -13,10 +13,23 @@ internal class KeyItemLocationModifier : Modifier {
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
     private const string CultivationRoomScenePath = "natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20";
+    internal const string OldHouseLevelFsmScenePath =
+        "natives/stm/leveldesign/fsm/chapter3/chapter3_3/levelfsm_c03_3.scn.20";
+    internal const string OldHouseShadowPuzzleProgressionTriggerName =
+        "150_Main_EnterMiaCapturedRoom_ShadowPuzzleFallback";
     private const int MaxRouteSeedAttempts = 64;
     private const int MaxRouteDeadEndsPerAttempt = 1024;
     private const int RouteDepthPadding = 8;
     private static readonly Guid _guestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
+    private static readonly Guid _oldHouseEnterMiaCapturedRoomTriggerGuid =
+        new("83eb1968-eba3-4925-8e1e-ddac00495a92");
+    private static readonly Guid _oldHousePassThroughFireplaceFlagGuid =
+        new("779d13a7-5296-4a4a-bf04-c92e8930cc90");
+    private static readonly Vector3 _oldHouseShadowPuzzleProgressionTriggerPosition =
+        new(-19.85224f, -2.963f, 92.8632f);
+    private static readonly Vector3 _oldHouseShadowPuzzleProgressionTriggerScale =
+        new(5f, 2.5f, 6f);
+    private const uint OldHouseShadowPuzzleProgressionPassThroughFireplaceActionUid = 0xB107A200;
 
     private static readonly HashSet<string> _preservedVanillaKeyItemIds = new(StringComparer.OrdinalIgnoreCase) // TODO
     {
@@ -57,7 +70,8 @@ internal class KeyItemLocationModifier : Modifier {
                 ["SilhouettePazzlePiece"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetPazzleObject",
                     new("e165ff7a-0829-4edc-8c34-68a01a1ff3b2"), true)),
                 ["SilhouettePazzlePieceOldHouse"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_EnterMiaCapturedRoom",
-                    new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true)),
+                    new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true,
+                    KeyItemAcquisitionFlagSource.NativeTriggerOnly)),
                 ["SerumMaterialA"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetEvlineArm",
                     new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true)),
                 ["Lantern"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetLantern",
@@ -233,6 +247,7 @@ internal class KeyItemLocationModifier : Modifier {
         var randomItemSettings = randomizer.StaticItemRandomizationService.RandomItemSettings;
         var preserveItemModels = randomizer.GetConfigOption<bool>("preserve-item-models");
         RemoveCultivationRoomMineDoors(randomizer, logger);
+        AddOldHouseShadowPuzzleProgressionTrigger(randomizer, logger);
         var availableTargets = GetEligibleTargetPlacements(randomizer, itemPlacementService)
             .OrderBy(target => target.Placement.SceneFile, StringComparer.OrdinalIgnoreCase)
             .ThenBy(target => target.LocationKey.X)
@@ -340,6 +355,97 @@ internal class KeyItemLocationModifier : Modifier {
 
         logger.LogLine(
             $"Cultivation room mine doors removed: {removed} in {FormatScenePath(CultivationRoomScenePath)}.");
+    }
+
+    private static void AddOldHouseShadowPuzzleProgressionTrigger(Randomizer randomizer, RandomizerLogger logger) {
+        var added = false;
+        var sourceMissing = false;
+        randomizer.FileRepository.ModifyScnFile(OldHouseLevelFsmScenePath, scene => {
+            if (scene.FindGameObject(OldHouseShadowPuzzleProgressionTriggerName) != null)
+                return scene;
+
+            var sourceTrigger = scene.FindGameObject(_oldHouseEnterMiaCapturedRoomTriggerGuid);
+            if (sourceTrigger == null) {
+                sourceMissing = true;
+                return scene;
+            }
+
+            var trigger = sourceTrigger
+                .CloneWithNewGuids(randomizer.GetRng($"{RandomizerKey}/old-house-shadow-puzzle-progress-trigger"))
+                .WithName(OldHouseShadowPuzzleProgressionTriggerName);
+            trigger = MoveOldHouseShadowPuzzleProgressionTrigger(trigger);
+            trigger = AddSetBoolAction(
+                trigger,
+                "c03_3_Main_PassThroughFirePlaceAgain",
+                _oldHousePassThroughFireplaceFlagGuid,
+                true,
+                OldHouseShadowPuzzleProgressionPassThroughFireplaceActionUid);
+
+            added = true;
+            return IntelOrca.Biohazard.REE.Rsz.RszExtensions.Add(
+                scene,
+                randomizer.FileRepository.TypeRepository,
+                "MainFlow_Advanced_gimmick/c03_3_Main_150/" + OldHouseShadowPuzzleProgressionTriggerName,
+                trigger);
+        });
+
+        if (added) {
+            logger.LogLine(
+                $"Old House shadow puzzle progression fallback added near the puzzle path in {FormatScenePath(OldHouseLevelFsmScenePath)}.");
+        } else if (sourceMissing) {
+            logger.LogLine(
+                $"Old House shadow puzzle progression fallback skipped: source trigger {_oldHouseEnterMiaCapturedRoomTriggerGuid} was not found.");
+        }
+    }
+
+    private static RszGameObject MoveOldHouseShadowPuzzleProgressionTrigger(RszGameObject trigger) {
+        var transform = trigger.FindComponent<GeneratedViaTransform>()
+                        ?? throw new Exception($"{OldHouseShadowPuzzleProgressionTriggerName} has no transform.");
+        transform.Position = _oldHouseShadowPuzzleProgressionTriggerPosition;
+        transform.Rotation = Quaternion.Identity;
+        transform.Scale = _oldHouseShadowPuzzleProgressionTriggerScale;
+        return trigger.AddOrUpdateComponent(transform);
+    }
+
+    private static RszGameObject AddSetBoolAction(
+        RszGameObject gameObject,
+        string flagName,
+        Guid flagGuid,
+        bool value,
+        uint uid) {
+        var added = false;
+        return gameObject.Visit(node => {
+            if (added ||
+                node is not RszObjectNode objectNode ||
+                objectNode.Type.Name != "via.fsm.SceneFsmData" ||
+                objectNode["v1_Actions"] is not RszArrayNode actions) {
+                return node;
+            }
+
+            if (actions.Children
+                .OfType<RszObjectNode>()
+                .Any(action =>
+                    action.Type.Name == "via.fsm.action.SetBool" &&
+                    action.Get<Guid>("v5_Guid") == flagGuid)) {
+                added = true;
+                return node;
+            }
+
+            var sourceAction = actions.Children
+                .OfType<RszObjectNode>()
+                .FirstOrDefault(action => action.Type.Name == "via.fsm.action.SetBool");
+            if (sourceAction == null)
+                return node;
+
+            var extraAction = sourceAction
+                .SetField("v2_UID", uid)
+                .SetField("v4_Variable", flagName)
+                .SetField("v5_Guid", flagGuid)
+                .SetField("v6_Status", value ? 1 : 0)
+                .SetField("v7_ActionEnd", false);
+            added = true;
+            return objectNode.SetField("v1_Actions", actions.Add(extraAction));
+        });
     }
 
     private static IEnumerable<ItemReplacementTarget> GetEligibleTargetPlacements(
@@ -513,6 +619,20 @@ internal class KeyItemLocationModifier : Modifier {
                 .ToImmutableArray();
             if (flags.Length == 0)
                 continue;
+
+            var triggerOnlyFlags = flags
+                .Where(flag => flag.Source == KeyItemAcquisitionFlagSource.NativeTriggerOnly)
+                .ToImmutableArray();
+            if (!triggerOnlyFlags.IsDefaultOrEmpty) {
+                logger.LogLine(
+                    $"Skipped pickup side effects for {_itemDefinitions.GetName(placementGroup.Key)}: " +
+                    $"{string.Join(", ", triggerOnlyFlags.Select(flag => flag.Name))} is driven by a native trigger and must not be faked on relocated pickups.");
+                flags = flags
+                    .Where(flag => flag.Source != KeyItemAcquisitionFlagSource.NativeTriggerOnly)
+                    .ToImmutableArray();
+                if (flags.Length == 0)
+                    continue;
+            }
 
             if (HasUnsafeRelocatedPickupSideEffect(placementGroup.Key, flags)) {
                 logger.LogLine(
@@ -1791,10 +1911,16 @@ internal class KeyItemLocationModifier : Modifier {
         int Count = 1,
         int Priority = 100);
 
+    private enum KeyItemAcquisitionFlagSource {
+        RelocatedPickup,
+        NativeTriggerOnly,
+    }
+
     private sealed record KeyItemAcquisitionFlag(
         string Name,
         Guid Guid,
-        bool Value);
+        bool Value,
+        KeyItemAcquisitionFlagSource Source = KeyItemAcquisitionFlagSource.RelocatedPickup);
 
     private sealed record KeyItemReplacementPlanSet(
         Dictionary<ReplacementKey, ReplacementPlan> Plans,
