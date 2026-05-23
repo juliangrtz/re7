@@ -60,8 +60,6 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["TalismanKey"] = new("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true),
             ["SilhouettePazzlePiece"] =
                 new("c03_2_Main_GetPazzleObject", new("e165ff7a-0829-4edc-8c34-68a01a1ff3b2"), true),
-            ["SilhouettePazzlePieceOldHouse"] = new("c03_3_Main_EnterMiaCapturedRoom",
-                new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"), true),
             ["SerumMaterialA"] = new("c03_3_Main_GetEvlineArm", new("e4b4b42e-ecfc-415e-a713-e1a3604af371"), true),
             ["SerumMaterialB"] = new("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true),
             ["EvCable"] = new("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"),
@@ -153,6 +151,10 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid OldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
     private static readonly Guid OldHouseCrankGuid = new("a3f59645-063b-41a5-a86a-6e5b8c507a88");
     private static readonly Guid OldHouseDSeriesArmGuid = new("1c01c49f-81fa-0d1c-2312-fd50eafe79a3");
+    private static readonly Vector3 OldHouseShadowPuzzleProgressionFallbackPosition =
+        new(-19.85224f, -2.963f, 92.8632f);
+    private static readonly Vector3 OldHouseOriginalMiaCapturedRoomTriggerPosition =
+        new(-51.50293f, -3.728563f, 76.21281f);
     private static readonly Guid TestingAreaDSeriesHeadGuid = new("89e0718a-9f23-0ba7-2ec6-0affca6c028b");
     private static readonly Guid TestingAreaCandleGuid = new("05606c7e-3669-497e-8196-561faefb95e5");
     private static readonly Guid ShipLugWrenchGuid = new("15114d15-56af-468e-ab53-154e305e0ad1");
@@ -499,6 +501,69 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         }
 
         Assert.DoesNotContain("Pickup side effect: sets c03_2_Main_OpenTrayInWorkshopKey", result.ProcessLog);
+    }
+
+    [Fact]
+    public void KeyItemLocations_AddsOldHouseShadowPuzzleProgressionFallbackTriggerOnNaturalPuzzlePath() {
+        using var result = RandomizerTest.RunState(config => { config["random-key-item-locations"] = true; });
+
+        Assert.True(result.WasFileModified(KeyItemLocationModifier.OldHouseLevelFsmScenePath));
+        var trigger = result.ReadAfterScene(KeyItemLocationModifier.OldHouseLevelFsmScenePath)
+            .FindGameObject(KeyItemLocationModifier.OldHouseShadowPuzzleProgressionTriggerName);
+        Assert.NotNull(trigger);
+
+        var transform = trigger!.FindComponent<GeneratedViaTransform>();
+        Assert.NotNull(transform);
+        Assert.True(
+            Vector3.Distance(OldHouseShadowPuzzleProgressionFallbackPosition, transform!.Position) < 0.001f,
+            "Old House progression fallback should be on the shadow-puzzle path, not in the vanilla Stone Statuette room.");
+        Assert.True(
+            Vector3.Distance(OldHouseOriginalMiaCapturedRoomTriggerPosition, transform.Position) > 30f,
+            "Old House progression fallback must not force a detour through the vanilla Stone Statuette room.");
+        Assert.True(transform.Scale.X >= 5f);
+        Assert.True(transform.Scale.Z >= 6f);
+
+        var actions = GetSetBoolActions(trigger);
+        Assert.Contains(actions, action =>
+            action.Variable.Equals("c03_3_Main_EnterMiaCapturedRoom", StringComparison.Ordinal) &&
+            action.Guid == new Guid("17e5af29-0cab-4e3c-a78d-71ee87798b6c") &&
+            action.Status == 1);
+        Assert.Contains(actions, action =>
+            action.Variable.Equals("c03_3_Main_PassThroughFirePlaceAgain", StringComparison.Ordinal) &&
+            action.Guid == new Guid("779d13a7-5296-4a4a-bf04-c92e8930cc90") &&
+            action.Status == 1);
+        Assert.Contains("Old House shadow puzzle progression fallback added", result.ProcessLog);
+    }
+
+    [Theory]
+    [InlineData(424855)]
+    [InlineData(702402)]
+    public void KeyItemLocations_OldHouseStoneStatuetteDoesNotFakeMiaCapturedRoomTriggerForReportedSeeds(int seed) {
+        using var result = RandomizerTest.RunState(config => {
+            config["random-key-item-locations"] = true;
+            config["random-items"] = true;
+            config["replace-madhouse-tapes"] = true;
+            config["replace-weapons"] = true;
+            config["additional-items"] = true;
+            config["additional-wooden-crates"] = true;
+        }, seed);
+
+        var change = GetChangedPlacements(result).SingleOrDefault(change =>
+            change.AfterId.Equals("SilhouettePazzlePieceOldHouse", StringComparison.OrdinalIgnoreCase));
+        Assert.NotNull(change);
+
+        var targetGuid = GetTargetGuid(change!.Placement);
+        var gameObject = result.ReadAfterScene(change.Placement.SceneFile).FindGameObject(targetGuid);
+        Assert.NotNull(gameObject);
+
+        AssertPickupDoesNotSetBoolFlag(
+            gameObject!,
+            "SilhouettePazzlePieceOldHouse",
+            "c03_3_Main_EnterMiaCapturedRoom",
+            new("17e5af29-0cab-4e3c-a78d-71ee87798b6c"));
+        Assert.Contains("Skipped pickup side effects for Stone Statuette:", result.ProcessLog);
+        Assert.DoesNotContain("Pickup side effect: sets c03_3_Main_EnterMiaCapturedRoom", result.ProcessLog);
+        Assert.DoesNotContain("Skipped key item Stone Statuette:", result.ProcessLog);
     }
 
     [Fact]
@@ -1182,6 +1247,43 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             Assert.Equal(flagGuid, interact.SetFsmBoolFlagId);
             Assert.Equal(value, interact.SetFsmBoolFlagValue);
         });
+    }
+
+    private static void AssertPickupDoesNotSetBoolFlag(
+        RszGameObject gameObject,
+        string itemId,
+        string flagName,
+        Guid flagGuid) {
+        var interactions = new List<app.InteractDetailSearch>();
+        gameObject.VisitGameObjects(child => {
+            var interact = child.FindComponent<app.InteractDetailSearch>();
+            if (interact != null) {
+                interactions.Add(interact);
+            }
+        });
+
+        Assert.True(interactions.Count > 0, $"{itemId} replacement has no InteractDetailSearch pickup interaction.");
+        Assert.All(interactions, interact => {
+            Assert.False(
+                interact.SetFsmBoolFlag.Equals(flagName, StringComparison.OrdinalIgnoreCase) ||
+                interact.SetFsmBoolFlagId == flagGuid,
+                $"{itemId} pickup must not fake {flagName}; that flag is set by the native room-entry trigger.");
+        });
+    }
+
+    private static List<(string Variable, Guid Guid, int Status)> GetSetBoolActions(RszGameObject gameObject) {
+        var result = new List<(string Variable, Guid Guid, int Status)>();
+        gameObject.Visit(node => {
+            if (node is RszObjectNode objectNode &&
+                objectNode.Type.Name == "via.fsm.action.SetBool") {
+                result.Add((
+                    objectNode.Get<string>("v4_Variable"),
+                    objectNode.Get<Guid>("v5_Guid"),
+                    objectNode.Get<int>("v6_Status")));
+            }
+        });
+
+        return result;
     }
 
     private static void AssertOriginalPickupShapePreserved(RszGameObject before, RszGameObject after, string itemId) {
