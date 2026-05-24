@@ -30,7 +30,9 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
     public string OriginalPrefabPath
         => PakPath.SceneFile($"scenes/enemy/em2000.scn"); // also there is scenes/enemy/em2000chapter4.scn
 
-    public bool UsesEnemyGenerator => false;
+    public bool UsesEnemyGenerator => true;
+
+    public string? SpawnOptionType => null;
 
     public bool SupportsSpeedRandomization => true;
 }

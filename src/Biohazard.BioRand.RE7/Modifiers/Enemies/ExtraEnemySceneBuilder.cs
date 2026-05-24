@@ -13,6 +13,7 @@ internal sealed class ExtraEnemySceneBuilder(
     internal const string SpawnPointsName = "BioRandExtraEnemySpawnPoints";
     internal const string SpawnInfoPrefix = "BioRandExtraEnemySpawnInfo";
     internal const string GeneratePrefix = "BioRandExtraEnemyGenerate";
+    internal const string StaticPrefix = "BioRandExtraEnemyStatic";
     private const string EnemyGenerationFsmFolderName = "EnemyGenFsm";
     private const string GenerateFsmResource = "LevelDesign/Fsm/Template/TempFsm_TriggerInAction_EnemyGenerate5.fsm";
 
@@ -56,6 +57,11 @@ internal sealed class ExtraEnemySceneBuilder(
         EnemyHealthResolver healthResolver,
         int index,
         Rng rng) {
+        if (UsesStaticScenePlacement(request.Enemy)) {
+            throw new InvalidOperationException(
+                $"{request.Enemy.Name} must be placed as a direct scene object because it has no EnemySpawnInfoOption.");
+        }
+
         var enemyId = request.Enemy.EnemyId.ToString();
         var spawnInfo = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng)
             .WithName(enemyId);
@@ -71,6 +77,7 @@ internal sealed class ExtraEnemySceneBuilder(
         spawnInfoComponent.UnitAlias = enemyId;
         spawnInfoComponent.Comment = $"{SpawnInfoPrefix}_{enemyId}_{index:000}";
         spawnInfoComponent.HealthParameter.Health = assignedHealth;
+
         ConfigureMoldedAiMap(spawnInfoComponent, enemyId, request.Placement.SceneFile);
         spawnInfoComponent.MyGUID = rng.NextGuid();
         spawnInfo = spawnInfo.AddOrUpdateComponent(spawnInfoComponent);
@@ -84,6 +91,30 @@ internal sealed class ExtraEnemySceneBuilder(
             spawnInfo.Guid);
 
         return spawnInfo;
+    }
+
+    internal RszGameObject CreateStaticInstance(
+        ResolvedExtraEnemyPlacement request,
+        EnemyRandomizerOptions options,
+        int index,
+        Rng rng) {
+        var enemyId = request.Enemy.EnemyId.ToString();
+        var transform = new GeneratedViaTransform(){
+            Position = GetPlacementPosition(request.Placement),
+            Rotation = GetPlacementRotation(request.Placement),
+            Scale = Vector3.One,
+        };
+
+        return EnemyTemplateFactory.RefreshRuntimeGuids(templateFactory.GetOrCreateEnemyTemplate(
+                    enemyId,
+                    transform,
+                    updateTransform: true,
+                    randomizeScale: true,
+                    options.ScaleOptions,
+                    rng,
+                    request.Enemy)
+                .WithName($"{StaticPrefix}_{enemyId}_{index:000}"),
+            rng);
     }
 
     internal List<RszGameObject> CreateInstances(
@@ -189,6 +220,19 @@ internal sealed class ExtraEnemySceneBuilder(
         var updatedFolder = fsmFolder.WithChildren(fsmFolder.Children.AddRange(fsmGenerators));
         return scene.WithChildren(scene.Children.Replace(fsmFolder, updatedFolder));
     }
+
+    internal static RszScene AddSceneObjects(
+        RszScene scene,
+        IReadOnlyCollection<RszGameObject> gameObjects) {
+        foreach (var gameObject in gameObjects) {
+            scene = scene.Add(gameObject);
+        }
+
+        return scene;
+    }
+
+    internal static bool UsesStaticScenePlacement(IEnemyDefinition enemy)
+        => enemy.UsesEnemyGenerator && enemy.SpawnOptionType == null;
 
     internal static string GetGeneratorScene(
         string requestScene,

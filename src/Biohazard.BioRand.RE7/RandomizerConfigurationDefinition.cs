@@ -377,6 +377,7 @@ internal static class RandomizerConfigurationDefinition {
                 Label = enemy.Name,
                 Category = new GroupItemCategory(enemy.Category.ToConfigCategory()),
                 Type = "range",
+                Description = enemy.EnemyId == EnemyID.Em2000 ? "Only applies to extra enemies." : null,
                 Min = 0,
                 Max = 1,
                 Step = 0.01,
