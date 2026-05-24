@@ -1,9 +1,11 @@
 using Biohazard.BioRand.RE7.Extensions;
+using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Messages;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -83,6 +85,16 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         Assert.Equal(
             Skl001PassiveSkillUserPath,
             ((RszUserDataNode)itemPassiveSkill!["PassiveSkill"]).Path);
+        AssertSkillVisualResources(
+            itemPrefab,
+            "skl001",
+            "Props/sm9958_skillpatch01/sm9958_skillpatch01.mesh",
+            "Props/sm9958_skillpatch01/skl001/skl001.mdf2");
+        AssertSkillVisualResources(
+            dropPrefab,
+            "skl001",
+            "Props/sm9958_skillpatch01/sm9958_skillpatch01.mesh",
+            "Props/sm9958_skillpatch01/skl001/skl001.mdf2");
         var passiveSkill = ReadAfterPassiveSkillUser(result, Skl001PassiveSkillUserPath);
         Assert.Equal(0.5f, passiveSkill.Get<float>("ReloadSpeedChangeRate"));
         Assert.Equal(-0.4f, passiveSkill.Get<float>("HitTimeBonusChangeRate"));
@@ -93,6 +105,49 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         Assert.Equal(
             "Infinite ammo. Reload your weapon\r\nas many times as you want...but\r\ntime bonuses are greatly decreased.",
             uiItemMessages.GetString(skillSetting.ManualMsg, LanguageId.English));
+    }
+
+    [Fact]
+    public void BirthdaySkillVisuals_ReferenceOverlayPatchMeshesAndMaterials() {
+        using var result = RandomizerTest.RunState();
+        var dropTemplate = ReadBeforePfb(
+            result,
+            PrefabPath("Prefab/Props_Dynamic/sm2479_PowerUpCoin01A/Get/sm2479_PowerUpCoin01A_Get.pfb"));
+        var dropTemplateRotation = FindItemTransform(dropTemplate, "PowerUpCoin01A").Rotation;
+
+        foreach (var (itemDataId, meshFolder) in ExpectedSkillVisuals()) {
+            var beforeItemPrefab = ReadBeforePfb(result, PrefabPath(GetSkillItemPrefabPath(itemDataId)));
+            var itemPrefab = result.ReadAfterPfb(PrefabPath(GetSkillItemPrefabPath(itemDataId)));
+            var dropPrefab = result.ReadAfterPfb(PrefabPath(GetSkillDropPrefabPath(itemDataId)));
+            var mesh = $"Props/{meshFolder}/{meshFolder}.mesh";
+            var material = $"Props/{meshFolder}/{itemDataId}/{itemDataId}.mdf2";
+
+            AssertSkillVisualResources(
+                itemPrefab,
+                itemDataId,
+                mesh,
+                material,
+                BirthdaySkillVisuals.CorrectRotation(FindItemTransform(beforeItemPrefab, itemDataId).Rotation));
+            AssertSkillVisualResources(
+                dropPrefab,
+                itemDataId,
+                mesh,
+                material,
+                BirthdaySkillVisuals.CorrectRotation(dropTemplateRotation));
+        }
+        Assert.DoesNotContain(result.ChangedFiles.Keys, IsBirthdaySkillOverlayAsset);
+    }
+
+    [Fact]
+    public void BirthdaySkillVisuals_RotationCorrection_ReducesQuaternionXOnly() {
+        var rotation = new Quaternion(-0.4470568f, 0.4819061f, 0.5673797f, 0.495448f);
+
+        var corrected = BirthdaySkillVisuals.CorrectRotation(rotation);
+
+        Assert.Equal(-0.2235284f, corrected.X, 6);
+        Assert.Equal(rotation.Y, corrected.Y);
+        Assert.Equal(rotation.Z, corrected.Z);
+        Assert.Equal(rotation.W, corrected.W);
     }
 
     [Fact]
@@ -175,6 +230,86 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
 
     private static string PrefabPath(string prefabPath)
         => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
+
+    private static string GetSkillItemPrefabPath(string itemDataId)
+        => $"Prefab/Skill/{itemDataId}/{ToSkillPrefabName(itemDataId)}.pfb";
+
+    private static string GetSkillDropPrefabPath(string itemDataId)
+        => $"Prefab/Skill/{itemDataId}/{ToSkillPrefabName(itemDataId)}Get.pfb";
+
+    private static string ToSkillPrefabName(string itemDataId)
+        => $"{char.ToUpperInvariant(itemDataId[0])}{itemDataId[1..]}";
+
+    private static (string ItemDataId, string MeshFolder)[] ExpectedSkillVisuals()
+        => [
+            ("skl001", "sm9958_skillpatch01"),
+            ("skl002", "sm9959_skillpatch02"),
+            ("skl008", "sm9959_skillpatch02"),
+            ("skl010", "sm9959_skillpatch02"),
+            ("skl012", "sm9959_skillpatch02"),
+            ("skl014", "sm9959_skillpatch02"),
+            ("skl016", "sm9959_skillpatch02"),
+            ("skl023", "sm9959_skillpatch02"),
+            ("skl003", "sm9960_skillpatch03"),
+            ("skl009", "sm9960_skillpatch03"),
+            ("skl011", "sm9960_skillpatch03"),
+            ("skl013", "sm9960_skillpatch03"),
+            ("skl015", "sm9960_skillpatch03"),
+            ("skl017", "sm9960_skillpatch03"),
+            ("skl018", "sm9960_skillpatch03"),
+            ("skl019", "sm9960_skillpatch03"),
+            ("skl021", "sm9960_skillpatch03"),
+            ("skl022", "sm9960_skillpatch03"),
+        ];
+
+    private static bool IsBirthdaySkillOverlayAsset(string path)
+        => path.StartsWith("natives/stm/props/sm995", StringComparison.OrdinalIgnoreCase) ||
+           path.Equals("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", StringComparison.OrdinalIgnoreCase);
+
+    private static RszScene ReadBeforePfb(RandomizerRunResult result, string path)
+        => new PfbFile(FileVersions.PfbFileVersion, result.ReadBeforeBytes(path))
+            .ReadScene(result.Randomizer.FileRepository.TypeRepository);
+
+    private static GeneratedViaTransform FindItemTransform(RszScene scene, string itemDataId) {
+        var gameObject = scene.GetGameObjects().Single(x =>
+            string.Equals(x.FindComponent<app.Item>()?.ItemDataID, itemDataId, StringComparison.OrdinalIgnoreCase));
+        var transform = gameObject.FindComponent<GeneratedViaTransform>();
+
+        Assert.NotNull(transform);
+        return transform!;
+    }
+
+    private static void AssertSkillVisualResources(
+        RszScene scene,
+        string itemDataId,
+        string meshPath,
+        string materialPath,
+        Quaternion? expectedRotation = null) {
+        var gameObject = scene.GetGameObjects().Single(x =>
+            string.Equals(x.FindComponent<app.Item>()?.ItemDataID, itemDataId, StringComparison.OrdinalIgnoreCase));
+        var mesh = gameObject.FindComponent("via.render.Mesh");
+
+        Assert.NotNull(mesh);
+        Assert.Equal(meshPath, ((RszResourceNode)mesh!["Mesh"]).Value);
+        Assert.Equal(materialPath, ((RszResourceNode)mesh["Material"]).Value);
+
+        if (expectedRotation != null) {
+            var transform = gameObject.FindComponent<GeneratedViaTransform>();
+            Assert.NotNull(transform);
+            AssertQuaternionEquals(expectedRotation.Value, transform!.Rotation);
+        }
+    }
+
+    private static void AssertQuaternionEquals(Quaternion expected, Quaternion actual) {
+        if (Quaternion.Dot(expected, actual) < 0) {
+            actual = new Quaternion(-actual.X, -actual.Y, -actual.Z, -actual.W);
+        }
+
+        Assert.InRange(MathF.Abs(actual.X - expected.X), 0, 0.0001f);
+        Assert.InRange(MathF.Abs(actual.Y - expected.Y), 0, 0.0001f);
+        Assert.InRange(MathF.Abs(actual.Z - expected.Z), 0, 0.0001f);
+        Assert.InRange(MathF.Abs(actual.W - expected.W), 0, 0.0001f);
+    }
 
     private static RszObjectNode ReadAfterPassiveSkillUser(RandomizerRunResult result, string userPath) {
         var path = PakPath.UserFile(userPath);

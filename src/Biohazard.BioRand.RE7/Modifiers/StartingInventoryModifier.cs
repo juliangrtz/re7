@@ -189,6 +189,7 @@ internal class StartingInventoryModifier : Modifier {
             if (giveRandomSkill) {
                 var skillId = skillRng.Next(StartingSkillLevelOneIds);
                 logger.LogLine($"Random starting skill: {skillId}");
+                BirthdaySkillVisuals.CopyRequiredFiles(randomizer.FileRepository, skillId);
                 root._AddItems.Add(new StartingInventoryItem{
                     ItemDataID = skillId,
                     Num = 1,

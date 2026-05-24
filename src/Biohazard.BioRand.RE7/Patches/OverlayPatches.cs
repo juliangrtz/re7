@@ -8,9 +8,10 @@ internal class JacksWelcomeToBioRandSevenSonAtticPunchPatch(IPatchContext contex
 // ReSharper disable once InconsistentNaming
 internal class uhTranceYeetusPaintingPatch(IPatchContext context) : IPatch {
     public void Apply() {
-        if (!string.Equals(context.GetConfigOption<string>("username"), "uhTrance", StringComparison.InvariantCultureIgnoreCase))
+        if (!string.Equals(context.GetConfigOption<string>("username"), "uhTrance",
+                StringComparison.InvariantCultureIgnoreCase))
             return;
-        
+
         context.ApplyOverlay(context.GetSupplementFile("trance_painting.zip")!);
     }
 }

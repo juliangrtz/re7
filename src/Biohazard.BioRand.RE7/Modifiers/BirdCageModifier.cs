@@ -245,15 +245,25 @@ internal class BirdCage {
 
         if (!PreserveItemModels) {
             var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-            var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID)
-                .FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Mesh) && !string.IsNullOrWhiteSpace(x.Material));
-
-            if (newItem != null) {
+            if (BirthdaySkillVisuals.TryGetResources(Item.ItemDataID, out var skillVisuals)) {
+                BirthdaySkillVisuals.CopyRequiredFiles(randomizer.FileRepository, Item.ItemDataID);
                 mesh = mesh
-                    .Set("Mesh", new RszResourceNode(newItem.Mesh))
-                    .Set("Material", new RszResourceNode(newItem.Material));
+                    .Set("Mesh", new RszResourceNode(skillVisuals.Mesh))
+                    .Set("Material", new RszResourceNode(skillVisuals.Material));
 
                 newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
+                newItemHolder = BirthdaySkillVisuals.ApplyRotationCorrection(newItemHolder);
+            } else {
+                var newItem = randomizer.ItemPlacementService.FromId(Item.ItemDataID)
+                    .FirstOrDefault(x => !string.IsNullOrWhiteSpace(x.Mesh) && !string.IsNullOrWhiteSpace(x.Material));
+
+                if (newItem != null) {
+                    mesh = mesh
+                        .Set("Mesh", new RszResourceNode(newItem.Mesh))
+                        .Set("Material", new RszResourceNode(newItem.Material));
+
+                    newItemHolder = newItemHolder.AddOrUpdateComponent(mesh);
+                }
             }
         }
 

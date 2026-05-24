@@ -44,14 +44,20 @@ For current design notes and planned work, see:
 ## Requirements
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/)
-- Git
+- Git with [Git LFS](https://git-lfs.com/)
 - A local Resident Evil 7 install with all DLCs for local setup/mod generation workflows
 - Windows is recommended for game-related workflows
 
-If the repository was cloned without submodules, initialize them first:
+Large embedded assets, including `src/Biohazard.BioRand.RE7/_Data/silver_birthday_patches.zip`, are stored with Git LFS. Install Git LFS before cloning when possible:
 
 ```powershell
-git submodule update --init --recursive
+git lfs install
+```
+
+For an existing clone, fetch the LFS payloads before building or running tests:
+
+```powershell
+git lfs pull
 ```
 
 ## Build And Test
@@ -113,7 +119,6 @@ src/Biohazard.BioRand.RE7.Benchmarks/         BenchmarkDotNet throughput benchma
 src/Biohazard.BioRand.RE7.DataGen/            Data and code generators
 src/Biohazard.BioRand.RE7.REFrameworkPlugins/ REFramework.NET plugin
 src/Biohazard.BioRand.RE7.Tests/              xUnit regression tests
-src/reeutils/                                 RE Engine tooling submodule
 docs/                                         Notes, roadmap, and research docs
 assets/                                       Project assets and bundled mod assets
 ```
@@ -133,6 +138,7 @@ BioRand 7 would not be possible without a few amazing people and tools:
 - [kagenocookie](https://github.com/kagenocookie)'s [REE Content Editor](https://github.com/kagenocookie/REE-Content-Editor)
 - [praydog](https://github.com/praydog)'s [RE Framework](https://github.com/praydog/REFramework)
 - [alphaZomega](https://github.com/alphazolam)'s many contributions to RE modding
+- [Silver](https://github.com/SilverEzredes)'s spiffy patches for the Jack's 55th Birthday skills
 
 ## License
 
