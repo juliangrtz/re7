@@ -151,10 +151,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid OldHouseCrowKeyGuid = new("8b940901-8893-4091-a4ac-5a16b3de3a11");
     private static readonly Guid OldHouseCrankGuid = new("a3f59645-063b-41a5-a86a-6e5b8c507a88");
     private static readonly Guid OldHouseDSeriesArmGuid = new("1c01c49f-81fa-0d1c-2312-fd50eafe79a3");
+
     private static readonly Vector3 OldHouseShadowPuzzleProgressionFallbackPosition =
         new(-19.85224f, -2.963f, 92.8632f);
+
     private static readonly Vector3 OldHouseOriginalMiaCapturedRoomTriggerPosition =
         new(-51.50293f, -3.728563f, 76.21281f);
+
     private static readonly Guid TestingAreaDSeriesHeadGuid = new("89e0718a-9f23-0ba7-2ec6-0affca6c028b");
     private static readonly Guid TestingAreaCandleGuid = new("05606c7e-3669-497e-8196-561faefb95e5");
     private static readonly Guid ShipLugWrenchGuid = new("15114d15-56af-468e-ab53-154e305e0ad1");

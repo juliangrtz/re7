@@ -20,7 +20,8 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings> {
         [CommandOption("-b|--beta")] public required bool Beta { get; init; }
     }
 
-    protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
+    protected override async Task<int>
+        ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var gameId = await GetGameIdAsync(settings.Host, "re7")
                      ?? throw new Exception("re7 game moniker not found.");
 

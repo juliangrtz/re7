@@ -130,8 +130,8 @@ internal class EnemyModifier : Modifier {
                 var spawnInfoTemplate = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng);
                 var spawnInfoTemplateComponent = spawnInfoTemplate.FindComponent<app.EnemySpawnInfo>()!;
                 var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType)
-                    ?? throw new InvalidOperationException(
-                        $"Spawn info template for '{enemyId}' does not contain '{newEnemy.SpawnOptionType}'.");
+                                      ?? throw new InvalidOperationException(
+                                          $"Spawn info template for '{enemyId}' does not contain '{newEnemy.SpawnOptionType}'.");
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
 
                 originalSpawnInfoGameObject = ReplaceSpawnInfoOptions(
@@ -574,6 +574,7 @@ internal class EnemyModifier : Modifier {
 
                 sceneFsmGenerators.AddRange(fsmGenerators);
             }
+
             logger.Pop();
         }
 
