@@ -138,6 +138,7 @@ BioRand 7 would not be possible without a few amazing people and tools:
 - [kagenocookie](https://github.com/kagenocookie)'s [REE Content Editor](https://github.com/kagenocookie/REE-Content-Editor)
 - [praydog](https://github.com/praydog)'s [RE Framework](https://github.com/praydog/REFramework)
 - [alphaZomega](https://github.com/alphazolam)'s many contributions to RE modding
+- [Silver](https://github.com/SilverEzredes)'s spiffy patches for the Jack's 55th Birthday skills
 
 ## License
 
