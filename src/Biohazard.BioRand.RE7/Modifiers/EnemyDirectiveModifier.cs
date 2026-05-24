@@ -8,6 +8,7 @@ internal class EnemyDirectiveModifier : Modifier {
     private readonly List<IDirectiveModifier> _enemySpecificDirectiveModifiers =[
         new EvelineFinalBossDirectiveModifier(),
         new InsectsDirectiveModifier(),
+        new JackShearsKneeDownDirectiveModifier(),
         new JackShearsDirectiveModifier(),
         new JackMutatedDirectiveModifier(),
         new JackStalkerDirectiveModifier(),
