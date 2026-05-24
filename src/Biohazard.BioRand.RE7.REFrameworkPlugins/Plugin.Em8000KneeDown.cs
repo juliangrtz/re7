@@ -11,11 +11,9 @@ using EnemyResistType = EnemyResistParameter.EnemyResistType;
 using ForbidDamageReactionType = EnemyActionController.ForbidDamageReactionType;
 
 public partial class REFPlugin {
-    [ThreadStatic]
-    private static bool _forceEm8000KneeDownDamageResult;
+    [ThreadStatic] private static bool _forceEm8000KneeDownDamageResult;
 
-    [ThreadStatic]
-    private static Em8000WeaponGroup _forceEm8000KneeDownWeaponGroup;
+    [ThreadStatic] private static Em8000WeaponGroup _forceEm8000KneeDownWeaponGroup;
 
     private static bool IsVanillaEm8000KneeDownWeaponGroup(Em8000WeaponGroup weaponGroup)
         => weaponGroup is Em8000WeaponGroup.Handgun
@@ -85,6 +83,7 @@ public partial class REFPlugin {
             return;
 
         retval = 1;
-        Logger.Log($"Allowed Em8000 knee down for unsupported weapon group {_forceEm8000KneeDownWeaponGroup}.", isVerbose: true);
+        Logger.Log($"Allowed Em8000 knee down for unsupported weapon group {_forceEm8000KneeDownWeaponGroup}.",
+            isVerbose: true);
     }
 }

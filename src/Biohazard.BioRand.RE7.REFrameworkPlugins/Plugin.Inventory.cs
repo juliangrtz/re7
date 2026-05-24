@@ -6,11 +6,9 @@ using static app.InventoryMenu;
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
 public partial class REFPlugin {
-    [ThreadStatic]
-    private static bool _forceItemCanDiscardResult;
+    [ThreadStatic] private static bool _forceItemCanDiscardResult;
 
-    [ThreadStatic]
-    private static string? _forceItemCanDiscardDataId;
+    [ThreadStatic] private static string? _forceItemCanDiscardDataId;
 
     private static string? GetPlayerName() {
         var objectManager = API.GetManagedSingleton("app.ObjectManager");

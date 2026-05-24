@@ -42,7 +42,8 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         return base.Validate(context, settings);
     }
 
-    protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
+    protected override async Task<int>
+        ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
         var reporter = new ConsoleReporter();
         if (settings.Kill) {
             reporter.RunTask("Killing re7.exe", KillRe7);

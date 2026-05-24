@@ -174,10 +174,10 @@ internal class WeaponDefinitionGenerator : IFileGenerator {
                                                         p.EndsWith($".motlist.{FileVersions.MotlistFileVersion}")
                 ).ToList().EmptyToNull();
 
-                var pfbPath = _pakPaths.First(
-                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
-                         (p.Contains(weaponComponent.WeaponID.ToString(),
-                             StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
+                var pfbPath = _pakPaths.First(p =>
+                    p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
+                    (p.Contains(weaponComponent.WeaponID.ToString(),
+                        StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
                 );
 
                 result.Add(new WeaponDefinition{
@@ -230,10 +230,10 @@ internal class WeaponDefinitionGenerator : IFileGenerator {
                 var motlistPaths = _pakPaths.Where(p => p.EndsWith($"{id}.motlist.{FileVersions.MotlistFileVersion}")
                 ).ToList().EmptyToNull();
 
-                var pfbPath = _pakPaths.First(
-                    p => p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
-                         (p.Contains(weaponGunComponent.WeaponID.ToString(),
-                             StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
+                var pfbPath = _pakPaths.First(p =>
+                    p.Contains($"prefab/weapon/{id}.pfb.{FileVersions.PfbFileVersion}") ||
+                    (p.Contains(weaponGunComponent.WeaponID.ToString(),
+                        StringComparison.InvariantCultureIgnoreCase) && _pfbRegex.IsMatch(p))
                 );
 
 

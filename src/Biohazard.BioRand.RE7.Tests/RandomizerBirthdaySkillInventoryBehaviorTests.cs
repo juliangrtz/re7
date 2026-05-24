@@ -135,6 +135,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
                 material,
                 BirthdaySkillVisuals.CorrectRotation(dropTemplateRotation));
         }
+
         Assert.DoesNotContain(result.ChangedFiles.Keys, IsBirthdaySkillOverlayAsset);
     }
 
@@ -241,7 +242,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         => $"{char.ToUpperInvariant(itemDataId[0])}{itemDataId[1..]}";
 
     private static (string ItemDataId, string MeshFolder)[] ExpectedSkillVisuals()
-        => [
+        =>[
             ("skl001", "sm9958_skillpatch01"),
             ("skl002", "sm9959_skillpatch02"),
             ("skl008", "sm9959_skillpatch02"),

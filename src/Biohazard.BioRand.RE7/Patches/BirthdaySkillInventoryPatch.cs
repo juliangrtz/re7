@@ -250,7 +250,8 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
 
     private void ApplySkillVisuals(string prefabPath, app.ItemData skill, RszObjectNode visualTemplateMesh) {
         var prefab = context.GetPfbFile(prefabPath).ToBuilder(context.TypeRepository);
-        prefab.Scene = prefab.Scene.VisitGameObjects(gameObject => ApplySkillVisuals(gameObject, skill, visualTemplateMesh));
+        prefab.Scene =
+            prefab.Scene.VisitGameObjects(gameObject => ApplySkillVisuals(gameObject, skill, visualTemplateMesh));
         context.SetPfbFile(prefabPath, prefab.RebuildResources().Build());
     }
 
@@ -439,8 +440,8 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
 
     private static string? GetMessageText(MsgFile source, Guid guid, LanguageId language) {
         var message = source.FindMessage(guid);
-        return message == null 
-            ? null 
+        return message == null
+            ? null
             : (from value in message.Values where value.Language == language select value.Text).FirstOrDefault();
     }
 

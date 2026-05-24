@@ -6,9 +6,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerInventoryManagementBehaviorTests {
     [Fact]
     public void InventoryManagement_AllowsOnlyBirthdayBlasters_ToMoveToItemBox() {
-        using var result = RandomizerTest.RunState(config => {
-            config["inventory-unrestricted-management"] = true;
-        });
+        using var result = RandomizerTest.RunState(config => { config["inventory-unrestricted-management"] = true; });
 
         var keyItems = result.ReadAfterUserFile<app.ItemSettings>(RandomizerTestPaths.KeyItemSettingsPath)._Settings;
         var resourceItems =
@@ -31,9 +29,7 @@ public class RandomizerInventoryManagementBehaviorTests {
 
     [Fact]
     public void InventoryManagement_LeavesFoundFootageMarkedAsKeyItems_ForRuntimeDiscardHook() {
-        using var result = RandomizerTest.RunState(config => {
-            config["inventory-unrestricted-management"] = true;
-        });
+        using var result = RandomizerTest.RunState(config => { config["inventory-unrestricted-management"] = true; });
 
         var keyItems = result.ReadAfterUserFile<app.ItemSettings>(RandomizerTestPaths.KeyItemSettingsPath)._Settings;
 

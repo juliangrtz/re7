@@ -13,22 +13,30 @@ internal class KeyItemLocationModifier : Modifier {
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
     private const string CultivationRoomScenePath = "natives/stm/environment/scene/chapter4/c04_cavepassage05.scn.20";
+
     internal const string OldHouseLevelFsmScenePath =
         "natives/stm/leveldesign/fsm/chapter3/chapter3_3/levelfsm_c03_3.scn.20";
+
     internal const string OldHouseShadowPuzzleProgressionTriggerName =
         "150_Main_EnterMiaCapturedRoom_ShadowPuzzleFallback";
+
     private const int MaxRouteSeedAttempts = 64;
     private const int MaxRouteDeadEndsPerAttempt = 1024;
     private const int RouteDepthPadding = 8;
     private static readonly Guid _guestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
+
     private static readonly Guid _oldHouseEnterMiaCapturedRoomTriggerGuid =
         new("83eb1968-eba3-4925-8e1e-ddac00495a92");
+
     private static readonly Guid _oldHousePassThroughFireplaceFlagGuid =
         new("779d13a7-5296-4a4a-bf04-c92e8930cc90");
+
     private static readonly Vector3 _oldHouseShadowPuzzleProgressionTriggerPosition =
         new(-19.85224f, -2.963f, 92.8632f);
+
     private static readonly Vector3 _oldHouseShadowPuzzleProgressionTriggerScale =
         new(5f, 2.5f, 6f);
+
     private const uint OldHouseShadowPuzzleProgressionPassThroughFireplaceActionUid = 0xB107A200;
 
     private static readonly HashSet<string> _preservedVanillaKeyItemIds = new(StringComparer.OrdinalIgnoreCase) // TODO
