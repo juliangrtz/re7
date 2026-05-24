@@ -6,6 +6,12 @@ using static app.InventoryMenu;
 namespace Biohazard.BioRand.RE7.REFrameworkPlugins;
 
 public partial class REFPlugin {
+    [ThreadStatic]
+    private static bool _forceItemCanDiscardResult;
+
+    [ThreadStatic]
+    private static string? _forceItemCanDiscardDataId;
+
     private static string? GetPlayerName() {
         var objectManager = API.GetManagedSingleton("app.ObjectManager");
         if (objectManager == null)
@@ -58,6 +64,7 @@ public partial class REFPlugin {
         }
 
         var itemDataId = item?.ItemDataID ?? itemData.ItemDataID;
+        Logger.Log($"Can discard check: {itemDataId}");
         if (itemDataId != null && itemDataId.StartsWith("FoundFootage", StringComparison.OrdinalIgnoreCase)) {
             return true;
         }
@@ -66,17 +73,34 @@ public partial class REFPlugin {
             and not Item.ItemCategoryType.UsableKeyItem;
     }
 
-    [MethodHook(typeof(Item), nameof(Item.isCanDiscard), MethodHookType.Post)]
-    private static void Item_isCanDiscard_Post(Span<ulong> args, ref ulong retval) {
-        if (retval != 0 || !Config.ReadOrDefault("inventory-unrestricted-management", true)) {
-            return;
+    [MethodHook(typeof(Item), nameof(Item.isCanDiscard), MethodHookType.Pre)]
+    private static PreHookResult Item_isCanDiscard_Pre(Span<ulong> args) {
+        _forceItemCanDiscardResult = false;
+        _forceItemCanDiscardDataId = null;
+
+        if (!Config.ReadOrDefault("inventory-unrestricted-management", true) || args.Length < 2)
+            return PreHookResult.Continue;
+
+        var item = ManagedObject.ToManagedObject(args[1])?.As<Item>();
+        if (CanForceDiscard(item)) {
+            _forceItemCanDiscardResult = true;
+            _forceItemCanDiscardDataId = item?.ItemDataID;
         }
 
-        var item = ManagedObject.ToManagedObject(args[1]).As<Item>();
-        if (CanForceDiscard(item)) {
-            Logger.Log($"Patch Item.isCanDiscard for '{item?.ItemDataID}'.", isVerbose: true);
-            retval = 1;
-        }
+        return PreHookResult.Continue;
+    }
+
+    [MethodHook(typeof(Item), nameof(Item.isCanDiscard), MethodHookType.Post)]
+    private static void Item_isCanDiscard_Post(ref ulong retval) {
+        var forceResult = _forceItemCanDiscardResult;
+        var itemDataId = _forceItemCanDiscardDataId;
+        _forceItemCanDiscardResult = false;
+        _forceItemCanDiscardDataId = null;
+        if (retval != 0 || !forceResult)
+            return;
+
+        Logger.Log($"Patch Item.isCanDiscard for '{itemDataId}'.", isVerbose: true);
+        retval = 1;
     }
 
     private static IPlayerOrder? GetPlayerOrder() {

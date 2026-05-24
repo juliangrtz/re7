@@ -1,11 +1,16 @@
 using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.REEngine;
+using Enums.app;
+using EnemyResistType = Enums.app.EnemyResistParameter.EnemyResistType;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyDirectiveBehaviorTests {
+    private static readonly string JackShearsResistPath =
+        PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameter.user");
+
     [Fact]
     public void EnemyDirectiveModifier_MoldedSpeed_ConfigUpdatesDirectiveFiles() {
         var enemy = EnemyDefinitions.Instance.All.First(x => x.Id == "Molded");
@@ -87,6 +92,36 @@ public class RandomizerEnemyDirectiveBehaviorTests {
     }
 
     [Fact]
+    public void EnemyDirectiveModifier_JackShearsKneeDown_AllWeaponsCanDrainLargeResistCounters() {
+        using var result = RandomizerTest.RunState();
+
+        var before = ReadFirstUserObject(result.ReadBeforeBytes(JackShearsResistPath));
+        var after = ReadFirstUserObject(result.ReadAfterBytes(JackShearsResistPath));
+        var weapons = new[]{
+            WeaponID.HandAxe,
+            WeaponID.Bar,
+            WeaponID.MachineGun,
+            WeaponID.Magnum,
+            WeaponID.GrenadeLauncher,
+            WeaponID.Burner,
+            WeaponID.LiquidBomb,
+        };
+
+        Assert.True(result.WasFileModified(JackShearsResistPath));
+        Assert.False(LargeResistPartAcceptsWeapon(before, "FullBody", WeaponID.HandAxe));
+        Assert.False(LargeResistPartAcceptsWeapon(before, "FullBody", WeaponID.MachineGun));
+        Assert.False(LargeResistPartAcceptsWeapon(before, "FullBody", WeaponID.GrenadeLauncher));
+
+        foreach (var partAlias in new[]{ "UpperBody", "LowerBody", "Head", "FullBody", "Core" }) {
+            foreach (var weapon in weapons) {
+                Assert.True(
+                    LargeResistPartAcceptsWeapon(after, partAlias, weapon),
+                    $"Expected Em8000 Large resist part '{partAlias}' to accept {weapon}.");
+            }
+        }
+    }
+
+    [Fact]
     public void EnemyDirectiveModifier_JackMutatedHealth_UsesIndividualAbsolutePartValues() {
         var directivePath = PakPath.UserFile("prefab/character/em8100/parameter/directive/em8100battledirective.user");
 
@@ -163,6 +198,29 @@ public class RandomizerEnemyDirectiveBehaviorTests {
     private static string GetFirstMoldedDirectivePath(RandomizerRunResult result, IEnemyDefinition enemy) {
         var holder = result.ReadAfterUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         return PakPath.UserFile(holder.holder.Units.First().Directive.Path);
+    }
+
+    private static bool LargeResistPartAcceptsWeapon(RszObjectNode resistParameter, string partAlias, WeaponID weapon) {
+        var weaponId = (int)weapon;
+        if (weaponId is < 0 or >= 64) {
+            return false;
+        }
+
+        var units = (RszArrayNode)resistParameter["units"];
+        var largeUnit = units.Children
+            .OfType<RszObjectNode>()
+            .Single(unit => (EnemyResistType)unit.Get<int>("resistType") == EnemyResistType.Large);
+        var parts = (RszArrayNode)largeUnit["parts"];
+        var part = parts.Children
+            .OfType<RszObjectNode>()
+            .Single(part => string.Equals(part.Get<string>("alias"), partAlias, StringComparison.Ordinal));
+        var weaponRates = (RszArrayNode)part["weaponRate"];
+        var fieldName = weaponId < 32 ? "weaponIDs" : "weaponIDs2";
+        var bit = 1u << (weaponId % 32);
+
+        return weaponRates.Children
+            .OfType<RszObjectNode>()
+            .Any(rate => (rate.Get<uint>(fieldName) & bit) != 0);
     }
 
     private static RszObjectNode ReadFirstUserObject(byte[] data)
