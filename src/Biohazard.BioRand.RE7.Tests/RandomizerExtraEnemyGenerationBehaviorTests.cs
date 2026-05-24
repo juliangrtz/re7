@@ -255,6 +255,31 @@ public class RandomizerExtraEnemyGenerationBehaviorTests {
     }
 
     [Fact]
+    public void ExtraEnemies_Em2000Placement_AddsStaticSceneInstance() {
+        using var result = RunWithExtraEnemies(BuildExtraEnemiesCsv(ExtraEnemyScenePath, 1, "Em2000"));
+        var beforeScene = result.ReadBeforeScene(ExtraEnemyScenePath);
+        var afterScene = result.ReadAfterScene(ExtraEnemyScenePath);
+
+        var newGameObjects = GetNewGameObjects(afterScene, beforeScene);
+        var staticMia = Assert.Single(
+            GetNewRootGameObjects(afterScene, beforeScene),
+            gameObject => gameObject.Name.StartsWith(EnemyModifier.ExtraEnemyStaticPrefix, StringComparison.Ordinal));
+        var transform = staticMia.FindComponent<GeneratedViaTransform>()!;
+
+        Assert.True(result.WasFileModified(ExtraEnemyScenePath));
+        Assert.Empty(GetNewExtraSpawnInfos(afterScene, beforeScene));
+        Assert.DoesNotContain(newGameObjects, gameObject => gameObject.Name == EnemyModifier.ExtraEnemyGeneratorName);
+        Assert.DoesNotContain(newGameObjects, IsFsmGenerationObject);
+        Assert.Equal("Prefab/Character/Em2000/Em2000.pfb", staticMia.Prefab);
+        Assert.Equal(-50f, transform.Position.X);
+        Assert.Equal(5f, transform.Position.Y);
+        Assert.Equal(100f, transform.Position.Z);
+        Assert.True(RszSerializer.Deserialize<bool>(staticMia.Settings["Update"]));
+        Assert.True(RszSerializer.Deserialize<bool>(staticMia.Settings["Draw"]));
+        Assert.Contains("app.fsm.Em2000ThinkState", GetFsmActionTypes(staticMia));
+    }
+
+    [Fact]
     public void ExtraEnemies_RandomId_UsesConfiguredEnemyRatios() {
         using var result = RunWithExtraEnemies(
             BuildExtraEnemiesCsv(RandomExtraEnemyScenePath, "random", "random", "random"),

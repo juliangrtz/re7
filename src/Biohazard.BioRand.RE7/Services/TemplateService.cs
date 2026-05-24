@@ -27,11 +27,17 @@ internal class TemplateService {
     public RszGameObject GetObject(string name)
         => _scene.FindGameObject(name) ?? throw new Exception($"Object with name {name} not found in template scene!");
 
+    public RszGameObject? TryGetObject(string name)
+        => _scene.FindGameObject(name);
+
     public RszGameObject GetEnemyTemplate(string enemyID)
         => GetObject($"EnemyTemplate_{enemyID}");
 
     public RszGameObject GetEnemySpawnInfo(string enemyID)
         => GetObject($"EnemySpawnInfo_{enemyID}");
+
+    public RszGameObject? TryGetEnemySpawnInfo(string enemyID)
+        => TryGetObject($"EnemySpawnInfo_{enemyID}");
 
     public RszGameObject GetEnemyGenerator()
         => GetObject("EnemyGenerator");

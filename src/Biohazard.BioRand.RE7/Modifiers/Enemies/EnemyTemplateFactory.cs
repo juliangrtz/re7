@@ -45,12 +45,9 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer) {
         return DisableEnemyStampSerialization(MarkExplosiveEm3300Template(enemyId, template.WithName(enemyId)));
     }
 
-    internal RszGameObject GetOrCreateSpawnInfoTemplate(
-        string enemyId,
-        Rng rng) {
+    internal RszGameObject GetOrCreateSpawnInfoTemplate(string enemyId, Rng rng) {
         if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template)) {
-            template = randomizer.TemplateService
-                .GetEnemySpawnInfo(enemyId)
+            template = GetSpawnInfoTemplate(enemyId)
                 .WithName(enemyId);
 
             _spawnInfoTemplateCache[enemyId] = template;
@@ -59,6 +56,18 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer) {
         return CloneGameObject(template, rng)
             .WithName($"ESI_{enemyId}");
     }
+
+    private RszGameObject GetSpawnInfoTemplate(string enemyId) {
+        var template = randomizer.TemplateService.TryGetEnemySpawnInfo(enemyId);
+        if (template != null) {
+            return template;
+        }
+
+        throw new Exception($"Object with name EnemySpawnInfo_{enemyId} not found in template scene!");
+    }
+
+    internal static bool IsSpawnInfoOption(RszObjectNode component)
+        => component.Type.Name.Contains("EnemySpawnInfoOption", StringComparison.Ordinal);
 
     internal List<RszGameObject> CreatePoolInstancesForNestedSpawnInfos(
         RszGameObject template,

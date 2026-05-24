@@ -310,6 +310,21 @@ public class RandomizerEnemyModifierBehaviorTests {
     }
 
     [Fact]
+    public void RandomizeEnemies_MiaChainsaw_IsNotUsedForGeneratorReplacements() {
+        using var result = RandomizerTest.RunState(config => {
+            config["random-enemies"] = true;
+            config["balanced-enemies"] = false;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["MiaChainsaw"]);
+        });
+
+        Assert.DoesNotContain(
+            GetChangedScenePaths(result),
+            path => path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
     public void RandomizeEnemies_Em3300ReplacementsAreMarkedForExplosiveBehavior() {
         using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;

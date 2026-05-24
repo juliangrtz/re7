@@ -13,6 +13,7 @@ internal class EnemyModifier : Modifier {
     internal const string ExtraEnemySpawnPointsName = ExtraEnemySceneBuilder.SpawnPointsName;
     internal const string ExtraEnemySpawnInfoPrefix = ExtraEnemySceneBuilder.SpawnInfoPrefix;
     internal const string ExtraEnemyGeneratePrefix = ExtraEnemySceneBuilder.GeneratePrefix;
+    internal const string ExtraEnemyStaticPrefix = ExtraEnemySceneBuilder.StaticPrefix;
 
     private static EnemyRandomizerOptions BuildOptions(Randomizer randomizer) {
         return new EnemyRandomizerOptions(
@@ -60,6 +61,22 @@ internal class EnemyModifier : Modifier {
             source.specifiedRankParameter.SpecifiedSlipParameterName;
     }
 
+    private static RszGameObject ReplaceSpawnInfoOptions(
+        RszGameObject spawnInfoGameObject,
+        RszObjectNode newSpawnOption,
+        RszObjectNode? dlcSpawnOption) {
+        var components = spawnInfoGameObject.Components
+            .Where(component => !EnemyTemplateFactory.IsSpawnInfoOption(component))
+            .ToImmutableArray()
+            .Add(newSpawnOption);
+
+        if (dlcSpawnOption != null) {
+            components = components.Add(dlcSpawnOption);
+        }
+
+        return spawnInfoGameObject.WithComponents(components);
+    }
+
     private static RszScene RandomizeForceTargetingOptions(
         RszScene scene,
         EnemyRandomizerOptions options,
@@ -104,29 +121,29 @@ internal class EnemyModifier : Modifier {
             var originalSpawnInfoComponent = originalSpawnInfoGameObject.FindComponent<app.EnemySpawnInfo>()!;
 
             if (newEnemy.UsesEnemyGenerator) {
-                // Enemy that uses generator pool: Replace SpawnInfoOptions, UnitAlias and associated GameObject.
-                var originalSpawnOptions =
-                    originalSpawnInfoGameObject.Components.Single(c => c.Type.Name.Contains("EnemySpawnInfoOption"));
+                // Enemy that uses generator pool: Replace UnitAlias and associated pool GameObject.
+                if (newEnemy.SpawnOptionType == null) {
+                    throw new InvalidOperationException(
+                        $"{newEnemy.Name} cannot replace EnemyGenerator spawns because it has no EnemySpawnInfoOption.");
+                }
+
                 var spawnInfoTemplate = templateFactory.GetOrCreateSpawnInfoTemplate(enemyId, rng);
                 var spawnInfoTemplateComponent = spawnInfoTemplate.FindComponent<app.EnemySpawnInfo>()!;
-                var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType!)!;
+                var newSpawnOptions = spawnInfoTemplate.FindComponent(newEnemy.SpawnOptionType)
+                    ?? throw new InvalidOperationException(
+                        $"Spawn info template for '{enemyId}' does not contain '{newEnemy.SpawnOptionType}'.");
                 var dlcSpawnOptions = spawnInfoTemplate.FindComponent("app.EnemySpawnInfoOptionDLC");
-                originalSpawnInfoGameObject.AddOrUpdateComponent(newSpawnOptions);
-                originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
-                    originalSpawnInfoGameObject.Components
-                        .Remove(originalSpawnOptions)
-                        .Add(newSpawnOptions));
-                if (dlcSpawnOptions != null) {
-                    originalSpawnInfoGameObject.AddOrUpdateComponent(dlcSpawnOptions);
-                    originalSpawnInfoGameObject = originalSpawnInfoGameObject.WithComponents(
-                        originalSpawnInfoGameObject.Components.Add(dlcSpawnOptions));
-                }
+
+                originalSpawnInfoGameObject = ReplaceSpawnInfoOptions(
+                    originalSpawnInfoGameObject,
+                    newSpawnOptions,
+                    dlcSpawnOptions);
+                CopySpecifiedRankParameter(originalSpawnInfoComponent, spawnInfoTemplateComponent);
 
                 var oldUnitAlias = originalSpawnInfoComponent.UnitAlias;
                 var assignedHealth = healthResolver.GetHealth(newEnemy);
                 originalSpawnInfoComponent.HealthParameter.Health = assignedHealth;
                 originalSpawnInfoComponent.UnitAlias = enemyId;
-                CopySpecifiedRankParameter(originalSpawnInfoComponent, spawnInfoTemplateComponent);
                 originalSpawnInfoGameObject = originalSpawnInfoGameObject
                     .AddOrUpdateComponent(originalSpawnInfoComponent)
                     .WithName(originalSpawnInfoGameObject.Name + "_Now_" + enemyId);
@@ -310,6 +327,9 @@ internal class EnemyModifier : Modifier {
             if (!includeBosses && enemy.IsBoss)
                 continue;
 
+            if (enemy.UsesEnemyGenerator && enemy.SpawnOptionType == null)
+                continue;
+
             var ratio = randomizer.GetConfigOption<double>($"enemy-ratio-{enemy.Id.ToLowerInvariant()}");
             if (ratio != 0) {
                 enemyPool.Add(new EnemyTableEntry(enemy, ratio));
@@ -428,6 +448,7 @@ internal class EnemyModifier : Modifier {
 
         var generatorBuilds = new Dictionary<string, ExtraEnemyGeneratorBuild>(StringComparer.OrdinalIgnoreCase);
         var fsmGeneratorsByScene = new Dictionary<string, List<RszGameObject>>(StringComparer.OrdinalIgnoreCase);
+        var directObjectsByScene = new Dictionary<string, List<RszGameObject>>(StringComparer.OrdinalIgnoreCase);
 
         foreach (var enemySceneGroup in extraEnemies) {
             var scene = enemySceneGroup.Key;
@@ -503,14 +524,32 @@ internal class EnemyModifier : Modifier {
             }
 
             var fsmGenerators = new List<RszGameObject>(extraEnemyRequests.Count);
-            var generatorScene = ExtraEnemySceneBuilder.GetGeneratorScene(scene, extraEnemyRequests);
-            if (!generatorBuilds.TryGetValue(generatorScene, out var generatorBuild)) {
-                generatorBuild = new ExtraEnemyGeneratorBuild();
-                generatorBuilds.Add(generatorScene, generatorBuild);
-            }
+            ExtraEnemyGeneratorBuild? generatorBuild = null;
 
             for (var i = 0; i < extraEnemyRequests.Count; i++) {
                 var request = extraEnemyRequests[i];
+                if (ExtraEnemySceneBuilder.UsesStaticScenePlacement(request.Enemy)) {
+                    if (!directObjectsByScene.TryGetValue(scene, out var directObjects)) {
+                        directObjects = [];
+                        directObjectsByScene.Add(scene, directObjects);
+                    }
+
+                    directObjects.Add(extraEnemySceneBuilder.CreateStaticInstance(
+                        request,
+                        options,
+                        directObjects.Count,
+                        rng));
+                    continue;
+                }
+
+                if (generatorBuild == null) {
+                    var generatorScene = ExtraEnemySceneBuilder.GetGeneratorScene(scene, extraEnemyRequests);
+                    if (!generatorBuilds.TryGetValue(generatorScene, out generatorBuild)) {
+                        generatorBuild = new ExtraEnemyGeneratorBuild();
+                        generatorBuilds.Add(generatorScene, generatorBuild);
+                    }
+                }
+
                 var generatorSpawnInfoIndex = generatorBuild.SpawnInfos.Count;
                 var spawnInfo = extraEnemySceneBuilder.CreateSpawnInfo(
                     logger,
@@ -527,12 +566,14 @@ internal class EnemyModifier : Modifier {
                 generatorBuild.Instances.AddRange(requestInstances);
             }
 
-            if (!fsmGeneratorsByScene.TryGetValue(scene, out var sceneFsmGenerators)) {
-                sceneFsmGenerators = [];
-                fsmGeneratorsByScene.Add(scene, sceneFsmGenerators);
-            }
+            if (fsmGenerators.Count != 0) {
+                if (!fsmGeneratorsByScene.TryGetValue(scene, out var sceneFsmGenerators)) {
+                    sceneFsmGenerators = [];
+                    fsmGeneratorsByScene.Add(scene, sceneFsmGenerators);
+                }
 
-            sceneFsmGenerators.AddRange(fsmGenerators);
+                sceneFsmGenerators.AddRange(fsmGenerators);
+            }
             logger.Pop();
         }
 
@@ -542,6 +583,10 @@ internal class EnemyModifier : Modifier {
                 extraEnemySceneBuilder.CreateGenerator(generatorBuild.SpawnInfos, generatorBuild.Instances, rng);
             randomizer.FileRepository.ModifyScnFile(generatorScene, root => {
                 root = root.Add(generator);
+                if (directObjectsByScene.Remove(generatorScene, out var directObjects)) {
+                    root = ExtraEnemySceneBuilder.AddSceneObjects(root, directObjects);
+                }
+
                 if (fsmGeneratorsByScene.Remove(generatorScene, out var fsmGenerators)) {
                     root = ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators);
                 }
@@ -552,8 +597,19 @@ internal class EnemyModifier : Modifier {
 
         foreach (var (scene, fsmGenerators) in fsmGeneratorsByScene.OrderBy(pair => pair.Key,
                      StringComparer.OrdinalIgnoreCase)) {
+            randomizer.FileRepository.ModifyScnFile(scene, root => {
+                if (directObjectsByScene.Remove(scene, out var directObjects)) {
+                    root = ExtraEnemySceneBuilder.AddSceneObjects(root, directObjects);
+                }
+
+                return ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators);
+            });
+        }
+
+        foreach (var (scene, directObjects) in directObjectsByScene.OrderBy(pair => pair.Key,
+                     StringComparer.OrdinalIgnoreCase)) {
             randomizer.FileRepository.ModifyScnFile(scene,
-                root => ExtraEnemySceneBuilder.AddFsmGenerators(root, fsmGenerators));
+                root => ExtraEnemySceneBuilder.AddSceneObjects(root, directObjects));
         }
 
         logger.Pop();
