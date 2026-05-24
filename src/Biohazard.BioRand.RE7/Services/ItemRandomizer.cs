@@ -228,7 +228,9 @@ internal class ItemRandomizer {
                     break;
                 case ItemDrops.BirthdaySkill:
                     if (_allowDlcItems) {
-                        result.Add(CreateValuableDrop(rng.Next(ItemDrops.BirthdaySkillIds), type));
+                        var skillId = rng.Next(ItemDrops.BirthdaySkillIds);
+                        BirthdaySkillVisuals.CopyRequiredFiles(_randomizer.FileRepository, skillId);
+                        result.Add(CreateValuableDrop(skillId, type));
                     }
 
                     break;

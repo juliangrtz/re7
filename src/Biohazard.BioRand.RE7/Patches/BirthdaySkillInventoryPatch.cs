@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
+using Biohazard.BioRand.RE7.Items;
 using Enums.app;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Messages;
@@ -82,8 +83,11 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
     private void CopySkillInventoryAssets(
         IReadOnlyList<app.ItemData> birthdaySkills,
         IReadOnlyDictionary<string, BirthdaySkillValueRow> birthdaySkillValues) {
+        var visualTemplateMesh = GetSkillVisualTemplateMesh();
         foreach (var skill in birthdaySkills) {
-            CopyRequiredFile(GetSkillItemPrefabPath(skill), $"Birthday skill '{skill.ItemDataID}' item prefab");
+            var itemPrefabPath = GetSkillItemPrefabPath(skill);
+            CopyRequiredFile(itemPrefabPath, $"Birthday skill '{skill.ItemDataID}' item prefab");
+            ApplySkillVisuals(itemPrefabPath, skill, visualTemplateMesh);
             CopyConfiguredPassiveSkillFile(skill, GetPassiveSkillUserPath(skill, birthdaySkillValues[skill.ItemDataID]),
                 birthdaySkillValues[skill.ItemDataID]);
         }
@@ -206,6 +210,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
 
     private void ApplyDropPrefabs(IReadOnlyList<app.ItemData> birthdaySkills) {
         var dropPrefabTemplate = context.GetPfbFile(_skillDropPrefabTemplatePath);
+        var visualTemplateMesh = GetSkillVisualTemplateMesh();
         foreach (var skill in birthdaySkills) {
             var template = dropPrefabTemplate.ToBuilder(context.TypeRepository);
 
@@ -226,10 +231,49 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
                             .Set("IsGetItemCountEnabled", false),
                         _ => component,
                     };
-                });
+                })
+                .VisitGameObjects(gameObject => ApplySkillVisuals(gameObject, skill, visualTemplateMesh));
 
             context.SetPfbFile(GetSkillDropPrefabPath(skill), template.RebuildResources().Build());
         }
+    }
+
+    private RszObjectNode GetSkillVisualTemplateMesh() {
+        return context.GetPfbFile(_skillDropPrefabTemplatePath)
+                   .ReadScene(context.TypeRepository)
+                   .GetGameObjects()
+                   .Select(gameObject => gameObject.FindComponent("via.render.Mesh"))
+                   .FirstOrDefault(mesh => mesh != null)
+               ?? throw new RandomizerUserException(
+                   $"Birthday skill visual template '{_skillDropPrefabTemplatePath}' has no via.render.Mesh component.");
+    }
+
+    private void ApplySkillVisuals(string prefabPath, app.ItemData skill, RszObjectNode visualTemplateMesh) {
+        var prefab = context.GetPfbFile(prefabPath).ToBuilder(context.TypeRepository);
+        prefab.Scene = prefab.Scene.VisitGameObjects(gameObject => ApplySkillVisuals(gameObject, skill, visualTemplateMesh));
+        context.SetPfbFile(prefabPath, prefab.RebuildResources().Build());
+    }
+
+    private static RszGameObject ApplySkillVisuals(
+        RszGameObject gameObject,
+        app.ItemData skill,
+        RszObjectNode visualTemplateMesh) {
+        if (!IsItemGameObject(gameObject, skill.ItemDataID) ||
+            !BirthdaySkillVisuals.TryGetResources(skill.ItemDataID, out var visualResources)) {
+            return gameObject;
+        }
+
+        var mesh = gameObject.FindComponent("via.render.Mesh") ?? visualTemplateMesh;
+        mesh = mesh
+            .Set("Mesh", new RszResourceNode(visualResources.Mesh))
+            .Set("Material", new RszResourceNode(visualResources.Material));
+        return BirthdaySkillVisuals.ApplyRotationCorrection(gameObject.AddOrUpdateComponent(mesh));
+    }
+
+    private static bool IsItemGameObject(RszGameObject gameObject, string itemDataId) {
+        var item = gameObject.FindComponent("app.Item");
+        return item != null &&
+               string.Equals(item.Get<string>("ItemDataID"), itemDataId, StringComparison.OrdinalIgnoreCase);
     }
 
     private string GetPassiveSkillUserPath(app.ItemData skill, BirthdaySkillValueRow values) {

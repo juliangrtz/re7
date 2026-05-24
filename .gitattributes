@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 reframework/** linguist-vendored
+/src/Biohazard.BioRand.RE7/_Data/silver_birthday_patches.zip filter=lfs diff=lfs merge=lfs -text
