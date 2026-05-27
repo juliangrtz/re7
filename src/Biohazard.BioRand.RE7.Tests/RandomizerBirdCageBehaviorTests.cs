@@ -1,6 +1,9 @@
+using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
+using IntelOrca.Biohazard.BioRand;
+using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Numerics;
 
@@ -146,24 +149,45 @@ public class RandomizerBirdCageBehaviorTests {
                 afterTransform!.Rotation);
         });
         Assert.Contains("natives/stm/props/sm9959_skillpatch02/sm9959_skillpatch02.mesh.220128762",
-            result.ChangedFiles.Keys);
+            result.AdditionalAssetFiles.Keys);
         Assert.Contains("natives/stm/props/sm9959_skillpatch02/skl002/skl002.mdf2.21",
-            result.ChangedFiles.Keys);
+            result.AdditionalAssetFiles.Keys);
         Assert.Contains("natives/stm/props/sm9959_skillpatch02/skl002/skl002_ALBM.tex.35",
-            result.ChangedFiles.Keys);
+            result.AdditionalAssetFiles.Keys);
         Assert.Contains("natives/stm/props/sm9959_skillpatch02/skl002/skl002_ATOS.tex.35",
-            result.ChangedFiles.Keys);
+            result.AdditionalAssetFiles.Keys);
         Assert.Contains("natives/stm/props/sm9959_skillpatch02/skl002/skl002_NRMR.tex.35",
-            result.ChangedFiles.Keys);
-        Assert.Contains("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", result.ChangedFiles.Keys);
-        Assert.DoesNotContain(result.ChangedFiles.Keys,
+            result.AdditionalAssetFiles.Keys);
+        Assert.Contains("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", result.AdditionalAssetFiles.Keys);
+        Assert.DoesNotContain(result.ChangedFiles.Keys, IsBirthdaySkillOverlayAsset);
+        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
             path => path.StartsWith(
                 "natives/stm/props/sm9959_skillpatch02/skl008/",
                 StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(result.ChangedFiles.Keys,
+        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
             path => path.StartsWith("natives/stm/props/sm9958_skillpatch01/", StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(result.ChangedFiles.Keys,
+        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
             path => path.StartsWith("natives/stm/props/sm9960_skillpatch03/", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void BirdCageModifier_BirthdaySkillRewards_EmitSeparateAdditionalAssetDownload() {
+        using var randomizer = CreateBirthdaySkillBirdCageRandomizer();
+        var output = randomizer.Randomize();
+        var additionalAsset = output.Assets.SingleOrDefault(asset => asset.Key == "3-assets");
+        var overlayPath = "natives/stm/props/sm9959_skillpatch02/skl002/skl002.mdf2.21";
+
+        Assert.NotNull(additionalAsset);
+        Assert.Contains("assets", additionalAsset!.FileName);
+
+        using var patchZip = output.Assets.Single(asset => asset.Key == "1-patch").Data.Unzip();
+        using var additionalZip = additionalAsset.Data.Unzip();
+        var patchPak = new PakFile(patchZip.Entries.Single(entry => entry.Name.EndsWith(".pak")).GetBytes());
+        var additionalPakEntry = additionalZip.Entries.Single(entry => entry.Name == "re_chunk_000.pak.patch_002.pak");
+        var additionalPak = new PakFile(additionalPakEntry.GetBytes());
+
+        Assert.Null(patchPak.GetEntryData(overlayPath));
+        Assert.NotNull(additionalPak.GetEntryData(overlayPath));
     }
 
     private static List<BirdCageState> GetChangedBirdCageStates(RandomizerRunResult result) {
@@ -183,6 +207,32 @@ public class RandomizerBirdCageBehaviorTests {
         return changed;
     }
 
+    private static Randomizer CreateBirthdaySkillBirdCageRandomizer() {
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
+            config["random-bird-cage-drugs-coins"] = true;
+        });
+        var input = new RandomizerInput{
+            Seed = 4342338,
+            UserName = "behavior-tests",
+            ProfileName = "Behavior Tests",
+            ProfileAuthor = "xUnit",
+            ProfileDescription = "Randomizer behavior test profile.",
+            Configuration = configuration
+        };
+        var randomizer = new Randomizer(input, RandomizerTest.InputPakPath, new EmptyReporter());
+        randomizer.CaptureStateLogs = false;
+        randomizer.DynamicData.SetData(
+            DynamicDataName.BirdCages,
+            System.Text.Encoding.UTF8.GetBytes("""
+                                               Enabled,ItemId,MinAmount,MaxAmount,CoinsMin,CoinsMax,InputItemIds
+                                               true,skl002,1,1,3,3,Coin CoinOld
+                                               """));
+        randomizer.DynamicData.SetData(
+            DynamicDataName.EnemyLimits,
+            System.Text.Encoding.UTF8.GetBytes("SceneFile,MaxEnemies,Comment\r\n"));
+        return randomizer;
+    }
+
     private static RszObjectNode GetBirdCageItemMesh(RszScene scene, Guid containerGuid) {
         var itemHolder = GetBirdCageItemHolder(scene, containerGuid);
         var mesh = itemHolder.FindComponent("via.render.Mesh");
@@ -195,6 +245,10 @@ public class RandomizerBirdCageBehaviorTests {
         Assert.NotNull(container);
         return container!.Children.Single(child => child.FindComponent<app.Item>() != null);
     }
+
+    private static bool IsBirthdaySkillOverlayAsset(string path)
+        => path.StartsWith("natives/stm/props/sm995", StringComparison.OrdinalIgnoreCase) ||
+           path.Equals("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", StringComparison.OrdinalIgnoreCase);
 
     private static void AssertQuaternionEquals(Quaternion expected, Quaternion actual) {
         if (Quaternion.Dot(expected, actual) < 0) {

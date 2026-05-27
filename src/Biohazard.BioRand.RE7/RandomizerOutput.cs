@@ -9,22 +9,27 @@ namespace Biohazard.BioRand.RE7;
 public sealed class RandomizerOutput {
     private byte[]? _zipFile;
     private byte[]? _modFile;
+    private byte[]? _additionalAssetsFile;
 
     public RandomizerInput Input { get; }
     public PakFileBuilder PakFile { get; }
+    public PakFileBuilder AdditionalAssetPakFile { get; }
+    public string AdditionalAssetPakVersion => $"{DateTime.Now.Month}-{DateTime.Now.Year}";
     public Dictionary<string, string> LogFiles { get; }
     public int PakVersion { get; }
     public bool IsWithREFramework { get; }
+    public bool HasAdditionalAssets => AdditionalAssetPakFile.Entries.Count != 0;
 
     private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
 
     private const string REFrameworkNightlyUrl =
         "https://github.com/praydog/REFramework-nightly/releases/latest/download/RE7.zip";
 
-    internal RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, Dictionary<string, string> logFiles,
-        int pakVersion, bool isWithREFramework) {
+    internal RandomizerOutput(RandomizerInput input, PakFileBuilder pakFile, PakFileBuilder additionalAssetPakFile,
+        Dictionary<string, string> logFiles, int pakVersion, bool isWithREFramework) {
         Input = input;
         PakFile = pakFile;
+        AdditionalAssetPakFile = additionalAssetPakFile;
         LogFiles = logFiles;
         PakVersion = pakVersion;
         IsWithREFramework = isWithREFramework;
@@ -54,6 +59,16 @@ public sealed class RandomizerOutput {
             .AddEntry("modinfo.ini", GetModInfo())
             .Build();
         return _modFile;
+    }
+
+    public byte[] GetAdditionalAssetsZip() {
+        if (_additionalAssetsFile != null)
+            return _additionalAssetsFile;
+
+        _additionalAssetsFile = new OutputZipFileBuilder()
+            .AddEntry($"re_chunk_000.pak.patch_{PakVersion + 1:000}.pak", AdditionalAssetPakFile.ToByteArray())
+            .Build();
+        return _additionalAssetsFile;
     }
 
     private OutputZipFileBuilder BuildZipFile(string logPrefix = "") {

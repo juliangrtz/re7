@@ -137,6 +137,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         }
 
         Assert.DoesNotContain(result.ChangedFiles.Keys, IsBirthdaySkillOverlayAsset);
+        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys, IsBirthdaySkillOverlayAsset);
     }
 
     [Fact]
