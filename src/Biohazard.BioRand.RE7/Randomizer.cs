@@ -99,7 +99,7 @@ internal class Randomizer : IDisposable {
             if (output.HasAdditionalAssets) {
                 assets.Add(new RandomizerOutputAsset(
                     "3-assets",
-                    $"Additional Assets (Version ${output.AdditionalAssetPakVersion})",
+                    $"Additional Assets (Version {output.AdditionalAssetPakVersion})",
                     "Required for large optional assets, such as Jack's 55th Birthday skill patches. " +
                     "You only have to download and install this if you want to use the additional assets. " +
                     "Only needs to be updated if the version changes.",
