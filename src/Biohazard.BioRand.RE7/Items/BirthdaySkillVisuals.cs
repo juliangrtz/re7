@@ -50,7 +50,7 @@ internal static class BirthdaySkillVisuals {
 
             copiedMesh |= path.Equals(meshPath, StringComparison.OrdinalIgnoreCase);
             copiedMaterialFolder |= path.StartsWith(materialFolderPath, StringComparison.OrdinalIgnoreCase);
-            context.SetFile(path, ReadZipEntry(entry));
+            SetRequiredAssetFile(context, path, ReadZipEntry(entry));
         }
 
         if (!copiedMesh || !copiedMaterialFolder) {
@@ -90,5 +90,14 @@ internal static class BirthdaySkillVisuals {
         using var memoryStream = new MemoryStream();
         entryStream.CopyTo(memoryStream);
         return memoryStream.ToArray();
+    }
+
+    private static void SetRequiredAssetFile(IPatchContext context, string path, byte[] data) {
+        if (context is FileRepository repository) {
+            repository.SetAdditionalOutputAssetFile(path, data);
+            return;
+        }
+
+        context.SetFile(path, data);
     }
 }

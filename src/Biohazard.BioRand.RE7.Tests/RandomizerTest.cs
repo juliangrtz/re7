@@ -190,9 +190,11 @@ public sealed class RandomizerRunResult : IDisposable {
         _randomizer = randomizer;
         _beforeRepository = beforeRepository;
         ChangedFiles = _randomizer.FileRepository.GetOutputFilesSnapshot();
+        AdditionalAssetFiles = _randomizer.FileRepository.GetAdditionalOutputFilesSnapshot();
     }
 
     public ImmutableDictionary<string, byte[]> ChangedFiles { get; }
+    public ImmutableDictionary<string, byte[]> AdditionalAssetFiles { get; }
     internal Randomizer Randomizer => _randomizer;
     internal ItemRandomizer ItemRandomizer => _randomizer.ItemRandomizer;
     internal ItemPlacementService ItemPlacementService => _randomizer.ItemPlacementService;

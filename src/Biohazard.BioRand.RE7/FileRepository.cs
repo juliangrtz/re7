@@ -21,6 +21,7 @@ internal class FileRepository : IPatchContext, IDisposable {
     private readonly string? _inputGamePath;
     private readonly ConcurrentDictionary<string, FileCacheEntry> _inputFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, byte[]> _additionalOutputFiles = new(StringComparer.OrdinalIgnoreCase);
 
     public Randomizer? Randomizer => _randomizer;
     public DynamicData DynamicData { get; } = new(download: false);
@@ -60,6 +61,9 @@ internal class FileRepository : IPatchContext, IDisposable {
         if (_outputFiles.TryGetValue(path, out var data))
             return data;
 
+        if (_additionalOutputFiles.TryGetValue(path, out data))
+            return data;
+
         var entry = _inputFiles.GetOrAdd(path, LoadInputFile);
         return entry.Exists ? entry.Data : null;
     }
@@ -68,8 +72,20 @@ internal class FileRepository : IPatchContext, IDisposable {
         _outputFiles[path] = data;
     }
 
+    internal void SetAdditionalOutputAssetFile(string path, byte[] data) {
+        _additionalOutputFiles[path] = data;
+    }
+
     internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot() {
         return _outputFiles.ToImmutableDictionary(
+            x => x.Key,
+            x => x.Value.ToArray(),
+            StringComparer.OrdinalIgnoreCase
+        );
+    }
+
+    internal ImmutableDictionary<string, byte[]> GetAdditionalOutputFilesSnapshot() {
+        return _additionalOutputFiles.ToImmutableDictionary(
             x => x.Key,
             x => x.Value.ToArray(),
             StringComparer.OrdinalIgnoreCase
@@ -94,6 +110,15 @@ internal class FileRepository : IPatchContext, IDisposable {
         return builder;
     }
 
+    public PakFileBuilder GetAdditionalOutputPakFile() {
+        var builder = new PakFileBuilder();
+        foreach (var outputFile in GetOrderedAdditionalOutputFiles()) {
+            AddOutputFile(builder, outputFile);
+        }
+
+        return builder;
+    }
+
     private static void AddOutputFile(PakFileBuilder builder, KeyValuePair<string, byte[]> outputFile) {
         builder.Entries[outputFile.Key] = outputFile.Value;
     }
@@ -108,6 +133,9 @@ internal class FileRepository : IPatchContext, IDisposable {
 
     private IOrderedEnumerable<KeyValuePair<string, byte[]>> GetOrderedOutputFiles()
         => _outputFiles.OrderBy(outputFile => outputFile.Key, StringComparer.Ordinal);
+
+    private IOrderedEnumerable<KeyValuePair<string, byte[]>> GetOrderedAdditionalOutputFiles()
+        => _additionalOutputFiles.OrderBy(outputFile => outputFile.Key, StringComparer.Ordinal);
 
     public T? GetConfigOption<T>(string key, T? defaultValue = default) {
         var randomizer = _randomizer;

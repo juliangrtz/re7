@@ -77,25 +77,38 @@ internal class Randomizer : IDisposable {
             var output = new RandomizerOutput(
                 input,
                 _fileRepository.GetOutputPakFile(),
+                _fileRepository.GetAdditionalOutputPakFile(),
                 _logFiles,
                 PakVersion,
                 IsREFrameworkRequired()
             );
+            var assets = new List<RandomizerOutputAsset>{
+                new(
+                    "1-patch",
+                    "Patch",
+                    "Simply drop this file into your RE 7 install folder.",
+                    $"biorand-re7-{input.Seed}.zip",
+                    output.GetOutputZip()),
+                new(
+                    "2-fluffy",
+                    "Fluffy Mod",
+                    "Drop this zip file into Fluffy Mod Manager's mod folder and enable it.",
+                    $"biorand-re7-{input.Seed}-mod.zip",
+                    output.GetOutputMod())
+            };
+            if (output.HasAdditionalAssets) {
+                assets.Add(new RandomizerOutputAsset(
+                    "3-assets",
+                    $"Additional Assets (Version ${output.AdditionalAssetPakVersion})",
+                    "Required for large optional assets, such as Jack's 55th Birthday skill patches. " +
+                    "You only have to download and install this if you want to use the additional assets. " +
+                    "Only needs to be updated if the version changes.",
+                    $"biorand-re7-assets-{output.AdditionalAssetPakVersion}.zip",
+                    output.GetAdditionalAssetsZip()));
+            }
+
             result = new IntelOrca.Biohazard.BioRand.RandomizerOutput(
-                [
-                    new RandomizerOutputAsset(
-                        "1-patch",
-                        "Patch",
-                        "Simply drop this file into your RE 7 install folder.",
-                        $"biorand-re7-{input.Seed}.zip",
-                        output.GetOutputZip()),
-                    new RandomizerOutputAsset(
-                        "2-fluffy",
-                        "Fluffy Mod",
-                        "Drop this zip file into Fluffy Mod Manager's mod folder and enable it.",
-                        $"biorand-re7-{input.Seed}-mod.zip",
-                        output.GetOutputMod())
-                ],
+                assets.ToImmutableArray(),
                 """
                 <p class="mt-3">What should I do if my game crashes?</p>
                 <ol class="list-decimal text-gray-300" style="margin-left: 3rem;">
