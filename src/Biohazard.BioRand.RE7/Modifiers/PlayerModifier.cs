@@ -14,8 +14,17 @@ internal class PlayerModifier : Modifier {
         new("steroid-use-4", "Steroid use 4", 1400),
     ];
 
+    internal static readonly IReadOnlyList<PlayerReloadSpeedLevel> ReloadSpeedLevels =[
+        new("base", "Base", 1.0),
+        new("stabilizer-use-1", "Stabilizer use 1", 1.2),
+        new("stabilizer-use-2", "Stabilizer use 2", 1.4),
+    ];
+
     private static readonly string PlayerMaxHealthTablePath =
         "prefab/character/pl0000/pl0000maxhealthtable.user".UserFile();
+
+    private static readonly string PlayerReloadSpeedTablePath =
+        "prefab/character/pl0000/pl0000reloadspeedratetable.user".UserFile();
 
     private static readonly string SystemParameterDataPath =
         "prefab/system/systemparameterdata.user".UserFile();
@@ -24,6 +33,12 @@ internal class PlayerModifier : Modifier {
         var table = randomizer.FileRepository.DeserializeUserFile<app.PlayerMaxHealthTable>(PlayerMaxHealthTablePath);
         logger.LogLine(
             $"[{PlayerMaxHealthTablePath}] Max health levels: {string.Join(", ", table.MaxHealthList.Select(FormatHealth))}");
+
+        var reloadSpeedTable =
+            randomizer.FileRepository.DeserializeUserFile<app.PlayerReloadSpeedRateTable>(PlayerReloadSpeedTablePath);
+        logger.LogLine(
+            $"[{PlayerReloadSpeedTablePath}] Reload speed levels: " +
+            $"{string.Join(", ", reloadSpeedTable.ReloadSpeedRateList.Select(FormatValue))}");
 
         var systemParameters =
             randomizer.FileRepository.DeserializeUserFile<app.SystemParameterData>(SystemParameterDataPath);
@@ -34,6 +49,7 @@ internal class PlayerModifier : Modifier {
 
     public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
         ApplyMaxHealth(randomizer, logger);
+        ApplyReloadSpeed(randomizer, logger);
         ApplyPsychostimulants(randomizer, logger);
     }
 
@@ -57,6 +73,32 @@ internal class PlayerModifier : Modifier {
                 var newHealth = GetMaxHealth(randomizer, level);
                 table.MaxHealthList[i] = newHealth;
                 logger.LogLine($"{level.Label}: {FormatHealth(oldHealth)} => {FormatHealth(newHealth)} HP");
+            }
+
+            return table;
+        });
+    }
+
+    private static void ApplyReloadSpeed(Randomizer randomizer, RandomizerLogger logger) {
+        if (!randomizer.GetConfigOption<bool>("player-random-reload-speed")) {
+            logger.LogLine("Player reload speed randomization is disabled.");
+            return;
+        }
+
+        randomizer.FileRepository.ModifyUserFile<app.PlayerReloadSpeedRateTable>(PlayerReloadSpeedTablePath, table => {
+            var levelCount = Math.Min(table.ReloadSpeedRateList.Count, ReloadSpeedLevels.Count);
+            if (table.ReloadSpeedRateList.Count != ReloadSpeedLevels.Count) {
+                logger.LogLine(
+                    $"Expected {ReloadSpeedLevels.Count} reload-speed levels but found {table.ReloadSpeedRateList.Count}. " +
+                    $"Randomizing the first {levelCount}.");
+            }
+
+            for (var i = 0; i < levelCount; i++) {
+                var level = ReloadSpeedLevels[i];
+                var oldRate = table.ReloadSpeedRateList[i];
+                var newRate = GetReloadSpeedRate(randomizer, level);
+                table.ReloadSpeedRateList[i] = newRate;
+                logger.LogLine($"{level.Label}: {FormatValue(oldRate)} => {FormatValue(newRate)} reload rate");
             }
 
             return table;
@@ -118,6 +160,18 @@ internal class PlayerModifier : Modifier {
             (float)Math.Round(randomizer.GetRng(RandomizerKey, "max-health", level.ConfigId).NextDouble(from, to)));
     }
 
+    private static float GetReloadSpeedRate(Randomizer randomizer, PlayerReloadSpeedLevel level) {
+        var from = randomizer.GetConfigOption<double>(level.FromConfigId, level.DefaultFromRate);
+        var to = randomizer.GetConfigOption<double>(level.ToConfigId, level.DefaultToRate);
+        if (to < from) {
+            (from, to) = (to, from);
+        }
+
+        return Math.Max(0.1f,
+            (float)Math.Round(randomizer.GetRng(RandomizerKey, "reload-speed", level.ConfigId).NextDouble(from, to),
+                3));
+    }
+
     private static float ScaleValue(float value, double multiplier)
         => (float)Math.Round(value * multiplier, 3);
 
@@ -136,4 +190,11 @@ internal sealed record PlayerMaxHealthLevel(string ConfigId, string Label, int V
     public string ToConfigId => $"player-max-health-to-{ConfigId}";
     public int DefaultFromHealth => (int)Math.Round(VanillaHealth * 0.75);
     public int DefaultToHealth => (int)Math.Round(VanillaHealth * 1.25);
+}
+
+internal sealed record PlayerReloadSpeedLevel(string ConfigId, string Label, double VanillaRate) {
+    public string FromConfigId => $"player-reload-speed-from-{ConfigId}";
+    public string ToConfigId => $"player-reload-speed-to-{ConfigId}";
+    public double DefaultFromRate => Math.Round(VanillaRate * 0.75, 2);
+    public double DefaultToRate => Math.Round(VanillaRate * 1.25, 2);
 }

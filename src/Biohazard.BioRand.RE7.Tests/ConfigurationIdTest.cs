@@ -145,6 +145,11 @@ public class ConfigurationIdUsageTest {
             ids.Add(healthLevel.FromConfigId);
             ids.Add(healthLevel.ToConfigId);
         }
+
+        foreach (var reloadSpeedLevel in PlayerModifier.ReloadSpeedLevels) {
+            ids.Add(reloadSpeedLevel.FromConfigId);
+            ids.Add(reloadSpeedLevel.ToConfigId);
+        }
     }
 
     private static void AddInventoryIds(HashSet<string> ids) {
