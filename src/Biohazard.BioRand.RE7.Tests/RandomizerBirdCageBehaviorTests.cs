@@ -13,9 +13,9 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class RandomizerBirdCageBehaviorTests {
     private static readonly string[] BirdCageScenePaths =[
         RandomizerTestPaths.BirdCageScenePath,
-        PakPath.SceneFile("leveldesign/itemset/chapter3/mainhouse_hall/hard.scn"),
-        PakPath.SceneFile("environment/scene/chapter4/c04_cottage.scn"),
-        PakPath.SceneFile("leveldesign/itemset/chapter4/shipoutside/hard.scn"),
+        "leveldesign/itemset/chapter3/mainhouse_hall/hard.scn".SceneFile(),
+        "environment/scene/chapter4/c04_cottage.scn".SceneFile(),
+        "leveldesign/itemset/chapter4/shipoutside/hard.scn".SceneFile(),
     ];
 
     [Fact]
@@ -108,7 +108,7 @@ public class RandomizerBirdCageBehaviorTests {
 
     [Fact]
     public void BirdCageModifier_BirthdaySkillRewards_UseOverlayVisuals() {
-        var scenePath = PakPath.SceneFile("leveldesign/itemset/chapter3/mainhouse_hall/hard.scn");
+        var scenePath = "leveldesign/itemset/chapter3/mainhouse_hall/hard.scn".SceneFile();
         using var result = RandomizerTest.RunState(
             config => { config["random-bird-cage-drugs-coins"] = true; },
             prepareRandomizer: randomizer => {

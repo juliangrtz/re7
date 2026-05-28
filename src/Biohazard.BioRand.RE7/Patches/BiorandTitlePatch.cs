@@ -24,7 +24,7 @@ internal class BiorandTitlePatch(IPatchContext context) : IPatch {
             LanguageId.Thai
         };
 
-        context.ModifyMsgFile(PakPath.MessageFile("message/ui_menu_mes.msg"), message => {
+        context.ModifyMsgFile("message/ui_menu_mes.msg".MessageFile(), message => {
             languagesWithEnglishText.ForEach(lang => {
                 message.SetString(NewGameTextGuid, lang, "NEW BIORAND7 GAME");
             });

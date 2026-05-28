@@ -11,17 +11,17 @@ internal class ItemDropTableModifier : Modifier {
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
     private readonly List<(GameFlowKindEnum, string)> _dropTableFiles = new(){
-        (GameFlowKindEnum.C03_1_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_01_0000.user")),
-        (GameFlowKindEnum.C03_2_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_02_0000.user")),
-        (GameFlowKindEnum.C03_2_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_02_0600.user")),
-        (GameFlowKindEnum.C03_3_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_03_0000.user")),
-        (GameFlowKindEnum.C03_3_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_03_1000.user")),
-        (GameFlowKindEnum.C03_4_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_04_0000.user")),
-        (GameFlowKindEnum.C03_5_Main, PakPath.UserFile("prefab/item/reliefitemtable_03_05_0000.user")),
-        (GameFlowKindEnum.C04_1_Main, PakPath.UserFile("prefab/item/reliefitemtable_04_01_0000.user")),
-        (GameFlowKindEnum.C04_2_Main, PakPath.UserFile("prefab/item/reliefitemtable_04_02_0000.user")),
-        (GameFlowKindEnum.C04_3_Main, PakPath.UserFile("prefab/item/reliefitemtable_04_02_0500.user")),
-        (GameFlowKindEnum.C04_3_Main, PakPath.UserFile("prefab/item/reliefitemtable_04_03_0000.user")),
+        (GameFlowKindEnum.C03_1_Main, "prefab/item/reliefitemtable_03_01_0000.user".UserFile()),
+        (GameFlowKindEnum.C03_2_Main, "prefab/item/reliefitemtable_03_02_0000.user".UserFile()),
+        (GameFlowKindEnum.C03_2_Main, "prefab/item/reliefitemtable_03_02_0600.user".UserFile()),
+        (GameFlowKindEnum.C03_3_Main, "prefab/item/reliefitemtable_03_03_0000.user".UserFile()),
+        (GameFlowKindEnum.C03_3_Main, "prefab/item/reliefitemtable_03_03_1000.user".UserFile()),
+        (GameFlowKindEnum.C03_4_Main, "prefab/item/reliefitemtable_03_04_0000.user".UserFile()),
+        (GameFlowKindEnum.C03_5_Main, "prefab/item/reliefitemtable_03_05_0000.user".UserFile()),
+        (GameFlowKindEnum.C04_1_Main, "prefab/item/reliefitemtable_04_01_0000.user".UserFile()),
+        (GameFlowKindEnum.C04_2_Main, "prefab/item/reliefitemtable_04_02_0000.user".UserFile()),
+        (GameFlowKindEnum.C04_3_Main, "prefab/item/reliefitemtable_04_02_0500.user".UserFile()),
+        (GameFlowKindEnum.C04_3_Main, "prefab/item/reliefitemtable_04_03_0000.user".UserFile()),
     };
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger) {

@@ -9,7 +9,7 @@ internal class InventoryManagementPatch(IPatchContext context) : IPatch {
     };
 
     private readonly string _birthdayResourceItemSettingsPath =
-        PakPath.UserFile("prefab/item/resourceitemsettings_birthday.user");
+        "prefab/item/resourceitemsettings_birthday.user".UserFile();
 
     public void Apply() {
         if (!context.GetConfigOption("inventory-unrestricted-management", true)) {

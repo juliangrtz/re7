@@ -74,12 +74,12 @@ internal sealed class EnemyRankParamDirectiveModifier : IDirectiveModifier {
         var damageMultiplier = GetDamageMultiplier(randomizer, rng);
         logger.LogMultiplier("Damage multiplier", damageMultiplier);
 
-        var holderPath = PakPath.UserFile(EnemyRankParameterHolderPath);
+        var holderPath = EnemyRankParameterHolderPath.UserFile();
         var holder = randomizer.FileRepository.DeserializeUserFile<app.EnemyRankParameterHolder>(holderPath);
 
         foreach (var unit in holder.Units) {
             var rank = unit.Rank;
-            var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
+            var userFilePath = unit.RankParameter.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.EnemyRankParameter>(userFilePath, param => {

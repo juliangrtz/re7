@@ -4,51 +4,51 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 internal static class RandomizerTestPaths {
     public static readonly string EthanInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user");
+        "leveldesign/fsm/chapter1/other/ch1_startinventory.user".UserFile();
 
     public static readonly string ClancyInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user");
+        "leveldesign/fsm/ff000/other/startinventory_ff000.user".UserFile();
 
     public static readonly string MiaInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user");
+        "leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user".UserFile();
 
     public static readonly string MiaVhsInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user");
+        "leveldesign/fsm/ff050/other/ff050_startinventory.user".UserFile();
 
     public static readonly string ReloadSpeedTablePath =
-        PakPath.UserFile("prefab/character/pl0000/pl0000reloadspeedratetable.user");
+        "prefab/character/pl0000/pl0000reloadspeedratetable.user".UserFile();
 
     public static readonly string PlayerMaxHealthTablePath =
-        PakPath.UserFile("prefab/character/pl0000/pl0000maxhealthtable.user");
+        "prefab/character/pl0000/pl0000maxhealthtable.user".UserFile();
 
     public static readonly string SystemParameterDataPath =
-        PakPath.UserFile("prefab/system/systemparameterdata.user");
+        "prefab/system/systemparameterdata.user".UserFile();
 
-    public static readonly string KeyItemSettingsPath = PakPath.UserFile("prefab/item/keyitemsettings.user");
-    public static readonly string ResourceItemSettingsPath = PakPath.UserFile("prefab/item/resourceitemsettings.user");
+    public static readonly string KeyItemSettingsPath = "prefab/item/keyitemsettings.user".UserFile();
+    public static readonly string ResourceItemSettingsPath = "prefab/item/resourceitemsettings.user".UserFile();
 
     public static readonly string BirthdayResourceItemSettingsPath =
-        PakPath.UserFile("prefab/item/resourceitemsettings_birthday.user");
+        "prefab/item/resourceitemsettings_birthday.user".UserFile();
 
-    public static readonly string ItemResourcesScenePath = PakPath.SceneFile("scenes/items/itemresources.scn");
-    public static readonly string UiItemMessagePath = PakPath.MessageFile("message/ui_item_mes.msg");
+    public static readonly string ItemResourcesScenePath = "scenes/items/itemresources.scn".SceneFile();
+    public static readonly string UiItemMessagePath = "message/ui_item_mes.msg".MessageFile();
 
     public static readonly string ChapterJumpScenePath =
-        PakPath.SceneFile("scenes/chapterjumpdata/chapterjumpdata.scn");
+        "scenes/chapterjumpdata/chapterjumpdata.scn".SceneFile();
 
     public static readonly string Chapter4DropTablePath =
-        PakPath.UserFile("prefab/item/reliefitemtable_04_01_0000.user");
+        "prefab/item/reliefitemtable_04_01_0000.user".UserFile();
 
-    public static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
+    public static readonly string ItemCombineDataPath = "prefab/item/itemcombinedata.user".UserFile();
 
     public static readonly string DictionaryCombineDataPath =
-        PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+        "prefab/item/dictionarycombinedata.user".UserFile();
 
     public static readonly string BirdCageScenePath =
-        PakPath.SceneFile("environment/scene/chapter3/c03_trailerhouse.scn");
+        "environment/scene/chapter3/c03_trailerhouse.scn".SceneFile();
 
     public static readonly string GlobalVariablesPath =
-        $"{PakPath.Of("userdata/globalvariables.uvar")}.{FileVersions.UvarFileVersion}";
+        $"{"userdata/globalvariables.uvar".Of()}.{FileVersions.UvarFileVersion}";
 
     public static readonly Guid GuestHouseJumpGuid = new("88045366-0683-481a-8b9a-1d8c59aa048a");
 }

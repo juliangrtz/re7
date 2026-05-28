@@ -16,16 +16,16 @@ internal class MargeStalker : IEnemyDefinition {
     public int BaseHealth => int.MaxValue;
 
     public List<string> RcolPaths =>
-        [PakPath.RcolFile("collision/collider/enemy/em3100/em3100.rcol")];
+        ["collision/collider/enemy/em3100/em3100.rcol".RcolFile()];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em3100/em3100directivesholder.user");
+        => "prefab/character/em3100/em3100directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em3100/em3100resistparameterholder.user");
+        => "prefab/character/em3100/em3100resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em3100.scn");
+        => $"scenes/enemy/em3100.scn".SceneFile();
 
     public bool UsesEnemyGenerator => false;
 
@@ -49,7 +49,7 @@ internal class MargeStalkerDirectiveModifier : IDirectiveModifier {
             randomizer.FileRepository.DeserializeUserFile<app.Em3100DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em3100Directive>(

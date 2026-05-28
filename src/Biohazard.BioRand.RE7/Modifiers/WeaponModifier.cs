@@ -201,7 +201,7 @@ internal class WeaponModifier : Modifier {
             return;
         }
 
-        randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile(WeaponItemMessagePath), messages => {
+        randomizer.FileRepository.ModifyMsgFile(WeaponItemMessagePath.MessageFile(), messages => {
             foreach (var (weaponId, roll) in activeRolls.OrderBy(x => x.Key.ToString(), StringComparer.Ordinal)) {
                 if (!itemDataByWeaponId.TryGetValue(weaponId, out var itemData) || itemData.ManualMsg == Guid.Empty) {
                     continue;

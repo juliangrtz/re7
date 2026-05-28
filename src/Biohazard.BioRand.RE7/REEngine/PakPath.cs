@@ -11,18 +11,19 @@ public static class PakPath {
             => $"{Prefix}{path}".ToLowerInvariant();
 
         public string UserFile()
-            => $"{Of(path)}.{FileVersions.UserFileVersion}".ToLowerInvariant();
+            => $"{path.Of()}.{FileVersions.UserFileVersion}".ToLowerInvariant();
 
         public string SceneFile()
-            => $"{Of(path)}.{FileVersions.SceneFileVersion}".ToLowerInvariant();
+            => $"{path.Of()}.{FileVersions.SceneFileVersion}".ToLowerInvariant();
 
         public string MessageFile()
-            => $"{Of(path)}.{FileVersions.MsgFileVersion}".ToLowerInvariant();
+            => $"{path.Of()}.{FileVersions.MsgFileVersion}".ToLowerInvariant();
 
         public string RcolFile()
-            => $"{Of(path)}.{FileVersions.RcolFileVersion}".ToLowerInvariant();
+            => $"{path.Of()}.{FileVersions.RcolFileVersion}".ToLowerInvariant();
 
         public string FromAbsolutePath()
-            => Of(path.Without(path.SubstringBefore(Prefix))).ToLowerInvariant();
+            =>
+                path.Without(path.SubstringBefore(Prefix)).Of().ToLowerInvariant();
     }
 }

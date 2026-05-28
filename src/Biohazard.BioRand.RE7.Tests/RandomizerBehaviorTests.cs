@@ -10,26 +10,26 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerBehaviorTests {
     private static readonly string EthanInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user");
+        "leveldesign/fsm/chapter1/other/ch1_startinventory.user".UserFile();
 
     private static readonly string ClancyInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user");
+        "leveldesign/fsm/ff000/other/startinventory_ff000.user".UserFile();
 
     private static readonly string MiaInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user");
+        "leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user".UserFile();
 
     private static readonly string MiaVhsInventoryPath =
-        PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user");
+        "leveldesign/fsm/ff050/other/ff050_startinventory.user".UserFile();
 
-    private static readonly string ItemCombineDataPath = PakPath.UserFile("prefab/item/itemcombinedata.user");
+    private static readonly string ItemCombineDataPath = "prefab/item/itemcombinedata.user".UserFile();
 
     private static readonly string DictionaryCombineDataPath =
-        PakPath.UserFile("prefab/item/dictionarycombinedata.user");
+        "prefab/item/dictionarycombinedata.user".UserFile();
 
-    private static readonly string UiMenuMessagePath = PakPath.MessageFile("message/ui_menu_mes.msg");
+    private static readonly string UiMenuMessagePath = "message/ui_menu_mes.msg".MessageFile();
 
     private static readonly string ChainSawDoorScenePath =
-        PakPath.SceneFile("environment/scene/chapter3/c03_rightareab1ffreezer.scn");
+        "environment/scene/chapter3/c03_rightareab1ffreezer.scn".SceneFile();
 
     [Fact]
     public void StartingInventory_Disabled_DoesNotModifyStartingInventoryFiles() {
@@ -87,7 +87,7 @@ public class RandomizerBehaviorTests {
     public void ItemStackModifier_CustomStackSize_ChangesConfiguredItemOnly() {
         var handgunBullets = ItemDefinitionRepository.Default.FromId("HandgunBullet")!;
         var shotgunShells = ItemDefinitionRepository.Default.FromId("ShotgunBullet")!;
-        var itemSettingsPath = $"{PakPath.Of("prefab/item")}/{handgunBullets.SourceUserFile}";
+        var itemSettingsPath = $"{"prefab/item".Of()}/{handgunBullets.SourceUserFile}";
 
         using var result = RandomizerTest.RunState(config => { config[handgunBullets.StackLimitConfigId] = 99; });
 
@@ -109,7 +109,7 @@ public class RandomizerBehaviorTests {
     public void ItemStackModifier_CustomStackSize_ChangesConfiguredNonStackableItem() {
         var chemFluid = ItemDefinitionRepository.Default.FromId("ChemicalS")!;
         var strongChemFluid = ItemDefinitionRepository.Default.FromId("ChemicalM")!;
-        var itemSettingsPath = $"{PakPath.Of("prefab/item")}/{chemFluid.SourceUserFile}";
+        var itemSettingsPath = $"{"prefab/item".Of()}/{chemFluid.SourceUserFile}";
 
         using var result = RandomizerTest.RunState(config => { config[chemFluid.StackLimitConfigId] = 5; });
 

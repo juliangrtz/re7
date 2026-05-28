@@ -19,16 +19,16 @@ internal abstract class MiaBase(string id, string name, bool isBoss, int health)
     public int BaseHealth => health;
 
     public List<string> RcolPaths
-        => [PakPath.RcolFile("collision/collider/enemy/em2000/em2000.rcol")];
+        => ["collision/collider/enemy/em2000/em2000.rcol".RcolFile()];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em2000/parameter/directives/em2000battledirectiveholder.user");
+        => "prefab/character/em2000/parameter/directives/em2000battledirectiveholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em2000/parameter/resist/em2000resistparameterholder.user");
+        => "prefab/character/em2000/parameter/resist/em2000resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em2000.scn"); // also there is scenes/enemy/em2000chapter4.scn
+        => $"scenes/enemy/em2000.scn".SceneFile(); // also there is scenes/enemy/em2000chapter4.scn
 
     public bool UsesEnemyGenerator => true;
 
@@ -67,7 +67,7 @@ internal class MiaDirectiveModifier : IDirectiveModifier {
 
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em2000BattleDirective>(

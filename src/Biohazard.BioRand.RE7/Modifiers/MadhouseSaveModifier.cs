@@ -7,18 +7,18 @@ internal class MadhouseSaveModifier : Modifier {
     internal const string ConfigKey = "madhouse-normal-saves";
 
     internal static readonly string[] AutosaveScenePaths =[
-        PakPath.SceneFile("leveldesign/fsm/chapter1/levelfsm_c01.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_1/levelfsm_c03_1.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_2/levelfsm_c03_2.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_3/levelfsm_c03_3.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_4/levelfsm_c03_4.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter3/chapter3_5/levelfsm_c03_5.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter4/chapter4_1/levelfsm_c04_1.scn"),
-        PakPath.SceneFile("leveldesign/fsm/chapter4/chapter4_2/levelfsm_c04_2.scn"),
-        PakPath.SceneFile("leveldesign/fsm/ff000/levelfsm_ff000.scn"),
-        PakPath.SceneFile("leveldesign/fsm/ff030/levelfsm_ff030.scn"),
-        PakPath.SceneFile("leveldesign/fsm/ff040/levelfsm_ff040.scn"),
-        PakPath.SceneFile("leveldesign/fsm/ff050/level_fsm_ff050.scn"),
+        "leveldesign/fsm/chapter1/levelfsm_c01.scn".SceneFile(),
+        "leveldesign/fsm/chapter3/chapter3_1/levelfsm_c03_1.scn".SceneFile(),
+        "leveldesign/fsm/chapter3/chapter3_2/levelfsm_c03_2.scn".SceneFile(),
+        "leveldesign/fsm/chapter3/chapter3_3/levelfsm_c03_3.scn".SceneFile(),
+        "leveldesign/fsm/chapter3/chapter3_4/levelfsm_c03_4.scn".SceneFile(),
+        "leveldesign/fsm/chapter3/chapter3_5/levelfsm_c03_5.scn".SceneFile(),
+        "leveldesign/fsm/chapter4/chapter4_1/levelfsm_c04_1.scn".SceneFile(),
+        "leveldesign/fsm/chapter4/chapter4_2/levelfsm_c04_2.scn".SceneFile(),
+        "leveldesign/fsm/ff000/levelfsm_ff000.scn".SceneFile(),
+        "leveldesign/fsm/ff030/levelfsm_ff030.scn".SceneFile(),
+        "leveldesign/fsm/ff040/levelfsm_ff040.scn".SceneFile(),
+        "leveldesign/fsm/ff050/level_fsm_ff050.scn".SceneFile(),
     ];
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger) {

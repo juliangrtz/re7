@@ -31,18 +31,18 @@ internal class JackMutated : IEnemyDefinition {
     public IReadOnlyList<EnemyHealthPart> HealthParts => PartHealth;
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile("collision/collider/enemy/em8100/em8100.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8100/em8100deadbody.rcol.20"),
+        "collision/collider/enemy/em8100/em8100.rcol".RcolFile(),
+        "collision/collider/enemy/em8100/em8100deadbody.rcol.20".RcolFile(),
     ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em8100/parameter/directive/em8100directivesholder.user");
+        => "prefab/character/em8100/parameter/directive/em8100directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em8100/parameter/resist/em8100resistparameterholder.user");
+        => "prefab/character/em8100/parameter/resist/em8100resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em8100.scn");
+        => $"scenes/enemy/em8100.scn".SceneFile();
 
     public bool UsesEnemyGenerator => false;
 
@@ -101,10 +101,10 @@ internal class JackMutatedDirectiveModifier : IDirectiveModifier {
     }
 
     private static IEnumerable<(string Label, string Path)> GetDirectiveFiles() {
-        yield return ("Default", PakPath.UserFile($"{DirectiveFolder}/em8100battledirective.user"));
+        yield return ("Default", $"{DirectiveFolder}/em8100battledirective.user".UserFile());
 
         for (var rank = 0; rank <= 9; rank++) {
-            yield return ($"Rank {rank}", PakPath.UserFile($"{DirectiveFolder}/em8100battledirectiverank{rank}.user"));
+            yield return ($"Rank {rank}", $"{DirectiveFolder}/em8100battledirectiverank{rank}.user".UserFile());
         }
     }
 }

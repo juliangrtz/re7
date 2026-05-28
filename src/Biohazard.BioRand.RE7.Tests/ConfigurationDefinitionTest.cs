@@ -206,21 +206,22 @@ public class ConfigurationDefinitionTest {
         var definition = RandomizerExecutor.ConfigurationDefinition;
         var page = Assert.Single(definition.Pages, page => page.Label == "Player");
         var group = Assert.Single(page.Groups, group => group.Label == "Health");
-        var ids = group.Items.Select(item => item.Id).ToHashSet();
+        var groupIds = group.Items.Select(item => item.Id).ToHashSet();
+        var pageIds = page.Groups.SelectMany(group => group.Items).Select(item => item.Id).ToHashSet();
 
-        Assert.Contains("player-random-max-health", ids);
+        Assert.Contains("player-random-max-health", groupIds);
         foreach (var healthLevel in PlayerModifier.MaxHealthLevels) {
-            Assert.Contains(healthLevel.FromConfigId, ids);
-            Assert.Contains(healthLevel.ToConfigId, ids);
+            Assert.Contains(healthLevel.FromConfigId, pageIds);
+            Assert.Contains(healthLevel.ToConfigId, pageIds);
         }
 
         group = Assert.Single(page.Groups, group => group.Label == "Psychostimulants");
-        ids = group.Items.Select(item => item.Id).ToHashSet();
+        groupIds = group.Items.Select(item => item.Id).ToHashSet();
 
-        Assert.Contains("player-random-psychostimulants", ids);
-        Assert.Contains("player-psychostimulant-duration-min", ids);
-        Assert.Contains("player-psychostimulant-duration-max", ids);
-        Assert.Contains("player-psychostimulant-range-min", ids);
-        Assert.Contains("player-psychostimulant-range-max", ids);
+        Assert.Contains("player-random-psychostimulants", groupIds);
+        Assert.Contains("player-psychostimulant-duration-min", pageIds);
+        Assert.Contains("player-psychostimulant-duration-max", pageIds);
+        Assert.Contains("player-psychostimulant-range-min", pageIds);
+        Assert.Contains("player-psychostimulant-range-max", pageIds);
     }
 }

@@ -21,7 +21,9 @@ internal class FileRepository : IPatchContext, IDisposable {
     private readonly string? _inputGamePath;
     private readonly ConcurrentDictionary<string, FileCacheEntry> _inputFiles = new(StringComparer.OrdinalIgnoreCase);
     private readonly ConcurrentDictionary<string, byte[]> _outputFiles = new(StringComparer.OrdinalIgnoreCase);
-    private readonly ConcurrentDictionary<string, byte[]> _additionalOutputFiles = new(StringComparer.OrdinalIgnoreCase);
+
+    private readonly ConcurrentDictionary<string, byte[]>
+        _additionalOutputFiles = new(StringComparer.OrdinalIgnoreCase);
 
     public Randomizer? Randomizer => _randomizer;
     public DynamicData DynamicData { get; } = new(download: false);

@@ -14,7 +14,8 @@ internal static class DirectiveModifierLogging {
         public void LogDirectiveFile(object rank,
             string userFilePath,
             Action action)
-            => LogDirectiveFile(logger, $"Rank {rank}", userFilePath, action);
+            =>
+                logger.LogDirectiveFile($"Rank {rank}", userFilePath, action);
 
         public void LogDirectiveFile(string label,
             string userFilePath,

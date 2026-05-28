@@ -9,10 +9,10 @@ namespace Biohazard.BioRand.RE7.Patches;
 internal class WeaponPatch(IPatchContext context) : IPatch {
     private const string ChainSawItemId = "ChainSaw";
 
-    private readonly string _weaponPrefabPath = PakPath.UserFile("prefab/item/resourceitemsettings.user");
+    private readonly string _weaponPrefabPath = "prefab/item/resourceitemsettings.user".UserFile();
 
     private readonly string _chainSawDoorScenePath =
-        PakPath.SceneFile("environment/scene/chapter3/c03_rightareab1ffreezer.scn");
+        "environment/scene/chapter3/c03_rightareab1ffreezer.scn".SceneFile();
 
     public void Apply() {
         var problematicWeapons = WeaponDefinitionRepository.Default.PlayerWeapons

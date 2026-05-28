@@ -680,7 +680,7 @@ public class RandomizerItemRandomizationTests {
     public void BirdCageModifier_Enabled_ChangesRewardDataInBirdCageScene() {
         using var result = RandomizerTest.RunState(config => { config["random-bird-cage-drugs-coins"] = true; });
 
-        var path = PakPath.SceneFile(BirdCageScenePath);
+        var path = BirdCageScenePath.SceneFile();
         var beforeStates = GetBirdCageStates(result.ReadBeforeScene(path));
         var afterStates = GetBirdCageStates(result.ReadAfterScene(path));
 

@@ -10,18 +10,18 @@ using System.Collections.Immutable;
 namespace Biohazard.BioRand.RE7.Patches;
 
 internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
-    private readonly string _birthdaySkillSettingsPath = PakPath.UserFile("prefab/item/birthdayskillitemsetting.user");
-    private readonly string _keyItemSettingsPath = PakPath.UserFile("prefab/item/keyitemsettings.user");
-    private readonly string _itemResourcesScenePath = PakPath.SceneFile("scenes/items/itemresources.scn");
+    private readonly string _birthdaySkillSettingsPath = "prefab/item/birthdayskillitemsetting.user".UserFile();
+    private readonly string _keyItemSettingsPath = "prefab/item/keyitemsettings.user".UserFile();
+    private readonly string _itemResourcesScenePath = "scenes/items/itemresources.scn".SceneFile();
 
     private readonly string _itemResourceTemplateScenePath =
-        PakPath.SceneFile("scenes/items/resources/powerupcoin01a.scn");
+        "scenes/items/resources/powerupcoin01a.scn".SceneFile();
 
     private readonly string _skillDropPrefabTemplatePath =
         GetPrefabPakPath("Prefab/Props_Dynamic/sm2479_PowerUpCoin01A/Get/sm2479_PowerUpCoin01A_Get.pfb");
 
-    private readonly string _uiItemMessagePath = PakPath.MessageFile("message/ui_item_mes.msg");
-    private readonly string _uiBirthdayMessagePath = PakPath.MessageFile("message/ui_birthday_mes.msg");
+    private readonly string _uiItemMessagePath = "message/ui_item_mes.msg".MessageFile();
+    private readonly string _uiBirthdayMessagePath = "message/ui_birthday_mes.msg".MessageFile();
 
     public void Apply() {
         var birthdaySkills = context
@@ -279,7 +279,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
 
     private string GetPassiveSkillUserPath(app.ItemData skill, BirthdaySkillValueRow values) {
         if (!string.IsNullOrWhiteSpace(values.PassiveSkillUserPath)) {
-            return PakPath.UserFile(NormalizeUserFilePath(values.PassiveSkillUserPath));
+            return NormalizeUserFilePath(values.PassiveSkillUserPath).UserFile();
         }
 
         var itemPrefab = context.GetPfbFile(GetSkillItemPrefabPath(skill))
@@ -295,7 +295,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
                 $"Birthday skill '{skill.ItemDataID}' passive component has no PlayerPassiveSkill userdata.");
         }
 
-        return PakPath.UserFile(passiveSkill.Path);
+        return passiveSkill.Path.UserFile();
     }
 
     private void ApplyBirthdayMessages(
@@ -529,7 +529,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
     }
 
     private static string GetItemResourceScenePath(string itemDataId)
-        => PakPath.SceneFile($"scenes/items/resources/{itemDataId}.scn");
+        => $"scenes/items/resources/{itemDataId}.scn".SceneFile();
 
     private static string GetItemResourceSceneReference(string itemDataId)
         => $"Scenes/Items/Resources/{itemDataId}.scn";
@@ -557,7 +557,7 @@ internal class BirthdaySkillInventoryPatch(IPatchContext context) : IPatch {
     }
 
     private static string GetPrefabPakPath(string prefabPath)
-        => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
+        => $"{prefabPath.Of()}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
 
     private static via.Prefab CreatePrefabReference(object path)
         => new(){
