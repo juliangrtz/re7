@@ -215,6 +215,15 @@ public class ConfigurationDefinitionTest {
             Assert.Contains(healthLevel.ToConfigId, pageIds);
         }
 
+        group = Assert.Single(page.Groups, group => group.Label == "Stabilizers");
+        groupIds = group.Items.Select(item => item.Id).ToHashSet();
+
+        Assert.Contains("player-random-reload-speed", groupIds);
+        foreach (var reloadSpeedLevel in PlayerModifier.ReloadSpeedLevels) {
+            Assert.Contains(reloadSpeedLevel.FromConfigId, pageIds);
+            Assert.Contains(reloadSpeedLevel.ToConfigId, pageIds);
+        }
+
         group = Assert.Single(page.Groups, group => group.Label == "Psychostimulants");
         groupIds = group.Items.Select(item => item.Id).ToHashSet();
 

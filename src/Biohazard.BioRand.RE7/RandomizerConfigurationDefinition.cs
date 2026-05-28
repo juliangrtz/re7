@@ -192,6 +192,41 @@ internal static class RandomizerConfigurationDefinition {
             });
         }
 
+        group = page.CreateGroup("Stabilizers");
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-random-reload-speed",
+            Label = "Randomize Reload Speed",
+            Description =
+                "Whether to randomize the player's base reload rate and stabilizer upgrades.",
+            Type = "switch",
+            Default = false
+        });
+
+        group = page.CreateGroup("");
+
+        foreach (var reloadSpeedLevel in PlayerModifier.ReloadSpeedLevels) {
+            group.Items.Add(new GroupItem(){
+                Id = reloadSpeedLevel.FromConfigId,
+                Label = $"{reloadSpeedLevel.Label} reload rate: From",
+                Type = "range",
+                Min = 0.1,
+                Max = 5,
+                Step = 0.05,
+                Default = reloadSpeedLevel.DefaultFromRate
+            });
+
+            group.Items.Add(new GroupItem(){
+                Id = reloadSpeedLevel.ToConfigId,
+                Label = $"{reloadSpeedLevel.Label} reload rate: To",
+                Type = "range",
+                Min = 0.1,
+                Max = 5,
+                Step = 0.05,
+                Default = reloadSpeedLevel.DefaultToRate
+            });
+        }
+
         group = page.CreateGroup("Psychostimulants");
 
         group.Items.Add(new GroupItem(){

@@ -84,6 +84,7 @@ public static class RandomizerTest {
         }
 
         configuration["player-random-max-health"] = false;
+        configuration["player-random-reload-speed"] = false;
         configuration["player-random-psychostimulants"] = false;
 
         configuration["recipes-add-new"] = false;
