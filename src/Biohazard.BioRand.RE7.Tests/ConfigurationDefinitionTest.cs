@@ -1,5 +1,6 @@
 ﻿using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Modifiers;
 using static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -198,5 +199,28 @@ public class ConfigurationDefinitionTest {
         Assert.Contains("event-enemy-paused", ids);
         Assert.Contains("event-enemy-radius", ids);
         Assert.Contains("event-enemy-max-targets", ids);
+    }
+
+    [Fact]
+    public void Test_Player_Configuration_Section_Exists() {
+        var definition = RandomizerExecutor.ConfigurationDefinition;
+        var page = Assert.Single(definition.Pages, page => page.Label == "Player");
+        var group = Assert.Single(page.Groups, group => group.Label == "Health");
+        var ids = group.Items.Select(item => item.Id).ToHashSet();
+
+        Assert.Contains("player-random-max-health", ids);
+        foreach (var healthLevel in PlayerModifier.MaxHealthLevels) {
+            Assert.Contains(healthLevel.FromConfigId, ids);
+            Assert.Contains(healthLevel.ToConfigId, ids);
+        }
+
+        group = Assert.Single(page.Groups, group => group.Label == "Psychostimulants");
+        ids = group.Items.Select(item => item.Id).ToHashSet();
+
+        Assert.Contains("player-random-psychostimulants", ids);
+        Assert.Contains("player-psychostimulant-duration-min", ids);
+        Assert.Contains("player-psychostimulant-duration-max", ids);
+        Assert.Contains("player-psychostimulant-range-min", ids);
+        Assert.Contains("player-psychostimulant-range-max", ids);
     }
 }

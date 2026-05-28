@@ -92,6 +92,7 @@ public class ConfigurationIdUsageTest {
         AddDropIds(ids, "enemy-drop", ItemDrops.GenericRuntimeDrops);
         AddDropIds(ids, "item-drop", ItemDrops.GenericDrops);
         AddEnemyIds(ids);
+        AddPlayerIds(ids);
         AddInventoryIds(ids);
         AddWeaponIds(ids);
 
@@ -136,6 +137,13 @@ public class ConfigurationIdUsageTest {
                 ids.Add($"{prefix}-health-min-{id}");
                 ids.Add($"{prefix}-health-max-{id}");
             }
+        }
+    }
+
+    private static void AddPlayerIds(HashSet<string> ids) {
+        foreach (var healthLevel in PlayerModifier.MaxHealthLevels) {
+            ids.Add(healthLevel.FromConfigId);
+            ids.Add(healthLevel.ToConfigId);
         }
     }
 

@@ -83,6 +83,9 @@ public static class RandomizerTest {
             configuration[item.StackLimitConfigId] = item.MaxStack;
         }
 
+        configuration["player-random-max-health"] = false;
+        configuration["player-random-psychostimulants"] = false;
+
         configuration["recipes-add-new"] = false;
 
         configuration["weapon-mod-damage"] = false;

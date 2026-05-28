@@ -3385,3 +3385,14 @@ namespace app {
         }
     }
 }
+
+namespace app {
+    public class SystemParameterData {
+        public MegusuriParamClass MegusuriParam { get; set; } = new();
+
+        public class MegusuriParamClass {
+            public float MegusuriMaxTime { get; set; }
+            public float MegusuriRange { get; set; }
+        }
+    }
+}
