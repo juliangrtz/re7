@@ -4,7 +4,7 @@ using Biohazard.BioRand.RE7.REEngine;
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ItemStackModifier : Modifier {
-    private readonly string itemDir = PakPath.Of("prefab/item");
+    private readonly string itemDir = "prefab/item".Of();
     private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
 

@@ -41,14 +41,14 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         var skillFolder = itemResources.Children
             .OfType<IntelOrca.Biohazard.REE.Rsz.RszFolder>()
             .SingleOrDefault(x => x.Name == "skl001");
-        var skillResourceScenePath = PakPath.SceneFile("scenes/items/resources/skl001.scn");
+        var skillResourceScenePath = "scenes/items/resources/skl001.scn".SceneFile();
         var skillResourceScene = result.ReadAfterScene(skillResourceScenePath);
         var resourceNode = skillResourceScene.FindGameObject("ItemResource")?.FindComponent("app.ItemResource");
         var dropPrefabPath = PrefabPath(Skl001DropPrefabPath);
         var dropPrefab = result.ReadAfterPfb(dropPrefabPath);
         var itemPrefabPath = PrefabPath(Skl001ItemPrefabPath);
         var itemPrefab = result.ReadAfterPfb(itemPrefabPath);
-        var passiveSkillUserPath = PakPath.UserFile(Skl001PassiveSkillUserPath);
+        var passiveSkillUserPath = Skl001PassiveSkillUserPath.UserFile();
         var dropItem = dropPrefab.GetGameObjects()
             .Select(x => x.FindComponent("app.Item"))
             .FirstOrDefault(x => x != null);
@@ -62,7 +62,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
             .Select(x => x.FindComponent("app.PassiveSkillItem"))
             .FirstOrDefault(x => x != null);
         var birthdaySettings =
-            result.ReadBeforeUserFile<app.ItemSettings>(PakPath.UserFile("prefab/item/birthdayskillitemsetting.user"));
+            result.ReadBeforeUserFile<app.ItemSettings>("prefab/item/birthdayskillitemsetting.user".UserFile());
         var skillSetting = birthdaySettings._Settings.Single(x => x.ItemDataID == "skl001");
         var uiItemMessages = result.ReadAfterMsgFile(RandomizerTestPaths.UiItemMessagePath);
 
@@ -231,7 +231,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
     }
 
     private static string PrefabPath(string prefabPath)
-        => $"{PakPath.Of(prefabPath)}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
+        => $"{prefabPath.Of()}.{FileVersions.PfbFileVersion}".ToLowerInvariant();
 
     private static string GetSkillItemPrefabPath(string itemDataId)
         => $"Prefab/Skill/{itemDataId}/{ToSkillPrefabName(itemDataId)}.pfb";
@@ -314,7 +314,7 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
     }
 
     private static RszObjectNode ReadAfterPassiveSkillUser(RandomizerRunResult result, string userPath) {
-        var path = PakPath.UserFile(userPath);
+        var path = userPath.UserFile();
         return new UserFile(result.ReadAfterBytes(path))
             .GetObjects(result.Randomizer.FileRepository.TypeRepository)[0];
     }

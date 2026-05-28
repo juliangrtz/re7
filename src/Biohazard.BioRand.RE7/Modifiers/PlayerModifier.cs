@@ -5,17 +5,20 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class PlayerModifier : Modifier {
     private const string RandomizerKey = "modifier/player";
-    internal static readonly IReadOnlyList<PlayerMaxHealthLevel> MaxHealthLevels = [
+
+    internal static readonly IReadOnlyList<PlayerMaxHealthLevel> MaxHealthLevels =[
         new("base", "Base", 1000),
         new("steroid-use-1", "Steroid use 1", 1100),
         new("steroid-use-2", "Steroid use 2", 1200),
         new("steroid-use-3", "Steroid use 3", 1300),
         new("steroid-use-4", "Steroid use 4", 1400),
     ];
+
     private static readonly string PlayerMaxHealthTablePath =
-        PakPath.UserFile("prefab/character/pl0000/pl0000maxhealthtable.user");
+        "prefab/character/pl0000/pl0000maxhealthtable.user".UserFile();
+
     private static readonly string SystemParameterDataPath =
-        PakPath.UserFile("prefab/system/systemparameterdata.user");
+        "prefab/system/systemparameterdata.user".UserFile();
 
     public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
         var table = randomizer.FileRepository.DeserializeUserFile<app.PlayerMaxHealthTable>(PlayerMaxHealthTablePath);

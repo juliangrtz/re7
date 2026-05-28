@@ -37,17 +37,17 @@ internal abstract class InsectBase(string id, EnemyID enemyId, string name, int 
     private string SanitizedId => EnemyId.ToString().ToLower();
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile($"collision/collider/enemy/{SanitizedId}/{SanitizedId}.rcol"),
+        $"collision/collider/enemy/{SanitizedId}/{SanitizedId}.rcol".RcolFile(),
     ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile($"prefab/character/{SanitizedId}/{SanitizedId}directivesholder.user");
+        => $"prefab/character/{SanitizedId}/{SanitizedId}directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile($"prefab/character/{SanitizedId}/{SanitizedId}resistparameterholder.user");
+        => $"prefab/character/{SanitizedId}/{SanitizedId}resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn");
+        => $"scenes/enemy/{EnemyId.ToString().ToLowerInvariant()}.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -73,7 +73,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier {
                 randomizer.FileRepository.DeserializeUserFile<app.Em5400DirectivesHolder>(enemy.DirectivesHolderPath);
             foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
-                var userFilePath = PakPath.UserFile(directive.Directive.Path);
+                var userFilePath = directive.Directive.Path.UserFile();
 
                 logger.LogDirectiveFile(rank, userFilePath, () =>
                     randomizer.FileRepository.ModifyUserFile<app.Em5400Directive>(
@@ -85,7 +85,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier {
                 randomizer.FileRepository.DeserializeUserFile<app.Em5510DirectivesHolder>(enemy.DirectivesHolderPath);
             foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
-                var userFilePath = PakPath.UserFile(directive.Directive.Path);
+                var userFilePath = directive.Directive.Path.UserFile();
 
                 logger.LogDirectiveFile(rank, userFilePath, () =>
                     randomizer.FileRepository.ModifyUserFile<app.Em5510UserData>(
@@ -97,7 +97,7 @@ internal class InsectsDirectiveModifier : IDirectiveModifier {
                 randomizer.FileRepository.DeserializeUserFile<app.Em5520DirectivesHolder>(enemy.DirectivesHolderPath);
             foreach (var directive in holder.holder.Units) {
                 var rank = directive.Rank;
-                var userFilePath = PakPath.UserFile(directive.Directive.Path);
+                var userFilePath = directive.Directive.Path.UserFile();
 
                 logger.LogDirectiveFile(rank, userFilePath, () =>
                     randomizer.FileRepository.ModifyUserFile<app.Em5520Directive>(

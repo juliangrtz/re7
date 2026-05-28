@@ -9,7 +9,7 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyDirectiveBehaviorTests {
     private static readonly string JackShearsResistPath =
-        PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameter.user");
+        "prefab/character/em8000/parameter/resist/em8000resistparameter.user".UserFile();
 
     [Fact]
     public void EnemyDirectiveModifier_MoldedSpeed_ConfigUpdatesDirectiveFiles() {
@@ -22,7 +22,7 @@ public class RandomizerEnemyDirectiveBehaviorTests {
         });
 
         var holder = result.ReadAfterUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
-        var directivePath = PakPath.UserFile(holder.holder.Units.First().Directive.Path);
+        var directivePath = holder.holder.Units.First().Directive.Path.UserFile();
         var before = result.ReadBeforeUserFile<app.Em4000BattleDirective>(directivePath);
         var after = result.ReadAfterUserFile<app.Em4000BattleDirective>(directivePath);
 
@@ -83,10 +83,10 @@ public class RandomizerEnemyDirectiveBehaviorTests {
             config["enemy-speed-max-molded"] = 2.0;
         });
 
-        var holderPath = PakPath.UserFile("prefab/character/misc/parameter/battle/enemyrankparameterholder.user");
+        var holderPath = "prefab/character/misc/parameter/battle/enemyrankparameterholder.user".UserFile();
         var holder = result.ReadBeforeUserFile<app.EnemyRankParameterHolder>(holderPath);
         foreach (var unit in holder.Units) {
-            var userFilePath = PakPath.UserFile(unit.RankParameter.Path);
+            var userFilePath = unit.RankParameter.Path.UserFile();
             Assert.False(result.WasFileModified(userFilePath));
         }
     }
@@ -123,7 +123,7 @@ public class RandomizerEnemyDirectiveBehaviorTests {
 
     [Fact]
     public void EnemyDirectiveModifier_JackMutatedHealth_UsesIndividualAbsolutePartValues() {
-        var directivePath = PakPath.UserFile("prefab/character/em8100/parameter/directive/em8100battledirective.user");
+        var directivePath = "prefab/character/em8100/parameter/directive/em8100battledirective.user".UserFile();
 
         using var result = RandomizerTest.RunState(config => {
             config["boss-random-health"] = true;
@@ -143,7 +143,7 @@ public class RandomizerEnemyDirectiveBehaviorTests {
 
     [Fact]
     public void EnemyDirectiveModifier_MargeMutatedHealth_UsesSecondaryAbsolutePartValues() {
-        var resistPath = PakPath.UserFile("prefab/character/em3600/resistparameters/em3600resistparameter_normal.user");
+        var resistPath = "prefab/character/em3600/resistparameters/em3600resistparameter_normal.user".UserFile();
 
         using var result = RandomizerTest.RunState(config => {
             config["boss-random-health"] = true;
@@ -167,7 +167,7 @@ public class RandomizerEnemyDirectiveBehaviorTests {
 
     [Fact]
     public void EnemyDirectiveModifier_MoldedFatHealth_UsesLostPartAbsoluteValues() {
-        var resistPath = PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameter_04.user");
+        var resistPath = "prefab/character/em4200/parameter/resist/em4200resistparameter_04.user".UserFile();
 
         using var result = RandomizerTest.RunState(config => {
             config["enemy-random-health"] = true;
@@ -197,7 +197,7 @@ public class RandomizerEnemyDirectiveBehaviorTests {
 
     private static string GetFirstMoldedDirectivePath(RandomizerRunResult result, IEnemyDefinition enemy) {
         var holder = result.ReadAfterUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
-        return PakPath.UserFile(holder.holder.Units.First().Directive.Path);
+        return holder.holder.Units.First().Directive.Path.UserFile();
     }
 
     private static bool LargeResistPartAcceptsWeapon(RszObjectNode resistParameter, string partAlias, WeaponID weapon) {

@@ -28,19 +28,19 @@ internal class MoldedFat : IEnemyDefinition {
     public IReadOnlyList<EnemyHealthPart> HealthParts => PartHealth;
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile("collision/collider/enemy/em4200/em4200.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em4200/em4200explosionattack.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em4200/em4200splashattack.rcol"),
+        "collision/collider/enemy/em4200/em4200.rcol".RcolFile(),
+        "collision/collider/enemy/em4200/em4200explosionattack.rcol".RcolFile(),
+        "collision/collider/enemy/em4200/em4200splashattack.rcol".RcolFile(),
     ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em4200/parameter/directive/em4200directivesholder.user");
+        => "prefab/character/em4200/parameter/directive/em4200directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameterholder.user");
+        => "prefab/character/em4200/parameter/resist/em4200resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em4200.scn");
+        => $"scenes/enemy/em4200.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 }
@@ -94,8 +94,8 @@ internal class MoldedFatDirectiveModifier : IDirectiveModifier {
 
     private static IEnumerable<(string Label, string Path)> GetResistFiles() {
         yield return ("Default",
-            PakPath.UserFile("prefab/character/em4200/parameter/resist/em4200resistparameter_04.user"));
+            "prefab/character/em4200/parameter/resist/em4200resistparameter_04.user".UserFile());
         yield return ("Chapter 3/4 boss",
-            PakPath.UserFile("prefab/character/em4200/parameter/resist/chp3_4_boss/em4200resistparameter.user"));
+            "prefab/character/em4200/parameter/resist/chp3_4_boss/em4200resistparameter.user".UserFile());
     }
 }

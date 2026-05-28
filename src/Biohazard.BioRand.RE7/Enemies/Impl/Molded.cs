@@ -15,16 +15,16 @@ internal class Molded : IEnemyDefinition {
 
     public int BaseHealth => 3000;
 
-    public List<string> RcolPaths => [PakPath.RcolFile("collision/collider/enemy/em4000/em4000.rcol")];
+    public List<string> RcolPaths => ["collision/collider/enemy/em4000/em4000.rcol".RcolFile()];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em4000/parameter/directive/em4000directivesholder.user");
+        => "prefab/character/em4000/parameter/directive/em4000directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000resistparameterholder.user");
+        => "prefab/character/em4000/parameter/resist/em4000resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em4000.scn");
+        => $"scenes/enemy/em4000.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -46,16 +46,16 @@ internal class MoldedBlade : IEnemyDefinition {
 
     public string HealthConfigId => "Molded";
 
-    public List<string> RcolPaths => [PakPath.RcolFile("collision/collider/enemy/em4000/em4000.rcol")];
+    public List<string> RcolPaths => ["collision/collider/enemy/em4000/em4000.rcol".RcolFile()];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em4000/parameter/directive/em4000bladebattledirectivesholder.user");
+        => "prefab/character/em4000/parameter/directive/em4000bladebattledirectivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em4000/parameter/resist/em4000bladeresistparameterholder.user");
+        => "prefab/character/em4000/parameter/resist/em4000bladeresistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em4000.scn");
+        => $"scenes/enemy/em4000.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -82,7 +82,7 @@ internal class MoldedDirectiveModifier : IDirectiveModifier {
             randomizer.FileRepository.DeserializeUserFile<app.Em4000DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em4000BattleDirective>(

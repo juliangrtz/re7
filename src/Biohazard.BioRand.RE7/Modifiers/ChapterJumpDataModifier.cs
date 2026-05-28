@@ -7,7 +7,7 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ChapterJumpDataModifier : Modifier {
     private const string RandomizerKey = "modifier/chapter-jump-data";
-    private readonly string _path = PakPath.SceneFile("scenes/chapterjumpdata/chapterjumpdata.scn");
+    private readonly string _path = "scenes/chapterjumpdata/chapterjumpdata.scn".SceneFile();
     private readonly Guid ChapterJumpData_c01 = new("88045366-0683-481a-8b9a-1d8c59aa048a");
 
     private readonly List<(ChapterNo Chapter, bool IsFoundFootage)> _validChapters =[

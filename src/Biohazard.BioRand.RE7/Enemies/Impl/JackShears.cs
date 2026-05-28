@@ -18,19 +18,19 @@ internal class JackShears : IEnemyDefinition {
     public int BaseHealth => 4500;
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile("collision/collider/enemy/em8000/em8000.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8000/em8000chainsawsensor.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8000/em8100deadbody.rcol.20"),
+        "collision/collider/enemy/em8000/em8000.rcol".RcolFile(),
+        "collision/collider/enemy/em8000/em8000chainsawsensor.rcol".RcolFile(),
+        "collision/collider/enemy/em8000/em8100deadbody.rcol.20".RcolFile(),
     ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em8000/parameter/directive/em8000directiveholder.user");
+        => "prefab/character/em8000/parameter/directive/em8000directiveholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em8000/parameter/resist/em8000resistparameterholder.user");
+        => "prefab/character/em8000/parameter/resist/em8000resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/chapter/chapter7/chapter7_3/wave5.scn");
+        => $"scenes/chapter/chapter7/chapter7_3/wave5.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 }
@@ -44,7 +44,7 @@ internal class JackShearsKneeDownDirectiveModifier : IDirectiveModifier {
         => enemy.EnemyId == EnemyID.Em8001;
 
     public void Apply(IEnemyDefinition enemy, Randomizer randomizer, RandomizerLogger logger) {
-        var userFilePath = PakPath.UserFile(ResistParameterPath);
+        var userFilePath = ResistParameterPath.UserFile();
         logger.LogDirectiveFile("Em8000 knee-down resist", userFilePath, () =>
             randomizer.FileRepository.ModifyUserFile(userFilePath, resistParameter => {
                 var patchedParts = 0;
@@ -115,7 +115,7 @@ internal class JackShearsDirectiveModifier : IDirectiveModifier {
         var newInitHp = enemy.GetHealth(randomizer, rng);
         logger.LogHealthAssignment("Common.InitHP", enemy.BaseHealth, newInitHp);
         var userFilePath =
-            PakPath.UserFile("prefab/character/em8001/parameter/directive/em8001battledirective_default.user");
+            "prefab/character/em8001/parameter/directive/em8001battledirective_default.user".UserFile();
         logger.LogDirectiveFile("Default", userFilePath, () => randomizer.FileRepository.ModifyUserFile(userFilePath,
             directive => {
                 var oldInitHp = directive.Get<float>("Common.InitHP");

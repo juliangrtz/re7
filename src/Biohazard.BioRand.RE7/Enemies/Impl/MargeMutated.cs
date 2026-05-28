@@ -26,18 +26,18 @@ internal class MargeMutated : IEnemyDefinition {
     public IReadOnlyList<EnemyHealthPart> HealthParts => PartHealth;
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile("collision/collider/enemy/em3600/em3600.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em3600/em3600shell.rcol")
+        "collision/collider/enemy/em3600/em3600.rcol".RcolFile(),
+        "collision/collider/enemy/em3600/em3600shell.rcol".RcolFile()
     ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em3600/em3600directivesholder.user");
+        => "prefab/character/em3600/em3600directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em3600/em3600resistparameterholder.user");
+        => "prefab/character/em3600/em3600resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/chapter/chapter3/enemy_em3600.scn");
+        => $"scenes/enemy/chapter/chapter3/enemy_em3600.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -87,7 +87,7 @@ internal class MargeMutatedDirectiveModifier : IDirectiveModifier {
             randomizer.FileRepository.DeserializeUserFile<app.Em3600DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em3600Directive>(
@@ -127,12 +127,12 @@ internal class MargeMutatedDirectiveModifier : IDirectiveModifier {
     }
 
     private static IEnumerable<(string Label, string Path)> GetResistFiles() {
-        yield return ("Default", PakPath.UserFile("prefab/character/em3600/em3600resistparameter.user"));
-        yield return ("Easy", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_easy.user"));
-        yield return ("Normal", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_normal.user"));
-        yield return ("Hard", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_hard.user"));
-        yield return ("Harder", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_harder.user"));
-        yield return ("Hardest", PakPath.UserFile($"{ResistFolder}/em3600resistparameter_hardest.user"));
+        yield return ("Default", "prefab/character/em3600/em3600resistparameter.user".UserFile());
+        yield return ("Easy", $"{ResistFolder}/em3600resistparameter_easy.user".UserFile());
+        yield return ("Normal", $"{ResistFolder}/em3600resistparameter_normal.user".UserFile());
+        yield return ("Hard", $"{ResistFolder}/em3600resistparameter_hard.user".UserFile());
+        yield return ("Harder", $"{ResistFolder}/em3600resistparameter_harder.user".UserFile());
+        yield return ("Hardest", $"{ResistFolder}/em3600resistparameter_hardest.user".UserFile());
     }
 
     private app.Em3600Directive ModifyDirective(

@@ -146,7 +146,7 @@ internal class BirdCageModifier : Modifier {
         var replacementPicker = new BirdCageReplacementPicker(replacements);
         foreach (var file in _birdCageScnFiles) {
             logger.Push(file);
-            var path = PakPath.SceneFile(file);
+            var path = file.SceneFile();
             var scnFile = randomizer.FileRepository.GetScnFile(path)
                 .ToBuilder(randomizer.FileRepository.TypeRepository);
             var changedBirdCages = new List<BirdCage>();

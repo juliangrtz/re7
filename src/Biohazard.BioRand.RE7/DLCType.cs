@@ -30,7 +30,7 @@ public static class DlcTypeExtensions {
             DlcType.Daughters;
 
     public static bool IsBannedFootage(this DlcType type) {
-        return IsBannedFootage1(type) || IsBannedFootage2(type);
+        return type.IsBannedFootage1() || type.IsBannedFootage2();
     }
 
     private sealed record DlcMapping(Regex Pattern, DlcType Type);

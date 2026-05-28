@@ -78,8 +78,8 @@ internal class WeaponDefinitionGenerator : IFileGenerator {
     private List<string> GetRcolPaths(string weaponId)
         => weaponId switch{
             "wp0060" =>[
-                PakPath.RcolFile("collision/collider/weapon/weapon0060/wp0060.rcol"),
-                PakPath.RcolFile("collision/collider/weapon/weapon0060/wp0060_chainsaw.rcol")
+                "collision/collider/weapon/weapon0060/wp0060.rcol".RcolFile(),
+                "collision/collider/weapon/weapon0060/wp0060_chainsaw.rcol".RcolFile()
             ],
             "wp0020" or
                 "wp2150" or
@@ -99,11 +99,11 @@ internal class WeaponDefinitionGenerator : IFileGenerator {
                 "wp0040" => _pakPaths
                     .Where(p => new Regex($"{weaponId}.*.rcol.{FileVersions.RcolFileVersion}").IsMatch(p)).ToList(),
             "wp1110" =>[
-                PakPath.RcolFile("collision/collider/weapon/acidbullets.rcol"),
-                PakPath.RcolFile("collision/collider/weapon/flamebullets.rcol"),
+                "collision/collider/weapon/acidbullets.rcol".RcolFile(),
+                "collision/collider/weapon/flamebullets.rcol".RcolFile(),
             ],
-            "wp1270" =>[PakPath.RcolFile("collision/collider/weapon/liquidbomb.rcol")],
-            _ =>[PakPath.RcolFile("collision/collider/weapon/defaultbullet.rcol")]
+            "wp1270" =>["collision/collider/weapon/liquidbomb.rcol".RcolFile()],
+            _ =>["collision/collider/weapon/defaultbullet.rcol".RcolFile()]
         };
 
     private Dictionary<string, WeaponDamageStats> GetDamageStats(List<string> rcolPaths, string id,

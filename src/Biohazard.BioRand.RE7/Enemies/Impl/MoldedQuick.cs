@@ -15,16 +15,16 @@ internal class MoldedQuick : IEnemyDefinition {
 
     public int BaseHealth => 900;
 
-    public List<string> RcolPaths => [PakPath.RcolFile("collision/collider/enemy/em4100/em4100.rcol")];
+    public List<string> RcolPaths => ["collision/collider/enemy/em4100/em4100.rcol".RcolFile()];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em4100/parameter/directive/em4100directivesholder.user");
+        => "prefab/character/em4100/parameter/directive/em4100directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em4100/parameter/resist/em4100resistparameterholder.user");
+        => "prefab/character/em4100/parameter/resist/em4100resistparameterholder.user".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em4100.scn");
+        => $"scenes/enemy/em4100.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -50,7 +50,7 @@ internal class MoldedQuickDirectiveModifier : IDirectiveModifier {
             randomizer.FileRepository.DeserializeUserFile<app.Em4100DirectivesHolder>(enemy.DirectivesHolderPath);
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em4100BattleDirective>(

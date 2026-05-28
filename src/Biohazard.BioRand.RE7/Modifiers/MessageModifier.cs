@@ -69,7 +69,7 @@ internal class MessageModifier : Modifier {
             .ToList();
 
         foreach (var fileGroup in chosenReplacements.GroupBy(x => x.MsgFileName)) {
-            randomizer.FileRepository.ModifyMsgFile(PakPath.MessageFile($"message/{fileGroup.Key}"), message => {
+            randomizer.FileRepository.ModifyMsgFile($"message/{fileGroup.Key}".MessageFile(), message => {
                 foreach (var replacement in fileGroup) {
                     var msg = message.FindMessage(replacement.TextName);
                     if (msg == null) {

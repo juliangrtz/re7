@@ -26,14 +26,14 @@ internal class StartingInventoryModifier : Modifier {
     ];
 
     private readonly Dictionary<MainCampaignCharacter, string> _paths = new(){
-        { MainCampaignCharacter.Ethan, PakPath.UserFile("leveldesign/fsm/chapter1/other/ch1_startinventory.user") },{
-            MainCampaignCharacter.ClancyVHS, PakPath.UserFile("leveldesign/fsm/ff000/other/startinventory_ff000.user")
+        { MainCampaignCharacter.Ethan, "leveldesign/fsm/chapter1/other/ch1_startinventory.user".UserFile() },{
+            MainCampaignCharacter.ClancyVHS, "leveldesign/fsm/ff000/other/startinventory_ff000.user".UserFile()
         }, // "Derelict House Footage" (Guest House)
         {
             MainCampaignCharacter.Mia,
-            PakPath.UserFile("leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user")
+            "leveldesign/fsm/chapter4/chapter4_1/other/4-1startinventory.user".UserFile()
         },{
-            MainCampaignCharacter.MiaVHS, PakPath.UserFile("leveldesign/fsm/ff050/other/ff050_startinventory.user")
+            MainCampaignCharacter.MiaVHS, "leveldesign/fsm/ff050/other/ff050_startinventory.user".UserFile()
         }, // Old Videotape (Ship)
     };
 

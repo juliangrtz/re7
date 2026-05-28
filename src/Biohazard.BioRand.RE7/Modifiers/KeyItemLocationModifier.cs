@@ -390,9 +390,7 @@ internal class KeyItemLocationModifier : Modifier {
                 OldHouseShadowPuzzleProgressionPassThroughFireplaceActionUid);
 
             added = true;
-            return IntelOrca.Biohazard.REE.Rsz.RszExtensions.Add(
-                scene,
-                randomizer.FileRepository.TypeRepository,
+            return scene.Add(randomizer.FileRepository.TypeRepository,
                 "MainFlow_Advanced_gimmick/c03_3_Main_150/" + OldHouseShadowPuzzleProgressionTriggerName,
                 trigger);
         });

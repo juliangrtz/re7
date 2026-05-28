@@ -19,18 +19,18 @@ internal class JackStalker : IEnemyDefinition {
 
     public List<string> RcolPaths
         =>[
-            PakPath.RcolFile("collision/collider/enemy/em3000/em3000.rcol"),
-            PakPath.RcolFile("collision/collider/enemy/em3000/em3000throwattack.rcol")
+            "collision/collider/enemy/em3000/em3000.rcol".RcolFile(),
+            "collision/collider/enemy/em3000/em3000throwattack.rcol".RcolFile()
         ];
 
     public string DirectivesHolderPath
-        => PakPath.UserFile("prefab/character/em3000/parameter/directive/em3000directivesholder.user");
+        => "prefab/character/em3000/parameter/directive/em3000directivesholder.user".UserFile();
 
     public string ResistParamsHolderPath
-        => PakPath.UserFile("prefab/character/em2000/parameter/resist/em3000resistparameter.user6");
+        => "prefab/character/em2000/parameter/resist/em3000resistparameter.user6".UserFile();
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em3000.scn");
+        => $"scenes/enemy/em3000.scn".SceneFile();
 
     public bool UsesEnemyGenerator => true;
 
@@ -82,7 +82,7 @@ internal class JackStalkerDirectiveModifier : IDirectiveModifier {
 
         foreach (var directive in holder.holder.Units) {
             var rank = directive.Rank;
-            var userFilePath = PakPath.UserFile(directive.Directive.Path);
+            var userFilePath = directive.Directive.Path.UserFile();
 
             logger.LogDirectiveFile(rank, userFilePath, () =>
                 randomizer.FileRepository.ModifyUserFile<app.Em3000BattleDirective>(

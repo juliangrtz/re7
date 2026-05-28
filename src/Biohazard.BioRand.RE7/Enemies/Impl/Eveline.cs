@@ -23,7 +23,7 @@ internal class EvelineGrandmother : IEnemyDefinition {
         throw new NotSupportedException("Elder Eveline does not have resist params!");
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em3300.scn");
+        => $"scenes/enemy/em3300.scn".SceneFile();
 
     public bool UsesEnemyGenerator => false;
 }
@@ -42,10 +42,10 @@ internal class EvelineFinalBoss : IEnemyDefinition {
     public int BaseHealth => 6000; // Only phase 1
 
     public List<string> RcolPaths =>[
-        PakPath.RcolFile("collision/collider/enemy/em8900/em8900.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8910/em8910.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8940/em8940.rcol"),
-        PakPath.RcolFile("collision/collider/enemy/em8950/em8950.rcol"),
+        "collision/collider/enemy/em8900/em8900.rcol".RcolFile(),
+        "collision/collider/enemy/em8910/em8910.rcol".RcolFile(),
+        "collision/collider/enemy/em8940/em8940.rcol".RcolFile(),
+        "collision/collider/enemy/em8950/em8950.rcol".RcolFile(),
     ];
 
     public string DirectivesHolderPath =>
@@ -55,7 +55,7 @@ internal class EvelineFinalBoss : IEnemyDefinition {
         throw new NotSupportedException("Em8900 has multiple phases with multiple resist params!");
 
     public string OriginalPrefabPath
-        => PakPath.SceneFile($"scenes/enemy/em8900.scn");
+        => $"scenes/enemy/em8900.scn".SceneFile();
 
     public bool UsesEnemyGenerator => false;
 
@@ -75,7 +75,7 @@ internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier {
         var speedMultiplier = enemy.GetSpeedMultiplier(randomizer);
         logger.LogMultiplier("Speed multiplier", speedMultiplier);
 
-        var phase1Path = PakPath.UserFile("prefab/character/em8900/parameter/directives/em8900directivedefault.user");
+        var phase1Path = "prefab/character/em8900/parameter/directives/em8900directivedefault.user".UserFile();
         logger.LogDirectiveFile("Phase 1", phase1Path, () =>
             randomizer.FileRepository.ModifyUserFile<app.Em8900Directive>(
                 phase1Path,
@@ -86,7 +86,7 @@ internal class EvelineFinalBossDirectiveModifier : IDirectiveModifier {
                     return directive;
                 }));
 
-        var phase2Path = PakPath.UserFile("prefab/character/em8940/parameter/directives/em8940directivedefault.user");
+        var phase2Path = "prefab/character/em8940/parameter/directives/em8940directivedefault.user".UserFile();
         logger.LogDirectiveFile("Phase 2", phase2Path, () =>
             randomizer.FileRepository.ModifyUserFile<app.Em8940Directive>(
                 phase2Path,
