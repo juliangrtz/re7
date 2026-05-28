@@ -154,6 +154,94 @@ internal static class RandomizerConfigurationDefinition {
 
         #endregion General
 
+        #region Player
+
+        page = configDefinition.CreatePage("Player");
+        group = page.CreateGroup("Health");
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-random-max-health",
+            Label = "Randomize Max Health",
+            Description =
+                "Whether to randomize Ethan's max health.",
+            Type = "switch",
+            Default = false
+        });
+
+        foreach (var healthLevel in PlayerModifier.MaxHealthLevels) {
+            group.Items.Add(new GroupItem(){
+                Id = healthLevel.FromConfigId,
+                Label = $"{healthLevel.Label} HP: From",
+                Type = "range",
+                Min = 1,
+                Max = 9999,
+                Step = 1,
+                Default = healthLevel.DefaultFromHealth
+            });
+
+            group.Items.Add(new GroupItem(){
+                Id = healthLevel.ToConfigId,
+                Label = $"{healthLevel.Label} HP: To",
+                Type = "range",
+                Min = 1,
+                Max = 9999,
+                Step = 1,
+                Default = healthLevel.DefaultToHealth
+            });
+        }
+
+        group = page.CreateGroup("Psychostimulants");
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-random-psychostimulants",
+            Label = "Randomize Psychostimulants",
+            Description = "Randomize psychostimulant effect duration and detection range.",
+            Type = "switch",
+            Default = false
+        });
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-psychostimulant-duration-min",
+            Label = "Min. Duration Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 5,
+            Step = 0.05,
+            Default = 0.75
+        });
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-psychostimulant-duration-max",
+            Label = "Max. Duration Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 5,
+            Step = 0.05,
+            Default = 1.5
+        });
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-psychostimulant-range-min",
+            Label = "Min. Range Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 5,
+            Step = 0.05,
+            Default = 0.75
+        });
+
+        group.Items.Add(new GroupItem(){
+            Id = "player-psychostimulant-range-max",
+            Label = "Max. Range Multiplier",
+            Type = "range",
+            Min = 0.1,
+            Max = 5,
+            Step = 0.05,
+            Default = 1.5
+        });
+
+        #endregion Player
+
         #region Enemies
 
         var allEnemies = EnemyDefinitions.Instance.Randomizable.OrderBy(enemy => enemy.Name);
