@@ -8,7 +8,6 @@ internal readonly record struct BirthdaySkillVisualResources(string Mesh, string
 
 internal static class BirthdaySkillVisuals {
     private const string OverlayZipName = "silver_birthday_patches.zip";
-    private const string CommonUiTexturePath = "natives/stm/ui/ui0100/tex/ui0105_iam.tex.35";
     private const float RotationXCorrectionScale = 0.5f;
 
     public static bool TryGetResources(string itemDataId, out BirthdaySkillVisualResources resources) {
@@ -29,6 +28,9 @@ internal static class BirthdaySkillVisuals {
         if (!TryGetMeshFolder(normalizedId, out var meshFolder))
             return;
 
+        if (context is FileRepository repository && repository.HasAdditionalOutputAssetBundle(OverlayZipName))
+            return;
+
         var meshPath = $"natives/stm/props/{meshFolder}/{meshFolder}.mesh.220128762";
         var materialFolderPath = $"natives/stm/props/{meshFolder}/{normalizedId}/";
         var zipData = context.GetSupplementFile(OverlayZipName) ??
@@ -42,10 +44,9 @@ internal static class BirthdaySkillVisuals {
                 continue;
 
             var path = entry.FullName.Replace('\\', '/');
-            if (!path.Equals(meshPath, StringComparison.OrdinalIgnoreCase) &&
-                !path.StartsWith(materialFolderPath, StringComparison.OrdinalIgnoreCase) &&
-                !path.Equals(CommonUiTexturePath, StringComparison.OrdinalIgnoreCase)) {
-                continue;
+            if (!IsSafeOverlayPath(path)) {
+                throw new RandomizerUserException(
+                    $"Birthday skill overlay '{OverlayZipName}' contains an invalid entry '{entry.FullName}'.");
             }
 
             copiedMesh |= path.Equals(meshPath, StringComparison.OrdinalIgnoreCase);
@@ -56,6 +57,10 @@ internal static class BirthdaySkillVisuals {
         if (!copiedMesh || !copiedMaterialFolder) {
             throw new RandomizerUserException(
                 $"Birthday skill overlay '{OverlayZipName}' does not contain required files for '{itemDataId}'.");
+        }
+
+        if (context is FileRepository outputRepository) {
+            outputRepository.MarkAdditionalOutputAssetBundle(OverlayZipName);
         }
     }
 
@@ -90,6 +95,11 @@ internal static class BirthdaySkillVisuals {
         using var memoryStream = new MemoryStream();
         entryStream.CopyTo(memoryStream);
         return memoryStream.ToArray();
+    }
+
+    private static bool IsSafeOverlayPath(string path) {
+        return path.StartsWith("natives/", StringComparison.OrdinalIgnoreCase) &&
+               !path.Split('/').Any(segment => segment == "..");
     }
 
     private static void SetRequiredAssetFile(IPatchContext context, string path, byte[] data) {

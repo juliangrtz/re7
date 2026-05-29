@@ -24,6 +24,8 @@ internal class FileRepository : IPatchContext, IDisposable {
 
     private readonly ConcurrentDictionary<string, byte[]>
         _additionalOutputFiles = new(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, byte>
+        _additionalOutputAssetBundles = new(StringComparer.OrdinalIgnoreCase);
 
     public Randomizer? Randomizer => _randomizer;
     public DynamicData DynamicData { get; } = new(download: false);
@@ -76,6 +78,14 @@ internal class FileRepository : IPatchContext, IDisposable {
 
     internal void SetAdditionalOutputAssetFile(string path, byte[] data) {
         _additionalOutputFiles[path] = data;
+    }
+
+    internal bool HasAdditionalOutputAssetBundle(string name) {
+        return _additionalOutputAssetBundles.ContainsKey(name);
+    }
+
+    internal void MarkAdditionalOutputAssetBundle(string name) {
+        _additionalOutputAssetBundles[name] = 0;
     }
 
     internal ImmutableDictionary<string, byte[]> GetOutputFilesSnapshot() {
