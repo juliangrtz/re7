@@ -15,6 +15,58 @@ internal class WeaponModifier : Modifier {
     private const string RollDescriptionPrefix = "BioRand:";
     private const double DefaultWeaponReloadSpeedMin = 0.3;
     private const double DefaultWeaponReloadSpeedMax = 1.8;
+
+    public static IReadOnlyList<WeaponGunStatRandomization> GunStatRandomizations { get; } = [
+        new(
+            ConfigId: "range",
+            GroupLabel: "Range",
+            RollLabel: "Range",
+            ToggleLabel: "Randomize Range",
+            ToggleDescription: "Scales weapon range and damage falloff distances.",
+            SliderLabel: "Range Multiplier",
+            Min: 0.1,
+            Max: 3,
+            Step: 0.05,
+            DefaultMin: 0.75,
+            DefaultMax: 1.5),
+        new(
+            ConfigId: "radius",
+            GroupLabel: "Hit Radius",
+            RollLabel: "Hit radius",
+            ToggleLabel: "Randomize Hit Radius",
+            ToggleDescription: "Scales the collision radius used by gun projectiles.",
+            SliderLabel: "Hit Radius Multiplier",
+            Min: 0.1,
+            Max: 3,
+            Step: 0.05,
+            DefaultMin: 0.75,
+            DefaultMax: 1.5),
+        new(
+            ConfigId: "accuracy",
+            GroupLabel: "Accuracy",
+            RollLabel: "Spread",
+            ToggleLabel: "Randomize Accuracy",
+            ToggleDescription: "Scales hip-fire and aimed spread. Lower spread multipliers make guns more accurate.",
+            SliderLabel: "Spread Multiplier",
+            Min: 0,
+            Max: 3,
+            Step: 0.05,
+            DefaultMin: 0.5,
+            DefaultMax: 1.5),
+        new(
+            ConfigId: "recoil",
+            GroupLabel: "Recoil",
+            RollLabel: "Recoil",
+            ToggleLabel: "Randomize Recoil",
+            ToggleDescription: "Scales vertical and horizontal recoil angles.",
+            SliderLabel: "Recoil Multiplier",
+            Min: 0,
+            Max: 3,
+            Step: 0.05,
+            DefaultMin: 0.5,
+            DefaultMax: 1.5)
+    ];
+
     private readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
     private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
@@ -45,6 +97,8 @@ internal class WeaponModifier : Modifier {
             RecordReloadSpeedRolls(randomizer, rolls);
             LogReloadSpeedRuntimeHandling(logger);
         }
+
+        RandomizeGunParameterStats(randomizer, logger, rolls);
 
         ApplyWeaponDescriptions(randomizer, logger, rolls);
     }
@@ -185,6 +239,56 @@ internal class WeaponModifier : Modifier {
         }
     }
 
+    private void RandomizeGunParameterStats(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        Dictionary<WeaponID, WeaponStatRolls> rolls) {
+        var activeStats = GunStatRandomizations
+            .Where(stat => randomizer.GetConfigOption<bool>(stat.ToggleConfigId))
+            .ToArray();
+        if (activeStats.Length == 0) {
+            return;
+        }
+
+        foreach (var definition in _weaponDefinitions.Guns.Where(x =>
+                     x.UserType == Enums.app.CharacterDefine.Type.Player)) {
+            if (definition.UserParamsPath == null) {
+                continue;
+            }
+
+            var name = definition.Name ?? definition.WeaponId.ToString();
+            var statRolls = new List<(WeaponGunStatRandomization Stat, double Multiplier)>();
+            foreach (var stat in activeStats) {
+                var min = randomizer.GetConfigOption<double>(stat.GetMinConfigId(definition.WeaponId));
+                var max = randomizer.GetConfigOption<double>(stat.GetMaxConfigId(definition.WeaponId));
+                if (max < min) {
+                    (min, max) = (max, min);
+                }
+
+                var rng = randomizer.GetRng(RandomizerKey, stat.ConfigId, definition.WeaponId);
+                var multiplier = Math.Round(rng.NextDouble(min, max), 3);
+                statRolls.Add((stat, multiplier));
+                GetOrCreateRolls(rolls, definition.WeaponId).GunStatMultipliers[stat.ConfigId] = multiplier;
+            }
+
+            randomizer.FileRepository.ModifyUserFile<app.WeaponGunParameter>(definition.UserParamsPath, root => {
+                foreach (var (stat, multiplier) in statRolls) {
+                    var before = DescribeGunStat(root, stat);
+                    ApplyGunStat(root, stat, multiplier);
+                    var after = DescribeGunStat(root, stat);
+                    if (before == after) {
+                        logger.LogLine($"{stat.GroupLabel} of {name} remains ({before})");
+                    } else {
+                        logger.LogLine(
+                            $"Changing {stat.GroupLabel.ToLowerInvariant()} of {name} from {before} to {after}");
+                    }
+                }
+
+                return root;
+            });
+        }
+    }
+
     private void ApplyWeaponDescriptions(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -293,17 +397,83 @@ internal class WeaponModifier : Modifier {
     private static string FormatMultiplier(double multiplier)
         => multiplier.ToString("0.###", CultureInfo.InvariantCulture);
 
+    private static string FormatFloat(float value)
+        => value.ToString("0.###", CultureInfo.InvariantCulture);
+
+    private static float ScaleFloat(float value, double multiplier)
+        => (float)Math.Round(value * multiplier, 3);
+
+    private static float ScalePositiveFloat(float value, double multiplier) {
+        if (value == 0) {
+            return 0;
+        }
+
+        return Math.Max(0.001f, ScaleFloat(value, multiplier));
+    }
+
+    private static void ApplyGunStat(app.WeaponGunParameter root, WeaponGunStatRandomization stat, double multiplier) {
+        switch (stat.ConfigId) {
+            case "range":
+                root.Range = ScalePositiveFloat(root.Range, multiplier);
+                root.AttenuationStart = ScalePositiveFloat(root.AttenuationStart, multiplier);
+                root.AttenuationEnd = ScalePositiveFloat(root.AttenuationEnd, multiplier);
+                break;
+            case "radius":
+                root.Radius = ScalePositiveFloat(root.Radius, multiplier);
+                break;
+            case "accuracy":
+                root.DiffusionRadius = ScaleFloat(root.DiffusionRadius, multiplier);
+                root.AimDiffusionRadius = ScaleFloat(root.AimDiffusionRadius, multiplier);
+                break;
+            case "recoil":
+                root.RecoilXAngle = ScaleFloat(root.RecoilXAngle, multiplier);
+                root.RecoilYAngle = ScaleFloat(root.RecoilYAngle, multiplier);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(stat), stat.ConfigId, null);
+        }
+    }
+
+    private static string DescribeGunStat(app.WeaponGunParameter root, WeaponGunStatRandomization stat)
+        => stat.ConfigId switch{
+            "range" => $"range {FormatFloat(root.Range)}, falloff {FormatFloat(root.AttenuationStart)}-" +
+                       $"{FormatFloat(root.AttenuationEnd)}",
+            "radius" => $"radius {FormatFloat(root.Radius)}",
+            "accuracy" => $"hip {FormatFloat(root.DiffusionRadius)}, aim {FormatFloat(root.AimDiffusionRadius)}",
+            "recoil" => $"x {FormatFloat(root.RecoilXAngle)}, y {FormatFloat(root.RecoilYAngle)}",
+            _ => throw new ArgumentOutOfRangeException(nameof(stat), stat.ConfigId, null)
+        };
+
     private void LogReloadSpeedRuntimeHandling(RandomizerLogger logger) {
         logger.LogLine("Weapon reload speed randomization is applied by the REFramework plugin at runtime.");
+    }
+
+    public sealed record WeaponGunStatRandomization(
+        string ConfigId,
+        string GroupLabel,
+        string RollLabel,
+        string ToggleLabel,
+        string ToggleDescription,
+        string SliderLabel,
+        double Min,
+        double Max,
+        double Step,
+        double DefaultMin,
+        double DefaultMax) {
+        public string ToggleConfigId => $"weapon-mod-{ConfigId}";
+        public string GetMinConfigId(WeaponID weaponId) => $"weapon-{ConfigId}-min-{SanitizeWeaponId(weaponId)}";
+        public string GetMaxConfigId(WeaponID weaponId) => $"weapon-{ConfigId}-max-{SanitizeWeaponId(weaponId)}";
     }
 
     private sealed class WeaponStatRolls {
         public double? DamageMultiplier { get; set; }
         public double? AmmoCapacityMultiplier { get; set; }
         public double? ReloadSpeedMultiplier { get; set; }
+        public Dictionary<string, double> GunStatMultipliers { get; } = [];
 
         public bool HasAny =>
-            DamageMultiplier != null || AmmoCapacityMultiplier != null || ReloadSpeedMultiplier != null;
+            DamageMultiplier != null || AmmoCapacityMultiplier != null || ReloadSpeedMultiplier != null ||
+            GunStatMultipliers.Count != 0;
 
         public string Format() {
             var parts = new List<string>();
@@ -317,6 +487,12 @@ internal class WeaponModifier : Modifier {
 
             if (ReloadSpeedMultiplier != null) {
                 parts.Add($"Reload speed {FormatMultiplier(ReloadSpeedMultiplier.Value)}x");
+            }
+
+            foreach (var stat in GunStatRandomizations) {
+                if (GunStatMultipliers.TryGetValue(stat.ConfigId, out var multiplier)) {
+                    parts.Add($"{stat.RollLabel} {FormatMultiplier(multiplier)}x");
+                }
             }
 
             return $"{RollDescriptionPrefix} {string.Join(", ", parts)}";

@@ -1215,6 +1215,40 @@ internal static class RandomizerConfigurationDefinition {
             });
         }
 
+        foreach (var stat in WeaponModifier.GunStatRandomizations) {
+            group = page.CreateGroup(stat.GroupLabel);
+            group.Items.Add(new GroupItem(){
+                Id = stat.ToggleConfigId,
+                Label = stat.ToggleLabel,
+                Description = stat.ToggleDescription,
+                Type = "switch",
+                Default = false
+            });
+
+            foreach (var definition in guns) {
+                var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+                group.Items.Add(new GroupItem(){
+                    Id = stat.GetMinConfigId(definition.WeaponId),
+                    Label = $"Min. {stat.SliderLabel} {name}",
+                    Type = "range",
+                    Min = stat.Min,
+                    Max = stat.Max,
+                    Step = stat.Step,
+                    Default = stat.DefaultMin
+                });
+
+                group.Items.Add(new GroupItem(){
+                    Id = stat.GetMaxConfigId(definition.WeaponId),
+                    Label = $"Max. {stat.SliderLabel} {name}",
+                    Type = "range",
+                    Min = stat.Min,
+                    Max = stat.Max,
+                    Step = stat.Step,
+                    Default = stat.DefaultMax
+                });
+            }
+        }
+
         #endregion
 
         #region Events

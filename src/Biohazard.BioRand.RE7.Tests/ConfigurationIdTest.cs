@@ -181,6 +181,11 @@ public class ConfigurationIdUsageTest {
             ids.Add($"weapon-ammo-capacity-max-{id}");
             ids.Add($"weapon-reload-speed-min-{id}");
             ids.Add($"weapon-reload-speed-max-{id}");
+            foreach (var stat in WeaponModifier.GunStatRandomizations) {
+                ids.Add(stat.ToggleConfigId);
+                ids.Add(stat.GetMinConfigId(gun.WeaponId));
+                ids.Add(stat.GetMaxConfigId(gun.WeaponId));
+            }
         }
     }
 
