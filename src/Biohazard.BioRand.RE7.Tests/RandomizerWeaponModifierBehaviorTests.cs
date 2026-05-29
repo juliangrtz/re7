@@ -76,6 +76,43 @@ public class RandomizerWeaponModifierBehaviorTests {
     }
 
     [Fact]
+    public void WeaponModifier_GunParameterStats_ScaleWeaponGunParameters() {
+        var weapon = WeaponDefinitionRepository.Default.FromWeaponId("Handgun_G17");
+
+        using var result = RandomizerTest.RunState(config => {
+            config["weapon-mod-range"] = true;
+            config["weapon-range-min-handgun-g17"] = 1.5;
+            config["weapon-range-max-handgun-g17"] = 1.5;
+
+            config["weapon-mod-radius"] = true;
+            config["weapon-radius-min-handgun-g17"] = 1.25;
+            config["weapon-radius-max-handgun-g17"] = 1.25;
+
+            config["weapon-mod-accuracy"] = true;
+            config["weapon-accuracy-min-handgun-g17"] = 0.5;
+            config["weapon-accuracy-max-handgun-g17"] = 0.5;
+
+            config["weapon-mod-recoil"] = true;
+            config["weapon-recoil-min-handgun-g17"] = 2.0;
+            config["weapon-recoil-max-handgun-g17"] = 2.0;
+        });
+
+        var before = result.ReadBeforeUserFile<app.WeaponGunParameter>(weapon.UserParamsPath!);
+        var after = result.ReadAfterUserFile<app.WeaponGunParameter>(weapon.UserParamsPath!);
+
+        Assert.True(result.WasFileModified(weapon.UserParamsPath!));
+        Assert.Equal(ScalePositive(before.Range, 1.5), after.Range, precision: 3);
+        Assert.Equal(ScalePositive(before.AttenuationStart, 1.5), after.AttenuationStart, precision: 3);
+        Assert.Equal(ScalePositive(before.AttenuationEnd, 1.5), after.AttenuationEnd, precision: 3);
+        Assert.Equal(before.MinAttenuationDamageRate, after.MinAttenuationDamageRate);
+        Assert.Equal(ScalePositive(before.Radius, 1.25), after.Radius, precision: 3);
+        Assert.Equal(Scale(before.DiffusionRadius, 0.5), after.DiffusionRadius, precision: 3);
+        Assert.Equal(Scale(before.AimDiffusionRadius, 0.5), after.AimDiffusionRadius, precision: 3);
+        Assert.Equal(Scale(before.RecoilXAngle, 2.0), after.RecoilXAngle, precision: 3);
+        Assert.Equal(Scale(before.RecoilYAngle, 2.0), after.RecoilYAngle, precision: 3);
+    }
+
+    [Fact]
     public void WeaponModifier_ReplacesWeaponDescriptionWithRandomizedRolls() {
         using var result = RandomizerTest.RunState(config => {
             config["weapon-mod-damage"] = true;
@@ -91,6 +128,22 @@ public class RandomizerWeaponModifierBehaviorTests {
             config["weapon-mod-reload-speed"] = true;
             config["weapon-reload-speed-min-handgun-g17"] = 0.8;
             config["weapon-reload-speed-max-handgun-g17"] = 0.8;
+
+            config["weapon-mod-range"] = true;
+            config["weapon-range-min-handgun-g17"] = 1.4;
+            config["weapon-range-max-handgun-g17"] = 1.4;
+
+            config["weapon-mod-radius"] = true;
+            config["weapon-radius-min-handgun-g17"] = 1.3;
+            config["weapon-radius-max-handgun-g17"] = 1.3;
+
+            config["weapon-mod-accuracy"] = true;
+            config["weapon-accuracy-min-handgun-g17"] = 0.6;
+            config["weapon-accuracy-max-handgun-g17"] = 0.6;
+
+            config["weapon-mod-recoil"] = true;
+            config["weapon-recoil-min-handgun-g17"] = 1.7;
+            config["weapon-recoil-max-handgun-g17"] = 1.7;
         });
 
         var itemSettings = result.ReadBeforeUserFile<app.ItemSettings>(RandomizerTestPaths.ResourceItemSettingsPath);
@@ -100,7 +153,18 @@ public class RandomizerWeaponModifierBehaviorTests {
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.UiItemMessagePath));
         Assert.Equal(
-            "BioRand: Damage 1.5x, Ammo capacity 2x, Reload speed 0.8x",
+            "BioRand: Damage 1.5x, Ammo capacity 2x, Reload speed 0.8x, Range 1.4x, Hit radius 1.3x, Spread 0.6x, Recoil 1.7x",
             afterDescription);
+    }
+
+    private static float Scale(float value, double factor)
+        => (float)Math.Round(value * factor, 3);
+
+    private static float ScalePositive(float value, double factor) {
+        if (value == 0) {
+            return 0;
+        }
+
+        return Math.Max(0.001f, Scale(value, factor));
     }
 }

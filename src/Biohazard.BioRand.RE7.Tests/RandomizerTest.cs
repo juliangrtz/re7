@@ -1,5 +1,6 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Items;
+using Biohazard.BioRand.RE7.Modifiers;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
@@ -92,6 +93,9 @@ public static class RandomizerTest {
         configuration["weapon-mod-damage"] = false;
         configuration["weapon-mod-ammo-capacity"] = false;
         configuration["weapon-mod-reload-speed"] = false;
+        foreach (var stat in WeaponModifier.GunStatRandomizations) {
+            configuration[stat.ToggleConfigId] = false;
+        }
 
         configuration["random-events"] = false;
 

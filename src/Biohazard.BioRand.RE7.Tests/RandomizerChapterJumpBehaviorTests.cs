@@ -5,8 +5,8 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class RandomizerChapterJumpBehaviorTests {
     [Fact]
-    public void ChapterJumpData_SkipGuestHouse_ChangesGuestHouseJumpToChapter3() {
-        using var result = RandomizerTest.RunState(config => { config["skip-guest-house"] = true; });
+    public void ChapterJumpData_StartChapterMainHouse_ChangesGuestHouseJumpToChapter3() {
+        using var result = RandomizerTest.RunState(config => { config["start-chapter"] = "Main House"; });
 
         var before = RandomizerTestHelpers.GetChapterJump(
             result.ReadBeforeScene(RandomizerTestPaths.ChapterJumpScenePath), RandomizerTestPaths.GuestHouseJumpGuid);
@@ -15,6 +15,35 @@ public class RandomizerChapterJumpBehaviorTests {
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.ChapterJumpScenePath));
         Assert.Equal(ChapterNo.Chapter1, before.JumpChapter);
+        Assert.Equal(ChapterNo.Chapter3, after.JumpChapter);
+    }
+
+    [Fact]
+    public void ChapterJumpData_StartChapterWreckedShip_ChangesGuestHouseJumpToChapter4() {
+        using var result = RandomizerTest.RunState(config => { config["start-chapter"] = "Wrecked Ship"; });
+
+        var before = RandomizerTestHelpers.GetChapterJump(
+            result.ReadBeforeScene(RandomizerTestPaths.ChapterJumpScenePath), RandomizerTestPaths.GuestHouseJumpGuid);
+        var after = RandomizerTestHelpers.GetChapterJump(
+            result.ReadAfterScene(RandomizerTestPaths.ChapterJumpScenePath), RandomizerTestPaths.GuestHouseJumpGuid);
+
+        Assert.True(result.WasFileModified(RandomizerTestPaths.ChapterJumpScenePath));
+        Assert.Equal(ChapterNo.Chapter1, before.JumpChapter);
+        Assert.Equal(ChapterNo.Chapter4, after.JumpChapter);
+    }
+
+    [Fact]
+    public void ChapterJumpData_StartChapterMainHouse_IsPreservedWhenShuffling() {
+        using var result = RandomizerTest.RunState(config => {
+            config["start-chapter"] = "Main House";
+            config["shuffle-chapters"] = true;
+            config["shuffle-chapters-with-ff"] = false;
+        });
+
+        var after = RandomizerTestHelpers.GetChapterJump(
+            result.ReadAfterScene(RandomizerTestPaths.ChapterJumpScenePath), RandomizerTestPaths.GuestHouseJumpGuid);
+
+        Assert.True(result.WasFileModified(RandomizerTestPaths.ChapterJumpScenePath));
         Assert.Equal(ChapterNo.Chapter3, after.JumpChapter);
     }
 

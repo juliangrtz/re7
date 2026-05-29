@@ -145,6 +145,23 @@ public class ConfigurationDefinitionTest {
     }
 
     [Fact]
+    public void Test_General_Configuration_Items_Exist() {
+        var definition = RandomizerExecutor.ConfigurationDefinition;
+        var page = Assert.Single(definition.Pages, page => page.Label == "General");
+        var ids = page.Groups.SelectMany(group => group.Items).Select(item => item.Id).ToHashSet();
+        var startChapter = Assert.Single(page.Groups.SelectMany(group => group.Items),
+            item => item.Id == ChapterJumpDataModifier.StartChapterConfigKey);
+
+        Assert.Contains(ChapterJumpDataModifier.StartChapterConfigKey, ids);
+        Assert.DoesNotContain("skip-guest-house", ids);
+        Assert.Equal("dropdown", startChapter.Type);
+        Assert.Equal(
+            ChapterJumpDataModifier.StartChapterOptions.Select(option => option.Name),
+            startChapter.Options);
+        Assert.Equal(ChapterJumpDataModifier.NormalStartChapter, startChapter.Default);
+    }
+
+    [Fact]
     public void Test_EnemyDrop_Configuration_Items_Exist() {
         var ids = items
             .Where(item => item.Id != null)

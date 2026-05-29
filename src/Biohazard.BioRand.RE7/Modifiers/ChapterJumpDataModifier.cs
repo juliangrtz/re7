@@ -6,9 +6,18 @@ using IntelOrca.Biohazard.REE.Rsz;
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ChapterJumpDataModifier : Modifier {
+    public const string StartChapterConfigKey = "start-chapter";
+    public const string NormalStartChapter = "Normal";
+
     private const string RandomizerKey = "modifier/chapter-jump-data";
     private readonly string _path = "scenes/chapterjumpdata/chapterjumpdata.scn".SceneFile();
     private readonly Guid ChapterJumpData_c01 = new("88045366-0683-481a-8b9a-1d8c59aa048a");
+
+    public static IReadOnlyList<StartChapterOption> StartChapterOptions { get; } = [
+        new(NormalStartChapter, null),
+        new("Main House", ChapterNo.Chapter3),
+        new("Wrecked Ship", ChapterNo.Chapter4)
+    ];
 
     private readonly List<(ChapterNo Chapter, bool IsFoundFootage)> _validChapters =[
         (ChapterNo.Chapter1, false),
@@ -33,20 +42,25 @@ internal class ChapterJumpDataModifier : Modifier {
         });
     }
 
-    private void SkipGuestHouse(Randomizer randomizer, RandomizerLogger logger) {
+    private void ApplyStartChapter(Randomizer randomizer, RandomizerLogger logger, StartChapterOption startChapter) {
+        if (startChapter.Chapter == null) {
+            return;
+        }
+
         randomizer.FileRepository.ModifyScnFile(_path, scene => {
             var go = scene.FindGameObject(ChapterJumpData_c01)!;
             var jumpData = go.FindComponent<ChapterJumpData>()!;
-            jumpData.JumpChapter = ChapterNo.Chapter3;
+            jumpData.JumpChapter = startChapter.Chapter.Value;
             go = go.AddOrUpdateComponent(jumpData);
             scene = scene.UpdateGameObject(go);
             return scene;
         });
 
-        logger.LogLine("Applied guest house skip");
+        logger.LogLine($"Start chapter: {startChapter.Name} ({startChapter.Chapter.Value.ToReadableString()})");
     }
 
-    private void ShuffleChapters(Randomizer randomizer, RandomizerLogger logger, bool skipGuestHouse, bool includeFF) {
+    private void ShuffleChapters(Randomizer randomizer, RandomizerLogger logger, bool skipGuestHouse, bool includeFF,
+        bool preserveConfiguredStart) {
         var candidates = _validChapters
             .Where(x =>
                 (includeFF || !x.IsFoundFootage) &&
@@ -58,6 +72,7 @@ internal class ChapterJumpDataModifier : Modifier {
             var targetJumps = scene.GetGameObjects()
                 .Select(go => (GameObject: go, Jump: go.FindComponent<ChapterJumpData>()))
                 .Where(x => x.Jump != null && candidates.Contains(x.Jump.JumpChapter))
+                .Where(x => !preserveConfiguredStart || x.GameObject.Guid != ChapterJumpData_c01)
                 .Select(x => (x.GameObject, Jump: x.Jump!))
                 .ToList();
 
@@ -99,17 +114,24 @@ internal class ChapterJumpDataModifier : Modifier {
         return shuffled;
     }
 
+    private static StartChapterOption GetStartChapterOption(string? name)
+        => StartChapterOptions.FirstOrDefault(option => string.Equals(option.Name, name, StringComparison.Ordinal)) ??
+           StartChapterOptions[0];
+
     public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
-        var skipGuestHouse = randomizer.GetConfigOption<bool>("skip-guest-house");
+        var startChapter = GetStartChapterOption(randomizer.GetConfigOption<string>(StartChapterConfigKey));
         var shuffleChapters = randomizer.GetConfigOption<bool>("shuffle-chapters");
         var shuffleChaptersWithFf = randomizer.GetConfigOption<bool>("shuffle-chapters-with-ff");
+        var hasConfiguredStart = startChapter.Chapter != null;
 
-        if (skipGuestHouse) {
-            SkipGuestHouse(randomizer, logger);
+        if (hasConfiguredStart) {
+            ApplyStartChapter(randomizer, logger, startChapter);
         }
 
         if (shuffleChapters) {
-            ShuffleChapters(randomizer, logger, skipGuestHouse, shuffleChaptersWithFf);
+            ShuffleChapters(randomizer, logger, hasConfiguredStart, shuffleChaptersWithFf, hasConfiguredStart);
         }
     }
+
+    public sealed record StartChapterOption(string Name, ChapterNo? Chapter);
 }

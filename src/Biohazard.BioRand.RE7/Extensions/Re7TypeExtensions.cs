@@ -75,5 +75,8 @@ public static class Re7TypeExtensions {
            $"{(@params.IsLoadNumInfinity ? "infinite bullets, " : "")}" +
            $"{(@params.IsBulletStackNumInfinity ? "infinite stack" : "")}" +
            $"{@params.Range} range, " +
-           $"{@params.Radius} radius";
+           $"{@params.AttenuationStart}-{@params.AttenuationEnd} attenuation, " +
+           $"{@params.Radius} radius, " +
+           $"{@params.DiffusionRadius}/{@params.AimDiffusionRadius} spread, " +
+           $"{@params.RecoilXAngle}/{@params.RecoilYAngle} recoil";
 }

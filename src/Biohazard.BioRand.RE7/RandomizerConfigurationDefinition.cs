@@ -75,11 +75,13 @@ internal static class RandomizerConfigurationDefinition {
         var page = configDefinition.CreatePage("General");
         var group = page.CreateGroup("");
         group.Items.Add(new GroupItem(){
-            Id = "skip-guest-house",
-            Label = "Skip Guest House Chapter",
-            Description = "Whether to skip the guest house chapter and start from the main Baker house.",
-            Type = "switch",
-            Default = false
+            Id = ChapterJumpDataModifier.StartChapterConfigKey,
+            Label = "Start Chapter",
+            Description =
+                "Choose where a new game starts.",
+            Type = "dropdown",
+            Options = [.. ChapterJumpDataModifier.StartChapterOptions.Select(option => option.Name)],
+            Default = ChapterJumpDataModifier.NormalStartChapter
         });
 
         group.Items.Add(new GroupItem(){
@@ -1213,6 +1215,40 @@ internal static class RandomizerConfigurationDefinition {
                 Step = 0.1,
                 Default = 1.8
             });
+        }
+
+        foreach (var stat in WeaponModifier.GunStatRandomizations) {
+            group = page.CreateGroup(stat.GroupLabel);
+            group.Items.Add(new GroupItem(){
+                Id = stat.ToggleConfigId,
+                Label = stat.ToggleLabel,
+                Description = stat.ToggleDescription,
+                Type = "switch",
+                Default = false
+            });
+
+            foreach (var definition in guns) {
+                var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+                group.Items.Add(new GroupItem(){
+                    Id = stat.GetMinConfigId(definition.WeaponId),
+                    Label = $"Min. {stat.SliderLabel} {name}",
+                    Type = "range",
+                    Min = stat.Min,
+                    Max = stat.Max,
+                    Step = stat.Step,
+                    Default = stat.DefaultMin
+                });
+
+                group.Items.Add(new GroupItem(){
+                    Id = stat.GetMaxConfigId(definition.WeaponId),
+                    Label = $"Max. {stat.SliderLabel} {name}",
+                    Type = "range",
+                    Min = stat.Min,
+                    Max = stat.Max,
+                    Step = stat.Step,
+                    Default = stat.DefaultMax
+                });
+            }
         }
 
         #endregion
