@@ -100,8 +100,8 @@ internal class Randomizer : IDisposable {
                 assets.Add(new RandomizerOutputAsset(
                     "3-assets",
                     $"Additional Assets (Version {output.AdditionalAssetPakVersion})",
-                    "Required for large optional assets, such as Jack's 55th Birthday skill patches. " +
-                    "You only have to download and install this if you want to use the additional assets. " +
+                    "Required for large assets, such as Jack's 55th Birthday skill patches. " +
+                    "Must be installed, otherwise infinite loading screens can occur! " +
                     "Only needs to be updated if the version changes.",
                     $"biorand-re7-assets-{output.AdditionalAssetPakVersion}.zip",
                     output.GetAdditionalAssetsZip()));
