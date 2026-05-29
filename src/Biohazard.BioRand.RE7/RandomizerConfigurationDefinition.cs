@@ -171,7 +171,7 @@ internal static class RandomizerConfigurationDefinition {
         });
 
         group = page.CreateGroup("");
-        
+
         foreach (var healthLevel in PlayerModifier.MaxHealthLevels) {
             group.Items.Add(new GroupItem(){
                 Id = healthLevel.FromConfigId,
@@ -238,7 +238,7 @@ internal static class RandomizerConfigurationDefinition {
             Type = "switch",
             Default = false
         });
-        
+
         group = page.CreateGroup("");
 
         group.Items.Add(new GroupItem(){

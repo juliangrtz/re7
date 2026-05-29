@@ -14,7 +14,7 @@ public sealed class RandomizerOutput {
     public RandomizerInput Input { get; }
     public PakFileBuilder PakFile { get; }
     public PakFileBuilder AdditionalAssetPakFile { get; }
-    public string AdditionalAssetPakVersion => $"{DateTime.Now.Month:00}-{DateTime.Now.Year}";
+    public const string AdditionalAssetPakVersion = "05-2026";
     public Dictionary<string, string> LogFiles { get; }
     public int PakVersion { get; }
     public bool IsWithREFramework { get; }

@@ -5,6 +5,7 @@ using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Package;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.IO.Compression;
 using System.Numerics;
 
 namespace Biohazard.BioRand.RE7.Tests;
@@ -160,14 +161,15 @@ public class RandomizerBirdCageBehaviorTests {
             result.AdditionalAssetFiles.Keys);
         Assert.Contains("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", result.AdditionalAssetFiles.Keys);
         Assert.DoesNotContain(result.ChangedFiles.Keys, IsBirthdaySkillOverlayAsset);
-        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
-            path => path.StartsWith(
-                "natives/stm/props/sm9959_skillpatch02/skl008/",
-                StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
-            path => path.StartsWith("natives/stm/props/sm9958_skillpatch01/", StringComparison.OrdinalIgnoreCase));
-        Assert.DoesNotContain(result.AdditionalAssetFiles.Keys,
-            path => path.StartsWith("natives/stm/props/sm9960_skillpatch03/", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains("natives/stm/props/sm9959_skillpatch02/skl008/skl008.mdf2.21",
+            result.AdditionalAssetFiles.Keys);
+        Assert.Contains("natives/stm/props/sm9958_skillpatch01/skl001/skl001.mdf2.21",
+            result.AdditionalAssetFiles.Keys);
+        Assert.Contains("natives/stm/props/sm9960_skillpatch03/skl003/skl003.mdf2.21",
+            result.AdditionalAssetFiles.Keys);
+        Assert.Equal(
+            GetBirthdayOverlayEntryPaths(),
+            result.AdditionalAssetFiles.Keys.Order(StringComparer.OrdinalIgnoreCase).ToArray());
     }
 
     [Fact]
@@ -176,6 +178,7 @@ public class RandomizerBirdCageBehaviorTests {
         var output = randomizer.Randomize();
         var additionalAsset = output.Assets.SingleOrDefault(asset => asset.Key == "3-assets");
         var overlayPath = "natives/stm/props/sm9959_skillpatch02/skl002/skl002.mdf2.21";
+        var unusedOverlayPath = "natives/stm/props/sm9960_skillpatch03/skl003/skl003.mdf2.21";
 
         Assert.NotNull(additionalAsset);
         Assert.Contains("assets", additionalAsset!.FileName);
@@ -188,6 +191,7 @@ public class RandomizerBirdCageBehaviorTests {
 
         Assert.Null(patchPak.GetEntryData(overlayPath));
         Assert.NotNull(additionalPak.GetEntryData(overlayPath));
+        Assert.NotNull(additionalPak.GetEntryData(unusedOverlayPath));
     }
 
     private static List<BirdCageState> GetChangedBirdCageStates(RandomizerRunResult result) {
@@ -249,6 +253,17 @@ public class RandomizerBirdCageBehaviorTests {
     private static bool IsBirthdaySkillOverlayAsset(string path)
         => path.StartsWith("natives/stm/props/sm995", StringComparison.OrdinalIgnoreCase) ||
            path.Equals("natives/stm/ui/ui0100/tex/ui0105_iam.tex.35", StringComparison.OrdinalIgnoreCase);
+
+    private static string[] GetBirthdayOverlayEntryPaths() {
+        using var zip = new ZipArchive(
+            new MemoryStream(EmbeddedData.GetFile("silver_birthday_patches.zip")),
+            ZipArchiveMode.Read);
+        return zip.Entries
+            .Where(entry => entry.Length != 0)
+            .Select(entry => entry.FullName.Replace('\\', '/'))
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
 
     private static void AssertQuaternionEquals(Quaternion expected, Quaternion actual) {
         if (Quaternion.Dot(expected, actual) < 0) {
