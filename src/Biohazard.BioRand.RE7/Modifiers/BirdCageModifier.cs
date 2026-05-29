@@ -243,10 +243,14 @@ internal class BirdCage {
         var newItemHolder = itemHolder
             .AddOrUpdateComponent(Item);
 
+        var hasBirthdaySkillVisuals = BirthdaySkillVisuals.TryGetResources(Item.ItemDataID, out var skillVisuals);
+        if (hasBirthdaySkillVisuals) {
+            BirthdaySkillVisuals.CopyRequiredFiles(randomizer.FileRepository, Item.ItemDataID);
+        }
+
         if (!PreserveItemModels) {
             var mesh = newItemHolder.FindComponent("via.render.Mesh")!;
-            if (BirthdaySkillVisuals.TryGetResources(Item.ItemDataID, out var skillVisuals)) {
-                BirthdaySkillVisuals.CopyRequiredFiles(randomizer.FileRepository, Item.ItemDataID);
+            if (hasBirthdaySkillVisuals) {
                 mesh = mesh
                     .Set("Mesh", new RszResourceNode(skillVisuals.Mesh))
                     .Set("Material", new RszResourceNode(skillVisuals.Material));
