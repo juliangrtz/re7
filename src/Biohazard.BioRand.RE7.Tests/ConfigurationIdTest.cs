@@ -26,6 +26,7 @@ public class ConfigurationIdUsageTest {
 
     private static readonly HashSet<string> IndirectlyReferencedConfigIds = new(StringComparer.Ordinal){
         "debug-force-reframework",
+        ChapterJumpDataModifier.StartChapterConfigKey,
         EnemyModifier.EnemyForceTargetingProbabilityConfigKey,
     };
 

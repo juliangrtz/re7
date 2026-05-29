@@ -1,5 +1,5 @@
 {
-  "skip-guest-house": false,
+  "start-chapter": "Normal",
   "shuffle-chapters": false,
   "shuffle-chapters-with-ff": false,
   "randomized-messages": true,

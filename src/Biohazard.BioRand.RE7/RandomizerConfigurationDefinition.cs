@@ -75,11 +75,13 @@ internal static class RandomizerConfigurationDefinition {
         var page = configDefinition.CreatePage("General");
         var group = page.CreateGroup("");
         group.Items.Add(new GroupItem(){
-            Id = "skip-guest-house",
-            Label = "Skip Guest House Chapter",
-            Description = "Whether to skip the guest house chapter and start from the main Baker house.",
-            Type = "switch",
-            Default = false
+            Id = ChapterJumpDataModifier.StartChapterConfigKey,
+            Label = "Start Chapter",
+            Description =
+                "Choose where a new game starts.",
+            Type = "dropdown",
+            Options = [.. ChapterJumpDataModifier.StartChapterOptions.Select(option => option.Name)],
+            Default = ChapterJumpDataModifier.NormalStartChapter
         });
 
         group.Items.Add(new GroupItem(){
