@@ -69,8 +69,8 @@ internal class KeyItemLocationModifier : Modifier {
                     new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true)),
                 ["3CrestKeyC"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetCrestInFreezerRoom",
                     new("ed2860cf-2569-4045-96c8-ba01e0fcfed8"), true)),
-                ["MasterKey"] = Flags(new KeyItemAcquisitionFlag("c03_2_Main_GetSnakeKey",
-                    new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true)),
+                ["MasterKey"] = Flags(new KeyItemAcquisitionFlag("c03_4_Main_SnakeKeyGet",
+                    new("3ceeead9-da86-48c2-89ed-73edeab7fdbf"), true)),
                 ["Crank"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_GetCrank",
                     new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true)),
                 ["TalismanKey"] = Flags(new KeyItemAcquisitionFlag("c03_3_Main_TalismanKeyGet",
@@ -98,6 +98,8 @@ internal class KeyItemLocationModifier : Modifier {
                     new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"), true)),
                 ["FuseCh4"] = Flags(new KeyItemAcquisitionFlag("c04_objective_ElevatorFuseGetInventory",
                     new("c7004b40-85bc-4d0a-a274-05d771d581ab"), true)),
+                ["SerumTypeE"] = Flags(new KeyItemAcquisitionFlag("c04_objective_EnecrotoxinGet",
+                    new("a787b236-b098-4b69-93b2-6df65c97bbe6"), true)),
             };
 
     private const int WhiteDogHeadMask = 1 << 0;

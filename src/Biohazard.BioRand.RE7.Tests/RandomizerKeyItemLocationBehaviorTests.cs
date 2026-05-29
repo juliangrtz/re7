@@ -55,7 +55,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly IReadOnlyDictionary<string, ExpectedPickupFlag> ExpectedPickupFlags =
         new Dictionary<string, ExpectedPickupFlag>(StringComparer.OrdinalIgnoreCase){
             ["FloorDoorKey"] = new("c03_1_Main_GetFloorDoorKey", new("024d7582-3a98-4587-9b4f-a4dc47cd2cb4"), true),
-            ["MasterKey"] = new("c03_2_Main_GetSnakeKey", new("f4bf6a88-ccd2-4614-87aa-59d77cae3754"), true),
+            ["MasterKey"] = new("c03_4_Main_SnakeKeyGet", new("3ceeead9-da86-48c2-89ed-73edeab7fdbf"), true),
             ["Crank"] = new("c03_3_Main_GetCrank", new("e4ef4f89-4d98-4d81-86a0-8ea640eac4dc"), true),
             ["TalismanKey"] = new("c03_3_Main_TalismanKeyGet", new("6ed99e11-2047-4236-84a0-6457c7a3b1c9"), true),
             ["SilhouettePazzlePiece"] =
@@ -64,6 +64,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["SerumMaterialB"] = new("c03_objective_EvlineFace_Get", new("21411c8c-2b95-418e-8efa-8bf79bae4ae5"), true),
             ["EvCable"] = new("c04_objective_ElevatorCableGetInventory", new("8dc1c235-4ffc-4894-bd45-ae1cf2e5fba2"),
                 true),
+            ["SerumTypeE"] = new("c04_objective_EnecrotoxinGet", new("a787b236-b098-4b69-93b2-6df65c97bbe6"), true),
         };
 
     private const string MainHouseHallScenePath = "natives/stm/environment/scene/chapter3/c03_mainhousehall.scn.20";
