@@ -1,6 +1,13 @@
 ﻿using Biohazard.BioRand.RE7;
+using IntelOrca.Biohazard.BioRand.REE;
 
 internal class UvarDefaultsModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public UvarDefaultsModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private void ApplyRecipeUnlocks(Randomizer randomizer) {
         if (!randomizer.GetConfigOption<bool>("recipes-unlock-from-start"))
             return;
@@ -27,7 +34,8 @@ internal class UvarDefaultsModifier : Modifier {
         patches.ForEach(p => randomizer.FlagService.SetFlag(new Guid(p.Guid), p.NewValue));
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         ApplyRecipeUnlocks(randomizer);
     }
 }

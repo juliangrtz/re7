@@ -1,10 +1,17 @@
 using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class EnemyMultiplierModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public EnemyMultiplierModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/enemy-multiplier";
 
     internal sealed record EnemySpawnSlot(
@@ -30,7 +37,8 @@ internal class EnemyMultiplierModifier : Modifier {
         RszGameObject GenerationGameObject
     );
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var multiplier = randomizer.GetConfigOption("enemy-multiplier", 1.0);
         if (multiplier == 1.0) {
             logger.LogLine("Not running modifier with default modifier of 1.0.");

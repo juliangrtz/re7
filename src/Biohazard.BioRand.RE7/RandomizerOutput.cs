@@ -7,6 +7,7 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7;
 
 public sealed class RandomizerOutput {
+    private static readonly HttpClient Http = new();
     private byte[]? _zipFile;
     private byte[]? _modFile;
     private byte[]? _additionalAssetsFile;
@@ -65,14 +66,14 @@ public sealed class RandomizerOutput {
         if (_additionalAssetsFile != null)
             return _additionalAssetsFile;
 
-        _additionalAssetsFile = new OutputZipFileBuilder()
+        _additionalAssetsFile = new ZipFileBuilder()
             .AddEntry($"re_chunk_000.pak.patch_{PakVersion + 1:000}.pak", AdditionalAssetPakFile.ToByteArray())
             .Build();
         return _additionalAssetsFile;
     }
 
-    private OutputZipFileBuilder BuildZipFile(string logPrefix = "") {
-        var builder = new OutputZipFileBuilder();
+    private ZipFileBuilder BuildZipFile(string logPrefix = "") {
+        var builder = new ZipFileBuilder();
         var configBytes = Encoding.UTF8.GetBytes(Input.Configuration.ToJson());
         builder.AddEntry($"{logPrefix}config.json", configBytes);
 
@@ -95,9 +96,7 @@ public sealed class RandomizerOutput {
         }
 
         if (Input.Configuration.GetValueOrDefault<bool>("debug-download-reframework-nightly")) {
-            using var http = new HttpClient();
-
-            var zipBytes = http.GetByteArrayAsync(REFrameworkNightlyUrl)
+            var zipBytes = Http.GetByteArrayAsync(REFrameworkNightlyUrl)
                 .GetAwaiter()
                 .GetResult();
 

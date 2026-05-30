@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
 
-public class RandomizerExecutor(string inputGamePath, IProgressReporter reporter) {
+public class RandomizerExecutor(string inputGamePath, IRandomizerProgress reporter) {
     public static string BuildVersion => RandomizerFactory.Default.GitHash;
 
     public static IntelOrca.Biohazard.BioRand.RandomizerConfigurationDefinition ConfigurationDefinition =>

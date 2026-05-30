@@ -1,9 +1,16 @@
 using Biohazard.BioRand.RE7.REEngine;
 using System.Globalization;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class PlayerModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public PlayerModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/player";
 
     internal static readonly IReadOnlyList<PlayerMaxHealthLevel> MaxHealthLevels =[
@@ -29,7 +36,8 @@ internal class PlayerModifier : Modifier {
     private static readonly string SystemParameterDataPath =
         "prefab/system/systemparameterdata.user".UserFile();
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var table = randomizer.FileRepository.DeserializeUserFile<app.PlayerMaxHealthTable>(PlayerMaxHealthTablePath);
         logger.LogLine(
             $"[{PlayerMaxHealthTablePath}] Max health levels: {string.Join(", ", table.MaxHealthList.Select(FormatHealth))}");
@@ -47,7 +55,8 @@ internal class PlayerModifier : Modifier {
             $"range = {FormatValue(systemParameters.MegusuriParam.MegusuriRange)}");
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         ApplyMaxHealth(randomizer, logger);
         ApplyReloadSpeed(randomizer, logger);
         ApplyPsychostimulants(randomizer, logger);

@@ -137,7 +137,7 @@ public enum RandomizerScenario {
     RealisticProfile
 }
 
-internal sealed class NoOpReporter : IProgressReporter {
+internal sealed class NoOpReporter : IRandomizerProgress {
     public void RunTask(string text, Action cb) {
         cb();
     }

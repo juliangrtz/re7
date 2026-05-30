@@ -1,16 +1,24 @@
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Services;
 using Enums.app.Item;
+using IntelOrca.Biohazard.BioRand.REE;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ItemModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public ItemModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
     private static readonly AreaDefinitionRepository _areaDefinitions = AreaDefinitionRepository.Default;
     private static readonly HashSet<Guid> _birdCageGuids = [.. BirdCageModifier.Guids];
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         if (!randomizer.GetConfigOption<bool>("random-items"))
             return;
 

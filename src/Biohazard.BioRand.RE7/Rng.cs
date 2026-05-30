@@ -70,11 +70,11 @@ public sealed class Rng {
 
     public T Next<T>(IEnumerable<T> values) {
         switch (values) {
-            case IList<T> list when list.Count > 0:
+            case IList<T>{ Count: > 0 } list:
                 return list[_random.Next(0, list.Count)];
-            case IReadOnlyList<T> list when list.Count > 0:
+            case IReadOnlyList<T>{ Count: > 0 } list:
                 return list[_random.Next(0, list.Count)];
-            case ICollection<T> collection when collection.Count > 0:
+            case ICollection<T>{ Count: > 0 } collection:
                 return values.ElementAt(_random.Next(0, collection.Count));
             default:
                 var array = values.ToArray();
@@ -118,18 +118,13 @@ public sealed class Rng {
         return new Guid(buffer);
     }
 
-    public class Table<T> {
-        private readonly Rng _rng;
-        private readonly List<(T, double)> _table = new();
+    public class Table<T>(Rng rng) {
+        private readonly List<(T, double)> _table = [];
         private double _total;
 
         public bool IsEmpty => _table.Count == 0;
         public T[] Values => _table.Select(x => x.Item1).ToArray();
         public int Count => _table.Count;
-
-        public Table(Rng rng) {
-            _rng = rng;
-        }
 
         public void Add(T value, double prob) {
             if (prob == 0)
@@ -140,23 +135,26 @@ public sealed class Rng {
         }
 
         public T Next() {
-            if (_table.Count == 0)
-                throw new InvalidOperationException("No probability entries added");
-            if (_table.Count > 1) {
-                var p = 0.0;
-                var n = _rng.NextDouble() * _total;
-                for (int i = 0; i < _table.Count - 1; i++) {
-                    var entry = _table[i];
-                    var nextI = p + entry.Item2;
-                    if (n < nextI) {
-                        return entry.Item1;
-                    }
-
-                    p = nextI;
-                }
+            switch (_table.Count) {
+                case 0:
+                    throw new InvalidOperationException("No probability entries added");
+                case <= 1:
+                    return _table[^1].Item1;
             }
 
-            return _table[_table.Count - 1].Item1;
+            var p = 0.0;
+            var n = rng.NextDouble() * _total;
+            for (var i = 0; i < _table.Count - 1; i++) {
+                var entry = _table[i];
+                var nextI = p + entry.Item2;
+                if (n < nextI) {
+                    return entry.Item1;
+                }
+
+                p = nextI;
+            }
+
+            return _table[^1].Item1;
         }
     }
 }

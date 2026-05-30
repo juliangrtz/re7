@@ -253,7 +253,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         public string FailReason { get; init; } = "";
     }
 
-    private class ConsoleReporter() : IProgressReporter {
+    private class ConsoleReporter() : IRandomizerProgress {
         public void RunTask(string text, Action cb) {
             long timeInMs = 0;
             AnsiConsole

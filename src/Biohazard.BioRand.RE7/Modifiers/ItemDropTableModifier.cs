@@ -3,10 +3,17 @@ using Biohazard.BioRand.RE7.REEngine;
 using Enums.app.GameFlowFsmManager;
 using Enums.app.Item;
 using IntelOrca.Biohazard.BioRand;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ItemDropTableModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public ItemDropTableModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/item-drops";
     private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
@@ -24,7 +31,8 @@ internal class ItemDropTableModifier : Modifier {
         (GameFlowKindEnum.C04_3_Main, "prefab/item/reliefitemtable_04_03_0000.user".UserFile()),
     };
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         logger.Push("Original item drop tables");
         foreach (var (chapter, path) in _dropTableFiles) {
             logger.Push(chapter.ToString().Without("_Main"));
@@ -51,7 +59,7 @@ internal class ItemDropTableModifier : Modifier {
         var rng = randomizer.GetRng(RandomizerKey, chapter, path);
 
         foreach (var id in ItemDrops.GenericRuntimeDrops) {
-            var idStr = id.ToString();
+            var idStr = id;
             var item = _itemDefinitions.FromId(idStr)!;
 
             var rate = randomizer.GetConfigOption<double>($"item-drop-ratio-{idStr.ToLowerInvariant()}");
@@ -96,7 +104,8 @@ internal class ItemDropTableModifier : Modifier {
         return result;
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         foreach (var (chapter, path) in _dropTableFiles) {
             var dropTable = ConstructItemDropTable(randomizer, chapter, path);
 

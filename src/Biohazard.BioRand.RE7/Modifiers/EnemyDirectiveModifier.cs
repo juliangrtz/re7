@@ -1,10 +1,17 @@
 ﻿using Biohazard.BioRand.RE7.Enemies;
 using Biohazard.BioRand.RE7.Enemies.Impl;
 using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class EnemyDirectiveModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public EnemyDirectiveModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private readonly List<IDirectiveModifier> _enemySpecificDirectiveModifiers =[
         new EvelineFinalBossDirectiveModifier(),
         new InsectsDirectiveModifier(),
@@ -24,7 +31,8 @@ internal class EnemyDirectiveModifier : Modifier {
         new EnemyRankParamDirectiveModifier(),
     ];
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         foreach (var enemy in EnemyDefinitions.Instance.All.OrderBy(em => em.EnemyId)) {
             var matchingModifiers = _enemySpecificDirectiveModifiers
                 .Where(modifier => modifier.Supports(enemy))

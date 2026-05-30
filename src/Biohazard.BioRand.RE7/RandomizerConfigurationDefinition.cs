@@ -12,8 +12,8 @@ namespace Biohazard.BioRand.RE7;
 // TODO: Add extension methods like
 // public static void AddDropdown(this Group group, GroupItem item) { ... }
 internal static class RandomizerConfigurationDefinition {
-    private static readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
+    private static readonly ItemDefinitionRepository ItemDefinitions = ItemDefinitionRepository.Default;
+    private static readonly WeaponDefinitionRepository WeaponDefinitions = WeaponDefinitionRepository.Default;
 
     private static GroupItem CreateValuableDropSwitch(string prefix, string drop, bool defaultValue)
         => new(){
@@ -515,9 +515,9 @@ internal static class RandomizerConfigurationDefinition {
         }
 
         var genericEnemyDrops =
-            ItemDrops.GenericRuntimeDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
+            ItemDrops.GenericRuntimeDrops.OrderBy(drop => ItemDefinitions.FromId(drop.ToString())!.CategoryType);
         var genericItemDrops =
-            ItemDrops.GenericDrops.OrderBy(drop => _itemDefinitions.FromId(drop.ToString())!.CategoryType);
+            ItemDrops.GenericDrops.OrderBy(drop => ItemDefinitions.FromId(drop.ToString())!.CategoryType);
 
         group = page.CreateGroup("Drops");
         group.Warning = "This feature requires RE Framework.";
@@ -601,8 +601,8 @@ internal static class RandomizerConfigurationDefinition {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem(){
-                Id = $"enemy-drop-ratio-{drop.ToString().ToLowerInvariant()}",
-                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
+                Id = $"enemy-drop-ratio-{drop.ToLowerInvariant()}",
+                Label = ItemDefinitions.FromId(drop)!.Name,
                 Category = new GroupItemCategory(){
                     Label = category,
                     BackgroundColor = bgColor,
@@ -841,8 +841,8 @@ internal static class RandomizerConfigurationDefinition {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem(){
-                Id = $"item-drop-ratio-{drop.ToString().ToLowerInvariant()}",
-                Label = _itemDefinitions.FromId(drop.ToString())!.Name,
+                Id = $"item-drop-ratio-{drop.ToLowerInvariant()}",
+                Label = ItemDefinitions.FromId(drop)!.Name,
                 Category = new GroupItemCategory(){
                     Label = category,
                     BackgroundColor = bgColor,
@@ -1055,7 +1055,7 @@ internal static class RandomizerConfigurationDefinition {
         group = page.CreateGroup("Stack Limits");
         group.Advanced = true;
 
-        var items = from item in _itemDefinitions.Items
+        var items = from item in ItemDefinitions.Items
             where item.IsStackLimitConfigurable
             select (item.StackLimitConfigId, item.Name, item.MaxStack);
 
@@ -1104,12 +1104,12 @@ internal static class RandomizerConfigurationDefinition {
 
         group = page.CreateGroup("");
 
-        var weapons = _weaponDefinitions.PlayerWeapons
+        var weapons = WeaponDefinitions.PlayerWeapons
             .Where(wp => !wp.WeaponId.ToString().Contains("blaster", StringComparison.InvariantCultureIgnoreCase))
             .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
         foreach (var definition in weapons) {
             var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
-            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            var name = ItemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
             group.Items.Add(new GroupItem(){
                 Id = $"weapon-damage-min-{sanitizedId}",
                 Label = $"Min. Damage Multiplier {name}",
@@ -1149,12 +1149,12 @@ internal static class RandomizerConfigurationDefinition {
             Default = true
         });
 
-        var guns = _weaponDefinitions.Guns
+        var guns = WeaponDefinitions.Guns
             .Where(gun => gun.UserType == Enums.app.CharacterDefine.Type.Player)
             .OrderBy(gun => gun.Name ?? gun.WeaponId.ToString());
         foreach (var definition in guns) {
             var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
-            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            var name = ItemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
             group.Items.Add(new GroupItem(){
                 Id = $"weapon-ammo-capacity-min-{sanitizedId}",
                 Label = $"Min. Ammo Capacity Multiplier {name}",
@@ -1195,7 +1195,7 @@ internal static class RandomizerConfigurationDefinition {
 
         foreach (var definition in guns) {
             var sanitizedId = definition.WeaponId.ToString().ToLowerInvariant().Replace("_", "-");
-            var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+            var name = ItemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
             group.Items.Add(new GroupItem(){
                 Id = $"weapon-reload-speed-min-{sanitizedId}",
                 Label = $"Min. Reload Speed Multiplier {name}",
@@ -1228,7 +1228,7 @@ internal static class RandomizerConfigurationDefinition {
             });
 
             foreach (var definition in guns) {
-                var name = _itemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
+                var name = ItemDefinitions.FromId(definition.WeaponId.ToString())!.Name;
                 group.Items.Add(new GroupItem(){
                     Id = stat.GetMinConfigId(definition.WeaponId),
                     Label = $"Min. {stat.SliderLabel} {name}",

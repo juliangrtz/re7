@@ -1,9 +1,16 @@
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class LucasPuzzleInventoryModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public LucasPuzzleInventoryModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     internal const string ScenePath = "natives/stm/leveldesign/fsm/chapter3/chapter3_4/levelfsm_c03_4.scn.20";
 
     internal static readonly string[] PatchedFsmGameObjectNames =[
@@ -14,7 +21,8 @@ internal class LucasPuzzleInventoryModifier : Modifier {
     private const string InventoryCheckActionType = "app.fsm.CheckInventoryEmpty";
     private const string SuccessfulActionType = "app.fsm.Wait";
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         if (!randomizer.GetConfigOption<bool>("random-key-item-locations"))
             return;
 
