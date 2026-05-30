@@ -1,6 +1,8 @@
-﻿namespace Biohazard.BioRand.RE7;
+﻿using IntelOrca.Biohazard.BioRand;
 
-public class EmptyReporter : IProgressReporter {
+namespace Biohazard.BioRand.RE7;
+
+public class EmptyReporter : IRandomizerProgress {
     public void RunTask(string text, Action cb) {
         cb();
     }

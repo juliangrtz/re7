@@ -5,7 +5,6 @@ using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
 using System.Collections.Immutable;
 using System.Threading;
-using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7;
 
@@ -19,7 +18,7 @@ internal class Randomizer : IDisposable {
 
     public int PakVersion { get; set; } = 1;
     public RandomizerInput Input { get; }
-    public IProgressReporter Reporter { get; }
+    public IRandomizerProgress Reporter { get; }
     public FileRepository FileRepository => _fileRepository;
     public DynamicData DynamicData { get; }
     internal bool CaptureStateLogs { get; set; } = true;
@@ -52,7 +51,7 @@ internal class Randomizer : IDisposable {
            || GetConfigOption<string>("random-starting-inventory-size-ethan") != "12"
            || GetConfigOption<string>("random-starting-inventory-size-mia") != "12";
 
-    public Randomizer(RandomizerInput input, string inputGamePath, IProgressReporter reporter) {
+    public Randomizer(RandomizerInput input, string inputGamePath, IRandomizerProgress reporter) {
         Input = input;
         _inputGamePath = inputGamePath;
         Reporter = reporter;
