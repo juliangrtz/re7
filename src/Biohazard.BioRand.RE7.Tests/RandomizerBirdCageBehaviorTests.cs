@@ -194,6 +194,16 @@ public class RandomizerBirdCageBehaviorTests {
         Assert.NotNull(additionalPak.GetEntryData(unusedOverlayPath));
     }
 
+    [Fact]
+    public void BirdCageModifier_BirthdaySkillRewards_EmitAdditionalAssetsWhenPreservingItemModels() {
+        using var randomizer = CreateBirthdaySkillBirdCageRandomizer(
+            config => { config["preserve-item-models"] = true; });
+        var output = randomizer.Randomize();
+        var additionalAsset = output.Assets.SingleOrDefault(asset => asset.Key == "3-assets");
+
+        Assert.NotNull(additionalAsset);
+    }
+
     private static List<BirdCageState> GetChangedBirdCageStates(RandomizerRunResult result) {
         var changed = new List<BirdCageState>();
         foreach (var scenePath in BirdCageScenePaths) {
@@ -211,9 +221,11 @@ public class RandomizerBirdCageBehaviorTests {
         return changed;
     }
 
-    private static Randomizer CreateBirthdaySkillBirdCageRandomizer() {
+    private static Randomizer CreateBirthdaySkillBirdCageRandomizer(
+        Action<RandomizerConfiguration>? configure = null) {
         var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
             config["random-bird-cage-drugs-coins"] = true;
+            configure?.Invoke(config);
         });
         var input = new RandomizerInput{
             Seed = 4342338,

@@ -139,7 +139,7 @@ internal class KeyItemLocationModifier : Modifier {
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
         OxStatuetteMask | RedDogHeadMask | CrankMask |
-        StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+        StoneStatuetteMask | DSeriesHeadMask;
 
     private const int MainHouseAfterGarageCarryMasks =
         (MainHouseBeforeHatchCarryMasks | PendulumMask) &
@@ -147,29 +147,29 @@ internal class KeyItemLocationModifier : Modifier {
 
     private const int MainHouseEastCarryMasks =
         MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
-        CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+        CrankMask | StoneStatuetteMask | DSeriesHeadMask;
 
     private const int DissectionRoomCarryMasks =
         AllDogHeadMasks | BatteryMask | CrowKeyMask |
-        CrankMask | StoneStatuetteMask | DSeriesArmMask | DSeriesHeadMask;
+        CrankMask | StoneStatuetteMask | DSeriesHeadMask;
 
     private const int OldHouseBeforeCrowCarryMasks =
-        CrankMask | StoneStatuetteMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+        CrankMask | StoneStatuetteMask | CrowKeyMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterStoneCarryMasks =
-        CrankMask | CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+        CrankMask | CrowKeyMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterCrankCarryMasks =
-        CrowKeyMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+        CrowKeyMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterCrowCarryMasks =
-        LanternMask | DSeriesArmMask | BatteryMask | DSeriesHeadMask;
+        LanternMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterLanternCarryMasks =
         DSeriesArmMask | SnakeKeyMask | BatteryMask | DSeriesHeadMask;
 
     private const int SnakeKeyRewardCarryMasks =
-        SnakeKeyMask | BatteryMask | DSeriesArmMask | DSeriesHeadMask;
+        SnakeKeyMask | BatteryMask | DSeriesHeadMask;
 
     private const int KeycardSetupCarryMasks =
         BatteryMask | DSeriesHeadMask | BlueKeycardMask | RedKeycardMask | CandleMask;

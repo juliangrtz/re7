@@ -28,7 +28,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
-            ["SerumMaterialA"] = new(3, ExpectedScope.BeforeSnakeRooms),
+            ["SerumMaterialA"] = new(3, ExpectedScope.AfterLanternBeforeSnakeRooms),
             ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
             ["SilhouettePazzlePiece"] = new(3, ExpectedScope.BeforeShadowPuzzle),
@@ -869,7 +869,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey"));
             Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "LucasCardKey2"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "Battery"));
-            Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialA"));
+            Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialA"));
             Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(snakeKeyBody, "SerumMaterialB"));
         }
     }
@@ -892,6 +892,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette,
                 "SilhouettePazzlePieceOldHouse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "MasterKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "SerumMaterialA"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "Crank"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "TalismanKey"));
 
@@ -917,10 +918,11 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "Lantern"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "LucasCardKey2"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "SerumMaterialA"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(greenhouseStairs, "SerumMaterialA"));
 
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "Lantern"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "MasterKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(dSeriesArmAltar, "SerumMaterialA"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(oldHouseStudyExtra, "Lantern"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(oldHouseStudyExtra, "SerumMaterialA"));
     }
@@ -994,7 +996,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
-    public void KeyItemLocations_LadderSoftlockSeedKeepsDSeriesArmBeforeSnakeRooms() {
+    public void KeyItemLocations_LadderSoftlockSeedKeepsDSeriesArmAfterLanternDoorBeforeSnakeRooms() {
         using var result = RandomizerTest.RunState(
             config => {
                 config["random-key-item-locations"] = true;
@@ -1011,12 +1013,46 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             .SingleOrDefault();
 
         if (dSeriesArm != null) {
-            Assert.True(ScopeMatches(ExpectedScope.BeforeSnakeRooms, dSeriesArm.Placement),
-                $"D-Series Arm was placed after the snake-room ladder gate: {dSeriesArm.Placement.SceneFile}.");
+            Assert.True(ScopeMatches(ExpectedScope.AfterLanternBeforeSnakeRooms, dSeriesArm.Placement),
+                $"D-Series Arm was placed before the Lantern-door reward sphere: {dSeriesArm.Placement.SceneFile}.");
         }
 
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House Stone Statuette pickup", result.ProcessLog);
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House before Stone Statuette shadow puzzle",
+            result.ProcessLog);
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House cleared / Main House basement police body",
+            result.ProcessLog);
         Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Main House snake-key rooms", result.ProcessLog);
         Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Testing Area", result.ProcessLog);
+    }
+
+    [Fact]
+    public void KeyItemLocations_StoneStatuettePodiumSoftlockSeedKeepsDSeriesArmAfterLanternDoor() {
+        using var result = RandomizerTest.RunState(
+            config => {
+                config["random-key-item-locations"] = true;
+                config["random-items"] = true;
+                config["replace-madhouse-tapes"] = true;
+                config["replace-weapons"] = true;
+                config["additional-items"] = true;
+                config["additional-wooden-crates"] = true;
+            },
+            seed: 305655);
+
+        var dSeriesArm = GetChangedPlacements(result)
+            .Where(change => change.AfterId == "SerumMaterialA")
+            .SingleOrDefault();
+
+        if (dSeriesArm != null) {
+            Assert.True(ScopeMatches(ExpectedScope.AfterLanternBeforeSnakeRooms, dSeriesArm.Placement),
+                $"D-Series Arm was placed before the Lantern-door reward sphere: {dSeriesArm.Placement.SceneFile}.");
+        }
+
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House Stone Statuette pickup", result.ProcessLog);
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House before Stone Statuette shadow puzzle",
+            result.ProcessLog);
+        Assert.DoesNotContain("[KEY ITEM ROUTE] D-Series Arm -> Old House cleared / Main House basement police body",
+            result.ProcessLog);
     }
 
     [Fact]
@@ -1406,7 +1442,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                                             || IsOldHouseCrowKeyPickup(placement)
                                             || IsOldHouseAfterStonePuzzleBeforeCrank(placement.SceneFile)
                                             || IsOldHouseAfterCrankBeforeCrowDoor(placement.SceneFile),
-            ExpectedScope.AfterLanternBeforeSnakeRooms => IsOldHouseAfterLanternDoor(placement.SceneFile),
+            ExpectedScope.AfterLanternBeforeSnakeRooms => IsOldHouseAfterLanternDoor(placement.SceneFile)
+                                                          || IsSnakeKeyBody(placement.SceneFile),
             ExpectedScope.BeforeDissectionRoom => IsMainHouseBeforeGarage(placement)
                                                   || IsMainHouseAfterGarageBeforeShadowPuzzle(placement)
                                                   || IsMainHouseEastOrBasement(placement.SceneFile),
