@@ -4,10 +4,17 @@ using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Globalization;
 using System.Numerics;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ExtraPlacementModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public ExtraPlacementModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     #region Tags
 
     internal const string WoodenCrateTag = "crate";
@@ -390,7 +397,8 @@ internal class ExtraPlacementModifier : Modifier {
         });
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var itemPlacementService = randomizer.ItemPlacementService;
         var context = randomizer.StaticItemRandomizationService;
         var randomItemsEnabled = randomizer.GetConfigOption<bool>("random-items");

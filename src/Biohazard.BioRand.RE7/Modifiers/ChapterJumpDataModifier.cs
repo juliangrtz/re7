@@ -1,11 +1,18 @@
 ﻿using app;
 using Biohazard.BioRand.RE7.REEngine;
 using Enums.app.GameManager;
+using IntelOrca.Biohazard.BioRand.REE;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ChapterJumpDataModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public ChapterJumpDataModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     public const string StartChapterConfigKey = "start-chapter";
     public const string NormalStartChapter = "Normal";
 
@@ -13,7 +20,7 @@ internal class ChapterJumpDataModifier : Modifier {
     private readonly string _path = "scenes/chapterjumpdata/chapterjumpdata.scn".SceneFile();
     private readonly Guid ChapterJumpData_c01 = new("88045366-0683-481a-8b9a-1d8c59aa048a");
 
-    public static IReadOnlyList<StartChapterOption> StartChapterOptions { get; } = [
+    public static IReadOnlyList<StartChapterOption> StartChapterOptions { get; } =[
         new(NormalStartChapter, null),
         new("Main House", ChapterNo.Chapter3),
         new("Wrecked Ship", ChapterNo.Chapter4)
@@ -29,7 +36,8 @@ internal class ChapterJumpDataModifier : Modifier {
         (ChapterNo.Chapter4, false),
     ];
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var transitions = randomizer.FileRepository.GetScnFile(_path)
             .ReadScene(randomizer.FileRepository.TypeRepository);
         transitions.GetGameObjects().ForEach(go => {
@@ -118,7 +126,8 @@ internal class ChapterJumpDataModifier : Modifier {
         => StartChapterOptions.FirstOrDefault(option => string.Equals(option.Name, name, StringComparison.Ordinal)) ??
            StartChapterOptions[0];
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var startChapter = GetStartChapterOption(randomizer.GetConfigOption<string>(StartChapterConfigKey));
         var shuffleChapters = randomizer.GetConfigOption<bool>("shuffle-chapters");
         var shuffleChaptersWithFf = randomizer.GetConfigOption<bool>("shuffle-chapters-with-ff");

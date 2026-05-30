@@ -4,10 +4,17 @@ using Biohazard.BioRand.RE7.Weapons;
 using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Globalization;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class WeaponModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public WeaponModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/weapons";
     private const string WeaponItemMessagePath = "message/ui_item_mes.msg";
     private const string ItemSettingsDirectory = "natives/stm/prefab/item";
@@ -16,7 +23,7 @@ internal class WeaponModifier : Modifier {
     private const double DefaultWeaponReloadSpeedMin = 0.3;
     private const double DefaultWeaponReloadSpeedMax = 1.8;
 
-    public static IReadOnlyList<WeaponGunStatRandomization> GunStatRandomizations { get; } = [
+    public static IReadOnlyList<WeaponGunStatRandomization> GunStatRandomizations { get; } =[
         new(
             ConfigId: "range",
             GroupLabel: "Range",
@@ -70,7 +77,8 @@ internal class WeaponModifier : Modifier {
     private readonly WeaponDefinitionRepository _weaponDefinitions = WeaponDefinitionRepository.Default;
     private readonly ItemDefinitionRepository _itemDefinitions = ItemDefinitionRepository.Default;
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         foreach (var definition in _weaponDefinitions.WeaponDefinitions) {
             if (string.IsNullOrEmpty(definition.UserParamsPath)) {
                 continue;
@@ -82,7 +90,8 @@ internal class WeaponModifier : Modifier {
         }
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var rng = randomizer.GetRng(RandomizerKey);
         var rolls = new Dictionary<WeaponID, WeaponStatRolls>();
         if (randomizer.GetConfigOption<bool>("weapon-mod-damage")) {

@@ -94,7 +94,7 @@ internal class ItemRandomizer {
 
     // (easy #, normal #, madhouse #)
     public (uint, uint, uint) DetermineDropAmount(string id, double min, double max, Rng rng) {
-        var item = _itemDefinitions.FromId(id.ToString())!;
+        var item = _itemDefinitions.FromId(id)!;
         var respectDifficulty = _randomizer.GetConfigOption<bool>("item-drop-respect-difficulty");
 
         if (item.CategoryType == ItemCategoryType.Shell) {
@@ -142,7 +142,7 @@ internal class ItemRandomizer {
         var (easyAmount, normalAmount, madhouseAmount) =
             DetermineDropAmount(id, settings.MinAmmoQuantity, settings.MaxAmmoQuantity, rng);
         return new Item(){
-            Id = id.ToString(),
+            Id = id,
             CountEasy = (int)easyAmount,
             CountNormal = (int)normalAmount,
             CountMadhouse = (int)madhouseAmount,

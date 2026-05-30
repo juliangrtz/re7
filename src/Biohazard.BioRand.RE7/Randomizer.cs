@@ -5,13 +5,14 @@ using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
 using System.Collections.Immutable;
 using System.Threading;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7;
 
 internal class Randomizer : IDisposable {
     private readonly string _inputGamePath;
     private FileRepository _fileRepository = new();
-    private ImmutableArray<Modifier> _modifiers = GetModifiers();
+    private ImmutableArray<Modifier> _modifiers = [];
     private readonly Dictionary<Type, object> _services = [];
     private readonly Lock _servicesLock = new();
     private readonly Dictionary<string, string> _logFiles = [];
@@ -57,6 +58,7 @@ internal class Randomizer : IDisposable {
         Reporter = reporter;
 
         DynamicData = new DynamicData(Input.Configuration.GetValueOrDefault<bool>("debug-download-data"));
+        _modifiers = GetModifiers();
     }
 
     public void Dispose() {
@@ -126,7 +128,9 @@ internal class Randomizer : IDisposable {
         var logger = new RandomizerLoggerIO();
         foreach (var l in new[]{ logger.Input, logger.Process, logger.Output }) {
             l.LogHr();
-            l.LogVersion();
+            l.LogVersionTimeInfo(
+                RandomizerFactory.Default.CurrentVersionInfo,
+                "by IntelOrca, Descole & BioRand Team");
             l.LogLine($"Seed = {input.Seed}");
             l.LogHr();
         }
@@ -142,7 +146,7 @@ internal class Randomizer : IDisposable {
             // Input
             IterateModifiers((n, m) => {
                 logger.Input.Push(n);
-                m.LogState(this, logger.Input);
+                m.LogState(logger.Input);
                 logger.Input.Pop();
                 logger.Input.LogHr();
             });
@@ -154,7 +158,7 @@ internal class Randomizer : IDisposable {
         // Apply modifiers
         IterateModifiers((n, m) => {
             logger.Process.Push(n);
-            Reporter.RunTask($"Running modifier: {n}", () => m.Apply(this, logger.Process));
+            Reporter.RunTask($"Running modifier: {n}", () => m.Apply(logger.Process));
             logger.Process.Pop();
             logger.Process.LogHr();
         });
@@ -166,7 +170,7 @@ internal class Randomizer : IDisposable {
             // Output
             IterateModifiers((n, m) => {
                 logger.Output.Push(n);
-                m.LogState(this, logger.Output);
+                m.LogState(logger.Output);
                 logger.Output.Pop();
                 logger.Output.LogHr();
             });
@@ -186,42 +190,42 @@ internal class Randomizer : IDisposable {
         }
     }
 
-    private static ImmutableArray<Modifier> GetModifiers() {
+    private ImmutableArray<Modifier> GetModifiers() {
         return[
             // Enemies
-            new EnemyDirectiveModifier(),
-            new EnemyModifier(),
-            new EnemyMultiplierModifier(),
+            new EnemyDirectiveModifier(this),
+            new EnemyModifier(this),
+            new EnemyMultiplierModifier(this),
 
             // Player
-            new PlayerModifier(),
+            new PlayerModifier(this),
 
             // Inventory
-            new StartingInventoryModifier(),
-            new RecipeModifier(),
-            new ItemStackModifier(),
+            new StartingInventoryModifier(this),
+            new RecipeModifier(this),
+            new ItemStackModifier(this),
 
             // Items
-            new ExtraPlacementModifier(),
-            new ItemModifier(),
-            new BirdCageModifier(),
-            new ItemDropTableModifier(),
-            new LucasPuzzleInventoryModifier(),
-            new KeyItemLocationModifier(),
+            new ExtraPlacementModifier(this),
+            new ItemModifier(this),
+            new BirdCageModifier(this),
+            new ItemDropTableModifier(this),
+            new LucasPuzzleInventoryModifier(this),
+            new KeyItemLocationModifier(this),
 
             // Weapons
-            new WeaponModifier(),
+            new WeaponModifier(this),
 
             // Misc.
-            new MadhouseSaveModifier(),
-            new ChapterJumpDataModifier(),
-            new MessageModifier(),
-            new UvarDefaultsModifier(),
+            new MadhouseSaveModifier(this),
+            new ChapterJumpDataModifier(this),
+            new MessageModifier(this),
+            new UvarDefaultsModifier(this),
         ];
     }
 
     public string User => GetConfigOption<string>("username") ?? "player";
-    public List<string> UserTags => GetConfigOption<string>("tags")?.Split(",")?.ToList() ?? [];
+    public List<string> UserTags => GetConfigOption<string>("tags")?.Split(",").ToList() ?? [];
     public int Seed => Input.Seed;
 
     public Rng GetRng(params object[] key) {
@@ -231,17 +235,12 @@ internal class Randomizer : IDisposable {
     }
 
     public T? GetConfigOption<T>(string key, T? defaultValue = default) {
-        if (Input.Configuration == null)
-            return defaultValue;
-        return Input.Configuration.GetValueOrDefault<T>(key, defaultValue);
+        return Input.Configuration.GetValueOrDefault(key, defaultValue);
     }
 
     public T? GetEnumConfigOption<T>(string key) where T : struct, Enum {
         var value = Input.Configuration.GetValueOrDefault<string>(key);
-        if (Input.Configuration == null || value == null)
-            return default;
-
-        return EnumExtensions.ParseOrNull<T>(value);
+        return value == null ? null : EnumExtensions.ParseOrNull<T>(value);
     }
 
     public bool HasSpecialTouch(string kind) {

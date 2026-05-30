@@ -6,12 +6,19 @@ using Enums.app;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using IntelOrca.Biohazard.BioRand.REE;
 using ReplacementData =
     (string Id, int Quantity, int Coins, System.Collections.Immutable.ImmutableArray<string> ValidItemIDs);
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class BirdCageModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public BirdCageModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/bird-cage";
 
     private readonly List<string> _birdCageScnFiles =[
@@ -40,8 +47,8 @@ internal class BirdCageModifier : Modifier {
     private static readonly Guid MadhouseScorpionKeyBirdCageGuid = new("c5f2b3fd-0732-468a-b8d6-017a8f1f20f2");
 
     private readonly Regex _birdCageRegex = new("^sm.*CoinBox((?!Interact).)*$", RegexOptions.Compiled);
-    private static readonly ItemDefinitionRepository _items = ItemDefinitionRepository.Default;
-    internal static readonly string[] _defaultInsertItems = ["Coin", "CoinOld"];
+    private static readonly ItemDefinitionRepository Items = ItemDefinitionRepository.Default;
+    private static readonly string[] DefaultInsertItems = ["Coin", "CoinOld"];
 
     private record BirdCageReplacement {
         public bool Enabled { get; init; }
@@ -100,7 +107,7 @@ internal class BirdCageModifier : Modifier {
 
         private static bool IsAlreadyPlacedWeapon(BirdCageReplacement replacement, ItemRandomizer itemRandomizer) {
             var itemId = replacement.ItemId;
-            return _items.FromId(itemId)?.IsWeapon == true && itemRandomizer.IsItemPlaced(itemId);
+            return Items.FromId(itemId)?.IsWeapon == true && itemRandomizer.IsItemPlaced(itemId);
         }
     }
 
@@ -115,7 +122,7 @@ internal class BirdCageModifier : Modifier {
         birdCage.Item.SaveGUID = rng.NextGuid(); // IMPORTANT!
         birdCage.CoinCounter.CoinMax = Coins;
 
-        if (!ValidItemIDs.SequenceEqual(_defaultInsertItems)) {
+        if (!ValidItemIDs.SequenceEqual(DefaultInsertItems)) {
             birdCage.ItemSelectReaction.ReactionSettings.Clear();
 
             foreach (var id in ValidItemIDs) {
@@ -132,7 +139,8 @@ internal class BirdCageModifier : Modifier {
         return true;
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var csv = randomizer.DynamicData.GetData(DynamicDataName.BirdCages) ??
                   throw new Exception("Unable to get bird cage data");
         var replacements = Csv.Deserialize<BirdCageReplacement>(csv)
@@ -162,7 +170,7 @@ internal class BirdCageModifier : Modifier {
                     if ((isMagnum && randomizeMagnum) || (!isMagnum && randomizeDrugsAndPowerCoins)) {
                         var (beforeItemCount, beforeItemId, beforeCoinCounter) =
                             (birdCage.Item.ItemStackNum, birdCage.Item.ItemDataID, birdCage.CoinCounter.CoinMax);
-                        var beforeName = _items.FromId(beforeItemId)!.Name;
+                        var beforeName = Items.FromId(beforeItemId)!.Name;
 
                         if (!RandomizeBirdCageContent(replacementPicker, rng, birdCage, randomizer.ItemRandomizer)) {
                             logger.LogLine(
@@ -171,7 +179,7 @@ internal class BirdCageModifier : Modifier {
                         }
 
                         changedBirdCages.Add(birdCage);
-                        var afterName = _items.FromId(birdCage.Item.ItemDataID)!.Name;
+                        var afterName = Items.FromId(birdCage.Item.ItemDataID)!.Name;
 
                         logger.LogLine(
                             $"Replaced {beforeItemCount}x {beforeName} that cost {beforeCoinCounter} antique coins in bird cage with " +

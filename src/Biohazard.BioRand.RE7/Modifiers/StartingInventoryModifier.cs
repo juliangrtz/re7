@@ -5,10 +5,17 @@ using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
 using Enums.app;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class StartingInventoryModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public StartingInventoryModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/inventory";
     private const int AntiqueCoinsProbabilityPct = 1;
     private const int AntiqueCoinsCount = 2;
@@ -60,7 +67,8 @@ internal class StartingInventoryModifier : Modifier {
         logger.Pop();
     }
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         foreach (var character in Enum.GetValues<MainCampaignCharacter>()) {
             LogVanillaInventory(logger, character, GetInventory(randomizer, character));
         }
@@ -208,7 +216,8 @@ internal class StartingInventoryModifier : Modifier {
         };
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var randomizeEthansInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-ethan");
         var randomizeMiasInventory = randomizer.GetConfigOption<bool>("random-starting-inventory-mia");
         var randomizeVhs = randomizer.GetConfigOption<bool>("random-starting-inventory-vhs");

@@ -1,13 +1,21 @@
 ﻿using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
+using IntelOrca.Biohazard.BioRand.REE;
 using IntelOrca.Biohazard.REE.Messages;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class MessageModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public MessageModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/messages";
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         if (!randomizer.GetConfigOption<bool>("randomized-messages"))
             return;
 

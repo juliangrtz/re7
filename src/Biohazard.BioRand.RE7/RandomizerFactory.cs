@@ -7,7 +7,7 @@ internal class RandomizerFactory {
     public static RandomizerFactory Default { get; } = new();
 
     private static Assembly CurrentAssembly => Assembly.GetExecutingAssembly();
-    public Version CurrentVersion { get; } = GetCurrentVersion();
+    private Version CurrentVersion { get; } = GetCurrentVersion();
     public string CurrentVersionNumber => $"{CurrentVersion.Major}.{CurrentVersion.Minor}.{CurrentVersion.Build}";
 
     public string CurrentVersionInfo =>
@@ -18,18 +18,14 @@ internal class RandomizerFactory {
     private RandomizerFactory() { }
 
     private static Version GetCurrentVersion() {
-        var version = CurrentAssembly?.GetName().Version ?? new Version();
+        var version = CurrentAssembly.GetName().Version ?? new Version();
         if (version.Revision == -1)
             return version;
         return new Version(version.Major, version.Minor, version.Build);
     }
 
     private static string GetGitHash() {
-        var assembly = CurrentAssembly;
-        if (assembly == null)
-            return string.Empty;
-
-        var attribute = assembly
+        var attribute = CurrentAssembly
             .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
             .FirstOrDefault();
         if (attribute == null)

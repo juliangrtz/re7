@@ -5,10 +5,17 @@ using IntelOrca.Biohazard.BioRand.Routing;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
 using System.Numerics;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class KeyItemLocationModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public KeyItemLocationModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/key-item-locations";
     private const string TemplateInstanceKey = $"{RandomizerKey}/template-instances";
     private const string ExtraKeyItemCarrierTemplateId = "HandgunBullet";
@@ -235,7 +242,8 @@ internal class KeyItemLocationModifier : Modifier {
         new("SilhouettePazzlePiece", 3, WoodenStatuetteMask, Priority: 80), // Wooden Statuette
     ];
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         foreach (var rule in _supportedKeyItems) {
             var item = _itemDefinitions.FromId(rule.Id)!;
             var placements = randomizer.ItemPlacementService.FromId(rule.Id);
@@ -247,7 +255,8 @@ internal class KeyItemLocationModifier : Modifier {
         }
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         if (!randomizer.GetConfigOption<bool>("random-key-item-locations"))
             return;
 

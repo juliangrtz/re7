@@ -2,10 +2,17 @@
 using Biohazard.BioRand.RE7.Serialization;
 using IntelOrca.Biohazard.REE.Rsz;
 using System.Collections.Immutable;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class EnemyModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public EnemyModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private const string RandomizerKey = "modifier/enemies";
     internal const string EnemyForceTargetingProbabilityConfigKey = "enemy-force-targeting-probability";
     internal const string ExtraEnemyGeneratorName = ExtraEnemySceneBuilder.GeneratorName;
@@ -616,7 +623,8 @@ internal class EnemyModifier : Modifier {
         logger.Pop();
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var options = BuildOptions(randomizer);
         if (options.DebugUniqueHp) {
             logger.LogUniqueSpawnHpHelp();

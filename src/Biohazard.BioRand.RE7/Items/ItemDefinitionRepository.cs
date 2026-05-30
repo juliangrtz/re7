@@ -84,7 +84,7 @@ public sealed class ItemDefinitionRepository {
     }
 
     public string GetName(string id) {
-        return FromId(id)?.Name ?? id.ToString();
+        return FromId(id)?.Name ?? id;
     }
 
     public string GetIdByName(string name) {

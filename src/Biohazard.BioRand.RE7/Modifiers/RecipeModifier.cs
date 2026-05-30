@@ -3,6 +3,7 @@ using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
 using System.Collections.Immutable;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
@@ -11,6 +12,12 @@ namespace Biohazard.BioRand.RE7.Modifiers;
 /// This is because the game has very strict limitations for what is shown in the combine GUI.
 /// </summary>
 internal class RecipeModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public RecipeModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     // The combine GUI only allows 20 slots, even in a modded state (4 cols, 5 rows).
     public const int MaxRecipeCount = 20;
 
@@ -44,14 +51,16 @@ internal class RecipeModifier : Modifier {
         logger.Pop();
     }
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         _originalRecipes = randomizer.FileRepository.DeserializeUserFile<ItemCombineData>(ItemCombineDataPath)._Datas;
         _originalDictCombineData = randomizer.FileRepository
             .DeserializeUserFile<DictionaryCombineData>(DictionaryCombineDataPath)._Datas;
         LogRecipeState(logger, _originalRecipes, _originalDictCombineData, beforeModifications: true);
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var addNewRecipes = randomizer.GetConfigOption<bool>("recipes-add-new");
 
         if (!addNewRecipes) {

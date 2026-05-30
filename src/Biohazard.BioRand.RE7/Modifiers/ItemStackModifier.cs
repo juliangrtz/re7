@@ -1,9 +1,16 @@
 ﻿using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.BioRand.REE;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class ItemStackModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public ItemStackModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     private readonly string itemDir = "prefab/item".Of();
     private const int MaxStackSize = 999;
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
@@ -24,7 +31,8 @@ internal class ItemStackModifier : Modifier {
         return result;
     }
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var customStacks = GetItemsWithCustomStackSize(randomizer);
         logger.Push("Stack sizes");
         foreach (var item in itemDefinitions.Items) {
@@ -43,7 +51,8 @@ internal class ItemStackModifier : Modifier {
         logger.Pop();
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         var customStacks = GetItemsWithCustomStackSize(randomizer);
 
         if (customStacks.Count == 0) {

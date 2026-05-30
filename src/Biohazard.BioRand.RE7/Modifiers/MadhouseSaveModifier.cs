@@ -1,9 +1,16 @@
 using Biohazard.BioRand.RE7.REEngine;
+using IntelOrca.Biohazard.BioRand.REE;
 using IntelOrca.Biohazard.REE.Rsz;
 
 namespace Biohazard.BioRand.RE7.Modifiers;
 
 internal class MadhouseSaveModifier : Modifier {
+    private readonly Randomizer _randomizer;
+
+    public MadhouseSaveModifier(Randomizer randomizer) {
+        _randomizer = randomizer;
+    }
+
     internal const string ConfigKey = "madhouse-normal-saves";
 
     internal static readonly string[] AutosaveScenePaths =[
@@ -21,11 +28,13 @@ internal class MadhouseSaveModifier : Modifier {
         "leveldesign/fsm/ff050/level_fsm_ff050.scn".SceneFile(),
     ];
 
-    public override void LogState(Randomizer randomizer, RandomizerLogger logger) {
+    public override void LogState(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         logger.LogLine($"Madhouse normal saves: {IsEnabled(randomizer)}");
     }
 
-    public override void Apply(Randomizer randomizer, RandomizerLogger logger) {
+    public override void Apply(RandomizerLogger logger) {
+        var randomizer = _randomizer;
         if (!IsEnabled(randomizer))
             return;
 

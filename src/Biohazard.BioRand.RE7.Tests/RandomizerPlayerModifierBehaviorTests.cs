@@ -69,7 +69,8 @@ public class RandomizerPlayerModifierBehaviorTests {
             }
         });
 
-        var before = result.ReadBeforeUserFile<app.PlayerReloadSpeedRateTable>(RandomizerTestPaths.ReloadSpeedTablePath);
+        var before =
+            result.ReadBeforeUserFile<app.PlayerReloadSpeedRateTable>(RandomizerTestPaths.ReloadSpeedTablePath);
         var after = result.ReadAfterUserFile<app.PlayerReloadSpeedRateTable>(RandomizerTestPaths.ReloadSpeedTablePath);
 
         Assert.True(result.WasFileModified(RandomizerTestPaths.ReloadSpeedTablePath));

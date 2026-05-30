@@ -8,6 +8,7 @@ global using System.IO;
 global using System.IO.Compression;
 global using System.Linq;
 global using System.Text;
+global using RandomizerLogger = IntelOrca.Biohazard.BioRand.RandomizerLogger;
 
 // Syntactic sugar for RSZ types
 global using Recipe = app.ItemCombineData.Data;

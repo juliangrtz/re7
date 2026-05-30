@@ -24,6 +24,7 @@ internal class FileRepository : IPatchContext, IDisposable {
 
     private readonly ConcurrentDictionary<string, byte[]>
         _additionalOutputFiles = new(StringComparer.OrdinalIgnoreCase);
+
     private readonly ConcurrentDictionary<string, byte>
         _additionalOutputAssetBundles = new(StringComparer.OrdinalIgnoreCase);
 

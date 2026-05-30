@@ -7,6 +7,7 @@ using System.Text.Json.Nodes;
 namespace Biohazard.BioRand.RE7;
 
 public sealed class RandomizerOutput {
+    private static readonly HttpClient Http = new();
     private byte[]? _zipFile;
     private byte[]? _modFile;
     private byte[]? _additionalAssetsFile;
@@ -95,9 +96,7 @@ public sealed class RandomizerOutput {
         }
 
         if (Input.Configuration.GetValueOrDefault<bool>("debug-download-reframework-nightly")) {
-            using var http = new HttpClient();
-
-            var zipBytes = http.GetByteArrayAsync(REFrameworkNightlyUrl)
+            var zipBytes = Http.GetByteArrayAsync(REFrameworkNightlyUrl)
                 .GetAwaiter()
                 .GetResult();
 

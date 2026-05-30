@@ -196,8 +196,8 @@ public class RandomizerBirdCageBehaviorTests {
 
     [Fact]
     public void BirdCageModifier_BirthdaySkillRewards_EmitAdditionalAssetsWhenPreservingItemModels() {
-        using var randomizer = CreateBirthdaySkillBirdCageRandomizer(
-            config => { config["preserve-item-models"] = true; });
+        using var randomizer =
+            CreateBirthdaySkillBirdCageRandomizer(config => { config["preserve-item-models"] = true; });
         var output = randomizer.Randomize();
         var additionalAsset = output.Assets.SingleOrDefault(asset => asset.Key == "3-assets");
 
