@@ -71,4 +71,36 @@ public class RandomizerRecipeModifierBehaviorTests {
         Assert.Equal("ShotgunBullet", selectedRecipe.ResultItemID);
         Assert.Equal(6, selectedRecipe.ResultItemNum);
     }
+
+    [Fact]
+    public void RecipeModifier_WithQuantityRandomization_ClampsResultAmountsToItemMaxStack() {
+        var recipesCsv = """
+                         Enabled,Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
+                         true,Balanced,1,1,Weak Acid,1,1,Strong Chem Fluid,6,6,Neuro Rounds,Balanced recipe
+                         """;
+
+        using var result = RandomizerTest.RunState(
+            config => {
+                config["recipes-add-new"] = true;
+                config["recipes-randomization-mode"] = "Balanced";
+                config["recipes-new-min"] = 1;
+                config["recipes-new-max"] = 1;
+                config["recipes-random-item-quantities"] = true;
+                config["recipes-count-min"] = 2.0;
+                config["recipes-count-max"] = 2.0;
+                config["inventory-stack-limit-acidbullets"] = 19;
+            },
+            prepareRandomizer: randomizer => {
+                randomizer.DynamicData.SetData(DynamicDataName.Recipes, Encoding.UTF8.GetBytes(recipesCsv));
+            });
+
+        var recipes = result.ReadAfterUserFile<app.ItemCombineData>(RandomizerTestPaths.ItemCombineDataPath)._Datas;
+        var selectedRecipe = recipes[0];
+        var afterDictionary =
+            result.ReadAfterUserFile<app.DictionaryCombineData>(RandomizerTestPaths.DictionaryCombineDataPath);
+
+        Assert.Equal("AcidBulletS", selectedRecipe.ResultItemID);
+        Assert.Equal(5, selectedRecipe.ResultItemNum);
+        Assert.Equal(["AcidBulletS"], afterDictionary._Datas.Select(x => x.ItemDataID).ToArray());
+    }
 }

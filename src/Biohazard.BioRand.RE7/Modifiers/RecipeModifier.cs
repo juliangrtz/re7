@@ -139,7 +139,7 @@ internal class RecipeModifier : Modifier {
 
                 r.SrcItemNum1 = Math.Max(1, (int)Math.Round(src1 * Scale()));
                 r.SrcItemNum2 = Math.Max(1, (int)Math.Round(src2 * Scale()));
-                r.ResultItemNum = Math.Max(1, (int)Math.Round(result * Scale()));
+                r.ResultItemNum = ClampRecipeResultNum(r.ResultItemID, (int)Math.Round(result * Scale()));
             }
         }
 
@@ -175,20 +175,31 @@ internal class RecipeModifier : Modifier {
         return result;
     }
 
-    private static Recipe CreateRecipe(RecipeModel model, Rng rng)
-        => new(){
+    private static Recipe CreateRecipe(RecipeModel model, Rng rng) {
+        var resultItemId = _itemDefinitions.NameToId(model.OutputItem);
+        return new(){
             _Comment = model.Comment,
             DataID = model.OutputItem,
             SrcItemID1 = _itemDefinitions.NameToId(model.Item1),
             SrcItemNum1 = rng.NextInclusive(model.Count1_Min, model.Count1_Max),
             SrcItemID2 = _itemDefinitions.NameToId(model.Item2),
             SrcItemNum2 = rng.NextInclusive(model.Count2_Min, model.Count2_Max),
-            ResultItemID = _itemDefinitions.NameToId(model.OutputItem),
-            ResultItemNum = rng.NextInclusive(model.OutputCount_Min, model.OutputCount_Max),
+            ResultItemID = resultItemId,
+            ResultItemNum = ClampRecipeResultNum(
+                resultItemId,
+                rng.NextInclusive(model.OutputCount_Min, model.OutputCount_Max)),
             EnableFlag = Guid.Empty,
             IsTutorialTarget = false,
             IsTrophyTarget = false,
         };
+    }
+
+    private static int ClampRecipeResultNum(string? itemId, int count) {
+        var result = Math.Max(1, count);
+        return itemId != null && _itemDefinitions.FromId(itemId) is { MaxStack: > 0 } definition
+            ? Math.Min(result, definition.MaxStack)
+            : result;
+    }
 
     private static void AddRecipes(Randomizer randomizer, List<Recipe> recipes, bool clear) {
         randomizer.FileRepository.ModifyUserFile<ItemCombineData>(ItemCombineDataPath, root => {
