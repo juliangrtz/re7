@@ -73,6 +73,7 @@ public partial class REFPlugin {
         DrawLabelValue("Static item locations", FormatEnabled(Config.ReadOrDefault("random-items", true)));
         DrawLabelValue("Additional items", FormatEnabled(Config.ReadOrDefault("additional-items", false)));
         DrawLabelValue("Enemy drops", $"{FormatEnabled(IsEnemyDropEnabled())} ({GetEnemyDropStateLabel()})");
+        DrawLabelValue("Static Mia memory", GetBioRandStaticMiaStateLabel());
         DrawLabelValue("Em3300 explosions",
             $"{FormatEnabled(IsEm3300ExplosionEnabled())} ({GetEm3300ExplosionStateLabel()})");
         DrawLabelValue("Random events", $"{FormatEnabled(IsRandomEventsEnabled())} ({GetRandomEventStateLabel()})");
@@ -105,10 +106,15 @@ public partial class REFPlugin {
             }
 
             ImGui.SameLine();
+            if (ImGui.Button("Clear static Mia state")) {
+                ClearBioRandStaticMiaStateFromUi();
+            }
+
             if (ImGui.Button("Clear Em3300 state")) {
                 ClearEm3300ExplosionStateFromUi();
             }
 
+            ImGui.SameLine();
             if (ImGui.Button("Clear reload cache")) {
                 ClearWeaponReloadSpeedStateFromUi();
             }
@@ -269,6 +275,12 @@ public partial class REFPlugin {
         }
     }
 
+    private static string GetBioRandStaticMiaStateLabel() {
+        lock (BioRandStaticMiaStateLock) {
+            return $"{KilledBioRandStaticMiaKeys.Count} keys, {SuppressedBioRandStaticMiaObjects.Count} suppressed";
+        }
+    }
+
     private static string GetEm3300ExplosionStateLabel() {
         lock (Em3300ExplosionStateLock) {
             return $"{Em3300ExplosionStates.Count} tracked";
@@ -315,6 +327,15 @@ public partial class REFPlugin {
         }
 
         Logger.Log("Cleared enemy drop state from UI.");
+    }
+
+    private static void ClearBioRandStaticMiaStateFromUi() {
+        lock (BioRandStaticMiaStateLock) {
+            KilledBioRandStaticMiaKeys.Clear();
+            SuppressedBioRandStaticMiaObjects.Clear();
+        }
+
+        Logger.Log("Cleared static Mia memory from UI.");
     }
 
     private static void ClearEm3300ExplosionStateFromUi() {

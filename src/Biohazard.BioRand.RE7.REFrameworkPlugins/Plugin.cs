@@ -25,6 +25,8 @@ public partial class REFPlugin {
     private const float EnemyDropGroundRayDistance = 50.0f;
     private const float EnemyDropGroundMinNormalY = 0.5f;
     private const float EnemyDropWallProbeDistance = 0.75f;
+    private const string BioRandStaticMiaNamePrefix = "BioRandExtraEnemyStatic_Em2000_";
+    private const float BioRandStaticMiaPositionKeyScale = 100.0f;
     private static readonly float[] EnemyDropWallClearanceDistances = [0.6f, 0.9f, 1.2f];
 
     private static bool _isInitialized;
@@ -36,6 +38,9 @@ public partial class REFPlugin {
     private static readonly Lock EnemyDropStateLock = new();
     private static readonly HashSet<ulong> DroppedEnemyObjects = [];
     private static readonly Dictionary<ulong, int> EnemyDropGenerations = [];
+    private static readonly Lock BioRandStaticMiaStateLock = new();
+    private static readonly HashSet<string> KilledBioRandStaticMiaKeys = [];
+    private static readonly HashSet<ulong> SuppressedBioRandStaticMiaObjects = [];
     private static readonly Lock Em3300ExplosionStateLock = new();
     private static readonly Dictionary<ulong, Em3300ExplosionState> Em3300ExplosionStates = [];
     private static WeaponID? _lastLoggedWeaponReloadSpeedWeapon;
@@ -82,6 +87,11 @@ public partial class REFPlugin {
         lock (EnemyDropStateLock) {
             DroppedEnemyObjects.Clear();
             EnemyDropGenerations.Clear();
+        }
+
+        lock (BioRandStaticMiaStateLock) {
+            KilledBioRandStaticMiaKeys.Clear();
+            SuppressedBioRandStaticMiaObjects.Clear();
         }
 
         lock (Em3300ExplosionStateLock) {
