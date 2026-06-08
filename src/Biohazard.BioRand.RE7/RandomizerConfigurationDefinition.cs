@@ -893,7 +893,7 @@ internal static class RandomizerConfigurationDefinition {
         group.Items.Add(new GroupItem(){
             Id = "random-starting-inventory-give-ammo",
             Label = "Provide ammo for primary weapon",
-            Description = "Whether to provide a random amount of ammo for your primary weapon.",
+            Description = "Whether to provide a starter ammo loadout for your primary weapon.",
             Type = "switch",
             Default = true
         });
