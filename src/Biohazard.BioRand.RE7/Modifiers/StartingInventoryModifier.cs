@@ -3,7 +3,6 @@ using Biohazard.BioRand.RE7.Inventory;
 using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.REEngine;
 using Biohazard.BioRand.RE7.Serialization;
-using Biohazard.BioRand.RE7.Weapons;
 using Enums.app;
 using IntelOrca.Biohazard.BioRand.REE;
 
@@ -19,6 +18,28 @@ internal class StartingInventoryModifier : Modifier {
     private const string RandomizerKey = "modifier/inventory";
     private const int AntiqueCoinsProbabilityPct = 1;
     private const int AntiqueCoinsCount = 2;
+
+    private static readonly (ItemID ItemId, int Count)[] StarterHealing =[
+        (ItemID.RemedyM, 1),
+        (ItemID.RemedyL, 1),
+    ];
+
+    private static readonly Dictionary<WeaponID, (ItemID ItemId, int Count)[]> StarterAmmoLoadouts = new(){
+        [WeaponID.Handgun] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.Handgun_M19] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.Handgun_G17] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.Handgun_MPM] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.Handgun_Albert] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.Handgun_Albert_Reward] =[(ItemID.HandgunBullet, 20), (ItemID.HandgunBulletL, 20)],
+        [WeaponID.ShotGun] =[(ItemID.ShotgunBullet, 15)],
+        [WeaponID.Shotgun_M37] =[(ItemID.ShotgunBullet, 15)],
+        [WeaponID.Shotgun_M37S] =[(ItemID.ShotgunBullet, 15)],
+        [WeaponID.Shotgun_DB] =[(ItemID.ShotgunBullet, 15)],
+        [WeaponID.MachineGun] =[(ItemID.MachineGunBullet, 150)],
+        [WeaponID.Magnum] =[(ItemID.MagnumBullet, 10)],
+        [WeaponID.GrenadeLauncher] =[(ItemID.FlameBulletS, 3), (ItemID.AcidBulletS, 3)],
+        [WeaponID.Burner] =[(ItemID.BurnerBullet, 150)],
+    };
 
     private static readonly string[] StartingSkillLevelOneIds =[
         "skl009", // Defense I
@@ -45,7 +66,6 @@ internal class StartingInventoryModifier : Modifier {
     };
 
     private static readonly ItemDefinitionRepository itemDefinitions = ItemDefinitionRepository.Default;
-    private static readonly WeaponDefinitionRepository weaponDefinitions = WeaponDefinitionRepository.Default;
 
     private List<StartingInventoryItem> GetInventory(Randomizer randomizer, MainCampaignCharacter character)
         => randomizer.FileRepository.DeserializeUserFile<app.AddItemListData>(_paths[character])._AddItems;
@@ -103,25 +123,6 @@ internal class StartingInventoryModifier : Modifier {
         return (primaryWeapon, secondaryWeapon);
     }
 
-    // (min, max)
-    private (int, int) DetermineAppropriateStartingAmmoCount(WeaponID wp) => wp switch{
-        WeaponID.Handgun => (10, 20),
-        WeaponID.Handgun_M19 => (10, 20),
-        WeaponID.Handgun_G17 => (10, 20),
-        WeaponID.Handgun_MPM => (10, 20),
-        WeaponID.Handgun_Albert => (10, 15),
-        WeaponID.Handgun_Albert_Reward => (5, 8),
-        WeaponID.ShotGun => (5, 10),
-        WeaponID.Shotgun_M37 => (5, 10),
-        WeaponID.Shotgun_M37S => (5, 10),
-        WeaponID.Shotgun_DB => (5, 10),
-        WeaponID.MachineGun => (30, 50),
-        WeaponID.Magnum => (1, 5),
-        WeaponID.GrenadeLauncher => (1, 1),
-        WeaponID.Burner => (75, 150),
-        _ => (0, 0)
-    };
-
     private void RandomizeStartingInventory(
         Randomizer randomizer,
         RandomizerLogger logger,
@@ -147,22 +148,14 @@ internal class StartingInventoryModifier : Modifier {
                     new StartingInventoryItem(){ ItemDataID = id, Num = 1 }
                 );
 
-                if (giveAmmo && Enum.TryParse(id, out WeaponID wpId)) {
-                    foreach (var ammoType in weaponDefinitions.GetAmmoTypes(wpId)) {
-                        if ( /*rng.CoinToss() &&*/ ammoType == AmmoTypes.Get(wpId)?.StrongAmmo)
-                            continue;
-
-                        (int min, int max) = DetermineAppropriateStartingAmmoCount(wpId);
-                        var ammoCount = inventoryRng.Next(min, max);
-                        if (ammoCount == 0) {
-                            logger.LogLine("Avoiding extra ammo (unsupported weapon type).");
-                            continue;
-                        }
-
+                if (giveAmmo && Enum.TryParse(id, out WeaponID wpId) &&
+                    StarterAmmoLoadouts.TryGetValue(wpId, out var ammoLoadout)) {
+                    foreach (var (ammoType, ammoCount) in ammoLoadout) {
                         logger.LogLine($"Extra ammo: {ammoCount}x {ammoType}");
-                        root._AddItems.Add(
-                            new StartingInventoryItem(){ ItemDataID = ammoType.ToString(), Num = ammoCount }
-                        );
+                        root._AddItems.Add(new StartingInventoryItem(){
+                            ItemDataID = ammoType.ToString(),
+                            Num = ammoCount,
+                        });
                     }
                 }
             }
@@ -177,6 +170,12 @@ internal class StartingInventoryModifier : Modifier {
             if (randomizeInventory && inventoryRng.NextProbability(AntiqueCoinsProbabilityPct)) {
                 logger.LogLine($"Nice! {AntiqueCoinsCount}x extra antique coin(s)!");
                 root._AddItems.Add(new StartingInventoryItem(){ ItemDataID = "Coin", Num = AntiqueCoinsCount });
+            }
+
+            if (randomizeInventory) {
+                foreach (var (itemId, count) in StarterHealing) {
+                    EnsureMinimumItem(root._AddItems, itemId, count, logger);
+                }
             }
 
 #if !DEBUG
@@ -207,6 +206,27 @@ internal class StartingInventoryModifier : Modifier {
             return root;
         });
         logger.Pop();
+    }
+
+    private static void EnsureMinimumItem(
+        List<StartingInventoryItem> items,
+        ItemID itemId,
+        int minimumCount,
+        RandomizerLogger logger
+    ) {
+        var id = itemId.ToString();
+        var existingCount = items
+            .Where(item => string.Equals(item.ItemDataID, id, StringComparison.OrdinalIgnoreCase))
+            .Sum(item => item.Num);
+        var countToAdd = minimumCount - existingCount;
+        if (countToAdd <= 0)
+            return;
+
+        logger.LogLine($"Starter item: {countToAdd}x {itemId}");
+        items.Add(new StartingInventoryItem(){
+            ItemDataID = id,
+            Num = countToAdd,
+        });
     }
 
     private static StartingInventoryItem CloneInventoryItem(StartingInventoryItem item) {
