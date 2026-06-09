@@ -1,12 +1,37 @@
 using Biohazard.BioRand.RE7.Extensions;
 using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.REE.Messages;
+using IntelOrca.Biohazard.REE.Rsz;
 using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
 public class RandomizerWeaponModifierBehaviorTests {
+    [Fact]
+    public void WeaponModifier_AmmoCapacity_UpdatesGunParameterAndPrefabLoadNums() {
+        var weapon = WeaponDefinitionRepository.Default.FromWeaponId("Handgun_G17");
+        const string inventoryPrefabPath =
+            "natives/stm/prefab/weapon/wp1210_handgun/inventory/wp1210_handgun_inventory.pfb.17";
+        const string itemPrefabPath =
+            "natives/stm/prefab/weapon/wp1210_handgun/item/wp1210_handgun_item.pfb.17";
+
+        using var result = RandomizerTest.RunState(config => {
+            config["weapon-mod-ammo-capacity"] = true;
+            config["weapon-mod-ammo-capacity-prevent-zero"] = true;
+            config["weapon-ammo-capacity-min-handgun-g17"] = 2.0;
+            config["weapon-ammo-capacity-max-handgun-g17"] = 2.0;
+        });
+
+        var beforeParameter = result.ReadBeforeUserFile<app.WeaponGunParameter>(weapon.UserParamsPath!);
+        var afterParameter = result.ReadAfterUserFile<app.WeaponGunParameter>(weapon.UserParamsPath!);
+
+        Assert.True(result.WasFileModified(weapon.UserParamsPath!));
+        Assert.Equal(beforeParameter.MaxLoadNum * 2, afterParameter.MaxLoadNum);
+        AssertWeaponGunLoadNumsScaled(result, inventoryPrefabPath, weapon, 2.0);
+        AssertWeaponGunLoadNumsScaled(result, itemPrefabPath, weapon, 2.0);
+    }
+
     [Fact]
     public void WeaponModifier_ReloadSpeed_DoesNotModifySharedReloadSpeedTable() {
         using var result = RandomizerTest.RunState(config => {
@@ -166,5 +191,73 @@ public class RandomizerWeaponModifierBehaviorTests {
         }
 
         return Math.Max(0.001f, Scale(value, factor));
+    }
+
+    private static void AssertWeaponGunLoadNumsScaled(
+        RandomizerRunResult result,
+        string prefabPath,
+        WeaponDefinition weapon,
+        double factor) {
+        var before = ReadWeaponGun(result, prefabPath, weapon, before: true);
+        var after = ReadWeaponGun(result, prefabPath, weapon, before: false);
+        var expectedLoadNums = before.BulletInfoList
+            .Select(x => x.LoadNum <= 0 ? x.LoadNum : Math.Max(1, (int)Math.Round(x.LoadNum * factor)))
+            .ToArray();
+
+        Assert.True(result.WasFileModified(prefabPath));
+        Assert.Contains(before.BulletInfoList, x => x.LoadNum > 0);
+        if (before.BulletInfoList.Any(x => x.LoadNum == 0)) {
+            Assert.Contains(after.BulletInfoList, x => x.LoadNum == 0);
+        }
+
+        Assert.Equal(expectedLoadNums, after.BulletInfoList.Select(x => x.LoadNum).ToArray());
+    }
+
+    private static app.WeaponGun ReadWeaponGun(
+        RandomizerRunResult result,
+        string prefabPath,
+        WeaponDefinition weapon,
+        bool before) {
+        var bytes = before ? result.ReadBeforeBytes(prefabPath) : result.ReadAfterBytes(prefabPath);
+        var scene = new PfbFile(FileVersions.PfbFileVersion, bytes)
+            .ReadScene(result.Randomizer.FileRepository.TypeRepository);
+        var guns = scene
+            .GetGameObjects()
+            .Select(x => x.FindComponent<app.WeaponGun>())
+            .Where(x => x != null)
+            .Select(x => x!)
+            .ToArray();
+        var gun = guns.SingleOrDefault(x => IsWeaponGunForDefinition(x, weapon));
+
+        Assert.True(
+            gun != null,
+            $"No matching app.WeaponGun in {prefabPath}. Found: {string.Join(", ", guns.Select(x => $"{x.WeaponID}:{x.WeaponGunParameter.Path}"))}");
+        return gun!;
+    }
+
+    private static bool IsWeaponGunForDefinition(app.WeaponGun gun, WeaponDefinition weapon)
+        => gun.WeaponID == weapon.WeaponId ||
+           string.Equals(
+               NormalizeUserDataPath(gun.WeaponGunParameter.Path),
+               NormalizeUserDataPath(weapon.UserParamsPath),
+               StringComparison.OrdinalIgnoreCase);
+
+    private static string NormalizeUserDataPath(string? path) {
+        if (string.IsNullOrWhiteSpace(path)) {
+            return string.Empty;
+        }
+
+        var result = path.Trim().Replace('\\', '/');
+        const string prefix = "natives/stm/";
+        if (result.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) {
+            result = result[prefix.Length..];
+        }
+
+        var versionSuffix = $".{FileVersions.UserFileVersion}";
+        if (result.EndsWith(versionSuffix, StringComparison.OrdinalIgnoreCase)) {
+            result = result[..^versionSuffix.Length];
+        }
+
+        return result;
     }
 }
