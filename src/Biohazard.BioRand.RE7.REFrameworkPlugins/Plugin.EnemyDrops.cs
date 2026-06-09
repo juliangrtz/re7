@@ -294,7 +294,8 @@ public partial class REFPlugin {
     private static bool ShouldKeepEnemyDropStateAfterForgetDie(ManagedObject dropSourceObject,
         via.GameObject? enemyObject) {
         var enemyTypeId = GetEnemyTypeId(dropSourceObject, enemyObject);
-        return enemyTypeId != null && SingleDropPerSpawnEnemyTypeIds.Contains(enemyTypeId);
+        return enemyTypeId != null && SingleDropPerSpawnEnemyTypeIds.Contains(enemyTypeId)
+               || IsBioRandStaticMiaGameObject(enemyObject);
     }
 
     private static bool TryBeginEnemyDrop(via.GameObject enemyObject, out int generation) {
@@ -533,15 +534,32 @@ public partial class REFPlugin {
         if (!IsEnemyDropEnabled() || enemyObject == null)
             return;
 
+        if (TrySuppressKilledBioRandStaticMia(dropSourceObject, enemyObject))
+            return;
+
         if (!TryBeginEnemyDrop(enemyObject, out var generation))
             return;
 
         SpawnConfiguredEnemyDrop(dropSourceObject, enemyObject, generation);
     }
 
+    private static void HandleEnemyDeathForDropsAndStaticMia(ManagedObject dropSourceObject,
+        via.GameObject? enemyObject) {
+        if (TrySuppressKilledBioRandStaticMia(dropSourceObject, enemyObject))
+            return;
+
+        TrySpawnConfiguredEnemyDrop(dropSourceObject, enemyObject);
+        RememberKilledBioRandStaticMia(dropSourceObject, enemyObject);
+    }
+
     [MethodHook(typeof(EnemyActionController), nameof(EnemyActionController.spawn), MethodHookType.Pre)]
     private static PreHookResult EnemyActionController_spawn_Pre(Span<ulong> args) {
-        ResetEnemyDropState(ManagedObject.ToManagedObject(args[1]).As<EnemyActionController>()?.GameObject);
+        var controllerObject = ManagedObject.ToManagedObject(args[1]);
+        var controller = controllerObject.As<EnemyActionController>();
+        if (TrySuppressKilledBioRandStaticMia(controllerObject, controller?.GameObject))
+            return PreHookResult.Skip;
+
+        ResetEnemyDropState(controller?.GameObject);
         return PreHookResult.Continue;
     }
 
@@ -549,6 +567,9 @@ public partial class REFPlugin {
     private static PreHookResult EnemyActionController_forgetDie_Pre(Span<ulong> args) {
         var controllerObject = ManagedObject.ToManagedObject(args[1]);
         var controller = controllerObject.As<EnemyActionController>();
+        if (TrySuppressKilledBioRandStaticMia(controllerObject, controller?.GameObject))
+            return PreHookResult.Skip;
+
         if (ShouldKeepEnemyDropStateAfterForgetDie(controllerObject, controller?.GameObject)) {
             Logger.Log(
                 $"Preserving enemy drop state after forgetDie for enemy object 0x{controller?.GameObject?.Address() ?? 0:X}.",
@@ -564,7 +585,7 @@ public partial class REFPlugin {
     private static PreHookResult EnemyActionController_finishDead_Pre(Span<ulong> args) {
         var controllerObject = ManagedObject.ToManagedObject(args[1]);
         var controller = controllerObject.As<EnemyActionController>();
-        TrySpawnConfiguredEnemyDrop(controllerObject, controller?.GameObject);
+        HandleEnemyDeathForDropsAndStaticMia(controllerObject, controller?.GameObject);
 
         return PreHookResult.Continue;
     }
@@ -573,7 +594,7 @@ public partial class REFPlugin {
     private static PreHookResult EnemyDamageController_doDie_Pre(Span<ulong> args) {
         var controllerObject = ManagedObject.ToManagedObject(args[1]);
         var controller = controllerObject.As<EnemyDamageController>();
-        TrySpawnConfiguredEnemyDrop(controllerObject, controller?.GameObject);
+        HandleEnemyDeathForDropsAndStaticMia(controllerObject, controller?.GameObject);
 
         return PreHookResult.Continue;
     }
