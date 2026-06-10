@@ -219,8 +219,11 @@ internal class WeaponModifier : Modifier {
             var factor = Math.Max(minCap, Math.Round(rng.NextDouble(min, max), 1));
             GetOrCreateRolls(rolls, definition.WeaponId).AmmoCapacityMultiplier = factor;
 
+            var previousLoadNum = 0;
+            var newLoadNum = 0;
             randomizer.FileRepository.ModifyUserFile<app.WeaponGunParameter>(definition.UserParamsPath, root => {
-                var newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
+                previousLoadNum = root.MaxLoadNum;
+                newLoadNum = (int)Math.Round(root.MaxLoadNum * factor);
 
                 if (root.MaxLoadNum == newLoadNum) {
                     logger.LogLine($"Ammo capacity of {name} remains ({root.MaxLoadNum})");
@@ -231,7 +234,138 @@ internal class WeaponModifier : Modifier {
                 root.MaxLoadNum = newLoadNum;
                 return root;
             });
+
+            UpdateWeaponPrefabLoadNums(randomizer, logger, definition, previousLoadNum, newLoadNum);
         }
+    }
+
+    private static void UpdateWeaponPrefabLoadNums(
+        Randomizer randomizer,
+        RandomizerLogger logger,
+        WeaponDefinition definition,
+        int previousLoadNum,
+        int newLoadNum) {
+        if (previousLoadNum <= 0 || previousLoadNum == newLoadNum) {
+            return;
+        }
+
+        foreach (var path in GetWeaponPrefabPaths(definition)) {
+            if (!randomizer.FileRepository.Exists(path)) {
+                continue;
+            }
+
+            var changedCount = 0;
+            var pfbFile = randomizer.FileRepository.GetPfbFile(path).ToBuilder(randomizer.FileRepository.TypeRepository);
+            pfbFile.Scene = pfbFile.Scene.VisitComponents((_, component) => {
+                if (component.Type.Name != "app.WeaponGun") {
+                    return component;
+                }
+
+                var gun = RszSerializer.Deserialize<app.WeaponGun>(component)!;
+                if (!IsWeaponGunForDefinition(gun, definition)) {
+                    return component;
+                }
+
+                var changed = false;
+                foreach (var bulletInfo in gun.BulletInfoList) {
+                    if (bulletInfo.LoadNum <= 0) {
+                        continue;
+                    }
+
+                    var scaledLoadNum = ScaleLoadNum(bulletInfo.LoadNum, previousLoadNum, newLoadNum);
+                    if (bulletInfo.LoadNum == scaledLoadNum) {
+                        continue;
+                    }
+
+                    bulletInfo.LoadNum = scaledLoadNum;
+                    changed = true;
+                    changedCount++;
+                }
+
+                return changed
+                    ? (RszObjectNode)RszSerializer.Serialize(component.Type, gun)
+                    : component;
+            });
+
+            if (changedCount == 0) {
+                continue;
+            }
+
+            randomizer.FileRepository.SetPfbFile(path, pfbFile.AddMissingResources().Build());
+            logger.LogLine(
+                $"Changing {changedCount} default loaded ammo value(s) in {path} to match {definition.Name ?? definition.WeaponId.ToString()} ammo capacity.");
+        }
+    }
+
+    private static int ScaleLoadNum(int loadNum, int previousLoadNum, int newLoadNum) {
+        if (newLoadNum <= 0) {
+            return 0;
+        }
+
+        return Math.Max(1, (int)Math.Round(loadNum * (newLoadNum / (double)previousLoadNum)));
+    }
+
+    private static bool IsWeaponGunForDefinition(app.WeaponGun gun, WeaponDefinition definition)
+        => gun.WeaponID == definition.WeaponId ||
+           string.Equals(
+               NormalizeUserDataPath(gun.WeaponGunParameter.Path),
+               NormalizeUserDataPath(definition.UserParamsPath),
+               StringComparison.OrdinalIgnoreCase);
+
+    private static string NormalizeUserDataPath(string? path) {
+        if (string.IsNullOrWhiteSpace(path)) {
+            return string.Empty;
+        }
+
+        var result = path.Trim().Replace('\\', '/');
+        const string prefix = "natives/stm/";
+        if (result.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) {
+            result = result[prefix.Length..];
+        }
+
+        var versionSuffix = $".{FileVersions.UserFileVersion}";
+        if (result.EndsWith(versionSuffix, StringComparison.OrdinalIgnoreCase)) {
+            result = result[..^versionSuffix.Length];
+        }
+
+        return result;
+    }
+
+    private static IEnumerable<string> GetWeaponPrefabPaths(WeaponDefinition definition) {
+        var result = new List<string>();
+        void AddPath(string path) {
+            if (!result.Contains(path, StringComparer.OrdinalIgnoreCase)) {
+                result.Add(path);
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(definition.PrefabPath)) {
+            AddPath(definition.PrefabPath);
+        }
+
+        if (string.IsNullOrWhiteSpace(definition.UserParamsPath)) {
+            return result;
+        }
+
+        var parameterPath = definition.UserParamsPath.Replace('\\', '/');
+        var separatorIndex = parameterPath.LastIndexOf('/');
+        if (separatorIndex < 0) {
+            return result;
+        }
+
+        var directory = parameterPath[..separatorIndex];
+        var folderName = directory[(directory.LastIndexOf('/') + 1)..];
+        var parameterFile = parameterPath[(separatorIndex + 1)..];
+        if (parameterFile.Contains("_reward_parameter.", StringComparison.OrdinalIgnoreCase)) {
+            AddPath($"{directory}/rewardinventory/{folderName}_rewardinventory.pfb.{FileVersions.PfbFileVersion}");
+            AddPath($"{directory}/reward_item/{folderName}_reward_item.pfb.{FileVersions.PfbFileVersion}");
+            return result;
+        }
+
+        AddPath($"{directory}/inventory/{folderName}_inventory.pfb.{FileVersions.PfbFileVersion}");
+        AddPath($"{directory}/item/{folderName}_item.pfb.{FileVersions.PfbFileVersion}");
+        AddPath($"{directory}/detailsearch/{folderName}_detailsearch.pfb.{FileVersions.PfbFileVersion}");
+        return result;
     }
 
     private void RecordReloadSpeedRolls(Randomizer randomizer, Dictionary<WeaponID, WeaponStatRolls> rolls) {
