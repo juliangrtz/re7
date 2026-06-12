@@ -88,7 +88,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
                     if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
                         return;
 #endif
-                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                    EnsureParentDirectory(outputPath);
                     pakFile.WriteToFile(outputPath);
                 });
 #if DEBUG
@@ -108,7 +108,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
 #endif
             } else if (outputPath.EndsWith(".zip")) {
                 reporter.RunTask($"Writing {outputPath}", () => {
-                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                    EnsureParentDirectory(outputPath);
                     zipFile.WriteToFile(outputPath);
                 });
             } else {
@@ -124,6 +124,13 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         }
 
         return 0;
+    }
+
+    internal static void EnsureParentDirectory(string path) {
+        var directory = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(directory)) {
+            Directory.CreateDirectory(directory);
+        }
     }
 
     private static void ExtractNatives(byte[] zipFile, string outputPath)

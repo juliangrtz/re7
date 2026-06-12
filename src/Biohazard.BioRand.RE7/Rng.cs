@@ -114,7 +114,8 @@ public sealed class Rng {
     public Guid NextGuid() {
         var buffer = new byte[16];
         _random.NextBytes(buffer);
-        buffer[8] = (byte)(0x40 | (buffer[8] & 0x0F));
+        buffer[7] = (byte)((buffer[7] & 0x0F) | 0x40);
+        buffer[8] = (byte)((buffer[8] & 0x3F) | 0x80);
         return new Guid(buffer);
     }
 

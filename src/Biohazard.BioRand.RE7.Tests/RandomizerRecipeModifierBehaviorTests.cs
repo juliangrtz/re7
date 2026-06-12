@@ -103,4 +103,36 @@ public class RandomizerRecipeModifierBehaviorTests {
         Assert.Equal(5, selectedRecipe.ResultItemNum);
         Assert.Equal(["AcidBulletS"], afterDictionary._Datas.Select(x => x.ItemDataID).ToArray());
     }
+
+    [Fact]
+    public void RecipeModifier_SkipsInvalidCsvRecipes() {
+        var recipesCsv = """
+                         Enabled,Pool,Count1_Min,Count1_Max,Item1,Count2_Min,Count2_Max,Item2,OutputCount_Min,OutputCount_Max,OutputItem,Comment
+                         true,AlwaysEnabled,1,1,Definitely Not An Item,1,1,Herb,1,1,Strong Chem Fluid,Invalid source
+                         true,AlwaysEnabled,1,1,Herb,1,1,Herb,1,1,Also Not An Item,Invalid result
+                         true,Balanced,0,0,Herb,1,1,Herb,1,1,Strong Chem Fluid,Invalid count
+                         true,Balanced,1,1,Handgun Ammo,1,1,Gunpowder,3,3,Shotgun Shells,Valid recipe
+                         """;
+
+        using var result = RandomizerTest.RunState(
+            config => {
+                config["recipes-add-new"] = true;
+                config["recipes-randomization-mode"] = "Balanced";
+                config["recipes-new-min"] = 1;
+                config["recipes-new-max"] = 1;
+            },
+            prepareRandomizer: randomizer => {
+                randomizer.DynamicData.SetData(DynamicDataName.Recipes, Encoding.UTF8.GetBytes(recipesCsv));
+            });
+
+        var beforeRecipes = result.ReadBeforeUserFile<app.ItemCombineData>(RandomizerTestPaths.ItemCombineDataPath);
+        var afterRecipes = result.ReadAfterUserFile<app.ItemCombineData>(RandomizerTestPaths.ItemCombineDataPath);
+        var afterDictionary =
+            result.ReadAfterUserFile<app.DictionaryCombineData>(RandomizerTestPaths.DictionaryCombineDataPath);
+
+        Assert.Equal(beforeRecipes._Datas.Count + 1, afterRecipes._Datas.Count);
+        Assert.Equal("ShotgunBullet", afterRecipes._Datas[0].ResultItemID);
+        Assert.Equal(["ShotgunBullet"], afterDictionary._Datas.Select(x => x.ItemDataID).ToArray());
+        Assert.Contains("Skipping bad CSV recipe", result.ProcessLog);
+    }
 }

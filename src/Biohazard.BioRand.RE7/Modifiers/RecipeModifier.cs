@@ -80,21 +80,8 @@ internal class RecipeModifier : Modifier {
                   throw new Exception("Unable to get recipe data");
         var recipes = Csv.Deserialize<RecipeModel>(csv)
             .Where(r => r.Enabled)
+            .Where(r => IsValidRecipe(r, logger))
             .ToImmutableList();
-
-        recipes.ForEach(r => {
-            if (!(r.Count1_Min > 0
-                  && r.Count1_Max > 0
-                  && r.Count2_Min > 0
-                  && r.Count2_Max > 0
-                  && r.OutputCount_Min > 0
-                  && r.OutputCount_Max > 0
-                  && _itemDefinitions.NameToId(r.Item1) != null
-                  && _itemDefinitions.NameToId(r.Item2) != null
-                  && _itemDefinitions.NameToId(r.OutputItem) != null)) {
-                logger.LogLine("Bad CSV recipe! Please report this. Recipe: " + r);
-            }
-        });
 
         // Apply config
         var recipePool = (mode switch{
@@ -192,6 +179,27 @@ internal class RecipeModifier : Modifier {
             IsTutorialTarget = false,
             IsTrophyTarget = false,
         };
+    }
+
+    private static bool IsValidRecipe(RecipeModel recipe, RandomizerLogger logger) {
+        var valid = recipe.Count1_Min > 0
+                    && recipe.Count1_Max > 0
+                    && recipe.Count1_Min <= recipe.Count1_Max
+                    && recipe.Count2_Min > 0
+                    && recipe.Count2_Max > 0
+                    && recipe.Count2_Min <= recipe.Count2_Max
+                    && recipe.OutputCount_Min > 0
+                    && recipe.OutputCount_Max > 0
+                    && recipe.OutputCount_Min <= recipe.OutputCount_Max
+                    && _itemDefinitions.NameToItemMap.ContainsKey(recipe.Item1)
+                    && _itemDefinitions.NameToItemMap.ContainsKey(recipe.Item2)
+                    && _itemDefinitions.NameToItemMap.ContainsKey(recipe.OutputItem);
+
+        if (!valid) {
+            logger.LogLine("Skipping bad CSV recipe! Please report this. Recipe: " + recipe);
+        }
+
+        return valid;
     }
 
     private static int ClampRecipeResultNum(string? itemId, int count) {
