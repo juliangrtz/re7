@@ -4,6 +4,8 @@ using Biohazard.BioRand.RE7.Services;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Cryptography;
 using System.Collections.Immutable;
+using System.Globalization;
+using System.Text;
 using System.Threading;
 
 namespace Biohazard.BioRand.RE7;
@@ -228,9 +230,31 @@ internal class Randomizer : IDisposable {
     public int Seed => Input.Seed;
 
     public Rng GetRng(params object[] key) {
-        var hashInput = string.Concat([Input.Seed, .. key]);
-        var seed = MurMur3.HashData(hashInput);
+        var seed = MurMur3.HashData(FormatRngKey(Input.Seed, key));
         return new Rng(seed);
+    }
+
+    private static string FormatRngKey(int seed, object[] key) {
+        var result = new StringBuilder();
+        AppendPart("seed", seed.ToString(CultureInfo.InvariantCulture));
+        foreach (var part in key) {
+            var value = Convert.ToString(part, CultureInfo.InvariantCulture) ?? "";
+            AppendPart(part?.GetType().FullName ?? "<null>", value);
+        }
+
+        return result.ToString();
+
+        void AppendPart(string type, string value) {
+            result
+                .Append(type.Length)
+                .Append(':')
+                .Append(type)
+                .Append('=')
+                .Append(value.Length)
+                .Append(':')
+                .Append(value)
+                .Append(';');
+        }
     }
 
     public T? GetConfigOption<T>(string key, T? defaultValue = default) {

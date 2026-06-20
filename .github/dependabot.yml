@@ -8,7 +8,7 @@ updates:
       - "/src/Biohazard.BioRand.RE7.DataGen"
       - "/src/Biohazard.BioRand.RE7.Tests"
       - "/src/biorand-re7"
-    target-branch: "staging"
+    target-branch: "master"
     schedule:
       interval: "weekly"
       day: "saturday"

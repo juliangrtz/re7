@@ -5,6 +5,27 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public class GenerateCommandExtractionTests {
     [Fact]
+    public void EnsureParentDirectory_AllowsCurrentDirectoryOutputPath() {
+        GenerateCommand.EnsureParentDirectory("biorand-re7-test-output.pak");
+    }
+
+    [Fact]
+    public void EnsureParentDirectory_CreatesNestedOutputDirectory() {
+        var outputRoot = CreateTemporaryDirectory();
+        var outputPath = Path.Combine(outputRoot, "nested", "seed.pak");
+        var outputDirectory = Path.GetDirectoryName(outputPath)!;
+
+        try {
+            GenerateCommand.EnsureParentDirectory(outputPath);
+
+            Assert.True(Directory.Exists(outputDirectory));
+        }
+        finally {
+            Directory.Delete(outputRoot, recursive: true);
+        }
+    }
+
+    [Fact]
     public void ExtractEntryToDirectory_ExtractsNestedEntry() {
         using var zip = CreateZip(("natives/stm/test.txt", "ok"));
         var outputPath = CreateTemporaryDirectory();
