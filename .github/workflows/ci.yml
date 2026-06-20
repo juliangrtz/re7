@@ -24,12 +24,12 @@ jobs:
       BIORAND_RE7_TEST_PAK_SHA256: ${{ secrets.BIORAND_RE7_TEST_PAK_SHA256 }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
       with:
         submodules: recursive
         lfs: true
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 10.0
     - name: Download baseline PAK
