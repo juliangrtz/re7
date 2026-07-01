@@ -143,20 +143,20 @@ internal static class KeyItemRouteGraphImageRenderer {
         const float arrowLength = 15;
         const float arrowWidth = 8;
 
-        using var path = new SKPath();
-        path.MoveTo(end);
-        path.LineTo(
+        using var pathBuilder = new SKPathBuilder();
+        pathBuilder.MoveTo(end);
+        pathBuilder.LineTo(
             end.X - (ux * arrowLength) + (px * arrowWidth),
             end.Y - (uy * arrowLength) + (py * arrowWidth));
-        path.LineTo(
+        pathBuilder.LineTo(
             end.X - (ux * arrowLength) - (px * arrowWidth),
             end.Y - (uy * arrowLength) - (py * arrowWidth));
-        path.Close();
+        pathBuilder.Close();
 
         using var fill = paint.Clone();
         fill.Style = SKPaintStyle.Fill;
         fill.PathEffect = null;
-        canvas.DrawPath(path, fill);
+        canvas.DrawPath(pathBuilder.Snapshot(), fill);
     }
 
     private static void DrawEdgeLabel(SKCanvas canvas, string label, SKPoint point, SKFont font, SKPaint textPaint) {
