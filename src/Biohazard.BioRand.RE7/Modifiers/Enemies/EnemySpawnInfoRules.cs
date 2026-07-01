@@ -41,7 +41,14 @@ internal static class EnemySpawnInfoRules {
         return component?.Enabled == true
                && !BarnFightMoldeds.Contains(spawnInfoGameObject.Guid)
                && !MargueritePitFightSpawns.Contains(spawnInfoGameObject.Guid)
+               && !HasNonDefaultMoldedQuickAppearMode(spawnInfoGameObject)
                && !IsExtraEnemySpawnInfo(spawnInfoGameObject);
+    }
+
+    internal static bool HasNonDefaultMoldedQuickAppearMode(RszGameObject spawnInfoGameObject) {
+        var option = spawnInfoGameObject.FindComponent<app.EnemySpawnInfoOptionEm4100>();
+        var appearType = option?.ThinkSet?.AppearSet?.AppearType;
+        return appearType is { } value && value != Enums.app.Em4100.ThinkAppearSet.Type.Default;
     }
 
     internal static bool IsExtraEnemySpawnInfo(RszGameObject gameObject) {
