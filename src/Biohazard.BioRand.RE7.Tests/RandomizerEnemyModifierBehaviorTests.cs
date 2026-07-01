@@ -310,6 +310,80 @@ public class RandomizerEnemyModifierBehaviorTests {
     }
 
     [Fact]
+    public void RandomizeEnemies_MoldedQuickReplacementsUseDefaultAppearMode() {
+        using var result = RandomizerTest.RunState(config => {
+            config["random-enemies"] = true;
+            config["balanced-enemies"] = false;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["MoldedQuick"]);
+        });
+
+        var replacementAppearTypes = new List<Enums.app.Em4100.ThinkAppearSet.Type>();
+        foreach (var path in GetChangedScenePaths(result)
+                     .Where(path =>
+                         path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase))) {
+            var afterScene = result.ReadAfterScene(path);
+            afterScene.VisitGameObjects(gameObject => {
+                var spawnInfo = gameObject.FindComponent<app.EnemySpawnInfo>();
+                if (spawnInfo?.UnitAlias != "Em4100" ||
+                    !gameObject.Name.EndsWith("_Now_Em4100", StringComparison.Ordinal)) {
+                    return;
+                }
+
+                var appearType = GetMoldedQuickAppearType(gameObject);
+                Assert.NotNull(appearType);
+                replacementAppearTypes.Add(appearType.Value);
+            });
+        }
+
+        Assert.NotEmpty(replacementAppearTypes);
+        Assert.All(
+            replacementAppearTypes,
+            appearType => Assert.Equal(Enums.app.Em4100.ThinkAppearSet.Type.Default, appearType));
+    }
+
+    [Fact]
+    public void RandomizeEnemies_NonDefaultMoldedQuickAppearSpawns_AreNotRandomized() {
+        using var result = RandomizerTest.RunState(config => {
+            config["random-enemies"] = true;
+            config["balanced-enemies"] = false;
+            config["enemy-variety"] = 1;
+            config["enemy-pack-max-size"] = 1;
+            ConfigureGeneratorEnemyPool(config, ["MoldedFat"]);
+        });
+
+        var preservedSpawnGuids = new List<Guid>();
+        foreach (var area in result.AreaService.Areas
+                     .Where(area =>
+                         area.Path.StartsWith("natives/stm/scenes/chapter/", StringComparison.OrdinalIgnoreCase))) {
+            var beforeScene = result.ReadBeforeScene(area.Path);
+            var afterScene = result.ReadAfterScene(area.Path);
+
+            beforeScene.VisitGameObjects(beforeGameObject => {
+                var beforeSpawnInfo = beforeGameObject.FindComponent<app.EnemySpawnInfo>();
+                if (beforeSpawnInfo?.Enabled != true ||
+                    !EnemySpawnInfoRules.HasNonDefaultMoldedQuickAppearMode(beforeGameObject)) {
+                    return;
+                }
+
+                var afterGameObject = afterScene.FindGameObject(beforeGameObject.Guid);
+                Assert.NotNull(afterGameObject);
+
+                var afterSpawnInfo = afterGameObject!.FindComponent<app.EnemySpawnInfo>();
+                Assert.NotNull(afterSpawnInfo);
+
+                preservedSpawnGuids.Add(beforeGameObject.Guid);
+                Assert.False(EnemySpawnInfoRules.ShouldReplaceSpawnInfo(beforeGameObject));
+                Assert.Equal(beforeSpawnInfo.UnitAlias, afterSpawnInfo!.UnitAlias);
+                Assert.Equal(GetMoldedQuickAppearType(beforeGameObject), GetMoldedQuickAppearType(afterGameObject));
+            });
+        }
+
+        Assert.NotEmpty(preservedSpawnGuids);
+    }
+
+    [Fact]
     public void RandomizeEnemies_MiaChainsaw_IsNotUsedForGeneratorReplacements() {
         using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
@@ -601,6 +675,9 @@ public class RandomizerEnemyModifierBehaviorTests {
                string.IsNullOrEmpty(specified.SpecifiedResistParameterName) &&
                string.IsNullOrEmpty(specified.SpecifiedSlipParameterName);
     }
+
+    private static Enums.app.Em4100.ThinkAppearSet.Type? GetMoldedQuickAppearType(RszGameObject gameObject)
+        => gameObject.FindComponent<app.EnemySpawnInfoOptionEm4100>()?.ThinkSet?.AppearSet?.AppearType;
 
     private sealed class TestEnemyDefinition(string id, EnemyID enemyId) : IEnemyDefinition {
         public string Id { get; } = id;

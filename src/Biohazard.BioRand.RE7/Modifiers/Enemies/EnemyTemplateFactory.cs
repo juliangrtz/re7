@@ -49,6 +49,7 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer) {
         if (!_spawnInfoTemplateCache.TryGetValue(enemyId, out var template)) {
             template = GetSpawnInfoTemplate(enemyId)
                 .WithName(enemyId);
+            template = NormalizeGenericSpawnInfoTemplate(enemyId, template);
 
             _spawnInfoTemplateCache[enemyId] = template;
         }
@@ -64,6 +65,18 @@ internal sealed class EnemyTemplateFactory(Randomizer randomizer) {
         }
 
         throw new Exception($"Object with name EnemySpawnInfo_{enemyId} not found in template scene!");
+    }
+
+    private static RszGameObject NormalizeGenericSpawnInfoTemplate(string enemyId, RszGameObject template) {
+        if (!string.Equals(enemyId, EnemyID.Em4100.ToString(), StringComparison.Ordinal))
+            return template;
+
+        var option = template.FindComponent<app.EnemySpawnInfoOptionEm4100>();
+        if (option?.ThinkSet?.AppearSet == null)
+            return template;
+
+        option.ThinkSet.AppearSet.AppearType = Enums.app.Em4100.ThinkAppearSet.Type.Default;
+        return template.AddOrUpdateComponent(option);
     }
 
     internal static bool IsSpawnInfoOption(RszObjectNode component)
