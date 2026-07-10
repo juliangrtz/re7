@@ -247,7 +247,7 @@ public class RandomizerEnemyModifierBehaviorTests {
     }
 
     [Fact]
-    public void RandomizeEnemies_MiaPastVhsEnemyScene_IsLoadedAndRandomized() {
+    public void RandomizeEnemies_MiaPastVhsEnemyScene_IsLoadedButPreserved() {
         using var result = RandomizerTest.RunState(config => {
             config["random-enemies"] = true;
             config["enemy-variety"] = 1;
@@ -265,11 +265,10 @@ public class RandomizerEnemyModifierBehaviorTests {
             .SelectMany(x => x)
             .ToList();
 
-        Assert.True(result.WasFileModified(MiaPastVhsEnemyScenePath));
+        Assert.False(result.WasFileModified(MiaPastVhsEnemyScenePath));
         Assert.NotEmpty(beforeAliases);
         Assert.Contains(beforeAliases, alias => alias != "Em4200");
-        Assert.NotEmpty(afterAliases);
-        Assert.All(afterAliases, alias => Assert.Equal("Em4200", alias));
+        Assert.Equal(beforeAliases, afterAliases);
     }
 
     [Fact]

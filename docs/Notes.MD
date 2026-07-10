@@ -29,6 +29,10 @@ I've gathered this information while working on the randomizer.
   - Candle (`Candle_Lighted`): its `c03_4_Main_PazzleRoom_CandleOn` flag is part of the Lucas birthday puzzle state machine.
   - Lantern, Ox Statuette, keycards, Chapter 1 key items, Chapter 4 fuse, and complete serum remain vanilla until exact access-sphere and FSM side effects are proven safe.
 - The D-Series Arm is a real progression precondition for the Lucas/snake-room branch: `objectivefsm_c03` reads `c03_3_Main_GetEvlineArm`, and the attic ladder branch also depends on the resulting Lucas card-key flow. Keep the graph edge into snake-key rooms gated on both Snake Key and D-Series Arm.
+- Route reachability is not sufficient for pickups that advance a level FSM. Their rules also carry an earliest-safe phase, which is checked independently of carrier masks. Crank cannot be collected before completing the Old House Stone Statuette puzzle, Crow Key cannot be collected before the crank bridges, and Power Cable cannot be collected before the Corrosive-gated ship rooms. If no carrier satisfies both the phase floor and the normal route deadline, preserve the vanilla pickup.
+- Flashback copies of key items are separate scripted state. Do not replace them with filler and do not use them when deriving relocated pickup side effects.
+- Scripted flashback scenes (`ff*` and chapter 4 `*past.scn` scenes) are protected from enemy replacement, enemy multiplication, extra enemy placement, and collision-bearing extra objects. Loose non-key supplies may still be randomized.
+- Carrier safety is an invariant over every eligible placement, not only generated routes. Extend `KeyItemLocations_AllProgressionFlagCarriersRespectMinimumSafePhases` whenever another pickup is shown to advance an FSM phase.
 
 ## DLC PAK file table
 

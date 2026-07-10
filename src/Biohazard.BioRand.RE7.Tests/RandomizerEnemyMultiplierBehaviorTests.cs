@@ -7,6 +7,8 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
 public class RandomizerEnemyMultiplierBehaviorTests {
+    private const string MiaPastVhsEnemyScenePath = "natives/stm/scenes/chapter/ff050/enemy_ff050.scn.20";
+
     private const string TestScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/moldeads.scn.20";
     private const string ExternalGenerateScenePath = "natives/stm/scenes/chapter/chapter4/chapter4_2/hard.scn.20";
 
@@ -212,6 +214,20 @@ public class RandomizerEnemyMultiplierBehaviorTests {
             Assert.NotEqual(beforeSlots.Length, targetCount);
             Assert.Equal(targetCount, afterSlots.Length);
         }
+    }
+
+    [Fact]
+    public void Randomizer_EnemyMultiplierPreservesScriptedFlashbackScene() {
+        using var result = RandomizerTest.RunState(config => { config["enemy-multiplier"] = 1.5; });
+
+        var beforeSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(
+            result.ReadBeforeScene(MiaPastVhsEnemyScenePath));
+        var afterSlots = EnemyMultiplierModifier.CollectMultipliableSpawnSlots(
+            result.ReadAfterScene(MiaPastVhsEnemyScenePath));
+
+        Assert.NotEmpty(beforeSlots);
+        Assert.False(result.WasFileModified(MiaPastVhsEnemyScenePath));
+        Assert.Equal(beforeSlots.Select(slot => slot.SpawnInfoGuid), afterSlots.Select(slot => slot.SpawnInfoGuid));
     }
 
     [Fact]

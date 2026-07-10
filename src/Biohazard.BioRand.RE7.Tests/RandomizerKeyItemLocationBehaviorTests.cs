@@ -25,14 +25,14 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             ["MorgueKey"] = new(3, ExpectedScope.BeforeShadowPuzzle),
             ["WorkroomKey"] = new(3, ExpectedScope.BeforeDissectionRoom),
             ["MasterKey"] = new(3, ExpectedScope.AfterLanternBeforeSnakeRooms),
-            ["TalismanKey"] = new(3, ExpectedScope.BeforeCrowDoor),
-            ["Crank"] = new(3, ExpectedScope.BeforeCrowDoor),
+            ["TalismanKey"] = new(3, ExpectedScope.AfterCrankBeforeCrowDoor),
+            ["Crank"] = new(3, ExpectedScope.AfterStonePuzzleBeforeCrank),
             ["SilhouettePazzlePieceOldHouse"] = new(3, ExpectedScope.BeforeOldHouseShadowPuzzle),
             ["SerumMaterialA"] = new(3, ExpectedScope.AfterLanternBeforeSnakeRooms),
             ["SerumMaterialB"] = new(3, ExpectedScope.BeforeJack3),
             ["EthanCarKey"] = new(3, ExpectedScope.Chapter3Start),
             ["SilhouettePazzlePiece"] = new(3, ExpectedScope.BeforeShadowPuzzle),
-            ["EvCable"] = new(4, ExpectedScope.MiaPresentShip),
+            ["EvCable"] = new(4, ExpectedScope.AfterCorrosiveBeforeRepair),
             ["EvOpener"] = new(4, ExpectedScope.MiaPresentShip),
             ["SpareKey"] = new(4, ExpectedScope.MiaPresentShip),
             ["SerumTypeE"] = new(4, ExpectedScope.BeforeNecrotoxinUse),
@@ -430,7 +430,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                          randomizedIds.Contains(placement.Id) &&
                          placement.Enabled &&
                          !placement.Tags.Contains(ItemPlacement.ExcludeTag) &&
-                         !placement.IsExtra)
+                         !placement.IsExtra &&
+                         !IsFlashbackPath(placement.SceneFile))
                      .DistinctBy(placement => (placement.SceneFile, placement.Guid))) {
             var afterItem = GetItem(result.ReadAfterScene(placement.SceneFile), placement.Guid);
             Assert.NotEqual(placement.Id, afterItem.ItemDataID);
@@ -893,14 +894,14 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                 "SilhouettePazzlePieceOldHouse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "MasterKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "SerumMaterialA"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "Crank"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "TalismanKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "Crank"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(stoneStatuette, "TalismanKey"));
 
         Assert.False(
             KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crankTunnel, "SilhouettePazzlePieceOldHouse"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crankTunnel, "Crank"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crankTunnel, "MasterKey"));
-        Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crankTunnel, "TalismanKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crankTunnel, "TalismanKey"));
 
         Assert.False(
             KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(crowKeyChest,
@@ -928,6 +929,33 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     }
 
     [Fact]
+    public void KeyItemLocations_AllProgressionFlagCarriersRespectMinimumSafePhases() {
+        var placements = _defaultRun.Result.ItemPlacementService.MainGamePlacements;
+        var contracts = new[]{
+            (ItemId: "Crank", Scope: ExpectedScope.AfterStonePuzzleBeforeCrank),
+            (ItemId: "TalismanKey", Scope: ExpectedScope.AfterCrankBeforeCrowDoor),
+            (ItemId: "EvCable", Scope: ExpectedScope.AfterCorrosiveBeforeRepair),
+        };
+
+        foreach (var contract in contracts) {
+            var candidates = placements
+                .Where(placement =>
+                    KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(placement, contract.ItemId))
+                .ToList();
+            var vanillaPlacements = placements
+                .Where(placement =>
+                    string.Equals(placement.Id, contract.ItemId, StringComparison.OrdinalIgnoreCase) &&
+                    !IsFlashbackPath(placement.SceneFile))
+                .ToList();
+
+            Assert.All(candidates, placement =>
+                Assert.True(ScopeMatches(contract.Scope, placement),
+                    $"{contract.ItemId} can use an unsafe carrier in {placement.SceneFile}."));
+            Assert.Contains(vanillaPlacements, placement => ScopeMatches(contract.Scope, placement));
+        }
+    }
+
+    [Fact]
     public void KeyItemLocations_SeparatesWreckedShipRepairPhases() {
         var result = _defaultRun.Result;
         var shipExitExtra = result.ItemPlacementService.MainGamePlacements.Single(placement =>
@@ -951,6 +979,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
 
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "EvOpener"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "SpareKey"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(captainCabinExtra, "EvCable"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "FuseCh4"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(lugWrench, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(loungeFuse, "SpareKey"));
@@ -958,6 +987,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "SpareKey"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipPastKitchen, "EvOpener"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvOpener"));
+        Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "EvCable"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(ship2FCorrosive, "SpareKey"));
         Assert.True(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "EvOpener"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(powerCable, "SpareKey"));
@@ -967,6 +997,52 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipExitExtra, "EvCable"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipExitExtra, "FuseCh4"));
         Assert.False(KeyItemLocationModifier.CanPlaceKeyItemInPlacementForTesting(shipExitExtra, "SpareKey"));
+    }
+
+    [Theory]
+    [InlineData(296769)]
+    [InlineData(424855)]
+    [InlineData(702402)]
+    public void KeyItemLocations_ReportedSeedsRespectProgressionPickupPhaseFloors(int seed) {
+        using var result = RandomizerTest.RunState(
+            config => {
+                config["random-key-item-locations"] = true;
+                config["additional-items"] = true;
+            },
+            seed: seed);
+
+        var randomizedKeyItems = GetChangedPlacements(result)
+            .Where(change => change.AfterId is "Crank" or "TalismanKey" or "EvCable")
+            .ToList();
+
+        Assert.All(randomizedKeyItems, change => {
+            var expectedScope = ExpectedRules[change.AfterId].Scope;
+            Assert.True(ScopeMatches(expectedScope, change.Placement),
+                $"{change.AfterId} violated its minimum pickup phase in {change.Placement.SceneFile}.");
+        });
+
+        foreach (var itemId in new[]{ "Crank", "TalismanKey", "EvCable" }) {
+            Assert.True(
+                randomizedKeyItems.Any(change => change.AfterId == itemId) ||
+                result.ProcessLog.Contains(
+                    $"Skipped key item {ItemDefinitionRepository.Default.GetName(itemId)}:",
+                    StringComparison.Ordinal),
+                $"{itemId} was neither assigned nor explicitly preserved for seed {seed}.");
+        }
+    }
+
+    [Fact]
+    public void KeyItemLocations_PreservesFlashbackKeyItemSources() {
+        using var result = RandomizerTest.RunState(config => { config["random-key-item-locations"] = true; });
+
+        var flashbackCrank = result.ItemPlacementService.FromId("Crank")
+            .First(placement => IsFlashbackPath(placement.SceneFile));
+        var before = GetItem(result.ReadBeforeScene(flashbackCrank.SceneFile), flashbackCrank.Guid);
+        var after = GetItem(result.ReadAfterScene(flashbackCrank.SceneFile), flashbackCrank.Guid);
+
+        Assert.Equal("Crank", before.ItemDataID);
+        Assert.Equal(before.ItemDataID, after.ItemDataID);
+        Assert.Equal(before.SaveGUID, after.SaveGUID);
     }
 
     [Fact]
@@ -1442,6 +1518,11 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                                             || IsOldHouseCrowKeyPickup(placement)
                                             || IsOldHouseAfterStonePuzzleBeforeCrank(placement.SceneFile)
                                             || IsOldHouseAfterCrankBeforeCrowDoor(placement.SceneFile),
+            ExpectedScope.AfterStonePuzzleBeforeCrank =>
+                IsOldHouseAfterStonePuzzleBeforeCrank(placement.SceneFile),
+            ExpectedScope.AfterCrankBeforeCrowDoor =>
+                IsOldHouseCrowKeyPickup(placement) ||
+                IsOldHouseAfterCrankBeforeCrowDoor(placement.SceneFile),
             ExpectedScope.AfterLanternBeforeSnakeRooms => IsOldHouseAfterLanternDoor(placement.SceneFile)
                                                           || IsSnakeKeyBody(placement.SceneFile),
             ExpectedScope.BeforeDissectionRoom => IsMainHouseBeforeGarage(placement)
@@ -1492,6 +1573,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
                                          || IsBoatHouseRoute(placement.SceneFile),
             ExpectedScope.BoatHouse => IsBoatHouseRoute(placement.SceneFile),
             ExpectedScope.MiaPresentShip => IsMiaPresentShipRoute(placement.SceneFile),
+            ExpectedScope.AfterCorrosiveBeforeRepair =>
+                IsShipAfterCorrosiveBeforeRepair(placement.SceneFile),
             ExpectedScope.BeforeNecrotoxinUse => IsSaltMineBeforeNecrotoxinUse(placement.SceneFile),
             _ => true,
         };
@@ -1529,7 +1612,9 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
 
     private static bool IsFlashbackPath(string path)
         => PathContains(path, "/environment/scene/ff")
-           || PathContains(path, "/leveldesign/itemset/ff");
+           || PathContains(path, "/leveldesign/itemset/ff")
+           || PathContains(path, "/scenes/chapter/ff")
+           || PathContains(path, "past.scn");
 
     private static bool IsMainHouseBeforeGarage(string path)
         => PathContains(path, "/leveldesign/itemset/chapter3/mainhouse_west/")
@@ -1729,6 +1814,8 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeDogDoor,
         BeforeScorpionDoor,
         BeforeCrowDoor,
+        AfterStonePuzzleBeforeCrank,
+        AfterCrankBeforeCrowDoor,
         AfterLanternBeforeSnakeRooms,
         BeforeDissectionRoom,
         BeforeOldHouseShadowPuzzle,
@@ -1741,6 +1828,7 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         BeforeJack3,
         BoatHouse,
         MiaPresentShip,
+        AfterCorrosiveBeforeRepair,
         BeforeNecrotoxinUse,
     }
 
