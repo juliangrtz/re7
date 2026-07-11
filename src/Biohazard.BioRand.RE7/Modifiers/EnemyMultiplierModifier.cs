@@ -48,6 +48,11 @@ internal class EnemyMultiplierModifier : Modifier {
         var enemyLimitService = randomizer.EnemySceneLimitService;
         var rng = randomizer.GetRng(RandomizerKey);
         foreach (var scenePath in GetCandidateScenePaths(randomizer)) {
+            if (!ScriptedSceneSafety.AllowsEnemyMutation(scenePath)) {
+                logger.LogLine($"Skipping enemy multiplier in scripted flashback scene {scenePath}.");
+                continue;
+            }
+
             var scnFile = randomizer.FileRepository.GetScnFile(scenePath)
                 .ToBuilder(randomizer.FileRepository.TypeRepository);
             var updatedScene = ProcessScene(

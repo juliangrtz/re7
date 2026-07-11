@@ -141,11 +141,11 @@ internal class KeyItemLocationModifier : Modifier {
     private const int CandleMask = 1 << 29;
     private const int DogHeadMasks = WhiteDogHeadMask | BlueDogHeadMask;
     private const int AllDogHeadMasks = DogHeadMasks | RedDogHeadMask;
-    private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask | CrowKeyMask;
+    private const int MainHouseCarryMasks = DogHeadMasks | BatteryMask;
 
     private const int MainHouseBeforeHatchCarryMasks =
         MainHouseCarryMasks | ScorpionKeyMask | CarKeyMask | WoodenStatuetteMask | FloorDoorKeyMask |
-        OxStatuetteMask | RedDogHeadMask | CrankMask |
+        OxStatuetteMask | RedDogHeadMask |
         StoneStatuetteMask | DSeriesHeadMask;
 
     private const int MainHouseAfterGarageCarryMasks =
@@ -154,17 +154,16 @@ internal class KeyItemLocationModifier : Modifier {
 
     private const int MainHouseEastCarryMasks =
         MainHouseCarryMasks | RedDogHeadMask | DissectionRoomKeyMask |
-        CrankMask | StoneStatuetteMask | DSeriesHeadMask;
+        StoneStatuetteMask | DSeriesHeadMask;
 
     private const int DissectionRoomCarryMasks =
-        AllDogHeadMasks | BatteryMask | CrowKeyMask |
-        CrankMask | StoneStatuetteMask | DSeriesHeadMask;
+        AllDogHeadMasks | BatteryMask | StoneStatuetteMask | DSeriesHeadMask;
 
     private const int OldHouseBeforeCrowCarryMasks =
-        CrankMask | StoneStatuetteMask | CrowKeyMask | BatteryMask | DSeriesHeadMask;
+        StoneStatuetteMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterStoneCarryMasks =
-        CrankMask | CrowKeyMask | BatteryMask | DSeriesHeadMask;
+        CrankMask | BatteryMask | DSeriesHeadMask;
 
     private const int OldHouseAfterCrankCarryMasks =
         CrowKeyMask | BatteryMask | DSeriesHeadMask;
@@ -183,8 +182,8 @@ internal class KeyItemLocationModifier : Modifier {
 
     private const int LucasBeforePuzzleCarryMasks = BatteryMask | DSeriesHeadMask | CandleMask;
     private const int LucasAfterPuzzleCarryMasks = DSeriesHeadMask;
-    private const int ShipBeforeWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
-    private const int ShipAfterWrenchMasks = PowerCableMask | ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipBeforeWrenchMasks = ShipFuseMask | LugWrenchMask | CorrosiveMask;
+    private const int ShipAfterWrenchMasks = ShipFuseMask | LugWrenchMask | CorrosiveMask;
     private const int ShipAfterCorrosiveMasks = PowerCableMask | ShipFuseMask | LugWrenchMask;
     private static readonly Guid _mainHouseWestBlueDogHeadGuid = new("401dbfaa-3469-0702-1c9a-d74a7d185216");
     private static readonly Guid _mainHouseWestBlueKeycardGuid = new("896dd0bb-f3ee-41bf-b4a0-0b28e99da94c");
@@ -221,19 +220,25 @@ internal class KeyItemLocationModifier : Modifier {
         new("EntranceHallKey", 3, OxStatuetteMask), // Ox Statuette
         new("PendulumClock", 3, PendulumMask), // Clock Pendulum
         new("MorgueKey", 3, ScorpionKeyMask, Priority: 130), // Scorpion Key
-        new("WorkroomKey", 3, DissectionRoomKeyMask), // Dissection Room Key
-        new("MasterKey", 3, SnakeKeyMask), // Snake Key
-        new("TalismanKey", 3, CrowKeyMask), // Crow Key
-        new("Crank", 3, CrankMask),
+        new("WorkroomKey", 3, DissectionRoomKeyMask,
+            EarliestSafePhase: KeyItemRoutePhase.MainHouseEast), // Dissection Room Key
+        new("MasterKey", 3, SnakeKeyMask,
+            EarliestSafePhase: KeyItemRoutePhase.OldHouseAfterLantern), // Snake Key
+        new("TalismanKey", 3, CrowKeyMask,
+            EarliestSafePhase: KeyItemRoutePhase.OldHouseAfterCrank), // Crow Key
+        new("Crank", 3, CrankMask,
+            EarliestSafePhase: KeyItemRoutePhase.OldHouseAfterStonePuzzle),
         new("SilhouettePazzlePieceOldHouse", 3, StoneStatuetteMask), // Stone Statuette
-        new("SerumMaterialA", 3, DSeriesArmMask), // D-Series Arm
+        new("SerumMaterialA", 3, DSeriesArmMask,
+            EarliestSafePhase: KeyItemRoutePhase.OldHouseAfterLantern), // D-Series Arm
         new("Lantern", 3, LanternMask),
         new("LucasCardKey", 3, BlueKeycardMask), // Blue Keycard
         new("LucasCardKey2", 3, RedKeycardMask), // Red Keycard
         new("SerumMaterialB", 3, DSeriesHeadMask), // D-Series Head
         new("SerumComplete", 3, SerumMask, Count: 2), // Serum
         new("Candle_Lighted", 3, CandleMask, Priority: 20), // Candle
-        new("EvCable", 4, PowerCableMask), // Power Cable
+        new("EvCable", 4, PowerCableMask,
+            EarliestSafePhase: KeyItemRoutePhase.ShipAfterCorrosive), // Power Cable
         new("FuseCh4", 4, ShipFuseMask), // General Purpose Fuse
         new("EvOpener", 4, LugWrenchMask), // Lug Wrench
         new("SpareKey", 4, CorrosiveMask, Count: 4), // Corrosive
@@ -608,7 +613,8 @@ internal class KeyItemLocationModifier : Modifier {
                 supportedIds.Contains(placement.Id) &&
                 placement.Enabled &&
                 !placement.Tags.Contains(ItemPlacement.ExcludeTag) &&
-                !placement.IsExtra)
+                !placement.IsExtra &&
+                !IsFlashbackPath(placement.SceneFile))
             .DistinctBy(placement => new ReplacementKey(placement.SceneFile, placement.Guid));
     }
 
@@ -627,7 +633,8 @@ internal class KeyItemLocationModifier : Modifier {
                          supportedIds.Contains(placement.Id) &&
                          placement.Enabled &&
                          !placement.IsExtra &&
-                         placement.Dlc == null)
+                         placement.Dlc == null &&
+                         !IsFlashbackPath(placement.SceneFile))
                      .GroupBy(placement => placement.Id, StringComparer.OrdinalIgnoreCase)) {
             var flags = placementGroup
                 .SelectMany(placement => GetPickupAcquisitionFlags(randomizer, placement))
@@ -1157,9 +1164,7 @@ internal class KeyItemLocationModifier : Modifier {
         => path.Contains(value, StringComparison.OrdinalIgnoreCase);
 
     private static bool IsFlashbackPath(string path)
-        => PathContains(path, "/environment/scene/ff")
-           || PathContains(path, "/leveldesign/itemset/ff")
-           || PathContains(path, "past");
+        => ScriptedSceneSafety.IsFlashbackPath(path);
 
     private static bool IsGuestHouseBeforeBoltCutters(string path)
         => !IsFlashbackPath(path)
@@ -1393,6 +1398,7 @@ internal class KeyItemLocationModifier : Modifier {
         private readonly Dictionary<string, KeyItemRule> _activeRulesById;
         private readonly Dictionary<Node, ItemReplacementTarget> _targetsByNode = [];
         private readonly Dictionary<Node, string> _regionByNode = [];
+        private readonly Dictionary<Node, int> _routeOrderByNode = [];
         private readonly Dictionary<Node, string> _diagramNodeIds = [];
         private readonly List<KeyItemRouteGraphNode> _diagramNodes = [];
         private readonly List<KeyItemRouteGraphEdge> _diagramEdges = [];
@@ -1521,6 +1527,13 @@ internal class KeyItemLocationModifier : Modifier {
                 return null;
 
             var groupMask = routeTarget.GroupMask & ~GetTargetAccessRequirementMask(target);
+            var routeOrder = _routeOrderByNode[routeTarget.Room];
+            foreach (var rule in _activeRules) {
+                if (routeOrder < (int)rule.EarliestSafePhase) {
+                    groupMask &= ~rule.RouteMask;
+                }
+            }
+
             if (!string.IsNullOrWhiteSpace(target.Placement.Id) &&
                 _activeRulesById.TryGetValue(target.Placement.Id, out var sourceKeyRule)) {
                 groupMask &= ~sourceKeyRule.RouteMask;
@@ -1770,6 +1783,7 @@ internal class KeyItemLocationModifier : Modifier {
 
         private Node Room(string id, string label, int row, int column) {
             var node = _builder.Room(label);
+            _routeOrderByNode[node] = row;
             _diagramNodeIds[node] = id;
             _diagramNodes.Add(new(id, label, row, column));
             return node;
@@ -1921,12 +1935,22 @@ internal class KeyItemLocationModifier : Modifier {
         Filler,
     }
 
+    private enum KeyItemRoutePhase {
+        Any = 0,
+        MainHouseEast = 8,
+        OldHouseAfterStonePuzzle = 11,
+        OldHouseAfterCrank = 12,
+        OldHouseAfterLantern = 14,
+        ShipAfterCorrosive = 22,
+    }
+
     private sealed record KeyItemRule(
         string Id,
         int Chapter,
         int RouteMask,
         int Count = 1,
-        int Priority = 100);
+        int Priority = 100,
+        KeyItemRoutePhase EarliestSafePhase = KeyItemRoutePhase.Any);
 
     private enum KeyItemAcquisitionFlagSource {
         RelocatedPickup,

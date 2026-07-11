@@ -385,6 +385,11 @@ internal class EnemyModifier : Modifier {
         }
 
         foreach (var area in randomizer.AreaService.EnemyAreas) {
+            if (!ScriptedSceneSafety.AllowsEnemyMutation(area.Path)) {
+                logger.LogLine($"Skipping enemy replacement in scripted flashback scene {area.Path}.");
+                continue;
+            }
+
             ProcessArea(area, randomizer, logger, templateFactory, enemyPool, options, rng, healthResolver);
         }
     }
@@ -401,6 +406,9 @@ internal class EnemyModifier : Modifier {
         var updatedSpawnInfoCount = 0;
 
         foreach (var area in randomizer.AreaService.Areas) {
+            if (!ScriptedSceneSafety.AllowsEnemyMutation(area.Path))
+                continue;
+
             var scnFile = randomizer.FileRepository
                 .GetScnFile(area.Path)
                 .ToBuilder(randomizer.FileRepository.TypeRepository);
@@ -432,7 +440,8 @@ internal class EnemyModifier : Modifier {
 
         var enabledExtraEnemies = Csv
             .Deserialize<ExtraEnemyPlacement>(randomizer.DynamicData.GetData(DynamicDataName.ExtraEnemies)!)
-            .Where(extraEnemy => extraEnemy.Enabled)
+            .Where(extraEnemy =>
+                extraEnemy.Enabled && ScriptedSceneSafety.AllowsEnemyMutation(extraEnemy.SceneFile))
             .ToList();
         var subsetCount = ExtraEnemyPlanner.GetSubsetCount(enabledExtraEnemies.Count, extraEnemyPct);
         if (subsetCount == 0)

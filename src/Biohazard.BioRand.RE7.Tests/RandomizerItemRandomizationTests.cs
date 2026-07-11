@@ -554,6 +554,29 @@ public class RandomizerItemRandomizationTests {
     }
 
     [Fact]
+    public void AdditionalWoodenCrates_SkipsScriptedShipFlashbackPlacement() {
+        using var result = RandomizerTest.RunState(config => {
+            config["random-items"] = true;
+            config["additional-wooden-crates"] = true;
+        });
+
+        var placement = result.ItemPlacementService.ItemPlacements.Single(x =>
+            x.Enabled &&
+            x.IsExtra &&
+            x.SceneFile.EndsWith("c04_shipb2engineroom01past.scn.20", StringComparison.OrdinalIgnoreCase) &&
+            x.Tags.Contains(ExtraPlacementModifier.WoodenCrateTag));
+        var beforeDynamic = GetDynamicParent(result.ReadBeforeScene(placement.SceneFile));
+        var afterDynamic = GetDynamicParent(result.ReadAfterScene(placement.SceneFile));
+        var newChildren = GetNewChildren(beforeDynamic, afterDynamic);
+
+        Assert.DoesNotContain(newChildren, child => {
+            var transform = child.FindComponent<GeneratedViaTransform>();
+            return transform != null && TransformMatchesPlacement(transform, placement);
+        });
+        Assert.Contains("scripted flashback scene", result.ProcessLog);
+    }
+
+    [Fact]
     public void AdditionalWoodenCrates_FakeProbability_UsesFractionalConfigValue() {
         using var result = RandomizerTest.RunState(config => {
             config["random-items"] = true;

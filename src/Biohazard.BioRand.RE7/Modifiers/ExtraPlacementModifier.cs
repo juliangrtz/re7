@@ -325,6 +325,13 @@ internal class ExtraPlacementModifier : Modifier {
         if (!IsPlacementEnabled(kind, allowExtraItems, allowExtraCrates))
             return (scene, parentGameObject, false);
 
+        if (kind != ExtraPlacementKind.Item &&
+            !ScriptedSceneSafety.AllowsCollisionBearingExtra(placement.SceneFile)) {
+            logger.LogLine(
+                $"[SKIP EXTRA] {kind} at {placement.Position} in {placement.SceneFile}: scripted flashback scene.");
+            return (scene, parentGameObject, false);
+        }
+
         return kind switch{
             ExtraPlacementKind.WoodenCrate => (scene,
                 AddExtraCrate(parentGameObject, randomizer, logger, placement, rng, randomItemSettings), true),
