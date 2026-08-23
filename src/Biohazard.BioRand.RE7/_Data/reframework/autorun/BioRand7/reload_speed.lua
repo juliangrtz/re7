@@ -1,0 +1,83 @@
+local ReloadSpeed = {}
+ReloadSpeed.__index = ReloadSpeed
+
+local WEAPON_NAMES = {
+    [0] = "hand", [1] = "handaxe", [2] = "circularsaw", [3] = "knife", [4] = "bar",
+    [5] = "handgun", [6] = "handgun-m19", [7] = "handgun-g17", [8] = "handgun-mpm",
+    [9] = "handgun-albert", [10] = "shotgun", [11] = "shotgun-m37", [12] = "shotgun-m37s",
+    [13] = "shotgun-db", [14] = "machinegun", [15] = "magnum", [16] = "grenadelauncher",
+    [17] = "burner", [18] = "candle", [19] = "glasses", [20] = "evelynradar",
+    [21] = "liquidbomb", [22] = "timebomb", [23] = "flare", [24] = "remedy", [25] = "eyedrops",
+    [26] = "stimulant", [27] = "depressant", [28] = "kitchenknife", [29] = "chainsaw",
+    [30] = "woodchip", [31] = "handlight", [32] = "chaincutter", [33] = "screwdriver",
+    [34] = "shovel", [35] = "lantern", [36] = "roller", [37] = "scissors", [38] = "stick",
+    [39] = "lanternbar", [40] = "glasspiece", [41] = "fireaxe", [42] = "miaknife",
+    [43] = "goldenbar", [44] = "hyperblaster", [45] = "barcircularsaw",
+    [46] = "handgun-albert-reward", [47] = "fireaxebreakable", [48] = "cknife",
+    [49] = "handgun-albert-c", [50] = "shotgun-albert", [51] = "blueblaster", [52] = "redblaster",
+    [53] = "birthday003", [54] = "birthday004", [55] = "lantern-c", [56] = "lighter-z",
+    [57] = "gimmickknife", [58] = "grenadebomb", [59] = "thermatebomb", [60] = "stangrenadebomb",
+    [61] = "ch9-wp000", [62] = "ch9-wp001", [63] = "ch9-wp002", [64] = "ch9-wp003",
+    [65] = "ch9-wp004", [66] = "ch9-wp005", [67] = "ch9-wp006", [68] = "ch9-wp007",
+    [69] = "ch9-wp008", [70] = "ch9-wp009", [71] = "num", [9999] = "etc",
+}
+
+function ReloadSpeed.new(context)
+    return setmetatable({ context = context }, ReloadSpeed)
+end
+
+function ReloadSpeed:multiplier(weapon_id)
+    local name = WEAPON_NAMES[weapon_id]
+    if name == nil then
+        return nil
+    end
+    return self.context.config:get("weapon-reload-speed-multiplier-" .. name)
+end
+
+function ReloadSpeed:apply(controller)
+    local weapon_id = controller:call("get_CurrentWeaponID")
+    local multiplier = self:multiplier(weapon_id)
+    if multiplier == nil then
+        local weapon = controller:call("get_CurrentWeapon")
+        if weapon ~= nil then
+            weapon_id = weapon:call("get_WeaponID")
+            multiplier = self:multiplier(weapon_id)
+        end
+    end
+    if multiplier == nil then
+        return
+    end
+
+    local depressant = math.max(0, controller:call("get_DepressantLevel"))
+    if depressant > 0 and not self.context.config:get("weapon-mod-reload-speed-include-stabilizers", true) then
+        multiplier = 1.0
+    end
+
+    local table_data = controller:call("get_PlayerReloadSpeedRateTable")
+    local motion_manager = controller:call("get_MotionManager")
+    if table_data == nil or motion_manager == nil then return end
+    local base_rate = table_data:call("getReloadSpeedRate(System.Int32)", depressant)
+    local rate = math.max(0.1, math.floor(base_rate * multiplier * 100 + 0.5) / 100)
+    controller:call("set_ReloadSpeedRate", rate)
+    local hash = self.context.game:static_field("app.PlayerMotionController.VariableNameHash", "fReloadSpeedRate")
+    motion_manager:call("setFloatToMotionVariable(System.UInt32, System.Single)", hash, rate)
+end
+
+function ReloadSpeed:install()
+    local game = self.context.game
+    game:hook("app.PlayerMotionController", "update()", function(args)
+        if self.context.config:get("weapon-mod-reload-speed", false) then
+            thread.get_hook_storage().biorand_reload_controller = game:object(args[2])
+        end
+    end, function(retval)
+        local storage = thread.get_hook_storage()
+        local controller = storage.biorand_reload_controller
+        storage.biorand_reload_controller = nil
+        if controller ~= nil then
+            self:apply(controller)
+        end
+        return retval
+    end)
+end
+
+return ReloadSpeed

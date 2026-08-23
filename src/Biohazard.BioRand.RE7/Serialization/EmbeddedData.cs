@@ -9,11 +9,12 @@ public static class EmbeddedData {
     public static Stream? GetStream(string name) {
         var exeDirectory = AppContext.BaseDirectory;
         var dataDirectory = Path.Combine(exeDirectory, DataDirectoryName);
-        var dataPath = Path.Combine(dataDirectory, name);
+        var dataPath = Path.Combine(dataDirectory, name.Replace('/', Path.DirectorySeparatorChar));
         if (File.Exists(dataPath))
             return new MemoryStream(File.ReadAllBytes(dataPath));
 
-        var resourceName = $"Biohazard.BioRand.RE7.{DataDirectoryName}.{name}";
+        var resourcePath = name.Replace('/', '.').Replace('\\', '.');
+        var resourceName = $"Biohazard.BioRand.RE7.{DataDirectoryName}.{resourcePath}";
         return assembly.GetManifestResourceStream(resourceName);
     }
 

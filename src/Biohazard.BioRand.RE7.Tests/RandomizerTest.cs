@@ -104,13 +104,7 @@ public static class RandomizerTest {
     }
 
     public static (ZipArchive, PakFile) Run(string configJson, int seed = DefaultTestingSeed) {
-        var input = new RandomizerInput(){
-            Seed = seed,
-            Configuration = RandomizerConfiguration.FromJson(configJson)
-        };
-
-        var output = Executor.Value.Randomize(input);
-        Assert.NotNull(output);
+        var output = RunOutput(configJson, seed);
 
         var zipAsset = output.Assets.FirstOrDefault(asset => asset.Key == "1-patch")?.Data.Unzip();
         Assert.NotNull(zipAsset);
@@ -124,6 +118,19 @@ public static class RandomizerTest {
                     .GetBytes()
             )
         );
+    }
+
+    public static IntelOrca.Biohazard.BioRand.RandomizerOutput RunOutput(
+        string configJson,
+        int seed = DefaultTestingSeed) {
+        var input = new RandomizerInput(){
+            Seed = seed,
+            Configuration = RandomizerConfiguration.FromJson(configJson)
+        };
+
+        var output = Executor.Value.Randomize(input);
+        Assert.NotNull(output);
+        return output;
     }
 
     internal static RandomizerRunResult RunState(

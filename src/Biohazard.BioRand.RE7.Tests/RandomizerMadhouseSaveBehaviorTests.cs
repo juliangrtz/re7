@@ -34,10 +34,12 @@ public class RandomizerMadhouseSaveBehaviorTests {
         var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x5A7E);
         using var zipDisposable = zip;
 
-        var pluginEntry = zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll");
+        var scriptEntry = zip.GetEntry("reframework/autorun/BioRand7/madhouse_saves.lua");
         var reframeworkConfigEntry = zip.GetEntry("reframework/data/BioRand7/config.json");
 
-        Assert.NotNull(pluginEntry);
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7.lua"));
+        Assert.NotNull(scriptEntry);
+        Assert.Null(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
         Assert.NotNull(reframeworkConfigEntry);
 
         var reframeworkConfig = JsonNode.Parse(reframeworkConfigEntry!.GetBytes())!.AsObject();

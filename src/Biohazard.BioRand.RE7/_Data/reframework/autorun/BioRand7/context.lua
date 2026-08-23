@@ -1,0 +1,34 @@
+local Config = require("BioRand7/config")
+local Game = require("BioRand7/game")
+local Logger = require("BioRand7/logger")
+
+local Context = {}
+Context.__index = Context
+
+function Context.new()
+    local config = Config.new()
+    return setmetatable({
+        config = config,
+        game = Game.new(),
+        log = Logger.new("BioRand7", config),
+        features = {},
+    }, Context)
+end
+
+function Context:add(name, feature)
+    self.features[name] = feature
+    feature:install()
+    self.log:info(name .. " loaded")
+    return feature
+end
+
+function Context:reset()
+    for _, feature in pairs(self.features) do
+        if feature.reset ~= nil then
+            feature:reset()
+        end
+    end
+    self.game.singletons = {}
+end
+
+return Context

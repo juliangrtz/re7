@@ -117,7 +117,7 @@ src/Biohazard.BioRand.RE7/                    Core randomizer library
 src/biorand-re7/                              Command-line app
 src/Biohazard.BioRand.RE7.Benchmarks/         BenchmarkDotNet throughput benchmarks
 src/Biohazard.BioRand.RE7.DataGen/            Data and code generators
-src/Biohazard.BioRand.RE7.REFrameworkPlugins/ REFramework.NET plugin
+src/Biohazard.BioRand.RE7/_Data/reframework/  REFramework Lua autorun scripts
 src/Biohazard.BioRand.RE7.Tests/              xUnit regression tests
 docs/                                         Notes, roadmap, and research docs
 assets/                                       Project assets and bundled mod assets

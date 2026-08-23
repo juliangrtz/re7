@@ -23,8 +23,6 @@
         <EmbeddedResource Include="_Data/**/*" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference
-            Include="..\Biohazard.BioRand.RE7.REFrameworkPlugins\Biohazard.BioRand.RE7.REFrameworkPlugins.csproj" />
         <ProjectReference Include="$(ReeutilsProjectPath)" Condition="'$(UseReeutilsProjectReference)' == 'true'" />
     </ItemGroup>
 </Project>

@@ -1,10 +1,30 @@
 using Biohazard.BioRand.RE7.Extensions;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
 [Trait("Category", "RequiresPak")]
 public class RandomizerRandomEventPluginBehaviorTests {
+    private static readonly string[] REFrameworkScriptPaths = [
+        "BioRand7.lua",
+        "BioRand7/config.lua",
+        "BioRand7/context.lua",
+        "BioRand7/data.lua",
+        "BioRand7/em3300_explosions.lua",
+        "BioRand7/em8000_knee_down.lua",
+        "BioRand7/enemy_drops.lua",
+        "BioRand7/game.lua",
+        "BioRand7/inventory.lua",
+        "BioRand7/logger.lua",
+        "BioRand7/madhouse_saves.lua",
+        "BioRand7/random_events.lua",
+        "BioRand7/reload_speed.lua",
+        "BioRand7/rng.lua",
+        "BioRand7/static_mia.lua",
+        "BioRand7/ui.lua",
+    ];
+
     [Fact]
     public void RandomEvents_EnableREFrameworkConfigAndInjectPluginSeedMetadata() {
         var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
@@ -16,14 +36,16 @@ public class RandomizerRandomEventPluginBehaviorTests {
             config["event-enemy-max-targets"] = 4;
         });
 
-        var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0xE7E775);
-        using var zipDisposable = zip;
+        var output = RandomizerTest.RunOutput(configuration.ToJson(), seed: 0xE7E775);
+        using var zip = output.Assets.Single(asset => asset.Key == "1-patch").Data.Unzip();
+        using var fluffyMod = output.Assets.Single(asset => asset.Key == "2-fluffy").Data.Unzip();
 
         var rootConfigEntry = zip.GetEntry("config.json");
         var reframeworkConfigEntry = zip.GetEntry("reframework/data/BioRand7/config.json");
 
         Assert.NotNull(rootConfigEntry);
-        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        AssertREFrameworkScripts(zip);
+        AssertREFrameworkScripts(fluffyMod);
         Assert.NotNull(reframeworkConfigEntry);
 
         var rootConfig = JsonNode.Parse(rootConfigEntry!.GetBytes())!.AsObject();
@@ -40,52 +62,59 @@ public class RandomizerRandomEventPluginBehaviorTests {
 
     [Fact]
     public void RandomEvents_InfiniteAmmo_UsesPassiveSkillInfinityFlag() {
-        var source = ReadPluginSource("Plugin.RandomEvents.cs");
+        var source = ReadScriptSource("random_events.lua");
 
-        Assert.Contains("case RandomEventKind.WeaponInfiniteAmmo:", source);
-        Assert.Contains("ApplyWeaponInfiniteAmmoEvent()", source);
-        Assert.Contains("\"set_loadNum\"", source);
-        Assert.Contains("PreHookResult.Skip", source);
-        Assert.Contains("InfiniteAmmoPassiveSkillDelta", source);
+        Assert.Contains("weapon_infinite_ammo", source);
+        Assert.Contains("apply_passive(INFINITE_AMMO_DELTA)", source);
+        Assert.Contains("set_loadNum(System.Int32)", source);
+        Assert.Contains("sdk.PreHookResult.SKIP_ORIGINAL", source);
+        Assert.Contains("INFINITE_AMMO_DELTA", source);
         Assert.Contains("BulletStackNumInfinityCount", source);
-        Assert.Contains("PlayerOrder.REFType", source);
-        Assert.Contains("PlayerStatus.REFType", source);
+        Assert.Contains("app.PlayerOrder", source);
+        Assert.Contains("app.PlayerStatus", source);
     }
 
     [Fact]
     public void RandomEvents_DebugUi_CanStartEverySupportedEffect() {
-        var pluginSource = ReadPluginSource("Plugin.cs");
-        var randomEventsSource = ReadPluginSource("Plugin.RandomEvents.cs");
-        var uiSource = ReadPluginSource("Plugin.UI.cs");
+        var pluginSource = ReadScriptSource("../BioRand7.lua");
+        var randomEventsSource = ReadScriptSource("random_events.lua");
+        var uiSource = ReadScriptSource("ui.lua");
 
-        Assert.Contains("activeRandomEventStartedFromUi", randomEventsSource);
-        Assert.Contains("ImGuiRender.Post += OnImGuiRender", pluginSource);
-        Assert.Contains("StartRandomEventFromUi(RandomEventKind.PlayerStatus)", uiSource);
-        Assert.Contains("StartRandomStatusEffectFromUi(delta)", uiSource);
-        Assert.Contains("RandomStatusEffectDeltas", uiSource);
-        Assert.Contains("DrawRandomEventOverlay()", uiSource);
-        Assert.Contains("TryGetRandomEventOverlayLabel", randomEventsSource);
-        Assert.Contains("SetNextWindowPos", uiSource);
-        Assert.Contains("NoInputs", uiSource);
+        Assert.Contains("started_from_ui", randomEventsSource);
+        Assert.Contains("re.on_application_entry(\"UpdateBehavior\"", pluginSource);
+        Assert.Contains("events:start(\"player_status\", true)", uiSource);
+        Assert.Contains("events:start(\"player_status\", true, delta)", uiSource);
+        Assert.Contains("events.status_deltas", uiSource);
+        Assert.Contains("draw_overlay", uiSource);
+        Assert.Contains("overlay_label", randomEventsSource);
+        Assert.Contains("set_next_window_pos", uiSource);
 
         foreach (var kind in new[]{
-                     "PlayerBlindness",
-                     "PlayerFreeze",
-                     "PlayerScale",
-                     "WeaponInfiniteAmmo",
-                     "WeaponNeuroAmmo",
-                     "WeaponExplosiveAmmo",
-                     "EnemySpeed",
-                     "EnemyInvisible",
-                     "EnemyWeak",
-                     "EnemyStrong",
-                     "EnemyPaused",
+                     "player_blindness",
+                     "player_freeze",
+                     "player_scale",
+                     "weapon_infinite_ammo",
+                     "weapon_neuro_ammo",
+                     "weapon_explosive_ammo",
+                     "enemy_speed",
+                     "enemy_invisible",
+                     "enemy_weak",
+                     "enemy_strong",
+                     "enemy_paused",
                  }) {
-            Assert.Contains($"RandomEventKind.{kind}", uiSource);
+            Assert.Contains($"\"{kind}\"", randomEventsSource);
         }
     }
 
-    private static string ReadPluginSource(string fileName) {
+    private static void AssertREFrameworkScripts(ZipArchive zip) {
+        foreach (var scriptPath in REFrameworkScriptPaths) {
+            Assert.NotNull(zip.GetEntry($"reframework/autorun/{scriptPath}"));
+        }
+        Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
+        Assert.Null(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+    }
+
+    private static string ReadScriptSource(string fileName) {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory != null && !File.Exists(Path.Combine(directory.FullName, "biorand-re7.sln"))) {
             directory = directory.Parent;
@@ -97,7 +126,11 @@ public class RandomizerRandomEventPluginBehaviorTests {
         var path = Path.Combine(
             directory.FullName,
             "src",
-            "Biohazard.BioRand.RE7.REFrameworkPlugins",
+            "Biohazard.BioRand.RE7",
+            "_Data",
+            "reframework",
+            "autorun",
+            "BioRand7",
             fileName);
         return File.ReadAllText(path);
     }
