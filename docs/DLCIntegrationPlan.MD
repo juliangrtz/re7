@@ -1,7 +1,7 @@
 # Not a Hero and End of Zoe integration plan
 
 Status: Proposed
-Last updated: 2026-08-24
+Last updated: 2026-08-25
 
 ## Purpose
 
@@ -12,6 +12,7 @@ The objective is not to make every discovered DLC object selectable as quickly a
 This plan builds on:
 
 - [Notes.MD](Notes.MD), especially the DLC integration and recipe notes.
+- [DLCIntegrationEvidence.MD](DLCIntegrationEvidence.MD), containing the binary-specific IDA evidence behind this plan.
 - [DLCAndModes.MD](../.analysis/knowledge/DLCAndModes.MD).
 - [ItemsInventoryRecipes.MD](../.analysis/knowledge/ItemsInventoryRecipes.MD).
 - [dlc-enemy-integration-findings.md](../.analysis/dlc-enemy-integration-findings.md).
@@ -98,6 +99,10 @@ The main campaign Em4400 prototype reached all of the following and still T-pose
 - A campaign-compatible spawn-info state.
 
 Its command container and action list were both empty. A healthy Not a Hero Em4400 had 29 actions in each. Later managed reconstruction made the enemy move and attack, but exposed a second terminal-action stall. Em4600 reached 38/38 action parity and then exposed missing idle, target, and action-setup layers.
+
+The 2026-08-25 IDA pass identified the first concrete cause. `CH8Em4400ActionController.doAwake()` contains no chapter guard: it calls `CH8MoldedActionController.doAwake()` and returns before action insertion when that base call leaves a managed exception. Both the CH8 molded base and the more general `CH8EnemyActionController.doAwake()` require the `CH8GameRankManager` singleton when an enemy rank manager is present. That singleton is absent in the campaign. Em4000, Em4200, and Em4400 use the molded path; Em4450 uses the CH8 enemy base directly.
+
+This is narrower than the earlier hypothesis of a generic missing DLC lifecycle. The normal `EnemySpawnInfo.setupInstance()` path subsequently applies the campaign `GameManager` rank, so the first production experiment should bypass or replace only the CH8-specific awake-time rank synchronization and then allow the derived controller to construct its native action table.
 
 This proves that successful asset loading or one successful animation is not a reliable acceptance criterion.
 
@@ -305,7 +310,14 @@ All steps must be idempotent. No adapter should perform broad per-frame repair.
 
 ### 6. Prefer a native lifecycle fix over action reconstruction
 
-Reverse engineer the exact mode or lifecycle guard that causes `CH8Em####ActionController.doAwake()` to skip its enemy-specific action insertion outside CH8. The preferred production fix is a narrow native hook that lets the enemy execute its own action construction and registration.
+The immediate CH8 target is now known: the CH8 action-controller base performs an awake-time rank synchronization through `CH8GameRankManager`. In campaign mode, the missing singleton raises the managed error observed by the derived controller, which then returns before native action insertion.
+
+Test a narrow campaign-only hook at the CH8 base rank-sync block that does one of the following:
+
+1. Preserves the current `EnemyRankManager` value and skips only the CH8 singleton lookup.
+2. Uses the ordinary `GameManager` rank, matching the later `EnemySpawnInfo.setupInstance()` behavior.
+
+Do not skip the complete CH8 base `doAwake()`: it also installs rank-change handlers and binds required components. After the narrow rank fix, require the derived method to build its own command container and allow the ordinary `EnemyActionController.doStart()` path to register and set up those actions.
 
 Any native patch must:
 
@@ -370,6 +382,8 @@ Examples:
 - Convert a CH8 healing item to a campaign `WeaponRemedyAppend` implementation with equivalent heal values.
 - Implement a DLC passive effect through `PlayerPassiveSkill` or a narrow insertion bridge instead of calling a CH8/CH9 passive manager from Ethan's inventory.
 - Preserve ammo IDs only when the matching weapon consumes them correctly; otherwise keep them unavailable.
+
+IDA confirms these are hard runtime boundaries. CH9 passive insertion casts the inventory owner to `ICH9PlayerOrder` before registering attack/guard amulets and the passive userdata. CH9 gauntlet insertion resolves `CH9PlayerEquipManager` from the owner and registers itself as a knuckle weapon. CH8 and CH9 remedy-use methods both check mode-specific player interfaces; the CH8 method also updates the CH8 rank manager's remedy-use score when that manager exists.
 
 The Birthday skill implementation is the reference pattern: copy the full item-data/prefab/userdata/message/resource chain, synthesize a campaign-safe pickup, and bridge only the incompatible insert callback.
 
