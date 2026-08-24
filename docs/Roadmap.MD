@@ -84,6 +84,7 @@ Status: **Not completed**
 * In-depth reverse engineering required
 * In the worst case binary patching might be necessary!
 * Ethan Must Die crate quality concept in main game
+* Not a Hero and End of Zoe must follow the staged compatibility and certification process in [DLCIntegrationPlan.MD](DLCIntegrationPlan.MD)
 
 *Estimated completion: August*  
 Status: **Not completed**
