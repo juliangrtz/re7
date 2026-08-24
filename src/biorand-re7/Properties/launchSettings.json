@@ -2,47 +2,11 @@
   "profiles": {
     "generate": {
       "commandName": "Project",
-      "commandLineArgs": "generate -s 357436 -c -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" -i ..\\biorand-re7.pak",
-      "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
-    },
-    "generate-pak": {
-      "commandName": "Project",
-      "commandLineArgs": "generate -s random -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\re_chunk_000.pak.patch_001.pak\" -i ..\\biorand-re7.pak",
-      "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
-    },
-    "generate-pak-website": {
-      "commandName": "Project",
-      "commandLineArgs": "generate --url https://beta-re7.biorand.net/seed/9211 -o \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\re_chunk_000.pak.patch_001.pak\" -i ..\\biorand-re7.pak -k",
-      "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
-    },
-    "agent": {
-      "commandName": "Project",
-      "commandLineArgs": "agent https://beta-api.biorand.net -k 0gDQTPwkhFrHypx2jpxqLsfsTFcjofna -i ..\\biorand-re7.pak",
-      "workingDirectory": "C:\\Users\\Julian\\.biorand\\logs"
-    },
-    "mod": {
-      "commandName": "Project",
-      "commandLineArgs": "mod -m flamethrower -o M:\\temp\\out -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\""
+      "commandLineArgs": "generate -s random -o ..\\..\\out\\biorand-re7.pak"
     },
     "update": {
       "commandName": "Project",
       "commandLineArgs": "update"
-    },
-    "setup": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
-    },
-    "setup-pak": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\" --full"
-    },
-    "setup-dlcs": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o F:\\RE_Modding\\BioRand\\re7-vanilla-dlc-extract -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full"
-    },
-    "setup-pak-dlcs": {
-      "commandName": "Project",
-      "commandLineArgs": "setup -o C:\\Users\\Julian\\.biorand\\biorand-re7-dlcs.pak -i \"D:\\SteamLibrary\\steamapps\\common\\RESIDENT EVIL 7 biohazard\\dlc\" --full"
     }
   }
 }

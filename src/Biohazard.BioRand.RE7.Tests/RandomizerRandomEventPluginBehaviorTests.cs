@@ -106,6 +106,18 @@ public class RandomizerRandomEventPluginBehaviorTests {
         }
     }
 
+    [Fact]
+    public void InventoryCombineHook_UsesStaticRowNumField() {
+        var gameSource = ReadScriptSource("game.lua");
+        var inventorySource = ReadScriptSource("inventory.lua");
+
+        Assert.Contains("sdk.set_native_field(nil", gameSource);
+        Assert.Contains("game:static_field(type_name, \"RowNum\")", inventorySource);
+        Assert.Contains("game:set_static_field(type_name, \"RowNum\", MAX_COMBINE_ROWS)", inventorySource);
+        Assert.DoesNotContain("get_RowNum", inventorySource);
+        Assert.DoesNotContain("set_RowNum", inventorySource);
+    }
+
     private static void AssertREFrameworkScripts(ZipArchive zip) {
         foreach (var scriptPath in REFrameworkScriptPaths) {
             Assert.NotNull(zip.GetEntry($"reframework/autorun/{scriptPath}"));

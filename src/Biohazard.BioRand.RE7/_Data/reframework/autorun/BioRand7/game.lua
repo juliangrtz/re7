@@ -33,6 +33,10 @@ function Game:static_field(type_name, name)
     return self:field(type_name, name):get_data(nil)
 end
 
+function Game:set_static_field(type_name, name, value)
+    sdk.set_native_field(nil, type_definition(type_name), name, value)
+end
+
 function Game:singleton(type_name)
     local singleton = self.singletons[type_name]
     if singleton == nil then

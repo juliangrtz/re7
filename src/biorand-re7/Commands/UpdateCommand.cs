@@ -11,16 +11,18 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings> {
 
     protected override async Task<int>
         ExecuteAsync(CommandContext context, Settings settings, CancellationToken token) {
-        var rootDir = FindRootDirectory();
-        if (rootDir == null) {
-            AnsiConsole.MarkupLine("[red]Project root directory not found.[/]");
+        var sourceDir = FindSourceDirectory();
+        if (sourceDir == null) {
+            AnsiConsole.MarkupLine("[red]Project source directory not found.[/]");
             return 1;
         }
 
-        var dataDir = Path.Combine(rootDir, "BioHazard.BioRand.RE7", "_Data");
+        var dataDir = Path.Combine(sourceDir, "Biohazard.BioRand.RE7", "_Data");
 
         var dynamicData = new DynamicData(download: true);
+        var failed = false;
         foreach (var dataName in Enum.GetValues<DynamicDataName>()) {
+            token.ThrowIfCancellationRequested();
             var filename = DynamicData.GetFileName(dataName)!;
 
             var destinationPath = Path.Combine(dataDir, filename);
@@ -33,28 +35,40 @@ internal sealed class UpdateCommand : AsyncCommand<UpdateCommand.Settings> {
                     continue;
                 }
 
-                await File.WriteAllBytesAsync(destinationPath, fileBytes);
+                await File.WriteAllBytesAsync(destinationPath, fileBytes, token);
                 AnsiConsole.MarkupLineInterpolated(
                     $"[green]Downloaded and overwrote: {destinationPath} ({fileBytes.Length} bytes)[/]");
             }
+            catch (OperationCanceledException) when (token.IsCancellationRequested) {
+                throw;
+            }
             catch (Exception ex) {
+                failed = true;
                 AnsiConsole.MarkupLineInterpolated($"[red]Failed to update {filename}: {ex.Message}[/]");
             }
         }
 
-        return 0;
+        return failed ? 1 : 0;
     }
 
-    private static string? FindRootDirectory() {
-        var dir = Directory.GetCurrentDirectory();
-        while (dir != null) {
-            if (dir.EndsWith("src")) {
-                return dir;
+    internal static string? FindSourceDirectory(string? startDirectory = null) {
+        var directory = new DirectoryInfo(startDirectory ?? Directory.GetCurrentDirectory());
+        while (directory != null) {
+            if (IsSourceDirectory(directory.FullName)) {
+                return directory.FullName;
             }
 
-            dir = Path.GetDirectoryName(dir);
+            var nestedSourceDirectory = Path.Combine(directory.FullName, "src");
+            if (IsSourceDirectory(nestedSourceDirectory)) {
+                return Path.GetFullPath(nestedSourceDirectory);
+            }
+
+            directory = directory.Parent;
         }
 
         return null;
     }
+
+    private static bool IsSourceDirectory(string path)
+        => Directory.Exists(Path.Combine(path, "Biohazard.BioRand.RE7", "_Data"));
 }

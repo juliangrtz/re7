@@ -17,6 +17,10 @@ function Inventory:desired_level()
     end
 
     local name = player:call("get_Name")
+    if type(name) ~= "string" then
+        return nil
+    end
+
     if name:sub(1, 4) == "Pl00" then
         return SIZE_LEVELS[tostring(self.context.config:get("random-starting-inventory-size-ethan", "12"))]
     end
@@ -27,7 +31,15 @@ function Inventory:desired_level()
 end
 
 function Inventory:is_birthday_skill(item)
+    if item == nil then
+        return false
+    end
+
     local data_id = item:call("get_ItemDataID")
+    if type(data_id) ~= "string" then
+        return false
+    end
+
     local normalized = data_id:lower()
     return normalized:sub(1, 3) == "skl" and normalized:sub(-2) ~= "no"
 end
@@ -48,6 +60,10 @@ function Inventory:install_discard_hook()
         end
 
         local data_id = item:call("get_ItemDataID") or item_data:call("get_ItemDataID")
+        if type(data_id) ~= "string" then
+            return
+        end
+
         local category = item_data:call("get_Category")
         storage.biorand_force_discard = data_id:lower():sub(1, 12) == "foundfootage"
             or (category ~= KEY_ITEM and category ~= USABLE_KEY_ITEM)
@@ -108,8 +124,8 @@ function Inventory:install_combine_hooks()
     local game = self.context.game
     game:hook("app.InventoryMenu.DictionaryCombineUIController", "deactivate()", function()
         local type_name = "app.InventoryMenu.DictionaryCombineUIController"
-        if game:method(type_name, "get_RowNum()"):call(nil) ~= MAX_COMBINE_ROWS then
-            game:method(type_name, "set_RowNum(System.Int32)"):call(nil, MAX_COMBINE_ROWS)
+        if game:static_field(type_name, "RowNum") ~= MAX_COMBINE_ROWS then
+            game:set_static_field(type_name, "RowNum", MAX_COMBINE_ROWS)
         end
     end)
 

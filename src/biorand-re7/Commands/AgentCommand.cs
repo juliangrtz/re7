@@ -30,15 +30,19 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings> {
             settings.ApiKey,
             gameId,
             new RandomizerAgentHandler(settings.InputPath, settings.Beta));
-        var cts = new CancellationTokenSource();
-        Console.CancelKeyPress += (sender, e) => {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+        ConsoleCancelEventHandler cancelHandler = (_, e) => {
             e.Cancel = true;
             cts.Cancel();
         };
+        Console.CancelKeyPress += cancelHandler;
         try {
             await agent.RunAsync(cts.Token);
         }
-        catch (TaskCanceledException) { }
+        catch (OperationCanceledException) when (cts.IsCancellationRequested) { }
+        finally {
+            Console.CancelKeyPress -= cancelHandler;
+        }
 
         return 0;
     }
@@ -85,10 +89,12 @@ internal sealed class AgentCommand : AsyncCommand<AgentCommand.Settings> {
             return Task.FromResult(randomizer.Randomize(input));
         }
 
-        public void LogInfo(string message) => AnsiConsole.MarkupLine($"[gray]{Timestamp} {message}[/]");
+        public void LogInfo(string message) =>
+            AnsiConsole.MarkupLine($"[gray]{Timestamp} {Markup.Escape(message)}[/]");
 
         public void LogError(Exception ex, string message) =>
-            AnsiConsole.MarkupLine($"[red]{Timestamp} {message} ({ex.Message})[/]");
+            AnsiConsole.MarkupLine(
+                $"[red]{Timestamp} {Markup.Escape(message)} ({Markup.Escape(ex.Message)})[/]");
 
         private static string Timestamp => DateTime.Now.ToString("[[yyyy-MM-dd HH:mm]]");
     }
