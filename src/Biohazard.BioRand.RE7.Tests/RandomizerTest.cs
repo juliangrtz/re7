@@ -50,7 +50,6 @@ public static class RandomizerTest {
         configuration["random-enemy-drops"] = false;
         configuration["boss-random-health"] = false;
         configuration["enemy-random-health"] = false;
-        configuration["enemy-health-progressive-difficulty"] = false;
         foreach (var drop in ItemDrops.HighValueDrops) {
             configuration[$"enemy-drop-valuable-{drop}"] = false;
         }

@@ -7,7 +7,6 @@ internal sealed record EnemyRandomizerOptions(
     int MaxPackSize,
     bool DebugUniqueHp,
     bool IsBalanced,
-    bool ProgressiveDifficulty,
     ScaleOptions ScaleOptions,
     double ForceTargetingProbability
 );
