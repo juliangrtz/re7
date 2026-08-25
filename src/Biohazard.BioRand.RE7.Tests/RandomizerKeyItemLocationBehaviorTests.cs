@@ -4,6 +4,7 @@ using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Text;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -199,6 +200,23 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         "natives/stm/environment/scene/chapter4/c04_ship1foffice.scn.20";
 
     private static readonly Guid ShipMaintenanceRoomDrawerHandgunGuid = new("23ffe0b9-43d3-4091-9588-bc45740c0b43");
+
+    [Fact]
+    public void KeyItemLocations_EmitsSeedSpecificHintAsset() {
+        const int seed = 35825;
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
+            config["random-key-item-locations"] = true;
+        });
+
+        var output = RandomizerTest.RunOutput(configuration.ToJson(), seed);
+        var hintsAsset = output.Assets.Single(asset => asset.Key == "4-key-hints");
+        var html = Encoding.UTF8.GetString(hintsAsset.Data);
+
+        Assert.Equal($"biorand-re7-{seed}-key-items.html", hintsAsset.FileName);
+        Assert.Contains($"Key Item Locations (Seed {seed})", html);
+        Assert.Contains("natives/stm/", html);
+        Assert.Contains("<tbody>", html);
+    }
 
     [Fact]
     public void KeyItemLocations_RandomizesSupportedKeyItemsIntoRouteSafeNormalPlacements() {

@@ -29,6 +29,7 @@ internal class KeyItemLocationModifier : Modifier {
 
     private const int MaxRouteSeedAttempts = 64;
     private const int MaxRouteDeadEndsPerAttempt = 1024;
+    private const int MaxPreferredRuleSubsetAttempts = 8192;
     private const int RouteDepthPadding = 8;
     private static readonly Guid _guestHouseFuseCabinetGuid = new("b116eb16-c4c5-4d43-8901-044ec9dccbcf");
 
@@ -283,6 +284,7 @@ internal class KeyItemLocationModifier : Modifier {
         var replacementPlanSet = CreateKeyItemReplacementPlans(logger, rng, availableTargets);
         if (replacementPlanSet == null)
             return;
+        AddKeyItemHintsOutput(randomizer, replacementPlanSet);
         var replacementPlans = replacementPlanSet.Plans;
         var acquisitionFlagsByItemId = GetAcquisitionFlagsByItemId(
             randomizer,
@@ -760,9 +762,9 @@ internal class KeyItemLocationModifier : Modifier {
             var activeTargets = availableTargets
                 .Where(target => !supportedIds.Contains(target.Placement.Id) || activeIds.Contains(target.Placement.Id))
                 .ToList();
-            var plans = TryCreateKeyItemReplacementPlans(routeSeed, activeRules, activeTargets,
+            var planSet = TryCreateKeyItemReplacementPlans(routeSeed, activeRules, activeTargets,
                 randomizableRules.Length, logger);
-            if (plans == null)
+            if (planSet == null)
                 continue;
 
             foreach (var skippedRule in randomizableRules.Where(rule => !activeIds.Contains(rule.Id))) {
@@ -770,15 +772,16 @@ internal class KeyItemLocationModifier : Modifier {
                     $"Skipped key item {_itemDefinitions.GetName(skippedRule.Id)}: no complete safe route was found after excluding drawer-backed pickups; vanilla placement is preserved.");
             }
 
-            return new KeyItemReplacementPlanSet(plans, activeRules);
+            return planSet;
         }
 
         logger.LogLine(
-            "Skipped key item randomization: no supported key item could be placed on a complete safe route after excluding drawer-backed pickups.");
+            "Skipped key item randomization: no supported key item could be placed on a complete safe route " +
+            $"after {MaxPreferredRuleSubsetAttempts} preferred fallback attempts and a deterministic greedy fallback.");
         return null;
     }
 
-    private static Dictionary<ReplacementKey, ReplacementPlan>? TryCreateKeyItemReplacementPlans(
+    private static KeyItemReplacementPlanSet? TryCreateKeyItemReplacementPlans(
         int routeSeed,
         ImmutableArray<KeyItemRule> activeRules,
         IReadOnlyCollection<ItemReplacementTarget> availableTargets,
@@ -836,46 +839,109 @@ internal class KeyItemLocationModifier : Modifier {
             logger.LogLine($"GUID: {assignment.Target.TargetGuid}");
         }
 
-        return result;
+        return new KeyItemReplacementPlanSet(result, activeRules, assignments);
     }
 
     private static IEnumerable<ImmutableArray<KeyItemRule>> EnumerateRuleSubsets(ImmutableArray<KeyItemRule> rules) {
-        if (rules.Length > 20) {
-            var activeRules = rules;
-            while (activeRules.Length > 0) {
-                yield return activeRules;
-                var dropRule = activeRules
-                    .OrderBy(rule => rule.Priority)
-                    .ThenBy(rule => rule.Id, StringComparer.OrdinalIgnoreCase)
-                    .First();
-                activeRules = activeRules.Remove(dropRule);
-            }
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var subset in EnumeratePreferredRuleSubsets(rules).Take(MaxPreferredRuleSubsetAttempts)) {
+            if (seen.Add(GetRuleSubsetSignature(subset)))
+                yield return subset;
+        }
 
+        // Always retain a cheap last-resort path to a smaller safe randomization.
+        // This is deliberately appended after the higher-quality one/two-key omissions above.
+        var activeRules = rules;
+        while (activeRules.Length > 0) {
+            if (seen.Add(GetRuleSubsetSignature(activeRules)))
+                yield return activeRules;
+
+            var dropRule = activeRules
+                .OrderBy(rule => rule.Priority)
+                .ThenBy(rule => rule.Id, StringComparer.OrdinalIgnoreCase)
+                .First();
+            activeRules = activeRules.Remove(dropRule);
+        }
+    }
+
+    private static IEnumerable<ImmutableArray<KeyItemRule>> EnumeratePreferredRuleSubsets(
+        ImmutableArray<KeyItemRule> rules) {
+        for (var omittedCount = 0; omittedCount < rules.Length; omittedCount++) {
+            var candidates = EnumerateIndexCombinations(rules.Length, omittedCount)
+                .Select(omittedIndices => new{
+                    OmittedIndices = omittedIndices,
+                    OmittedPriority = omittedIndices.Sum(index => rules[index].Priority),
+                    OmittedMask = omittedIndices.Aggregate(
+                        BigInteger.Zero,
+                        (mask, index) => mask | (BigInteger.One << index)),
+                })
+                .OrderBy(candidate => candidate.OmittedPriority)
+                // The previous active-mask search used ascending masks. For equal priority,
+                // that is equivalent to descending omitted masks; preserve seed behavior.
+                .ThenByDescending(candidate => candidate.OmittedMask);
+
+            foreach (var candidate in candidates) {
+                var omitted = candidate.OmittedIndices.ToHashSet();
+                yield return rules
+                    .Where((_, index) => !omitted.Contains(index))
+                    .ToImmutableArray();
+            }
+        }
+    }
+
+    private static IEnumerable<ImmutableArray<int>> EnumerateIndexCombinations(int itemCount, int selectionCount) {
+        if (selectionCount == 0) {
+            yield return [];
             yield break;
         }
 
-        var maxMask = 1 << rules.Length;
-        for (var size = rules.Length; size >= 1; size--) {
-            foreach (var entry in Enumerable.Range(1, maxMask - 1)
-                         .Where(mask => BitOperations.PopCount((uint)mask) == size)
-                         .Select(mask => new{
-                             Mask = mask,
-                             Score = rules
-                                 .Where((_, index) => (mask & (1 << index)) != 0)
-                                 .Sum(rule => rule.Priority),
-                         })
-                         .OrderByDescending(entry => entry.Score)
-                         .ThenBy(entry => entry.Mask)) {
-                var subset = ImmutableArray.CreateBuilder<KeyItemRule>(size);
-                for (var i = 0; i < rules.Length; i++) {
-                    if ((entry.Mask & (1 << i)) != 0) {
-                        subset.Add(rules[i]);
-                    }
-                }
+        var selected = new int[selectionCount];
+        foreach (var result in Enumerate(0, 0))
+            yield return result;
 
-                yield return subset.ToImmutable();
+        IEnumerable<ImmutableArray<int>> Enumerate(int depth, int startIndex) {
+            if (depth == selectionCount) {
+                yield return [.. selected];
+                yield break;
+            }
+
+            var remaining = selectionCount - depth;
+            for (var index = startIndex; index <= itemCount - remaining; index++) {
+                selected[depth] = index;
+                foreach (var result in Enumerate(depth + 1, index + 1))
+                    yield return result;
             }
         }
+    }
+
+    private static string GetRuleSubsetSignature(ImmutableArray<KeyItemRule> rules)
+        => string.Join('\u001F', rules.Select(rule => rule.Id));
+
+    private static void AddKeyItemHintsOutput(Randomizer randomizer, KeyItemReplacementPlanSet replacementPlanSet) {
+        if (replacementPlanSet.Assignments.IsDefaultOrEmpty)
+            return;
+
+        var hints = replacementPlanSet.Assignments.Select(assignment => {
+            var placement = assignment.Target.Placement;
+            return new KeyItemHint(
+                assignment.RouteOrder,
+                _itemDefinitions.GetName(assignment.Rule.Id),
+                assignment.Rule.Id,
+                assignment.Rule.Count,
+                assignment.RegionName,
+                placement.SceneFile,
+                assignment.Target.TargetGuid,
+                placement.Position.X,
+                placement.Position.Y,
+                placement.Position.Z);
+        });
+        var html = KeyItemHintsGenerator.RenderHtml(hints, randomizer.Seed);
+        randomizer.AddOutputAsset(new IntelOrca.Biohazard.BioRand.RandomizerOutputAsset(
+            "4-key-hints",
+            "Key Item Hints",
+            "Spoiler sheet showing where progression items were placed in this seed.",
+            $"biorand-re7-{randomizer.Seed}-key-items.html",
+            Encoding.UTF8.GetBytes(html)));
     }
 
     internal static string GenerateRouteGraphMermaid(bool includeItems = false)
@@ -1398,6 +1464,7 @@ internal class KeyItemLocationModifier : Modifier {
         private readonly Dictionary<string, KeyItemRule> _activeRulesById;
         private readonly Dictionary<Node, ItemReplacementTarget> _targetsByNode = [];
         private readonly Dictionary<Node, string> _regionByNode = [];
+        private readonly Dictionary<Node, int> _routeOrderByTargetNode = [];
         private readonly Dictionary<Node, int> _routeOrderByNode = [];
         private readonly Dictionary<Node, string> _diagramNodeIds = [];
         private readonly List<KeyItemRouteGraphNode> _diagramNodes = [];
@@ -1551,6 +1618,7 @@ internal class KeyItemLocationModifier : Modifier {
                 routeTarget.Room);
             _targetsByNode[node] = target;
             _regionByNode[node] = routeTarget.RegionName;
+            _routeOrderByTargetNode[node] = _routeOrderByNode[routeTarget.Room];
         }
 
         public bool HasCandidate(KeyItemRule rule)
@@ -1659,7 +1727,8 @@ internal class KeyItemLocationModifier : Modifier {
                     return new KeyItemRouteAssignment(
                         rule,
                         _targetsByNode[node],
-                        _regionByNode[node]);
+                        _regionByNode[node],
+                        _routeOrderByTargetNode[node]);
                 })
                 .ToImmutableArray();
 
@@ -1767,7 +1836,8 @@ internal class KeyItemLocationModifier : Modifier {
                 yield return new KeyItemRouteAssignment(
                     rule,
                     _targetsByNode[node],
-                    _regionByNode[node]);
+                    _regionByNode[node],
+                    _routeOrderByTargetNode[node]);
             }
         }
 
@@ -1965,14 +2035,16 @@ internal class KeyItemLocationModifier : Modifier {
 
     private sealed record KeyItemReplacementPlanSet(
         Dictionary<ReplacementKey, ReplacementPlan> Plans,
-        ImmutableArray<KeyItemRule> ActiveRules);
+        ImmutableArray<KeyItemRule> ActiveRules,
+        ImmutableArray<KeyItemRouteAssignment> Assignments);
 
     private sealed record RouteTarget(Node Room, int GroupMask, string RegionName);
 
     private sealed record KeyItemRouteAssignment(
         KeyItemRule Rule,
         ItemReplacementTarget Target,
-        string RegionName);
+        string RegionName,
+        int RouteOrder);
 
     internal sealed record KeyItemRouteGraphDiagram(
         ImmutableArray<KeyItemRouteGraphNode> Nodes,

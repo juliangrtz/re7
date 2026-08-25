@@ -17,6 +17,7 @@ internal class Randomizer : IDisposable {
     private readonly Dictionary<Type, object> _services = [];
     private readonly Lock _servicesLock = new();
     private readonly Dictionary<string, string> _logFiles = [];
+    private readonly Dictionary<string, RandomizerOutputAsset> _seedOutputAssets = [];
 
     public int PakVersion { get; set; } = 1;
     public RandomizerInput Input { get; }
@@ -109,6 +110,8 @@ internal class Randomizer : IDisposable {
                     $"biorand-re7-assets-{RandomizerOutput.AdditionalAssetPakVersion}.zip",
                     output.GetAdditionalAssetsZip()));
             }
+
+            assets.AddRange(_seedOutputAssets.Values.OrderBy(asset => asset.Key, StringComparer.Ordinal));
 
             result = new IntelOrca.Biohazard.BioRand.RandomizerOutput(
                 assets.ToImmutableArray(),
@@ -301,5 +304,9 @@ internal class Randomizer : IDisposable {
 
     public void AddLogFile(string name, string content) {
         _logFiles[name] = content;
+    }
+
+    public void AddOutputAsset(RandomizerOutputAsset asset) {
+        _seedOutputAssets[asset.Key] = asset;
     }
 }
