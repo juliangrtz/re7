@@ -568,6 +568,19 @@ internal class KeyItemLocationModifier : Modifier {
         return routeTarget != null && (routeTarget.GroupMask & rule.RouteMask) == rule.RouteMask;
     }
 
+    internal static ImmutableArray<(Guid TargetGuid, string Description)> GetRouteTargetsForTesting(
+        Randomizer randomizer) {
+        return GetEligibleTargetPlacements(randomizer, randomizer.ItemPlacementService)
+            .Where(target => _supportedKeyItems.Any(rule =>
+                CanPlaceKeyItemInPlacementForTesting(target.Placement, rule.Id)))
+            .Select(target => (
+                target.TargetGuid,
+                $"{FormatScenePath(target.Placement.SceneFile)} / {target.Label} / {target.Placement.Position}"))
+            .DistinctBy(target => target.TargetGuid)
+            .OrderBy(target => target.TargetGuid)
+            .ToImmutableArray();
+    }
+
     private static bool IsOriginalSupportedKeyItemPlacement(ItemPlacement placement)
         => !placement.IsExtra
            && !string.IsNullOrWhiteSpace(placement.Id)
@@ -923,11 +936,15 @@ internal class KeyItemLocationModifier : Modifier {
 
         var hints = replacementPlanSet.Assignments.Select(assignment => {
             var placement = assignment.Target.Placement;
+            var pickupName = placement.IsExtra && !string.IsNullOrWhiteSpace(placement.Comment)
+                ? placement.Comment
+                : assignment.Target.Label;
             return new KeyItemHint(
                 assignment.RouteOrder,
                 _itemDefinitions.GetName(assignment.Rule.Id),
                 assignment.Rule.Id,
                 assignment.Rule.Count,
+                pickupName,
                 assignment.RegionName,
                 placement.SceneFile,
                 assignment.Target.TargetGuid,
@@ -938,8 +955,8 @@ internal class KeyItemLocationModifier : Modifier {
         var html = KeyItemHintsGenerator.RenderHtml(hints, randomizer.Seed);
         randomizer.AddOutputAsset(new IntelOrca.Biohazard.BioRand.RandomizerOutputAsset(
             "4-key-hints",
-            "Key Item Hints",
-            "Spoiler sheet showing where progression items were placed in this seed.",
+            "Key Item Spoiler Maps",
+            "Floor-plan maps showing where progression items were placed in this seed.",
             $"biorand-re7-{randomizer.Seed}-key-items.html",
             Encoding.UTF8.GetBytes(html)));
     }

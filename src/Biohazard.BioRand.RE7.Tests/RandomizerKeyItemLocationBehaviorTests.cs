@@ -213,9 +213,13 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
         var html = Encoding.UTF8.GetString(hintsAsset.Data);
 
         Assert.Equal($"biorand-re7-{seed}-key-items.html", hintsAsset.FileName);
-        Assert.Contains($"Key Item Locations (Seed {seed})", html);
+        Assert.Equal("Key Item Spoiler Maps", hintsAsset.Title);
+        Assert.Contains($"Key Item Spoiler Maps (Seed {seed})", html);
         Assert.Contains("natives/stm/", html);
-        Assert.Contains("<tbody>", html);
+        Assert.Contains("data:image/gif;base64,", html);
+        Assert.Contains("class=\"map-marker\"", html);
+        Assert.DoesNotContain("<table", html);
+        Assert.DoesNotContain("Other route locations", html);
     }
 
     [Fact]
@@ -227,6 +231,12 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             .ToList();
 
         Assert.NotEmpty(randomizedKeyItems);
+
+        var unmappedTargets = KeyItemLocationModifier.GetRouteTargetsForTesting(result.Randomizer)
+            .Where(target => !KeyItemMapRepository.TryGetLocation(target.TargetGuid, out _))
+            .ToArray();
+        Assert.True(unmappedTargets.Length == 0,
+            $"Missing spoiler-map locations: {string.Join("; ", unmappedTargets.Select(target => $"{target.TargetGuid}: {target.Description}"))}");
 
         foreach (var change in randomizedKeyItems) {
             var rule = ExpectedRules[change.AfterId];
