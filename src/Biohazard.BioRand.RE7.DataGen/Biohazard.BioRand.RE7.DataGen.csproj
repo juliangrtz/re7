@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <Target Name="GenerateKeyItemRouteGraphDiagram"
-          AfterTargets="Build"
-          Condition="'$(DesignTimeBuild)' != 'true' and '$(SkipKeyItemRouteGraphDiagramGeneration)' != 'true'">
+          DependsOnTargets="Build"
+          Condition="'$(DesignTimeBuild)' != 'true'">
     <Exec WorkingDirectory="$(MSBuildProjectDirectory)\..\.."
           Command="dotnet &quot;$(TargetPath)&quot; generate key_item_route_graph -f Binary --output-dir &quot;$(MSBuildProjectDirectory)\..\..\docs&quot;" />
   </Target>

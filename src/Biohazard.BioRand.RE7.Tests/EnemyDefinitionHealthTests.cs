@@ -91,7 +91,6 @@ public class EnemyDefinitionHealthTests {
             MaxPackSize: 1,
             DebugUniqueHp: true,
             IsBalanced: false,
-            ProgressiveDifficulty: false,
             ScaleOptions: new ScaleOptions(0.0, 1.0f, 1.0f),
             ForceTargetingProbability: 0.0
         );

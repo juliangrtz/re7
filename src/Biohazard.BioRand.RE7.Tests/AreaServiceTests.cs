@@ -5,6 +5,15 @@ namespace Biohazard.BioRand.RE7.Tests;
 [Trait("Category", "RequiresPak")]
 public class AreaServiceTests {
     [Fact]
+    public void Areas_AreOrderedOrdinallyForCrossPlatformDeterminism() {
+        using var result = RandomizerTest.RunState();
+
+        var paths = result.AreaService.Areas.Select(area => area.Path).ToArray();
+
+        Assert.Equal(paths.Order(StringComparer.Ordinal), paths);
+    }
+
+    [Fact]
     public void FindAreaContainingGameObject_ReturnsOwningAreaForLoadedSceneGuid() {
         using var result = RandomizerTest.RunState();
 

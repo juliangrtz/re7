@@ -28,7 +28,6 @@ internal class EnemyModifier : Modifier {
             MaxPackSize: randomizer.GetConfigOption<int>("enemy-pack-max-size"),
             DebugUniqueHp: randomizer.GetConfigOption<bool>("debug-unique-enemy-hp"),
             IsBalanced: randomizer.GetConfigOption<bool>("balanced-enemies"),
-            ProgressiveDifficulty: randomizer.GetConfigOption("enemy-health-progressive-difficulty", false),
             ScaleOptions: new ScaleOptions(
                 Probability: randomizer.GetConfigOption<double>("enemy-scale-probability", 0),
                 Min: Math.Clamp(randomizer.GetConfigOption("enemy-scale-min", 0.25f), 0.1f, 10.0f),

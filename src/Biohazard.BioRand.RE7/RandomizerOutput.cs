@@ -21,7 +21,24 @@ public sealed class RandomizerOutput {
     public bool IsWithREFramework { get; }
     public bool HasAdditionalAssets => AdditionalAssetPakFile.Entries.Count != 0;
 
-    private const string REFrameworkPluginName = "Biohazard.BioRand.RE7.REFrameworkPlugins.dll";
+    private static readonly string[] REFrameworkScriptPaths = [
+        "BioRand7.lua",
+        "BioRand7/config.lua",
+        "BioRand7/context.lua",
+        "BioRand7/data.lua",
+        "BioRand7/em3300_explosions.lua",
+        "BioRand7/em8000_knee_down.lua",
+        "BioRand7/enemy_drops.lua",
+        "BioRand7/game.lua",
+        "BioRand7/inventory.lua",
+        "BioRand7/logger.lua",
+        "BioRand7/madhouse_saves.lua",
+        "BioRand7/random_events.lua",
+        "BioRand7/reload_speed.lua",
+        "BioRand7/rng.lua",
+        "BioRand7/static_mia.lua",
+        "BioRand7/ui.lua",
+    ];
 
     private const string REFrameworkNightlyUrl =
         "https://github.com/praydog/REFramework-nightly/releases/latest/download/RE7.zip";
@@ -82,15 +99,10 @@ public sealed class RandomizerOutput {
         }
 
         if (IsWithREFramework) {
-            //var pluginPath = Path.Combine(
-            //    AppContext.BaseDirectory,
-            //    REFrameworkPluginName
-            //);
-
-            builder.AddEntry(
-                $"reframework/plugins/managed/{REFrameworkPluginName}",
-                EmbeddedData.GetFile(REFrameworkPluginName)
-            );
+            foreach (var scriptPath in REFrameworkScriptPaths) {
+                var autorunPath = $"reframework/autorun/{scriptPath}";
+                builder.AddEntry(autorunPath, EmbeddedData.GetFile(autorunPath));
+            }
 
             builder.AddEntry("reframework/data/BioRand7/config.json", GetREFrameworkConfigBytes());
         }

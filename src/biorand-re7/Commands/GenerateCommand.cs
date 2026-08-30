@@ -82,7 +82,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
                 () => { ExtractLogFiles(zipFile, Environment.CurrentDirectory); });
 
             var outputPath = settings.OutputPath!;
-            if (outputPath.EndsWith(".pak")) {
+            if (HasExtension(outputPath, ".pak")) {
                 reporter.RunTask($"Writing {outputPath}", () => {
 #if DEBUG
                     if (Biohazard.BioRand.RE7.Extensions.MemoryExtensions.IsProcessRunning("re7"))
@@ -106,7 +106,7 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
                     ExtractNatives(zipFile, Path.GetDirectoryName(nativesDir)!);
                 });
 #endif
-            } else if (outputPath.EndsWith(".zip")) {
+            } else if (HasExtension(outputPath, ".zip")) {
                 reporter.RunTask($"Writing {outputPath}", () => {
                     EnsureParentDirectory(outputPath);
                     zipFile.WriteToFile(outputPath);
@@ -132,6 +132,9 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
             Directory.CreateDirectory(directory);
         }
     }
+
+    internal static bool HasExtension(string path, string extension)
+        => string.Equals(Path.GetExtension(path), extension, StringComparison.OrdinalIgnoreCase);
 
     private static void ExtractNatives(byte[] zipFile, string outputPath)
         => ExtractEntries(zipFile, outputPath,
@@ -184,11 +187,13 @@ internal sealed class GenerateCommand : AsyncCommand<GenerateCommand.Settings> {
         return segments.Any(segment => segment == "..");
     }
 
-    private static byte[] GetPakFile(byte[] zip) {
-        var archive = new ZipArchive(new MemoryStream(zip));
-        var entry = archive.Entries.First(x => x.FullName.EndsWith(".pak"));
-        var output = new MemoryStream();
-        entry.Open().CopyTo(output);
+    internal static byte[] GetPakFile(byte[] zip) {
+        using var input = new MemoryStream(zip, writable: false);
+        using var archive = new ZipArchive(input, ZipArchiveMode.Read);
+        var entry = archive.Entries.First(x => x.FullName.EndsWith(".pak", StringComparison.OrdinalIgnoreCase));
+        using var output = new MemoryStream();
+        using var entryStream = entry.Open();
+        entryStream.CopyTo(output);
         return output.ToArray();
     }
 

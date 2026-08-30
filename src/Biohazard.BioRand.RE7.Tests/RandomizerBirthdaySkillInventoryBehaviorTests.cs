@@ -210,7 +210,9 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x7B157);
         using var zipDisposable = zip;
 
-        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7.lua"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7/inventory.lua"));
+        Assert.Null(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
         Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
     }
 
@@ -226,7 +228,9 @@ public class RandomizerBirthdaySkillInventoryBehaviorTests {
         var (zip, _) = RandomizerTest.Run(configuration.ToJson(), seed: 0x7B157);
         using var zipDisposable = zip;
 
-        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7.lua"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7/inventory.lua"));
+        Assert.Null(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
         Assert.NotNull(zip.GetEntry("reframework/data/BioRand7/config.json"));
     }
 

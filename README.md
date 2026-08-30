@@ -35,6 +35,7 @@ For current design notes and planned work, see:
 - Generates RE7 randomizer output as a patch PAK, Fluffy Mod Manager ZIP, or extracted `natives/` folder.
 - Supports seeded generation and JSON configuration profiles.
 - Randomizes items, key item locations, item drops, bird cages, starting inventory, inventory stack limits, and crafting recipes.
+- Emits an offline HTML key-item spoiler with numbered pickup markers on RE7 floor-plan images.
 - Includes weapon stat randomization for damage, ammo capacity, and reload speed.
 - Includes enemy randomization options for enemy classes, multipliers, placement, health, speed, damage, and scale.
 - Adds REFramework artifacts when features require runtime support.
@@ -117,7 +118,7 @@ src/Biohazard.BioRand.RE7/                    Core randomizer library
 src/biorand-re7/                              Command-line app
 src/Biohazard.BioRand.RE7.Benchmarks/         BenchmarkDotNet throughput benchmarks
 src/Biohazard.BioRand.RE7.DataGen/            Data and code generators
-src/Biohazard.BioRand.RE7.REFrameworkPlugins/ REFramework.NET plugin
+src/Biohazard.BioRand.RE7/_Data/reframework/  REFramework Lua autorun scripts
 src/Biohazard.BioRand.RE7.Tests/              xUnit regression tests
 docs/                                         Notes, roadmap, and research docs
 assets/                                       Project assets and bundled mod assets

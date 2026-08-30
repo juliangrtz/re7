@@ -82,7 +82,6 @@
   "enemy-drop-valuable-repair-kit": false,
   "boss-random-health": false,
   "enemy-random-health": false,
-  "enemy-health-progressive-difficulty": false,
   "enemy-health-min-flyingbug": 113,
   "enemy-health-max-flyingbug": 188,
   "enemy-health-min-insecthive": 1800,

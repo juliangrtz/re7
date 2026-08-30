@@ -63,7 +63,9 @@ public class RandomizerWeaponModifierBehaviorTests {
 
         var reframeworkConfigEntry = zip.GetEntry("reframework/data/BioRand7/config.json");
 
-        Assert.NotNull(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7.lua"));
+        Assert.NotNull(zip.GetEntry("reframework/autorun/BioRand7/reload_speed.lua"));
+        Assert.Null(zip.GetEntry("reframework/plugins/managed/Biohazard.BioRand.RE7.REFrameworkPlugins.dll"));
         Assert.NotNull(reframeworkConfigEntry);
 
         var reframeworkConfig = JsonNode.Parse(reframeworkConfigEntry!.GetBytes())!.AsObject();

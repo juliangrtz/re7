@@ -4,6 +4,7 @@ using Biohazard.BioRand.RE7.Items;
 using Biohazard.BioRand.RE7.Modifiers;
 using Enums.app.Item;
 using IntelOrca.Biohazard.REE.Rsz;
+using System.Text;
 
 namespace Biohazard.BioRand.RE7.Tests;
 
@@ -201,6 +202,27 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
     private static readonly Guid ShipMaintenanceRoomDrawerHandgunGuid = new("23ffe0b9-43d3-4091-9588-bc45740c0b43");
 
     [Fact]
+    public void KeyItemLocations_EmitsSeedSpecificHintAsset() {
+        const int seed = 35825;
+        var configuration = RandomizerTest.CreateFeatureTestConfiguration(config => {
+            config["random-key-item-locations"] = true;
+        });
+
+        var output = RandomizerTest.RunOutput(configuration.ToJson(), seed);
+        var hintsAsset = output.Assets.Single(asset => asset.Key == "4-key-hints");
+        var html = Encoding.UTF8.GetString(hintsAsset.Data);
+
+        Assert.Equal($"biorand-re7-{seed}-key-items.html", hintsAsset.FileName);
+        Assert.Equal("Key Item Spoiler Maps", hintsAsset.Title);
+        Assert.Contains($"Key Item Spoiler Maps (Seed {seed})", html);
+        Assert.Contains("natives/stm/", html);
+        Assert.Contains("data:image/gif;base64,", html);
+        Assert.Contains("class=\"map-marker\"", html);
+        Assert.DoesNotContain("<table", html);
+        Assert.DoesNotContain("Other route locations", html);
+    }
+
+    [Fact]
     public void KeyItemLocations_RandomizesSupportedKeyItemsIntoRouteSafeNormalPlacements() {
         using var result = RandomizerTest.RunState(config => { config["random-key-item-locations"] = true; });
 
@@ -209,6 +231,12 @@ public class RandomizerKeyItemLocationBehaviorTests : IClassFixture<DefaultRando
             .ToList();
 
         Assert.NotEmpty(randomizedKeyItems);
+
+        var unmappedTargets = KeyItemLocationModifier.GetRouteTargetsForTesting(result.Randomizer)
+            .Where(target => !KeyItemMapRepository.TryGetLocation(target.TargetGuid, out _))
+            .ToArray();
+        Assert.True(unmappedTargets.Length == 0,
+            $"Missing spoiler-map locations: {string.Join("; ", unmappedTargets.Select(target => $"{target.TargetGuid}: {target.Description}"))}");
 
         foreach (var change in randomizedKeyItems) {
             var rule = ExpectedRules[change.AfterId];

@@ -33,6 +33,8 @@ I've gathered this information while working on the randomizer.
 - Flashback copies of key items are separate scripted state. Do not replace them with filler and do not use them when deriving relocated pickup side effects.
 - Scripted flashback scenes (`ff*` and chapter 4 `*past.scn` scenes) are protected from enemy replacement, enemy multiplication, extra enemy placement, and collision-bearing extra objects. Loose non-key supplies may still be randomized.
 - Carrier safety is an invariant over every eligible placement, not only generated routes. Extend `KeyItemLocations_AllProgressionFlagCarriersRespectMinimumSafePhases` whenever another pickup is shown to advance an FSM phase.
+- The `4-key-hints` output asset is a seed-specific offline HTML map spoiler. `KeyItemMapRepository` maps stable pickup GUIDs to room-label centroids on embedded floor plans under `_Data/key_item_maps`; marker numbers and legends retain route-sphere order, original carrier names, and collapsible scene/GUID/world-position diagnostics. Keep `KeyItemLocations_RandomizesSupportedKeyItemsIntoRouteSafeNormalPlacements` covering every eligible route target so a newly added pickup cannot silently lose its map marker.
+- Chapter 4 `ff050/bf` itemset metadata identifies Ship S2 but not an exact room. Those spoiler markers are deliberately labeled as approximate floor-level locations. Do not invent exact room calibration without additional structured evidence.
 
 ## DLC PAK file table
 
@@ -102,6 +104,26 @@ Not a Hero and End of Zoe enemies:
 - `Em4460` = Mama Mold. A wrapper object with nested `Em4450` exists, but `main300generator.scn.20` also has a normal generator-style `UnitAlias = Em4460` source.
 - `Em4500` = Mutated Lucas. This is the Not a Hero final boss and should stay opt-in/special-case until runtime-proven.
 - `Em4600` = Fumer. It uses `UnitAlias = Em4600`, but the runtime stack is `app.CH8Em4000*` plus `app.CH8EnemySpawnInfoOptionEm4000`.
+
+IDA MCP confirmation pass, 2026-08-25, RE7 `1.0.0.7`, SHA-256 `D550260029B51A580E206B9A12A4EB7F4A1B4DD230BBA5DEFCCA81DA40597321`:
+
+Full function addresses, control-flow evidence, signatures, and implementation consequences are recorded in [DLCIntegrationEvidence.MD](DLCIntegrationEvidence.MD).
+
+- The missing CH8 command actions are not caused by an explicit chapter check in `app.CH8Em4400ActionController::doAwake149958` (`0x1418DDB00`). Its first call is `app.CH8MoldedActionController::doAwake144706`; if that base call leaves a managed exception, the Em4400 method returns before inserting any actions.
+- `app.CH8MoldedActionController::doAwake144706` (`0x141E35C20`) and `app.CH8EnemyActionController::doAwake150859` (`0x1410EF950`) both require the `app.CH8GameRankManager` singleton when the enemy has an initialized `EnemyRankManager`. A missing singleton takes the null/error path before the derived action insertion block.
+- This dependency covers the known ordinary CH8 families: Em4000, Em4200, and Em4400 call the CH8 molded base; Em4450 calls the CH8 enemy base directly. The preferred experiment is now a narrow campaign-only rank-sync bypass/fallback, not manual action construction.
+- Base `app.EnemySpawnInfo::setupInstance90108` already gets the current rank from the ordinary `app.GameManager` and applies it with `EnemyRankManager.setRank`. Skipping only the earlier CH8-specific rank synchronization should therefore retain campaign rank semantics.
+- `app.CH8EnemyGenerator::.ctor323011` (`0x1401066A0`) sets `IsEnablePause = true`; imported CH8 generators must be explicitly unpaused. `app.CH8EnemyPool::.ctor323010` is only a thunk to the base pool constructor.
+- IDA contains no `CH9EnemyGenerator` or `CH9EnemyPool` functions. `app.CH9EnemySpawnInfo::.ctor325718` (`0x14032F790`) sets one default value and calls the base spawn-info constructor, supporting base generator/pool use for CH9.
+- CH8 need-area requests are unsuitable for campaign FSMs: `requestSpawnWithNeedArea189521` only queues a deduplicated Spawn operation when the spawn-info GameObject has `UpdateSelf`; `update189520` drains it through `requestOperationWithNeedArea189526`, which calls the CH8 blackboard and generator manager.
+
+Not a Hero and End of Zoe items:
+
+- `app.ItemManager::createItemInstance319138` (`0x142146680`) returns null when `ItemData` or `ItemPrefab` is missing, otherwise instantiates the prefab at the owner transform and parents it to the owner.
+- `app.fsm.ItemAddTest::start357511` (`0x14045C1B0`) tests its own `_Multiple`, `_ItemList`, and `_ItemDataID` path. Changing only the scene `app.Item.ItemDataID` is not sufficient for these interactions.
+- `app.CH9PassiveSkillItem::onInsertInventory113604` (`0x1415621D0`) requires `app.ICH9PlayerOrder` from the inventory owner and registers attack/guard amulets and the passive skill through that interface. Ethan cannot consume this callback unchanged.
+- `app.CH9Weapon1600::onInsertInventory328503` (`0x140556DD0`) resolves `app.CH9PlayerEquipManager` from the inventory owner and calls `registerKnuckleWeapon`; Joe's gauntlets are a player-system port, not a data-only weapon import.
+- `app.CH8WeaponRemedyAppend::use324610` (`0x140AA29F0`) requires a CH8-compatible player interface and optionally updates `CH8GameRankManager` remedy-use score. `app.CH9WeaponRemedyAppend::use328562` (`0x1414BDDC0`) likewise checks a CH9-specific player interface. Campaign healing should use a campaign-native remedy adapter.
 
 ## Recipes
 

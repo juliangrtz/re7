@@ -25,6 +25,30 @@ public class GenerateCommandExtractionTests {
         }
     }
 
+    [Theory]
+    [InlineData("seed.pak", ".pak")]
+    [InlineData("seed.PAK", ".pak")]
+    [InlineData("seed.ZiP", ".zip")]
+    public void HasExtension_IsCaseInsensitive(string path, string extension) {
+        Assert.True(GenerateCommand.HasExtension(path, extension));
+    }
+
+    [Fact]
+    public void GetPakFile_ReadsCaseInsensitivePakEntry() {
+        var expected = new byte[]{ 1, 2, 3, 4 };
+        byte[] archiveBytes;
+        using (var stream = new MemoryStream()) {
+            using (var archive = new ZipArchive(stream, ZipArchiveMode.Create, leaveOpen: true)) {
+                var entry = archive.CreateEntry("nested/seed.PAK");
+                using var entryStream = entry.Open();
+                entryStream.Write(expected);
+            }
+            archiveBytes = stream.ToArray();
+        }
+
+        Assert.Equal(expected, GenerateCommand.GetPakFile(archiveBytes));
+    }
+
     [Fact]
     public void ExtractEntryToDirectory_ExtractsNestedEntry() {
         using var zip = CreateZip(("natives/stm/test.txt", "ok"));

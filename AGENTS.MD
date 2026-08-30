@@ -13,7 +13,7 @@ Important projects and directories:
 - `src/Biohazard.BioRand.RE7/` - core randomizer library, modifiers, services, RE Engine serializers/helpers, embedded `_Data`.
 - `src/biorand-re7/` - Spectre.Console CLI for setup, generation, updates, mods, and remote agent mode.
 - `src/Biohazard.BioRand.RE7.DataGen/` - data/code generation tools for CSV/JSON/binary outputs and RSZ C# types.
-- `src/Biohazard.BioRand.RE7.REFrameworkPlugins/` - REFramework.NET plugin, unsafe code, checked-in plugin DLL references in `lib/`, copies its build output into the core project bin folder.
+- `src/Biohazard.BioRand.RE7/_Data/reframework/autorun/` - modular REFramework Lua autorun scripts embedded and deployed by the core project.
 - `src/Biohazard.BioRand.RE7.Tests/` - xUnit behavior/regression tests over the embedded baseline pak.
 - `src/reeutils/` - git submodule for RE Engine tooling. Do not edit it casually; call out any intentional submodule changes.
 - `docs/` - active reverse-engineering notes and roadmap. Read `docs/Notes.MD` before changing item, enemy, inventory, recipe, chapter, or DLC logic.

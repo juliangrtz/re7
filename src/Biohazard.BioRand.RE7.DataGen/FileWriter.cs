@@ -13,16 +13,23 @@ internal class FileWriter {
     }
 
     public static string WriteOutput(string outputDirectory, string path, string content) {
-        Directory.CreateDirectory(outputDirectory);
         var finalPath = Path.Combine(outputDirectory, path);
+        CreateParentDirectory(finalPath);
         File.WriteAllText(finalPath, content);
         return finalPath;
     }
 
     public static string WriteOutput(string outputDirectory, string path, byte[] content) {
-        Directory.CreateDirectory(outputDirectory);
         var finalPath = Path.Combine(outputDirectory, path);
+        CreateParentDirectory(finalPath);
         File.WriteAllBytes(finalPath, content);
         return finalPath;
+    }
+
+    private static void CreateParentDirectory(string path) {
+        var parentDirectory = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(parentDirectory)) {
+            Directory.CreateDirectory(parentDirectory);
+        }
     }
 }

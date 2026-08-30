@@ -145,6 +145,51 @@ public class ConfigurationDefinitionTest {
     }
 
     [Fact]
+    public void Test_Pages_And_Groups_Have_Readable_Unique_Labels() {
+        var pages = RandomizerExecutor.ConfigurationDefinition.Pages;
+        var duplicatePageLabels = pages
+            .GroupBy(page => page.Label)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToArray();
+
+        Assert.All(pages, page => Assert.False(string.IsNullOrWhiteSpace(page.Label)));
+        Assert.Empty(duplicatePageLabels);
+
+        foreach (var page in pages) {
+            var duplicateGroupLabels = page.Groups
+                .GroupBy(group => group.Label)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key)
+                .ToArray();
+
+            Assert.All(page.Groups, group =>
+                Assert.False(string.IsNullOrWhiteSpace(group.Label), $"Page '{page.Label}' has an unnamed group."));
+            Assert.True(duplicateGroupLabels.Length == 0,
+                $"Page '{page.Label}' has duplicate groups: {string.Join(", ", duplicateGroupLabels)}");
+        }
+    }
+
+    [Fact]
+    public void Test_Nonfunctional_Configuration_Items_Are_Not_Exposed() {
+        var ids = items.Select(item => item.Id).ToHashSet(StringComparer.Ordinal);
+
+        Assert.DoesNotContain("enemy-health-progressive-difficulty", ids);
+
+        foreach (var id in new[]{ "random-starting-inventory-size-ethan", "random-starting-inventory-size-mia" }) {
+            var item = Assert.Single(items, item => item.Id == id);
+            Assert.Equal(new[]{ "12", "16", "20" }, item.Options);
+        }
+    }
+
+    [Fact]
+    public void Test_Recipe_Mode_Description_Documents_Every_Choice() {
+        var item = Assert.Single(items, item => item.Id == "recipes-randomization-mode");
+
+        Assert.All(item.Options!, option => Assert.Contains($"{option}:", item.Description));
+    }
+
+    [Fact]
     public void Test_General_Configuration_Items_Exist() {
         var definition = RandomizerExecutor.ConfigurationDefinition;
         var page = Assert.Single(definition.Pages, page => page.Label == "General");
@@ -232,7 +277,7 @@ public class ConfigurationDefinitionTest {
             Assert.Contains(healthLevel.ToConfigId, pageIds);
         }
 
-        group = Assert.Single(page.Groups, group => group.Label == "Stabilizers");
+        group = Assert.Single(page.Groups, group => group.Label == "Base Reload Rate");
         groupIds = group.Items.Select(item => item.Id).ToHashSet();
 
         Assert.Contains("player-random-reload-speed", groupIds);

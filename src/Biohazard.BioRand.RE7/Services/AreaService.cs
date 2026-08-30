@@ -41,7 +41,7 @@ internal class AreaService(Randomizer randomizer) {
             .Where(a => a.Dlc == null)
             .AsParallel()
             .Select(d => new Area(Randomizer, d))
-            .OrderBy(x => x.Path)
+            .OrderBy(x => x.Path, StringComparer.Ordinal)
             .ToImmutableArray();
 
         // Map initial guids
@@ -80,7 +80,7 @@ internal class AreaService(Randomizer randomizer) {
             .AsParallel()
             .Select(definition => new Area(Randomizer, definition!, AreaScanMode.IndexedTargets))
             .Where(area => area.EnemyGenerators.Length != 0)
-            .OrderBy(area => area.Path)
+            .OrderBy(area => area.Path, StringComparer.Ordinal)
             .ToImmutableArray();
     }
 

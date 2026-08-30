@@ -11,6 +11,8 @@ namespace Biohazard.BioRand.RE7.Tests;
 public class ConfigurationIdUsageTest {
     private const string ConfigReadMethodPattern =
         "(?:Get(?:ConfigOption|ValueOrDefault)|Read(?:OrDefault|EnemyDropConfigOrDefault))";
+    private const string LuaConfigReadMethodPattern =
+        "(?:(?:[a-zA-Z_][a-zA-Z0-9_.]*\\.)?config:get|self:config)";
 
     private readonly HashSet<string> _definedIds =
         RandomizerExecutor.ConfigurationDefinition.AllItems
@@ -19,6 +21,7 @@ public class ConfigurationIdUsageTest {
             .ToHashSet(StringComparer.Ordinal);
 
     private static readonly HashSet<string> RuntimeConfigIds = new(StringComparer.Ordinal){
+        "biorand-seed",
         "username",
         "special",
         "tags",
@@ -35,23 +38,9 @@ public class ConfigurationIdUsageTest {
     [Fact]
     public void Test_All_StringId_References_Exist() {
         var projectRoot = GetProjectRoot();
-        var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
-        var configRegex = new Regex(
-            $"{ConfigReadMethodPattern}(?:<[^>]+>)?\\s*\\(\\s*\"([a-zA-Z0-9\\-]+)\"",
-            RegexOptions.Compiled);
-        var invalidUsages = new HashSet<string>();
-
-        foreach (var file in csFiles) {
-            var content = File.ReadAllText(file);
-            foreach (Match match in configRegex.Matches(content)) {
-                var value = match.Groups[1].Value;
-
-                if (IsValidId(value))
-                    continue;
-
-                invalidUsages.Add(value);
-            }
-        }
+        var invalidUsages = GetReferencedConfigIds(projectRoot)
+            .Where(id => !IsValidId(id))
+            .ToHashSet(StringComparer.Ordinal);
 
         Assert.True(invalidUsages.Count == 0,
             $"Invalid config ID usages found: {string.Join(", ", invalidUsages)}");
@@ -60,23 +49,48 @@ public class ConfigurationIdUsageTest {
     [Fact]
     public void Test_All_ConfigIds_Are_Referenced() {
         var projectRoot = GetProjectRoot();
-        var csFiles = Directory.GetFiles(projectRoot, "*.cs", SearchOption.AllDirectories);
-
-        var content = string.Join("\n", csFiles.Select(File.ReadAllText));
-
-        static Regex UsageRegex(string id) => new(
-            $"{ConfigReadMethodPattern}(?:<[^>]+>)?\\s*\\(\\s*\"{Regex.Escape(id)}\"",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        var referencedIds = GetReferencedConfigIds(projectRoot);
 
         var unused = _definedIds
             .Where(id =>
-                !UsageRegex(id).IsMatch(content) &&
+                !referencedIds.Contains(id) &&
                 !GeneratedConfigIds.Value.Contains(id) &&
                 !IndirectlyReferencedConfigIds.Contains(id))
             .ToList();
 
         Assert.True(unused.Count == 0,
             $"Unused config IDs: {string.Join(", ", unused)}");
+    }
+
+    private static HashSet<string> GetReferencedConfigIds(string projectRoot) {
+        var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var configRegex = new Regex(
+            $"{ConfigReadMethodPattern}(?:<[^>]+>)?\\s*\\(\\s*\"([a-zA-Z0-9\\-]+)\"",
+            RegexOptions.Compiled);
+        var luaConfigRegex = new Regex(
+            $"{LuaConfigReadMethodPattern}\\s*\\(\\s*\"([a-zA-Z0-9\\-]+)\"\\s*[,)]",
+            RegexOptions.Compiled);
+        var luaConfigDefinitionRegex = new Regex(
+            "(?:enabled|duration)\\s*=\\s*\"([a-zA-Z0-9\\-]+)\"",
+            RegexOptions.Compiled);
+
+        foreach (var file in Directory.EnumerateFiles(projectRoot, "*.cs", SearchOption.AllDirectories)) {
+            foreach (Match match in configRegex.Matches(File.ReadAllText(file))) {
+                result.Add(match.Groups[1].Value);
+            }
+        }
+
+        foreach (var file in Directory.EnumerateFiles(projectRoot, "*.lua", SearchOption.AllDirectories)) {
+            var content = File.ReadAllText(file);
+            foreach (Match match in luaConfigRegex.Matches(content)) {
+                result.Add(match.Groups[1].Value);
+            }
+            foreach (Match match in luaConfigDefinitionRegex.Matches(content)) {
+                result.Add(match.Groups[1].Value);
+            }
+        }
+
+        return result;
     }
 
     private bool IsValidId(string value) {
