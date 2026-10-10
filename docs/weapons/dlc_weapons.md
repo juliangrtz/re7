@@ -274,6 +274,11 @@ with no registered hit sets. This was a staged inventory test, not normal pickup
 or storage certification; direct menu calls threw after partially doing their
 work. Do not retry a failed native inventory call without inspecting ownership.
 Continuous story transitions and VHS validation remain open.
+Bank availability also needs an exact identity check: in live Ethan,
+`findMotionBank(0, 9911)` returned `pl0000_Hands` with bank ID/type 0/0 even though
+type 9911 did not exist. A non-null result is not proof that the requested bank
+exists. The adapter verifies the returned `BankID` and `BankType`; its regression
+test models this fallback instead of returning null for an absent bank.
 Do not confuse `Pl3100_Chapter7_#` with Mia: these belong to the Bedroom, 21 and
 Nightmare DLC scenes, as the area catalog confirms. They remain excluded.
 The lab must be armed; the campaign uses both config flags.

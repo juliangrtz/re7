@@ -26,7 +26,9 @@ function Player:bank_for(controller, weapon_id)
         local motion = controller:get_field("Motion")
         if not motion then return nil end
         for _, bank in ipairs({ HAND_AXE_BANK, KNIFE_BANK }) do
-            if motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, bank) then return bank end
+            local found = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, bank)
+            -- RE7 returns its default bank when the requested type is absent.
+            if found and found:call("get_BankID") == 0 and found:call("get_BankType") == bank then return bank end
         end
     end
 end

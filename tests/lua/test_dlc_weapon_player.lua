@@ -7,7 +7,12 @@ return function()
     local banks = { [10] = true, [30] = true }
     local motion = { call = function(_, method, id, bank)
         assert(method == "findMotionBank(System.UInt32, System.UInt32)" and id == 0)
-        return banks[bank]
+        local actual = banks[bank] and bank or 0
+        return { call = function(_, member)
+            if member == "get_BankID" then return 0 end
+            assert(member == "get_BankType")
+            return actual
+        end }
     end }
     local controller = {
         call = function(_, method) assert(method == "get_GameObject"); return owner end,
