@@ -44,11 +44,14 @@ return function()
     local manager = object({}, { findItemData = function() return item end })
     local game = {
         player = function() return player end,
-        component = function(_, _, type_name) assert(type_name == "app.Inventory"); return inventory end,
+        component = function(_, _, type_name)
+            if type_name == "app.EquipManager" then return nil end
+            assert(type_name == "app.Inventory"); return inventory
+        end,
         singleton = function(_, type_name) assert(type_name == "app.ItemManager"); return manager end,
         address = function(_, value) assert(value == box); return box_id end,
         hook = function(_, type_name, signature, before)
-            assert(type_name == "app.SaveDataManager" or type_name == "app.PlayerMotionController")
+            assert(type_name == "app.SaveDataManager" or type_name == "app.PlayerMotionController" or type_name == "app.DamageController")
             hooks[signature] = before
         end,
     }

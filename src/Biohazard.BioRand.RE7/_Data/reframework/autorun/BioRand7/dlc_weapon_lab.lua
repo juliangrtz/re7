@@ -19,6 +19,7 @@ function Lab.new(game)
 end
 
 function Lab:reset()
+    if self.player_adapter then self.player_adapter:reset() end
     self.armed, self.pending, self.report, self.box_identity = false, nil, nil, nil
     self.added = {}
     self.status = "Session changed; test receipts cleared"
@@ -129,6 +130,15 @@ function Lab:execute(request)
 end
 
 function Lab:update()
+    if self.player_adapter then
+        local ok, message = pcall(function() self.player_adapter:update() end)
+        if not ok then
+            self.armed = false
+            self.player_adapter:reset()
+            self.status = tostring(message)
+            return
+        end
+    end
     local request = self.pending
     self.pending = nil
     if not request or not self.armed then return end

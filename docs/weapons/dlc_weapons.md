@@ -18,7 +18,7 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
 - The lab additionally exports a **Spirit Blade base-melee research adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
-  includes an opt-in Ethan hand-axe motion mapping, but not Spirit Blade healing. It is not
+  includes opt-in Ethan hand-axe motions and confirmed-hit recovery. It is not
   available to the campaign generator or its debug grant. Lab candidacy and
   campaign candidacy are now separate properties; do not promote a lab export
   merely because its prefab loads.
@@ -87,7 +87,7 @@ WeaponID is distinct from the string ItemDataID.
 | `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | None |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | None |
-| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base-melee lab only; player/healing adapter pending |
+| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Lab: Ethan motions, Molded damage and light-hit healing verified; persistence pending |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
@@ -246,7 +246,10 @@ of an active attack. Do not change the inventory/native WeaponID to borrow a ban
 The 2026-10-10 cold campaign load registered the isolated Spirit Blade PFB,
 accepted its deferred load request and an item-box entry. Normal item-box withdrawal
 and the examine model worked. Ethan equipped native ID 63 and accepted mouse-driven
-melee attacks with hand-axe bank 10. Damage, recovery, and persistence remain unproven.
+melee attacks with hand-axe bank 10. Subsequent hallway combat confirmed native
+damage against a campaign `Em4000`: a 100-point base hit reduced health by 60,
+after its normal resistance. Request sets 0/2/4 activated during `Melee.AttackL`
+and unregistered when the swing ended; `IsAttacking` also returned to false.
 
 The bank hook must exist **before equip**. Equipping unsupported ID 63 first entered
 `Melee.ReadyStart` with frame/end-frame both zero. Changing the bank afterwards did
@@ -258,8 +261,30 @@ inventory of the active banks. A one-shot research restart of the already-stalle
 ready state proved the resource worked. The checked-in adapter does **not** force
 FSM states: installed before a fresh knife-to-blade equip, it allows the native
 ready/idle/attack transitions to complete normally. `dlc_weapon_player.lua` changes
-only the bank return for ID 63, the active `Pl0000`, and the exact lab prefab path;
+the bank return for ID 63, the active `Pl0000`, and the exact lab prefab path;
 the lab must be armed. It does not rewrite weapon identity or alter DLC players.
+
+The lab recovery adapter observes `DamageController.addDamageCore`, whose returned
+`DamageRecord.AddedDamage` and receiver health change both confirmed real damage
+in the live test. The record's `CalculatedDamage`, `AddedDamage`, and `DamageInfo`
+are fields; `get_DamageController()` is a real accessor. Recovery requires positive
+added damage, enemy health loss, the tracked weapon attacker, and the current
+player identity. It queues 100.0 health (150.0 for an aimed attack) for UpdateBehavior,
+with one recovery per attack window and no native hit-object retention between
+frames. Loads, disarming, and weapon/player changes invalidate pending recovery.
+A live light strike healed Ethan from 500 to 600 HP; a deliberate wall swing left
+health at 600, and the next landed strike healed to 700. Aimed recovery and native
+save/load still require runtime validation. The solution built with zero warnings
+or errors, and all 22 Lua 5.4 suites passed after this adapter was added.
+`Weapon.onAttackTrigger/offAttackTrigger` hooks did not fire for this observed
+attack path, so they are not used as the recovery reset mechanism.
+
+Combat test setup matters: a spawned Molded immediately self-suspended in the
+safe room even after disabling its explicit self-suspend option. The same setup
+stayed active in the adjacent hallway. The staged human `Em3100` was not a valid
+damage control: even a vanilla G17 shot produced no damage there. Do not infer a
+weapon RCOL failure from an unverified target. The eventual test protection only
+disabled incoming player damage; enemy resistance and health handling stayed native.
 
 A separate deployment check
 found current campaign assets alongside an older installed `BioRand7.lua` that

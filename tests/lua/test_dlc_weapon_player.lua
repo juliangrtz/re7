@@ -17,7 +17,7 @@ return function()
         singleton = function(_, type_name) assert(type_name == "app.ItemManager"); return manager end,
         object = function(_, value) conversions = conversions + 1; return value end,
         hook = function(_, type_name, signature, before, after)
-            assert(type_name == "app.PlayerMotionController" and signature == "getBankType(app.WeaponID)")
+            assert(type_name == "app.PlayerMotionController" or type_name == "app.DamageController")
             hooks[#hooks + 1] = { before = before, after = after }
         end,
     }
@@ -25,7 +25,7 @@ return function()
     thread = { get_hook_storage = function() return storage end }
     local adapter = Player.new(game, function() return enabled end, "BioRand/DlcWeaponLab")
     adapter:install(); adapter:install()
-    assert(#hooks == 1)
+    assert(#hooks == 2)
     local original = {}
     local function bank(id)
         local args = { nil, controller, id }
