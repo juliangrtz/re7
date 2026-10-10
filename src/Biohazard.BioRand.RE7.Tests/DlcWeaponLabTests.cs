@@ -12,6 +12,67 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public sealed class DlcWeaponLabTests {
     [Fact]
+    public void GrenadeManifestIncludesNativePoolAndAllHandPoses() {
+        var paths = DlcGrenadeWeapons.RequiredAssetPaths;
+        Assert.Equal(58, paths.Length);
+        Assert.Equal(paths.Order(StringComparer.Ordinal), paths);
+        Assert.Equal(paths.Length, paths.Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        foreach (var pose in new[] { "grenade", "grenadebomb", "thermatebomb", "stangrenadebomb" })
+            Assert.Contains($"natives/stm/ch8/animation/player/pl1000/motlist/pl1000_{pose}.motlist.524", paths);
+        Assert.Contains("natives/stm/ch8/prefab/weapon/defaultbullet.pfb.17", paths);
+        Assert.All(paths, p => {
+            Assert.StartsWith("natives/stm/", p);
+            Assert.Matches(@"\.\d+(\.stm)?$", p);
+            Assert.DoesNotContain("..", p);
+        });
+    }
+
+    [Fact]
+    [Trait("Category", "RequiresPak")]
+    public void GrenadeShellExportIsIsolatedAndDeterministic() {
+        const string root = "BioRand/DlcWeapons";
+        using var first = new LabContext(true);
+        using var second = new LabContext(true);
+        DlcGrenadeWeapons.ExportShellManager(first, root);
+        DlcGrenadeWeapons.ExportShellManager(second, root);
+        Assert.Equal(7, first.Files.Count);
+        Assert.Equal(first.Files.Keys.Order(), second.Files.Keys.Order());
+        foreach (var file in first.Files) {
+            Assert.StartsWith(root.Of().ToLowerInvariant() + "/", file.Key);
+            Assert.Equal(file.Value, second.Files[file.Key]);
+        }
+        var managerFile = first.GetPfbFile(DlcGrenadeWeapons.ManagerPrefab(root).Of() + ".17");
+        var manager = Assert.Single(managerFile.ReadScene(first.TypeRepository).GetGameObjects());
+        Assert.Equal("BioRandGrenadeShellManager", manager.Name);
+        Assert.True(string.IsNullOrEmpty(manager.Prefab));
+        Assert.Equal(new[] { "via.Transform", "app.CH8ShellManager" }, manager.Components.Select(c => c.Type.Name));
+        var component = manager.Components[1];
+        Assert.Equal("CH8/Prefab/Weapon/DefaultBullet.pfb", component.Get<RszResourceNode>("DefaultBulletPrefab.Path").Value,
+            ignoreCase: true);
+        foreach (var (id, model, field) in DlcGrenadeWeapons.Sources) {
+            var shellPath = $"{root}/{id}/Shell.pfb";
+            Assert.Equal(shellPath, component.Get<RszResourceNode>(field + ".Path").Value);
+            Assert.True(component.Get<bool>(field + ".Standby"));
+            Assert.Contains(shellPath, managerFile.Resources);
+            var shell = first.GetPfbFile(shellPath.Of() + ".17");
+            var collision = $"CH8/Collision/Collider/Weapon/{model[..6]}/{model}.rcol";
+            Assert.Contains($"{root}/{id}/Attack.rcol", shell.Resources);
+            Assert.DoesNotContain(shell.Resources, p => string.Equals(p, collision, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(first.GetSourceFile(collision.RcolFile()), first.GetFile($"{root}/{id}/Attack.rcol".RcolFile()));
+            Assert.Contains(shell.ReadScene(first.TypeRepository).GetGameObjects().SelectMany(go => go.Components),
+                c => c.Type.Name == "app.CH8Throwable");
+        }
+    }
+
+    [Fact]
+    [Trait("Category", "RequiresPak")]
+    public void GrenadeShellExportFailsWithoutPartialWrites() {
+        using var context = new LabContext(true, "ch8/collision/collider/weapon/wp3020/wp3020_stangrenadebomb.rcol".RcolFile());
+        Assert.Throws<InvalidDataException>(() => DlcGrenadeWeapons.ExportShellManager(context, "BioRand/DlcWeapons"));
+        Assert.Empty(context.Files);
+    }
+
+    [Fact]
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
