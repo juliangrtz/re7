@@ -28,6 +28,12 @@ for fixed recovery values and `value + 0.0` for integer values decoded from JSON
 Offline native-call mocks should assert `math.type(value) == "float"` where this
 distinction matters; accepting either numeric subtype can hide a live interop bug.
 
+For a by-value `via.Ray`, use `ValueType.new(sdk.find_type_definition("via.Ray"))`
+and set its `from`/`dir` fields. A boxed `sdk.create_instance("via.Ray", true)`
+read back correctly but produced a wrong grenade launch direction in the campaign
+test; the value-type container produced the intended velocity. A readable boxed
+object is not proof of correct native argument marshalling.
+
 Check return types in the RT dump (`reframework/il2cpp_dump_rt.json.gz`) as well: `ObjectManager.getEnemyID` returns `System.Nullable<app.EnemyID>` and must be unwrapped. For identity rotations use `Quaternion.identity()`; REF's [quaternion constructor](https://cursey.github.io/reframework-book/api/types/Quaternion.html) takes `(w, x, y, z)`.
 
 Public references: [managed object field and method access](https://cursey.github.io/reframework-book/api/types/REManagedObject.html), [hook arguments and returns](https://cursey.github.io/reframework-book/api/sdk.html), [hooking shared getter/setter implementations](https://cursey.github.io/reframework-book/api/general/best-practices.html), and [available ImGui bindings](https://cursey.github.io/reframework-book/api/imgui.html).

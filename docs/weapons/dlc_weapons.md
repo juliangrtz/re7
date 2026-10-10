@@ -688,6 +688,58 @@ this is a verified transform correction, not evidence that it caused every
 collision or animation problem. Full equip/reset regression tests now exercise
 the transform, hidden skeleton, both hand masks, and all three variants.
 
+### CH8 throwable backend research
+
+The 2026-10-10 campaign experiment isolated `via.Transform` and
+`app.CH8ShellManager` from `CH8_SystemObject` into a new prefab. Its native awake
+path populated 30 bullets and six shells for each of the three grenade types.
+The campaign already called this owned manager's `updateList`; adding a second
+Lua update loop was unnecessary. Pools are `ShellManager.ManageList<T>`, not
+ordinary lists: inspect `List`, `UsedCount`, and `UnusedCount`.
+
+A native `createThrowable` test with Ethan as owner established:
+
+- The last float is the remaining fuse, despite the `ElapsedTimer` field name.
+  Zero exploded on the next update; `3.0` exploded after approximately 3 seconds.
+- Native `doUpdate`, `doLateUpdate`, explosion, and deactivation ran. The regular
+  grenade returned to six unused / zero used slots about 5.2 seconds after the
+  explosion, without forcing its completion or resetting the pool.
+- Read flight from `RigidBody.getPosition(bodyId)` and `getLinearVelocity`, not
+  just the GameObject transform. The latter remained at launch until explosion.
+- An unchanged source grenade RCOL damaged campaign `Em4000`: raw 1,500,
+  calculated/applied 750, health 2,629.4749 to 1,879.4749. Enemy health was not
+  edited. This proves one ordinary-grenade native hit, not every target/filter
+  or incendiary/neuro-stun behavior.
+
+Three source inventory prefabs were subsequently registered through a separate
+research-only `ItemSettings` file. `createItemInstance` initialized the native
+`CH8WeaponThrowable` with Ethan's Inventory and Item. `onStartStandby`,
+`onPinPulled`, and `onStartThrow(player, false)` ran; the latter allocated a shell
+with the source grenade's two-second fuse. These were direct diagnostic calls,
+not normal input, stock-consumption, pickup, save/load, or campaign certification.
+The three grenades remain outside the supported campaign pool until those paths
+and interruption/last-item handling are proven.
+
+The shared `pl1000_Grenade.motlist` contains ready 2000/2001, walk/jog 2020/2021,
+guard 2300/2305/2306, throws 2400/2401, and standby 8001/8002. The separate
+Grenadebomb/Thermatebomb/Stangrenadebomb lists each supply hand-pose clip 8000;
+copying only the shared list misses these dependencies. Hidden-skeleton sampling
+observed `CH8PlayerPinPulledTrack.IsPinPulled` near frame 20 of standby 8001,
+and `CH8PlayerThrowTrack.IsThrow` near frames 29/30 of overhand/underhand clips.
+Consume the actual tracks rather than using wall-clock release delays.
+
+Two further interop pitfalls were reproduced:
+
+- A fresh `sdk.create_instance("via.Prefab", true)` with its own path and standby
+  request loaded the fixture; duplicating an existing Prefab returned an invalid
+  managed pointer in that test. This does not establish the cause of every earlier
+  readiness failure.
+- Use `ValueType.new(sdk.find_type_definition("via.Ray"))` for a native by-value
+  ray. A boxed `sdk.create_instance("via.Ray", true)` could read back plausible
+  fields but launched in the wrong direction. Replacing it with the value-type
+  container produced the requested forward velocity. See the
+  [REFramework value-type API](https://cursey.github.io/reframework-book/api/types/ValueType.html).
+
 Other blocked families have distinct requirements:
 
 - CH8 grenades use standby, pin-pull, timed throw, underthrow, stock consumption,
