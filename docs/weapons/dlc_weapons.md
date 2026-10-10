@@ -1377,6 +1377,55 @@ weapon after pickup. Preserved gun pickups that do contain WeaponGun must instea
 replace it with the grenade's `CH8WeaponThrowable` and rebind ItemAddTest IDs.
 Do not make a test demand a component that the real donor never had.
 
+### Stake Bomb placement research
+
+Stake Bomb (`CH9_WP005`, WeaponID 66) is still excluded from generation and debug
+grants. Unlike knife/spear it derives from `WeaponItem`, not `CH9WeaponThrowable`.
+Ethan's native `PlayerItem` already binds `CH9Weapon1900` and its
+`CH9WeaponLiquidBombAppend`. Keep the Item category and native `tryUse`/`use`
+path; changing it to Melee would discard working placement and stock logic.
+
+An isolated runtime prototype supplied Joe's `pl9000_LiquidBomb.motlist` under
+bank type 9962 with campaign Item bank 200 as fallback, synchronized the two
+Item arm layers, and repaired only the initial zero-duration ready state after
+the bank became ready. Normal mouse placement played Item.Use clip 2400,
+consumed one charge, and returned to ready. Invalid floor aim rejected use without
+consuming stock. Native recovery returned a charge and recycled the pool slot.
+
+Two independent callbacks assume `CH9TutorialManager` exists:
+
+- `CH9InstallationWp1900.onSuccessInteractCh9` only closes tutorial 5. The pool
+  guard skips this callback for its exact owned campaign shells. It does not
+  skip base Bomb recovery or inventory transfer.
+- `CH9InstallationWp1900.callSE` closes the same tutorial on explosion trigger
+  `0x73CE5AE3`. A missing manager aborts `Bomb.doUpdate` after explosion damage
+  registration but before advancing Rno from Wait to Explosion. The resulting
+  hidden active shell can damage again on another detonation request. For owned
+  campaign shells only, call the base `Bomb.callSE` directly, preserving the
+  shallow-water substitution `0xE350A1FC`. Other sound triggers stay native.
+
+Do not replace this with a global tutorial hook, forced Rno writes, or a timer
+that destroys every hidden shell. Both guards check active campaign player,
+exact registration path, pool ownership, absence of the DLC tutorial manager,
+and reset/destruction state. Lua regressions cover those boundaries and all five
+installation types. The guards are inert without a matching Stake registration.
+
+Placed ground bombs retain the player's native command updater. `Bomb.checkExplosion`
+uses its Detonate command (PC Reload binding), a damage hit, or an explicit native
+request; the tested path was not a proximity trigger. A bounded native command
+pulse with the audio guard recorded `JoeLiquidbomb -> Em4000`, calculated damage
+1000, and health 1421.5408 -> 421.5408. A fresh normally placed bomb then killed
+that target and recycled, with no direct enemy-health writes or RCOL modification.
+The reused stuck shell's earlier hit is not a second successful placement test.
+Physical Reload taps were not reliably consumed and still need input validation.
+
+Local evidence: `stake-floor-place-1167.json`, `stake-recovered-1170.json`,
+`stake-update-native-1190.txt`, `stake-audio-native-1190.txt`,
+`stake-audio-guard-detonation-1204.json`, and `stake-fresh-kill-1209.json` under
+`.analysis/dlc-weapons-2026-10-10/`. Remaining work includes last-charge recovery,
+pool exhaustion, pickup/storage and cold save restoration, input parity, and the
+production player adapter before promoting the catalog entry.
+
 ### Motion scratch lifetime on reload
 
 Returning to title and reloading a grenade-equipped save exposed a stale cached

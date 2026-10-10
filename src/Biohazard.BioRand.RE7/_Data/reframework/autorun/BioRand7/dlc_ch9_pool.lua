@@ -123,6 +123,25 @@ function Pool:skip_spear_tutorial(interact, inventory, weapon_object)
     return false
 end
 
+function Pool:owns_campaign_stake(shell)
+    if not shell or not self.ready or not self:owned() or self.reset_pending or self.destroy_pending then return false end
+    local player = self.game:player()
+    if not player or player ~= self.player or not PLAYERS[player:call("get_Name")] then return false end
+    local flow = self.game:chapter()
+    if not flow or flow < 0 or flow > 13 or self.game:singleton("app.CH9TutorialManager") then return false end
+    local items = self.game:singleton("app.ItemManager")
+    local data = items and items:call("findItemData", "CH9_WP005")
+    local prefab = data and data:get_field("ItemPrefab")
+    local path = prefab and prefab:call("get_Path")
+    if not path or path:lower() ~= (self.root .. "/CH9_WP005/Item.pfb"):lower() then return false end
+    local list = self.manager:get_field("LiquidBombList")
+    if not list then return false end
+    for entry in self.game:list(list:get_field("List")) do
+        if entry:get_field("Behavior") == shell then return true end
+    end
+    return false
+end
+
 function Pool:install()
     if self.installed then return end
     self.installed = true
@@ -134,6 +153,21 @@ function Pool:install()
                 return sdk.PreHookResult.SKIP_ORIGINAL
             end
         end, function(ret) return ret end)
+    self.game:hook("app.CH9InstallationWp1900", "onSuccessInteractCh9", function(args)
+        -- This callback only closes tutorial 5. Base recovery and stock transfer stay native.
+        if self:owns_campaign_stake(self.game:object(args[2])) then return sdk.PreHookResult.SKIP_ORIGINAL end
+    end, function(ret) return ret end)
+    self.game:hook("app.CH9InstallationWp1900", "callSE", function(args)
+        local trigger = sdk.to_int64(args[3]) & 0xffffffff
+        if trigger ~= 0x73ce5ae3 then return end
+        local shell = self.game:object(args[2])
+        if not self:owns_campaign_stake(shell) then return end
+        -- The CH9 override closes a missing tutorial before sound, aborting Bomb.doUpdate
+        -- after damage registration but before Wait -> Explosion. Preserve its water sound.
+        if shell:get_field("InstallationType") == 2 then trigger = 0xe350a1fc end
+        self.game:method("app.Bomb", "callSE"):call(shell, trigger)
+        return sdk.PreHookResult.SKIP_ORIGINAL
+    end, function(ret) return ret end)
 end
 
 return Pool

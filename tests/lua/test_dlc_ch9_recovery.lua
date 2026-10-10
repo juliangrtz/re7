@@ -42,6 +42,7 @@ return function()
         list = function(_, list) local i = 0; return function() i = i + 1; return list[i] end end,
         object = function(_, value) return value end,
         hook = function(_, kind, signature, before, after)
+            if kind == "app.CH9InstallationWp1900" then return end
             assert(kind == "app.CH9InteractWeapon" and signature == "equipWeapon(app.Inventory, app.EquipManager, via.GameObject, System.Boolean)")
             pre, post, installs = before, after, installs + 1
         end,
