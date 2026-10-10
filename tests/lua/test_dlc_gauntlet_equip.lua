@@ -40,12 +40,12 @@ return function()
         offAttackTrigger = function() off = off + 1 end,
     })
     local hand_entries, hand_states = {}, {}
-    for _, name in ipairs({"Pl0000HandR", "Pl0000HandL"}) do
+    for _, left in ipairs({false, true}) do
         local original, material = object({}, {}), object({}, {})
         local state = { mesh = original, material = material, parts = {true, false, false, false, false} }
         hand_states[#hand_states + 1] = state
         hand_entries[#hand_entries + 1] = {
-            object = object({}, {get_Name = function() return name end}),
+            object = {}, left = left,
             replacement = {}, material = {},
             mesh = object({}, {
                 get_Valid = function() return true end,

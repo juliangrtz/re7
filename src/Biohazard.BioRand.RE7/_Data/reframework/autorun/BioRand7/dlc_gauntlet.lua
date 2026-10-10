@@ -1,4 +1,4 @@
--- Experimental Ethan adapter, scoped to its exported inventory prefab namespace.
+-- Experimental campaign adapter, scoped to its exported inventory prefab namespace.
 local Gauntlet = {}
 Gauntlet.__index = Gauntlet
 
@@ -15,6 +15,7 @@ local VARIANTS = {
 }
 Gauntlet.variants = VARIANTS
 local LAYERS = { 1, 2, 9 }
+local CAMPAIGN_PLAYERS = { Pl0000 = true, Pl0000_Chapter1 = true, Pl2000 = true, Pl2100 = true, Pl3000 = true }
 local AIM = { ["Melee.ReadyToAim"] = true, ["Melee.AimIdle"] = true,
     ["Melee.AimIdleSp"] = true, ["Melee.AimMove"] = true }
 local BOTH = { ["Melee.ReadyStart"] = true, ["Melee.ReadyIdle"] = true,
@@ -31,7 +32,7 @@ function Gauntlet.new(game, enabled, root)
 end
 
 function Gauntlet:matches(player, variant)
-    if not player or player ~= self.game:player() or player:call("get_Name") ~= "Pl0000" then return false end
+    if not player or player ~= self.game:player() or not CAMPAIGN_PLAYERS[player:call("get_Name")] then return false end
     if not variant then
         for _, entry in ipairs(VARIANTS) do if self:matches(player, entry) then return true end end
         return false
@@ -77,7 +78,7 @@ function Gauntlet:prepare(player)
     end
     self:reset()
     self.session = nil
-    assert(self:matches(player), "Gauntlets require the matching Ethan lab prefab")
+    assert(self:matches(player), "Gauntlets require a matching campaign player and exported prefab")
     local game_manager = self.game:singleton("app.GameManager")
     if not game_manager or game_manager:call("get_IsSceneLoading") then return false, "scene loading" end
     local controller = self.game:component(player, "app.PlayerMotionController")
@@ -95,14 +96,15 @@ function Gauntlet:prepare(player)
     end
     local fallback = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, 10)
     if not fallback or fallback:call("get_BankID") ~= 0 or fallback:call("get_BankType") ~= 10
-        or not fallback:call("get_MotionList") then return false, "Ethan axe fallback bank" end
-    local scene = sdk.call_native_func(sdk.get_native_singleton("via.SceneManager"),
-        sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
-    if not scene then return false, "current scene" end
+        or not fallback:call("get_MotionList") then return false, "campaign axe fallback bank" end
+    local mesh_controller = self.game:component(player, "app.PlayerMeshController")
+    if not mesh_controller then return false, "player mesh controller" end
     local hands = {}
-    for _, entry in ipairs({ { "Pl0000HandR", "pl9010" }, { "Pl0000HandL", "pl9020" } }) do
-        local object = scene:call("findGameObject(System.String)", entry[1])
-        local mesh = object and self.game:component(object, "via.render.Mesh")
+    for _, entry in ipairs({ { "RArmMesh", "pl9010", false }, { "LArmMesh", "pl9020", true } }) do
+        -- Resolve the active player's arms, never a same-named object in another
+        -- loaded chapter. These are TDB fields, not property getters.
+        local mesh = mesh_controller:get_field(entry[1])
+        local object = mesh and mesh:call("get_GameObject")
         if not mesh or not mesh:call("getMesh") or not mesh:call("get_Material") then return false, entry[1] end
         if not mesh:call("get_MeshReady") or not mesh:call("get_MaterialReady") then return false, entry[1] .. " resources" end
         local parent, owned = object:call("get_Transform"), false
@@ -113,7 +115,7 @@ function Gauntlet:prepare(player)
         end
         if not owned then return false, entry[1] .. " ownership" end
         local path = "CH9/Character/Player/pl9000/" .. entry[2] .. "/" .. entry[2]
-        hands[#hands + 1] = { object = object, mesh = mesh, path = path }
+        hands[#hands + 1] = { object = object, mesh = mesh, path = path, left = entry[3] }
     end
     -- A newly discovered player can precede its banks and hand renderers by seconds.
     -- Resolve every native dependency before allocating or attaching anything.
@@ -212,7 +214,7 @@ function Gauntlet:equip(weapon, variant)
         end
         hand.mesh:call("setMesh", hand.replacement)
         hand.mesh:call("set_Material", hand.material)
-        local gauntlet = variant.dual or hand.object:call("get_Name") == "Pl0000HandL"
+        local gauntlet = variant.dual or hand.left
         for i = 0, 4 do hand.mesh:call("setPartsEnable", i, (gauntlet and (i == 2 or i == 3)) or (not gauntlet and i == 0)) end
     end
 end

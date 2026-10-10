@@ -39,6 +39,12 @@ return function()
     }
     local adapter = Gauntlet.new(game, function() return enabled end, "BioRand/DlcWeaponLab")
     assert(adapter:matches(player))
+    for _, campaign_name in ipairs({"Pl0000_Chapter1", "Pl2000", "Pl2100", "Pl3000"}) do
+        name = campaign_name; assert(adapter:matches(player))
+    end
+    for _, foreign_name in ipairs({"Pl1000", "Pl2000_Birthday", "Pl3100_Chapter7_1"}) do
+        name = foreign_name; assert(not adapter:matches(player))
+    end
     name = "Pl9000"; assert(not adapter:matches(player)); name = "Pl0000"
     path = "BioRand/DlcWeapons/CH9_WP006/Item.pfb"; assert(not adapter:matches(player))
     path = "BioRand/DlcWeaponLab/CH9_WP006/Item.pfb"
@@ -331,7 +337,7 @@ return function()
         ["findMotionBank(System.UInt32, System.UInt32)"] = function() return nil end,
     }) }, {})
     ready, reason = pending:prepare(player)
-    assert(not ready and reason == "Ethan axe fallback bank" and creations == created_before,
+    assert(not ready and reason == "campaign axe fallback bank" and creations == created_before,
         "Normal startup must not allocate resources or append banks before native readiness")
     local clock, now = os.clock, 1.0
     os.clock = function() return now end
@@ -340,37 +346,33 @@ return function()
     assert(pending.waiting.since == now, "A long native scene load is not an adapter failure")
     loading = false
     now = 101.0; pending:update()
-    assert(pending.waiting.reason == "Ethan axe fallback bank")
+    assert(pending.waiting.reason == "campaign axe fallback bank")
     now = 111.0
     assert(not pcall(function() pending:update() end), "Missing post-load dependencies must time out")
     enabled = false; pending:update(); assert(not pending.waiting)
     enabled = true
     local hand_ready, material_ready = false, false
+    local early_hand = {}
     local hand_mesh = object({}, {
+        get_GameObject = function() return early_hand end,
         getMesh = function() return {} end, get_Material = function() return {} end,
         get_MeshReady = function() return hand_ready end, get_MaterialReady = function() return material_ready end,
     })
-    local early_hand = {}
     local fallback = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 10 end,
         get_MotionList = function() return {} end })
     early_controller = object({ MotionManager = {}, Motion = object({}, {
         ["findMotionBank(System.UInt32, System.UInt32)"] = function(_, bank) return bank == 10 and fallback or nil end,
     }) }, {})
-    sdk.get_native_singleton = function() return {} end
-    sdk.find_type_definition = function() return {} end
-    sdk.call_native_func = function()
-        return object({}, { ["findGameObject(System.String)"] = function() return early_hand end })
-    end
     local early_components = game.component
     game.component = function(self, owner, kind)
-        if owner == early_hand then assert(kind == "via.render.Mesh"); return hand_mesh end
+        if kind == "app.PlayerMeshController" then return object({ RArmMesh = hand_mesh }, {}) end
         return early_components(self, owner, kind)
     end
     ready, reason = pending:prepare(player)
-    assert(not ready and reason == "Pl0000HandR resources" and creations == created_before)
+    assert(not ready and reason == "RArmMesh resources" and creations == created_before)
     hand_ready = true
     ready, reason = pending:prepare(player)
-    assert(not ready and reason == "Pl0000HandR resources" and creations == created_before,
+    assert(not ready and reason == "RArmMesh resources" and creations == created_before,
         "Do not replace a native hand before both its mesh and material finish loading")
     os.clock, game.component = clock, component
 end
