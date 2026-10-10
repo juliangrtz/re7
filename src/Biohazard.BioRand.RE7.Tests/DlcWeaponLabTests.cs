@@ -14,9 +14,11 @@ public sealed class DlcWeaponLabTests {
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
-        Assert.Equal(4, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(4, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        Assert.DoesNotContain(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.False(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
-        foreach (var weapon in DlcWeaponCatalog.Weapons.Where(w => !w.IsLabCandidate))
+        foreach (var weapon in DlcWeaponCatalog.Weapons.Where(w => !w.IsCampaignCandidate))
             Assert.Null(ItemDefinitionRepository.Default.FromId(weapon.ItemId));
     }
 
@@ -83,7 +85,7 @@ public sealed class DlcWeaponLabTests {
             Assert.True(component.Get<bool>("_ResourcePrefab.Standby"));
             Assert.NotEmpty(first.GetPfbFile(weapon.DetailPrefab.Of() + ".17").ReadScene(first.TypeRepository).GetGameObjects());
         }
-        Assert.Equal(15, first.Files.Count);
+        Assert.Equal(18, first.Files.Count);
     }
 
     [Fact]

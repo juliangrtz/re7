@@ -7,6 +7,7 @@ Lab.candidates = {
     { id = "Handgun_Albert_C", name = "Samurai Edge - AW Model-01" },
     { id = "Shotgun_Albert", name = "Thor's Hammer - AW Model-02" },
     { id = "NumaItem072", name = "Joe's M21" },
+    { id = "CH9_WP002", name = "Spirit Blade (player adapter research)" },
 }
 
 local function candidate(id)

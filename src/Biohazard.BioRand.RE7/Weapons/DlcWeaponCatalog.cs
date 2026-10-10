@@ -14,7 +14,7 @@ public static class DlcWeaponCatalog {
         new("Stangrenadebomb", "Neuro-stun Grenade", 8, 60, "app.CH8WeaponThrowable", DlcWeaponAdapter.None),
         new("CH9_WP000", "AMG-78a", 9, 61, "app.CH9Weapon1600", DlcWeaponAdapter.None),
         new("CH9_WP001", "AMG-78", 9, 62, "app.CH9Weapon1600", DlcWeaponAdapter.None),
-        new("CH9_WP002", "Spirit Blade", 9, 63, "app.CH9Weapon1700", DlcWeaponAdapter.None),
+        new("CH9_WP002", "Spirit Blade", 9, 63, "app.CH9Weapon1700", DlcWeaponAdapter.SpiritBlade),
         new("CH9_WP003", "Throwing Knife", 9, 64, "app.CH9Weapon1500", DlcWeaponAdapter.None),
         new("CH9_WP004", "Throwing Spear", 9, 65, "app.CH9Weapon1800", DlcWeaponAdapter.None),
         new("CH9_WP005", "Stake Bomb", 9, 66, "app.CH9Weapon1900", DlcWeaponAdapter.None),
@@ -30,6 +30,7 @@ public static class DlcWeaponCatalog {
 public sealed record DlcWeaponSource(
     string ItemId, string Name, int Chapter, int WeaponId, string ComponentType, DlcWeaponAdapter Adapter) {
     public bool IsLabCandidate => Adapter != DlcWeaponAdapter.None;
+    public bool IsCampaignCandidate => Adapter is DlcWeaponAdapter.Knife or DlcWeaponAdapter.Gun;
     public string ResourceRoot { get; init; } = "BioRand/DlcWeaponLab";
     public string CampaignPrefab => $"{ResourceRoot}/{ItemId}/Item.pfb";
     public string ResourceScene => $"{ResourceRoot}/{ItemId}/Resource.scn";
@@ -41,8 +42,9 @@ public sealed record DlcWeaponSource(
         "Handgun_Albert_C" => "ch8/scenes/items/resources_chapter8/chrishandgun.scn",
         "Shotgun_Albert" => "ch8/scenes/items/resources_chapter8/chrisshotgun.scn",
         "NumaItem072" => "ch9/scenes/items/resource/numaitem072.scn",
+        "CH9_WP002" => "ch9/scenes/items/resource/ch9_wp002.scn",
         _ => throw new InvalidOperationException($"No campaign resource adapter for {ItemId}."),
     };
 }
 
-public enum DlcWeaponAdapter { None, Knife, Gun }
+public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade }

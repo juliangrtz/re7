@@ -1,6 +1,6 @@
 # Not a Hero and End of Zoe weapons
 
-Status: experimental, **not campaign-certified**. Investigation: 2026-10-09.
+Status: experimental, **not campaign-certified**. Investigation: 2026-10-10.
 
 This is the handoff for the DLC weapon integration attempt. Do not interpret the
 source catalog, a successful export, an item-box entry, or a forced shot as a
@@ -16,6 +16,12 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
+- The lab additionally exports a **Spirit Blade base-melee research adapter**.
+  It preserves WeaponID 63 and the source render/motion/collider stack but does
+  not yet implement Ethan's motion mapping or Spirit Blade healing. It is not
+  available to the campaign generator or its debug grant. Lab candidacy and
+  campaign candidacy are now separate properties; do not promote a lab export
+  merely because its prefab loads.
 - `DlcCampaignWeaponPatch` integrates four candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
@@ -81,7 +87,7 @@ WeaponID is distinct from the string ItemDataID.
 | `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | None |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | None |
-| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | None |
+| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base-melee lab only; player/healing adapter pending |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
@@ -213,6 +219,39 @@ also drives bullet type, parameters, saves, and equip behavior. A bank mapping
 alone does not prove that all required motions exist or transition correctly.
 
 ## Why AMG-Dual is different
+
+### Additional source evidence (2026-10-10)
+
+Joe's complete player object is serialized as `Pl9000` in
+`ch9/scenes/chapter/c09_ingame.scn.20`, not `chapter9resident.scn.20`.
+Its prefab reference is `CH9/Prefab/Character/Pl9000/Pl9000.pfb`. This scene
+provides the complete component inventory even when that prefab is absent from
+the local extracted subset. The motion uses `pl9000.motbank` and
+`pl9000_JointMap.jmap`; its ten FSM layers include Body, Weapon, RHand,
+TouchWall, PosturalCamera, DamageCamera, AddBlend, and WeaponUpper resources.
+These are player resources, not dependencies contained in the gauntlet item PFB.
+
+Live static TDB fields give Joe's bank IDs: bare knuckles 5, AMG-78a 6,
+AMG-78 7, AMG-Dual 8, Spirit Blade 10, throwing knife 300, throwing spear 310,
+and liquid bomb 230. Chris's grenade/incendiary/neuro-stun banks are 260/270/280.
+These constants establish mappings, not that Ethan's bank contains those motions.
+Spirit Blade's bank 10 is the same family as the campaign hand axe.
+
+`CH9/Prefab/Weapon/CH9ThrowWepParam.user` supplies Spirit Blade recovery values
+100 and 150 (`Wp1700RecoveryValueS/L`). Its source weapon owns CH9 status/order
+references and `checkAttackHit()`; the base-melee lab conversion omits that native
+healing path. Healing must be driven by confirmed hits, not clicks or every frame
+of an active attack. Do not change the inventory/native WeaponID to borrow a bank.
+
+The 2026-10-10 cold campaign load registered the isolated Spirit Blade PFB,
+accepted its deferred load request and an item-box entry. Withdrawal, attacks,
+damage, recovery, and persistence remain unproven. A separate deployment check
+found current campaign assets alongside an older installed `BioRand7.lua` that
+did not require or update `dlc_weapons.lua`; enabling the config alone therefore
+did not load the four existing prefabs. Deploy the entrypoint and feature modules
+together. After the matching entrypoint was loaded, all four became ready.
+
+### Player-system requirements
 
 The gauntlet inventory prefab has Transform, Item, and `CH9Weapon1600`; it is not
 a self-contained pair of animated weapon meshes. The earlier IDA trace shows

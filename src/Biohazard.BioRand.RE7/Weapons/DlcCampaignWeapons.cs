@@ -10,7 +10,7 @@ namespace Biohazard.BioRand.RE7.Weapons;
 public static class DlcCampaignWeapons {
     public const string ConfigKey = "dlc-campaign-weapons";
     public static ImmutableArray<DlcWeaponSource> Sources { get; } = [.. DlcWeaponCatalog.Weapons
-        .Where(w => w.IsLabCandidate).Select(w => w with { ResourceRoot = "BioRand/DlcWeapons" })];
+        .Where(w => w.IsCampaignCandidate).Select(w => w with { ResourceRoot = "BioRand/DlcWeapons" })];
     public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. System.Text.Encoding.UTF8
         .GetString(EmbeddedData.GetFile("dlc_weapon_assets.txt"))
         .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)];

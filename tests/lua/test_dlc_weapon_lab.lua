@@ -1,5 +1,7 @@
 return function()
     local Lab = require("BioRand7/dlc_weapon_lab")
+    assert(#Lab.candidates == 5)
+    assert(Lab.candidates[5].id == "CH9_WP002")
     local writes, registered, owned, in_inventory = 0, true, false, false
     local box_id, name, fail = 1, "Pl0000", false
     local ready, loads = true, 0
@@ -57,6 +59,8 @@ return function()
     assert(not lab:queue("box"), "A menu manager call alone does not initialize the item-box UI")
     assert(not lab:queue("add", "CH9_WP006"))
     assert(not lab:queue("prepare", "CH9_WP006"))
+    assert(lab:queue("prepare", "CH9_WP002"), "Spirit Blade is an explicit lab candidate only")
+    lab.pending = nil
     assert(lab:queue("add", "CKnife"))
     assert(not lab:queue("add", "CKnife"))
     assert(writes == 0, "UI must never mutate the game")

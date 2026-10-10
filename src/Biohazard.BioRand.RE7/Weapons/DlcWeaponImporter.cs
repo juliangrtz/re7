@@ -104,9 +104,15 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
 
         return scene.VisitGameObjects(go => go.WithComponents(go.Components
             .Where(c => c.Type.Name is not ("app.DisableSave" or "app.CH8HandgunBulletSound"
-                or "app.CH8ReticleChanger" or "app.CH8ReticleMaterialChanger"))
+                or "app.CH8ReticleChanger" or "app.CH8ReticleMaterialChanger" or "app.CH9WeaponWwiseStateList"))
             .Select(c => {
-                if (c != source || weapon.Adapter != DlcWeaponAdapter.Gun) return c;
+                if (c != source) return c;
+                if (weapon.Adapter == DlcWeaponAdapter.SpiritBlade) {
+                    var melee = types.Create("app.Weapon");
+                    foreach (var field in melee.Type.Fields) melee = melee.Set(field.Name, c[field.Name]);
+                    return melee;
+                }
+                if (weapon.Adapter != DlcWeaponAdapter.Gun) return c;
 
                 var gun = types.Create("app.WeaponGun");
                 foreach (var field in gun.Type.Fields) gun = gun.Set(field.Name, c[field.Name]);
