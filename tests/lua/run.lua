@@ -8,6 +8,7 @@ local suites = {
     "test_enemy_targets",
     "test_inventory",
     "test_dlc_weapon_lab",
+    "test_dlc_weapon_player",
     "test_dlc_weapons",
     "test_dlc_weapon_grant",
     "test_inventory_pause",

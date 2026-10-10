@@ -1,0 +1,65 @@
+return function()
+    local Player = require("BioRand7/dlc_weapon_player")
+    local enabled, name, path = true, "Pl0000", "BioRand/DlcWeaponLab/CH9_WP002/Item.pfb"
+    local hooks, storage, conversions, lookups = {}, {}, 0, 0
+    local player = { call = function(_, method) assert(method == "get_Name"); return name end }
+    local owner = player
+    local controller = { call = function(_, method) assert(method == "get_GameObject"); return owner end }
+    local prefab = { call = function(_, method) assert(method == "get_Path"); return path end }
+    local data = { get_field = function(_, field) assert(field == "ItemPrefab"); return prefab end }
+    local manager = { call = function(_, method, id)
+        assert(method == "findItemData" and id == "CH9_WP002")
+        lookups = lookups + 1
+        return data
+    end }
+    local game = {
+        player = function() return player end,
+        singleton = function(_, type_name) assert(type_name == "app.ItemManager"); return manager end,
+        object = function(_, value) conversions = conversions + 1; return value end,
+        hook = function(_, type_name, signature, before, after)
+            assert(type_name == "app.PlayerMotionController" and signature == "getBankType(app.WeaponID)")
+            hooks[#hooks + 1] = { before = before, after = after }
+        end,
+    }
+    sdk = { to_int64 = function(value) return value end, to_ptr = function(value) return { pointer = value } end }
+    thread = { get_hook_storage = function() return storage end }
+    local adapter = Player.new(game, function() return enabled end, "BioRand/DlcWeaponLab")
+    adapter:install(); adapter:install()
+    assert(#hooks == 1)
+    local original = {}
+    local function bank(id)
+        local args = { nil, controller, id }
+        hooks[1].before(args)
+        assert(args[3] == id, "Native weapon identity must never be rewritten")
+        local result = hooks[1].after(original)
+        assert(next(storage) == nil, "Do not leak a previous call's bank override")
+        return result
+    end
+    assert(bank(63).pointer == 10)
+    for _, id in ipairs({ 0, 1, 3, 13, 48, 49, 50, 61, 62, 64, 65, 66, 67 }) do
+        assert(bank(id) == original)
+    end
+    assert(conversions == 1 and lookups == 1, "Unrelated weapons must take the cheap pass-through path")
+    enabled = false
+    assert(bank(63) == original and conversions == 1)
+    enabled = true
+    for _, other_name in ipairs({ "Pl8000", "Pl9000", "Pl1000", "Pl2100" }) do
+        name = other_name
+        assert(bank(63) == original)
+    end
+    name, owner = "Pl0000", nil
+    assert(bank(63) == original)
+    owner = {}
+    assert(bank(63) == original, "An inactive or duplicated Ethan is not the current player")
+    owner = player
+    for _, foreign_path in ipairs({ "CH9/Weapon/Original.pfb", "OtherMod/CH9_WP002/Item.pfb", "BioRand/DlcWeapons/CH9_WP002/Item.pfb" }) do
+        path = foreign_path
+        assert(bank(63) == original)
+    end
+    path = "BIORAND/DLCWEAPONLAB/CH9_WP002/ITEM.PFB"
+    assert(bank(63).pointer == 10)
+    path = nil
+    assert(bank(63) == original)
+    manager = nil
+    assert(bank(63) == original)
+end

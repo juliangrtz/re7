@@ -48,7 +48,7 @@ return function()
         singleton = function(_, type_name) assert(type_name == "app.ItemManager"); return manager end,
         address = function(_, value) assert(value == box); return box_id end,
         hook = function(_, type_name, signature, before)
-            assert(type_name == "app.SaveDataManager")
+            assert(type_name == "app.SaveDataManager" or type_name == "app.PlayerMotionController")
             hooks[signature] = before
         end,
     }

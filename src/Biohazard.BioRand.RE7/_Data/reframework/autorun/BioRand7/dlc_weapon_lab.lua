@@ -25,6 +25,11 @@ function Lab:reset()
 end
 
 function Lab:install()
+    if not self.player_adapter then
+        self.player_adapter = require("BioRand7/dlc_weapon_player").new(self.game,
+            function() return self.armed end, "BioRand/DlcWeaponLab")
+        self.player_adapter:install()
+    end
     self.game:hook("app.SaveDataManager", "newGameInit()", function() self:reset() end)
     self.game:hook("app.SaveDataManager", "loadLevelUsingLoadData()", function() self:reset() end)
 end

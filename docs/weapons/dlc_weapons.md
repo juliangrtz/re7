@@ -17,8 +17,8 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
 - The lab additionally exports a **Spirit Blade base-melee research adapter**.
-  It preserves WeaponID 63 and the source render/motion/collider stack but does
-  not yet implement Ethan's motion mapping or Spirit Blade healing. It is not
+  It preserves WeaponID 63 and the source render/motion/collider stack and
+  includes an opt-in Ethan hand-axe motion mapping, but not Spirit Blade healing. It is not
   available to the campaign generator or its debug grant. Lab candidacy and
   campaign candidacy are now separate properties; do not promote a lab export
   merely because its prefab loads.
@@ -244,8 +244,24 @@ healing path. Healing must be driven by confirmed hits, not clicks or every fram
 of an active attack. Do not change the inventory/native WeaponID to borrow a bank.
 
 The 2026-10-10 cold campaign load registered the isolated Spirit Blade PFB,
-accepted its deferred load request and an item-box entry. Withdrawal, attacks,
-damage, recovery, and persistence remain unproven. A separate deployment check
+accepted its deferred load request and an item-box entry. Normal item-box withdrawal
+and the examine model worked. Ethan equipped native ID 63 and accepted mouse-driven
+melee attacks with hand-axe bank 10. Damage, recovery, and persistence remain unproven.
+
+The bank hook must exist **before equip**. Equipping unsupported ID 63 first entered
+`Melee.ReadyStart` with frame/end-frame both zero. Changing the bank afterwards did
+not restart the animation, and subsequent `Inventory.equipWeapon` calls stayed
+pending (`isUseItemRequested=true`, `isUseItemTried=false`). This initially looked
+like an absent axe motion resource. In fact, `getActiveMotionBankCount` included
+`pl0000_Ax`, bank type 10; `getMotionBankCount` returned zero and was not a valid
+inventory of the active banks. A one-shot research restart of the already-stalled
+ready state proved the resource worked. The checked-in adapter does **not** force
+FSM states: installed before a fresh knife-to-blade equip, it allows the native
+ready/idle/attack transitions to complete normally. `dlc_weapon_player.lua` changes
+only the bank return for ID 63, the active `Pl0000`, and the exact lab prefab path;
+the lab must be armed. It does not rewrite weapon identity or alter DLC players.
+
+A separate deployment check
 found current campaign assets alongside an older installed `BioRand7.lua` that
 did not require or update `dlc_weapons.lua`; enabling the config alone therefore
 did not load the four existing prefabs. Deploy the entrypoint and feature modules
