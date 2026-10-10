@@ -21,6 +21,8 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
             var sourcePath = PrefabPath(item.ItemPrefab.Path.ToString()!);
             var prefab = context.GetPfbFile(sourcePath).ToBuilder(context.TypeRepository);
             prefab.Scene = AdaptPrefab(prefab.Scene, context.TypeRepository, weapon);
+            if (weapon.Adapter == DlcWeaponAdapter.Gauntlet)
+                prefab.Scene = AddGauntletCombat(prefab.Scene, weapon);
             if (isolateParameters) {
                 prefab.Scene = IsolateParameters(prefab.Scene, weapon);
                 prefab.Scene = prefab.Scene.VisitGameObjects(go => go.Components.Any(c => c.Type.Name is "app.Weapon" or "app.WeaponGun")
@@ -109,9 +111,13 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
                 or "app.CH8ReticleChanger" or "app.CH8ReticleMaterialChanger" or "app.CH9WeaponWwiseStateList"))
             .Select(c => {
                 if (c != source) return c;
-                if (weapon.Adapter == DlcWeaponAdapter.SpiritBlade) {
+                if (weapon.Adapter is DlcWeaponAdapter.SpiritBlade or DlcWeaponAdapter.Gauntlet) {
                     var melee = types.Create("app.Weapon");
                     foreach (var field in melee.Type.Fields) melee = melee.Set(field.Name, c[field.Name]);
+                    if (weapon.Adapter == DlcWeaponAdapter.Gauntlet)
+                        melee = melee.Set("EquipParam.JointName", "")
+                            .Set("EquipParam.Position", System.Numerics.Vector3.Zero)
+                            .Set("EquipParam.Angle", System.Numerics.Vector3.Zero);
                     return melee;
                 }
                 if (weapon.Adapter != DlcWeaponAdapter.Gun) return c;
@@ -120,6 +126,34 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
                 foreach (var field in gun.Type.Fields) gun = gun.Set(field.Name, c[field.Name]);
                 return AdaptAmmunition(gun);
             }).ToImmutableArray()));
+    }
+
+    private RszScene AddGauntletCombat(RszScene scene, DlcWeaponSource weapon) {
+        var source = context.GetPfbFile("ch9/prefab/weapon/wp1700_hatchet/item/wp1700_hatchet_item.pfb".Of() + ".17")
+            .ReadScene(context.TypeRepository).GetGameObjects().SelectMany(go => go.Components);
+        var components = source.Where(c => c.Type.Name is "app.Collision.HitController" or "via.physics.RequestSetCollider")
+            .Select(c => c.Type.Name == "via.physics.RequestSetCollider"
+                ? c.Set("RequestSetGroups", new RszArrayNode(c.Get<RszArrayNode>("RequestSetGroups").Type,
+                    [context.TypeRepository.Create("via.physics.RequestSetCollider.RequestSetGroup")
+                        .Set("Resource", new RszResourceNode(weapon.CollisionPath))])) : c).ToImmutableArray();
+        if (components.Length != 2) throw new InvalidDataException("Missing melee collision component template.");
+        var collision = context.GetRcolFile("ch9/collision/collider/player/pl9000/pl9000.rcol".RcolFile())
+            .ToBuilder(context.TypeRepository);
+        var names = new[] { "AttackHookR_Double", "AttackHook_Double", "AttackUppercutR_Double",
+            "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble" };
+        var requests = names.Select(name => collision.RequestSets.Single(r => r.Name == name)).ToArray();
+        collision.RequestSets.Clear();
+        for (var i = 0; i < requests.Length; i++) {
+            requests[i].Id = i;
+            collision.RequestSets.Add(requests[i]);
+        }
+        var groups = requests.Select(r => r.Group).Distinct().ToArray();
+        collision.Groups.RemoveAll(g => !groups.Contains(g));
+        // The runtime adapter supplies the active player's skeleton. Preserve Joe's bone-local shapes.
+        context.SetRcolFile(weapon.CollisionPath.RcolFile(), collision.Build());
+        return scene.VisitGameObjects(go => go.Components.Any(c => c.Type.Name == "app.Weapon")
+            ? go.WithComponents([.. go.Components.Select(c => c.Type.Name == "via.Transform"
+                ? c.Set("SameJointsContraint", true) : c), .. components]) : go);
     }
 
     private static RszObjectNode AdaptAmmunition(RszObjectNode gun) {

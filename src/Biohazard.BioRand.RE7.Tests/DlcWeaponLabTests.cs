@@ -14,10 +14,11 @@ public sealed class DlcWeaponLabTests {
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
-        Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(6, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
         Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
         Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
-        Assert.False(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
+        Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
+        Assert.False(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsCampaignCandidate);
         foreach (var weapon in DlcWeaponCatalog.Weapons.Where(w => !w.IsCampaignCandidate))
             Assert.Null(ItemDefinitionRepository.Default.FromId(weapon.ItemId));
     }
@@ -56,10 +57,24 @@ public sealed class DlcWeaponLabTests {
             var path = weapon.CampaignPrefab.Of() + ".17";
             var scene = first.GetPfbFile(path).ReadScene(first.TypeRepository);
             var components = scene.GetGameObjects().SelectMany(go => go.Components).ToArray();
-            Assert.Contains(components, c => c.Type.Name == "via.render.Mesh");
-            Assert.Contains(components, c => c.Type.Name == "via.motion.Motion");
-            Assert.Contains(components, c => c.Type.Name == "via.motion.MotionFsm");
-            Assert.Contains(first.GetPfbFile(path).Resources, p => p.EndsWith(".mesh", StringComparison.OrdinalIgnoreCase));
+            if (weapon.Adapter == DlcWeaponAdapter.Gauntlet) {
+                Assert.DoesNotContain(components, c => c.Type.Name == "via.render.Mesh");
+                Assert.Single(components, c => c.Type.Name == "app.Collision.HitController");
+                Assert.Single(components, c => c.Type.Name == "via.physics.RequestSetCollider");
+                Assert.Contains(weapon.CollisionPath, first.GetPfbFile(path).Resources);
+                var collision = first.GetRcolFile(weapon.CollisionPath.RcolFile()).ToBuilder(first.TypeRepository);
+                Assert.Equal(Enumerable.Range(0, 6), collision.RequestSets.Select(r => r.Id));
+                Assert.Equal(new[] { 300, 300, 300, 300, 500, 3000 }, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
+                Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "R_UpperArm");
+                Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "L_UpperArm");
+                Assert.True(components.Single(c => c.Type.Name == "via.Transform").Get<bool>("SameJointsContraint"));
+                Assert.Empty(components.Single(c => c.Type.Name == "app.Weapon").Get<string>("EquipParam.JointName"));
+            } else {
+                Assert.Contains(components, c => c.Type.Name == "via.render.Mesh");
+                Assert.Contains(components, c => c.Type.Name == "via.motion.Motion");
+                Assert.Contains(components, c => c.Type.Name == "via.motion.MotionFsm");
+                Assert.Contains(first.GetPfbFile(path).Resources, p => p.EndsWith(".mesh", StringComparison.OrdinalIgnoreCase));
+            }
             Assert.DoesNotContain(components, c => c.Type.Name.StartsWith("app.CH8") || c.Type.Name.StartsWith("app.CH9"));
             Assert.DoesNotContain(components, c => c.Type.Name == "app.DisableSave");
             var native = Assert.Single(components, c => c.Type.Name == (weapon.Adapter == DlcWeaponAdapter.Gun ? "app.WeaponGun" : "app.Weapon"));
@@ -85,7 +100,7 @@ public sealed class DlcWeaponLabTests {
             Assert.True(component.Get<bool>("_ResourcePrefab.Standby"));
             Assert.NotEmpty(first.GetPfbFile(weapon.DetailPrefab.Of() + ".17").ReadScene(first.TypeRepository).GetGameObjects());
         }
-        Assert.Equal(18, first.Files.Count);
+        Assert.Equal(22, first.Files.Count);
     }
 
     [Fact]

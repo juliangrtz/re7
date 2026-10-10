@@ -351,6 +351,56 @@ not animation retargeting or gameplay. Finite raw punches exist alongside blend
 trees: e.g. right straight 2440 (60 frames) and its hit reaction 2565 (28 frames).
 Never treat a blend-tree end frame of -1 as a missing resource.
 
+### AMG-Dual campaign prototype
+
+The lab exporter now has a sixth asset candidate, `CH9_WP006` / native WeaponID
+67, but it remains excluded from campaign pools and debug grants. The stock lab
+helper does not yet expose it: the following observations used an isolated,
+temporary player adapter, not a complete shipped implementation.
+
+- Converting the inventory component to base `app.Weapon` avoids Joe's
+  `registerKnuckleWeapon` callback. Campaign inventory recognized a one-slot,
+  quick-selectable weapon with icon 905, its name and description. Native box
+  withdrawal and equip were exercised; normal two-way storage and cold save/load
+  are not yet certified. The original description still mentions Extreme Challenge.
+- Joe's GauntletW motion list is an override, not a complete bank. It lacks idle
+  and the first punch. Three owned dynamic banks with the same isolated type,
+  ordered GauntletW, Knuckle, then Ethan's axe fallback, produced a normal
+  `ReadyStart -> ReadyIdle -> AttackL -> AttackLToReady -> ReadyIdle` path.
+  Base campaign banks were not overwritten. Special idle also completed normally.
+  A temporary gap while replacing the research hook stranded an existing idle
+  motion; never disable a bank mapping underneath an equipped weapon.
+- Joe's hand meshes/materials can replace Ethan's existing hand renderers and
+  follow his animated joints. Restore the exact original resources and part mask
+  on unequip. Enabling all gauntlet parts was only a visual loading proof, not a
+  validated variant selection.
+- The inventory prefab has no skeleton or collision components. The exporter
+  adds the ordinary melee HitController/RequestSetCollider component pair and an
+  isolated subset of Joe's player RCOL: right/left hooks, right/left uppercuts,
+  and the two both-hand charge levels. Request IDs are compacted to 0 through 5;
+  native attack userdata, shapes and bone names remain intact. Source RCOL is not
+  changed.
+- Do **not** clear the RCOL joint names and attach these shapes to a palm. Joe's
+  capsules use upper-arm/forearm-local coordinates. A hidden mesh on the weapon,
+  using the active player's body mesh/material, an identity local transform,
+  empty attachment joint, and SameJointsConstraint provided both arm skeletons.
+  All six tested arm/palm joint positions exactly matched Ethan. Joe's right-hand
+  mesh alone supplied only right-arm bones and was insufficient for Dual-AMG.
+  The serialized Transform field is spelled `SameJointsContraint`; the live
+  accessor is `set_SameJointsConstraint`.
+- A mouse-driven prototype punch registered the native right-hand attack only
+  during its bounded animation window. `addDamageCore` recorded native attacker
+  `wp1620_GauntletW_Item`, raw damage 300, calculated/added damage 180, and a
+  matching 180 HP loss on a normal campaign Em4000. The collider unregistered and
+  the attack returned to idle. Enemy resistance was unchanged; test protection
+  blocked only incoming player damage. This proves native combat routing, not
+  exact timing parity with Joe.
+
+Remaining work includes hand-part selection, left/right combos, charge controls
+and feedback, interrupted attacks, pause/load/player transitions, resource cleanup,
+normal pickup/storage, and save restoration. Do not promote this candidate based
+only on the successful first punch.
+
 Other blocked families have distinct requirements:
 
 - CH8 grenades use standby, pin-pull, timed throw, underthrow, stock consumption,

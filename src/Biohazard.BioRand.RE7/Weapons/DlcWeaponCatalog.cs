@@ -18,7 +18,7 @@ public static class DlcWeaponCatalog {
         new("CH9_WP003", "Throwing Knife", 9, 64, "app.CH9Weapon1500", DlcWeaponAdapter.None),
         new("CH9_WP004", "Throwing Spear", 9, 65, "app.CH9Weapon1800", DlcWeaponAdapter.None),
         new("CH9_WP005", "Stake Bomb", 9, 66, "app.CH9Weapon1900", DlcWeaponAdapter.None),
-        new("CH9_WP006", "AMG-Dual", 9, 67, "app.CH9Weapon1600", DlcWeaponAdapter.None),
+        new("CH9_WP006", "AMG-Dual", 9, 67, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         // This inventory ID deliberately shares Shotgun_DB's native WeaponID.
         new("NumaItem072", "Joe's M21", 9, 13, "app.CH9WeaponGun", DlcWeaponAdapter.Gun),
     ];
@@ -43,8 +43,9 @@ public sealed record DlcWeaponSource(
         "Shotgun_Albert" => "ch8/scenes/items/resources_chapter8/chrisshotgun.scn",
         "NumaItem072" => "ch9/scenes/items/resource/numaitem072.scn",
         "CH9_WP002" => "ch9/scenes/items/resource/ch9_wp002.scn",
+        "CH9_WP006" => "ch9/scenes/items/resource/ch9_wp006.scn",
         _ => throw new InvalidOperationException($"No campaign resource adapter for {ItemId}."),
     };
 }
 
-public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade }
+public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade, Gauntlet }
