@@ -728,6 +728,48 @@ observed `CH8PlayerPinPulledTrack.IsPinPulled` near frame 20 of standby 8001,
 and `CH8PlayerThrowTrack.IsThrow` near frames 29/30 of overhand/underhand clips.
 Consume the actual tracks rather than using wall-clock release delays.
 
+Subsequent **normal mouse-click** research tests completed pin-pull, throw,
+native shell allocation, one-item consumption, and return to the campaign melee
+idle for all three types. These tests still used isolated research registrations,
+not the supported campaign export. Additional findings:
+
+- Wait for the native attack motion ID (2400/2401/2407) after the FSM enters its
+  attack state before replacing it with standby 8001. Replacing it on the FSM
+  name change alone lets the next native update overwrite the standby clip.
+- Use `MotionNodeCtrl.getSequenceTracks(UInt32, Tracks, Single, Single)` over
+  the elapsed frame range, with once-only pin/release flags. Current-frame-only
+  sampling can miss short event tracks when frames are skipped. An explicit
+  range test found the pin event in 19..22 but not 0..19 or 22..30.
+- Source `CH8PlayerThrowable` permits standby-to-throw cancellation after frame
+  23, with underthrow thresholds -10 degrees standing and 0 degrees crouching.
+  Native `onStartThrow(player, under)` still handles release position, collision
+  adjustment, velocity, and remaining fuse.
+- A bounded diagnostic held-command override reached standby loop 8002 and
+  native `isForceThrow` at elapsed 2.501 seconds for the three-second incendiary
+  fuse. It then released and consumed the last item. This proves the native
+  cooking path through a command override, not a physical held-button test.
+- `Inventory.reduceItem(id, 1, false)` can destroy the equipped weapon on the
+  final item immediately at release. Do not retain/use its native component
+  for the rest of the throw. The prototype retained only the clip ID, waited
+  for its end, updated the target bank, and requested `Hands.ReadyStart`.
+  Subsequent ordinary knife equip worked. Production recovery still needs
+  bounded, same-player/task guards and interruption coverage.
+
+Unmodified source shell collisions also worked against normal campaign
+`Em4000`. Incendiary explosions recorded raw 500 / applied 250, followed by
+additional native blast and fire damage. Neuro-stun recorded raw 500 / applied
+250 on a fresh target and set native `EnemyActionController.isSlippingAcid`;
+the target then lost health over time. This is native acid/status compatibility,
+not proof of identical Not a Hero balance or stun duration. A separate one-HP
+target died from the neuro-stun explosion. None of these tests wrote enemy HP.
+Keep shell damage and status behavior distinct when deciding campaign balance.
+
+Local evidence is retained under `.analysis/dlc-weapons-2026-10-10/`:
+`grenade-mouse-throw-691.json`, `grenade-incendiary-native-hit-721.json`,
+`grenade-stun-native-hit-725.json`, `grenade-stun-acid-status-731.json`, and
+`grenade-cooking-last-item-736.json`. These ignored traces are research artifacts,
+not packaged assets or a substitute for regression tests.
+
 Two further interop pitfalls were reproduced:
 
 - A fresh `sdk.create_instance("via.Prefab", true)` with its own path and standby
