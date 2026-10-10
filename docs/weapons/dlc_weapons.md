@@ -975,7 +975,64 @@ interruption and low-FPS timing, near-wall hit branches, exact launch orientatio
 spear recovery/damage, stake-bomb placement, messages, generation, and cold
 save/load still need validation. The prototype currently uses the camera rotation;
 the source constructs its orientation from direction/up vectors. No CH9 player
-component was grafted onto Ethan.
+component was grafted onto Ethan. Spear recovery was subsequently proven in the
+scoped experiment below; damage and complete campaign integration remain open.
+
+### Spear recovery and stationary pool roots
+
+The research spear released at the native frame-32 marker, consumed one item,
+and lodged in a campaign wall. Two independent issues then prevented a complete
+throw/recovery cycle:
+
+- **Transform parenting is not just lifetime ownership.** Native projectile roots
+  are children of `CH9ShellManager`'s GameObject. Parenting that manager to Ethan
+  made a lodged spear and its recovery child move by exactly the player's warp
+  delta. A 0.75-metre approach did not reduce their separation. Detaching only
+  the owned manager while preserving its world transform fixed this. Keep the
+  manager stationary and explicitly destroy it on reset/player replacement.
+  This observation is specific to the CH9 spear; the existing CH8 grenade root
+  also uses player parenting, but its physics behavior needs an independent test
+  before claiming the same gameplay defect.
+- **Successful inventory insertion is not completed pickup.** Native
+  `CH9InteractWeapon.getWeapon` entered `insertInventry`, added one spear, and
+  hid the projectile, but never reached `successInteract`. Its `equipWeapon`
+  branch for WeaponID 65 unconditionally opens
+  `CH9TutorialManager.openTutorial(HarpoonChange)` (enum 15). Campaign has no
+  tutorial manager, so this aborts after inventory mutation but before the
+  success delegate deactivates the shell. WeaponID 64 similarly opens
+  `knife_Desc` (enum 13). Neither branch actually equips the throwable.
+
+Do not force `doStart`, manually run the success callback, or tick the manager
+again to hide this symptom. `SuccessInteractHandler` was already registered.
+Bounded hooks observed native `CH9ShellManager.updateList` and `updateThrowable`
+running every frame. The missing transition was the pickup completion callback,
+not pool scheduling. Native pointer identity must use `get_address`, not the
+Lua userdata wrapper's `tostring` output.
+
+`BioRand7/dlc_ch9_pool.lua` is a tested, currently unwired research foundation.
+It requests the isolated manager prefab, waits for the native 2/10/5/2 pools,
+keeps the root unparented, and defers destruction to its update callback. It
+refuses to destroy its object while a foreign CH9 manager occupies the singleton.
+Its recovery hook skips only the tutorial-only `equipWeapon` branch for an exact
+namespaced spear returned to the current campaign inventory by an interaction
+belonging to its own spear pool. It does not replace inventory insertion, force
+equip, clear used flags, or import CH9 tutorial/system managers. It is not yet
+wired into candidate selection or the ordinary runtime archive allowlist.
+
+Live validation used the actual module after destroying the earlier research
+manager and disabling its prototype recovery bypass. Two normal mouse throws
+and native interaction-command pickups each produced stock 4 -> 3 -> 4 and pool
+availability 10 -> 9 -> 10. `InteractSuccessCount` became 1, `get_isActive` and
+`get_isUsed` became false, and the interaction disabled. The next throw used a
+different native pool slot, so these observations prove recycling/count recovery,
+not traversal and reuse of every slot. An explicit reset destroyed/recreated the
+manager and restored all pool types without parenting or adapter errors. Evidence
+is in the ignored `ch9-module-*` captures, with the failing/control traces in
+`ch9-recovery-*`. Pickups used bounded UI-command pulses after a short physical
+F-key tap was not consumed. Cold-save/title transitions, full-pool cycling,
+full-inventory rejection, spear damage, and aimed/held throws remain unproven.
+All 30 Lua suites passed under Lua 5.4, along with 23 focused DLC weapon/runtime
+.NET tests; this does not promote the three CH9 throwables into generation.
 
 The old IDA address export did not match the installed executable. Refresh method
 addresses from the current TDB and normalize against the current process image
