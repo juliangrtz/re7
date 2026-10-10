@@ -782,7 +782,20 @@ them; they are **not yet wired into the campaign catalog or automatic runtime
 startup**. The exporter isolates all three shell
 prefabs and their RCOLs under the supplied BioRand namespace, preserves the
 native default-bullet pool, and copies no other `CH8_SystemObject` components.
-The 58-path dependency manifest is text only; no extracted assets are committed.
+The 80-path dependency manifest is text only; no extracted assets are committed.
+
+A cold campaign process exposed a missing sound dependency that the earlier warm
+research session had hidden. All three registered grenade PFBs reported
+`Exist=true`, `Standby=true`, but `Ready=false` and `Valid=false`; a one-shot
+standby/path request did not fix them. Fresh handles for both an unchanged source
+PFB and the adapted PFB failed identically. Adding the 22 referenced sound
+containers, event lists, rigidbody list, and banks and restarting made all three
+registered PFBs ready and valid immediately after loading, without a repair
+request. This validates the dependency set as a group, not each file as an
+individual cause. Sound dependencies can block complete prefab readiness, not
+merely silence playback. A closure walker restricted to `CH8/` and `CH9/` silently
+misses their `Sound/` references. Keep the shared interaction-exception sound bank
+as well as the three weapon/explosion banks in the export manifest.
 
 Live standalone-module validation created the exported manager, parented it to
 Ethan, observed all native pools ready, destroyed it through the native GameObject

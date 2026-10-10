@@ -12,14 +12,25 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public sealed class DlcWeaponLabTests {
     [Fact]
-    public void GrenadeManifestIncludesNativePoolAndAllHandPoses() {
+    public void GrenadeManifestIncludesNativePoolHandPosesAndSoundDependencies() {
         var paths = DlcGrenadeWeapons.RequiredAssetPaths;
-        Assert.Equal(58, paths.Length);
+        Assert.Equal(80, paths.Length);
         Assert.Equal(paths.Order(StringComparer.Ordinal), paths);
         Assert.Equal(paths.Length, paths.Distinct(StringComparer.OrdinalIgnoreCase).Count());
         foreach (var pose in new[] { "grenade", "grenadebomb", "thermatebomb", "stangrenadebomb" })
             Assert.Contains($"natives/stm/ch8/animation/player/pl1000/motlist/pl1000_{pose}.motlist.524", paths);
         Assert.Contains("natives/stm/ch8/prefab/weapon/defaultbullet.pfb.17", paths);
+        foreach (var model in new[] { "wp3000", "wp3010", "wp3020" }) {
+            foreach (var suffix in new[] { "", "_exp" }) {
+                Assert.Contains($"natives/stm/sound/resource/snd_container/snd_container_chp8_{model}{suffix}.wcc.2", paths);
+                Assert.Contains($"natives/stm/sound/resource/snd_eventlist_chp8_{model}{suffix}.wel.11", paths);
+                Assert.Contains($"natives/stm/sound/wwise/chp8_{model}{suffix}.bnk.2.stm", paths);
+            }
+        }
+        Assert.Contains("natives/stm/sound/resource/snd_chp8_system_id_intaract_exceptional.wel.11", paths);
+        Assert.Contains("natives/stm/sound/wwise/chp8_system_id_intaract_exceptional.bnk.2.stm", paths);
+        Assert.Contains("natives/stm/sound/resource/snd_rigidbody/snd_rigidbodylist_wp3000_shell.wcrb.5", paths);
+        Assert.Contains("natives/stm/sound/resource/snd_eventlist_wp3000_shell.wel.11", paths);
         Assert.All(paths, p => {
             Assert.StartsWith("natives/stm/", p);
             Assert.Matches(@"\.\d+(\.stm)?$", p);
