@@ -1422,9 +1422,37 @@ Physical Reload taps were not reliably consumed and still need input validation.
 Local evidence: `stake-floor-place-1167.json`, `stake-recovered-1170.json`,
 `stake-update-native-1190.txt`, `stake-audio-native-1190.txt`,
 `stake-audio-guard-detonation-1204.json`, and `stake-fresh-kill-1209.json` under
-`.analysis/dlc-weapons-2026-10-10/`. Remaining work includes last-charge recovery,
-pool exhaustion, pickup/storage and cold save restoration, input parity, and the
-production player adapter before promoting the catalog entry.
+`.analysis/dlc-weapons-2026-10-10/`. Remaining work includes pool exhaustion,
+pickup/storage and cold save restoration, input parity, and wiring and validating
+the production player adapter before promoting the catalog entry.
+
+The final charge also follows native `PlayerItem` behavior: placement changes
+stock 1 -> 0 and switches to empty hands; recovering it changes stock 0 -> 1,
+restores the pool slot and clears `SetupBombCount`. Recovery does not automatically
+re-equip WeaponID 66. Do not add a forced equip or stock refund to compensate.
+Evidence: `stake-last-charge-1219.json` and `stake-last-recovery-1221.json`.
+
+`dlc_ch9_item.lua` is a preparatory, currently unwired player adapter. It retains
+the native Item category and shares the CH9 throwable adapter's pool rather than
+creating a second manager. Its owned bank 9962 combines Joe's LiquidBomb motions
+with campaign Item bank 200 as fallback. It waits for clips 2000, 2001 and 2400,
+mirrors native Item arm work, and repairs only an initial zero-duration ready
+state. Placement, stock consumption, recovery and detonation remain native.
+Native `tryUse`/`use` fail closed while the owned player, inventory, motion or pool
+is unavailable, including adapter failure, menus, loading and player death.
+The module has scoped Lua regressions but is not campaign acceptance evidence.
+
+Do not reject placement solely because the five-slot bomb pool has no unused
+entry. Native `CH9ShellManager.createBomb` calls the common pool allocator, which
+can recycle the oldest used entry through its callback. Live full-pool behavior
+still needs validation. See `stake-pool-allocation-native-1190.txt`.
+
+A heavily probed warm session developed a test-position snap while idle, including
+with vanilla G17 equipped. Both input and root-motion translation were zero in
+the sampled state; transform and native warp attempts did not persist. No cause
+has been established. This session must not certify movement behavior or be
+saved as a new baseline; repeat with a fresh player/process. Do not introduce
+recurring transform writes into the weapon adapter to mask it.
 
 ### Motion scratch lifetime on reload
 
