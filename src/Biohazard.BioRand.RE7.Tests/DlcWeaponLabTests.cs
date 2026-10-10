@@ -12,6 +12,63 @@ namespace Biohazard.BioRand.RE7.Tests;
 
 public sealed class DlcWeaponLabTests {
     [Fact]
+    [Trait("Category", "RequiresPak")]
+    public void Ch9ProjectileExportPreservesNativePoolsAndIsolatesAttackDataDeterministically() {
+        const string root = "BioRand/Research/CH9Projectiles";
+        using var first = new LabContext(true);
+        using var second = new LabContext(true);
+        DlcCh9Projectiles.ExportShellManager(first, root);
+        DlcCh9Projectiles.ExportShellManager(second, root);
+        Assert.Equal(9, first.Files.Count);
+        Assert.Equal(first.Files.Keys.Order(), second.Files.Keys.Order());
+        foreach (var file in first.Files) {
+            Assert.StartsWith(root.Of().ToLowerInvariant() + "/", file.Key);
+            Assert.Equal(file.Value, second.Files[file.Key]);
+        }
+        var managerFile = first.GetPfbFile(DlcCh9Projectiles.ManagerPrefab(root).Of() + ".17");
+        var manager = Assert.Single(managerFile.ReadScene(first.TypeRepository).GetGameObjects());
+        Assert.Equal("BioRandCH9ShellManager", manager.Name);
+        Assert.True(string.IsNullOrEmpty(manager.Prefab));
+        Assert.Equal(new[] { "via.Transform", "app.CH9ShellManager" }, manager.Components.Select(c => c.Type.Name));
+        foreach (var (name, field, component, collisionName) in DlcCh9Projectiles.Sources) {
+            var shellPath = $"{root}/{name}/Shell.pfb";
+            Assert.Equal(shellPath, manager.Components[1].Get<RszResourceNode>(field + ".Path").Value);
+            Assert.True(manager.Components[1].Get<bool>(field + ".Standby"));
+            Assert.Contains(shellPath, managerFile.Resources);
+            var shell = first.GetPfbFile(shellPath.Of() + ".17");
+            var collision = $"CH9/Collision/Collider/Weapon/{collisionName}.rcol";
+            Assert.Contains($"{root}/{name}/Attack.rcol", shell.Resources);
+            Assert.DoesNotContain(shell.Resources, p => string.Equals(p, collision, StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(first.GetSourceFile(collision.RcolFile()), first.GetFile($"{root}/{name}/Attack.rcol".RcolFile()));
+            var components = shell.ReadScene(first.TypeRepository).GetGameObjects().SelectMany(go => go.Components).ToArray();
+            Assert.Single(components, c => c.Type.Name == component);
+            Assert.Single(components, c => c.Type.Name == "app.Collision.HitController");
+            Assert.Single(components, c => c.Type.Name == "via.physics.RequestSetCollider");
+            if (name is "NailKnifeBulletS" or "HarpoonBulletS") {
+                var weapon = Assert.Single(components, c => c.Type.Name == "app.CH9WeaponThrowable");
+                Assert.False(weapon.Get<bool>("Enabled"));
+                Assert.False(weapon.Get<bool>("IsInventoryWeapon"));
+                Assert.Equal(1, weapon.Get<int>("UseType"));
+                Assert.Equal(name == "NailKnifeBulletS" ? 64 : 65, weapon.Get<int>("WeaponID"));
+            }
+            if (name is "HarpoonBulletS" or "JoeLiquidbomb")
+                Assert.Single(components, c => c.Type.Name == "app.CH9InteractWeapon");
+        }
+    }
+
+    [Theory]
+    [Trait("Category", "RequiresPak")]
+    [InlineData("nailknifebullets")]
+    [InlineData("harpoonbullets")]
+    [InlineData("wp1900/wp1900")]
+    [InlineData("knucklebullets")]
+    public void Ch9ProjectileExportFailsWithoutPartialWrites(string collision) {
+        using var context = new LabContext(true, $"ch9/collision/collider/weapon/{collision}.rcol".RcolFile());
+        Assert.Throws<InvalidDataException>(() => DlcCh9Projectiles.ExportShellManager(context, "BioRand/Research/CH9Projectiles"));
+        Assert.Empty(context.Files);
+    }
+
+    [Fact]
     public void GrenadeManifestIncludesNativePoolHandPosesAndSoundDependencies() {
         var paths = DlcGrenadeWeapons.RequiredAssetPaths;
         Assert.Equal(80, paths.Length);

@@ -850,6 +850,80 @@ Other blocked families have distinct requirements:
 - Stake Bomb also has `CH9WeaponLiquidBombAppend`; a campaign remote-bomb ID is
   not automatically an equivalent implementation.
 
+### End of Zoe projectile investigation
+
+The October 10 follow-up separated CH9 inventory weapons from their native pool
+objects. `CH9Weapon1500` (Throwing Knife, ID 64) and `CH9Weapon1800` (Throwing
+Spear, ID 65) derive from `CH9WeaponThrowable`. Their inventory instances have
+`UseType = Equip`, while the projectile prefabs contain a disabled
+`CH9WeaponThrowable` with `UseType = Throwing` and `IsInventoryWeapon = false`.
+Preserve that distinction; enabling the projectile's weapon component or replacing
+it with a conventional gun is not an established repair.
+
+`CH9_SystemObject` in `ch9/scenes/chapter/chapter9.scn.20` owns
+`app.CH9ShellManager`. Its native initialization requests these pools:
+
+| Manager field | Source prefab under `CH9/Prefab/Weapon/` | Count |
+| --- | --- | --- |
+| `ThrowingWp1500Prefab` | `NailKnifeBulletS.pfb` | 2 |
+| `ThrowingWp1800Prefab` | `HarpoonBulletS.pfb` | 10 |
+| `LiquidBombPrefab` | `JoeLiquidbomb.pfb` | 5 |
+| `ThrowingWp0000Prefab` | `KnuckleBulletS.pfb` | 2 |
+
+These are static native initialization arguments, not observed campaign-ready
+counts. The new explicit `DlcCh9Projectiles.ExportShellManager` research exporter
+retains only Transform and CH9ShellManager from the source object, preserves all
+four pool slots, and clones every projectile and attack RCOL under the requested
+namespace. It does not load CH9 gameplay/save managers, register inventory weapons,
+or run during normal generation. The exported spear and bomb retain their native
+`CH9InteractWeapon` recovery children. Nine files are produced deterministically;
+missing attack resources fail before any writes. No extracted assets are committed.
+
+Read-only live method-address discovery plus disassembly of the matching installed
+executable established these contracts:
+
+- `CH9PlayerGun.throwWeapon(bool)` obtains the player camera's shoot ray, performs
+  launch/collision calculations, and calls `CH9ShellManager.setupThrowingWeapon`
+  with the owning player GameObject: pool type 4 for knife, 5 for spear. It then
+  calls the projectile's virtual `activate(position, rotation)`. Non-aimed throws
+  include native random spread. A raw camera-position spawn is not exact parity.
+- `CH9ThrowingWeaponBase.setup` marks the slot used, binds the owner to the
+  projectile and its weapon, calls `HitController.setAttackOwner`, assigns the
+  shell ID/type, and enables its request-set collider. That base setup does not
+  cast the owner to a CH9 player interface.
+- Spear setup additionally resolves shared `IPlayerOrder` and
+  `Command.CommandUpdater`. This is encouraging for campaign ownership, but does
+  not prove its later collision, attachment, or recovery paths work on Ethan.
+- The knife and spear use projectile-specific collision files
+  `NailKnifeBulletS.rcol` / `HarpoonBulletS.rcol`, not their inventory `wp1500` /
+  `wp1800` RCOLs. Damage changes must target the actual projectile data.
+- `CH9WeaponThrowable.reduceWeapon()` uses its bound `Inventory`, checks native
+  infinity state, converts WeaponID to the item name, and calls
+  `Inventory.reduceItem(..., 1, true)`. Launch and stock consumption are separate
+  operations; a projectile appearing alone is not a working inventory lifecycle.
+- Stake Bomb remains distinct: `CH9WeaponLiquidBombAppend.isUsable(owner)` checks
+  the camera ray and placement geometry. `use(owner)` computes placement and
+  selects the Transform/Joint overload of `CH9ShellManager.createBomb`. The source
+  also carries water/sink settings. Do not replace it with a remote-bomb alias or
+  bypass the placement check.
+
+Local discovery found 86 candidate dependencies, including CH9 motion lists,
+projectile/interaction prefabs, effects, textures, and sound resources outside
+`CH9/`. This remains a research list, not a certified cold-load manifest. Next
+validation must prove native startup/readiness, campaign-owned launch and damage,
+stock loss exactly once, spear/bomb recovery, interrupted throws, last-item
+cleanup, storage, and cold save/load before promoting the three inventory items.
+
+The old IDA address export did not match the installed executable. Refresh method
+addresses from the current TDB and normalize against the current process image
+base before reading the executable from disk. Windows x64 unwind entries can be
+chained fragments, and short leaf/tail-call functions can have no unwind entry at
+all. A single unwind range is not necessarily the whole method. Durable evidence
+should name methods and executable identity, not assume old absolute addresses.
+This pass used PE timestamp `0x69c1fe87`, image size `0x9a37000`; the local IDA MCP
+endpoint was unavailable, so these findings came from matching-file disassembly,
+not a successful IDA decompilation.
+
 ## Pitfalls to carry forward
 
 1. **Prove the test environment first.** Trainer infinite ammo, instant kills,
