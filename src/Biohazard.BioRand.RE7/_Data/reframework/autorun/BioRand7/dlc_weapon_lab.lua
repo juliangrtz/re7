@@ -9,6 +9,8 @@ Lab.candidates = {
     { id = "NumaItem072", name = "Joe's M21" },
     { id = "CH9_WP002", name = "Spirit Blade (player adapter research)" },
     { id = "CH9_WP006", name = "AMG-Dual (player adapter research)" },
+    { id = "CH9_WP000", name = "AMG-78a (player adapter research)" },
+    { id = "CH9_WP001", name = "AMG-78 (player adapter research)" },
 }
 
 local function candidate(id)

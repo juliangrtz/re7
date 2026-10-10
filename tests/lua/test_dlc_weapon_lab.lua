@@ -6,7 +6,7 @@ return function()
             update = function(self) if gauntlet_failure and not self.error then error("Gauntlet failed") end end }
     end }
     local Lab = require("BioRand7/dlc_weapon_lab")
-    assert(#Lab.candidates == 6)
+    assert(#Lab.candidates == 8)
     assert(Lab.candidates[5].id == "CH9_WP002")
     assert(Lab.candidates[6].id == "CH9_WP006")
     local writes, registered, owned, in_inventory = 0, true, false, false
@@ -67,7 +67,7 @@ return function()
     assert(not lab:queue("add", "CKnife"))
     lab.armed = true
     assert(not lab:queue("box"), "A menu manager call alone does not initialize the item-box UI")
-    assert(not lab:queue("add", "CH9_WP001"))
+    assert(not lab:queue("add", "CH9_WP003"))
     assert(lab:queue("prepare", "CH9_WP006"))
     lab.pending = nil
     assert(lab:queue("prepare", "CH9_WP002"), "Spirit Blade is an explicit lab candidate only")

@@ -4,8 +4,9 @@ Status: experimental, **not campaign-certified**. Investigation: 2026-10-10.
 
 This is the handoff for the DLC weapon integration attempt. Do not interpret the
 source catalog, a successful export, an item-box entry, or a forced shot as a
-working randomizer weapon. AMG-Dual has an **experimental Ethan lab adapter**,
-but is not yet included in campaign generation or the supported-weapon grant.
+working randomizer weapon. AMG-Dual, AMG-78a, and AMG-78 have **experimental Ethan
+lab adapters**, but are not yet included in campaign generation or the
+supported-weapon grant.
 
 Related: [integration plan](../DLCIntegrationPlan.MD),
 [binary evidence](../DLCIntegrationEvidence.MD), [technical notes](../Notes.MD),
@@ -17,7 +18,7 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
-  The export preflights and copies the campaign dependency manifest plus 32
+  The export preflights and copies the campaign dependency manifest plus 34
   gauntlet hand, material, texture and motion resources from the installed game.
 - The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
@@ -90,8 +91,8 @@ WeaponID is distinct from the string ItemDataID.
 | `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | None |
 | `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | None |
 | `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
-| `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | None |
-| `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | None |
+| `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
+| `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
@@ -515,6 +516,53 @@ The exact native reason runtime-created holders fail on first binding has not be
 isolated. Do not replace this evidence with arbitrary delays or per-frame rebinding.
 An existing save loading after a preload fix is also evidence against prematurely
 diagnosing the earlier loading-screen stall as save corruption.
+
+### Single-gauntlet variants
+
+AMG-78a (`CH9_WP000`, WeaponID 61) is `wp1610_GauntletR`, not `wp1600`.
+AMG-78 (`CH9_WP001`, WeaponID 62) is `wp1600_Gauntlet`. They share Joe's
+hand resources with Dual, but native `CH9PlayerMeshController` uses gauntlet
+parts 2/3 only on the left; the right hand uses bare part 0. Dual uses parts
+2/3 on both hands. Each variant now has an isolated bank type (9911/9912,
+with 9910 retained for Dual), followed by Knuckle and Ethan's axe fallback.
+Only variants with matching namespaced inventory prefabs are prepared.
+
+An isolated native Motion/Mesh probe sampled every frame of the source clips.
+It had no hit controller or collision component and did not animate the player:
+
+| Motion | AMG-78a request | AMG-78 request |
+| --- | --- | --- |
+| 2441, right hook (Knuckle) | 16 | 16 |
+| 2641, left hook | 37 | 34 |
+| 2443, right uppercut (Knuckle) | 17 | 17 |
+| 2643, left straight finisher | 39 | 36 |
+| 2662, weak charge release | 23 | 20 |
+| 2663, medium charge release | 24 | 21 |
+| 2664, full charge release | 25 | 22 |
+
+Do not reuse Dual's request 45 for Knuckle motion 2443: the single-gauntlet
+clip really requests `AttackUppercutR` (17). Both charge-start clips (2660,
+239 frames) expose level-1 and level-2 markers; the loop (2661, 229 frames)
+retains the reached level. Releases use 60/130/130-frame clips. Some track
+samples also report zero or -1; damage must still require the expected attack
+request, not just any successful track read. The runtime track-index cache
+includes variant bank type because motion IDs repeat across the source lists.
+
+The exported RCOLs preserve source damage/stun data. AMG-78a's three charge
+strengths are 150/300/500 damage with 100/200/300 stun; AMG-78's are
+300/700/2000 damage. These are raw source values, before campaign difficulty,
+hit location, passive skills, and other damage modifiers.
+
+Clean-process campaign tests withdrew both variants through the physical item-box
+UI and equipped them through ordinary `Inventory.equipWeapon` requests. Both used
+the expected bare-right/gauntlet-left masks, with all nine family banks retained.
+AMG-78's normal mouse punch produced 100 raw / 50 added damage on an Em4000;
+its full charge produced 2000 raw / 1000 calculated damage and killed that target.
+AMG-78a's four normal mouse punches produced raw 100/150/150/450 and added
+50/75/75/225. Its three charge strengths produced raw 150/300/500 and added
+75/150/250 on another Em4000. Charge tests used bounded native command requests,
+not a physical held-button test. Both returned to native melee idle without a
+forced FSM reset. These results do not certify pickup/save/player transitions.
 
 ### Gauntlet storage teardown and empty transitions
 

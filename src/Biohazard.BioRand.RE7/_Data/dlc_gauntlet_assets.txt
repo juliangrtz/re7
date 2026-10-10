@@ -1,3 +1,5 @@
+natives/stm/ch9/animation/player/pl9000/motlist/pl9000_gauntlet.motlist.524
+natives/stm/ch9/animation/player/pl9000/motlist/pl9000_gauntletr.motlist.524
 natives/stm/ch9/animation/player/pl9000/motlist/pl9000_gauntletw.motlist.524
 natives/stm/ch9/animation/player/pl9000/motlist/pl9000_knuckle.motlist.524
 natives/stm/ch9/character/player/pl9000/pl9010/pl9010.mdf2.21

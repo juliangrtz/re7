@@ -15,7 +15,7 @@ public sealed class DlcWeaponLabTests {
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
-        Assert.Equal(6, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(8, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
         Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
         Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
@@ -48,6 +48,8 @@ public sealed class DlcWeaponLabTests {
         }
         Assert.Contains(paths, p => p.Contains("/streaming/ch9/") && p.Contains("gauntlet"));
         Assert.Contains(paths, p => p.Contains("pl9000_gauntletw.motlist."));
+        Assert.Contains(paths, p => p.Contains("pl9000_gauntlet.motlist."));
+        Assert.Contains(paths, p => p.Contains("pl9000_gauntletr.motlist."));
         Assert.Contains(paths, p => p.Contains("pl9000_knuckle.motlist."));
         Assert.Contains(paths, p => p.Contains("pl9010_hand_recordsys_rtt.rtex."));
     }
@@ -106,9 +108,18 @@ public sealed class DlcWeaponLabTests {
                 }
                 var collision = first.GetRcolFile(weapon.CollisionPath.RcolFile()).ToBuilder(first.TypeRepository);
                 Assert.Equal(Enumerable.Range(0, 7), collision.RequestSets.Select(r => r.Id));
-                Assert.Equal(new[] { 300, 300, 300, 300, 500, 3000, 500 }, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
-                Assert.Equal("AttackBodyblowR_Double", collision.RequestSets[2].Name);
-                Assert.Equal("AttackStraightV2_Double", collision.RequestSets[6].Name);
+                int[] damage = weapon.WeaponId switch {
+                    67 => [300, 300, 300, 300, 500, 3000, 500],
+                    61 => [100, 150, 150, 450, 150, 300, 500],
+                    62 => [100, 150, 150, 450, 300, 700, 2000],
+                    _ => throw new InvalidOperationException(),
+                };
+                Assert.Equal(damage, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
+                Assert.Equal(weapon.WeaponId == 67 ? "AttackBodyblowR_Double" : "AttackUppercutR", collision.RequestSets[2].Name);
+                Assert.Equal(weapon.WeaponId == 67 ? "AttackStraightV2_Double" : weapon.WeaponId == 61
+                    ? "Attack3ChargeLeftReword" : "Attack3ChargeLeft", collision.RequestSets[6].Name);
+                if (weapon.WeaponId == 61)
+                    Assert.Equal(new[] { 100, 200, 300 }, collision.RequestSets.Skip(4).Select(r => r.UserData!.Get<int>("Stun")));
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "R_UpperArm");
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "L_UpperArm");
                 var weaponRoot = scene.GetGameObjects().Single(g => g.Components.Any(c => c.Type.Name == "app.Weapon"));
@@ -149,7 +160,7 @@ public sealed class DlcWeaponLabTests {
             Assert.True(component.Get<bool>("_ResourcePrefab.Standby"));
             Assert.NotEmpty(first.GetPfbFile(weapon.DetailPrefab.Of() + ".17").ReadScene(first.TypeRepository).GetGameObjects());
         }
-        Assert.Equal(22 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
+        Assert.Equal(30 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
     }
 
     [Fact]

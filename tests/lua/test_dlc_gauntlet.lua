@@ -13,7 +13,8 @@ return function()
     local player = object({}, { get_Name = function() return name end })
     local current_player = player
     local data = object({ ItemPrefab = object({}, { get_Path = function() return path end }) }, {})
-    local items = object({}, { findItemData = function(id) assert(id == "CH9_WP006"); return data end })
+    local item_id = "CH9_WP006"
+    local items = object({}, { findItemData = function(id) return id == item_id and data or nil end })
     local hooks, storage = {}, {}
     local paused, loading, health = false, false, 500
     local manager = object({}, { get_IsPause = function() return paused end, get_IsSceneLoading = function() return loading end })
@@ -90,7 +91,7 @@ return function()
         end,
     })
     local banks = {}
-    for i = 1, 3 do banks[i] = {index = i, bank = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 9910 end })} end
+    for i = 1, 3 do banks[i] = {index = i, kind = 9910, bank = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 9910 end })} end
     local motion = object({}, { getLayer = function() return layer end,
         get_TargetBankType = function() return target_bank end,
         ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(bank, kind, id)
@@ -126,7 +127,9 @@ return function()
     adapter.hit = object({}, { requestCollider = function(index) collider_requests[#collider_requests + 1] = index end })
     adapter.collider_track = object({}, { initialize = function() end })
     adapter.charge_track = object({}, { initialize = function() end })
-    adapter.session = { player = player, motion = motion, controller = controller, manager = motion_manager, banks = banks, hands = {} }
+    adapter.variant = Gauntlet.variants[1]
+    adapter.session = { player = player, motion = motion, controller = controller, manager = motion_manager,
+        banks = banks, bank_count = 3, variants = {adapter.variant}, hands = {} }
     assert(adapter:owns_banks())
     adapter:prepare(player)
     adapter:install(); adapter:install()
@@ -195,6 +198,42 @@ return function()
     adapter.equip_pending, end_frame = true, 0.0
     update("Melee.GuardStart", 2000)
     assert(not adapter.equip_pending and #returns == before_recovery + 1, "Never replace another native action")
+    -- Each family member uses its own native markers and request-set export.
+    for _, variant in ipairs({Gauntlet.variants[2], Gauntlet.variants[3]}) do
+        item_id, path = variant.item, "BioRand/DlcWeaponLab/" .. variant.item .. "/Item.pfb"
+        adapter.variant, adapter.session.variants = variant, {variant}
+        weapon:set_field("WeaponID", variant.weapon)
+        controller_fields.CurrentWeaponID = variant.weapon
+        adapter.combo = 0
+        assert(variant.combo[3][3] == 17, "Knuckle uppercut differs from Dual's BodyblowR marker")
+        assert(adapter:matches(player) and adapter:scope(controller))
+        bank_hook[1]({nil, controller, variant.weapon}); assert(bank_hook[2](0) == variant.bank)
+        bank_hook[1]({nil, controller, 67}); assert(bank_hook[2](0) == 0, "Do not map an absent variant")
+        for _, entry in ipairs(variant.combo) do
+            update("Melee.ReadyIdle", 2001)
+            source = -1; update("Melee.AttackR", 2401)
+            assert(motion_id == entry[1] and adapter.attack.request == entry[2] and not adapter.active)
+            source = entry[3]; adapter:update()
+            assert(adapter.active and collider_requests[#collider_requests] == entry[2])
+            ended = true; adapter:update(); assert(not adapter.active)
+        end
+        for level = 0, 2 do
+            update("Melee.ReadyIdle", 2001)
+            source, charge_level = -1, level
+            update("Melee.ReadyToAim", 2205); adapter:update()
+            assert(motion_id == 2660 and adapter.charge.level == level)
+            ended = true; adapter:update(); assert(motion_id == 2661)
+            update("Melee.AimIdle", 2200)
+            update("Melee.AimAttackC", 2407)
+            local entry = variant.charge[level + 1]
+            assert(motion_id == entry[1] and adapter.attack.request == entry[2] and adapter.attack.source == entry[3])
+            source = entry[3]; adapter:update(); assert(adapter.active)
+            ended = true; adapter:update(); assert(not adapter.active and returns[#returns] == "Melee.AimToReady")
+        end
+    end
+    item_id, path = "CH9_WP006", "BioRand/DlcWeaponLab/CH9_WP006/Item.pfb"
+    weapon:set_field("WeaponID", 67); controller_fields.CurrentWeaponID = 67
+    adapter.variant, adapter.session.variants = Gauntlet.variants[1], {Gauntlet.variants[1]}
     local old_session = adapter.session
     local restored_mesh, restored_material, restored_parts = false, false, {}
     local original, original_material = {}, {}

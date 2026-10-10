@@ -2,7 +2,18 @@
 local Gauntlet = {}
 Gauntlet.__index = Gauntlet
 
-local WEAPON, BANK = 67, 9910
+local VARIANTS = {
+    { weapon = 67, item = "CH9_WP006", bank = 9910, list = "GauntletW", dual = true,
+        combo = { {2441, 0, 43}, {2641, 1, 40}, {2443, 2, 45}, {2643, 6, 42} },
+        charge_start = 2688, charge_loop = 2689, charge = { {2690, 4, 32}, {2690, 4, 32}, {2691, 5, 33} } },
+    { weapon = 61, item = "CH9_WP000", bank = 9911, list = "GauntletR",
+        combo = { {2441, 0, 16}, {2641, 1, 37}, {2443, 2, 17}, {2643, 3, 39} },
+        charge_start = 2660, charge_loop = 2661, charge = { {2662, 4, 23}, {2663, 5, 24}, {2664, 6, 25} } },
+    { weapon = 62, item = "CH9_WP001", bank = 9912, list = "Gauntlet",
+        combo = { {2441, 0, 16}, {2641, 1, 34}, {2443, 2, 17}, {2643, 3, 36} },
+        charge_start = 2660, charge_loop = 2661, charge = { {2662, 4, 20}, {2663, 5, 21}, {2664, 6, 22} } },
+}
+Gauntlet.variants = VARIANTS
 local LAYERS = { 1, 2, 9 }
 local AIM = { ["Melee.ReadyToAim"] = true, ["Melee.AimIdle"] = true,
     ["Melee.AimIdleSp"] = true, ["Melee.AimMove"] = true }
@@ -11,8 +22,6 @@ local BOTH = { ["Melee.ReadyStart"] = true, ["Melee.ReadyIdle"] = true,
     ["Melee.ReadyJogEnd"] = true, ["Melee.AttackL"] = true, ["Melee.AttackR"] = true,
     ["Melee.AttackLToReady"] = true, ["Melee.AttackRToReady"] = true,
     ["Melee.AimAttackC"] = true, ["Melee.AimToReady"] = true }
-local COMBO = { { id = 2441, request = 0, source = 43 }, { id = 2641, request = 1, source = 40 },
-    { id = 2443, request = 2, source = 45 }, { id = 2643, request = 6, source = 42 } }
 local CHANGE = "changeMotion(System.UInt32, System.UInt32, System.Single, System.Single, via.motion.InterpolationMode, via.motion.InterpolationCurve)"
 local REQUEST = "requestMotion(System.String, System.UInt32, System.Single, System.Single, app.PlayerMotionController.RequestPriority)"
 
@@ -21,13 +30,17 @@ function Gauntlet.new(game, enabled, root)
         resources = {}, combo = 0, track_indices = {} }, Gauntlet)
 end
 
-function Gauntlet:matches(player)
+function Gauntlet:matches(player, variant)
     if not player or player ~= self.game:player() or player:call("get_Name") ~= "Pl0000" then return false end
+    if not variant then
+        for _, entry in ipairs(VARIANTS) do if self:matches(player, entry) then return true end end
+        return false
+    end
     local manager = self.game:singleton("app.ItemManager")
-    local data = manager and manager:call("findItemData", "CH9_WP006")
+    local data = manager and manager:call("findItemData", variant.item)
     local prefab = data and data:get_field("ItemPrefab")
     local path = prefab and prefab:call("get_Path")
-    return path ~= nil and path:lower() == (self.root .. "/CH9_WP006/Item.pfb"):lower()
+    return path ~= nil and path:lower() == (self.root .. "/" .. variant.item .. "/Item.pfb"):lower()
 end
 
 function Gauntlet:resource(kind, path)
@@ -47,11 +60,12 @@ end
 function Gauntlet:owns_banks()
     local s = self.session
     if not s or s.player ~= self.game:player() then return false end
-    for i = 1, 3 do
+    if not s.bank_count or s.bank_count < 3 or #s.banks ~= s.bank_count then return false end
+    for i = 1, s.bank_count do
         local entry = s.banks[i]
         if not entry then return false end
         local bank = s.motion:call("getDynamicMotionBank", entry.index)
-        if bank ~= entry.bank or bank:call("get_BankID") ~= 0 or bank:call("get_BankType") ~= BANK then return false end
+        if bank ~= entry.bank or bank:call("get_BankID") ~= 0 or bank:call("get_BankType") ~= entry.kind then return false end
     end
     return true
 end
@@ -71,8 +85,14 @@ function Gauntlet:prepare(player)
     local manager = controller and controller:get_field("MotionManager")
     local sequence = self.game:component(player, "app.PlayerSequenceManager")
     if not motion or not manager or not sequence then return false, "player motion components" end
-    local existing = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, BANK)
-    assert(not existing or existing:call("get_BankType") ~= BANK, "Gauntlet bank type is already occupied")
+    local variants = {}
+    for _, variant in ipairs(VARIANTS) do
+        if self:matches(player, variant) then
+            local existing = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, variant.bank)
+            assert(not existing or existing:call("get_BankType") ~= variant.bank, "Gauntlet bank type is already occupied")
+            variants[#variants + 1] = variant
+        end
+    end
     local fallback = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, 10)
     if not fallback or fallback:call("get_BankID") ~= 0 or fallback:call("get_BankType") ~= 10
         or not fallback:call("get_MotionList") then return false, "Ethan axe fallback bank" end
@@ -97,11 +117,14 @@ function Gauntlet:prepare(player)
     end
     -- A newly discovered player can precede its banks and hand renderers by seconds.
     -- Resolve every native dependency before allocating or attaching anything.
-    local holders = {
-        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_GauntletW.motlist"),
-        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_Knuckle.motlist"),
-        fallback:call("get_MotionList"),
-    }
+    local holders = {}
+    for _, variant in ipairs(variants) do
+        for _, holder in ipairs({
+            self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_" .. variant.list .. ".motlist"),
+            self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_Knuckle.motlist"),
+            fallback:call("get_MotionList"),
+        }) do holders[#holders + 1] = { holder = holder, kind = variant.bank } end
+    end
     for _, hand in ipairs(hands) do
         hand.replacement = self:resource("via.render.MeshResource", hand.path .. ".mesh")
         hand.material = self:resource("via.render.MeshMaterialResource", hand.path .. ".mdf2")
@@ -109,18 +132,18 @@ function Gauntlet:prepare(player)
     self.collider_track = self.collider_track or sdk.create_instance("app.Collision.ColliderTrack"):add_ref()
     self.charge_track = self.charge_track or sdk.create_instance("app.SequenceTrackObject.CH9PlayerGauntletChargeLevel"):add_ref()
     local s = { player = player, controller = controller, motion = motion, hands = hands, banks = {},
-        sequence = sequence, manager = manager }
+        sequence = sequence, manager = manager, variants = variants, bank_count = #holders }
     self.session = s
-    -- Append only our isolated bank type. Never replace a campaign bank.
-    for _, holder in ipairs(holders) do
+    -- Append only our isolated bank types. Never replace a campaign bank.
+    for _, entry in ipairs(holders) do
         local bank = sdk.create_instance("via.motion.DynamicMotionBank"):add_ref()
-        bank:call("set_MotionList", holder)
+        bank:call("set_MotionList", entry.holder)
         bank:call("set_OverwriteBankID", true); bank:call("set_BankID", 0)
-        bank:call("set_OverwriteBankType", true); bank:call("set_BankType", BANK)
+        bank:call("set_OverwriteBankType", true); bank:call("set_BankType", entry.kind)
         local index = motion:call("getDynamicMotionBankCount")
         motion:call("setDynamicMotionBankCount", index + 1)
         motion:call("setDynamicMotionBank", index, bank)
-        s.banks[#s.banks + 1] = { index = index, bank = bank }
+        s.banks[#s.banks + 1] = { index = index, bank = bank, kind = entry.kind }
     end
     return true
 end
@@ -150,7 +173,7 @@ function Gauntlet:reset()
             hand.original, hand.original_material, hand.parts = nil, nil, nil
         end
     end
-    self.weapon, self.collider, self.hit = nil, nil, nil
+    self.weapon, self.collider, self.hit, self.variant = nil, nil, nil, nil
     self.attack, self.charge, self.last_state, self.controllable = nil, nil, nil, false
     self.equip_pending, self.unequip_pending = nil, nil
     self.combo = 0
@@ -158,16 +181,16 @@ function Gauntlet:reset()
     -- a load callback or while the weapon is still equipped invalidates animations.
 end
 
-function Gauntlet:equip(weapon)
+function Gauntlet:equip(weapon, variant)
     self:reset()
     local s, game = self.session, self.game
     local object = weapon:call("get_GameObject")
     local item = game:component(object, "app.Item")
-    assert(item and item:get_field("ItemDataID") == "CH9_WP006", "Unexpected gauntlet instance")
+    assert(item and item:get_field("ItemDataID") == variant.item and self:matches(s.player, variant), "Unexpected gauntlet instance")
     local collider = assert(game:component(object, "via.physics.RequestSetCollider"))
     assert(collider:call("getNumCollidables(System.UInt32)", 6) > 0, "Gauntlet collider export is outdated")
     self.collider, self.hit = collider, assert(game:component(object, "app.Collision.HitController"))
-    self.weapon = weapon
+    self.weapon, self.variant = weapon, variant
     self.equip_pending = true
     local skeleton = game:component(object, "via.render.Mesh")
         or object:call("createComponent", sdk.typeof("via.render.Mesh"))
@@ -189,7 +212,8 @@ function Gauntlet:equip(weapon)
         end
         hand.mesh:call("setMesh", hand.replacement)
         hand.mesh:call("set_Material", hand.material)
-        for i = 0, 4 do hand.mesh:call("setPartsEnable", i, i == 2 or i == 3) end
+        local gauntlet = variant.dual or hand.object:call("get_Name") == "Pl0000HandL"
+        for i = 0, 4 do hand.mesh:call("setPartsEnable", i, (gauntlet and (i == 2 or i == 3)) or (not gauntlet and i == 0)) end
     end
 end
 
@@ -214,9 +238,9 @@ function Gauntlet:recover_equip(name, layer)
     self.motion_info = self.motion_info or sdk.create_instance("via.motion.MotionInfo"):add_ref()
     local s = self.session
     if not s.motion:call("getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)",
-        0, BANK, 2001, self.motion_info) or self.motion_info:call("get_MotionEndFrame") <= 0.0 then return end
+        0, self.variant.bank, 2001, self.motion_info) or self.motion_info:call("get_MotionEndFrame") <= 0.0 then return end
     s.controller:call("updateTargetBankType")
-    assert(s.motion:call("get_TargetBankType") == BANK, "Gauntlet equip selected an unexpected bank")
+    assert(s.motion:call("get_TargetBankType") == self.variant.bank, "Gauntlet equip selected an unexpected bank")
     self.equip_pending = nil
     self:request("Melee.ReadyIdle")
 end
@@ -254,7 +278,7 @@ end
 
 function Gauntlet:read_track(node, kind, destination)
     local id = node:call("get_MotionID")
-    local key = tostring(id) .. kind
+    local key = tostring(self.variant.bank) .. ":" .. tostring(id) .. kind
     local index = self.track_indices[key]
     if index == nil then
         index = false
@@ -270,11 +294,12 @@ function Gauntlet:read_track(node, kind, destination)
 end
 
 function Gauntlet:update_motion(name, layer)
+    local variant = self.variant
     local ordinary = name == "Melee.AttackL" or name == "Melee.AttackR"
     if name ~= self.last_state then
         self:clear_attack()
         self.attack = (ordinary or name == "Melee.AimAttackC") and { pending = true } or nil
-        if name == "Melee.ReadyToAim" then self.charge = { id = 2688, frame = 0.0, level = 0 }
+        if name == "Melee.ReadyToAim" then self.charge = { id = variant.charge_start, frame = 0.0, level = 0 }
         elseif not AIM[name] and name ~= "Melee.AimAttackC" then self.charge = nil end
         self.last_state = name
     end
@@ -291,9 +316,9 @@ function Gauntlet:update_motion(name, layer)
                     elseif self.charge_track:get_field("IsChargeLevel1") then charge.level = math.max(charge.level, 1) end
                 end
             end
-            if charge.id == 2688 and layer:call("get_StateEndOfMotion") then
-                charge.id, charge.frame = 2689, 0.0
-                self:change_clip(2689)
+            if charge.id == variant.charge_start and layer:call("get_StateEndOfMotion") then
+                charge.id, charge.frame = variant.charge_loop, 0.0
+                self:change_clip(variant.charge_loop)
                 self:request("Melee.AimIdle")
             end
         end
@@ -301,14 +326,13 @@ function Gauntlet:update_motion(name, layer)
     local attack, id = self.attack, layer:call("get_MotionID")
     if attack and attack.pending then
         if name == "Melee.AimAttackC" and id == 2407 then
-            local strong = self.charge and self.charge.level == 2
-            self.attack = { id = strong and 2691 or 2690, request = strong and 5 or 4,
-                source = strong and 33 or 32, charged = true }
+            local entry = variant.charge[(self.charge and self.charge.level or 0) + 1]
+            self.attack = { id = entry[1], request = entry[2], source = entry[3], charged = true }
             self.charge, self.combo = nil, 0
         elseif ordinary and id == (name == "Melee.AttackL" and 2400 or 2401) then
-            self.combo = self.combo % #COMBO + 1
-            local entry = COMBO[self.combo]
-            self.attack = { id = entry.id, request = entry.request, source = entry.source }
+            self.combo = self.combo % #variant.combo + 1
+            local entry = variant.combo[self.combo]
+            self.attack = { id = entry[1], request = entry[2], source = entry[3] }
         end
         if self.attack.id then self:change_clip(self.attack.id) end
     end
@@ -353,7 +377,11 @@ function Gauntlet:update()
     self.waiting = nil
     local s = self.session
     local weapon = self.game:component(player, "app.EquipManager"):call("get_equipWeaponRight")
-    if not weapon or weapon:get_field("WeaponID") ~= WEAPON then
+    local variant
+    for _, entry in ipairs(s.variants) do
+        if weapon and weapon:get_field("WeaponID") == entry.weapon and self:matches(player, entry) then variant = entry; break end
+    end
+    if not variant then
         local pending = self.weapon and {} or self.unequip_pending
         self:reset()
         if not weapon and s.controller:get_field("CurrentWeaponID") == 0 then
@@ -371,7 +399,7 @@ function Gauntlet:update()
         if self.attack then self.attack.interrupted = true end
         return
     end
-    if self.weapon ~= weapon then self:equip(weapon); self.controllable = true end
+    if self.weapon ~= weapon then self:equip(weapon, variant); self.controllable = true end
     local name, layer = s.manager:call("getCurrentMotionFsmStateName", 1, false), s.motion:call("getLayer", 1)
     self:recover_equip(name, layer)
     self:update_motion(name, layer)
@@ -379,8 +407,11 @@ end
 
 function Gauntlet:scope(controller)
     local s = self.session
-    return s and self.enabled() and not self.error and s.player == self.game:player() and controller == s.controller
-        and controller:get_field("CurrentWeaponID") == WEAPON
+    if not (s and self.enabled() and not self.error and s.player == self.game:player() and controller == s.controller) then return false end
+    for _, variant in ipairs(s.variants) do
+        if controller:get_field("CurrentWeaponID") == variant.weapon then return true end
+    end
+    return false
 end
 
 function Gauntlet:install()
@@ -389,10 +420,11 @@ function Gauntlet:install()
     local bank_key, sequence_key, tag_key = {}, {}, {}
     self.game:hook("app.PlayerMotionController", "getBankType(app.WeaponID)", function(args)
         thread.get_hook_storage()[bank_key] = nil
-        if sdk.to_int64(args[3]) ~= WEAPON then return end
         local controller = self.game:object(args[2])
         if self.session and controller == self.session.controller and self:owns_banks() then
-            thread.get_hook_storage()[bank_key] = BANK
+            for _, variant in ipairs(self.session.variants) do
+                if sdk.to_int64(args[3]) == variant.weapon then thread.get_hook_storage()[bank_key] = variant.bank; break end
+            end
         end
     end, function(ret)
         local storage = thread.get_hook_storage()
@@ -447,7 +479,8 @@ function Gauntlet:install()
         if scoped then
             local s = self.session
             local id = s.motion:call("getLayer", 1):call("get_MotionID")
-            if (id == 2688 or id == 2689) and AIM[s.manager:call("getCurrentMotionFsmStateName", 1, false)] then
+            if self.variant and (id == self.variant.charge_start or id == self.variant.charge_loop)
+                and AIM[s.manager:call("getCurrentMotionFsmStateName", 1, false)] then
                 self.aim_tag = self.aim_tag or self.game:static_field("app.PlayerDefine.MotionTag", "MeleeAimIdle")
                 s.manager:get_field("TagManager"):call("addTag(System.Int32, System.UInt32, System.Type)",
                     1, self.aim_tag, sdk.typeof("app.PlayerMelee"))

@@ -139,10 +139,17 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
         if (components.Length != 2) throw new InvalidDataException("Missing melee collision component template.");
         var collision = context.GetRcolFile("ch9/collision/collider/player/pl9000/pl9000.rcol".RcolFile())
             .ToBuilder(context.TypeRepository);
-        // Motion 2443 is named Uppercut but its ColliderTrack requests BodyblowR (45).
-        var names = new[] { "AttackHookR_Double", "AttackHook_Double", "AttackBodyblowR_Double",
-            "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble",
-            "AttackStraightV2_Double" };
+        // Dual's motion 2443 requests BodyblowR (45); the Knuckle version requests UppercutR (17).
+        string[] names = weapon.WeaponId switch {
+            67 => ["AttackHookR_Double", "AttackHook_Double", "AttackBodyblowR_Double",
+                "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble",
+                "AttackStraightV2_Double"],
+            61 => ["AttackHookR", "AttackHook_Reword", "AttackUppercutR", "AttackStraightV2_Reword",
+                "Attack1ChargeLeftReword", "Attack2ChargeLeftReword", "Attack3ChargeLeftReword"],
+            62 => ["AttackHookR", "AttackHook_Gauntlet", "AttackUppercutR", "AttackStraightV2_Gauntlet",
+                "Attack1ChargeLeft", "Attack2ChargeLeft", "Attack3ChargeLeft"],
+            _ => throw new InvalidDataException($"Unknown gauntlet: {weapon.ItemId}"),
+        };
         var requests = names.Select(name => collision.RequestSets.Single(r => r.Name == name)).ToArray();
         collision.RequestSets.Clear();
         for (var i = 0; i < requests.Length; i++) {
