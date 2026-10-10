@@ -42,6 +42,13 @@ public sealed class DlcCampaignWeaponTests {
         Assert.Equal([ItemID.ShotgunBullet], WeaponDefinitionRepository.Default.GetAmmoTypes(WeaponID.Shotgun_Albert));
         Assert.DoesNotContain(ItemID.Handgun_Albert_C, StartingWeaponCategory.Handgun.GetItemIds());
         Assert.Contains(ItemID.Handgun_Albert_C, StartingWeaponCategory.Handgun.GetItemIds(true));
+        Assert.DoesNotContain(ItemID.CH9_WP002, StartingWeaponCategory.Bladed.GetItemIds());
+        Assert.Contains(ItemID.CH9_WP002, StartingWeaponCategory.Bladed.GetItemIds(true));
+        var blade = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)63);
+        Assert.False(blade.IsGun);
+        Assert.Equal("Spirit Blade", blade.Name);
+        Assert.NotNull(blade.BulletItemIDs);
+        Assert.Empty(blade.BulletItemIDs);
     }
 
     [Fact]
@@ -51,13 +58,14 @@ public sealed class DlcCampaignWeaponTests {
         Assert.Equal(paths.Length, paths.Distinct(StringComparer.OrdinalIgnoreCase).Count());
         Assert.All(paths, p => {
             Assert.StartsWith("natives/stm/", p);
-            Assert.Matches(@"\.\d+$", p);
+            Assert.Matches(@"\.\d+(\.stm)?$", p);
             Assert.DoesNotContain("..", p);
             Assert.DoesNotContain("/ingame/", p);
         });
         Assert.Contains(paths, p => p.Contains("wp1330") && p.Contains(".mesh."));
         Assert.Contains(paths, p => p.Contains("wp1340") && p.Contains(".motlist."));
         Assert.Contains(paths, p => p.Contains("wp1390") && p.Contains(".rcol."));
+        Assert.Contains(paths, p => p.Contains("wp1700") && p.Contains(".rcol."));
     }
 
     [Fact]
@@ -84,6 +92,13 @@ public sealed class DlcCampaignWeaponTests {
         foreach (var path in DlcCampaignWeapons.RequiredAssetPaths)
             if (repository.GetFile(path) == null) repository.SetAdditionalOutputAssetFile(path, [1, 2, 3]);
         new DlcCampaignWeaponPatch(repository).Apply();
+        var blade = DlcCampaignWeapons.Sources.Single(w => w.ItemId == "CH9_WP002");
+        var originalBladeCollision = "ch9/collision/collider/weapon/wp1700/wp1700_hatchet.rcol".RcolFile();
+        var sourceCollision = repository.GetFile(originalBladeCollision)!;
+        Assert.Equal(sourceCollision, repository.GetFile(blade.CollisionPath.RcolFile()));
+        var bladePrefab = repository.GetPfbFile(blade.CampaignPrefab.Of() + ".17");
+        Assert.Contains(blade.CollisionPath, bladePrefab.Resources);
+        Assert.DoesNotContain(bladePrefab.Resources, p => p.Contains("wp1700_hatchet.rcol", StringComparison.OrdinalIgnoreCase));
         var settings = repository.DeserializeUserFile<app.ItemSettings>("prefab/item/resourceitemsettings.user".UserFile());
         foreach (var source in DlcCampaignWeapons.Sources) {
             var item = Assert.Single(settings._Settings, i => i.ItemDataID == source.ItemId);
@@ -116,12 +131,19 @@ public sealed class DlcCampaignWeaponTests {
         randomizer.ItemRandomizer.MarkItemPlaced("Shotgun_DB");
         Assert.True(randomizer.ItemRandomizer.IsItemPlaced("NumaItem072"));
         randomizer.Input.Configuration["weapon-mod-ammo-capacity"] = true;
+        randomizer.Input.Configuration["weapon-mod-damage"] = true;
+        randomizer.Input.Configuration["weapon-damage-min-ch9-wp002"] = 2.0;
+        randomizer.Input.Configuration["weapon-damage-max-ch9-wp002"] = 2.0;
         foreach (var definition in WeaponDefinitionRepository.Default.Guns) {
             var id = definition.WeaponId.ToString().ToLowerInvariant().Replace('_', '-');
             randomizer.Input.Configuration[$"weapon-ammo-capacity-min-{id}"] = 2.0;
             randomizer.Input.Configuration[$"weapon-ammo-capacity-max-{id}"] = 2.0;
         }
         new WeaponModifier(randomizer).Apply(new RandomizerLogger());
+        Assert.Equal(sourceCollision, repository.GetFile(originalBladeCollision));
+        var collision = repository.GetRcolFile(blade.CollisionPath.RcolFile()).ToBuilder(repository.TypeRepository);
+        Assert.Equal(200, collision.RequestSets.Single(r => r.Name == "AttackSmall").UserData!.Get<int>("Damage"));
+        Assert.Equal(300, collision.RequestSets.Single(r => r.Name == "AttackLarge").UserData!.Get<int>("Damage"));
         foreach (var id in new[] { "Handgun_Albert_C", "Shotgun_Albert" }) {
             var source = DlcCampaignWeapons.Sources.Single(w => w.ItemId == id);
             var definition = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)source.WeaponId);

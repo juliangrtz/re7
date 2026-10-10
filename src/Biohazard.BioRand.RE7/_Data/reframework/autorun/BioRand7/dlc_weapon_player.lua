@@ -3,14 +3,17 @@ Player.__index = Player
 
 local SPIRIT_BLADE = 63
 local HAND_AXE_BANK = 10
+local KNIFE_BANK = 30
+local CAMPAIGN_PLAYERS = { Pl0000 = true, Pl0000_Chapter1 = true, Pl2000 = true, Pl2100 = true, Pl3000 = true }
 
 function Player.new(game, enabled, resource_root)
     return setmetatable({ game = game, enabled = enabled, resource_root = resource_root }, Player)
 end
 
 function Player:enabled_for(owner)
-    if not self.enabled() or not owner or owner ~= self.game:player()
-        or owner:call("get_Name") ~= "Pl0000" then return false end
+    if not self.enabled() or not owner or owner ~= self.game:player() then return false end
+    local name = owner:call("get_Name")
+    if not CAMPAIGN_PLAYERS[name] then return false end
     local manager = self.game:singleton("app.ItemManager")
     local data = manager and manager:call("findItemData", "CH9_WP002")
     local prefab = data and data:get_field("ItemPrefab")
@@ -20,7 +23,11 @@ end
 
 function Player:bank_for(controller, weapon_id)
     if weapon_id == SPIRIT_BLADE and self:enabled_for(controller:call("get_GameObject")) then
-        return HAND_AXE_BANK
+        local motion = controller:get_field("Motion")
+        if not motion then return nil end
+        for _, bank in ipairs({ HAND_AXE_BANK, KNIFE_BANK }) do
+            if motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, bank) then return bank end
+        end
     end
 end
 

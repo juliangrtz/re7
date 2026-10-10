@@ -28,15 +28,40 @@ return function()
     enabled, allow = true, false
     weapons:update(); assert(calls == 0)
     allow = true
-    weapons:update(); assert(calls == 4 and loads == 0)
+    weapons:update(); assert(calls == 5 and loads == 0)
     available, now = true, 1
-    weapons:update(); assert(loads == 12)
-    now = 3; weapons:update(); assert(loads == 12 and calls == 8)
+    weapons:update(); assert(loads == 15)
+    now = 3; weapons:update(); assert(loads == 15 and calls == 10)
     weapons:reset(); ready = true
-    weapons:update(); assert(loads == 12)
+    weapons:update(); assert(loads == 15)
     weapons:reset(); ready, foreign = false, true
-    weapons:update(); assert(loads == 12)
+    weapons:update(); assert(loads == 15)
     weapons:reset(); foreign, fail = false, true
-    weapons:update(); assert(loads == 16 and errors == 4)
-    now = 5; weapons:update(); assert(loads == 16, "Failed mutations must not retry every frame")
+    weapons:update(); assert(loads == 20 and errors == 5)
+    now = 5; weapons:update(); assert(loads == 20, "Failed mutations must not retry every frame")
+
+    local module_name = "BioRand7/dlc_weapon_player"
+    local previous = package.loaded[module_name]
+    local installed, updated, reset = 0, 0, 0
+    local adapter_enabled
+    package.loaded[module_name] = { new = function(game, is_enabled, root)
+        assert(game == context.game and root == "BioRand/DlcWeapons")
+        adapter_enabled = is_enabled
+        return {
+            install = function() installed = installed + 1 end,
+            update = function() updated = updated + 1; error("adapter failure") end,
+            reset = function() reset = reset + 1 end,
+        }
+    end }
+    weapons:install(); weapons:install()
+    assert(installed == 1 and adapter_enabled())
+    weapons:update(); weapons:update()
+    assert(updated == 1 and reset == 1 and not adapter_enabled(), "Adapter failures must stop until reset")
+    weapons:reset()
+    assert(reset == 2 and adapter_enabled(), "New sessions reset adapter state without reinstalling hooks")
+    enabled = false
+    assert(not adapter_enabled())
+    enabled, allow = true, false
+    assert(not adapter_enabled())
+    package.loaded[module_name] = previous
 end

@@ -33,7 +33,7 @@ internal static class StartingWeaponCategoryExtensions {
         public List<ItemID> GetItemIds(bool includeDlcWeapons = false) {
             var items = GetBaseItemIds(category);
             if (includeDlcWeapons) items.AddRange(category switch {
-                StartingWeaponCategory.Bladed => [ItemID.CKnife],
+                StartingWeaponCategory.Bladed => [ItemID.CKnife, ItemID.CH9_WP002],
                 StartingWeaponCategory.Handgun => [ItemID.Handgun_Albert_C],
                 StartingWeaponCategory.Shotgun => [ItemID.Shotgun_Albert, ItemID.NumaItem072],
                 _ => Array.Empty<ItemID>(),

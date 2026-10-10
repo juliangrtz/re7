@@ -171,7 +171,7 @@ internal static class RandomizerConfigurationDefinition {
         group.Items.Add(new GroupItem(){
             Id = DlcCampaignWeapons.ConfigKey,
             Label = "Experimental DLC Campaign Weapons",
-            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, and Joe's M21 in campaign weapon pools. " +
+            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, and Spirit Blade in campaign weapon pools. " +
                 "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. AMG and throwable weapons are excluded.",
             Type = "switch",
             Default = false

@@ -16,17 +16,18 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
-- The lab additionally exports a **Spirit Blade base-melee research adapter**.
+- The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
-  includes opt-in Ethan hand-axe motions and confirmed-hit recovery. It is not
-  available to the campaign generator or its debug grant. Lab candidacy and
-  campaign candidacy are now separate properties; do not promote a lab export
-  merely because its prefab loads.
-- `DlcCampaignWeaponPatch` integrates four candidates under `BioRand/DlcWeapons`
+  includes opt-in hand-axe motions and confirmed-hit recovery. The campaign
+  version additionally isolates its attack RCOL and participates in generation
+  and debug grants. Lab candidacy and campaign candidacy remain separate
+  properties; do not promote a lab export merely because its prefab loads.
+- `DlcCampaignWeaponPatch` integrates five candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
-- The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, and Joe's M21.
-  The remaining ten catalog entries, including AMG-Dual, stay excluded.
+- The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21,
+  and Spirit Blade. The remaining nine catalog entries, including AMG-Dual,
+  stay excluded pending player-system work.
 - Campaign integration includes item definitions, starting weapons and ammunition,
   random weapon pools, pickup templates, item settings/messages, inspection
   resource folders, and weapon-stat controls. Custom bird-cage entries are gated;
@@ -35,18 +36,19 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   knife attack RCOL are copied to that namespace before stat changes. Joe's M21
   deliberately shares campaign M21 parameters and controls. Source DLC settings
   and inventory PFBs are not rewritten, and DLC gameplay roots stay inactive.
-- `_Data/dlc_weapon_assets.txt` lists 92 required installed resources, including
+- `_Data/dlc_weapon_assets.txt` lists 113 required installed resources, including
   weapon render/motion/collision/VFX dependencies and import metadata. Generation
   preflights every entry before registering anything and emits a clear error if
   the baseline needs `setup --dlc-weapons`. Extracted game assets are not committed.
 - `BioRand7/dlc_weapons.lua` makes at most one deferred loading request per matching
   campaign prefab per session. It does not automatically grant items, force native
-  initialization, repair AI, or install attack/input hooks. Both flags imply
-  REFramework is required.
+  initialization or repair AI. Its scoped player adapter maps Spirit Blade's
+  motion bank and observes confirmed damage for recovery; it never synthesizes
+  attacks or input. Both flags imply REFramework is required.
 - **BioRand 7 > Debug tools > Add supported DLC weapons to item box** queues a
-  one-shot grant on `UpdateBehavior`. It adds one of each of the four candidates,
+  one-shot grant on `UpdateBehavior`. It adds one of each of the five candidates,
   skipping weapons already owned in inventory or storage. Both integration flags,
-  campaign Ethan, and all four ready campaign prefabs are required. Missing/foreign
+  campaign Ethan, and all five ready campaign prefabs are required. Missing/foreign
   adapters abort before any additions; a native add failure stops the batch without
   retrying or removing earlier successes. The menu reports the result. Loading a
   save, starting a new game, resetting scripts, or reloading config cancels pending
@@ -87,7 +89,7 @@ WeaponID is distinct from the string ItemDataID.
 | `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | None |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | None |
-| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Lab: Ethan motions, Molded damage and light-hit healing verified; persistence pending |
+| `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
@@ -123,11 +125,13 @@ exists in the campaign message table. Merge messages by GUID and destination
 language/attribute layout; copying a foreign message record verbatim can mismatch
 the destination MSG schema.
 
-## What the four adapters change
+## What the adapters change
 
 The gun adapters replace only the CH8/CH9 gun component with `app.WeaponGun`,
 copying its serialized base fields. They retain the native WeaponID and source
 weapon parameters. The knife already uses `app.Weapon`.
+Spirit Blade replaces its CH9-specific weapon component with `app.Weapon`, keeps
+the source mesh/motion/collider stack, and uses the scoped player adapter below.
 
 The export removes `app.DisableSave`, `app.CH8HandgunBulletSound`,
 `app.CH8ReticleChanger`, and `app.CH8ReticleMaterialChanger` where present, and
@@ -261,10 +265,21 @@ inventory of the active banks. A one-shot research restart of the already-stalle
 ready state proved the resource worked. The checked-in adapter does **not** force
 FSM states: installed before a fresh knife-to-blade equip, it allows the native
 ready/idle/attack transitions to complete normally. `dlc_weapon_player.lua` changes
-the bank return for ID 63, the active `Pl0000`, and the exact lab prefab path;
-the lab must be armed. It does not rewrite weapon identity or alter DLC players.
+the bank return for ID 63 and the exact imported prefab path. It accepts active
+campaign Ethan (`Pl0000`, `Pl0000_Chapter1`), Mia (`Pl2000`, `Pl2100`) and VHS
+Clancy (`Pl3000`), selecting available bank 10 or falling back to bank 30. Ship Mia
+uses Ethan's complete bank. In the loaded ship save, `Pl2100` equipped native ID
+63 and completed a mouse-driven swing with request sets 0/2/4, returning to idle
+with no registered hit sets. This was a staged inventory test, not normal pickup
+or storage certification; direct menu calls threw after partially doing their
+work. Do not retry a failed native inventory call without inspecting ownership.
+Continuous story transitions and VHS validation remain open.
+Do not confuse `Pl3100_Chapter7_#` with Mia: these belong to the Bedroom, 21 and
+Nightmare DLC scenes, as the area catalog confirms. They remain excluded.
+The lab must be armed; the campaign uses both config flags.
+It does not rewrite weapon identity or alter DLC players.
 
-The lab recovery adapter observes `DamageController.addDamageCore`, whose returned
+The shared recovery adapter observes `DamageController.addDamageCore`, whose returned
 `DamageRecord.AddedDamage` and receiver health change both confirmed real damage
 in the live test. The record's `CalculatedDamage`, `AddedDamage`, and `DamageInfo`
 are fields; `get_DamageController()` is a real accessor. Recovery requires positive
@@ -273,11 +288,20 @@ player identity. It queues 100.0 health (150.0 for an aimed attack) for UpdateBe
 with one recovery per attack window and no native hit-object retention between
 frames. Loads, disarming, and weapon/player changes invalidate pending recovery.
 A live light strike healed Ethan from 500 to 600 HP; a deliberate wall swing left
-health at 600, and the next landed strike healed to 700. Aimed recovery and native
-save/load still require runtime validation. The solution built with zero warnings
+health at 600, and the next landed strike healed to 700. Aimed recovery still
+requires runtime validation. The solution built with zero warnings
 or errors, and all 22 Lua 5.4 suites passed after this adapter was added.
 `Weapon.onAttackTrigger/offAttackTrigger` hooks did not fire for this observed
 attack path, so they are not used as the recovery reset mechanism.
+
+A normal manual save retained Spirit Blade in inventory and equipped state. A
+fresh process loaded it successfully with the campaign adapter: ID 63, campaign
+prefab `Ready=true`, bank 10, pause zero, and a normal mouse attack returning to
+idle. The first lab-only cold load stalled until a deferred prefab request was
+made; serialized `Standby=true` alone was insufficient. The campaign preload must
+include Spirit Blade before inventory restoration waits on that handle. Do not
+mistake this loading-screen stall for a corrupt save. Damage randomization changes
+only the namespaced attack RCOL; source CH9 RCOL bytes remain unchanged.
 
 Combat test setup matters: a spawned Molded immediately self-suspended in the
 safe room even after disabling its explicit self-suspend option. The same setup
@@ -310,6 +334,17 @@ chain. Replacing `CH9Weapon1600` with `app.Weapon` would not implement AMG-Dual.
 The remaining investigation is a player-system adapter, including cancellation,
 damage reactions, guarding, scripted interactions, and restoring Ethan's state.
 Do not activate a whole Joe player/gameplay root to satisfy one missing interface.
+
+Joe's serialized right/left hand children use `pl9010.mesh` / `pl9020.mesh` and
+matching materials, not a mesh in the inventory prefab. Their gauntlet emissive
+materials are controlled by `CH9PlayerMeshController.setGantletParts`. The base
+player's hand meshes and the gauntlet variants therefore need a reversible visual
+adapter, in addition to attack logic. The native motion resource API successfully
+loaded Joe's Knuckle (53 motions), GauntletW (64), Gauntlet (26), and GauntletR (26)
+lists into unused diagnostic dynamic banks on Ethan. This proves resource loading,
+not animation retargeting or gameplay. Finite raw punches exist alongside blend
+trees: e.g. right straight 2440 (60 frames) and its hit reaction 2565 (28 frames).
+Never treat a blend-tree end frame of -1 as a missing resource.
 
 Other blocked families have distinct requirements:
 
@@ -443,7 +478,7 @@ pickup interaction rebinding, messages, ammo mapping, capacity changes, and the
 WeaponID 13 alias. Lua coverage checks exact namespace guards, deferred bounded
 loading, failures without repeated mutations, and load/new-game invalidation.
 
-The campaign integration full solution run passed 593 tests, and all 19 Lua suites
+The campaign integration full solution run passed 593 tests, and all 22 Lua suites
 passed under Lua 5.4. The machine's `lua` command was Lua 5.1, so a compatible
 Lua 5.4 runtime was used. Automated success does not remove the manual risks above.
 
@@ -459,6 +494,6 @@ Remaining acceptance work:
    parent-controlled FSMs and any explicitly enabled bird-cage entries. Check sound
    loading separately; the curated manifest is not proof of a complete sound-bank
    closure. Check randomized loaded ammo on scene pickups as well as inventory PFBs.
-5. Keep AMG/throwable/blade player-system ports deferred. They are not required to
-   finish this four-candidate campaign integration, and no runtime shim for them
-   should be hidden inside the conventional gun adapter.
+5. Continue AMG and throwable player-system work separately from the conventional
+   gun adapter. Keep unproven candidates out of generation and debug grants until
+   their complete equip/attack/cancel/restore lifecycle is demonstrated.

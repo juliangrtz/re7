@@ -56,7 +56,7 @@ internal class TemplateService {
             if (!DlcCampaignWeapons.IsEnabled(_randomizer.FileRepository))
                 throw new InvalidOperationException($"DLC campaign weapons are disabled: {id}");
             var baseId = id switch {
-                "CKnife" => "MiaKnife",
+                "CKnife" or "CH9_WP002" => "MiaKnife",
                 "Handgun_Albert_C" => "Handgun_M19",
                 "Shotgun_Albert" => "MachineGun",
                 _ => "Shotgun_DB",

@@ -49,7 +49,7 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
 
     private RszScene IsolateParameters(RszScene scene, DlcWeaponSource weapon) {
         // Joe's M21 intentionally shares campaign M21 parameters and stat controls.
-        if (weapon.Chapter != 8) return scene;
+        if (weapon.ItemId == "NumaItem072") return scene;
         var definition = DlcCampaignWeapons.CreateWeaponDefinitions().Single(w => (int)w.WeaponId == weapon.WeaponId);
         if (weapon.Adapter == DlcWeaponAdapter.Gun) {
             var gun = scene.GetGameObjects().SelectMany(go => go.Components).Single(c => c.Type.Name == "app.WeaponGun");
@@ -59,7 +59,9 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
             return scene.Visit(node => node is RszUserDataNode u && u.Path == parameter.Path
                 ? new RszUserDataNode(u.Type, weapon.ParameterPath) : node);
         }
-        var source = "CH8/Collision/Collider/Weapon/wp1390/wp1390_ChrisKnife.rcol";
+        var source = weapon.Adapter == DlcWeaponAdapter.SpiritBlade
+            ? "CH9/Collision/Collider/Weapon/wp1700/wp1700_hatchet.rcol"
+            : "CH8/Collision/Collider/Weapon/wp1390/wp1390_ChrisKnife.rcol";
         context.SetFile(definition.RcolPaths.Single(), context.GetFile(source.RcolFile())
             ?? throw new InvalidDataException($"Missing knife collision: {source}"));
         return scene.Visit(node => node is RszResourceNode r && string.Equals(r.Value, source, StringComparison.OrdinalIgnoreCase)

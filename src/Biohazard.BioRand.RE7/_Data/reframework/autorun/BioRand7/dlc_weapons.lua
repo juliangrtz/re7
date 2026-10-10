@@ -1,14 +1,26 @@
 local Weapons = {}
 Weapons.__index = Weapons
-local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072" }
+local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002" }
 
 function Weapons.new(context)
     return setmetatable({ context = context, requested = {}, next_check = 0 }, Weapons)
 end
 
-function Weapons:install() end
+function Weapons:enabled()
+    return self.context.config:get("dlc-campaign-weapons", false)
+        and self.context.config:get("allow-dlc-items", false)
+end
+
+function Weapons:install()
+    if self.player_adapter then return end
+    self.player_adapter = require("BioRand7/dlc_weapon_player").new(self.context.game,
+        function() return self:enabled() and not self.adapter_failed end, "BioRand/DlcWeapons")
+    self.player_adapter:install()
+end
 
 function Weapons:reset()
+    if self.player_adapter then self.player_adapter:reset() end
+    self.adapter_failed = false
     self.requested, self.next_check, self.finished = {}, 0, false
     self.pending_add, self.grant_status = nil, nil
 end
@@ -72,6 +84,14 @@ function Weapons:process_item_box_request()
 end
 
 function Weapons:update()
+    if self.player_adapter and not self.adapter_failed then
+        local ok, message = pcall(function() self.player_adapter:update() end)
+        if not ok then
+            self.adapter_failed = true
+            self.player_adapter:reset()
+            self.context.log:error("DLC weapon player adapter failed: " .. tostring(message))
+        end
+    end
     self:process_item_box_request()
     local context = self.context
     if self.finished or not context.config:get("dlc-campaign-weapons", false)

@@ -15,8 +15,8 @@ public sealed class DlcWeaponLabTests {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
         Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
-        Assert.Equal(4, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
-        Assert.DoesNotContain(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
+        Assert.Equal(5, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.False(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
         foreach (var weapon in DlcWeaponCatalog.Weapons.Where(w => !w.IsCampaignCandidate))
             Assert.Null(ItemDefinitionRepository.Default.FromId(weapon.ItemId));

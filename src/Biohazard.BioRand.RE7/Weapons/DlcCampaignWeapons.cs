@@ -62,5 +62,19 @@ public static class DlcCampaignWeapons {
                 },
             };
         }
+        var blade = Sources.Single(w => w.Adapter == DlcWeaponAdapter.SpiritBlade);
+        yield return new WeaponDefinition {
+            WeaponId = (WeaponID)blade.WeaponId, Id = "wp1700", Name = blade.Name,
+            IsGun = false, IsInventoryWeapon = true, UserType = Enums.app.CharacterDefine.Type.Player,
+            BulletItemIDs = [], UserParamsPath = null,
+            Mesh = "CH9/Weapon/wp1700_hatchet/wp1700.mesh",
+            Material = "CH9/Weapon/wp1700_hatchet/wp1700.mdf2",
+            PrefabPath = blade.CampaignPrefab.Of() + ".17",
+            RcolPaths = [blade.CollisionPath.RcolFile()],
+            Damage = new() {
+                ["Attack.rcol/AttackSmall"] = new() { Damage = 100, Stun = 10 },
+                ["Attack.rcol/AttackLarge"] = new() { Damage = 150, Stun = 50 },
+            },
+        };
     }
 }

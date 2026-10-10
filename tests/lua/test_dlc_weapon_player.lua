@@ -4,7 +4,15 @@ return function()
     local hooks, storage, conversions, lookups = {}, {}, 0, 0
     local player = { call = function(_, method) assert(method == "get_Name"); return name end }
     local owner = player
-    local controller = { call = function(_, method) assert(method == "get_GameObject"); return owner end }
+    local banks = { [10] = true, [30] = true }
+    local motion = { call = function(_, method, id, bank)
+        assert(method == "findMotionBank(System.UInt32, System.UInt32)" and id == 0)
+        return banks[bank]
+    end }
+    local controller = {
+        call = function(_, method) assert(method == "get_GameObject"); return owner end,
+        get_field = function(_, field) assert(field == "Motion"); return motion end,
+    }
     local prefab = { call = function(_, method) assert(method == "get_Path"); return path end }
     local data = { get_field = function(_, field) assert(field == "ItemPrefab"); return prefab end }
     local manager = { call = function(_, method, id)
@@ -43,7 +51,16 @@ return function()
     enabled = false
     assert(bank(63) == original and conversions == 1)
     enabled = true
-    for _, other_name in ipairs({ "Pl8000", "Pl9000", "Pl1000", "Pl2100" }) do
+    for _, campaign_player in ipairs({ "Pl0000_Chapter1", "Pl2000", "Pl2100", "Pl3000" }) do
+        name = campaign_player
+        assert(bank(63).pointer == 10)
+        banks[10] = nil
+        assert(bank(63).pointer == 30, "Use an available melee bank in reduced player setups")
+        banks[30] = nil
+        assert(bank(63) == original, "Never select an absent animation bank")
+        banks[10], banks[30] = true, true
+    end
+    for _, other_name in ipairs({ "Pl8000", "Pl9000", "Pl1000", "Pl3100_Chapter7_1", "Pl3100_Chapter7_2", "Pl3100_Chapter7_3", "Pl3400" }) do
         name = other_name
         assert(bank(63) == original)
     end

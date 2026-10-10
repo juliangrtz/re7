@@ -332,6 +332,8 @@
   "weapon-damage-max-machinegun": 1.2,
   "weapon-damage-min-handgun-albert-c": 0.8,
   "weapon-damage-max-handgun-albert-c": 1.2,
+  "weapon-damage-min-ch9-wp002": 0.8,
+  "weapon-damage-max-ch9-wp002": 1.2,
   "weapon-damage-min-miaknife": 0.8,
   "weapon-damage-max-miaknife": 1.2,
   "weapon-damage-min-cknife": 0.8,
