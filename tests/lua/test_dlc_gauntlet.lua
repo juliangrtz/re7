@@ -46,6 +46,7 @@ return function()
 
     local creations, releases, refs, fail = 0, 0, 0, false
     sdk = { to_int64 = function(value) return value end, to_ptr = function(value) return value end,
+        to_float = function(value) return value.float end, float_to_ptr = function(value) return { float = value } end,
         PreHookResult = { SKIP_ORIGINAL = "skip" },
         create_resource = function(kind, resource_path)
             creations = creations + 1
@@ -141,6 +142,26 @@ return function()
     enabled = false; assert(not adapter:scope(controller)); enabled = true
     current_player = nil; assert(not adapter:owns_banks() and not adapter:scope(controller)); current_player = player
 
+    local guard_hook = hooks["app.PlayerDamageController:get_guardDamageCutRate"]
+    local function guard(base, receiver)
+        local original = sdk.float_to_ptr(base)
+        guard_hook[1]({nil, receiver or damage})
+        local result = guard_hook[2](original)
+        assert(next(storage) == nil, "Guard hook must clear its per-call storage")
+        return sdk.to_float(result), result == original
+    end
+    assert(math.abs(guard(0.75) - 0.9) < 0.00001)
+    assert(guard(0.95) == 1.0 and guard(-1.0) == 0.0, "Clamp without changing the stored base stat")
+    local value, unchanged = guard(0.75, {}); assert(value == 0.75 and unchanged)
+    enabled = false; assert(guard(0.75) == 0.75); enabled = true
+    adapter.error = "test"; assert(guard(0.75) == 0.75); adapter.error = nil
+    current_player = nil; assert(guard(0.75) == 0.75); current_player = player
+    current_weapon = {}; assert(guard(0.75) == 0.75); current_weapon = weapon
+    controller_fields.CurrentWeaponID = 61; assert(guard(0.75) == 0.75); controller_fields.CurrentWeaponID = 67
+    weapon_valid = false; assert(guard(0.75) == 0.75); weapon_valid = true
+    path = "CH9/Vanilla.pfb"; assert(guard(0.75) == 0.75); path = "BioRand/DlcWeaponLab/CH9_WP006/Item.pfb"
+    adapter:install_guard(); assert(hooks["app.PlayerDamageController:get_guardDamageCutRate"] == guard_hook)
+
     local function update(name, id)
         state_name, motion_id, ended = name, id or motion_id, false
         adapter:update()
@@ -207,6 +228,7 @@ return function()
         adapter.combo = 0
         assert(variant.combo[3][3] == 17, "Knuckle uppercut differs from Dual's BodyblowR marker")
         assert(adapter:matches(player) and adapter:scope(controller))
+        assert(math.abs(guard(0.75) - 0.8) < 0.00001, "Single gauntlets preserve their five-point bonus")
         bank_hook[1]({nil, controller, variant.weapon}); assert(bank_hook[2](0) == variant.bank)
         bank_hook[1]({nil, controller, 67}); assert(bank_hook[2](0) == 0, "Do not map an absent variant")
         for _, entry in ipairs(variant.combo) do

@@ -3,13 +3,13 @@ local Gauntlet = {}
 Gauntlet.__index = Gauntlet
 
 local VARIANTS = {
-    { weapon = 67, item = "CH9_WP006", bank = 9910, list = "GauntletW", dual = true,
+    { weapon = 67, item = "CH9_WP006", bank = 9910, list = "GauntletW", dual = true, guard = 0.15,
         combo = { {2441, 0, 43}, {2641, 1, 40}, {2443, 2, 45}, {2643, 6, 42} },
         charge_start = 2688, charge_loop = 2689, charge = { {2690, 4, 32}, {2690, 4, 32}, {2691, 5, 33} } },
-    { weapon = 61, item = "CH9_WP000", bank = 9911, list = "GauntletR",
+    { weapon = 61, item = "CH9_WP000", bank = 9911, list = "GauntletR", guard = 0.05,
         combo = { {2441, 0, 16}, {2641, 1, 37}, {2443, 2, 17}, {2643, 3, 39} },
         charge_start = 2660, charge_loop = 2661, charge = { {2662, 4, 23}, {2663, 5, 24}, {2664, 6, 25} } },
-    { weapon = 62, item = "CH9_WP001", bank = 9912, list = "Gauntlet",
+    { weapon = 62, item = "CH9_WP001", bank = 9912, list = "Gauntlet", guard = 0.05,
         combo = { {2441, 0, 16}, {2641, 1, 34}, {2443, 2, 17}, {2643, 3, 36} },
         charge_start = 2660, charge_loop = 2661, charge = { {2662, 4, 20}, {2663, 5, 21}, {2664, 6, 22} } },
 }
@@ -414,9 +414,32 @@ function Gauntlet:scope(controller)
     return false
 end
 
+function Gauntlet:install_guard()
+    if self.guard_installed then return end
+    self.guard_installed = true
+    local key = {}
+    self.game:hook("app.PlayerDamageController", "get_guardDamageCutRate", function(args)
+        local storage = thread.get_hook_storage()
+        storage[key] = nil
+        local s, variant = self.session, self.variant
+        if not (s and variant and self.weapon and self:scope(s.controller)
+            and s.controller:get_field("CurrentWeaponID") == variant.weapon
+            and self:matches(s.player, variant) and self.weapon:call("get_Valid")) then return end
+        if self.game:object(args[2]) ~= self.game:component(s.player, "app.PlayerDamageController") then return end
+        if self.game:component(s.player, "app.EquipManager"):call("get_equipWeaponRight") ~= self.weapon then return end
+        storage[key] = variant.guard
+    end, function(ret)
+        local storage = thread.get_hook_storage()
+        local bonus = storage[key]; storage[key] = nil
+        -- CH9 adds to the already computed base/passive reduction, then clamps.
+        return bonus and sdk.float_to_ptr(math.max(0.0, math.min(1.0, sdk.to_float(ret) + bonus))) or ret
+    end)
+end
+
 function Gauntlet:install()
     if self.installed then return end
     self.installed = true
+    self:install_guard()
     local bank_key, sequence_key, tag_key = {}, {}, {}
     self.game:hook("app.PlayerMotionController", "getBankType(app.WeaponID)", function(args)
         thread.get_hook_storage()[bank_key] = nil

@@ -564,6 +564,25 @@ AMG-78a's four normal mouse punches produced raw 100/150/150/450 and added
 not a physical held-button test. Both returned to native melee idle without a
 forced FSM reset. These results do not certify pickup/save/player transitions.
 
+### Guard reduction
+
+The source `CH9Weapon1600.AddGuardDamageCutRate` is 0.05 for AMG-78a/AMG-78
+and 0.15 for Dual. Native `CH9PlayerDamageController.get_guardDamageCutRateCh9`
+adds this to the base controller's computed reduction and clamps to [0, 1].
+The adapter mirrors that in Ethan's `get_guardDamageCutRate`, after native/passive
+calculation. It never writes `GuardDamageCutRate` or invents a separate damage path.
+The receiver, live equipped instance, native ID, active Ethan session, and exact
+adapter namespace must all match. Disabled/failed adapters and unequipped or
+destroyed instances return the original result.
+
+Live getter checks gave 0.80 for the prototype, 0.90 for Dual, and 0.75 after
+switching to the campaign Knife, with the stored base remaining 0.75 throughout.
+Bounded guard commands reached finite `Melee.GuardStart` (2305, 40 frames) and
+`Melee.Guard` (2300, 180 frames), then returned normally. The attempted incoming-hit
+comparison had no live target contact and is not evidence of guarded health loss.
+Lua tests cover both bonuses, caps, receiver/weapon/namespace/lifetime exclusions,
+and no duplicate hook installation.
+
 ### Gauntlet storage teardown and empty transitions
 
 Native item-box storage destroys the weapon and its `RequestSetCollider` before
