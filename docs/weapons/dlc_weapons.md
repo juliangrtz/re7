@@ -184,8 +184,8 @@ The later pass used working read-only REFramework endpoints and a temporary
 | Empty-magazine reload | Normal attack input on an empty magazine triggered the reload animation; 0 loaded / 30 reserve became 9 / 21 | Dedicated reload-key automation was inconclusive |
 | Normal Molded damage | User observed lethal headshots and lower body damage with Samurai Edge | Not a controlled damage/balance measurement; balancing deferred |
 | Tactical Knife | Box withdrawal and equip reached ID 48 / bank 30 | Hand pose and attack behavior were not certified |
-| Thor's Hammer | Box withdrawal produced the correct inventory ID | The session later crashed; firing/reload were not validated |
-| Joe's M21 | Serialized adapter and generated chest passed checks | No clean live equip/fire/reload pass yet |
+| Thor's Hammer | Later clean session: native box withdrawal/equip, normal mouse fire, campaign Molded damage, and empty-magazine reload passed | Full pickup/player-transition and sound validation remain open |
+| Joe's M21 | Later clean session: native box withdrawal/equip, normal mouse fire, campaign Molded damage, and empty-magazine reload passed | Shares campaign M21 identity/parameters; not independently balanced |
 
 Two later sessions were invalidated by direct inventory/menu probes: a vanilla
 weapon storage call threw and was followed by process exit; another session
@@ -197,6 +197,26 @@ bridge and diagnostic hooks are not part of the production module.
 
 Save files matched the pre-test backup after these sessions. No DLC-bearing save
 was written, so that comparison is preservation evidence, not a save/load test.
+
+The later eight-weapon cold-load session supersedes those two shotgun gaps only:
+both shotguns were withdrawn through the physical item-box UI, with Thor's Hammer
+retaining 12 loaded rounds and Joe's M21 retaining two. One 30-shell test stack was
+added to storage with menus closed, then withdrawn through the native UI. Both
+guns reported ordinary `ShotgunBullet`, finite magazine and finite reserve flags.
+Normal mouse shots consumed one loaded shell each and reached campaign
+`DefaultBullet` / `EnemyDamageController` processing. An observed Thor hit totaled
+300 raw / 150 added damage against an Em4000; an M21 hit totaled 720 raw / 1260
+added damage against another Em4000. Pellet aggregation and hit zones differ, so
+these numbers establish working damage, not a balance comparison. The targets
+were existing campaign spawn records positioned for a disposable combat test;
+enemy health was not edited. Player incoming damage was disabled for the test.
+
+After normal shots emptied each weapon, another mouse attack initiated its native
+reload sequence. M21's two one-shell callbacks changed 0 loaded / 30 reserve to
+2 / 28. Thor's magazine callback changed 0 / 28 to 12 / 16. No direct gun reload,
+ammo setter, or forced fire call was used. A short synthetic reload-key tap did not
+produce a reliable action, so dedicated key handling remains a separate check.
+This pass did not save its ammo consumption or certify shotgun world pickups.
 
 ### Earlier lab evidence
 
