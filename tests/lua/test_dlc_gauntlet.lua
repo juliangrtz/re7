@@ -18,15 +18,20 @@ return function()
     local paused, loading, health = false, false, 500
     local manager = object({}, { get_IsPause = function() return paused end, get_IsSceneLoading = function() return loading end })
     local damage = object({}, { get_health = function() return health end })
+    local menu_open, down_requested, hands_action = false, false, 0
+    local menu = object({}, { isOpenInventoryMenu = function() return menu_open end })
+    local hands = object({}, { get_isDownWeaponActionRequested = function() return down_requested end,
+        get_actionID = function() return hands_action end })
     local current_weapon
     local equip = object({}, { get_equipWeaponRight = function() return current_weapon end })
     local game = {
         player = function() return current_player end,
         valid = function() return true end,
-        singleton = function(_, kind) return kind == "app.ItemManager" and items or manager end,
+        singleton = function(_, kind) return kind == "app.ItemManager" and items or kind == "app.MenuManager" and menu or manager end,
         component = function(_, owner, kind)
             assert(owner == player)
             return kind == "app.EquipManager" and equip or kind == "app.PlayerDamageController" and damage
+                or kind == "app.PlayerHands" and hands
         end,
         object = function(_, value) return value end,
         hook = function(_, kind, method, pre, post) hooks[kind .. ":" .. method] = {pre, post} end,
@@ -105,13 +110,19 @@ return function()
             returns[#returns + 1] = state
         end,
     })
+    local weapon_valid, collider_valid = true, true
     local weapon = object({ WeaponID = 67 }, {
+        get_Valid = function() return weapon_valid end,
         get_GameObject = function() return {} end,
         onAttackTrigger = function() on_count = on_count + 1 end,
         offAttackTrigger = function() off_count = off_count + 1 end,
     })
     current_weapon, adapter.weapon = weapon, weapon
-    adapter.collider = object({}, { ["unregisterRequestSet(System.UInt32)"] = function(index) cleared[index] = true end })
+    adapter.collider = object({}, { get_Valid = function() return collider_valid end,
+        ["unregisterRequestSet(System.UInt32)"] = function(index)
+            assert(collider_valid, "Never access a destroyed collider")
+            cleared[index] = true
+        end })
     adapter.hit = object({}, { requestCollider = function(index) collider_requests[#collider_requests + 1] = index end })
     adapter.collider_track = object({}, { initialize = function() end })
     adapter.charge_track = object({}, { initialize = function() end })
@@ -185,8 +196,61 @@ return function()
     update("Melee.GuardStart", 2000)
     assert(not adapter.equip_pending and #returns == before_recovery + 1, "Never replace another native action")
     local old_session = adapter.session
+    local restored_mesh, restored_material, restored_parts = false, false, {}
+    local original, original_material = {}, {}
+    old_session.hands = { { object = {}, original = original, original_material = original_material,
+        parts = {true, false, false}, mesh = object({}, {
+            get_Valid = function() return true end,
+            setMesh = function(value) assert(value == original); restored_mesh = true end,
+            set_Material = function(value) assert(value == original_material); restored_material = true end,
+            setPartsEnable = function(index, value) restored_parts[index] = value end,
+        }) } }
+    collider_valid = false
+    local before_off = off_count
+    adapter:clear_attack()
+    assert(off_count == before_off + 1, "A destroyed collider does not prevent a live weapon trigger from clearing")
+    weapon_valid, collider_valid, cleared = false, true, {}
+    adapter:clear_attack()
+    assert(cleared[6] and off_count == before_off + 1, "Clear a surviving collider independently of its weapon")
+    collider_valid = false
     adapter:reset(); assert(not adapter.weapon and not adapter.attack and not adapter.charge and adapter.session == old_session)
+    assert(restored_mesh and restored_material and restored_parts[0] and restored_parts[1] == false
+        and not old_session.hands[1].original, "Storage destroys the weapon but must still restore Ethan's hands")
+    adapter:reset()
     assert(adapter:owns_banks(), "Do not remove banks while the native player may still refer to them")
+    local before_unequip = #returns
+    adapter.weapon, current_weapon, controller_fields.CurrentWeaponID, target_bank = weapon, nil, 0, 0
+    motion_id, end_frame, state_name, menu_open = 0xFFFFFFFF, 0.0, "DownWeapon", true
+    adapter:update(); adapter:update()
+    assert(adapter.unequip_pending and #returns == before_unequip, "Defer unequip recovery until the item box closes")
+    menu_open, down_requested = false, true
+    adapter:update(); assert(adapter.unequip_pending and #returns == before_unequip, "Respect genuine lowered-weapon requests")
+    down_requested, paused = false, true
+    adapter:update(); assert(#returns == before_unequip, "No unarmed recovery while paused")
+    paused = false
+    adapter:update(); assert(#returns == before_unequip, "Observe an empty transition across two updates")
+    adapter:update(); adapter:update()
+    assert(#returns == before_unequip + 1 and returns[#returns] == "Hands.ReadyStart" and not adapter.unequip_pending,
+        "Only one ordinary request may repair the post-storage transition")
+    adapter.unequip_pending, end_frame = {}, 20.0
+    adapter:update(); assert(not adapter.unequip_pending and #returns == before_unequip + 1, "Preserve finite native transitions")
+    adapter.unequip_pending, end_frame, hands_action = {}, 0.0, 13
+    adapter:update(); assert(not adapter.unequip_pending, "Do not replace an executing native hands action")
+    adapter.unequip_pending, hands_action, state_name = {}, 0, "Hands.GuardStart"
+    adapter:update(); assert(not adapter.unequip_pending, "Never replace another unarmed action")
+    adapter.unequip_pending, state_name, manager_fields.CurrentTask = {}, "DownWeapon", {}
+    adapter:update(); assert(not adapter.unequip_pending, "External tasks cancel pending recovery")
+    manager_fields.CurrentTask = task
+    adapter.unequip_pending, loading = {}, true
+    adapter:update(); assert(not adapter.unequip_pending, "Loading cancels pending recovery")
+    loading = false
+    adapter.unequip_pending, health = {}, 0
+    adapter:update(); assert(not adapter.unequip_pending, "Death cancels pending recovery")
+    health = 500
+    adapter.unequip_pending = { since = os.clock() - 3.0 }
+    adapter:update(); assert(not adapter.unequip_pending, "Recovery has a bounded active window")
+    adapter.unequip_pending, current_weapon = {}, object({ WeaponID = 3 }, {})
+    adapter:update(); assert(not adapter.unequip_pending, "Another weapon cancels pending recovery")
     banks[2] = nil
     assert(not adapter:owns_banks())
     assert(not pcall(function() adapter:prepare(player) end), "Never silently reappend after ownership loss")

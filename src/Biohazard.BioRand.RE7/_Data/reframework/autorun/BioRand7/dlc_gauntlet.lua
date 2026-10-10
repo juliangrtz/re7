@@ -126,10 +126,13 @@ function Gauntlet:prepare(player)
 end
 
 function Gauntlet:clear_attack()
-    if self.weapon and self.session and self.session.player == self.game:player()
-        and self.game:valid(self.weapon:call("get_GameObject")) then
-        for i = 0, 6 do self.collider:call("unregisterRequestSet(System.UInt32)", i) end
-        self.weapon:call("offAttackTrigger")
+    if self.session and self.session.player == self.game:player() then
+        -- Item-box storage can destroy these components before the next update.
+        -- Even get_GameObject throws on an invalid native component.
+        if self.collider and self.collider:call("get_Valid") then
+            for i = 0, 6 do self.collider:call("unregisterRequestSet(System.UInt32)", i) end
+        end
+        if self.weapon and self.weapon:call("get_Valid") then self.weapon:call("offAttackTrigger") end
     end
     self.active = false
 end
@@ -139,7 +142,7 @@ function Gauntlet:reset()
     local s = self.session
     if s and s.player == self.game:player() then
         for _, hand in ipairs(s.hands) do
-            if hand.original and self.game:valid(hand.object) then
+            if hand.original and self.game:valid(hand.object) and hand.mesh:call("get_Valid") then
                 hand.mesh:call("setMesh", hand.original)
                 hand.mesh:call("set_Material", hand.original_material)
                 for i, value in ipairs(hand.parts) do hand.mesh:call("setPartsEnable", i - 1, value) end
@@ -149,7 +152,7 @@ function Gauntlet:reset()
     end
     self.weapon, self.collider, self.hit = nil, nil, nil
     self.attack, self.charge, self.last_state, self.controllable = nil, nil, nil, false
-    self.equip_pending = nil
+    self.equip_pending, self.unequip_pending = nil, nil
     self.combo = 0
     -- Banks belong to the live player until its destruction. Dropping them during
     -- a load callback or while the weapon is still equipped invalidates animations.
@@ -216,6 +219,37 @@ function Gauntlet:recover_equip(name, layer)
     assert(s.motion:call("get_TargetBankType") == BANK, "Gauntlet equip selected an unexpected bank")
     self.equip_pending = nil
     self:request("Melee.ReadyIdle")
+end
+
+function Gauntlet:recover_unequip(manager)
+    local pending, s = self.unequip_pending, self.session
+    if not pending then return end
+    local damage = self.game:component(s.player, "app.PlayerDamageController")
+    local owner = s.manager:get_field("OwnerTask")
+    if not manager or manager:call("get_IsSceneLoading") or not damage or damage:call("get_health") <= 0
+        or not owner or s.manager:get_field("CurrentTask") ~= owner then
+        self.unequip_pending = nil; return
+    end
+    if manager:call("get_IsPause") then return end
+    local hands = self.game:component(s.player, "app.PlayerHands")
+    local menu = self.game:singleton("app.MenuManager")
+    if not hands or not menu then self.unequip_pending = nil; return end
+    if menu:call("isOpenInventoryMenu") or hands:call("get_isDownWeaponActionRequested") then return end
+    pending.since = pending.since or os.clock()
+    if os.clock() - pending.since > 2.0 then self.unequip_pending = nil; return end
+    local name = s.manager:call("getCurrentMotionFsmStateName", 1, false)
+    local layer = s.motion:call("getLayer", 1)
+    if (name ~= "DownWeapon" and name ~= "Hands.ReadyStart") or layer:call("get_EndFrame") ~= 0.0
+        or layer:call("get_MotionID") ~= 0xFFFFFFFF or hands:call("get_actionID") ~= 0 then
+        self.unequip_pending = nil; return
+    end
+    -- Storage can leave an empty transition with no native action delegate.
+    -- Confirm it across updates, then retry once through ordinary priority rules.
+    if pending.state ~= name then pending.state = name; return end
+    self.unequip_pending = nil
+    s.controller:call("updateTargetBankType")
+    assert(s.motion:call("get_TargetBankType") == 0, "Unexpected unarmed motion bank")
+    self:request("Hands.ReadyStart")
 end
 
 function Gauntlet:read_track(node, kind, destination)
@@ -319,7 +353,15 @@ function Gauntlet:update()
     self.waiting = nil
     local s = self.session
     local weapon = self.game:component(player, "app.EquipManager"):call("get_equipWeaponRight")
-    if not weapon or weapon:get_field("WeaponID") ~= WEAPON then self:reset(); return end
+    if not weapon or weapon:get_field("WeaponID") ~= WEAPON then
+        local pending = self.weapon and {} or self.unequip_pending
+        self:reset()
+        if not weapon and s.controller:get_field("CurrentWeaponID") == 0 then
+            self.unequip_pending = pending
+            self:recover_unequip(manager)
+        end
+        return
+    end
     local damage = self.game:component(player, "app.PlayerDamageController")
     local owner = s.manager:get_field("OwnerTask")
     self.controllable = manager and not manager:call("get_IsPause") and not manager:call("get_IsSceneLoading")

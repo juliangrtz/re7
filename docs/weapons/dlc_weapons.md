@@ -516,6 +516,36 @@ isolated. Do not replace this evidence with arbitrary delays or per-frame rebind
 An existing save loading after a preload fix is also evidence against prematurely
 diagnosing the earlier loading-screen stall as save corruption.
 
+### Gauntlet storage teardown and empty transitions
+
+Native item-box storage destroys the weapon and its `RequestSetCollider` before
+the next Lua update. A non-null managed wrapper is not a live component, and even
+`get_GameObject` throws after native destruction. Cleanup checks `get_Valid` on
+each component independently, clears any surviving collider/weapon trigger, and
+still restores Ethan's original hand meshes, materials, and part masks. Reset is
+idempotent and retains the banks owned by the live player.
+
+After teardown, storage could leave `DownWeapon` or `Hands.ReadyStart` with end
+frame zero, motion ID `0xFFFFFFFF`, and `PlayerHands.actionID == 0`. The native
+lowering delegate sets action ID 13; it was not running in this failure. Menus and
+the genuine down-weapon request were already closed/false, but ordinary inventory
+equip requests remained pending. Adding Ethan's Hands list as a fourth fallback
+bank did not fix it and is not part of the adapter.
+
+The adapter now arms recovery only after its own tracked weapon is removed. With
+the player unarmed, alive, in control, and outside menus/loading/pause, it confirms
+the same empty transition across updates and makes one normal-priority
+`Hands.ReadyStart` request after selecting native unarmed bank zero. The active
+window is bounded; finite clips, executing native actions, other states/weapons,
+external tasks, death, and loading cancel it. This is not a general FSM watchdog.
+
+A clean-process test exercised native UI storage, automatic hand restoration,
+ordinary `Inventory.equipWeapon("Knife")`, native UI withdrawal, and ordinary
+re-equip of AMG-Dual with both renderers ready and three banks retained. A normal
+mouse punch was also exercised after withdrawal. This verifies that round trip,
+not campaign-wide pickup/player-transition coverage. Lua regression tests cover
+independent component destruction and the recovery exclusions above.
+
 Other blocked families have distinct requirements:
 
 - CH8 grenades use standby, pin-pull, timed throw, underthrow, stock consumption,
