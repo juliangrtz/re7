@@ -1,4 +1,4 @@
--- Experimental Ethan adapter. Kept separate from the campaign weapon allowlist.
+-- Experimental Ethan adapter, scoped to its exported inventory prefab namespace.
 local Gauntlet = {}
 Gauntlet.__index = Gauntlet
 
@@ -200,7 +200,7 @@ function Gauntlet:equip(weapon, variant)
     skeleton:call("set_Material", body:call("get_Material"))
     local transform = object:call("get_Transform")
     transform:call("set_LocalPosition", Vector3f.new(0, 0, 0))
-    transform:call("set_LocalRotation", Quaternion.new(0, 0, 0, 1))
+    transform:call("set_LocalRotation", Quaternion.identity())
     assert(weapon:get_field("EquipParam"):get_field("JointName") == "", "Unexpected gauntlet attachment")
     transform:call("set_ParentJoint", "")
     transform:call("set_SameJointsConstraint", true)
