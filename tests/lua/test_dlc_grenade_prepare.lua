@@ -65,7 +65,9 @@ return function()
     fallback_ready, conflict = true, true
     assert(not pcall(function() adapter:prepare(player) end) and #banks == 0)
     conflict = false
+    adapter.motion_info = { stale = true }
     assert(adapter:prepare(player) and #banks == 9 and adapter:owns_banks())
+    assert(adapter.motion_info == nil, "Never carry MotionInfo across player sessions")
     assert(released == 4 and tracks == 2)
     for i = 1, 3 do
         assert(banks[i * 3]:get_field("list") == original_list)
@@ -76,4 +78,7 @@ return function()
     assert(not pcall(function() adapter:prepare(player) end), "Never overwrite banks after ownership changes")
     banks[1] = original
     current_player = nil; assert(not adapter:owns_banks())
+    adapter.motion_info = { stale = true }
+    adapter:reset()
+    assert(adapter.motion_info == nil and adapter.reset_pending, "Reset must discard scene-owned motion scratch data without native calls")
 end

@@ -1100,8 +1100,10 @@ arm-layer clip. The same state appeared after normal grenade storage. Pickup and
 weapon switching still worked. Re-requesting that state did not change it, and a
 direct `Inventory.removeEquip()` control probe threw rather than supplying a
 healthy comparison. Do not infer a missing animation asset or add repeated
-recovery writes from this observation alone. A normal vanilla-weapon storage
-comparison and further empty-hands interaction/guard coverage remain required.
+recovery writes from this observation alone. A subsequent native item-box menu
+transfer of an equipped G17 reproduced action 34, no clip on arm layers 1/2/9,
+and movement accepted. This matches the grenade-storage observation in the same
+campaign setup; further empty-hands interaction/guard coverage remains required.
 
 Loose grenade pickups use the campaign LiquidBomb template and its native
 `InteractDetailSearch`. A loose item does not need a Weapon component: LiquidBomb
@@ -1109,6 +1111,30 @@ and MiaKnife donors have none. The registered inventory prefab supplies the nati
 weapon after pickup. Preserved gun pickups that do contain WeaponGun must instead
 replace it with the grenade's `CH8WeaponThrowable` and rebind ItemAddTest IDs.
 Do not make a test demand a component that the real donor never had.
+
+### Motion scratch lifetime on reload
+
+Returning to title and reloading a grenade-equipped save exposed a stale cached
+`via.motion.MotionInfo` in `Grenade:motion_ready`. The motion component and active
+player were valid, but `sdk.is_managed_object` rejected the scratch object's old
+address. Its surviving Lua wrapper and earlier `add_ref()` did not prove native
+validity. The failure disabled the adapter, leaving a zero-duration `Melee.ReadyStart`
+and blocking movement/equip until the scratch object was discarded and the adapter
+reset. Do not misdiagnose this as failed pool initialization or missing animation
+assets. Discard motion scratch data on reset and player replacement without calling
+methods on the expired object. The gauntlet adapter uses the same scratch type and
+now discards it on reset too. Lua regressions cover both invalidation boundaries.
+
+A fresh process with this fix loaded the grenade-bearing save, returned to title,
+and loaded it again without hot-patching or explicit adapter resets. Both loads
+reached idle clip 2001 with nine banks and an owned ready pool; a subsequent normal
+mouse throw consumed exactly the remaining grenade without adapter failure.
+
+An earlier heavily probed session crashed on title teardown in Wwise's
+`CAkRegisteredObj` destructor (executable RVA `0x5A0E520`). The dump/log are retained
+locally. This happened before any CH9 research fixtures were deployed; neither a
+CH9 regression nor a causal connection to MotionInfo has been established. Keep
+the audio teardown crash separate from the reproducible stale-scratch Lua error.
 
 ### Campaign flow scope
 

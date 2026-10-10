@@ -163,6 +163,7 @@ function Gauntlet:clear_attack()
 end
 
 function Gauntlet:reset()
+    self.motion_info = nil
     self:clear_attack()
     local s = self.session
     if s and s.player == self.game:player() then

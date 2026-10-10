@@ -280,7 +280,9 @@ return function()
     adapter:clear_attack()
     assert(cleared[6] and off_count == before_off + 1, "Clear a surviving collider independently of its weapon")
     collider_valid = false
+    adapter.motion_info = { stale = true }
     adapter:reset(); assert(not adapter.weapon and not adapter.attack and not adapter.charge and adapter.session == old_session)
+    assert(adapter.motion_info == nil, "Do not retain MotionInfo across scene/weapon resets")
     assert(restored_mesh and restored_material and restored_parts[0] and restored_parts[1] == false
         and not old_session.hands[1].original, "Storage destroys the weapon but must still restore Ethan's hands")
     adapter:reset()

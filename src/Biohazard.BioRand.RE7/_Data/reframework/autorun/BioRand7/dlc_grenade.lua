@@ -61,6 +61,8 @@ function Grenade:prepare(player)
         return true
     end
     self:cancel(false)
+    -- MotionInfo can be invalidated by scene unload even while its Lua wrapper survives.
+    self.motion_info = nil
     self.weapon, self.variant, self.empty, self.last_state, self.owner_wait = nil, nil, nil, nil, nil
     local controller = self.game:component(player, "app.PlayerMotionController")
     local motion = controller and controller:get_field("Motion")
@@ -159,6 +161,7 @@ end
 
 function Grenade:reset()
     self.reset_pending = true
+    self.motion_info = nil
     self.pool:reset()
 end
 
