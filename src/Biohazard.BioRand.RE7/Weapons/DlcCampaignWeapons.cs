@@ -11,9 +11,10 @@ public static class DlcCampaignWeapons {
     public const string ConfigKey = "dlc-campaign-weapons";
     public static ImmutableArray<DlcWeaponSource> Sources { get; } = [.. DlcWeaponCatalog.Weapons
         .Where(w => w.IsCampaignCandidate).Select(w => w with { ResourceRoot = "BioRand/DlcWeapons" })];
-    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. System.Text.Encoding.UTF8
-        .GetString(EmbeddedData.GetFile("dlc_weapon_assets.txt"))
-        .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)];
+    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. new[] { "dlc_weapon_assets.txt", "dlc_gauntlet_assets.txt" }
+        .SelectMany(name => System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile(name))
+            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
+        .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.Ordinal)];
 
     public static bool Contains(string id) => Sources.Any(w => w.ItemId == id);
     internal static bool IsEnabled(IPatchContext context)
@@ -76,5 +77,21 @@ public static class DlcCampaignWeapons {
                 ["Attack.rcol/AttackLarge"] = new() { Damage = 150, Stun = 50 },
             },
         };
+        foreach (var gauntlet in Sources.Where(w => w.Adapter == DlcWeaponAdapter.Gauntlet)) {
+            var model = DlcGauntletWeapons.GetModel(gauntlet.WeaponId);
+            yield return new WeaponDefinition {
+                WeaponId = (WeaponID)gauntlet.WeaponId,
+                Id = gauntlet.WeaponId == 61 ? "wp1610" : model, Name = gauntlet.Name,
+                IsGun = false, IsInventoryWeapon = true, UserType = Enums.app.CharacterDefine.Type.Player,
+                BulletItemIDs = [], UserParamsPath = null,
+                Mesh = $"CH9/Weapon/{model}_Gauntlet/{model}.mesh",
+                Material = $"CH9/Weapon/{model}_Gauntlet/{model}.mdf2",
+                PrefabPath = gauntlet.CampaignPrefab.Of() + ".17",
+                RcolPaths = [gauntlet.CollisionPath.RcolFile()],
+                Damage = DlcGauntletWeapons.GetAttacks(gauntlet.WeaponId).ToDictionary(
+                    attack => $"Attack.rcol/{attack.Name}",
+                    attack => new WeaponDamageStats { Damage = attack.Damage, Stun = attack.Stun }),
+            };
+        }
     }
 }

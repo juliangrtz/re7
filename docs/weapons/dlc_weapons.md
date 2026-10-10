@@ -4,9 +4,9 @@ Status: experimental, **not campaign-certified**. Investigation: 2026-10-10.
 
 This is the handoff for the DLC weapon integration attempt. Do not interpret the
 source catalog, a successful export, an item-box entry, or a forced shot as a
-working randomizer weapon. AMG-Dual, AMG-78a, and AMG-78 have **experimental Ethan
-lab adapters**, but are not yet included in campaign generation or the
-supported-weapon grant.
+working randomizer weapon. AMG-Dual, AMG-78a, and AMG-78 now join the opt-in
+campaign pool through an experimental player adapter. Combat, acquisition, and
+persistence evidence below is narrower than complete playthrough certification.
 
 Related: [integration plan](../DLCIntegrationPlan.MD),
 [binary evidence](../DLCIntegrationEvidence.MD), [technical notes](../Notes.MD),
@@ -18,20 +18,20 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
-  The export preflights and copies the campaign dependency manifest plus 34
-  gauntlet hand, material, texture and motion resources from the installed game.
+  The export preflights and copies the weapon dependency manifests, including 38
+  gauntlet display, hand, material, texture and motion resources from the installed game.
 - The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
   includes opt-in hand-axe motions and confirmed-hit recovery. The campaign
   version additionally isolates its attack RCOL and participates in generation
   and debug grants. Lab candidacy and campaign candidacy remain separate
   properties; do not promote a lab export merely because its prefab loads.
-- `DlcCampaignWeaponPatch` integrates five candidates under `BioRand/DlcWeapons`
+- `DlcCampaignWeaponPatch` integrates eight candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
 - The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21,
-  and Spirit Blade. The remaining nine catalog entries, including AMG-Dual,
-  stay excluded pending player-system work.
+  Spirit Blade, AMG-78a, AMG-78, and AMG-Dual. The remaining six catalog entries
+  are throwables and stay excluded pending player-system work.
 - Campaign integration includes item definitions, starting weapons and ammunition,
   random weapon pools, pickup templates, item settings/messages, inspection
   resource folders, and weapon-stat controls. Custom bird-cage entries are gated;
@@ -40,19 +40,22 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   knife attack RCOL are copied to that namespace before stat changes. Joe's M21
   deliberately shares campaign M21 parameters and controls. Source DLC settings
   and inventory PFBs are not rewritten, and DLC gameplay roots stay inactive.
-- `_Data/dlc_weapon_assets.txt` lists 113 required installed resources, including
-  weapon render/motion/collision/VFX dependencies and import metadata. Generation
+- `_Data/dlc_weapon_assets.txt` and `_Data/dlc_gauntlet_assets.txt` together list
+  151 required installed resources, including weapon render/motion/collision/VFX
+  dependencies and import metadata. Generation
   preflights every entry before registering anything and emits a clear error if
   the baseline needs `setup --dlc-weapons`. Extracted game assets are not committed.
 - `BioRand7/dlc_weapons.lua` makes at most one deferred loading request per matching
   campaign prefab per session. It does not automatically grant items, force native
   initialization or repair AI. Its scoped player adapter maps Spirit Blade's
-  motion bank and observes confirmed damage for recovery; it never synthesizes
-  attacks or input. Both flags imply REFramework is required.
+  motion bank and observes confirmed damage for recovery. The separate gauntlet
+  adapter maps native melee actions to Joe's clips and enables their exported
+  collision windows; neither adapter synthesizes player input. Both flags imply
+  REFramework is required.
 - **BioRand 7 > Debug tools > Add supported DLC weapons to item box** queues a
-  one-shot grant on `UpdateBehavior`. It adds one of each of the five candidates,
+  one-shot grant on `UpdateBehavior`. It adds one of each of the eight candidates,
   skipping weapons already owned in inventory or storage. Both integration flags,
-  campaign Ethan, and all five ready campaign prefabs are required. Missing/foreign
+  campaign Ethan, and all eight ready campaign prefabs are required. Missing/foreign
   adapters abort before any additions; a native add failure stops the batch without
   retrying or removing earlier successes. The menu reports the result. Loading a
   save, starting a new game, resetting scripts, or reloading config cancels pending
@@ -91,13 +94,13 @@ WeaponID is distinct from the string ItemDataID.
 | `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | None |
 | `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | None |
 | `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
-| `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
-| `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
+| `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
+| `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
-| `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
+| `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `NumaItem072` | Joe's M21 | CH9 | 13 | `app.CH9WeaponGun` | Experimental base gun |
 
 Additional identities that must not be conflated:
@@ -613,6 +616,58 @@ mouse punch was also exercised after withdrawal. This verifies that round trip,
 not campaign-wide pickup/player-transition coverage. Lua regression tests cover
 independent component destruction and the recovery exclusions above.
 
+### Eight-weapon campaign integration
+
+The production `BioRand7/dlc_weapons` feature owns the gauntlet adapter; the
+manual lab runner is not required. Generation adds the three gauntlet item and
+weapon definitions, melee starting selections, random pickups, inspection
+resources, and namespaced attack RCOLs. All seven attack records per variant
+participate in ordinary damage/stun randomization without rewriting Joe's source
+player RCOL. Gauntlet inventory prefabs must **not** receive
+`WeaponMotionController`: their skeleton and motion belong to the player adapter,
+not a weapon-local Motion component.
+
+Recorded production-path checks:
+
+- A full opt-in seed generated with all 151 dependencies. Its starting selections
+  included AMG-Dual for Ethan, AMG-78a for Mia, and Spirit Blade for Clancy VHS.
+  This was an output inspection, not a complete deployed-seed playthrough.
+- Native world pickups made from the production gauntlet templates added AMG-78a
+  and AMG-78 to Ethan's inventory. Both used their imported IDs, correct display
+  models, and ordinary equip. AMG-78's examine view loaded its silver model.
+- The actual debug grant added four missing weapons and skipped the four already
+  owned. A second request added zero and reported all eight already owned.
+- A disposable manual save containing all eight weapons survived a process
+  restart: four remained in inventory, four in storage. Saved AMG-78 equipped
+  automatically into bank 9912 with finite 284-frame ReadyIdle clips, valid hand
+  resources, accepted input, and no adapter failure. Earlier isolated-lab tests
+  established the Dual's storage and equipped cold-load paths separately.
+- A native chapter transition from Ethan to ship VHS Mia (`Pl2000`, chapter 13)
+  created nine correctly owned banks. All three gauntlets were withdrawn through
+  her physical item box and equipped normally. A mouse click started Dual motion
+  2441. Bounded native input requests exercised full-charge Dual motion 2691 /
+  request 5 and single-gauntlet motion 2664 / request 6, including active collision
+  windows and return to idle. Switching to MiaKnife restored `pl2010.mesh` and
+  `pl2020.mesh`. This does not establish Mia enemy damage or held-button input.
+
+Campaign player scenes for `Pl0000`, `Pl0000_Chapter1`, `Pl2000`, `Pl2100`, and
+`Pl3000` use `pl0000.motbank` and its joint map. The adapter accepts those explicit
+identities only. It resolves the real `PlayerMeshController.RArmMesh` and
+`LArmMesh` TDB fields, then verifies ancestry belongs to the active player. Global
+`findGameObject("Pl0000HandL")` is not valid for Mia/VHS or overlapping chapter
+loads. Left/right selection is explicit, not inferred from Ethan object names.
+Exact fallback bank ID/type, hand readiness, and ownership are checked before
+allocating dynamic banks. Broader player-transition/combat acceptance remains
+separate from source-scene compatibility and mocked regression coverage.
+
+The weapon-local attachment now uses `Quaternion.identity()`. Live REFramework
+showed `Quaternion.new(0, 0, 0, 1)` produces `(x=0,y=0,z=1,w=0)`, a 180-degree
+rotation, because the constructor takes **w, x, y, z**. The corrected cold-loaded
+weapon has `(x=0,y=0,z=0,w=1)`. Earlier hits still landed with the old value, so
+this is a verified transform correction, not evidence that it caused every
+collision or animation problem. Full equip/reset regression tests now exercise
+the transform, hidden skeleton, both hand masks, and all three variants.
+
 Other blocked families have distinct requirements:
 
 - CH8 grenades use standby, pin-pull, timed throw, underthrow, stock consumption,
@@ -696,6 +751,24 @@ Other blocked families have distinct requirements:
     registrations first. Isolate CH8 parameter/knife RCOL edits from source DLC;
     document deliberate aliases such as Joe's M21. The added campaign
     WeaponMotionController was not independently A/B-tested as a causal fix.
+17. **Test exported runtime packaging, not just embedded files.**
+    `RandomizerOutput.REFrameworkScriptPaths` is an explicit allowlist. All three
+    DLC runtime modules were embedded but missing from fresh output archives;
+    a warm installation with manually copied scripts hid that defect. Both export
+    formats now contain the modules. Regression tests resolve every literal
+    local `require("BioRand7/...")` in packaged Lua and compare packaged bytes
+    with the embedded module. Check a fresh full seed, not only a successful DLL
+    build or isolated lab deployment.
+18. **Disposable pickup fixtures need independent save identities.** A research
+    prefab reused its SCN donor's `SaveGUID`; saved pickup state changed its
+    ItemDataID and disabled it in a different player scene. Production placement
+    paths already clone with new GUIDs. Do the same before serializing a research
+    prefab. Do not run the SCN GUID remapper on an already serialized PFB: empty
+    object GUIDs can accidentally remap nil references. Construct from the SCN
+    donor, assign fresh identities, then serialize. Runtime-created prefab handles
+    for newly installed fixture files also became invalid in this session; the
+    cause was not established. Production inventory prefabs stayed valid, and
+    native storage/withdrawal provided an independent player-adapter test.
 
 These are the same broad lessons as Em4400: serialized component parity does not
 prove native initialization, and one successful animation does not prove a
@@ -747,7 +820,7 @@ pickup interaction rebinding, messages, ammo mapping, capacity changes, and the
 WeaponID 13 alias. Lua coverage checks exact namespace guards, deferred bounded
 loading, failures without repeated mutations, and load/new-game invalidation.
 
-The campaign integration full test-project run passed 595 tests, and all 23 Lua suites
+The campaign integration full test-project run passed 597 tests, and all 25 Lua suites
 passed under Lua 5.4. The machine's `lua` command was Lua 5.1, so a compatible
 Lua 5.4 runtime was used. Automated success does not remove the manual risks above.
 
@@ -763,6 +836,7 @@ Remaining acceptance work:
    parent-controlled FSMs and any explicitly enabled bird-cage entries. Check sound
    loading separately; the curated manifest is not proof of a complete sound-bank
    closure. Check randomized loaded ammo on scene pickups as well as inventory PFBs.
-5. Continue AMG and throwable player-system work separately from the conventional
-   gun adapter. Keep unproven candidates out of generation and debug grants until
-   their complete equip/attack/cancel/restore lifecycle is demonstrated.
+5. Finish gauntlet player-transition, held-button input, sound, and visual checks.
+   Port throwables separately from the conventional gun adapter. Keep those six
+   candidates out of generation and debug grants until their complete
+   equip/attack/consume/cancel/restore lifecycle is demonstrated.

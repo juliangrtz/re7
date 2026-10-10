@@ -18,7 +18,7 @@ internal static class StartingWeaponCategoryExtensions {
     extension(StartingWeaponCategory category) {
         public string GetLabel()
             => category switch{
-                StartingWeaponCategory.Bladed => "Edged/Bladed",
+                StartingWeaponCategory.Bladed => "Melee",
                 StartingWeaponCategory.CircularSaw => "Circular Saw",
                 StartingWeaponCategory.Handgun => "Handgun",
                 StartingWeaponCategory.MachineGun => "P19 Machine Gun",
@@ -33,7 +33,7 @@ internal static class StartingWeaponCategoryExtensions {
         public List<ItemID> GetItemIds(bool includeDlcWeapons = false) {
             var items = GetBaseItemIds(category);
             if (includeDlcWeapons) items.AddRange(category switch {
-                StartingWeaponCategory.Bladed => [ItemID.CKnife, ItemID.CH9_WP002],
+                StartingWeaponCategory.Bladed => [ItemID.CKnife, ItemID.CH9_WP002, ItemID.CH9_WP000, ItemID.CH9_WP001, ItemID.CH9_WP006],
                 StartingWeaponCategory.Handgun => [ItemID.Handgun_Albert_C],
                 StartingWeaponCategory.Shotgun => [ItemID.Shotgun_Albert, ItemID.NumaItem072],
                 _ => Array.Empty<ItemID>(),

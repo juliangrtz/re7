@@ -26,6 +26,10 @@ natives/stm/ch9/vfx/vfx_recordsystem/vfx_recordtexture/pl9000/pl9010_hand_bloodf
 natives/stm/ch9/vfx/vfx_recordsystem/vfx_recordtexture/pl9000/pl9010_hand_recordsys_rtt.rtex.5
 natives/stm/ch9/vfx/vfx_recordsystem/vfx_recordtexture/pl9000/pl9020_hand_bloodflow_rtt.rtex.5
 natives/stm/ch9/vfx/vfx_recordsystem/vfx_recordtexture/pl9000/pl9020_hand_recordsys_rtt.rtex.5
+natives/stm/ch9/weapon/wp1600_gauntlet/wp1600.mdf2.21
+natives/stm/ch9/weapon/wp1600_gauntlet/wp1600.mesh.220128762
+natives/stm/ch9/weapon/wp1620_gauntlet/wp1620.mdf2.21
+natives/stm/ch9/weapon/wp1620_gauntlet/wp1620.mesh.220128762
 natives/stm/streaming/ch9/character/player/pl9000/pl9010/pl9010_atlas_albm.tex.35
 natives/stm/streaming/ch9/character/player/pl9000/pl9010/pl9010_atlas_nrmr.tex.35
 natives/stm/streaming/ch9/character/player/pl9000/pl9010/pl9020_atlas_albm.tex.35

@@ -1,6 +1,6 @@
 local Weapons = {}
 Weapons.__index = Weapons
-local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002" }
+local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002", "CH9_WP000", "CH9_WP001", "CH9_WP006" }
 
 function Weapons.new(context)
     return setmetatable({ context = context, requested = {}, next_check = 0 }, Weapons)
@@ -16,11 +16,16 @@ function Weapons:install()
     self.player_adapter = require("BioRand7/dlc_weapon_player").new(self.context.game,
         function() return self:enabled() and not self.adapter_failed end, "BioRand/DlcWeapons")
     self.player_adapter:install()
+    self.gauntlet_adapter = require("BioRand7/dlc_gauntlet").new(self.context.game,
+        function() return self:enabled() and not self.gauntlet_failed end, "BioRand/DlcWeapons")
+    self.gauntlet_adapter:install()
 end
 
 function Weapons:reset()
     if self.player_adapter then self.player_adapter:reset() end
+    if self.gauntlet_adapter then self.gauntlet_adapter:reset() end
     self.adapter_failed = false
+    self.gauntlet_failed = false
     self.requested, self.next_check, self.finished = {}, 0, false
     self.pending_add, self.grant_status = nil, nil
 end
@@ -84,6 +89,14 @@ function Weapons:process_item_box_request()
 end
 
 function Weapons:update()
+    if self.gauntlet_adapter and not self.gauntlet_failed then
+        local ok, message = pcall(function() self.gauntlet_adapter:update() end)
+        if not ok then
+            self.gauntlet_failed = true
+            pcall(function() self.gauntlet_adapter:reset() end)
+            self.context.log:error("DLC gauntlet adapter failed: " .. tostring(message))
+        end
+    end
     if self.player_adapter and not self.adapter_failed then
         local ok, message = pcall(function() self.player_adapter:update() end)
         if not ok then

@@ -25,7 +25,8 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
                 prefab.Scene = AddGauntletCombat(prefab.Scene, weapon);
             if (isolateParameters) {
                 prefab.Scene = IsolateParameters(prefab.Scene, weapon);
-                prefab.Scene = prefab.Scene.VisitGameObjects(go => go.Components.Any(c => c.Type.Name is "app.Weapon" or "app.WeaponGun")
+                prefab.Scene = prefab.Scene.VisitGameObjects(go => weapon.Adapter != DlcWeaponAdapter.Gauntlet
+                    && go.Components.Any(c => c.Type.Name is "app.Weapon" or "app.WeaponGun")
                     && !go.Components.Any(c => c.Type.Name == "app.WeaponMotionController")
                     ? go.AddOrUpdateComponent(context.TypeRepository.Create("app.WeaponMotionController").Set("Enabled", true)) : go);
             }
@@ -50,8 +51,8 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
     }
 
     private RszScene IsolateParameters(RszScene scene, DlcWeaponSource weapon) {
-        // Joe's M21 intentionally shares campaign M21 parameters and stat controls.
-        if (weapon.ItemId == "NumaItem072") return scene;
+        // Joe's M21 shares campaign M21 parameters; gauntlet RCOLs were already isolated above.
+        if (weapon.ItemId == "NumaItem072" || weapon.Adapter == DlcWeaponAdapter.Gauntlet) return scene;
         var definition = DlcCampaignWeapons.CreateWeaponDefinitions().Single(w => (int)w.WeaponId == weapon.WeaponId);
         if (weapon.Adapter == DlcWeaponAdapter.Gun) {
             var gun = scene.GetGameObjects().SelectMany(go => go.Components).Single(c => c.Type.Name == "app.WeaponGun");
@@ -140,17 +141,8 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
         var collision = context.GetRcolFile("ch9/collision/collider/player/pl9000/pl9000.rcol".RcolFile())
             .ToBuilder(context.TypeRepository);
         // Dual's motion 2443 requests BodyblowR (45); the Knuckle version requests UppercutR (17).
-        string[] names = weapon.WeaponId switch {
-            67 => ["AttackHookR_Double", "AttackHook_Double", "AttackBodyblowR_Double",
-                "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble",
-                "AttackStraightV2_Double"],
-            61 => ["AttackHookR", "AttackHook_Reword", "AttackUppercutR", "AttackStraightV2_Reword",
-                "Attack1ChargeLeftReword", "Attack2ChargeLeftReword", "Attack3ChargeLeftReword"],
-            62 => ["AttackHookR", "AttackHook_Gauntlet", "AttackUppercutR", "AttackStraightV2_Gauntlet",
-                "Attack1ChargeLeft", "Attack2ChargeLeft", "Attack3ChargeLeft"],
-            _ => throw new InvalidDataException($"Unknown gauntlet: {weapon.ItemId}"),
-        };
-        var requests = names.Select(name => collision.RequestSets.Single(r => r.Name == name)).ToArray();
+        var requests = DlcGauntletWeapons.GetAttacks(weapon.WeaponId)
+            .Select(attack => collision.RequestSets.Single(r => r.Name == attack.Name)).ToArray();
         collision.RequestSets.Clear();
         for (var i = 0; i < requests.Length; i++) {
             requests[i].Id = i;

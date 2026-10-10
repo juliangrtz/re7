@@ -28,20 +28,32 @@ return function()
     enabled, allow = true, false
     weapons:update(); assert(calls == 0)
     allow = true
-    weapons:update(); assert(calls == 5 and loads == 0)
+    weapons:update(); assert(calls == 8 and loads == 0)
     available, now = true, 1
-    weapons:update(); assert(loads == 15)
-    now = 3; weapons:update(); assert(loads == 15 and calls == 10)
+    weapons:update(); assert(loads == 24)
+    now = 3; weapons:update(); assert(loads == 24 and calls == 16)
     weapons:reset(); ready = true
-    weapons:update(); assert(loads == 15)
+    weapons:update(); assert(loads == 24)
     weapons:reset(); ready, foreign = false, true
-    weapons:update(); assert(loads == 15)
+    weapons:update(); assert(loads == 24)
     weapons:reset(); foreign, fail = false, true
-    weapons:update(); assert(loads == 20 and errors == 5)
-    now = 5; weapons:update(); assert(loads == 20, "Failed mutations must not retry every frame")
+    weapons:update(); assert(loads == 32 and errors == 8)
+    now = 5; weapons:update(); assert(loads == 32, "Failed mutations must not retry every frame")
 
     local module_name = "BioRand7/dlc_weapon_player"
     local previous = package.loaded[module_name]
+    local gauntlet_name = "BioRand7/dlc_gauntlet"
+    local previous_gauntlet = package.loaded[gauntlet_name]
+    local gauntlet_installed, gauntlet_updated, gauntlet_reset, gauntlet_enabled = 0, 0, 0
+    package.loaded[gauntlet_name] = { new = function(game, is_enabled, root)
+        assert(game == context.game and root == "BioRand/DlcWeapons")
+        gauntlet_enabled = is_enabled
+        return {
+            install = function() gauntlet_installed = gauntlet_installed + 1 end,
+            update = function() gauntlet_updated = gauntlet_updated + 1; error("gauntlet failure") end,
+            reset = function() gauntlet_reset = gauntlet_reset + 1 end,
+        }
+    end }
     local installed, updated, reset = 0, 0, 0
     local adapter_enabled
     package.loaded[module_name] = { new = function(game, is_enabled, root)
@@ -55,13 +67,18 @@ return function()
     end }
     weapons:install(); weapons:install()
     assert(installed == 1 and adapter_enabled())
+    assert(gauntlet_installed == 1 and gauntlet_enabled())
     weapons:update(); weapons:update()
     assert(updated == 1 and reset == 1 and not adapter_enabled(), "Adapter failures must stop until reset")
+    assert(gauntlet_updated == 1 and gauntlet_reset == 1 and not gauntlet_enabled())
     weapons:reset()
     assert(reset == 2 and adapter_enabled(), "New sessions reset adapter state without reinstalling hooks")
+    assert(gauntlet_reset == 2 and gauntlet_enabled())
     enabled = false
     assert(not adapter_enabled())
+    assert(not gauntlet_enabled())
     enabled, allow = true, false
     assert(not adapter_enabled())
     package.loaded[module_name] = previous
+    package.loaded[gauntlet_name] = previous_gauntlet
 end
