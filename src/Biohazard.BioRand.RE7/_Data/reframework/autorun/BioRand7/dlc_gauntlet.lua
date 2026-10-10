@@ -238,6 +238,7 @@ function Gauntlet:recover_equip(name, layer)
     end
     -- A saved equip can select its motion before our isolated bank exists.
     -- Wait for the actual idle clip, then make one ordinary motion request.
+    if self.motion_info and not sdk.is_managed_object(self.motion_info) then self.motion_info = nil end
     self.motion_info = self.motion_info or sdk.create_instance("via.motion.MotionInfo"):add_ref()
     local s = self.session
     if not s.motion:call("getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)",

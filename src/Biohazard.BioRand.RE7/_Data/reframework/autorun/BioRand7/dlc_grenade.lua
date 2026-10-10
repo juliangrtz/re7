@@ -111,6 +111,7 @@ function Grenade:motion_ready(variant)
     local s = self.session
     s.ready = s.ready or {}
     if s.ready[variant.weapon] then return true end
+    if self.motion_info and not sdk.is_managed_object(self.motion_info) then self.motion_info = nil end
     self.motion_info = self.motion_info or sdk.create_instance("via.motion.MotionInfo"):add_ref()
     for _, clip in ipairs({ 8000, 8001, 8002, 2001, 2400, 2401 }) do
         if not s.motion:call("getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)",

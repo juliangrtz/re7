@@ -108,6 +108,8 @@ function Throwable:motion_ready(variant)
     local s = self.session
     s.ready = s.ready or {}
     if s.ready[variant.weapon] then return true end
+    -- Native scratch can expire between weapon equips without a player replacement.
+    if self.motion_info and not sdk.is_managed_object(self.motion_info) then self.motion_info = nil end
     self.motion_info = self.motion_info or sdk.create_instance("via.motion.MotionInfo"):add_ref()
     for _, clip in ipairs({ 2001, 2400, 2405, 2406, 2407 }) do
         if not s.motion:call("getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)",

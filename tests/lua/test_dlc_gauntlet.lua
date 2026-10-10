@@ -52,6 +52,11 @@ return function()
 
     local creations, releases, refs, fail = 0, 0, 0, false
     sdk = { to_int64 = function(value) return value end, to_ptr = function(value) return value end,
+        is_managed_object = function(value) return not value.stale end,
+        create_instance = function(kind)
+            assert(kind == "via.motion.MotionInfo")
+            return object({}, { get_MotionEndFrame = function() return 284.0 end })
+        end,
         to_float = function(value) return value.float end, float_to_ptr = function(value) return { float = value } end,
         PreHookResult = { SKIP_ORIGINAL = "skip" },
         create_resource = function(kind, resource_path)
@@ -101,7 +106,8 @@ return function()
     for i = 1, 3 do banks[i] = {index = i, kind = 9910, bank = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 9910 end })} end
     local motion = object({}, { getLayer = function() return layer end,
         get_TargetBankType = function() return target_bank end,
-        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(bank, kind, id)
+        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(bank, kind, id, info)
+            assert(not info.stale, "Never reuse expired motion scratch")
             assert(bank == 0 and kind == 9910 and id == 2001)
             return idle_ready
         end,
@@ -209,10 +215,12 @@ return function()
     health, loading = 500, true; adapter:update(); assert(not adapter.controllable)
     loading, manager_fields.OwnerTask = false, nil; adapter:update(); assert(not adapter.controllable)
     manager_fields.OwnerTask = task
-    adapter.motion_info = object({}, { get_MotionEndFrame = function() return 284.0 end })
+    local expired_info = { stale = true }
+    adapter.motion_info = expired_info
     local before_recovery = #returns
     adapter.equip_pending, end_frame, idle_ready = true, 0.0, false
     update("Melee.ReadyStart", 2000)
+    assert(adapter.motion_info ~= expired_info, "Refresh scratch within an unchanged player session")
     assert(adapter.equip_pending and #returns == before_recovery, "Wait for the actual idle clip")
     idle_ready, paused = true, true
     adapter:update(); assert(#returns == before_recovery, "Never recover while paused")

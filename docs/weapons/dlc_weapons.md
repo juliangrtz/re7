@@ -1171,8 +1171,11 @@ inventory. Returning to title and continuing restored both exact counts, both
 campaign prefab paths, owned banks, a ready pool, and knife idle clip 2001 with
 284-frame duration. A normal mouse throw then consumed the last saved knife and
 completed into the same empty-hands state as the vanilla comparison. This pass
-needed no prototype loader, hot adoption, or explicit adapter reset. It establishes
-same-process title reload, not yet a separate cold-process load of this new save.
+needed no prototype loader, hot adoption, or explicit adapter reset. A subsequent
+cold-process load restored the same save and exposed an additional intra-session
+scratch lifetime bug described below. With the managed-validity guard deployed,
+another cold-process load restored both items and normal mouse throws consumed
+the last spear and knife, each 1 -> 0, without adapter failure or a stuck action.
 
 Test fixture ownership produced a separate research-only trap: a newly created
 `via.Prefab` wrapper became invalid while the retained production pool prefab and
@@ -1391,6 +1394,23 @@ A fresh process with this fix loaded the grenade-bearing save, returned to title
 and loaded it again without hot-patching or explicit adapter resets. Both loads
 reached idle clip 2001 with nine banks and an owned ready pool; a subsequent normal
 mouse throw consumed exactly the remaining grenade without adapter failure.
+
+Reset boundaries alone are insufficient. A cold load with knife equipped cached
+valid scratch, but equipping the spear in the same player session later passed
+expired scratch to `Throwable:motion_ready`. A scoped traceback and validity
+probe identified that exact `MotionInfo` address as invalid while the weapon,
+shell manager, and owned pool remained valid. The resulting `sol_lua_push: ...
+is not a managed object` error disabled the adapter. A successful retry or title
+reload did not disprove the intermittent lifetime bug.
+
+All three motion adapters now check `sdk.is_managed_object` before reusing scratch
+and recreate it when invalid, without invoking methods on the expired wrapper.
+Lua tests cover invalidation within an unchanged player session. A fresh process
+with this guard replaced the cached scratch between knife and spear readiness,
+then completed ordinary mouse throws of both weapons, consuming exactly one of
+each. The pool stayed owned and ready; no prototype adoption, hot reset, or
+behavior patch was needed. Local evidence is in `ch9-scratchfix-*` captures.
+The solution build, 43 focused .NET tests, and all 31 Lua 5.4 suites passed.
 
 An earlier heavily probed session crashed on title teardown in Wwise's
 `CAkRegisteredObj` destructor (executable RVA `0x5A0E520`). The dump/log are retained

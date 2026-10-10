@@ -20,6 +20,7 @@ return function()
     os.clock = function() return now end
     thread = { get_hook_storage = function() return storage end }
     sdk = { to_int64 = function(value) return value end, to_ptr = function(value) return value end,
+        is_managed_object = function(value) return not value.stale end,
         PreHookResult = { SKIP_ORIGINAL = "skip" },
         create_instance = function(kind)
             assert(kind == "via.motion.MotionInfo")
@@ -84,7 +85,8 @@ return function()
         end,
     })
     local motion = object({}, { getLayer = function() return layer end,
-        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(id, kind)
+        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(id, kind, clip, info)
+            assert(not info.stale, "Never reuse expired motion scratch")
             assert(id == 0 and kind == 9950); return motion_ready
         end,
         getDynamicMotionBank = function(index) return banks[index] and banks[index].bank end })
@@ -168,7 +170,10 @@ return function()
     motion_ready, end_frame = false, 0.0
     update("Melee.ReadyStart", 4294967295, 0.0)
     assert(adapter.equip_pending and #requests == 0)
+    local expired_info = adapter.motion_info
+    expired_info.stale = true
     motion_ready = true; update()
+    assert(adapter.motion_info ~= expired_info, "Refresh scratch without resetting the player or adapter")
     assert(not adapter.equip_pending and requests[#requests] == "Melee.ReadyIdle")
     local before_ready = #requests; update(); assert(#requests == before_ready, "Repair an empty saved equip only once")
     end_frame = 284.0

@@ -38,6 +38,7 @@ return function()
         return object(fields, calls)
     end
     sdk = { to_int64 = function(v) return v end, to_ptr = function(v) return v end,
+        is_managed_object = function(v) return not v.stale end,
         PreHookResult = { SKIP_ORIGINAL = "skip" }, find_type_definition = function(kind) return kind end,
         create_resource = function(kind, path)
             assert(kind == "via.motion.MotionListResource")
@@ -111,7 +112,8 @@ return function()
         setDynamicMotionBank = function(index, bank) banks[index + 1] = bank end,
         getDynamicMotionBank = function(index) return banks[index + 1] end,
         getLayer = function(index) assert(index == 1 or index == 2 or index == 9); return layer end,
-        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(id, kind, clip)
+        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(id, kind, clip, info)
+            assert(not info.stale, "Never pass expired scratch to a native motion call")
             assert(id == 0 and kind == variant.bank and ({ [2001]=true, [2400]=true, [2405]=true, [2406]=true, [2407]=true })[clip])
             info_clip = clip
             return motion_ready
@@ -227,6 +229,15 @@ return function()
         update(nil, aim and 2407 or 2400, 0.0)
         assert(adapter.attack and motion_id == (aim and 2405 or 2400))
     end
+    assert(adapter:motion_ready(variant))
+    local expired = adapter.motion_info
+    expired.stale = true
+    variant = Throwable.variants[2]
+    assert(adapter:motion_ready(variant) and adapter.motion_info ~= expired,
+        "Recreate expired scratch when switching variants within the same player session")
+    local retained = adapter.motion_info
+    adapter.session.ready = {}
+    assert(adapter:motion_ready(variant) and adapter.motion_info == retained, "Reuse valid scratch")
     for _, v in ipairs(Throwable.variants) do
         variant = v; weapon_fields.WeaponID = v.weapon; controller_fields.CurrentWeaponID = v.weapon
         adapter.weapon = nil
