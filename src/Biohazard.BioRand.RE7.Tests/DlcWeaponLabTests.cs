@@ -65,6 +65,7 @@ public sealed class DlcWeaponLabTests {
                 var collision = first.GetRcolFile(weapon.CollisionPath.RcolFile()).ToBuilder(first.TypeRepository);
                 Assert.Equal(Enumerable.Range(0, 7), collision.RequestSets.Select(r => r.Id));
                 Assert.Equal(new[] { 300, 300, 300, 300, 500, 3000, 500 }, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
+                Assert.Equal("AttackBodyblowR_Double", collision.RequestSets[2].Name);
                 Assert.Equal("AttackStraightV2_Double", collision.RequestSets[6].Name);
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "R_UpperArm");
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "L_UpperArm");

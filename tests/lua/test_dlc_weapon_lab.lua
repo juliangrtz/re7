@@ -1,7 +1,14 @@
 return function()
+    local gauntlet_resets, gauntlet_failure = 0, false
+    package.loaded["BioRand7/dlc_gauntlet"] = { new = function(_, _, root)
+        assert(root == "BioRand/DlcWeaponLab")
+        return { install = function() end, reset = function() gauntlet_resets = gauntlet_resets + 1 end,
+            update = function(self) if gauntlet_failure and not self.error then error("Gauntlet failed") end end }
+    end }
     local Lab = require("BioRand7/dlc_weapon_lab")
-    assert(#Lab.candidates == 5)
+    assert(#Lab.candidates == 6)
     assert(Lab.candidates[5].id == "CH9_WP002")
+    assert(Lab.candidates[6].id == "CH9_WP006")
     local writes, registered, owned, in_inventory = 0, true, false, false
     local box_id, name, fail = 1, "Pl0000", false
     local ready, loads = true, 0
@@ -60,8 +67,9 @@ return function()
     assert(not lab:queue("add", "CKnife"))
     lab.armed = true
     assert(not lab:queue("box"), "A menu manager call alone does not initialize the item-box UI")
-    assert(not lab:queue("add", "CH9_WP006"))
-    assert(not lab:queue("prepare", "CH9_WP006"))
+    assert(not lab:queue("add", "CH9_WP001"))
+    assert(lab:queue("prepare", "CH9_WP006"))
+    lab.pending = nil
     assert(lab:queue("prepare", "CH9_WP002"), "Spirit Blade is an explicit lab candidate only")
     lab.pending = nil
     assert(lab:queue("add", "CKnife"))
@@ -101,6 +109,7 @@ return function()
     lab.armed = true
     hooks["newGameInit()"]()
     assert(not lab.armed)
+    assert(gauntlet_resets == 2, "Both load/new-game paths discard the gauntlet's transient state")
     fail, owned, ready, lab.armed = false, false, false, true
     lab:queue("add", "CKnife"); lab:update()
     assert(writes == 4 and not lab.armed, "Do not add an unready prefab")
@@ -113,4 +122,7 @@ return function()
     registered = false
     lab:queue("prepare", "CKnife"); lab:update()
     assert(loads == 3 and not lab.armed, "Preparation must not alter source DLC prefabs")
+    gauntlet_failure, lab.armed = true, true
+    lab:update(); lab:update()
+    assert(not lab.armed and lab.gauntlet.error and gauntlet_resets == 3, "Disarm failed adapters without retrying mutations")
 end

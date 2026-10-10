@@ -10,6 +10,7 @@ local suites = {
     "test_dlc_weapon_lab",
     "test_dlc_weapon_player",
     "test_dlc_weapon_recovery",
+    "test_dlc_gauntlet",
     "test_dlc_weapons",
     "test_dlc_weapon_grant",
     "test_inventory_pause",

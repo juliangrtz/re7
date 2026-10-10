@@ -424,10 +424,52 @@ Further runtime findings from the isolated adapter:
   request observed in an updater hook was absent at melee consumption time. Keep
   diagnostic command injection separate from normal-input acceptance evidence.
 
-Remaining work includes hand-part selection, left/right combos, charge controls
-and feedback, interrupted attacks, pause/load/player transitions, resource cleanup,
-normal pickup/storage, and save restoration. Do not promote this candidate based
-only on the successful first punch.
+The standalone `dlc_gauntlet.lua` lab adapter was subsequently tested after a
+process restart, without the EMV resource helper or live collider repairs:
+
+- Right and left mouse-click punches both reached the campaign Molded's native
+  `DamageController.addDamageCore`: 300 raw damage, 108 applied in that contact.
+  The finisher delivered 500 raw / 300 applied; the level-2 charge delivered
+  3,000 raw / 1,800 applied. These values are observations, not fixed campaign
+  damage multipliers. Only incoming player damage was blocked for the test.
+- The motion name is not authoritative for collision selection. Clip 2443 is
+  named `Knuckle_Attack-R-Uppercut`, but emits request 45,
+  `AttackBodyblowR_Double`, rather than request 44, `AttackUppercutR_Double`.
+  The exported request and runtime marker must agree. The adapter now checks
+  exact source IDs (43, 40, 45, 42; charged attacks 32/33), not any nonnegative ID.
+- Native `MotionDelegateTagManager.addTagFromMotion` loses the melee action tag
+  after a raw clip replacement. A narrowly scoped post-hook adds the native
+  `MeleeAimIdle` tag, with `PlayerMelee` as sender, for the two owned charge clips
+  in the corresponding aim FSM states. This restored attack/cancel dispatch.
+  No tag-list pointer writes or global action-ID overrides are needed.
+- Native `SequenceTrackObject.CH9PlayerGauntletChargeLevel` markers reached
+  level 2. `Melee.AimAttackC` selects missing campaign clip 2407, which the
+  adapter replaces with 2690 or 2691. Both attacks returned to idle. Charge
+  tests used bounded diagnostic native command requests, not held-button input;
+  normal held-RMB acceptance remains a separate test.
+- Switching to Knife during charging restored both original Ethan hand meshes
+  and bank type 30. Re-equipping reused exactly three owned dynamic banks.
+  Pausing inside an active punch cleared all registered attack colliders;
+  resuming completed the animation without rearming that interrupted hit.
+- `app.PauseManager` is not a managed singleton. Check the actual
+  `app.GameManager.get_IsPause` and scene-loading state. The current motion task
+  must also be the non-null owner task before requesting gauntlet collisions.
+- `sdk.create_resource` plus `REResource:create_holder` supplies the mesh,
+  material and motion-list holders directly. Balance the temporary resource
+  reference on success and failure; retain holders and original hand resources.
+  Verify hand ancestry and exact motion-bank identity before changing anything.
+  Keep the isolated banks until their native player is destroyed, rather than
+  removing a bank while native animation state may still refer to it.
+
+The opt-in lab now exposes AMG-Dual and disarms its adapter on update failures.
+Its Lua regression coverage includes ownership guards, cached resource creation,
+all four punch mappings, both charge levels, finite completion, pause/external
+task/death suppression and refusal to reclaim another bank's slot.
+
+Remaining work includes normal held-button charging and feedback, combo timing,
+guard/damage/event interactions, cold saves with AMG-Dual already equipped,
+load/player transitions, normal pickup/two-way storage and resource teardown.
+Do not promote this candidate based only on animation or isolated damage tests.
 
 Other blocked families have distinct requirements:
 
@@ -530,8 +572,9 @@ dotnet run --project src/biorand-re7 -- mod -m "DLC Weapon Lab" -i "<RE7 install
 ```
 
 1. Deploy the explicit lab export using the normal mod workflow, with RE7 stopped.
-2. Ensure the current `BioRand7/game.lua` and `BioRand7/dlc_weapon_lab.lua` modules
-   are deployed. Run `tools/dlc_weapon_lab.lua` manually via ScriptRunner; do not
+2. Ensure the current `BioRand7/game.lua`, `BioRand7/dlc_weapon_lab.lua`,
+   `BioRand7/dlc_weapon_player.lua` and `BioRand7/dlc_gauntlet.lua` modules are
+   deployed. Run `tools/dlc_weapon_lab.lua` manually via ScriptRunner; do not
    add it to ordinary autorun or grant weapons on load.
 3. Load Ethan's campaign. Enable commands, select one candidate, and use
    **Prepare prefab** once. Wait, then **Add to item box**. A not-ready error

@@ -8,6 +8,7 @@ Lab.candidates = {
     { id = "Shotgun_Albert", name = "Thor's Hammer - AW Model-02" },
     { id = "NumaItem072", name = "Joe's M21" },
     { id = "CH9_WP002", name = "Spirit Blade (player adapter research)" },
+    { id = "CH9_WP006", name = "AMG-Dual (player adapter research)" },
 }
 
 local function candidate(id)
@@ -20,6 +21,7 @@ end
 
 function Lab:reset()
     if self.player_adapter then self.player_adapter:reset() end
+    if self.gauntlet then self.gauntlet:reset() end
     self.armed, self.pending, self.report, self.box_identity = false, nil, nil, nil
     self.added = {}
     self.status = "Session changed; test receipts cleared"
@@ -30,6 +32,11 @@ function Lab:install()
         self.player_adapter = require("BioRand7/dlc_weapon_player").new(self.game,
             function() return self.armed end, "BioRand/DlcWeaponLab")
         self.player_adapter:install()
+    end
+    if not self.gauntlet then
+        self.gauntlet = require("BioRand7/dlc_gauntlet").new(self.game,
+            function() return self.armed end, "BioRand/DlcWeaponLab")
+        self.gauntlet:install()
     end
     self.game:hook("app.SaveDataManager", "newGameInit()", function() self:reset() end)
     self.game:hook("app.SaveDataManager", "loadLevelUsingLoadData()", function() self:reset() end)
@@ -130,6 +137,16 @@ function Lab:execute(request)
 end
 
 function Lab:update()
+    if self.gauntlet and not self.gauntlet.error then
+        local ok, message = pcall(function() self.gauntlet:update() end)
+        if not ok then
+            self.armed = false
+            self.gauntlet.error = tostring(message)
+            pcall(function() self.gauntlet:reset() end)
+            self.status = tostring(message)
+            return
+        end
+    end
     if self.player_adapter then
         local ok, message = pcall(function() self.player_adapter:update() end)
         if not ok then
