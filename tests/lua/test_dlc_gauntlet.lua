@@ -59,6 +59,7 @@ return function()
     assert(releases == 2 and not adapter.resources["Resource:other/path"], "Release temporary resource on failure")
 
     local motion_id, ended, frame, source, charge_level = 2001, false, 0.0, -1, 0
+    local end_frame, idle_ready, target_bank, bank_updates = 284.0, true, 9910, 0
     local change_count, on_count, off_count, collider_requests, cleared, returns = 0, 0, 0, {}, {}, {}
     local node = object({}, {
         get_MotionID = function() return motion_id end, get_Weight = function() return 1.0 end,
@@ -74,6 +75,7 @@ return function()
     })
     local layer = object({}, {
         get_MotionID = function() return motion_id end, get_StateEndOfMotion = function() return ended end,
+        get_EndFrame = function() return end_frame end,
         get_Frame = function() return frame end, getRawMotionNodeCount = function() return 1 end,
         getRawMotionNode = function() return node end,
         ["changeMotion(System.UInt32, System.UInt32, System.Single, System.Single, via.motion.InterpolationMode, via.motion.InterpolationCurve)"] = function(bank, id, start, interpolation)
@@ -85,6 +87,11 @@ return function()
     local banks = {}
     for i = 1, 3 do banks[i] = {index = i, bank = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 9910 end })} end
     local motion = object({}, { getLayer = function() return layer end,
+        get_TargetBankType = function() return target_bank end,
+        ["getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)"] = function(bank, kind, id)
+            assert(bank == 0 and kind == 9910 and id == 2001)
+            return idle_ready
+        end,
         getDynamicMotionBank = function(index) return banks[index] and banks[index].bank end })
     local state_name = "Melee.ReadyIdle"
     local task = {}
@@ -92,6 +99,7 @@ return function()
     local motion_manager = object(manager_fields, { getCurrentMotionFsmStateName = function() return state_name end })
     local controller_fields = { CurrentWeaponID = 67 }
     local controller = object(controller_fields, {
+        updateTargetBankType = function() bank_updates = bank_updates + 1 end,
         ["requestMotion(System.String, System.UInt32, System.Single, System.Single, app.PlayerMotionController.RequestPriority)"] = function(state, index, start, interpolation, priority)
             assert(index == 1 and priority == 0 and math.type(start) == "float" and math.type(interpolation) == "float")
             returns[#returns + 1] = state
@@ -160,10 +168,84 @@ return function()
     health, loading = 500, true; adapter:update(); assert(not adapter.controllable)
     loading, manager_fields.OwnerTask = false, nil; adapter:update(); assert(not adapter.controllable)
     manager_fields.OwnerTask = task
+    adapter.motion_info = object({}, { get_MotionEndFrame = function() return 284.0 end })
+    local before_recovery = #returns
+    adapter.equip_pending, end_frame, idle_ready = true, 0.0, false
+    update("Melee.ReadyStart", 2000)
+    assert(adapter.equip_pending and #returns == before_recovery, "Wait for the actual idle clip")
+    idle_ready, paused = true, true
+    adapter:update(); assert(#returns == before_recovery, "Never recover while paused")
+    paused = false
+    adapter:update(); adapter:update()
+    assert(#returns == before_recovery + 1 and returns[#returns] == "Melee.ReadyIdle" and bank_updates == 1,
+        "One normal-priority request recovers a cold empty equip")
+    adapter.equip_pending, end_frame = true, 30.0
+    adapter:update(); assert(not adapter.equip_pending and #returns == before_recovery + 1, "Preserve a valid equip animation")
+    adapter.equip_pending, end_frame = true, 0.0
+    update("Melee.GuardStart", 2000)
+    assert(not adapter.equip_pending and #returns == before_recovery + 1, "Never replace another native action")
     local old_session = adapter.session
     adapter:reset(); assert(not adapter.weapon and not adapter.attack and not adapter.charge and adapter.session == old_session)
     assert(adapter:owns_banks(), "Do not remove banks while the native player may still refer to them")
     banks[2] = nil
     assert(not adapter:owns_banks())
     assert(not pcall(function() adapter:prepare(player) end), "Never silently reappend after ownership loss")
+
+    local component = game.component
+    local early_controller, early_sequence
+    game.component = function(_, _, kind)
+        if kind == "app.PlayerMotionController" then return early_controller end
+        if kind == "app.PlayerSequenceManager" then return early_sequence end
+    end
+    local pending = Gauntlet.new(game, function() return enabled end, "BioRand/DlcWeaponLab")
+    local created_before = creations
+    local ready, reason = pending:prepare(player)
+    assert(not ready and reason == "player motion components" and not pending.session)
+    early_sequence = {}
+    early_controller = object({ MotionManager = {}, Motion = object({}, {
+        ["findMotionBank(System.UInt32, System.UInt32)"] = function() return nil end,
+    }) }, {})
+    ready, reason = pending:prepare(player)
+    assert(not ready and reason == "Ethan axe fallback bank" and creations == created_before,
+        "Normal startup must not allocate resources or append banks before native readiness")
+    local clock, now = os.clock, 1.0
+    os.clock = function() return now end
+    loading = true
+    pending:update(); now = 100.0; pending:update()
+    assert(pending.waiting.since == now, "A long native scene load is not an adapter failure")
+    loading = false
+    now = 101.0; pending:update()
+    assert(pending.waiting.reason == "Ethan axe fallback bank")
+    now = 111.0
+    assert(not pcall(function() pending:update() end), "Missing post-load dependencies must time out")
+    enabled = false; pending:update(); assert(not pending.waiting)
+    enabled = true
+    local hand_ready, material_ready = false, false
+    local hand_mesh = object({}, {
+        getMesh = function() return {} end, get_Material = function() return {} end,
+        get_MeshReady = function() return hand_ready end, get_MaterialReady = function() return material_ready end,
+    })
+    local early_hand = {}
+    local fallback = object({}, { get_BankID = function() return 0 end, get_BankType = function() return 10 end,
+        get_MotionList = function() return {} end })
+    early_controller = object({ MotionManager = {}, Motion = object({}, {
+        ["findMotionBank(System.UInt32, System.UInt32)"] = function(_, bank) return bank == 10 and fallback or nil end,
+    }) }, {})
+    sdk.get_native_singleton = function() return {} end
+    sdk.find_type_definition = function() return {} end
+    sdk.call_native_func = function()
+        return object({}, { ["findGameObject(System.String)"] = function() return early_hand end })
+    end
+    local early_components = game.component
+    game.component = function(self, owner, kind)
+        if owner == early_hand then assert(kind == "via.render.Mesh"); return hand_mesh end
+        return early_components(self, owner, kind)
+    end
+    ready, reason = pending:prepare(player)
+    assert(not ready and reason == "Pl0000HandR resources" and creations == created_before)
+    hand_ready = true
+    ready, reason = pending:prepare(player)
+    assert(not ready and reason == "Pl0000HandR resources" and creations == created_before,
+        "Do not replace a native hand before both its mesh and material finish loading")
+    os.clock, game.component = clock, component
 end

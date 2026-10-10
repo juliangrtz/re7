@@ -4,7 +4,8 @@ Status: experimental, **not campaign-certified**. Investigation: 2026-10-10.
 
 This is the handoff for the DLC weapon integration attempt. Do not interpret the
 source catalog, a successful export, an item-box entry, or a forced shot as a
-working randomizer weapon. AMG-Dual is **not implemented for Ethan**.
+working randomizer weapon. AMG-Dual has an **experimental Ethan lab adapter**,
+but is not yet included in campaign generation or the supported-weapon grant.
 
 Related: [integration plan](../DLCIntegrationPlan.MD),
 [binary evidence](../DLCIntegrationEvidence.MD), [technical notes](../Notes.MD),
@@ -16,6 +17,8 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
 
 - `DlcWeaponLabPatch` remains an explicit mod export under `BioRand/DlcWeaponLab`.
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
+  The export preflights and copies the campaign dependency manifest plus 32
+  gauntlet hand, material, texture and motion resources from the installed game.
 - The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
   includes opt-in hand-axe motions and confirmed-hit recovery. The campaign
@@ -93,7 +96,7 @@ WeaponID is distinct from the string ItemDataID.
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
-| `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | None |
+| `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | Experimental Ethan punch/charge adapter; lab only |
 | `NumaItem072` | Joe's M21 | CH9 | 13 | `app.CH9WeaponGun` | Experimental base gun |
 
 Additional identities that must not be conflated:
@@ -203,7 +206,7 @@ was written, so that comparison is preservation evidence, not a save/load test.
 | Imported prefab readiness | Four imported handles reported `Exist=true`, `Standby=true`, but `Ready=false`, `Valid=false` in a fresh campaign | A missing physical file |
 | Explicit knife load | Standby off, same path reassigned, standby on; a later probe saw `Ready=true`, `Valid=true`, then instantiated the prefab | Inventory ownership or attack readiness |
 | Deferred knife insertion | `isCanAddItem` returned true; `addItem(app.Item, via.GameObject)` with a null out argument threw | Whether the cause is the Lua out-argument marshalling or native item setup |
-| AMG-Dual | Source and player dependency chain identified | A working campaign gauntlet |
+| AMG-Dual | Lab punches/charges damage campaign Molded; cold equipped load with explicit dependencies | Complete campaign lifecycle and normal held-button charging |
 
 The forced pistol experiment included temporary motion-bank/name experiments and
 did not use a normal inventory-owned weapon throughout. It is useful evidence of
@@ -467,9 +470,51 @@ all four punch mappings, both charge levels, finite completion, pause/external
 task/death suppression and refusal to reclaim another bank's slot.
 
 Remaining work includes normal held-button charging and feedback, combo timing,
-guard/damage/event interactions, cold saves with AMG-Dual already equipped,
-load/player transitions, normal pickup/two-way storage and resource teardown.
+guard/damage/event interactions, broader load/player transitions, normal
+pickup/two-way storage and resource teardown.
 Do not promote this candidate based only on animation or isolated damage tests.
+
+### Cold-load gauntlet failures
+
+A disposable manual campaign save with AMG-Dual equipped exposed startup
+problems that warm re-equips had hidden:
+
+1. The player becomes discoverable before its motion manager, fallback bank and
+   hand renderers are ready. Preparation now resolves all dependencies before
+   allocating resources or appending banks. Scene loading does not consume the
+   bounded post-load readiness timeout. Initial equip also waits for player control.
+2. Native saved equip can select `Melee.ReadyStart` before bank type 9910 exists,
+   leaving an empty clip with end frame zero. After the actual idle clip becomes
+   available, one normal-priority `Melee.ReadyIdle` request repairs that initial
+   state. It does not force an FSM state or replace a finite equip/other action.
+3. Correct mesh/material paths and non-null resource holders do not prove native
+   readiness. Both hand renderers remained invisible with `MeshReady` and
+   `MaterialReady` false. Waiting for Ethan's original hands to finish loading
+   did not solve this, while switching away and back could hide the failure.
+
+The successful cold-load configuration combines two hidden Transform/Mesh children
+in the inventory prefab with the explicit `_Data/dlc_gauntlet_assets.txt` dependency
+set. The hidden children preload Joe's hand resources; the existing Ethan hand
+renderers still perform the visible swap. No Joe gameplay components are imported.
+The manifest includes both hands, MDFs, streaming texture companions, record-system
+textures/render targets, and GauntletW/Knuckle motion lists. Only paths are committed,
+not extracted game assets.
+
+Controlled comparison using the same save and runtime adapter:
+
+- Hidden mesh references without the dependency copy left the item prefab unready
+  and blocked loading. Adding unused resource-table paths also stalled; this did
+  **not** establish that unused table entries themselves were the cause.
+- Copying the dependencies with the original componentless prefab allowed loading
+  but still produced invisible, unready hand renderers.
+- Hidden native mesh references plus the dependency copy loaded the saved equipped
+  gauntlets visibly, with both mesh/material readiness flags true and no manual
+  re-equip. The initial empty-motion recovery reached idle automatically.
+
+The exact native reason runtime-created holders fail on first binding has not been
+isolated. Do not replace this evidence with arbitrary delays or per-frame rebinding.
+An existing save loading after a preload fix is also evidence against prematurely
+diagnosing the earlier loading-screen stall as save corruption.
 
 Other blocked families have distinct requirements:
 
@@ -562,7 +607,8 @@ complete behavior chain. Keep observations separate from root-cause hypotheses.
 ## Running the isolated lab
 
 Use a disposable save/profile and back up saves and overridden loose files first.
-Installed source DLC assets are required; the output is **not self-contained**.
+Installed source DLC assets are required for export. The lab copies its curated
+dependency manifests, but this is not a claim of complete sound/VFX closure.
 Do not redistribute extracted game assets. The export writes campaign settings
 and messages, so do not assume it composes with an arbitrary generated PAK or
 another loose-file override.
@@ -604,7 +650,7 @@ pickup interaction rebinding, messages, ammo mapping, capacity changes, and the
 WeaponID 13 alias. Lua coverage checks exact namespace guards, deferred bounded
 loading, failures without repeated mutations, and load/new-game invalidation.
 
-The campaign integration full solution run passed 593 tests, and all 22 Lua suites
+The campaign integration full test-project run passed 595 tests, and all 23 Lua suites
 passed under Lua 5.4. The machine's `lua` command was Lua 5.1, so a compatible
 Lua 5.4 runtime was used. Automated success does not remove the manual risks above.
 

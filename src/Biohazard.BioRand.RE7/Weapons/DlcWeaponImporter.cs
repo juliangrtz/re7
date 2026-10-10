@@ -153,9 +153,19 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
         collision.Groups.RemoveAll(g => !groups.Contains(g));
         // The runtime adapter supplies the active player's skeleton. Preserve Joe's bone-local shapes.
         context.SetRcolFile(weapon.CollisionPath.RcolFile(), collision.Build());
+        // Preload the hand resources through native component references before a saved equip.
+        // Runtime-created holders alone can remain unready even with the assets deployed.
+        var player = context.GetScnFile("ch9/scenes/chapter/c09_ingame.scn".SceneFile()).ReadScene(context.TypeRepository);
+        var hands = new[] { "Pl9000HandR", "Pl9000HandL" }.Select(name => {
+            var hand = player.GetGameObjects().Single(g => g.Name == name);
+            return hand.WithPrefab("")
+                .WithChildren([]).WithSettings(hand.Settings.Set("Name", "BioRandGauntlet" + name[^5..]).Set("Draw", false))
+                .WithComponents([.. hand.Components.Where(c => c.Type.Name is "via.Transform" or "via.render.Mesh")
+                    .Select(c => c.Type.Name == "via.render.Mesh" ? c.Set("DrawDefault", false) : c)]);
+        }).ToImmutableArray();
         return scene.VisitGameObjects(go => go.Components.Any(c => c.Type.Name == "app.Weapon")
             ? go.WithComponents([.. go.Components.Select(c => c.Type.Name == "via.Transform"
-                ? c.Set("SameJointsContraint", true) : c), .. components]) : go);
+                ? c.Set("SameJointsContraint", true) : c), .. components]).WithChildren([.. go.Children, .. hands]) : go);
     }
 
     private static RszObjectNode AdaptAmmunition(RszObjectNode gun) {

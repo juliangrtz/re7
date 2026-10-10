@@ -59,45 +59,57 @@ end
 function Gauntlet:prepare(player)
     if self.session and self.session.player == player then
         assert(self:owns_banks(), "Gauntlet motion banks changed ownership")
-        return
+        return true
     end
     self:reset()
     self.session = nil
     assert(self:matches(player), "Gauntlets require the matching Ethan lab prefab")
-    local controller = assert(self.game:component(player, "app.PlayerMotionController"))
-    local motion = assert(controller:get_field("Motion"))
+    local game_manager = self.game:singleton("app.GameManager")
+    if not game_manager or game_manager:call("get_IsSceneLoading") then return false, "scene loading" end
+    local controller = self.game:component(player, "app.PlayerMotionController")
+    local motion = controller and controller:get_field("Motion")
+    local manager = controller and controller:get_field("MotionManager")
+    local sequence = self.game:component(player, "app.PlayerSequenceManager")
+    if not motion or not manager or not sequence then return false, "player motion components" end
     local existing = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, BANK)
     assert(not existing or existing:call("get_BankType") ~= BANK, "Gauntlet bank type is already occupied")
     local fallback = motion:call("findMotionBank(System.UInt32, System.UInt32)", 0, 10)
-    assert(fallback and fallback:call("get_BankID") == 0 and fallback:call("get_BankType") == 10,
-        "Ethan's axe fallback bank is unavailable")
-    local holders = {
-        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_GauntletW.motlist"),
-        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_Knuckle.motlist"),
-        fallback:call("get_MotionList"),
-    }
+    if not fallback or fallback:call("get_BankID") ~= 0 or fallback:call("get_BankType") ~= 10
+        or not fallback:call("get_MotionList") then return false, "Ethan axe fallback bank" end
     local scene = sdk.call_native_func(sdk.get_native_singleton("via.SceneManager"),
         sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
+    if not scene then return false, "current scene" end
     local hands = {}
     for _, entry in ipairs({ { "Pl0000HandR", "pl9010" }, { "Pl0000HandL", "pl9020" } }) do
-        local object = assert(scene:call("findGameObject(System.String)", entry[1]), "Missing Ethan hand")
+        local object = scene:call("findGameObject(System.String)", entry[1])
+        local mesh = object and self.game:component(object, "via.render.Mesh")
+        if not mesh or not mesh:call("getMesh") or not mesh:call("get_Material") then return false, entry[1] end
+        if not mesh:call("get_MeshReady") or not mesh:call("get_MaterialReady") then return false, entry[1] .. " resources" end
         local parent, owned = object:call("get_Transform"), false
         for _ = 1, 32 do
             if not parent then break end
             if parent:call("get_GameObject") == player then owned = true; break end
             parent = parent:call("get_Parent")
         end
-        assert(owned, "Hand renderer belongs to another player")
+        if not owned then return false, entry[1] .. " ownership" end
         local path = "CH9/Character/Player/pl9000/" .. entry[2] .. "/" .. entry[2]
-        hands[#hands + 1] = { object = object, mesh = assert(self.game:component(object, "via.render.Mesh")),
-            replacement = self:resource("via.render.MeshResource", path .. ".mesh"),
-            material = self:resource("via.render.MeshMaterialResource", path .. ".mdf2") }
+        hands[#hands + 1] = { object = object, mesh = mesh, path = path }
+    end
+    -- A newly discovered player can precede its banks and hand renderers by seconds.
+    -- Resolve every native dependency before allocating or attaching anything.
+    local holders = {
+        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_GauntletW.motlist"),
+        self:resource("via.motion.MotionListResource", "CH9/Animation/Player/pl9000/motlist/pl9000_Knuckle.motlist"),
+        fallback:call("get_MotionList"),
+    }
+    for _, hand in ipairs(hands) do
+        hand.replacement = self:resource("via.render.MeshResource", hand.path .. ".mesh")
+        hand.material = self:resource("via.render.MeshMaterialResource", hand.path .. ".mdf2")
     end
     self.collider_track = self.collider_track or sdk.create_instance("app.Collision.ColliderTrack"):add_ref()
     self.charge_track = self.charge_track or sdk.create_instance("app.SequenceTrackObject.CH9PlayerGauntletChargeLevel"):add_ref()
     local s = { player = player, controller = controller, motion = motion, hands = hands, banks = {},
-        sequence = assert(self.game:component(player, "app.PlayerSequenceManager")),
-        manager = assert(controller:get_field("MotionManager")) }
+        sequence = sequence, manager = manager }
     self.session = s
     -- Append only our isolated bank type. Never replace a campaign bank.
     for _, holder in ipairs(holders) do
@@ -110,6 +122,7 @@ function Gauntlet:prepare(player)
         motion:call("setDynamicMotionBank", index, bank)
         s.banks[#s.banks + 1] = { index = index, bank = bank }
     end
+    return true
 end
 
 function Gauntlet:clear_attack()
@@ -136,6 +149,7 @@ function Gauntlet:reset()
     end
     self.weapon, self.collider, self.hit = nil, nil, nil
     self.attack, self.charge, self.last_state, self.controllable = nil, nil, nil, false
+    self.equip_pending = nil
     self.combo = 0
     -- Banks belong to the live player until its destruction. Dropping them during
     -- a load callback or while the weapon is still equipped invalidates animations.
@@ -151,6 +165,7 @@ function Gauntlet:equip(weapon)
     assert(collider:call("getNumCollidables(System.UInt32)", 6) > 0, "Gauntlet collider export is outdated")
     self.collider, self.hit = collider, assert(game:component(object, "app.Collision.HitController"))
     self.weapon = weapon
+    self.equip_pending = true
     local skeleton = game:component(object, "via.render.Mesh")
         or object:call("createComponent", sdk.typeof("via.render.Mesh"))
     local body = assert(game:component(s.player, "via.render.Mesh"))
@@ -183,6 +198,24 @@ end
 
 function Gauntlet:request(name)
     self.session.controller:call(REQUEST, name, 1, 0.0, 4.0, 0)
+end
+
+function Gauntlet:recover_equip(name, layer)
+    if not self.equip_pending then return end
+    if name ~= "Melee.ReadyStart" or layer:call("get_EndFrame") > 0.0 then
+        self.equip_pending = nil
+        return
+    end
+    -- A saved equip can select its motion before our isolated bank exists.
+    -- Wait for the actual idle clip, then make one ordinary motion request.
+    self.motion_info = self.motion_info or sdk.create_instance("via.motion.MotionInfo"):add_ref()
+    local s = self.session
+    if not s.motion:call("getMotionInfo(System.UInt32, System.Int32, System.UInt32, via.motion.MotionInfo)",
+        0, BANK, 2001, self.motion_info) or self.motion_info:call("get_MotionEndFrame") <= 0.0 then return end
+    s.controller:call("updateTargetBankType")
+    assert(s.motion:call("get_TargetBankType") == BANK, "Gauntlet equip selected an unexpected bank")
+    self.equip_pending = nil
+    self:request("Melee.ReadyIdle")
 end
 
 function Gauntlet:read_track(node, kind, destination)
@@ -269,13 +302,24 @@ end
 
 function Gauntlet:update()
     local player = self.game:player()
-    if not self.enabled() or self.error or not self:matches(player) then self:reset(); return end
-    self:prepare(player)
+    if not self.enabled() or self.error or not self:matches(player) then
+        self:reset(); self.waiting = nil; return
+    end
+    local manager = self.game:singleton("app.GameManager")
+    local ready, reason = self:prepare(player)
+    if not ready then
+        local now = os.clock()
+        if not self.waiting or self.waiting.player ~= player or not manager or manager:call("get_IsSceneLoading") then
+            self.waiting = { player = player, since = now }
+        end
+        self.waiting.reason = reason
+        assert(now - self.waiting.since < 10.0, "Gauntlet readiness timed out: " .. reason)
+        return
+    end
+    self.waiting = nil
     local s = self.session
     local weapon = self.game:component(player, "app.EquipManager"):call("get_equipWeaponRight")
     if not weapon or weapon:get_field("WeaponID") ~= WEAPON then self:reset(); return end
-    if self.weapon ~= weapon then self:equip(weapon) end
-    local manager = self.game:singleton("app.GameManager")
     local damage = self.game:component(player, "app.PlayerDamageController")
     local owner = s.manager:get_field("OwnerTask")
     self.controllable = manager and not manager:call("get_IsPause") and not manager:call("get_IsSceneLoading")
@@ -285,7 +329,10 @@ function Gauntlet:update()
         if self.attack then self.attack.interrupted = true end
         return
     end
-    self:update_motion(s.manager:call("getCurrentMotionFsmStateName", 1, false), s.motion:call("getLayer", 1))
+    if self.weapon ~= weapon then self:equip(weapon); self.controllable = true end
+    local name, layer = s.manager:call("getCurrentMotionFsmStateName", 1, false), s.motion:call("getLayer", 1)
+    self:recover_equip(name, layer)
+    self:update_motion(name, layer)
 end
 
 function Gauntlet:scope(controller)
