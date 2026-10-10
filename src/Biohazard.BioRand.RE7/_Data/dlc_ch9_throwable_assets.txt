@@ -22,6 +22,7 @@ natives/stm/ch9/prefab/weapon/wp1900_joeliquidbomb/get/wp1900_joeliquidbomb_get.
 natives/stm/ch9/prefab/weapon/wp1900_joeliquidbomb/item/wp1900_joeliquidbomb_item.pfb.17
 natives/stm/ch9/scenes/items/resource/ch9_wp003.scn.20
 natives/stm/ch9/scenes/items/resource/ch9_wp004.scn.20
+natives/stm/ch9/scenes/items/resource/ch9_wp005.scn.20
 natives/stm/ch9/vfx/vfx_clip/clp_weapon_id/vfx_wp_1900_00_epvc.pfb.17
 natives/stm/ch9/vfx/vfx_clip/clp_weapon_id/vfx_wp_1900_00_epvs.pfb.17
 natives/stm/ch9/vfx/vfx_clip/clp_weapon_id/vfx_wp_1900_00_final.tml.43001

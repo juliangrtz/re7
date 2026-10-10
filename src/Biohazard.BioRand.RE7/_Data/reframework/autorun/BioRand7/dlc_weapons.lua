@@ -1,7 +1,7 @@
 local Weapons = {}
 Weapons.__index = Weapons
 local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002", "CH9_WP000", "CH9_WP001", "CH9_WP006",
-    "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004" }
+    "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004", "CH9_WP005" }
 
 function Weapons.new(context)
     return setmetatable({ context = context, requested = {}, next_check = 0 }, Weapons)

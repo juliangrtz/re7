@@ -171,8 +171,8 @@ internal static class RandomizerConfigurationDefinition {
         group.Items.Add(new GroupItem(){
             Id = DlcCampaignWeapons.ConfigKey,
             Label = "Experimental DLC Campaign Weapons",
-            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, all three AMG gauntlets, Not a Hero grenades, and End of Zoe throwing knives and spears in the campaign. " +
-                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. Stake Bomb is excluded.",
+            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, all three AMG gauntlets, Not a Hero grenades, and End of Zoe throwing knives, spears and Stake Bombs in the campaign. " +
+                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental.",
             Type = "switch",
             Default = false
         });

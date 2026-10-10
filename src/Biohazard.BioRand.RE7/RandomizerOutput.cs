@@ -27,6 +27,7 @@ public sealed class RandomizerOutput {
         "BioRand7/context.lua",
         "BioRand7/crafting.lua",
         "BioRand7/data.lua",
+        "BioRand7/dlc_ch9_item.lua",
         "BioRand7/dlc_ch9_pool.lua",
         "BioRand7/dlc_ch9_throwable.lua",
         "BioRand7/dlc_gauntlet.lua",

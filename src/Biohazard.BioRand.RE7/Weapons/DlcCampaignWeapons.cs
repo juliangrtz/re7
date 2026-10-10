@@ -98,6 +98,23 @@ public static class DlcCampaignWeapons {
                 },
             };
         }
+        foreach (var source in Sources.Where(w => w.Adapter == DlcWeaponAdapter.Ch9Item)) {
+            yield return new WeaponDefinition {
+                WeaponId = (WeaponID)source.WeaponId, Id = "wp1900", Name = source.Name,
+                IsGun = false, IsInventoryWeapon = true, UserType = Enums.app.CharacterDefine.Type.Player,
+                BulletItemIDs = [], UserParamsPath = null,
+                Mesh = "CH9/Weapon/wp1900_joeliquidbomb/wp1900.mesh",
+                Material = "CH9/Weapon/wp1900_joeliquidbomb/wp1900.mdf2",
+                PrefabPath = source.CampaignPrefab.Of() + ".17",
+                RcolPaths = [DlcCh9Projectiles.WeaponCollisionPath(source).RcolFile()],
+                Damage = new() {
+                    ["Attack.rcol/ExplosionCToEnemy"] = new() { Damage = 1000, Stun = 500 },
+                    ["Attack.rcol/ExplosionToEnemy"] = new() { Damage = 1000, Stun = 500 },
+                    ["Attack.rcol/ExplosionCToPlayer"] = new() { Damage = 400, Stun = 250 },
+                    ["Attack.rcol/ExplosionToPlayer"] = new() { Damage = 300, Stun = 150 },
+                },
+            };
+        }
         var blade = Sources.Single(w => w.Adapter == DlcWeaponAdapter.SpiritBlade);
         yield return new WeaponDefinition {
             WeaponId = (WeaponID)blade.WeaponId, Id = "wp1700", Name = blade.Name,

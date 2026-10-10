@@ -71,12 +71,12 @@ public sealed class DlcWeaponLabTests {
     [Fact]
     public void Ch9ThrowableManifestIncludesAllNativePoolDependenciesAndItemResources() {
         var paths = DlcCh9Projectiles.RequiredAssetPaths;
-        Assert.Equal(88, paths.Length);
+        Assert.Equal(89, paths.Length);
         Assert.Equal(paths.Order(StringComparer.Ordinal), paths);
         Assert.Equal(paths.Length, paths.Distinct(StringComparer.OrdinalIgnoreCase).Count());
         foreach (var (_, _, _, collision) in DlcCh9Projectiles.Sources)
             Assert.Contains($"CH9/Collision/Collider/Weapon/{collision}.rcol".RcolFile().ToLowerInvariant(), paths);
-        foreach (var id in new[] { "ch9_wp003", "ch9_wp004" })
+        foreach (var id in new[] { "ch9_wp003", "ch9_wp004", "ch9_wp005" })
             Assert.Contains($"natives/stm/ch9/scenes/items/resource/{id}.scn.20", paths);
         foreach (var motion in new[] { "nailknife", "bangstick", "liquidbomb" })
             Assert.Contains(paths, p => p.Contains($"pl9000_{motion}.motlist."));
@@ -163,9 +163,12 @@ public sealed class DlcWeaponLabTests {
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
-        Assert.Equal(13, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
-        Assert.Equal(13, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
-        Assert.Equal("CH9_WP005", Assert.Single(DlcWeaponCatalog.Weapons, w => !w.IsCampaignCandidate).ItemId);
+        Assert.Equal(14, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(14, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        var unsupported = DlcWeaponCatalog.Weapons[0] with { Adapter = DlcWeaponAdapter.None };
+        Assert.False(unsupported.IsLabCandidate);
+        Assert.False(unsupported.IsCampaignCandidate);
+        Assert.False(unsupported.IsStackWeapon);
         Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsCampaignCandidate);
@@ -276,7 +279,7 @@ public sealed class DlcWeaponLabTests {
                 Assert.Empty(components.Single(c => c.Type.Name == "app.Weapon").Get<string>("EquipParam.JointName"));
             } else {
                 Assert.Contains(components, c => c.Type.Name == "via.render.Mesh");
-                if (weapon.Adapter != DlcWeaponAdapter.Ch9Throwable) {
+                if (weapon.Adapter is not (DlcWeaponAdapter.Ch9Throwable or DlcWeaponAdapter.Ch9Item)) {
                     Assert.Contains(components, c => c.Type.Name == "via.motion.Motion");
                     Assert.Contains(components, c => c.Type.Name == "via.motion.MotionFsm");
                 }
@@ -284,19 +287,21 @@ public sealed class DlcWeaponLabTests {
             }
             Assert.DoesNotContain(components, c => (c.Type.Name.StartsWith("app.CH8") || c.Type.Name.StartsWith("app.CH9"))
                 && !(weapon.Adapter == DlcWeaponAdapter.Grenade && c.Type.Name == "app.CH8WeaponThrowable")
-                && !(weapon.Adapter == DlcWeaponAdapter.Ch9Throwable && c.Type.Name == weapon.ComponentType));
+                && !(weapon.Adapter is DlcWeaponAdapter.Ch9Throwable or DlcWeaponAdapter.Ch9Item && c.Type.Name == weapon.ComponentType)
+                && !(weapon.Adapter == DlcWeaponAdapter.Ch9Item && c.Type.Name == "app.CH9WeaponLiquidBombAppend"));
             Assert.DoesNotContain(components, c => c.Type.Name == "app.DisableSave");
             var native = Assert.Single(components, c => c.Type.Name == (weapon.Adapter switch {
                 DlcWeaponAdapter.Gun => "app.WeaponGun",
                 DlcWeaponAdapter.Grenade => "app.CH8WeaponThrowable",
-                DlcWeaponAdapter.Ch9Throwable => weapon.ComponentType,
+                DlcWeaponAdapter.Ch9Throwable or DlcWeaponAdapter.Ch9Item => weapon.ComponentType,
                 _ => "app.Weapon",
             }));
             Assert.Equal(weapon.WeaponId, native.Get<int>("WeaponID"));
             Assert.Equal(weapon.ItemId, Assert.Single(components, c => c.Type.Name == "app.Item").Get<string>("ItemDataID"));
             if (weapon.IsStackWeapon) {
                 Assert.Equal(6, item.MaxStackNum);
-                var folder = weapon.Adapter == DlcWeaponAdapter.Ch9Throwable ? DlcCh9Projectiles.ProjectileName(weapon.WeaponId) : weapon.ItemId;
+                var folder = weapon.Adapter is DlcWeaponAdapter.Ch9Throwable or DlcWeaponAdapter.Ch9Item
+                    ? DlcCh9Projectiles.ProjectileName(weapon.WeaponId) : weapon.ItemId;
                 Assert.Contains($"{weapon.ResourceRoot}/{folder}/Shell.pfb".Of() + ".17", first.Files.Keys);
             }
             if (weapon.Adapter == DlcWeaponAdapter.Gun) {
@@ -323,7 +328,7 @@ public sealed class DlcWeaponLabTests {
             Assert.True(component.Get<bool>("_ResourcePrefab.Standby"));
             Assert.NotEmpty(first.GetPfbFile(weapon.DetailPrefab.Of() + ".17").ReadScene(first.TypeRepository).GetGameObjects());
         }
-        Assert.Equal(61 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
+        Assert.Equal(64 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
     }
 
     [Fact]
@@ -336,8 +341,8 @@ public sealed class DlcWeaponLabTests {
             var scene = context.GetPfbFile(item.ItemPrefab.Path.ToString()!.Of() + ".17").ReadScene(context.TypeRepository);
             var native = Assert.Single(scene.GetGameObjects().SelectMany(go => go.Components), c => c.Type.Name == weapon.ComponentType);
             Assert.Equal(weapon.WeaponId, native.Get<int>("WeaponID"));
-            if (!weapon.IsLabCandidate)
-                Assert.Throws<InvalidOperationException>(() => DlcWeaponLabPatch.AdaptPrefab(scene, context.TypeRepository, weapon));
+            Assert.Throws<InvalidOperationException>(() => DlcWeaponLabPatch.AdaptPrefab(scene, context.TypeRepository,
+                weapon with { Adapter = DlcWeaponAdapter.None }));
         }
     }
 

@@ -13,7 +13,7 @@ public class RandomizerOutputPackagingTests {
     public void RuntimeArchivesIncludeEveryLiteralLocalLuaDependency(bool fluffy) {
         var output = CreateOutput(new PakFileBuilder(), new PakFileBuilder(), true);
         using var zip = new ZipArchive(new MemoryStream(fluffy ? output.GetOutputMod() : output.GetOutputZip()));
-        foreach (var name in new[] { "dlc_weapons", "dlc_weapon_player", "dlc_gauntlet", "dlc_grenade", "dlc_grenade_pool", "dlc_ch9_throwable", "dlc_ch9_pool" })
+        foreach (var name in new[] { "dlc_weapons", "dlc_weapon_player", "dlc_gauntlet", "dlc_grenade", "dlc_grenade_pool", "dlc_ch9_throwable", "dlc_ch9_pool", "dlc_ch9_item" })
             Assert.NotNull(zip.GetEntry($"reframework/autorun/BioRand7/{name}.lua"));
         foreach (var script in zip.Entries.Where(e => e.FullName.StartsWith("reframework/autorun/") && e.FullName.EndsWith(".lua"))) {
             var bytes = ReadBytes(zip, script.FullName);

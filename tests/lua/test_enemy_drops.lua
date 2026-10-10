@@ -100,7 +100,7 @@ return function()
     end
     configuration["enemy-drop-probability"] = nil
 
-    for _, id in ipairs({ "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004" }) do
+    for _, id in ipairs({ "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004", "CH9_WP005" }) do
         local key = "enemy-drop-ratio-" .. id:lower():gsub("_", "-")
         configuration[key] = 1
         for _, allow in ipairs({ false, true }) do

@@ -32,6 +32,7 @@ internal class ItemDrops {
             ["Stangrenadebomb"] = 0.03,
             ["CH9_WP003"] = 0.03,
             ["CH9_WP004"] = 0.03,
+            ["CH9_WP005"] = 0.03,
             ["Coin"] = 0.1,
             ["Alcohol"] = 0.05,
             ["Flower"] = 0.05,
@@ -72,7 +73,8 @@ internal class ItemDrops {
         "Thermatebomb",
         "Stangrenadebomb",
         "CH9_WP003",
-        "CH9_WP004"
+        "CH9_WP004",
+        "CH9_WP005"
     ];
 
     public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } =[
@@ -179,7 +181,7 @@ internal class ItemDrops {
     public static string GetCategory(string id) => id switch{
         "NoName" => CategoryNone,
         "CH9_WP003" or "CH9_WP004" => CategoryAmmo,
-        "LiquidBomb" or "Grenadebomb" or "Thermatebomb" or "Stangrenadebomb" => CategoryExplosive,
+        "LiquidBomb" or "Grenadebomb" or "Thermatebomb" or "Stangrenadebomb" or "CH9_WP005" => CategoryExplosive,
         "HandgunBullet" => CategoryAmmo,
         "HandgunBulletL" => CategoryAmmo,
         "ShotgunBullet" => CategoryAmmo,

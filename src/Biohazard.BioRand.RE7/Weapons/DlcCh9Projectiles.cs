@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-// Keep the complete native pool shape; only knife and spear inventory items are candidates.
+// Keep the complete native pool shape for throwing weapons and placed Stake Bombs.
 internal static class DlcCh9Projectiles {
     internal static ImmutableArray<string> RequiredAssetPaths { get; } = [.. System.Text.Encoding.UTF8
         .GetString(EmbeddedData.GetFile("dlc_ch9_throwable_assets.txt"))
@@ -15,6 +15,7 @@ internal static class DlcCh9Projectiles {
     internal static string ProjectileName(int weaponId) => weaponId switch {
         64 => "NailKnifeBulletS",
         65 => "HarpoonBulletS",
+        66 => "JoeLiquidbomb",
         _ => throw new ArgumentOutOfRangeException(nameof(weaponId)),
     };
 

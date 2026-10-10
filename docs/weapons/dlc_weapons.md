@@ -20,8 +20,8 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
   The export preflights and copies the weapon dependency manifests, including 38
   gauntlet display, hand, material, texture and motion resources from the installed game.
-- The lab and campaign now have thirteen candidates, including the three
-  CH8 grenades and CH9 throwing knife/spear. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
+- The lab and campaign now have fourteen candidates, including the three
+  CH8 grenades, CH9 throwing knife/spear, and Stake Bomb. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
   keep six-item stacks, and receive isolated shell pools, copied messages, and
   inspection resources. The campaign uses its own namespace and automatic runtime
   adapter; it does not run the manually armed lab controller.
@@ -31,13 +31,12 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   version additionally isolates its attack RCOL and participates in generation
   and debug grants. Lab candidacy and campaign candidacy remain separate
   properties; do not promote a lab export merely because its prefab loads.
-- `DlcCampaignWeaponPatch` integrates thirteen candidates under `BioRand/DlcWeapons`
+- `DlcCampaignWeaponPatch` integrates fourteen candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
 - The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21,
   Spirit Blade, AMG-78a, AMG-78, AMG-Dual, Grenade, Incendiary Grenade, and Neuro-stun
-  Grenade, Throwing Knife, and Throwing Spear. Stake Bomb remains excluded pending
-  its installation/explosion player-system work.
+  Grenade, Throwing Knife, Throwing Spear, and Stake Bomb.
 - Campaign integration includes item definitions, starting weapons and ammunition,
   random weapon pools, pickup templates, item settings/messages, inspection
   resource folders, and weapon-stat controls. Custom bird-cage entries are gated;
@@ -48,7 +47,7 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   and inventory PFBs are not rewritten, and DLC gameplay roots stay inactive.
 - `_Data/dlc_weapon_assets.txt`, `_Data/dlc_gauntlet_assets.txt`,
   `_Data/dlc_grenade_assets.txt`, and `_Data/dlc_ch9_throwable_assets.txt` together
-  list 319 required installed resources,
+  list 320 required installed resources,
   including weapon render/motion/collision/VFX/sound
   dependencies and import metadata. Generation
   preflights every entry before registering anything and emits a clear error if
@@ -60,13 +59,15 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   adapter maps native melee actions to Joe's clips and enables their exported
   collision windows. The grenade adapter drives the native throw callbacks and
   owns a scoped shell pool. The CH9 knife/spear adapter reads native throw-timing
-  tracks and owns a stationary native CH9 shell pool. None of these adapters
+  tracks and owns a stationary native CH9 shell pool. Stake Bomb's separate Item
+  motion adapter shares that pool and retains native placement, recovery and
+  detonation. None of these adapters
   synthesizes player input. Both flags imply
   REFramework is required.
 - **BioRand 7 > Debug tools > Add supported DLC weapons to item box** queues a
-  one-shot grant on `UpdateBehavior`. It adds one of each of the thirteen candidates,
+  one-shot grant on `UpdateBehavior`. It adds one of each of the fourteen candidates,
   skipping weapons already owned in inventory or storage. Both integration flags,
-  campaign Ethan, and all thirteen ready campaign prefabs are required. Missing/foreign
+  campaign Ethan, and all fourteen ready campaign prefabs are required. Missing/foreign
   adapters abort before any additions; a native add failure stops the batch without
   retrying or removing earlier successes. The menu reports the result. Loading a
   save, starting a new game, resetting scripts, or reloading config cancels pending
@@ -85,11 +86,18 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   concrete native CH9 component. They participate in static pools, crate relief
   tables, runtime enemy drops, damage/stun controls, and debug grants. They do not
   replace the permanent Bladed starting weapon with consumable stock.
-- The five consumable DLC weapons have runtime Lua drop entries as well as C#
+- Stake Bomb retains native `CH9Weapon1900` and `CH9WeaponLiquidBombAppend`, with
+  six-item stacks, a LiquidBomb loose-pickup donor, isolated installation RCOL,
+  inspection resources, and item-box persistence. It joins the opt-in Explosives
+  starting category and has independent item/enemy drop weights (default 0.03).
+  Damage/stun controls preserve native enemy/player explosion requests and respect
+  Include Self-Damage. Its `Damage` request is damage-receiver data, not an attack
+  stat to scale. The source DLC RCOL is never rewritten.
+- The six consumable DLC weapons have runtime Lua drop entries as well as C#
   drop definitions, gated by both flags. Boss reward eligibility remains unchanged.
-  CH9 drop config IDs use `ch9-wp003`/`ch9-wp004`, not native item-ID underscores;
+  CH9 drop config IDs use `ch9-wp003`/`ch9-wp004`/`ch9-wp005`, not native item-ID underscores;
   generation and Lua must normalize identically. The native `AttackToWeapon`
-  requests on these two projectiles intentionally have zero damage and stun.
+  requests on knife/spear projectiles intentionally have zero damage and stun.
 
 This implements the campaign generation path, **not completed playthrough
 certification**. Save migration is not implemented. Use backed-up test saves until
@@ -129,7 +137,7 @@ WeaponID is distinct from the string ItemDataID.
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
 | `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | Experimental campaign throw adapter |
 | `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | Experimental campaign throw/recovery adapter |
-| `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
+| `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | Experimental campaign Item placement/recovery adapter |
 | `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `NumaItem072` | Joe's M21 | CH9 | 13 | `app.CH9WeaponGun` | Experimental base gun |
 
@@ -1124,18 +1132,18 @@ pause/menu/task/clip interruption, and reset/player scratch invalidation. The
 module at foundation commit `51592c0` was not yet selected by generation or included
 in the ordinary runtime archive allowlist. Warm adoption is not fresh startup validation. Clean-process
 pickup/messages/storage/save/title checks, all-pool-slot reuse, exact source
-orientation parity, and Mia/Clancy coverage remain open. Stake Bomb remains
-separate and unsupported; this work does not substitute its placement logic.
+orientation parity, and Mia/Clancy coverage remained open at that stage. Stake Bomb
+was still unsupported; the later Item adapter below handles its distinct placement logic.
 
 ### Knife/spear campaign integration
 
 The subsequent production pass registers both throwables under `BioRand/DlcWeapons`
 and packages their motion and pool modules through the ordinary runtime allowlist.
 Both configuration gates remain required, and the feature remains default-off.
-The catalog and debug grant now contain 13 candidates; Stake Bomb stays excluded.
-The curated CH9 manifest has 88 paths, including both resource scenes, bringing
-the deduplicated campaign dependency manifest to 319 paths. Keep the full native
-four-kind CH9 shell-pool layout even though only two inventory weapons are enabled.
+That pass brought the catalog and debug grant to 13 candidates, with Stake Bomb
+still excluded. Its 88-path CH9 manifest brought the deduplicated dependencies to
+319; the later Stake Bomb pass adds its resource scene for totals of 89 and 320.
+Keep the full native four-kind CH9 shell-pool layout, including the unused knuckle pool.
 
 Knife and spear are six-per-slot stack weapons, with no gun or ammo-parameter graft.
 Loose pickups reuse LiquidBomb's native `InteractDetailSearch`; preserved gun
@@ -1300,7 +1308,9 @@ dotnet run --project src/biorand-re7 -- mod -m "DLC Weapon Lab" -i "<RE7 install
 1. Deploy the explicit lab export using the normal mod workflow, with RE7 stopped.
 2. Ensure the current `BioRand7/game.lua`, `BioRand7/dlc_weapon_lab.lua`,
    `BioRand7/dlc_weapon_player.lua`, `BioRand7/dlc_gauntlet.lua`,
-   `BioRand7/dlc_grenade.lua`, and `BioRand7/dlc_grenade_pool.lua` modules are
+   `BioRand7/dlc_grenade.lua`, `BioRand7/dlc_grenade_pool.lua`,
+   `BioRand7/dlc_ch9_throwable.lua`, `BioRand7/dlc_ch9_pool.lua`, and
+   `BioRand7/dlc_ch9_item.lua` modules are
    deployed. Run `tools/dlc_weapon_lab.lua` manually via ScriptRunner; do not
    add it to ordinary autorun or grant weapons on load.
 3. Load Ethan's campaign. Enable commands, select one candidate, and use
@@ -1377,10 +1387,10 @@ weapon after pickup. Preserved gun pickups that do contain WeaponGun must instea
 replace it with the grenade's `CH8WeaponThrowable` and rebind ItemAddTest IDs.
 Do not make a test demand a component that the real donor never had.
 
-### Stake Bomb placement research
+### Stake Bomb campaign integration
 
-Stake Bomb (`CH9_WP005`, WeaponID 66) is still excluded from generation and debug
-grants. Unlike knife/spear it derives from `WeaponItem`, not `CH9WeaponThrowable`.
+Stake Bomb (`CH9_WP005`, WeaponID 66) now participates in opt-in generation and
+debug grants. Unlike knife/spear it derives from `WeaponItem`, not `CH9WeaponThrowable`.
 Ethan's native `PlayerItem` already binds `CH9Weapon1900` and its
 `CH9WeaponLiquidBombAppend`. Keep the Item category and native `tryUse`/`use`
 path; changing it to Melee would discard working placement and stock logic.
@@ -1422,9 +1432,9 @@ Physical Reload taps were not reliably consumed and still need input validation.
 Local evidence: `stake-floor-place-1167.json`, `stake-recovered-1170.json`,
 `stake-update-native-1190.txt`, `stake-audio-native-1190.txt`,
 `stake-audio-guard-detonation-1204.json`, and `stake-fresh-kill-1209.json` under
-`.analysis/dlc-weapons-2026-10-10/`. Remaining work includes pool exhaustion,
-pickup/storage and cold save restoration, input parity, and wiring and validating
-the production player adapter before promoting the catalog entry.
+`.analysis/dlc-weapons-2026-10-10/`. These were isolated research tests;
+the capacity and production checks below supersede their registration,
+pickup/storage and equipped-save gaps, not their physical-input limitation.
 
 The final charge also follows native `PlayerItem` behavior: placement changes
 stock 1 -> 0 and switches to empty hands; recovering it changes stock 0 -> 1,
@@ -1432,8 +1442,8 @@ restores the pool slot and clears `SetupBombCount`. Recovery does not automatica
 re-equip WeaponID 66. Do not add a forced equip or stock refund to compensate.
 Evidence: `stake-last-charge-1219.json` and `stake-last-recovery-1221.json`.
 
-`dlc_ch9_item.lua` is a preparatory player adapter, wired into campaign lifecycle
-handling but inert while the Stake Bomb catalog entry remains excluded. It retains
+`dlc_ch9_item.lua` is wired into campaign and manually armed lab lifecycle
+handling, with its own failure latch and explicit output packaging. It retains
 the native Item category and shares the CH9 throwable adapter's pool rather than
 creating a second manager. Its owned bank 9962 combines Joe's LiquidBomb motions
 with campaign Item bank 200 as fallback. It waits for clips 2000, 2001 and 2400,
@@ -1458,8 +1468,8 @@ were used. See `stake-pool-allocation-native-1190.txt` and the
 This run initialized the new Item adapter from scratch, not by adopting the old
 prototype's banks. Both arms reached valid idle; normal placement and recovery
 left the test position stable. Its registration and shell tutorial guards still
-used the research fixture, so cold production registration/save restoration and
-ordinary keyboard/controller input remain acceptance requirements.
+used the research fixture; it did not establish cold production registration or
+ordinary keyboard/controller input coverage.
 
 A heavily probed warm session developed a test-position snap while idle, including
 with vanilla G17 equipped. Both input and root-motion translation were zero in
@@ -1467,6 +1477,37 @@ the sampled state; transform and native warp attempts did not persist. No cause
 has been established. This session must not certify movement behavior or be
 saved as a new baseline; repeat with a fresh player/process. Do not introduce
 recurring transform writes into the weapon adapter to mask it.
+
+The subsequent clean production export contains 388 files, including the 320
+manifest dependencies. With only production registration, Item motion handling
+and tutorial guards, a fresh campaign process passed these checks:
+
+- A generated LiquidBomb-derived pickup displayed Stake Bomb and entered inventory
+  through native `InteractDetailSearch`. The pickup used a bounded UI Interact
+  pulse after the automation's short key tap was not consumed, not an inventory grant.
+- Native inventory equip selected ID 66 and bank 9962, with both arms in
+  `Item.ReadyIdle`, clip 2001, end frame 284. An ordinary mouse placement consumed
+  the final charge. Native recovery restored one charge and returned the pool slot.
+- The physical item-box UI stored and withdrew that recovered bomb. A disposable,
+  backed-up manual save was then written with one bomb equipped.
+- A complete process restart restored stock 1, WeaponID 66, the campaign prefab
+  namespace, owned ready motion banks, valid idle and all five unused shell slots.
+  No prototype bank adoption, forced native startup or hot adapter reset was used.
+- A normal mouse placement after cold load changed stock 1 -> 0 and SetupBombCount
+  0 -> 1. A bounded native Detonate command cleared the bomb, restored all five
+  unused slots and SetupBombCount 0. Every shell was inactive with update/draw off
+  and Rno 2; no hidden active bomb remained. Player damage protection was test-only
+  and disabled afterward. This production cleanup test had no enemy target; the
+  earlier native Molded damage/kill evidence is recorded separately above.
+
+Local captures: `stake-production-pickup-1299.json`, `stake-production-equip-1301.json`,
+`stake-production-place-1304.json`, `stake-production-recover-1306.json`,
+`stake-production-store-1309.json`, and `stake-production-cold-*-1315/1319/1322/1323.json`
+under `.analysis/dlc-weapons-2026-10-10/`. The temporary research loader was not part
+of the export. These checks do not certify physical Reload/controller input,
+every installation surface/enemy attachment, placed-bomb persistence across saves,
+all preserved-FSM pickups, Mia/Clancy, or chapter transitions. Save migration and
+full-playthrough certification remain out of scope for this experimental adapter.
 
 ### Motion scratch lifetime on reload
 
@@ -1527,7 +1568,7 @@ pickup interaction rebinding, messages, ammo mapping, capacity changes, and the
 WeaponID 13 alias. Lua coverage checks exact namespace guards, deferred bounded
 loading, failures without repeated mutations, and load/new-game invalidation.
 
-The campaign integration full test-project run passed 607 tests, and all 28 Lua suites
+The latest campaign integration full test-project run passed 615 tests, and all 33 Lua suites
 passed under Lua 5.4. The machine's `lua` command was Lua 5.1, so a compatible
 Lua 5.4 runtime was used. Automated success does not remove the manual risks above.
 An opt-in full seed (35825) also generated successfully from a clean baseline
@@ -1550,6 +1591,7 @@ Remaining acceptance work:
 5. Finish gauntlet player-transition, held-button input, sound, and visual checks.
    Knife and spear now use their dedicated experimental CH9 adapter; broaden
    player-transition, all-pool-slot reuse, and source-orientation parity coverage.
-   Keep Stake Bomb out of generation and debug grants until its distinct placement,
-   arming, detonation, cancellation, and restoration lifecycle is demonstrated.
+   Stake Bomb now joins the opt-in pool after placement, recovery, native detonation,
+   storage and equipped cold-save checks; broaden physical-input, installation-surface,
+   enemy-attachment, placed-bomb persistence and player-transition coverage.
    Broaden CH8 grenade player-transition coverage too.

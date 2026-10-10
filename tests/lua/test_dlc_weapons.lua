@@ -28,17 +28,17 @@ return function()
     enabled, allow = true, false
     weapons:update(); assert(calls == 0)
     allow = true
-    weapons:update(); assert(calls == 13 and loads == 0)
+    weapons:update(); assert(calls == 14 and loads == 0)
     available, now = true, 1
-    weapons:update(); assert(loads == 39)
-    now = 3; weapons:update(); assert(loads == 39 and calls == 26)
+    weapons:update(); assert(loads == 42)
+    now = 3; weapons:update(); assert(loads == 42 and calls == 28)
     weapons:reset(); ready = true
-    weapons:update(); assert(loads == 39)
+    weapons:update(); assert(loads == 42)
     weapons:reset(); ready, foreign = false, true
-    weapons:update(); assert(loads == 39)
+    weapons:update(); assert(loads == 42)
     weapons:reset(); foreign, fail = false, true
-    weapons:update(); assert(loads == 52 and errors == 13)
-    now = 5; weapons:update(); assert(loads == 52, "Failed mutations must not retry every frame")
+    weapons:update(); assert(loads == 56 and errors == 14)
+    now = 5; weapons:update(); assert(loads == 56, "Failed mutations must not retry every frame")
 
     local module_name = "BioRand7/dlc_weapon_player"
     local previous = package.loaded[module_name]
