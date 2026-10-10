@@ -870,8 +870,9 @@ it with a conventional gun is not an established repair.
 | `LiquidBombPrefab` | `JoeLiquidbomb.pfb` | 5 |
 | `ThrowingWp0000Prefab` | `KnuckleBulletS.pfb` | 2 |
 
-These are static native initialization arguments, not observed campaign-ready
-counts. The new explicit `DlcCh9Projectiles.ExportShellManager` research exporter
+These counts were first recovered from native initialization and subsequently
+observed in a fresh campaign process using the isolated research export. The
+explicit `DlcCh9Projectiles.ExportShellManager` research exporter
 retains only Transform and CH9ShellManager from the source object, preserves all
 four pool slots, and clones every projectile and attack RCOL under the requested
 namespace. It does not load CH9 gameplay/save managers, register inventory weapons,
@@ -885,8 +886,10 @@ executable established these contracts:
 - `CH9PlayerGun.throwWeapon(bool)` obtains the player camera's shoot ray, performs
   launch/collision calculations, and calls `CH9ShellManager.setupThrowingWeapon`
   with the owning player GameObject: pool type 4 for knife, 5 for spear. It then
-  calls the projectile's virtual `activate(position, rotation)`. Non-aimed throws
-  include native random spread. A raw camera-position spawn is not exact parity.
+  calls the projectile's virtual `activate(position, rotation)`. Its false branch
+  includes random spread, but both normal and aimed source attack callbacks pass
+  **true**. Do not infer that normal input should use the random-spread branch.
+  A raw camera-position spawn is not exact parity.
 - `CH9ThrowingWeaponBase.setup` marks the slot used, binds the owner to the
   projectile and its weapon, calls `HitController.setAttackOwner`, assigns the
   shell ID/type, and enables its request-set collider. That base setup does not
@@ -913,6 +916,66 @@ projectile/interaction prefabs, effects, textures, and sound resources outside
 validation must prove native startup/readiness, campaign-owned launch and damage,
 stock loss exactly once, spear/bomb recovery, interrupted throws, last-item
 cleanup, storage, and cold save/load before promoting the three inventory items.
+
+#### Campaign knife probe and native throw contract
+
+A later fresh-process research deployment loaded the isolated manager, three
+inventory fixtures, and the candidate dependency closure without loading CH9
+gameplay managers. Native pools initialized to 2/10/5/2. Direct projectile probes
+bound Ethan as owner; the knife collided and returned to its pool, while the spear
+lodged in a wall with its shared player-order and command-updater references set.
+Neither observation alone proves inventory integration or recovery.
+
+A player-scoped prototype then registered the research item settings and attached
+Joe's knife/spear motion banks, with the campaign axe bank as fallback. The native
+`CH9Weapon1500` inventory object was withdrawn through the real item-box menu and
+equipped on Ethan. Keeping its native class while routing only its weapon category
+and player motion bank allowed both arms to reach Joe's ready and throw motions.
+The research item had an icon but blank text: messages still require integration.
+
+Important contracts established by disassembly and the live trace:
+
+- Top-level motions 2400/2405 are blend trees; release tracks are on children
+  2406/2407. Matching raw node ID to the top-level clip loses the event.
+- `app.SequenceTrackObject.CH9PlayerActionTrack.IsWepThrowTiming` has a knife
+  window at frames 27..38 (78-frame clip), and a spear window at 32..40
+  (90-frame clip). These are boolean windows, not two throws. The source callback
+  latches release once, hides/disables the equipped object with
+  `Util.setActive(go, false, false)`, and calls native `reduceWeapon()` once.
+  Restore the held object on completion/cancellation when it remains valid.
+- `CH9WeaponThrowable` does not have the CH8 throwable's `Item` field. Read stock
+  through the bound inventory; preserve native `reduceWeapon()` and infinity
+  handling instead of mutating stack fields directly.
+- Source launch starts at shoot-ray origin plus direction times 0.1 for the knife
+  or 1.0 for the spear. It casts two 1 m rays: `DamageCheckDefault`, ignoring the
+  owner, then `EffectCheckBullet`. Both disable backface hits. A first hit backs
+  off by 1.0/0.2 m (knife/spear); the second replaces that result only when its raw
+  hit position is nearer than the first adjusted start, backing off by 1.0/0.36 m.
+  Preserve this unusual comparison rather than silently simplifying it.
+- The raw Lua `castRay` signature uses `app.Collision.CollisionSystem.HitResult`
+  without an ampersand, despite C# exposing `ref`. The probe passed a retained
+  HitResult through an owned 8-byte reference cell and checked that native code
+  had not replaced it. A missing Lua overload can silently return nil; assert the
+  method and distinguish nil from a real false/no-hit result.
+- Use `ShellManager.makeShellID()` when the shared manager is available. The
+  initial pool-only probes used zero and are not the production ID policy.
+
+Three normal mouse-click knife throws released once each at approximately frame
+27, consumed stock 3 -> 2 -> 1 -> 0, and produced native shell IDs 1/2/3. Two hit
+ordinary `Em4000`: `DamageController.addDamageCore` identified `NailKnifeBulletS`,
+raw damage 200, and applied 100 then 60 according to the native hit calculation.
+The last knife disappeared and G17 could subsequently equip; the empty-hands FSM
+showed `Hands.ReadyStart`, so do not call the empty-hands presentation certified.
+Player damage protection was enabled for this disposable-save test, not enemy
+health or projectile damage overrides. Evidence is under the ignored
+`.analysis/dlc-weapons-2026-10-10/ch9-knife-*` and `ch9-last-knife-*` captures.
+
+This is **research evidence, not supported-item promotion**. Aimed/held input,
+interruption and low-FPS timing, near-wall hit branches, exact launch orientation,
+spear recovery/damage, stake-bomb placement, messages, generation, and cold
+save/load still need validation. The prototype currently uses the camera rotation;
+the source constructs its orientation from direction/up vectors. No CH9 player
+component was grafted onto Ethan.
 
 The old IDA address export did not match the installed executable. Refresh method
 addresses from the current TDB and normalize against the current process image
