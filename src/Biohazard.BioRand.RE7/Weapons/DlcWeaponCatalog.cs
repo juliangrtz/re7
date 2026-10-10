@@ -9,9 +9,9 @@ public static class DlcWeaponCatalog {
         new("CKnife", "Tactical Knife", 8, 48, "app.Weapon", DlcWeaponAdapter.Knife),
         new("Handgun_Albert_C", "Samurai Edge - AW Model-01", 8, 49, "app.CH8WeaponGun", DlcWeaponAdapter.Gun),
         new("Shotgun_Albert", "Thor's Hammer - AW Model-02", 8, 50, "app.CH8WeaponGun", DlcWeaponAdapter.Gun),
-        new("Grenadebomb", "Grenade", 8, 58, "app.CH8WeaponThrowable", DlcWeaponAdapter.None),
-        new("Thermatebomb", "Incendiary Grenade", 8, 59, "app.CH8WeaponThrowable", DlcWeaponAdapter.None),
-        new("Stangrenadebomb", "Neuro-stun Grenade", 8, 60, "app.CH8WeaponThrowable", DlcWeaponAdapter.None),
+        new("Grenadebomb", "Grenade", 8, 58, "app.CH8WeaponThrowable", DlcWeaponAdapter.Grenade),
+        new("Thermatebomb", "Incendiary Grenade", 8, 59, "app.CH8WeaponThrowable", DlcWeaponAdapter.Grenade),
+        new("Stangrenadebomb", "Neuro-stun Grenade", 8, 60, "app.CH8WeaponThrowable", DlcWeaponAdapter.Grenade),
         new("CH9_WP000", "AMG-78a", 9, 61, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         new("CH9_WP001", "AMG-78", 9, 62, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         new("CH9_WP002", "Spirit Blade", 9, 63, "app.CH9Weapon1700", DlcWeaponAdapter.SpiritBlade),
@@ -41,6 +41,9 @@ public sealed record DlcWeaponSource(
         "CKnife" => "ch8/scenes/items/resources_chapter8/chrisknife.scn",
         "Handgun_Albert_C" => "ch8/scenes/items/resources_chapter8/chrishandgun.scn",
         "Shotgun_Albert" => "ch8/scenes/items/resources_chapter8/chrisshotgun.scn",
+        "Grenadebomb" => "ch8/scenes/items/resources_chapter8/grenadebomb.scn",
+        "Thermatebomb" => "ch8/scenes/items/resources_chapter8/thermatebomb.scn",
+        "Stangrenadebomb" => "ch8/scenes/items/resources_chapter8/stangrenadebomb.scn",
         "NumaItem072" => "ch9/scenes/items/resource/numaitem072.scn",
         "CH9_WP002" => "ch9/scenes/items/resource/ch9_wp002.scn",
         "CH9_WP000" => "ch9/scenes/items/resource/ch9_wp000.scn",
@@ -50,4 +53,4 @@ public sealed record DlcWeaponSource(
     };
 }
 
-public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade, Gauntlet }
+public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade, Gauntlet, Grenade }

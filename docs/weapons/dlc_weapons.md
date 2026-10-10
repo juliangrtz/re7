@@ -20,6 +20,11 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
   The export preflights and copies the weapon dependency manifests, including 38
   gauntlet display, hand, material, texture and motion resources from the installed game.
+- The lab has eleven candidates: the eight campaign candidates plus the three
+  CH8 grenades. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
+  keep six-item stacks, and receive isolated shell pools, copied messages, and
+  inspection resources. This lab integration does not enable campaign generation
+  or the normal supported-weapon debug grant for grenades.
 - The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
   includes opt-in hand-axe motions and confirmed-hit recovery. The campaign
@@ -91,9 +96,9 @@ WeaponID is distinct from the string ItemDataID.
 | `CKnife` | Tactical Knife | CH8 | 48 | `app.Weapon` | Experimental knife |
 | `Handgun_Albert_C` | Samurai Edge - AW Model-01 | CH8 | 49 | `app.CH8WeaponGun` | Experimental base gun |
 | `Shotgun_Albert` | Thor's Hammer - AW Model-02 | CH8 | 50 | `app.CH8WeaponGun` | Experimental base gun |
-| `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | None |
-| `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | None |
-| `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | None |
+| `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | Grenade, lab only |
+| `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | Grenade, lab only |
+| `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | Grenade, lab only |
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
@@ -772,8 +777,9 @@ not packaged assets or a substitute for regression tests.
 
 The follow-up implementation now has a separate deterministic
 `DlcGrenadeWeapons.ExportShellManager` exporter and `dlc_grenade_pool.lua` /
-`dlc_grenade.lua` runtime modules. They are **not yet wired into the campaign
-catalog or automatic runtime startup**. The exporter isolates all three shell
+`dlc_grenade.lua` runtime modules. The explicit lab export/runner now includes
+them; they are **not yet wired into the campaign catalog or automatic runtime
+startup**. The exporter isolates all three shell
 prefabs and their RCOLs under the supplied BioRand namespace, preserves the
 native default-bullet pool, and copies no other `CH8_SystemObject` components.
 The 58-path dependency manifest is text only; no extracted assets are committed.
@@ -931,7 +937,8 @@ dotnet run --project src/biorand-re7 -- mod -m "DLC Weapon Lab" -i "<RE7 install
 
 1. Deploy the explicit lab export using the normal mod workflow, with RE7 stopped.
 2. Ensure the current `BioRand7/game.lua`, `BioRand7/dlc_weapon_lab.lua`,
-   `BioRand7/dlc_weapon_player.lua` and `BioRand7/dlc_gauntlet.lua` modules are
+   `BioRand7/dlc_weapon_player.lua`, `BioRand7/dlc_gauntlet.lua`,
+   `BioRand7/dlc_grenade.lua`, and `BioRand7/dlc_grenade_pool.lua` modules are
    deployed. Run `tools/dlc_weapon_lab.lua` manually via ScriptRunner; do not
    add it to ordinary autorun or grant weapons on load.
 3. Load Ethan's campaign. Enable commands, select one candidate, and use

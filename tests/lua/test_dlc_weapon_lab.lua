@@ -1,4 +1,13 @@
 return function()
+    local grenade_resets, grenade_failure, grenade_updates = 0, false, 0
+    package.loaded["BioRand7/dlc_grenade"] = { new = function(_, _, root)
+        assert(root == "BioRand/DlcWeaponLab")
+        return { install = function() end, reset = function() grenade_resets = grenade_resets + 1 end,
+            update = function(self)
+                grenade_updates = grenade_updates + 1
+                if grenade_failure and not self.error then error("Grenade failed") end
+            end }
+    end }
     local gauntlet_resets, gauntlet_failure = 0, false
     package.loaded["BioRand7/dlc_gauntlet"] = { new = function(_, _, root)
         assert(root == "BioRand/DlcWeaponLab")
@@ -6,7 +15,7 @@ return function()
             update = function(self) if gauntlet_failure and not self.error then error("Gauntlet failed") end end }
     end }
     local Lab = require("BioRand7/dlc_weapon_lab")
-    assert(#Lab.candidates == 8)
+    assert(#Lab.candidates == 11)
     assert(Lab.candidates[5].id == "CH9_WP002")
     assert(Lab.candidates[6].id == "CH9_WP006")
     local writes, registered, owned, in_inventory = 0, true, false, false
@@ -110,6 +119,7 @@ return function()
     hooks["newGameInit()"]()
     assert(not lab.armed)
     assert(gauntlet_resets == 2, "Both load/new-game paths discard the gauntlet's transient state")
+    assert(grenade_resets == 2, "Both load/new-game paths invalidate the grenade session")
     fail, owned, ready, lab.armed = false, false, false, true
     lab:queue("add", "CKnife"); lab:update()
     assert(writes == 4 and not lab.armed, "Do not add an unready prefab")
@@ -125,4 +135,10 @@ return function()
     gauntlet_failure, lab.armed = true, true
     lab:update(); lab:update()
     assert(not lab.armed and lab.gauntlet.error and gauntlet_resets == 3, "Disarm failed adapters without retrying mutations")
+    grenade_failure, lab.armed = true, true
+    lab:update()
+    local updates = grenade_updates
+    lab:update()
+    assert(not lab.armed and lab.grenade.error and grenade_resets == 3 and grenade_updates == updates + 1,
+        "A failed grenade controller must still tick deferred pool cleanup")
 end

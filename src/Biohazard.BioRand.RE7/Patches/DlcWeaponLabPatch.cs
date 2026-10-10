@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using Biohazard.BioRand.RE7.Serialization;
 using Biohazard.BioRand.RE7.Weapons;
 using IntelOrca.Biohazard.BioRand;
 using IntelOrca.Biohazard.REE.Rsz;
@@ -10,8 +9,7 @@ namespace Biohazard.BioRand.RE7.Patches;
     Author = "BioRand", Description = "Experimental campaign weapon adapters. Not certified for a saved playthrough.")]
 internal sealed class DlcWeaponLabPatch(IPatchContext context) : IPatch {
     internal static ImmutableArray<string> RequiredAssetPaths { get; } = [.. DlcCampaignWeapons.RequiredAssetPaths
-        .Concat(System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile("dlc_gauntlet_assets.txt"))
-            .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
+        .Concat(DlcGrenadeWeapons.RequiredAssetPaths)
         .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.Ordinal)];
 
     public void Apply() {

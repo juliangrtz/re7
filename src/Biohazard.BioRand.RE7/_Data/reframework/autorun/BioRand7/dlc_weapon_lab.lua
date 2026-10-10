@@ -11,6 +11,9 @@ Lab.candidates = {
     { id = "CH9_WP006", name = "AMG-Dual (player adapter research)" },
     { id = "CH9_WP000", name = "AMG-78a (player adapter research)" },
     { id = "CH9_WP001", name = "AMG-78 (player adapter research)" },
+    { id = "Grenadebomb", name = "Grenade (player adapter research)" },
+    { id = "Thermatebomb", name = "Incendiary Grenade (player adapter research)" },
+    { id = "Stangrenadebomb", name = "Neuro-stun Grenade (player adapter research)" },
 }
 
 local function candidate(id)
@@ -24,6 +27,7 @@ end
 function Lab:reset()
     if self.player_adapter then self.player_adapter:reset() end
     if self.gauntlet then self.gauntlet:reset() end
+    if self.grenade then self.grenade:reset() end
     self.armed, self.pending, self.report, self.box_identity = false, nil, nil, nil
     self.added = {}
     self.status = "Session changed; test receipts cleared"
@@ -39,6 +43,11 @@ function Lab:install()
         self.gauntlet = require("BioRand7/dlc_gauntlet").new(self.game,
             function() return self.armed end, "BioRand/DlcWeaponLab")
         self.gauntlet:install()
+    end
+    if not self.grenade then
+        self.grenade = require("BioRand7/dlc_grenade").new(self.game,
+            function() return self.armed end, "BioRand/DlcWeaponLab")
+        self.grenade:install()
     end
     self.game:hook("app.SaveDataManager", "newGameInit()", function() self:reset() end)
     self.game:hook("app.SaveDataManager", "loadLevelUsingLoadData()", function() self:reset() end)
@@ -139,6 +148,18 @@ function Lab:execute(request)
 end
 
 function Lab:update()
+    if self.grenade then
+        local ok, message = pcall(function() self.grenade:update() end)
+        if not ok then
+            self.armed = false
+            if not self.grenade.error then
+                self.grenade.error = tostring(message)
+                self.grenade:reset()
+            end
+            self.status = tostring(message)
+            return
+        end
+    end
     if self.gauntlet and not self.gauntlet.error then
         local ok, message = pcall(function() self.gauntlet:update() end)
         if not ok then

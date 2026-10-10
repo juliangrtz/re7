@@ -48,11 +48,13 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
         context.SerializeUserFile(CampaignSettings, campaign);
         context.SetMsgFile(CampaignMessages, messages.Build());
         RegisterItemResources(candidates);
+        foreach (var root in candidates.Where(w => w.Adapter == DlcWeaponAdapter.Grenade).Select(w => w.ResourceRoot).Distinct())
+            DlcGrenadeWeapons.ExportShellManager(context, root);
     }
 
     private RszScene IsolateParameters(RszScene scene, DlcWeaponSource weapon) {
         // Joe's M21 shares campaign M21 parameters; gauntlet RCOLs were already isolated above.
-        if (weapon.ItemId == "NumaItem072" || weapon.Adapter == DlcWeaponAdapter.Gauntlet) return scene;
+        if (weapon.ItemId == "NumaItem072" || weapon.Adapter is DlcWeaponAdapter.Gauntlet or DlcWeaponAdapter.Grenade) return scene;
         var definition = DlcCampaignWeapons.CreateWeaponDefinitions().Single(w => (int)w.WeaponId == weapon.WeaponId);
         if (weapon.Adapter == DlcWeaponAdapter.Gun) {
             var gun = scene.GetGameObjects().SelectMany(go => go.Components).Single(c => c.Type.Name == "app.WeaponGun");
