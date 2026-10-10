@@ -770,6 +770,34 @@ Local evidence is retained under `.analysis/dlc-weapons-2026-10-10/`:
 `grenade-cooking-last-item-736.json`. These ignored traces are research artifacts,
 not packaged assets or a substitute for regression tests.
 
+The follow-up implementation now has a separate deterministic
+`DlcGrenadeWeapons.ExportShellManager` exporter and `dlc_grenade_pool.lua` /
+`dlc_grenade.lua` runtime modules. They are **not yet wired into the campaign
+catalog or automatic runtime startup**. The exporter isolates all three shell
+prefabs and their RCOLs under the supplied BioRand namespace, preserves the
+native default-bullet pool, and copies no other `CH8_SystemObject` components.
+The 58-path dependency manifest is text only; no extracted assets are committed.
+
+Live standalone-module validation created the exported manager, parented it to
+Ethan, observed all native pools ready, destroyed it through the native GameObject
+API, observed the singleton become null, and recreated it successfully. Cleanup
+is deferred to UpdateBehavior and refuses to destroy an owned object while a
+different manager occupies the singleton. Script reset without a scene reload
+is not certified; do not adopt an arbitrary pre-existing manager by name.
+
+The new controller completed a normal-click last-item neuro-stun throw and then
+an ordinary knife equip. It owns nine separate banks (9950..9952), samples source
+pin/release tracks over frame ranges, and gates throws on pool capacity and
+motion readiness. Live `getMotionInfo` returned hand pose 8000 = 10 frames,
+standby 8001 = 50, standby loop 8002 = 180, idle 2001 = 284, and both throws = 55.
+Mock tests additionally cover cooking/forced release, missed-event failure,
+pause, task loss, death, weapon removal, infinite stock, last-item destruction,
+bank ownership, and bounded recovery. These are not live save/load,
+pickup/storage, other-player, or interruption certification. Cancellation before
+release currently keeps the item; exact CH8 damage-interruption behavior remains
+unverified. Production activation must wait for the remaining inventory/export
+integration and lifecycle tests.
+
 Two further interop pitfalls were reproduced:
 
 - A fresh `sdk.create_instance("via.Prefab", true)` with its own path and standby
