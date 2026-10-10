@@ -27,6 +27,9 @@ internal class ItemDrops {
             ["ChemicalS"] = 0.2,
             ["Gunpowder"] = 0.35,
             ["LiquidBomb"] = 0.05,
+            ["Grenadebomb"] = 0.03,
+            ["Thermatebomb"] = 0.03,
+            ["Stangrenadebomb"] = 0.03,
             ["Coin"] = 0.1,
             ["Alcohol"] = 0.05,
             ["Flower"] = 0.05,
@@ -62,7 +65,10 @@ internal class ItemDrops {
         "Flower",
         "AlloyClay",
         "Magnesium",
-        "SyntheticDetergent"
+        "SyntheticDetergent",
+        "Grenadebomb",
+        "Thermatebomb",
+        "Stangrenadebomb"
     ];
 
     public static ImmutableHashSet<string> UnsupportedRuntimeDropIds { get; } =[
@@ -166,7 +172,7 @@ internal class ItemDrops {
 
     public static string GetCategory(string id) => id switch{
         "NoName" => CategoryNone,
-        "LiquidBomb" => CategoryExplosive,
+        "LiquidBomb" or "Grenadebomb" or "Thermatebomb" or "Stangrenadebomb" => CategoryExplosive,
         "HandgunBullet" => CategoryAmmo,
         "HandgunBulletL" => CategoryAmmo,
         "ShotgunBullet" => CategoryAmmo,

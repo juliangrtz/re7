@@ -23,7 +23,7 @@ internal static class StartingWeaponCategoryExtensions {
                 StartingWeaponCategory.Handgun => "Handgun",
                 StartingWeaponCategory.MachineGun => "P19 Machine Gun",
                 StartingWeaponCategory.Shotgun => "Shotgun",
-                StartingWeaponCategory.Bomb => "Remote Bomb",
+                StartingWeaponCategory.Bomb => "Explosives",
                 StartingWeaponCategory.Burner => "Burner",
                 StartingWeaponCategory.Magnum => "44 MAG",
                 StartingWeaponCategory.GrenadeLauncher => "Grenade Launcher",
@@ -36,6 +36,7 @@ internal static class StartingWeaponCategoryExtensions {
                 StartingWeaponCategory.Bladed => [ItemID.CKnife, ItemID.CH9_WP002, ItemID.CH9_WP000, ItemID.CH9_WP001, ItemID.CH9_WP006],
                 StartingWeaponCategory.Handgun => [ItemID.Handgun_Albert_C],
                 StartingWeaponCategory.Shotgun => [ItemID.Shotgun_Albert, ItemID.NumaItem072],
+                StartingWeaponCategory.Bomb => [ItemID.Grenadebomb, ItemID.Thermatebomb, ItemID.Stangrenadebomb],
                 _ => Array.Empty<ItemID>(),
             });
             return items;

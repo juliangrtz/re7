@@ -138,7 +138,8 @@ internal class ExtraPlacementModifier : Modifier {
         ItemRandomizer itemRandomizer,
         Rng rng,
         RandomItemSettings randomItemSettings) {
-        if (!ItemDrops.GenericRuntimeDrops.Any(id => randomItemSettings.GetItemRatio(id) > 0)) {
+        if (!ItemDrops.GenericRuntimeDrops.Any(id => itemRandomizer.IsGeneralDropAvailable(id)
+                && randomItemSettings.GetItemRatio(id) > 0)) {
             return new Item(ItemID.Herb.ToString(), 1);
         }
 

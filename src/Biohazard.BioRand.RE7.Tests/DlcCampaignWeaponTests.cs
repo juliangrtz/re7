@@ -29,6 +29,13 @@ public sealed class DlcCampaignWeaponTests {
         foreach (var source in DlcCampaignWeapons.Sources)
             Assert.Equal(allowDlc && enableWeapons, randomizer.ItemRandomizer.IsItemAllowed(
                 ItemDefinitionRepository.Default.FromId(source.ItemId)!));
+        var grenades = DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade).Select(w => w.ItemId).ToArray();
+        var bag = randomizer.ItemRandomizer.CreateGeneralItemPool(new RandomItemSettings {
+            ItemRatioKeyFunc = id => grenades.Contains(id) ? 1.0 : 0.0,
+        }, randomizer.GetRng("dlc-grenade-drops"));
+        var drops = Enumerable.Range(0, 3).Select(_ => bag.Next()).ToArray();
+        if (allowDlc && enableWeapons) Assert.Equal(grenades.Order(), drops.Order());
+        else Assert.All(drops, id => Assert.Equal("Herb", id));
         if (allowDlc && enableWeapons) Assert.True(randomizer.IsREFrameworkRequired());
         Assert.False(RandomizerExecutor.DefaultConfiguration.GetValueOrDefault<bool>(DlcCampaignWeapons.ConfigKey));
     }
@@ -60,6 +67,31 @@ public sealed class DlcCampaignWeaponTests {
         }
     }
 
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    [Trait("Category", "RequiresPak")]
+    public void GrenadeReliefDropsRequireBothPermissions(bool allowDlc, bool enableWeapons) {
+        using var state = RandomizerTest.RunState();
+        var randomizer = state.Randomizer;
+        randomizer.Input.Configuration["allow-dlc-items"] = allowDlc;
+        randomizer.Input.Configuration[DlcCampaignWeapons.ConfigKey] = enableWeapons;
+        foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade))
+            randomizer.Input.Configuration[$"item-drop-ratio-{source.ItemId.ToLowerInvariant()}"] = 0.03;
+        new ItemDropTableModifier(randomizer).Apply(new RandomizerLogger());
+        var table = randomizer.FileRepository.DeserializeUserFile<app.ReliefItemTable>(RandomizerTestPaths.Chapter4DropTablePath);
+        foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade)) {
+            var entries = table.DataList.Where(d => d.ItemID == source.ItemId).ToArray();
+            if (allowDlc && enableWeapons) {
+                var drop = Assert.Single(entries);
+                Assert.Equal((3u, 3u, 3u), (drop.EasyDropRate, drop.NormalDropRate, drop.HardDropRate));
+                Assert.Equal((1u, 1u, 1u), (drop.ReliefNum, drop.NormalDropNum, drop.ReliefDropNum));
+            } else Assert.Empty(entries);
+        }
+    }
+
     [Fact]
     public void ManifestIsScopedAndVersioned() {
         var paths = DlcCampaignWeapons.RequiredAssetPaths;
@@ -78,6 +110,30 @@ public sealed class DlcCampaignWeaponTests {
         Assert.Contains(paths, p => p.Contains("wp1600_gauntlet") && p.Contains(".mesh."));
         Assert.Contains(paths, p => p.Contains("wp1620_gauntlet") && p.Contains(".mesh."));
         Assert.Contains(paths, p => p.Contains("pl9000_gauntletw.motlist."));
+        Assert.All(DlcGrenadeWeapons.RequiredAssetPaths, path => Assert.Contains(path, paths));
+    }
+
+    [Fact]
+    public void GrenadesKeepNativeStackCategoryAndIsolatedProjectileStats() {
+        foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade)) {
+            var item = ItemDefinitionRepository.Default.FromId(source.ItemId)!;
+            Assert.Equal(Enums.app.Item.ItemCategoryType.StackWeapon, item.CategoryType);
+            Assert.True(item.IsWeapon);
+            Assert.Equal(6, item.MaxStack);
+            var itemId = Enum.Parse<ItemID>(source.ItemId);
+            Assert.DoesNotContain(itemId, StartingWeaponCategory.Bomb.GetItemIds());
+            Assert.Contains(itemId, StartingWeaponCategory.Bomb.GetItemIds(true));
+            Assert.Contains(source.ItemId, ItemDrops.GenericDrops);
+            Assert.Contains(source.ItemId, ItemDrops.GenericRuntimeDrops);
+            Assert.Equal(ItemDrops.CategoryExplosive, ItemDrops.GetCategory(source.ItemId));
+            var definition = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)source.WeaponId);
+            Assert.False(definition.IsGun);
+            Assert.Null(definition.UserParamsPath);
+            Assert.Empty(definition.BulletItemIDs!);
+            Assert.Equal(source.CollisionPath.RcolFile(), Assert.Single(definition.RcolPaths));
+            Assert.Contains(definition.Mesh.Of() + ".220128762", DlcCampaignWeapons.RequiredAssetPaths, StringComparer.OrdinalIgnoreCase);
+            Assert.Contains(definition.Material.Of() + ".21", DlcCampaignWeapons.RequiredAssetPaths, StringComparer.OrdinalIgnoreCase);
+        }
     }
 
     [Fact]
@@ -93,9 +149,11 @@ public sealed class DlcCampaignWeaponTests {
         Assert.Equal(0, missing.Writes);
     }
 
-    [Fact]
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     [Trait("Category", "RequiresPak")]
-    public void CampaignRegistrationTemplatesAndStatsUseNativeIdentities() {
+    public void CampaignRegistrationTemplatesAndStatsUseNativeIdentities(bool includeSelfDamage) {
         using var state = RandomizerTest.RunState();
         var randomizer = state.Randomizer;
         var repository = randomizer.FileRepository;
@@ -110,6 +168,7 @@ public sealed class DlcCampaignWeaponTests {
         var originalGauntletCollision = "ch9/collision/collider/player/pl9000/pl9000.rcol".RcolFile();
         var sourceGauntletCollision = repository.GetFile(originalGauntletCollision)!;
         var gauntletDamage = new Dictionary<string, int[]>();
+        var grenadeCollisions = new Dictionary<string, byte[]>();
         Assert.Equal(sourceCollision, repository.GetFile(blade.CollisionPath.RcolFile()));
         var bladePrefab = repository.GetPfbFile(blade.CampaignPrefab.Of() + ".17");
         Assert.Contains(blade.CollisionPath, bladePrefab.Resources);
@@ -119,6 +178,23 @@ public sealed class DlcCampaignWeaponTests {
             var item = Assert.Single(settings._Settings, i => i.ItemDataID == source.ItemId);
             Assert.Equal(source.CampaignPrefab, item.ItemPrefab.Path.ToString());
             Assert.True(item.CanStoreItembox);
+            if (source.Adapter == DlcWeaponAdapter.Grenade) {
+                Assert.Equal(6, item.MaxStackNum);
+                var definition = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)source.WeaponId);
+                var model = DlcGrenadeWeapons.Sources.Single(w => w.ItemId == source.ItemId).Model;
+                var original = $"CH8/Collision/Collider/Weapon/{model[..6]}/{model}.rcol".RcolFile();
+                grenadeCollisions[original] = repository.GetFile(original)!;
+                Assert.Equal(grenadeCollisions[original], repository.GetFile(source.CollisionPath.RcolFile()));
+                var rcol = repository.GetRcolFile(source.CollisionPath.RcolFile()).ToBuilder(repository.TypeRepository);
+                foreach (var request in rcol.RequestSets.Where(r => r.UserData?.Type.Name == "app.Collision.AttackUserData")) {
+                    var stats = definition.Damage[$"Attack.rcol/{request.Name}"];
+                    Assert.Equal(stats.Damage, request.UserData!.Get<int>("Damage"));
+                    Assert.Equal(stats.Stun, request.UserData!.Get<int>("Stun"));
+                }
+                var inventory = repository.GetPfbFile(source.CampaignPrefab.Of() + ".17").ReadScene(repository.TypeRepository);
+                Assert.Contains(inventory.GetGameObjects().SelectMany(g => g.Components), c => c.Type.Name == "app.CH8WeaponThrowable");
+                Assert.DoesNotContain(inventory.GetGameObjects().SelectMany(g => g.Components), c => c.Type.Name == "app.DisableSave");
+            }
             if (source.Adapter == DlcWeaponAdapter.Gauntlet) {
                 var definition = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)source.WeaponId);
                 var rcol = repository.GetRcolFile(source.CollisionPath.RcolFile()).ToBuilder(repository.TypeRepository);
@@ -139,19 +215,22 @@ public sealed class DlcCampaignWeaponTests {
             template.Visit(n => {
                 if (n is RszObjectNode o && o.Type.Name == "app.Item") ids.Add(o.Get<string>("ItemDataID"));
                 if (n is RszObjectNode a && a.Type.Name == "app.fsm.ItemAddTest") Assert.Equal(source.ItemId, a.Get<string>("_ItemDataID"));
-                if (n is RszObjectNode w && w.Type.Name is "app.WeaponGun" or "app.Weapon") Assert.Equal(source.WeaponId, w.Get<int>("WeaponID"));
+                if (n is RszObjectNode w && w.Type.Name is "app.WeaponGun" or "app.Weapon" or "app.CH8WeaponThrowable") Assert.Equal(source.WeaponId, w.Get<int>("WeaponID"));
                 return n;
             });
             Assert.NotEmpty(ids);
             Assert.All(ids, id => Assert.Equal(source.ItemId, id));
             Assert.Contains(template.Components, c => c.Type.Name == "via.render.Mesh");
-            Assert.True(template.Children.SelectMany(c => c.Components).Any(c => c.Type.Name == "app.InteractWeapon"), source.ItemId);
+            var interaction = source.Adapter == DlcWeaponAdapter.Grenade ? "app.InteractDetailSearch" : "app.InteractWeapon";
+            Assert.True(template.Children.SelectMany(c => c.Components).Any(c => c.Type.Name == interaction), source.ItemId);
             var donor = randomizer.TemplateService.GetItemTemplate("Handgun_M19");
             var preserved = randomizer.TemplateService.RebindDlcPickup(donor, "Handgun_M19", source.ItemId);
+            if (source.Adapter == DlcWeaponAdapter.Grenade)
+                Assert.Contains(preserved.Components, c => c.Type.Name == "app.CH8WeaponThrowable");
             Assert.Equal(donor.Guid, preserved.Guid);
             Assert.Equal(donor.Children.Select(c => c.Guid), preserved.Children.Select(c => c.Guid));
             preserved.Visit(n => {
-                if (n is RszObjectNode w && w.Type.Name is "app.WeaponGun" or "app.Weapon")
+                if (n is RszObjectNode w && w.Type.Name is "app.WeaponGun" or "app.Weapon" or "app.CH8WeaponThrowable")
                     Assert.Equal(source.WeaponId, w.Get<int>("WeaponID"));
                 if (n is RszObjectNode a && a.Type.Name == "app.fsm.ItemAddTest")
                     Assert.Equal(source.ItemId, a.Get<string>("_ItemDataID"));
@@ -162,10 +241,16 @@ public sealed class DlcCampaignWeaponTests {
         Assert.True(randomizer.ItemRandomizer.IsItemPlaced("NumaItem072"));
         randomizer.Input.Configuration["weapon-mod-ammo-capacity"] = true;
         randomizer.Input.Configuration["weapon-mod-damage"] = true;
+        randomizer.Input.Configuration["weapon-mod-damage-include-player-damage"] = includeSelfDamage;
         randomizer.Input.Configuration["weapon-damage-min-ch9-wp002"] = 2.0;
         randomizer.Input.Configuration["weapon-damage-max-ch9-wp002"] = 2.0;
         foreach (var id in gauntletDamage.Keys) {
             var key = id.ToLowerInvariant().Replace('_', '-');
+            randomizer.Input.Configuration[$"weapon-damage-min-{key}"] = 2.0;
+            randomizer.Input.Configuration[$"weapon-damage-max-{key}"] = 2.0;
+        }
+        foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade)) {
+            var key = ((WeaponID)source.WeaponId).ToString().ToLowerInvariant();
             randomizer.Input.Configuration[$"weapon-damage-min-{key}"] = 2.0;
             randomizer.Input.Configuration[$"weapon-damage-max-{key}"] = 2.0;
         }
@@ -177,6 +262,16 @@ public sealed class DlcCampaignWeaponTests {
         new WeaponModifier(randomizer).Apply(new RandomizerLogger());
         Assert.Equal(sourceCollision, repository.GetFile(originalBladeCollision));
         Assert.Equal(sourceGauntletCollision, repository.GetFile(originalGauntletCollision));
+        foreach (var (path, original) in grenadeCollisions) Assert.Equal(original, repository.GetFile(path));
+        foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade)) {
+            var definition = WeaponDefinitionRepository.Default.FromWeaponId((WeaponID)source.WeaponId);
+            var rcol = repository.GetRcolFile(source.CollisionPath.RcolFile()).ToBuilder(repository.TypeRepository);
+            foreach (var request in rcol.RequestSets.Where(r => r.UserData?.Type.Name == "app.Collision.AttackUserData")) {
+                var original = definition.Damage[$"Attack.rcol/{request.Name}"].Damage;
+                Assert.Equal(request.Name.Contains("Player") && !includeSelfDamage ? original : original * 2,
+                    request.UserData!.Get<int>("Damage"));
+            }
+        }
         foreach (var source in DlcCampaignWeapons.Sources.Where(w => w.Adapter == DlcWeaponAdapter.Gauntlet)) {
             var rcol = repository.GetRcolFile(source.CollisionPath.RcolFile()).ToBuilder(repository.TypeRepository);
             Assert.Equal(gauntletDamage[source.ItemId].Select(d => d * 2), rcol.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));

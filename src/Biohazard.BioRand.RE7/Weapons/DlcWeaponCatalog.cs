@@ -30,7 +30,7 @@ public static class DlcWeaponCatalog {
 public sealed record DlcWeaponSource(
     string ItemId, string Name, int Chapter, int WeaponId, string ComponentType, DlcWeaponAdapter Adapter) {
     public bool IsLabCandidate => Adapter != DlcWeaponAdapter.None;
-    public bool IsCampaignCandidate => Adapter is DlcWeaponAdapter.Knife or DlcWeaponAdapter.Gun or DlcWeaponAdapter.SpiritBlade or DlcWeaponAdapter.Gauntlet;
+    public bool IsCampaignCandidate => Adapter is DlcWeaponAdapter.Knife or DlcWeaponAdapter.Gun or DlcWeaponAdapter.SpiritBlade or DlcWeaponAdapter.Gauntlet or DlcWeaponAdapter.Grenade;
     public string ResourceRoot { get; init; } = "BioRand/DlcWeaponLab";
     public string CampaignPrefab => $"{ResourceRoot}/{ItemId}/Item.pfb";
     public string ResourceScene => $"{ResourceRoot}/{ItemId}/Resource.scn";

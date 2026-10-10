@@ -20,23 +20,23 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
   The export preflights and copies the weapon dependency manifests, including 38
   gauntlet display, hand, material, texture and motion resources from the installed game.
-- The lab has eleven candidates: the eight campaign candidates plus the three
+- The lab and campaign now have eleven candidates, including the three
   CH8 grenades. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
   keep six-item stacks, and receive isolated shell pools, copied messages, and
-  inspection resources. This lab integration does not enable campaign generation
-  or the normal supported-weapon debug grant for grenades.
+  inspection resources. The campaign uses its own namespace and automatic runtime
+  adapter; it does not run the manually armed lab controller.
 - The lab also exports a **Spirit Blade base-melee adapter**.
   It preserves WeaponID 63 and the source render/motion/collider stack and
   includes opt-in hand-axe motions and confirmed-hit recovery. The campaign
   version additionally isolates its attack RCOL and participates in generation
   and debug grants. Lab candidacy and campaign candidacy remain separate
   properties; do not promote a lab export merely because its prefab loads.
-- `DlcCampaignWeaponPatch` integrates eight candidates under `BioRand/DlcWeapons`
+- `DlcCampaignWeaponPatch` integrates eleven candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
 - The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21,
-  Spirit Blade, AMG-78a, AMG-78, and AMG-Dual. The remaining six catalog entries
-  are throwables and stay excluded pending player-system work.
+  Spirit Blade, AMG-78a, AMG-78, AMG-Dual, Grenade, Incendiary Grenade, and Neuro-stun
+  Grenade. The three CH9 throwables remain excluded pending player-system work.
 - Campaign integration includes item definitions, starting weapons and ammunition,
   random weapon pools, pickup templates, item settings/messages, inspection
   resource folders, and weapon-stat controls. Custom bird-cage entries are gated;
@@ -45,8 +45,9 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   knife attack RCOL are copied to that namespace before stat changes. Joe's M21
   deliberately shares campaign M21 parameters and controls. Source DLC settings
   and inventory PFBs are not rewritten, and DLC gameplay roots stay inactive.
-- `_Data/dlc_weapon_assets.txt` and `_Data/dlc_gauntlet_assets.txt` together list
-  151 required installed resources, including weapon render/motion/collision/VFX
+- `_Data/dlc_weapon_assets.txt`, `_Data/dlc_gauntlet_assets.txt`, and
+  `_Data/dlc_grenade_assets.txt` together list 231 required installed resources,
+  including weapon render/motion/collision/VFX/sound
   dependencies and import metadata. Generation
   preflights every entry before registering anything and emits a clear error if
   the baseline needs `setup --dlc-weapons`. Extracted game assets are not committed.
@@ -55,16 +56,24 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   initialization or repair AI. Its scoped player adapter maps Spirit Blade's
   motion bank and observes confirmed damage for recovery. The separate gauntlet
   adapter maps native melee actions to Joe's clips and enables their exported
-  collision windows; neither adapter synthesizes player input. Both flags imply
+  collision windows. The grenade adapter drives the native throw callbacks and
+  owns a scoped shell pool; none of these adapters synthesizes player input. Both flags imply
   REFramework is required.
 - **BioRand 7 > Debug tools > Add supported DLC weapons to item box** queues a
-  one-shot grant on `UpdateBehavior`. It adds one of each of the eight candidates,
+  one-shot grant on `UpdateBehavior`. It adds one of each of the eleven candidates,
   skipping weapons already owned in inventory or storage. Both integration flags,
-  campaign Ethan, and all eight ready campaign prefabs are required. Missing/foreign
+  campaign Ethan, and all eleven ready campaign prefabs are required. Missing/foreign
   adapters abort before any additions; a native add failure stops the batch without
   retrying or removing earlier successes. The menu reports the result. Loading a
   save, starting a new game, resetting scripts, or reloading config cancels pending
   requests. The button does not deploy assets, equip weapons, or save the game.
+- Grenades are stack weapons, not guns or ammunition. The Explosives starting
+  category includes them only with both flags enabled. Each has an independent
+  item/enemy drop weight (default 0.03), gated at pool construction and relief-table
+  export. A drop supplies one grenade. Disabled-only grenade weights fall back to
+  Herb for both ordinary pickups and crates, rather than requesting an unavailable
+  pickup template. Their isolated RCOLs participate in damage/stun controls, respecting
+  Include Self-Damage; contact-only zero-damage requests retain their native values.
 
 This implements the campaign generation path, **not completed playthrough
 certification**. Save migration is not implemented. Use backed-up test saves until
@@ -96,9 +105,9 @@ WeaponID is distinct from the string ItemDataID.
 | `CKnife` | Tactical Knife | CH8 | 48 | `app.Weapon` | Experimental knife |
 | `Handgun_Albert_C` | Samurai Edge - AW Model-01 | CH8 | 49 | `app.CH8WeaponGun` | Experimental base gun |
 | `Shotgun_Albert` | Thor's Hammer - AW Model-02 | CH8 | 50 | `app.CH8WeaponGun` | Experimental base gun |
-| `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | Grenade, lab only |
-| `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | Grenade, lab only |
-| `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | Grenade, lab only |
+| `Grenadebomb` | Grenade | CH8 | 58 | `app.CH8WeaponThrowable` | Experimental campaign throw adapter |
+| `Thermatebomb` | Incendiary Grenade | CH8 | 59 | `app.CH8WeaponThrowable` | Experimental campaign throw adapter |
+| `Stangrenadebomb` | Neuro-stun Grenade | CH8 | 60 | `app.CH8WeaponThrowable` | Experimental campaign throw adapter |
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
@@ -722,8 +731,9 @@ research-only `ItemSettings` file. `createItemInstance` initialized the native
 `onPinPulled`, and `onStartThrow(player, false)` ran; the latter allocated a shell
 with the source grenade's two-second fuse. These were direct diagnostic calls,
 not normal input, stock-consumption, pickup, save/load, or campaign certification.
-The three grenades remain outside the supported campaign pool until those paths
-and interruption/last-item handling are proven.
+At that research stage the three grenades remained outside the campaign pool.
+The later dedicated adapter and production tests below supersede that boundary;
+these direct calls alone were not sufficient for promotion.
 
 The shared `pl1000_Grenade.motlist` contains ready 2000/2001, walk/jog 2020/2021,
 guard 2300/2305/2306, throws 2400/2401, and standby 8001/8002. The separate
@@ -778,8 +788,8 @@ not packaged assets or a substitute for regression tests.
 The follow-up implementation now has a separate deterministic
 `DlcGrenadeWeapons.ExportShellManager` exporter and `dlc_grenade_pool.lua` /
 `dlc_grenade.lua` runtime modules. The explicit lab export/runner now includes
-them; they are **not yet wired into the campaign catalog or automatic runtime
-startup**. The exporter isolates all three shell
+them; the later eleven-weapon integration also wires them into the campaign catalog
+and automatic runtime startup. The exporter isolates all three shell
 prefabs and their RCOLs under the supplied BioRand namespace, preserves the
 native default-bullet pool, and copies no other `CH8_SystemObject` components.
 The 80-path dependency manifest is text only; no extracted assets are committed.
@@ -989,6 +999,54 @@ A bounded one-frame UI-command pulse selected the real quick slot and reached
 `Melee.ReadyIdle` with all nine banks and the owned shell pool ready; that is
 native quick-slot routing evidence, not physical-key timing coverage.
 
+### Grenade cold-save and pickup boundary
+
+A disposable manual save held a regular grenade equipped, an incendiary grenade
+in inventory, and a neuro-stun grenade in the item box. A complete process restart
+restored those exact counts and locations with all three prefabs ready, nine motion
+banks, an owned ready shell pool, and `Melee.ReadyIdle` clip 2001. A normal mouse
+throw consumed the last regular grenade without adapter error. Quick-slot selection
+then returned to G17; equipping the cold-loaded incendiary grenade also reached a
+valid idle without forcing native startup. These tests used the lab namespace and
+a cold-start research loader, so production campaign wiring is validated separately.
+
+The subsequent production deployment disabled that research loader and used only
+`BioRand7/dlc_weapons.lua` with both configuration flags enabled. A fresh process
+loaded the same disposable save with exact grenade inventory/storage counts,
+`BioRand/DlcWeapons` prefab paths, nine banks, the owned ready pool, and idle clip
+2001. A normal mouse throw consumed the regular grenade without adapter failure.
+A fresh LiquidBomb-derived world pickup displayed the grenade model and normal
+interaction prompt, entered inventory through `InteractDetailSearch`, and equipped
+with a valid idle. Pickup used a bounded native UI-command pulse after a physical
+key tap was not consumed; it was not a direct inventory grant. The actual item-box
+menu then stored it successfully.
+
+After the last throw, empty hands reported `Hands.ReadyStart`, action 34, and no
+arm-layer clip. The same state appeared after normal grenade storage. Pickup and
+weapon switching still worked. Re-requesting that state did not change it, and a
+direct `Inventory.removeEquip()` control probe threw rather than supplying a
+healthy comparison. Do not infer a missing animation asset or add repeated
+recovery writes from this observation alone. A normal vanilla-weapon storage
+comparison and further empty-hands interaction/guard coverage remain required.
+
+Loose grenade pickups use the campaign LiquidBomb template and its native
+`InteractDetailSearch`. A loose item does not need a Weapon component: LiquidBomb
+and MiaKnife donors have none. The registered inventory prefab supplies the native
+weapon after pickup. Preserved gun pickups that do contain WeaponGun must instead
+replace it with the grenade's `CH8WeaponThrowable` and rebind ItemAddTest IDs.
+Do not make a test demand a component that the real donor never had.
+
+### Campaign flow scope
+
+`Game:chapter()` returns `GameFlowFsmManager.GameFlowKindEnum`, not a chapter number
+or `GameManager.ChapterNo`. Values 0 through 13 cover C00, C01, the C03/C04 main
+flows, and the campaign found-footage scenes. For example 8 is C04_2, 13 is FF050,
+18 is Not a Hero, and 21 is End of Zoe. An apparently conservative 1..5 check
+silently excludes late-campaign and VHS players. The grenade adapter now accepts
+0..13 while retaining exact active-player names and campaign prefab namespaces.
+Tests cover every campaign flow and reject DLC/none flows; these scope tests do
+not replace live Mia/Clancy motion, pool-lifetime, or interaction validation.
+
 Automated coverage includes the 14 source identities, rejected unsupported
 adapters, default-off behavior, both permission gates, manifest extraction and
 missing-resource preflight, deterministic lab export, serialized native identities,
@@ -996,9 +1054,13 @@ pickup interaction rebinding, messages, ammo mapping, capacity changes, and the
 WeaponID 13 alias. Lua coverage checks exact namespace guards, deferred bounded
 loading, failures without repeated mutations, and load/new-game invalidation.
 
-The campaign integration full test-project run passed 597 tests, and all 25 Lua suites
+The campaign integration full test-project run passed 607 tests, and all 28 Lua suites
 passed under Lua 5.4. The machine's `lua` command was Lua 5.1, so a compatible
 Lua 5.4 runtime was used. Automated success does not remove the manual risks above.
+An opt-in full seed (35825) also generated successfully from a clean baseline
+augmented with the 231 required installed resources, including grenade drop tables
+and packaged runtime modules. That output was inspected, not used to certify a
+complete randomized playthrough.
 
 Remaining acceptance work:
 
@@ -1013,6 +1075,7 @@ Remaining acceptance work:
    loading separately; the curated manifest is not proof of a complete sound-bank
    closure. Check randomized loaded ammo on scene pickups as well as inventory PFBs.
 5. Finish gauntlet player-transition, held-button input, sound, and visual checks.
-   Port throwables separately from the conventional gun adapter. Keep those six
-   candidates out of generation and debug grants until their complete
-   equip/attack/consume/cancel/restore lifecycle is demonstrated.
+   Port CH9 throwables separately from the conventional gun adapter. Keep those
+   three candidates out of generation and debug grants until their complete
+   equip/attack/consume/cancel/restore lifecycle is demonstrated. CH8 grenades now
+   use the dedicated experimental adapter; broaden its player-transition coverage.

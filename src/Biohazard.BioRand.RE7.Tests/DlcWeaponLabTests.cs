@@ -88,7 +88,7 @@ public sealed class DlcWeaponLabTests {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
         Assert.Equal(11, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
-        Assert.Equal(8, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        Assert.Equal(11, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
         Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsCampaignCandidate);

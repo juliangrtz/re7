@@ -11,7 +11,7 @@ public static class DlcCampaignWeapons {
     public const string ConfigKey = "dlc-campaign-weapons";
     public static ImmutableArray<DlcWeaponSource> Sources { get; } = [.. DlcWeaponCatalog.Weapons
         .Where(w => w.IsCampaignCandidate).Select(w => w with { ResourceRoot = "BioRand/DlcWeapons" })];
-    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. new[] { "dlc_weapon_assets.txt", "dlc_gauntlet_assets.txt" }
+    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. new[] { "dlc_weapon_assets.txt", "dlc_gauntlet_assets.txt", "dlc_grenade_assets.txt" }
         .SelectMany(name => System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile(name))
             .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.Ordinal)];
@@ -23,15 +23,15 @@ public static class DlcCampaignWeapons {
         => randomizer.GetConfigOption<bool>(ConfigKey) && randomizer.GetConfigOption<bool>("allow-dlc-items");
 
     internal static IEnumerable<ItemDefinition> CreateItemDefinitions() => Sources.Select(w => new ItemDefinition {
-        Id = w.ItemId, Name = w.Name, CategoryType = ItemCategoryType.Weapon,
+        Id = w.ItemId, Name = w.Name, CategoryType = w.Adapter == DlcWeaponAdapter.Grenade ? ItemCategoryType.StackWeapon : ItemCategoryType.Weapon,
         Size = w.ItemId is "Shotgun_Albert" or "NumaItem072" ? ItemSlotSize.Slot2 : ItemSlotSize.Slot1,
         Dlc = w.Chapter == 8 ? DlcType.NotAHero : DlcType.EndOfZoe,
-        WeaponId = (WeaponID)w.WeaponId, MaxStack = 1, CanStoreInItemBox = true,
+        WeaponId = (WeaponID)w.WeaponId, MaxStack = w.Adapter == DlcWeaponAdapter.Grenade ? 6 : 1, CanStoreInItemBox = true,
         SourceUserFile = "resourceitemsettings.user.2",
     });
 
     internal static IEnumerable<WeaponDefinition> CreateWeaponDefinitions() {
-        foreach (var source in Sources.Where(w => w.Chapter == 8)) {
+        foreach (var source in Sources.Where(w => w.Chapter == 8 && w.Adapter != DlcWeaponAdapter.Grenade)) {
             var gun = source.Adapter == DlcWeaponAdapter.Gun;
             var family = source.ItemId switch {
                 "CKnife" => "wp1390_ChrisKnife",
@@ -61,6 +61,24 @@ public static class DlcCampaignWeapons {
                     },
                     _ => new() { ["defaultbullet.rcol/Shotgun_Albert"] = new() { Damage = 60, Stun = 15 } },
                 },
+            };
+        }
+        foreach (var source in Sources.Where(w => w.Adapter == DlcWeaponAdapter.Grenade)) {
+            var model = DlcGrenadeWeapons.Sources.Single(w => w.ItemId == source.ItemId).Model;
+            yield return new WeaponDefinition {
+                WeaponId = (WeaponID)source.WeaponId, Id = model[..6], Name = source.Name,
+                IsGun = false, IsInventoryWeapon = true, UserType = Enums.app.CharacterDefine.Type.Player,
+                BulletItemIDs = [], UserParamsPath = null,
+                Mesh = $"CH8/Weapon/{model}/{model}.mesh",
+                Material = $"CH8/Weapon/{model}/{model}.mdf2",
+                PrefabPath = source.CampaignPrefab.Of() + ".17",
+                RcolPaths = [source.CollisionPath.RcolFile()],
+                Damage = source.WeaponId == 58 ? new() {
+                    ["Attack.rcol/ExplosionCToEnemy"] = new() { Damage = 500, Stun = 500 },
+                    ["Attack.rcol/ExplosionToEnemy"] = new() { Damage = 1500, Stun = 500 },
+                    ["Attack.rcol/ExplosionCToPlayer"] = new() { Damage = 400, Stun = 250 },
+                    ["Attack.rcol/ExplosionToPlayer"] = new() { Damage = 300, Stun = 150 },
+                } : CreateGrenadeDamage(source.WeaponId == 59),
             };
         }
         var blade = Sources.Single(w => w.Adapter == DlcWeaponAdapter.SpiritBlade);
@@ -93,5 +111,16 @@ public static class DlcCampaignWeapons {
                     attack => new WeaponDamageStats { Damage = attack.Damage, Stun = attack.Stun }),
             };
         }
+    }
+
+    private static Dictionary<string, WeaponDamageStats> CreateGrenadeDamage(bool incendiary) {
+        var damage = new Dictionary<string, WeaponDamageStats> {
+            ["Attack.rcol/AttackToWeapon"] = new() { Damage = 0, Stun = 100 },
+            ["Attack.rcol/Impact"] = new() { Damage = 0, Stun = 0 },
+            ["Attack.rcol/ExplosionToEnemy"] = new() { Damage = 500, Stun = 0 },
+            ["Attack.rcol/ExplosionToPlayer"] = new() { Damage = 100, Stun = 100 },
+        };
+        if (incendiary) damage["Attack.rcol/Residual"] = new() { Damage = 500, Stun = 0 };
+        return damage;
     }
 }

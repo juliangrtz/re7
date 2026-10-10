@@ -28,6 +28,8 @@ public sealed class RandomizerOutput {
         "BioRand7/crafting.lua",
         "BioRand7/data.lua",
         "BioRand7/dlc_gauntlet.lua",
+        "BioRand7/dlc_grenade.lua",
+        "BioRand7/dlc_grenade_pool.lua",
         "BioRand7/dlc_weapon_player.lua",
         "BioRand7/dlc_weapons.lua",
         "BioRand7/em3300_explosions.lua",

@@ -129,7 +129,13 @@ return function()
     assert(adapter:matches(player) and adapter:owns_banks())
     for _, other in ipairs({ "Pl1000", "Pl9000", "Pl2000_Birthday" }) do player_name = other; assert(not adapter:matches(player)) end
     for _, campaign in ipairs({ "Pl0000", "Pl0000_Chapter1", "Pl2000", "Pl2100", "Pl3000" }) do player_name = campaign; assert(adapter:matches(player)) end
-    player_name = "Pl0000"; chapter = 8; assert(not adapter:matches(player)); chapter = 3
+    for _, campaign in ipairs({ "Pl0000", "Pl0000_Chapter1", "Pl2000", "Pl2100", "Pl3000" }) do
+        player_name = campaign
+        for flow = 0, 13 do chapter = flow; assert(adapter:matches(player), "Campaign game flow " .. flow) end
+    end
+    player_name = "Pl0000"
+    for _, flow in ipairs({ -1, 14, 15, 16, 17, 18, 19, 20, 21 }) do chapter = flow; assert(not adapter:matches(player)) end
+    chapter = nil; assert(not adapter:matches(player)); chapter = 3
     path = "CH8/Vanilla.pfb"; assert(not adapter:matches(player)); path = "BioRand/DlcWeapons/Grenadebomb/Item.pfb"
     adapter:install(); adapter:install()
     local bank_hook = hooks["app.PlayerMotionController:getBankType(app.WeaponID)"]
@@ -137,7 +143,7 @@ return function()
     bank_hook[1]({ nil, {}, 58 }); assert(bank_hook[2](260) == 260)
     local start_hook = hooks["app.CH8WeaponThrowable:doStart"]
     start_hook[1]({ nil, weapon }); assert(start_hook[2](0) == 0 and events[#events] == "category" and next(storage) == nil)
-    chapter = 8; local before = #events; start_hook[1]({ nil, weapon }); start_hook[2](0); assert(#events == before); chapter = 3
+    chapter = 18; local before = #events; start_hook[1]({ nil, weapon }); start_hook[2](0); assert(#events == before); chapter = 3
 
     local function update(state, clip, at, complete)
         name, motion_id, frame, ended = state or name, clip or motion_id, at or frame, complete or false

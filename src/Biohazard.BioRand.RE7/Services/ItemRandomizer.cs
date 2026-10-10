@@ -130,6 +130,9 @@ internal class ItemRandomizer {
         return true;
     }
 
+    public bool IsGeneralDropAvailable(string id)
+        => !DlcCampaignWeapons.Contains(id) || DlcCampaignWeapons.IsEnabled(_randomizer);
+
     public Item GetNextGeneralDrop(Rng rng, RandomItemSettings settings) {
         var bag = CreateGeneralItemPool(settings, rng);
 
@@ -155,6 +158,7 @@ internal class ItemRandomizer {
     public EndlessBag<string> CreateGeneralItemPool(RandomItemSettings settings, Rng rng) {
         if (!_generalDrops.TryGetValue(settings, out var result)) {
             var weights = new Dictionary<string, decimal>();
+            var excludedDlcWeight = false;
             foreach (var dropKind in ItemDrops.GenericDrops) {
                 var ratio = settings.GetItemRatio(dropKind);
                 // Profiles can be submitted without using the slider UI. Bound weights before
@@ -167,12 +171,15 @@ internal class ItemRandomizer {
 
                 var weight = ConvertToWeight(ratio);
                 if (weight > 0) {
-                    weights.Add(dropKind, weight);
+                    if (IsGeneralDropAvailable(dropKind)) weights.Add(dropKind, weight);
+                    else excludedDlcWeight = true;
                 }
             }
 
-            if (weights.Count == 0)
-                return new EndlessBag<string>(rng, ["EthanLeg"]);
+            if (weights.Count == 0) {
+                // A disabled DLC-only profile still needs a valid campaign pickup template.
+                return new EndlessBag<string>(rng, [excludedDlcWeight ? "Herb" : "EthanLeg"]);
+            }
 
             var scale = (decimal)Math.Pow(10, weights.Values.Max(GetDecimalPlaces));
             var entries = weights

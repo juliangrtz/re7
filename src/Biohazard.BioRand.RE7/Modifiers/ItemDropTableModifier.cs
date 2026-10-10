@@ -59,6 +59,8 @@ internal class ItemDropTableModifier : Modifier {
         var rng = randomizer.GetRng(RandomizerKey, chapter, path);
 
         foreach (var id in ItemDrops.GenericRuntimeDrops) {
+            if (!itemRandomizer.IsGeneralDropAvailable(id))
+                continue;
             var idStr = id;
             var item = _itemDefinitions.FromId(idStr)!;
 

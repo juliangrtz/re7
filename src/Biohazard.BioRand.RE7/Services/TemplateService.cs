@@ -57,6 +57,7 @@ internal class TemplateService {
                 throw new InvalidOperationException($"DLC campaign weapons are disabled: {id}");
             var baseId = id switch {
                 "CKnife" or "CH9_WP002" or "CH9_WP000" or "CH9_WP001" or "CH9_WP006" => "MiaKnife",
+                "Grenadebomb" or "Thermatebomb" or "Stangrenadebomb" => "LiquidBomb",
                 "Handgun_Albert_C" => "Handgun_M19",
                 "Shotgun_Albert" => "MachineGun",
                 _ => "Shotgun_DB",
@@ -93,7 +94,7 @@ internal class TemplateService {
             return obj.Type.Name switch {
                 "app.Item" => obj.Set("ItemDataID", id),
                 "app.fsm.ItemAddTest" => obj.Set("_ItemDataID", id),
-                "app.WeaponGun" or "app.Weapon" => nativeWeapon,
+                "app.WeaponGun" or "app.Weapon" or "app.CH8WeaponThrowable" => nativeWeapon,
                 "via.render.Mesh" => obj.Set("Mesh", new RszResourceNode(definition.Mesh))
                     .Set("Material", new RszResourceNode(definition.Material)),
                 _ => obj,
@@ -105,7 +106,7 @@ internal class TemplateService {
         if (!DlcCampaignWeapons.Contains(id)) return pickup;
         var weapon = ReadDlcWeaponComponent(id);
         return pickup.Visit(node => node is RszObjectNode obj ? obj.Type.Name switch {
-            "app.Weapon" or "app.WeaponGun" => weapon,
+            "app.Weapon" or "app.WeaponGun" or "app.CH8WeaponThrowable" => weapon,
             "app.fsm.ItemAddTest" when obj.Get<string>("_ItemDataID") == originalId => obj.Set("_ItemDataID", id),
             _ => obj,
         } : node);
@@ -116,6 +117,6 @@ internal class TemplateService {
         var inventory = _randomizer.FileRepository.GetPfbFile(source.CampaignPrefab.Of() + ".17")
             .ReadScene(_randomizer.FileRepository.TypeRepository);
         return inventory.GetGameObjects().SelectMany(g => g.Components)
-            .Single(c => c.Type.Name is "app.Weapon" or "app.WeaponGun");
+            .Single(c => c.Type.Name is "app.Weapon" or "app.WeaponGun" or "app.CH8WeaponThrowable");
     }
 }

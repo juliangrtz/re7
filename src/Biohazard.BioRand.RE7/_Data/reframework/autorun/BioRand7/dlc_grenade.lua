@@ -18,8 +18,9 @@ end
 
 function Grenade:matches(player, variant)
     if not player or player ~= self.game:player() or not PLAYERS[player:call("get_Name")] then return false end
-    local chapter = self.game:chapter()
-    if not chapter or chapter < 1 or chapter > 5 then return false end
+    -- Game:chapter returns GameFlowKindEnum: C00 through FF050 are the campaign (0..13).
+    local flow = self.game:chapter()
+    if not flow or flow < 0 or flow > 13 then return false end
     if not variant then
         for _, entry in ipairs(VARIANTS) do if self:matches(player, entry) then return true end end
         return false

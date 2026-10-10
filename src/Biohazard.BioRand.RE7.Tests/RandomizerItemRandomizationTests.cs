@@ -738,8 +738,10 @@ public class RandomizerItemRandomizationTests {
         Assert.Equal("ItemBox_Fake", newChild.Name);
     }
 
-    [Fact]
-    public void AdditionalWoodenCrates_UnsupportedRuntimeDrops_AreExcluded() {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AdditionalWoodenCrates_UnsupportedRuntimeDrops_AreExcluded(bool disabledGrenades) {
         using var result = RandomizerTest.RunState(config => {
             config["random-items"] = true;
             config["additional-wooden-crates"] = true;
@@ -749,8 +751,15 @@ public class RandomizerItemRandomizationTests {
                 config[$"item-drop-ratio-{dropId.ToLowerInvariant()}"] = 0.0;
             }
 
-            config["item-drop-ratio-stimulant"] = 1.0;
-            config["item-drop-ratio-depressant"] = 1.0;
+            if (disabledGrenades) {
+                config["dlc-campaign-weapons"] = false;
+                config["item-drop-ratio-grenadebomb"] = 1.0;
+                config["item-drop-ratio-thermatebomb"] = 1.0;
+                config["item-drop-ratio-stangrenadebomb"] = 1.0;
+            } else {
+                config["item-drop-ratio-stimulant"] = 1.0;
+                config["item-drop-ratio-depressant"] = 1.0;
+            }
         });
 
         var placement = result.ItemPlacementService.ItemPlacements.First(x =>

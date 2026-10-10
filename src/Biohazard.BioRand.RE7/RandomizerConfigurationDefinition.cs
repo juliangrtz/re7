@@ -171,8 +171,8 @@ internal static class RandomizerConfigurationDefinition {
         group.Items.Add(new GroupItem(){
             Id = DlcCampaignWeapons.ConfigKey,
             Label = "Experimental DLC Campaign Weapons",
-            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, AMG-78a, AMG-78, and AMG-Dual in campaign weapon pools. " +
-                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. Throwable weapons are excluded.",
+            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, all three AMG gauntlets, and Not a Hero grenades in the campaign. " +
+                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. End of Zoe throwables are excluded.",
             Type = "switch",
             Default = false
         });
@@ -629,7 +629,8 @@ internal static class RandomizerConfigurationDefinition {
             group.Items.Add(new GroupItem(){
                 Id = $"enemy-drop-ratio-{drop.ToLowerInvariant()}",
                 Label = ItemDefinitions.FromId(drop)!.Name,
-                Description = "Relative drop weight. Set to 0 to exclude this item from enemy drops.",
+                Description = "Relative drop weight. Set to 0 to exclude this item from enemy drops."
+                    + (DlcCampaignWeapons.Contains(drop) ? " Requires both DLC campaign weapons and Allow DLC Items." : ""),
                 Category = new GroupItemCategory(){
                     Label = category,
                     BackgroundColor = bgColor,
@@ -864,7 +865,8 @@ internal static class RandomizerConfigurationDefinition {
             group.Items.Add(new GroupItem(){
                 Id = $"item-drop-ratio-{drop.ToLowerInvariant()}",
                 Label = ItemDefinitions.FromId(drop)!.Name,
-                Description = "Relative drop weight. Set to 0 to exclude this item from randomized item drops.",
+                Description = "Relative drop weight. Set to 0 to exclude this item from randomized item drops."
+                    + (DlcCampaignWeapons.Contains(drop) ? " Requires both DLC campaign weapons and Allow DLC Items." : ""),
                 Category = new GroupItemCategory(){
                     Label = category,
                     BackgroundColor = bgColor,
