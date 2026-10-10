@@ -6,8 +6,20 @@ using System.Collections.Immutable;
 
 namespace Biohazard.BioRand.RE7.Weapons;
 
-// Explicit research export only. These projectiles are not campaign weapon candidates yet.
+// Keep the complete native pool shape; only knife and spear inventory items are candidates.
 internal static class DlcCh9Projectiles {
+    internal static ImmutableArray<string> RequiredAssetPaths { get; } = [.. System.Text.Encoding.UTF8
+        .GetString(EmbeddedData.GetFile("dlc_ch9_throwable_assets.txt"))
+        .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)];
+
+    internal static string ProjectileName(int weaponId) => weaponId switch {
+        64 => "NailKnifeBulletS",
+        65 => "HarpoonBulletS",
+        _ => throw new ArgumentOutOfRangeException(nameof(weaponId)),
+    };
+
+    internal static string WeaponCollisionPath(DlcWeaponSource weapon)
+        => $"{weapon.ResourceRoot}/{ProjectileName(weapon.WeaponId)}/Attack.rcol";
     internal static ImmutableArray<(string Name, string ManagerField, string Component, string Collision)> Sources { get; } = [
         ("NailKnifeBulletS", "ThrowingWp1500Prefab", "app.CH9ThrowingWp1500", "NailKnifeBulletS"),
         ("HarpoonBulletS", "ThrowingWp1800Prefab", "app.CH9ThrowingWp1800", "HarpoonBulletS"),

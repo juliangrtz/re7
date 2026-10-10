@@ -8,7 +8,7 @@ local LISTS = {
 }
 local PLAYERS = { Pl0000 = true, Pl0000_Chapter1 = true, Pl2000 = true, Pl2100 = true, Pl3000 = true }
 
--- Research foundation only; no candidate is enabled by constructing this module.
+-- The caller gates campaign support; constructing this module never grants items.
 function Pool.new(game, root)
     return setmetatable({ game = game, root = root }, Pool)
 end

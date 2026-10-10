@@ -115,12 +115,15 @@ function EnemyDrops:candidates(rng, boss)
     end
 
     for _, item_id in ipairs(Data.generic_drop_items) do
+        local allowed_dlc = not Data.dlc_stack_weapons[item_id]
+            or (self.context.config:get("dlc-campaign-weapons", false) and self.context.config:get("allow-dlc-items", false))
         local allowed_for_boss = not boss or Data.boss_drop_items[item_id]
         local allowed_for_chapter = allowed_ammo == nil or not Data.ammo[item_id] or allowed_ammo[item_id]
-        if allowed_for_boss and allowed_for_chapter then
+        if allowed_dlc and allowed_for_boss and allowed_for_chapter then
+            local config_id = item_id:lower():gsub("_", "-")
             local ratio = self:config(
-                "enemy-drop-ratio-" .. item_id:lower(),
-                "item-drop-ratio-" .. item_id:lower(),
+                "enemy-drop-ratio-" .. config_id,
+                "item-drop-ratio-" .. config_id,
                 0)
             if ratio > 0 then
                 candidates[#candidates + 1] = { value = item_id, weight = ratio * 100 }

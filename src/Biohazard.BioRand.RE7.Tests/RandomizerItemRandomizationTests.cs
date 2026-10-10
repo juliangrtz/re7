@@ -741,21 +741,23 @@ public class RandomizerItemRandomizationTests {
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void AdditionalWoodenCrates_UnsupportedRuntimeDrops_AreExcluded(bool disabledGrenades) {
+    public void AdditionalWoodenCrates_UnsupportedRuntimeDrops_AreExcluded(bool disabledDlcWeapons) {
         using var result = RandomizerTest.RunState(config => {
             config["random-items"] = true;
             config["additional-wooden-crates"] = true;
             config["additional-wooden-crates-fakes"] = false;
 
             foreach (var dropId in ItemDrops.GenericDrops) {
-                config[$"item-drop-ratio-{dropId.ToLowerInvariant()}"] = 0.0;
+                config[$"item-drop-ratio-{ItemDrops.GetConfigId(dropId)}"] = 0.0;
             }
 
-            if (disabledGrenades) {
+            if (disabledDlcWeapons) {
                 config["dlc-campaign-weapons"] = false;
                 config["item-drop-ratio-grenadebomb"] = 1.0;
                 config["item-drop-ratio-thermatebomb"] = 1.0;
                 config["item-drop-ratio-stangrenadebomb"] = 1.0;
+                config["item-drop-ratio-ch9-wp003"] = 1.0;
+                config["item-drop-ratio-ch9-wp004"] = 1.0;
             } else {
                 config["item-drop-ratio-stimulant"] = 1.0;
                 config["item-drop-ratio-depressant"] = 1.0;
@@ -899,7 +901,7 @@ public class RandomizerItemRandomizationTests {
 
     private static void ConfigureSingleDrop(RandomizerConfiguration configuration, string itemId) {
         foreach (var dropId in ItemDrops.GenericDrops) {
-            configuration[$"item-drop-ratio-{dropId.ToLowerInvariant()}"] = dropId == itemId ? 1.0 : 0.0;
+            configuration[$"item-drop-ratio-{ItemDrops.GetConfigId(dropId)}"] = dropId == itemId ? 1.0 : 0.0;
         }
     }
 

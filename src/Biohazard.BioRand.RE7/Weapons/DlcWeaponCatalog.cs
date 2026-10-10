@@ -15,8 +15,8 @@ public static class DlcWeaponCatalog {
         new("CH9_WP000", "AMG-78a", 9, 61, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         new("CH9_WP001", "AMG-78", 9, 62, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         new("CH9_WP002", "Spirit Blade", 9, 63, "app.CH9Weapon1700", DlcWeaponAdapter.SpiritBlade),
-        new("CH9_WP003", "Throwing Knife", 9, 64, "app.CH9Weapon1500", DlcWeaponAdapter.None),
-        new("CH9_WP004", "Throwing Spear", 9, 65, "app.CH9Weapon1800", DlcWeaponAdapter.None),
+        new("CH9_WP003", "Throwing Knife", 9, 64, "app.CH9Weapon1500", DlcWeaponAdapter.Ch9Throwable),
+        new("CH9_WP004", "Throwing Spear", 9, 65, "app.CH9Weapon1800", DlcWeaponAdapter.Ch9Throwable),
         new("CH9_WP005", "Stake Bomb", 9, 66, "app.CH9Weapon1900", DlcWeaponAdapter.None),
         new("CH9_WP006", "AMG-Dual", 9, 67, "app.CH9Weapon1600", DlcWeaponAdapter.Gauntlet),
         // This inventory ID deliberately shares Shotgun_DB's native WeaponID.
@@ -30,7 +30,8 @@ public static class DlcWeaponCatalog {
 public sealed record DlcWeaponSource(
     string ItemId, string Name, int Chapter, int WeaponId, string ComponentType, DlcWeaponAdapter Adapter) {
     public bool IsLabCandidate => Adapter != DlcWeaponAdapter.None;
-    public bool IsCampaignCandidate => Adapter is DlcWeaponAdapter.Knife or DlcWeaponAdapter.Gun or DlcWeaponAdapter.SpiritBlade or DlcWeaponAdapter.Gauntlet or DlcWeaponAdapter.Grenade;
+    public bool IsCampaignCandidate => Adapter is DlcWeaponAdapter.Knife or DlcWeaponAdapter.Gun or DlcWeaponAdapter.SpiritBlade or DlcWeaponAdapter.Gauntlet or DlcWeaponAdapter.Grenade or DlcWeaponAdapter.Ch9Throwable;
+    public bool IsStackWeapon => Adapter is DlcWeaponAdapter.Grenade or DlcWeaponAdapter.Ch9Throwable;
     public string ResourceRoot { get; init; } = "BioRand/DlcWeaponLab";
     public string CampaignPrefab => $"{ResourceRoot}/{ItemId}/Item.pfb";
     public string ResourceScene => $"{ResourceRoot}/{ItemId}/Resource.scn";
@@ -46,6 +47,8 @@ public sealed record DlcWeaponSource(
         "Stangrenadebomb" => "ch8/scenes/items/resources_chapter8/stangrenadebomb.scn",
         "NumaItem072" => "ch9/scenes/items/resource/numaitem072.scn",
         "CH9_WP002" => "ch9/scenes/items/resource/ch9_wp002.scn",
+        "CH9_WP003" => "ch9/scenes/items/resource/ch9_wp003.scn",
+        "CH9_WP004" => "ch9/scenes/items/resource/ch9_wp004.scn",
         "CH9_WP000" => "ch9/scenes/items/resource/ch9_wp000.scn",
         "CH9_WP001" => "ch9/scenes/items/resource/ch9_wp001.scn",
         "CH9_WP006" => "ch9/scenes/items/resource/ch9_wp006.scn",
@@ -53,4 +56,4 @@ public sealed record DlcWeaponSource(
     };
 }
 
-public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade, Gauntlet, Grenade }
+public enum DlcWeaponAdapter { None, Knife, Gun, SpiritBlade, Gauntlet, Grenade, Ch9Throwable }

@@ -100,6 +100,28 @@ return function()
     end
     configuration["enemy-drop-probability"] = nil
 
+    for _, id in ipairs({ "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004" }) do
+        local key = "enemy-drop-ratio-" .. id:lower():gsub("_", "-")
+        configuration[key] = 1
+        for _, allow in ipairs({ false, true }) do
+            for _, enabled in ipairs({ false, true }) do
+                configuration["allow-dlc-items"], configuration["dlc-campaign-weapons"] = allow, enabled
+                local candidates = drops:candidates({}, false)
+                assert(#candidates == (allow and enabled and 1 or 0), "DLC drops require both permissions")
+                if #candidates > 0 then
+                    assert(candidates[1].value == id and candidates[1].weight == 100)
+                    assert(drops:stack_amount(id, {}) == 1)
+                end
+                assert(#drops:candidates({}, true) == 0, "Do not change the boss reward whitelist")
+            end
+        end
+        configuration[key] = nil
+        configuration["item-drop-ratio-" .. id:lower():gsub("_", "-")] = 1
+        assert(drops:candidates({}, false)[1].value == id, "Normalized item-rate fallback must work")
+        configuration["item-drop-ratio-" .. id:lower():gsub("_", "-")] = nil
+    end
+    configuration["allow-dlc-items"], configuration["dlc-campaign-weapons"] = nil, nil
+
     local fixed_rng = { int = function(_, minimum, maximum)
         assert(minimum == 3 and maximum == 3)
         return minimum

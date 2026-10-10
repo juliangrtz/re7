@@ -1,4 +1,13 @@
 return function()
+    local ch9_resets, ch9_failure, ch9_updates = 0, false, 0
+    package.loaded["BioRand7/dlc_ch9_throwable"] = { new = function(_, _, root)
+        assert(root == "BioRand/DlcWeaponLab")
+        return { install = function() end, reset = function() ch9_resets = ch9_resets + 1 end,
+            update = function(self)
+                ch9_updates = ch9_updates + 1
+                if ch9_failure and not self.error then error("CH9 throwable failed") end
+            end }
+    end }
     local grenade_resets, grenade_failure, grenade_updates = 0, false, 0
     package.loaded["BioRand7/dlc_grenade"] = { new = function(_, _, root)
         assert(root == "BioRand/DlcWeaponLab")
@@ -15,7 +24,7 @@ return function()
             update = function(self) if gauntlet_failure and not self.error then error("Gauntlet failed") end end }
     end }
     local Lab = require("BioRand7/dlc_weapon_lab")
-    assert(#Lab.candidates == 11)
+    assert(#Lab.candidates == 13)
     assert(Lab.candidates[5].id == "CH9_WP002")
     assert(Lab.candidates[6].id == "CH9_WP006")
     local writes, registered, owned, in_inventory = 0, true, false, false
@@ -76,7 +85,11 @@ return function()
     assert(not lab:queue("add", "CKnife"))
     lab.armed = true
     assert(not lab:queue("box"), "A menu manager call alone does not initialize the item-box UI")
-    assert(not lab:queue("add", "CH9_WP003"))
+    assert(not lab:queue("add", "CH9_WP005"))
+    for _, id in ipairs({ "CH9_WP003", "CH9_WP004" }) do
+        assert(lab:queue("prepare", id))
+        lab.pending = nil
+    end
     assert(lab:queue("prepare", "CH9_WP006"))
     lab.pending = nil
     assert(lab:queue("prepare", "CH9_WP002"), "Spirit Blade is an explicit lab candidate only")
@@ -120,6 +133,7 @@ return function()
     assert(not lab.armed)
     assert(gauntlet_resets == 2, "Both load/new-game paths discard the gauntlet's transient state")
     assert(grenade_resets == 2, "Both load/new-game paths invalidate the grenade session")
+    assert(ch9_resets == 2, "Both load/new-game paths invalidate the CH9 throwable session")
     fail, owned, ready, lab.armed = false, false, false, true
     lab:queue("add", "CKnife"); lab:update()
     assert(writes == 4 and not lab.armed, "Do not add an unready prefab")
@@ -141,4 +155,10 @@ return function()
     lab:update()
     assert(not lab.armed and lab.grenade.error and grenade_resets == 3 and grenade_updates == updates + 1,
         "A failed grenade controller must still tick deferred pool cleanup")
+    ch9_failure, lab.armed = true, true
+    lab:update()
+    updates = ch9_updates
+    lab:update()
+    assert(not lab.armed and lab.ch9.error and ch9_resets == 3 and ch9_updates == updates + 1,
+        "A failed CH9 controller must still tick deferred pool cleanup")
 end

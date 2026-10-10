@@ -64,7 +64,7 @@ internal class ItemDropTableModifier : Modifier {
             var idStr = id;
             var item = _itemDefinitions.FromId(idStr)!;
 
-            var rate = randomizer.GetConfigOption<double>($"item-drop-ratio-{idStr.ToLowerInvariant()}");
+            var rate = randomizer.GetConfigOption<double>($"item-drop-ratio-{ItemDrops.GetConfigId(idStr)}");
             if (rate <= 0)
                 continue;
 

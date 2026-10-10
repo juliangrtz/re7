@@ -28,17 +28,17 @@ return function()
     enabled, allow = true, false
     weapons:update(); assert(calls == 0)
     allow = true
-    weapons:update(); assert(calls == 11 and loads == 0)
+    weapons:update(); assert(calls == 13 and loads == 0)
     available, now = true, 1
-    weapons:update(); assert(loads == 33)
-    now = 3; weapons:update(); assert(loads == 33 and calls == 22)
+    weapons:update(); assert(loads == 39)
+    now = 3; weapons:update(); assert(loads == 39 and calls == 26)
     weapons:reset(); ready = true
-    weapons:update(); assert(loads == 33)
+    weapons:update(); assert(loads == 39)
     weapons:reset(); ready, foreign = false, true
-    weapons:update(); assert(loads == 33)
+    weapons:update(); assert(loads == 39)
     weapons:reset(); foreign, fail = false, true
-    weapons:update(); assert(loads == 44 and errors == 11)
-    now = 5; weapons:update(); assert(loads == 44, "Failed mutations must not retry every frame")
+    weapons:update(); assert(loads == 52 and errors == 13)
+    now = 5; weapons:update(); assert(loads == 52, "Failed mutations must not retry every frame")
 
     local module_name = "BioRand7/dlc_weapon_player"
     local previous = package.loaded[module_name]
@@ -46,6 +46,21 @@ return function()
     local previous_gauntlet = package.loaded[gauntlet_name]
     local grenade_name = "BioRand7/dlc_grenade"
     local previous_grenade = package.loaded[grenade_name]
+    local ch9_name = "BioRand7/dlc_ch9_throwable"
+    local previous_ch9 = package.loaded[ch9_name]
+    local ch9_installed, ch9_updated, ch9_reset, ch9_enabled = 0, 0, 0
+    package.loaded[ch9_name] = { new = function(game, is_enabled, root)
+        assert(game == context.game and root == "BioRand/DlcWeapons")
+        ch9_enabled = is_enabled
+        return {
+            install = function() ch9_installed = ch9_installed + 1 end,
+            update = function(self)
+                ch9_updated = ch9_updated + 1
+                if not self.error then error("CH9 throwable failure") end
+            end,
+            reset = function() ch9_reset = ch9_reset + 1 end,
+        }
+    end }
     local grenade_installed, grenade_updated, grenade_reset, grenade_enabled = 0, 0, 0
     package.loaded[grenade_name] = { new = function(game, is_enabled, root)
         assert(game == context.game and root == "BioRand/DlcWeapons")
@@ -84,22 +99,29 @@ return function()
     assert(installed == 1 and adapter_enabled())
     assert(gauntlet_installed == 1 and gauntlet_enabled())
     assert(grenade_installed == 1 and grenade_enabled())
+    assert(ch9_installed == 1 and ch9_enabled())
     weapons:update(); weapons:update()
     assert(updated == 1 and reset == 1 and not adapter_enabled(), "Adapter failures must stop until reset")
     assert(gauntlet_updated == 1 and gauntlet_reset == 1 and not gauntlet_enabled())
     assert(grenade_updated == 2 and grenade_reset == 1 and not grenade_enabled() and weapons.grenade_adapter.error,
         "Failed grenade controllers still drain deferred native pool cleanup")
+    assert(ch9_updated == 2 and ch9_reset == 1 and not ch9_enabled() and weapons.ch9_adapter.error,
+        "Failed CH9 controllers still drain deferred native pool cleanup")
     weapons:reset()
     assert(reset == 2 and adapter_enabled(), "New sessions reset adapter state without reinstalling hooks")
     assert(gauntlet_reset == 2 and gauntlet_enabled())
     assert(grenade_reset == 2 and grenade_enabled() and not weapons.grenade_adapter.error)
+    assert(ch9_reset == 2 and ch9_enabled() and not weapons.ch9_adapter.error)
     enabled = false
     assert(not adapter_enabled())
     assert(not gauntlet_enabled())
     assert(not grenade_enabled())
+    assert(not ch9_enabled())
     enabled, allow = true, false
     assert(not adapter_enabled())
+    assert(not ch9_enabled())
     package.loaded[module_name] = previous
     package.loaded[gauntlet_name] = previous_gauntlet
     package.loaded[grenade_name] = previous_grenade
+    package.loaded[ch9_name] = previous_ch9
 end

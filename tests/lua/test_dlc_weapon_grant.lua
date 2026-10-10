@@ -2,7 +2,7 @@ return function()
     local Weapons = require("BioRand7/dlc_weapons")
     local UI = require("BioRand7/ui")
     local ids = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002", "CH9_WP000", "CH9_WP001", "CH9_WP006",
-        "Grenadebomb", "Thermatebomb", "Stangrenadebomb" }
+        "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004" }
     local flags = { ["dlc-campaign-weapons"] = true, ["allow-dlc-items"] = true }
     local owned, boxed, paths, ready, missing = {}, {}, {}, {}, {}
     local calls, errors, infos = {}, {}, {}
@@ -78,13 +78,13 @@ return function()
     assert(weapons.pending_add and #calls == 0, "UI must only queue the grant")
     weapons:request_add_to_item_box()
     weapons:update()
-    assert(#calls == 11 and #infos == 1 and #errors == 0)
+    assert(#calls == 13 and #infos == 1 and #errors == 0)
     for i, id in ipairs(ids) do assert(calls[i] == id and boxed[id]) end
-    assert(weapons.grant_status == "Added 11 to item box; 0 already owned")
-    weapons:update(); assert(#calls == 11, "No repeated grants")
+    assert(weapons.grant_status == "Added 13 to item box; 0 already owned")
+    weapons:update(); assert(#calls == 13, "No repeated grants")
     boxed[ids[1]], owned[ids[1]] = nil, true
     weapons:request_add_to_item_box(); weapons:update()
-    assert(#calls == 11 and weapons.grant_status == "Added 0 to item box; 11 already owned")
+    assert(#calls == 13 and weapons.grant_status == "Added 0 to item box; 13 already owned")
 
     local function rejected(expected)
         owned, boxed = {}, {}

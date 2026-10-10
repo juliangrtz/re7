@@ -11,7 +11,7 @@ public static class DlcCampaignWeapons {
     public const string ConfigKey = "dlc-campaign-weapons";
     public static ImmutableArray<DlcWeaponSource> Sources { get; } = [.. DlcWeaponCatalog.Weapons
         .Where(w => w.IsCampaignCandidate).Select(w => w with { ResourceRoot = "BioRand/DlcWeapons" })];
-    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. new[] { "dlc_weapon_assets.txt", "dlc_gauntlet_assets.txt", "dlc_grenade_assets.txt" }
+    public static ImmutableArray<string> RequiredAssetPaths { get; } = [.. new[] { "dlc_weapon_assets.txt", "dlc_gauntlet_assets.txt", "dlc_grenade_assets.txt", "dlc_ch9_throwable_assets.txt" }
         .SelectMany(name => System.Text.Encoding.UTF8.GetString(EmbeddedData.GetFile(name))
             .Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.Ordinal)];
@@ -23,10 +23,10 @@ public static class DlcCampaignWeapons {
         => randomizer.GetConfigOption<bool>(ConfigKey) && randomizer.GetConfigOption<bool>("allow-dlc-items");
 
     internal static IEnumerable<ItemDefinition> CreateItemDefinitions() => Sources.Select(w => new ItemDefinition {
-        Id = w.ItemId, Name = w.Name, CategoryType = w.Adapter == DlcWeaponAdapter.Grenade ? ItemCategoryType.StackWeapon : ItemCategoryType.Weapon,
+        Id = w.ItemId, Name = w.Name, CategoryType = w.IsStackWeapon ? ItemCategoryType.StackWeapon : ItemCategoryType.Weapon,
         Size = w.ItemId is "Shotgun_Albert" or "NumaItem072" ? ItemSlotSize.Slot2 : ItemSlotSize.Slot1,
         Dlc = w.Chapter == 8 ? DlcType.NotAHero : DlcType.EndOfZoe,
-        WeaponId = (WeaponID)w.WeaponId, MaxStack = w.Adapter == DlcWeaponAdapter.Grenade ? 6 : 1, CanStoreInItemBox = true,
+        WeaponId = (WeaponID)w.WeaponId, MaxStack = w.IsStackWeapon ? 6 : 1, CanStoreInItemBox = true,
         SourceUserFile = "resourceitemsettings.user.2",
     });
 
@@ -79,6 +79,23 @@ public static class DlcCampaignWeapons {
                     ["Attack.rcol/ExplosionCToPlayer"] = new() { Damage = 400, Stun = 250 },
                     ["Attack.rcol/ExplosionToPlayer"] = new() { Damage = 300, Stun = 150 },
                 } : CreateGrenadeDamage(source.WeaponId == 59),
+            };
+        }
+        foreach (var source in Sources.Where(w => w.Adapter == DlcWeaponAdapter.Ch9Throwable)) {
+            var knife = source.WeaponId == 64;
+            var folder = knife ? "wp1500_nailknife" : "wp1800_harpoon";
+            var model = knife ? "wp1500" : "wp1800_harpoon";
+            yield return new WeaponDefinition {
+                WeaponId = (WeaponID)source.WeaponId, Id = model[..6], Name = source.Name,
+                IsGun = false, IsInventoryWeapon = true, UserType = Enums.app.CharacterDefine.Type.Player,
+                BulletItemIDs = [], UserParamsPath = null,
+                Mesh = $"CH9/Weapon/{folder}/{model}.mesh", Material = $"CH9/Weapon/{folder}/{model}.mdf2",
+                PrefabPath = source.CampaignPrefab.Of() + ".17",
+                RcolPaths = [DlcCh9Projectiles.WeaponCollisionPath(source).RcolFile()],
+                Damage = new() {
+                    ["Attack.rcol/Impact"] = new() { Damage = knife ? 200 : 100, Stun = knife ? 50 : 100 },
+                    ["Attack.rcol/AttackToWeapon"] = new() { Damage = 0, Stun = 0 },
+                },
             };
         }
         var blade = Sources.Single(w => w.Adapter == DlcWeaponAdapter.SpiritBlade);

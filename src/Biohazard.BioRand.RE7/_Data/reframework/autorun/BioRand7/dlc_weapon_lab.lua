@@ -14,6 +14,8 @@ Lab.candidates = {
     { id = "Grenadebomb", name = "Grenade (player adapter research)" },
     { id = "Thermatebomb", name = "Incendiary Grenade (player adapter research)" },
     { id = "Stangrenadebomb", name = "Neuro-stun Grenade (player adapter research)" },
+    { id = "CH9_WP003", name = "Throwing Knife (player adapter research)" },
+    { id = "CH9_WP004", name = "Throwing Spear (player adapter research)" },
 }
 
 local function candidate(id)
@@ -28,6 +30,7 @@ function Lab:reset()
     if self.player_adapter then self.player_adapter:reset() end
     if self.gauntlet then self.gauntlet:reset() end
     if self.grenade then self.grenade:reset() end
+    if self.ch9 then self.ch9:reset(); self.ch9.error = nil end
     self.armed, self.pending, self.report, self.box_identity = false, nil, nil, nil
     self.added = {}
     self.status = "Session changed; test receipts cleared"
@@ -48,6 +51,11 @@ function Lab:install()
         self.grenade = require("BioRand7/dlc_grenade").new(self.game,
             function() return self.armed end, "BioRand/DlcWeaponLab")
         self.grenade:install()
+    end
+    if not self.ch9 then
+        self.ch9 = require("BioRand7/dlc_ch9_throwable").new(self.game,
+            function() return self.armed end, "BioRand/DlcWeaponLab")
+        self.ch9:install()
     end
     self.game:hook("app.SaveDataManager", "newGameInit()", function() self:reset() end)
     self.game:hook("app.SaveDataManager", "loadLevelUsingLoadData()", function() self:reset() end)
@@ -148,6 +156,15 @@ function Lab:execute(request)
 end
 
 function Lab:update()
+    if self.ch9 then
+        local ok, message = pcall(function() self.ch9:update() end)
+        if not ok then
+            self.armed = false
+            if not self.ch9.error then self.ch9.error = tostring(message); self.ch9:reset() end
+            self.status = tostring(message)
+            return
+        end
+    end
     if self.grenade then
         local ok, message = pcall(function() self.grenade:update() end)
         if not ok then

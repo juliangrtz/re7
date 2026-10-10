@@ -69,6 +69,25 @@ public sealed class DlcWeaponLabTests {
     }
 
     [Fact]
+    public void Ch9ThrowableManifestIncludesAllNativePoolDependenciesAndItemResources() {
+        var paths = DlcCh9Projectiles.RequiredAssetPaths;
+        Assert.Equal(88, paths.Length);
+        Assert.Equal(paths.Order(StringComparer.Ordinal), paths);
+        Assert.Equal(paths.Length, paths.Distinct(StringComparer.OrdinalIgnoreCase).Count());
+        foreach (var (_, _, _, collision) in DlcCh9Projectiles.Sources)
+            Assert.Contains($"CH9/Collision/Collider/Weapon/{collision}.rcol".RcolFile().ToLowerInvariant(), paths);
+        foreach (var id in new[] { "ch9_wp003", "ch9_wp004" })
+            Assert.Contains($"natives/stm/ch9/scenes/items/resource/{id}.scn.20", paths);
+        foreach (var motion in new[] { "nailknife", "bangstick", "liquidbomb" })
+            Assert.Contains(paths, p => p.Contains($"pl9000_{motion}.motlist."));
+        Assert.All(paths, p => {
+            Assert.StartsWith("natives/stm/", p);
+            Assert.Matches(@"\.\d+(\.stm)?$", p);
+            Assert.DoesNotContain("..", p);
+        });
+    }
+
+    [Fact]
     public void GrenadeManifestIncludesNativePoolHandPosesAndSoundDependencies() {
         var paths = DlcGrenadeWeapons.RequiredAssetPaths;
         Assert.Equal(80, paths.Length);
@@ -144,8 +163,9 @@ public sealed class DlcWeaponLabTests {
     public void CatalogExcludesUnsupportedCampaignWeapons() {
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Length);
         Assert.Equal(14, DlcWeaponCatalog.Weapons.Select(w => w.ItemId).Distinct().Count());
-        Assert.Equal(11, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
-        Assert.Equal(11, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        Assert.Equal(13, DlcWeaponCatalog.Weapons.Count(w => w.IsLabCandidate));
+        Assert.Equal(13, DlcWeaponCatalog.Weapons.Count(w => w.IsCampaignCandidate));
+        Assert.Equal("CH9_WP005", Assert.Single(DlcWeaponCatalog.Weapons, w => !w.IsCampaignCandidate).ItemId);
         Assert.Contains(DlcCampaignWeapons.Sources, w => w.ItemId == "CH9_WP002");
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsLabCandidate);
         Assert.True(DlcWeaponCatalog.Weapons.Single(w => w.ItemId == "CH9_WP006").IsCampaignCandidate);
@@ -256,23 +276,28 @@ public sealed class DlcWeaponLabTests {
                 Assert.Empty(components.Single(c => c.Type.Name == "app.Weapon").Get<string>("EquipParam.JointName"));
             } else {
                 Assert.Contains(components, c => c.Type.Name == "via.render.Mesh");
-                Assert.Contains(components, c => c.Type.Name == "via.motion.Motion");
-                Assert.Contains(components, c => c.Type.Name == "via.motion.MotionFsm");
+                if (weapon.Adapter != DlcWeaponAdapter.Ch9Throwable) {
+                    Assert.Contains(components, c => c.Type.Name == "via.motion.Motion");
+                    Assert.Contains(components, c => c.Type.Name == "via.motion.MotionFsm");
+                }
                 Assert.Contains(first.GetPfbFile(path).Resources, p => p.EndsWith(".mesh", StringComparison.OrdinalIgnoreCase));
             }
             Assert.DoesNotContain(components, c => (c.Type.Name.StartsWith("app.CH8") || c.Type.Name.StartsWith("app.CH9"))
-                && !(weapon.Adapter == DlcWeaponAdapter.Grenade && c.Type.Name == "app.CH8WeaponThrowable"));
+                && !(weapon.Adapter == DlcWeaponAdapter.Grenade && c.Type.Name == "app.CH8WeaponThrowable")
+                && !(weapon.Adapter == DlcWeaponAdapter.Ch9Throwable && c.Type.Name == weapon.ComponentType));
             Assert.DoesNotContain(components, c => c.Type.Name == "app.DisableSave");
             var native = Assert.Single(components, c => c.Type.Name == (weapon.Adapter switch {
                 DlcWeaponAdapter.Gun => "app.WeaponGun",
                 DlcWeaponAdapter.Grenade => "app.CH8WeaponThrowable",
+                DlcWeaponAdapter.Ch9Throwable => weapon.ComponentType,
                 _ => "app.Weapon",
             }));
             Assert.Equal(weapon.WeaponId, native.Get<int>("WeaponID"));
             Assert.Equal(weapon.ItemId, Assert.Single(components, c => c.Type.Name == "app.Item").Get<string>("ItemDataID"));
-            if (weapon.Adapter == DlcWeaponAdapter.Grenade) {
+            if (weapon.IsStackWeapon) {
                 Assert.Equal(6, item.MaxStackNum);
-                Assert.Contains($"{weapon.ResourceRoot}/{weapon.ItemId}/Shell.pfb".Of() + ".17", first.Files.Keys);
+                var folder = weapon.Adapter == DlcWeaponAdapter.Ch9Throwable ? DlcCh9Projectiles.ProjectileName(weapon.WeaponId) : weapon.ItemId;
+                Assert.Contains($"{weapon.ResourceRoot}/{folder}/Shell.pfb".Of() + ".17", first.Files.Keys);
             }
             if (weapon.Adapter == DlcWeaponAdapter.Gun) {
                 var bullets = native.Get<RszArrayNode>("BulletInfoList").Cast<RszObjectNode>().Select(x => x.Get<int>("BulletItemID")).ToArray();
@@ -298,7 +323,7 @@ public sealed class DlcWeaponLabTests {
             Assert.True(component.Get<bool>("_ResourcePrefab.Standby"));
             Assert.NotEmpty(first.GetPfbFile(weapon.DetailPrefab.Of() + ".17").ReadScene(first.TypeRepository).GetGameObjects());
         }
-        Assert.Equal(46 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
+        Assert.Equal(61 + DlcWeaponLabPatch.RequiredAssetPaths.Length, first.Files.Count);
     }
 
     [Fact]

@@ -67,7 +67,7 @@ public static class RandomizerTest {
         configuration["additional-items"] = false;
         configuration["additional-wooden-crates"] = false;
         foreach (var drop in ItemDrops.GenericDrops) {
-            configuration[$"item-drop-ratio-{drop.ToLowerInvariant()}"] = ItemDrops.GetDefaultGenericDropRatio(drop);
+            configuration[$"item-drop-ratio-{ItemDrops.GetConfigId(drop)}"] = ItemDrops.GetDefaultGenericDropRatio(drop);
         }
 
         foreach (var drop in ItemDrops.HighValueDrops) {

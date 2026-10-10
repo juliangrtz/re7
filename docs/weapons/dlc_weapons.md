@@ -20,8 +20,8 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Its manual Lua runner is not loaded by `BioRand7.lua` and grants nothing on load.
   The export preflights and copies the weapon dependency manifests, including 38
   gauntlet display, hand, material, texture and motion resources from the installed game.
-- The lab and campaign now have eleven candidates, including the three
-  CH8 grenades. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
+- The lab and campaign now have thirteen candidates, including the three
+  CH8 grenades and CH9 throwing knife/spear. Grenades retain native `CH8WeaponThrowable`, lose `DisableSave`,
   keep six-item stacks, and receive isolated shell pools, copied messages, and
   inspection resources. The campaign uses its own namespace and automatic runtime
   adapter; it does not run the manually armed lab controller.
@@ -31,12 +31,13 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   version additionally isolates its attack RCOL and participates in generation
   and debug grants. Lab candidacy and campaign candidacy remain separate
   properties; do not promote a lab export merely because its prefab loads.
-- `DlcCampaignWeaponPatch` integrates eleven candidates under `BioRand/DlcWeapons`
+- `DlcCampaignWeaponPatch` integrates thirteen candidates under `BioRand/DlcWeapons`
   when **both** `dlc-campaign-weapons` and `allow-dlc-items` are true. The new
   experimental option defaults to false. Ordinary profiles retain their old pools.
 - The candidate set is Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21,
   Spirit Blade, AMG-78a, AMG-78, AMG-Dual, Grenade, Incendiary Grenade, and Neuro-stun
-  Grenade. The three CH9 throwables remain excluded pending player-system work.
+  Grenade, Throwing Knife, and Throwing Spear. Stake Bomb remains excluded pending
+  its installation/explosion player-system work.
 - Campaign integration includes item definitions, starting weapons and ammunition,
   random weapon pools, pickup templates, item settings/messages, inspection
   resource folders, and weapon-stat controls. Custom bird-cage entries are gated;
@@ -45,8 +46,9 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   knife attack RCOL are copied to that namespace before stat changes. Joe's M21
   deliberately shares campaign M21 parameters and controls. Source DLC settings
   and inventory PFBs are not rewritten, and DLC gameplay roots stay inactive.
-- `_Data/dlc_weapon_assets.txt`, `_Data/dlc_gauntlet_assets.txt`, and
-  `_Data/dlc_grenade_assets.txt` together list 231 required installed resources,
+- `_Data/dlc_weapon_assets.txt`, `_Data/dlc_gauntlet_assets.txt`,
+  `_Data/dlc_grenade_assets.txt`, and `_Data/dlc_ch9_throwable_assets.txt` together
+  list 319 required installed resources,
   including weapon render/motion/collision/VFX/sound
   dependencies and import metadata. Generation
   preflights every entry before registering anything and emits a clear error if
@@ -57,12 +59,14 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   motion bank and observes confirmed damage for recovery. The separate gauntlet
   adapter maps native melee actions to Joe's clips and enables their exported
   collision windows. The grenade adapter drives the native throw callbacks and
-  owns a scoped shell pool; none of these adapters synthesizes player input. Both flags imply
+  owns a scoped shell pool. The CH9 knife/spear adapter reads native throw-timing
+  tracks and owns a stationary native CH9 shell pool. None of these adapters
+  synthesizes player input. Both flags imply
   REFramework is required.
 - **BioRand 7 > Debug tools > Add supported DLC weapons to item box** queues a
-  one-shot grant on `UpdateBehavior`. It adds one of each of the eleven candidates,
+  one-shot grant on `UpdateBehavior`. It adds one of each of the thirteen candidates,
   skipping weapons already owned in inventory or storage. Both integration flags,
-  campaign Ethan, and all eleven ready campaign prefabs are required. Missing/foreign
+  campaign Ethan, and all thirteen ready campaign prefabs are required. Missing/foreign
   adapters abort before any additions; a native add failure stops the batch without
   retrying or removing earlier successes. The menu reports the result. Loading a
   save, starting a new game, resetting scripts, or reloading config cancels pending
@@ -74,6 +78,18 @@ There are now two separate entry points, sharing `DlcWeaponImporter`:
   Herb for both ordinary pickups and crates, rather than requesting an unavailable
   pickup template. Their isolated RCOLs participate in damage/stun controls, respecting
   Include Self-Damage; contact-only zero-damage requests retain their native values.
+- Knives and spears retain native `CH9Weapon1500`/`CH9Weapon1800`, six-item stacks,
+  namespaced inventory/inspection resources, and isolated projectile RCOLs. Their
+  loose pickup donor is `LiquidBomb` (`InteractDetailSearch`), not a permanent
+  melee weapon (`InteractWeapon`). A preserved gun pickup instead receives the
+  concrete native CH9 component. They participate in static pools, crate relief
+  tables, runtime enemy drops, damage/stun controls, and debug grants. They do not
+  replace the permanent Bladed starting weapon with consumable stock.
+- The five consumable DLC weapons have runtime Lua drop entries as well as C#
+  drop definitions, gated by both flags. Boss reward eligibility remains unchanged.
+  CH9 drop config IDs use `ch9-wp003`/`ch9-wp004`, not native item-ID underscores;
+  generation and Lua must normalize identically. The native `AttackToWeapon`
+  requests on these two projectiles intentionally have zero damage and stun.
 
 This implements the campaign generation path, **not completed playthrough
 certification**. Save migration is not implemented. Use backed-up test saves until
@@ -111,8 +127,8 @@ WeaponID is distinct from the string ItemDataID.
 | `CH9_WP000` | AMG-78a | CH9 | 61 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP001` | AMG-78 | CH9 | 62 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `CH9_WP002` | Spirit Blade | CH9 | 63 | `app.CH9Weapon1700` | Base melee: Ethan attack/damage/recovery and cold campaign save/load verified |
-| `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | None |
-| `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | None |
+| `CH9_WP003` | Throwing Knife | CH9 | 64 | `app.CH9Weapon1500` | Experimental campaign throw adapter |
+| `CH9_WP004` | Throwing Spear | CH9 | 65 | `app.CH9Weapon1800` | Experimental campaign throw/recovery adapter |
 | `CH9_WP005` | Stake Bomb | CH9 | 66 | `app.CH9Weapon1900` | None |
 | `CH9_WP006` | AMG-Dual | CH9 | 67 | `app.CH9Weapon1600` | Experimental campaign punch/charge adapter |
 | `NumaItem072` | Joe's M21 | CH9 | 13 | `app.CH9WeaponGun` | Experimental base gun |
@@ -1105,11 +1121,70 @@ new strict mocks cover both weapons and attack modes, blend-root readiness,
 shared hook registration, native collision filters/reference marshalling/offsets,
 low-FPS release, last-stock destruction, infinity, missing tracks, pool exhaustion,
 pause/menu/task/clip interruption, and reset/player scratch invalidation. The
-module is not yet selected by generation or included in the ordinary runtime
-archive allowlist. Warm adoption is not fresh startup validation. Clean-process
+module at foundation commit `51592c0` was not yet selected by generation or included
+in the ordinary runtime archive allowlist. Warm adoption is not fresh startup validation. Clean-process
 pickup/messages/storage/save/title checks, all-pool-slot reuse, exact source
 orientation parity, and Mia/Clancy coverage remain open. Stake Bomb remains
 separate and unsupported; this work does not substitute its placement logic.
+
+### Knife/spear campaign integration
+
+The subsequent production pass registers both throwables under `BioRand/DlcWeapons`
+and packages their motion and pool modules through the ordinary runtime allowlist.
+Both configuration gates remain required, and the feature remains default-off.
+The catalog and debug grant now contain 13 candidates; Stake Bomb stays excluded.
+The curated CH9 manifest has 88 paths, including both resource scenes, bringing
+the deduplicated campaign dependency manifest to 319 paths. Keep the full native
+four-kind CH9 shell-pool layout even though only two inventory weapons are enabled.
+
+Knife and spear are six-per-slot stack weapons, with no gun or ammo-parameter graft.
+Loose pickups reuse LiquidBomb's native `InteractDetailSearch`; preserved gun
+pickups retain their donor identity while rebinding the concrete CH9 weapon type.
+Damage randomization edits copied projectile RCOLs, never source DLC collisions.
+`Impact` uses native damage/stun 200/50 for knife and 100/100 for spear.
+`AttackToWeapon` is deliberately zero/zero contact data, not a missing damage stat.
+Consumable throwables must not replace the guaranteed permanent starting blade.
+
+Adding CH9 IDs exposed a configuration naming pitfall: item IDs contain underscores,
+but configuration IDs permit hyphens. Normalize `CH9_WP003` to `ch9-wp003` consistently
+in definitions, static supply pools, relief tables, and Lua enemy-drop lookups.
+The runtime generic-drop list also needed all five supported consumable DLC weapons,
+not just new C# entries. Gate those runtime candidates on both DLC permissions and
+leave the existing boss-drop whitelist unchanged. Regressions exercise actual
+configuration readers rather than supplying a test-only weight delegate.
+
+Live checks used a fresh process with the production feature only, not hot adoption
+or the prototype CH9 loader. Both exact campaign prefab paths became ready, the
+adapter owned its motion banks, and its native pool initialized without error.
+Generated loose-pickup fixtures rendered the correct models/messages and entered
+inventory through normal pickup interaction. These interactions used bounded native
+UI-command pulses after physical key taps were not consumed, not direct grants.
+A normal mouse knife throw consumed the last item. A bounded native Aim/Attack
+probe consumed the last spear, left one lodged native projectile, and recovery
+returned stock 0 -> 1 and pool availability 9 -> 10. Neither action remained stuck.
+The real item-box menu stored the spear and withdrew both knife and spear; the
+knife then equipped into `Melee.ReadyIdle`, clip 2001, with a positive duration.
+Evidence is in the ignored `ch9-production-*` captures.
+
+A backed-up disposable manual save held one knife equipped and one spear in
+inventory. Returning to title and continuing restored both exact counts, both
+campaign prefab paths, owned banks, a ready pool, and knife idle clip 2001 with
+284-frame duration. A normal mouse throw then consumed the last saved knife and
+completed into the same empty-hands state as the vanilla comparison. This pass
+needed no prototype loader, hot adoption, or explicit adapter reset. It establishes
+same-process title reload, not yet a separate cold-process load of this new save.
+
+Test fixture ownership produced a separate research-only trap: a newly created
+`via.Prefab` wrapper became invalid while the retained production pool prefab and
+an earlier fixture holder remained valid. `duplicate()` did not cure it. Reusing
+the earlier inactive fixture holder allowed the spear pickup test; this does not
+justify replacing production item registration or resetting healthy native pools.
+
+The full test project passed 614 tests and all 31 Lua 5.4 suites passed. A normal
+opt-in seed (35825) generated successfully from a clean baseline augmented with
+the explicit dependency manifest. Running setup against a currently modded install
+can instead incorporate installed randomizer patch PAKs into a contaminated baseline.
+Do not certify generation against that result or deploy it over the active seed.
 
 ## Pitfalls to carry forward
 
@@ -1362,7 +1437,8 @@ Remaining acceptance work:
    loading separately; the curated manifest is not proof of a complete sound-bank
    closure. Check randomized loaded ammo on scene pickups as well as inventory PFBs.
 5. Finish gauntlet player-transition, held-button input, sound, and visual checks.
-   Port CH9 throwables separately from the conventional gun adapter. Keep those
-   three candidates out of generation and debug grants until their complete
-   equip/attack/consume/cancel/restore lifecycle is demonstrated. CH8 grenades now
-   use the dedicated experimental adapter; broaden its player-transition coverage.
+   Knife and spear now use their dedicated experimental CH9 adapter; broaden
+   player-transition, all-pool-slot reuse, and source-orientation parity coverage.
+   Keep Stake Bomb out of generation and debug grants until its distinct placement,
+   arming, detonation, cancellation, and restoration lifecycle is demonstrated.
+   Broaden CH8 grenade player-transition coverage too.

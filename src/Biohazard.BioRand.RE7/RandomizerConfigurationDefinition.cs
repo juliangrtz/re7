@@ -171,8 +171,8 @@ internal static class RandomizerConfigurationDefinition {
         group.Items.Add(new GroupItem(){
             Id = DlcCampaignWeapons.ConfigKey,
             Label = "Experimental DLC Campaign Weapons",
-            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, all three AMG gauntlets, and Not a Hero grenades in the campaign. " +
-                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. End of Zoe throwables are excluded.",
+            Description = "Include Tactical Knife, Samurai Edge, Thor's Hammer, Joe's M21, Spirit Blade, all three AMG gauntlets, Not a Hero grenades, and End of Zoe throwing knives and spears in the campaign. " +
+                "Requires Allow DLC Items and a baseline prepared with setup --dlc-weapons. Save/load and player transitions remain experimental. Stake Bomb is excluded.",
             Type = "switch",
             Default = false
         });
@@ -627,7 +627,7 @@ internal static class RandomizerConfigurationDefinition {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem(){
-                Id = $"enemy-drop-ratio-{drop.ToLowerInvariant()}",
+                Id = $"enemy-drop-ratio-{ItemDrops.GetConfigId(drop)}",
                 Label = ItemDefinitions.FromId(drop)!.Name,
                 Description = "Relative drop weight. Set to 0 to exclude this item from enemy drops."
                     + (DlcCampaignWeapons.Contains(drop) ? " Requires both DLC campaign weapons and Allow DLC Items." : ""),
@@ -863,7 +863,7 @@ internal static class RandomizerConfigurationDefinition {
             var category = ItemDrops.GetCategory(drop);
             var (bgColor, textColor) = ItemDrops.GetColor(category);
             group.Items.Add(new GroupItem(){
-                Id = $"item-drop-ratio-{drop.ToLowerInvariant()}",
+                Id = $"item-drop-ratio-{ItemDrops.GetConfigId(drop)}",
                 Label = ItemDefinitions.FromId(drop)!.Name,
                 Description = "Relative drop weight. Set to 0 to exclude this item from randomized item drops."
                     + (DlcCampaignWeapons.Contains(drop) ? " Requires both DLC campaign weapons and Allow DLC Items." : ""),

@@ -1,7 +1,7 @@
 local Weapons = {}
 Weapons.__index = Weapons
 local IDS = { "CKnife", "Handgun_Albert_C", "Shotgun_Albert", "NumaItem072", "CH9_WP002", "CH9_WP000", "CH9_WP001", "CH9_WP006",
-    "Grenadebomb", "Thermatebomb", "Stangrenadebomb" }
+    "Grenadebomb", "Thermatebomb", "Stangrenadebomb", "CH9_WP003", "CH9_WP004" }
 
 function Weapons.new(context)
     return setmetatable({ context = context, requested = {}, next_check = 0 }, Weapons)
@@ -23,15 +23,20 @@ function Weapons:install()
     self.grenade_adapter = require("BioRand7/dlc_grenade").new(self.context.game,
         function() return self:enabled() and not self.grenade_failed end, "BioRand/DlcWeapons")
     self.grenade_adapter:install()
+    self.ch9_adapter = require("BioRand7/dlc_ch9_throwable").new(self.context.game,
+        function() return self:enabled() and not self.ch9_failed end, "BioRand/DlcWeapons")
+    self.ch9_adapter:install()
 end
 
 function Weapons:reset()
     if self.player_adapter then self.player_adapter:reset() end
     if self.gauntlet_adapter then self.gauntlet_adapter:reset() end
     if self.grenade_adapter then self.grenade_adapter:reset(); self.grenade_adapter.error = nil end
+    if self.ch9_adapter then self.ch9_adapter:reset(); self.ch9_adapter.error = nil end
     self.adapter_failed = false
     self.gauntlet_failed = false
     self.grenade_failed = false
+    self.ch9_failed = false
     self.requested, self.next_check, self.finished = {}, 0, false
     self.pending_add, self.grant_status = nil, nil
 end
@@ -95,6 +100,15 @@ function Weapons:process_item_box_request()
 end
 
 function Weapons:update()
+    if self.ch9_adapter then
+        local ok, message = pcall(function() self.ch9_adapter:update() end)
+        if not ok and not self.ch9_failed then
+            self.ch9_failed = true
+            self.ch9_adapter.error = tostring(message)
+            self.ch9_adapter:reset()
+            self.context.log:error("DLC CH9 throwable adapter failed: " .. tostring(message))
+        end
+    end
     if self.grenade_adapter then
         -- Failed adapters must still drain deferred native pool destruction.
         local ok, message = pcall(function() self.grenade_adapter:update() end)
