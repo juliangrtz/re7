@@ -154,6 +154,11 @@ return function()
         update(nil, 2400, 0.0)
         assert(adapter.attack.phase == "standby" and motion_id == 8001)
     end
+    weapon:set_field("Inventory", nil)
+    before = #events
+    update("Melee.ReadyStart", 4294967295, 0.0)
+    assert(adapter.owner_wait and not adapter.weapon and #events == before, "Wait for native doStart ownership")
+    weapon:set_field("Inventory", inventory)
     motion_ready, end_frame = false, 0.0
     update("Melee.ReadyStart", 4294967295, 0.0)
     assert(adapter.equip_pending and #requests == 0)
@@ -208,4 +213,14 @@ return function()
     assert(not pcall(update) and not adapter.attack)
     start(); current_player = nil; before = #events; update()
     assert(not adapter.attack and #events == before, "Do not dereference old-player weapon components")
+    current_player = player
+    weapon:set_field("Inventory", {})
+    local ok, message = pcall(update)
+    assert(not ok and message:find("Unexpected grenade inventory owner"), "Never adopt a foreign inventory")
+    weapon:set_field("Inventory", nil)
+    update("Melee.ReadyIdle", 2001, 0.0)
+    adapter.owner_wait.age = 2.1
+    ok, message = pcall(update)
+    assert(not ok and message:find("inventory owner readiness timed out") and not adapter.weapon)
+    enabled = false; update(); assert(not adapter.owner_wait, "Disabled adapters clear pending ownership")
 end

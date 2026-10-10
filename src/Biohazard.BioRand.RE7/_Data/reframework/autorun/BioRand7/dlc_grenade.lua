@@ -60,7 +60,7 @@ function Grenade:prepare(player)
         return true
     end
     self:cancel(false)
-    self.weapon, self.variant, self.empty, self.last_state = nil, nil, nil, nil
+    self.weapon, self.variant, self.empty, self.last_state, self.owner_wait = nil, nil, nil, nil, nil
     local controller = self.game:component(player, "app.PlayerMotionController")
     local motion = controller and controller:get_field("Motion")
     local manager = controller and controller:get_field("MotionManager")
@@ -241,7 +241,7 @@ function Grenade:update()
     local player = self.game:player()
     if self.reset_pending or not self.enabled() or self.error or not self:matches(player) then
         self:cancel(false)
-        self.weapon, self.variant, self.empty, self.last_state, self.equip_pending = nil, nil, nil, nil, nil
+        self.weapon, self.variant, self.empty, self.last_state, self.equip_pending, self.owner_wait = nil, nil, nil, nil, nil, nil
         self.reset_pending = nil
         self.pool:update(nil)
         return
@@ -285,13 +285,24 @@ function Grenade:update()
             if weapon:get_field("WeaponID") == entry.weapon and self:matches(player, entry) then variant = entry; break end
         end
     end
-    if not variant then self:cancel(false); self.weapon, self.variant, self.last_state, self.equip_pending = nil, nil, nil, nil; return end
+    if not variant then self:cancel(false); self.weapon, self.variant, self.last_state, self.equip_pending, self.owner_wait = nil, nil, nil, nil, nil; return end
     assert(weapon:get_type_definition():get_full_name() == "app.CH8WeaponThrowable", "Unexpected grenade component")
+    local inventory = weapon:get_field("Inventory")
+    assert(not inventory or inventory == s.inventory, "Unexpected grenade inventory owner")
+    if not inventory then
+        -- Quick-slot selection can expose the component before native doStart binds its inventory.
+        self:cancel(false)
+        self.weapon, self.variant, self.last_state, self.equip_pending = nil, nil, nil, nil
+        if not self.owner_wait or self.owner_wait.weapon ~= weapon then self.owner_wait = { weapon = weapon, age = 0.0 } end
+        self.owner_wait.age = self.owner_wait.age + dt
+        assert(self.owner_wait.age < 2.0, "Grenade inventory owner readiness timed out")
+        return
+    end
+    self.owner_wait = nil
     if self.weapon ~= weapon then
         self:cancel(false)
         self.weapon, self.variant, self.last_state = weapon, variant, nil
         self.equip_pending = { age = 0.0 }
-        assert(weapon:get_field("Inventory") == s.inventory, "Unexpected grenade inventory owner")
         s.controller:call("updateTargetBankType")
     end
     if not pool_ready then self:cancel(true); return end

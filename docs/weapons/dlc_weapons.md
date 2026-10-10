@@ -975,6 +975,20 @@ the rest of the native lifecycle.
 
 ## Acceptance and next steps
 
+### Grenade inventory startup ordering
+
+Native quick-slot selection can expose `CH8WeaponThrowable` through
+`EquipManager` before `doStart` fills its `Inventory` field. A strict immediate
+owner assertion therefore disabled the adapter after a normal item-box withdrawal.
+The same component later had the correct Ethan inventory without intervention.
+Wait up to two active seconds for a null owner, perform no throw callbacks while
+waiting, and still reject a non-null foreign owner immediately. Pause and menus
+do not spend this readiness budget. Do not force `doStart` or assign `Inventory`.
+The regression covers delayed ownership, wrong ownership, timeout, and reset.
+A bounded one-frame UI-command pulse selected the real quick slot and reached
+`Melee.ReadyIdle` with all nine banks and the owned shell pool ready; that is
+native quick-slot routing evidence, not physical-key timing coverage.
+
 Automated coverage includes the 14 source identities, rejected unsupported
 adapters, default-off behavior, both permission gates, manifest extraction and
 missing-resource preflight, deterministic lab export, serialized native identities,
