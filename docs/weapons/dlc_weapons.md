@@ -1432,7 +1432,8 @@ restores the pool slot and clears `SetupBombCount`. Recovery does not automatica
 re-equip WeaponID 66. Do not add a forced equip or stock refund to compensate.
 Evidence: `stake-last-charge-1219.json` and `stake-last-recovery-1221.json`.
 
-`dlc_ch9_item.lua` is a preparatory, currently unwired player adapter. It retains
+`dlc_ch9_item.lua` is a preparatory player adapter, wired into campaign lifecycle
+handling but inert while the Stake Bomb catalog entry remains excluded. It retains
 the native Item category and shares the CH9 throwable adapter's pool rather than
 creating a second manager. Its owned bank 9962 combines Joe's LiquidBomb motions
 with campaign Item bank 200 as fallback. It waits for clips 2000, 2001 and 2400,
@@ -1440,12 +1441,25 @@ mirrors native Item arm work, and repairs only an initial zero-duration ready
 state. Placement, stock consumption, recovery and detonation remain native.
 Native `tryUse`/`use` fail closed while the owned player, inventory, motion or pool
 is unavailable, including adapter failure, menus, loading and player death.
-The module has scoped Lua regressions but is not campaign acceptance evidence.
+The shared pool owner's failure also disables Item use; Item failure latches
+separately and never resets or updates the shared pool a second time. Session
+reset clears both failure latches without reinstalling hooks.
 
 Do not reject placement solely because the five-slot bomb pool has no unused
 entry. Native `CH9ShellManager.createBomb` calls the common pool allocator, which
-can recycle the oldest used entry through its callback. Live full-pool behavior
-still needs validation. See `stake-pool-allocation-native-1190.txt`.
+can recycle the oldest used entry through its callback. A fresh-process research
+fixture confirmed six ordinary mouse placements consume a six-charge stack while
+retaining five active shells, without error. Recovering one with empty hands
+restored one charge; a bounded native Detonate pulse then cleared the remaining
+four shells and returned all five slots. No forced stock, Rno or damage writes
+were used. See `stake-pool-allocation-native-1190.txt` and the
+`stake-capacity-*-1279/1280/1281/1283/1286/1288.json` captures.
+
+This run initialized the new Item adapter from scratch, not by adopting the old
+prototype's banks. Both arms reached valid idle; normal placement and recovery
+left the test position stable. Its registration and shell tutorial guards still
+used the research fixture, so cold production registration/save restoration and
+ordinary keyboard/controller input remain acceptance requirements.
 
 A heavily probed warm session developed a test-position snap while idle, including
 with vanilla G17 equipped. Both input and root-motion translation were zero in
