@@ -377,7 +377,8 @@ temporary player adapter, not a complete shipped implementation.
 - The inventory prefab has no skeleton or collision components. The exporter
   adds the ordinary melee HitController/RequestSetCollider component pair and an
   isolated subset of Joe's player RCOL: right/left hooks, right/left uppercuts,
-  and the two both-hand charge levels. Request IDs are compacted to 0 through 5;
+  the two both-hand charge levels, and the left straight finisher. Request IDs
+  are compacted to 0 through 6 (the finisher is 6);
   native attack userdata, shapes and bone names remain intact. Source RCOL is not
   changed.
 - Do **not** clear the RCOL joint names and attach these shapes to a palm. Joe's
@@ -395,6 +396,33 @@ temporary player adapter, not a complete shipped implementation.
   the attack returned to idle. Enemy resistance was unchanged; test protection
   blocked only incoming player damage. This proves native combat routing, not
   exact timing parity with Joe.
+
+Further runtime findings from the isolated adapter:
+
+- `PlayerMotionController.updateLArmMotion` both selects a motion work entry and
+  dispatches it to the motion FSM. Copying the right-arm entry after this method,
+  or skipping it without dispatching the replacement, leaves the left arm in
+  `RemoveWeapon`. A scoped equivalent dispatch synchronized layers 1, 2 and 9.
+- The native CH9 mesh controller selects parts 2 and 3 for non-VR dual gauntlets,
+  with parts 0, 1 and 4 disabled. This replaced the all-parts loading experiment.
+- Read `app.Collision.ColliderTrack` from each active raw `MotionNodeCtrl` through
+  `getSequenceTracks`. A successful read alone does not mean an active hit window:
+  `RequestId` is -1 outside it. Right/left hook windows were observed around frames
+  26 through 31, later than the initial approximate test window.
+- Direct `TreeLayer.changeMotion` is not a complete FSM transition. Raw punches
+  can finish while the FSM remains in `Melee.AttackL/R`. A one-shot normal-priority
+  request to the corresponding `AttackL/RToReady` state returned both tested hooks
+  to idle. The straight finisher requires `AttackStraightV2_Double`, not the left
+  uppercut's collider or damage value.
+- The two-hand charge clip carries
+  `app.SequenceTrackObject.CH9PlayerGauntletChargeLevel` markers. Reading those
+  tracks reached charge level 2 in campaign. However, replacing the raw clip also
+  left `PlayerMelee.actionID` unknown; animation and charge markers alone do not
+  prove working attack/cancel dispatch.
+- A test hook on `CommandUpdater.isRequested` can give false confidence: native
+  melee code may fetch the command group and read `IsRequested` directly. A queued
+  request observed in an updater hook was absent at melee consumption time. Keep
+  diagnostic command injection separate from normal-input acceptance evidence.
 
 Remaining work includes hand-part selection, left/right combos, charge controls
 and feedback, interrupted attacks, pause/load/player transitions, resource cleanup,

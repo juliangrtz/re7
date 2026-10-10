@@ -140,7 +140,8 @@ internal sealed class DlcWeaponImporter(IPatchContext context) {
         var collision = context.GetRcolFile("ch9/collision/collider/player/pl9000/pl9000.rcol".RcolFile())
             .ToBuilder(context.TypeRepository);
         var names = new[] { "AttackHookR_Double", "AttackHook_Double", "AttackUppercutR_Double",
-            "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble" };
+            "AttackUppercut_Double", "Attack1ChargeBothHandsDouble", "Attack2ChargeBothHandsDouble",
+            "AttackStraightV2_Double" };
         var requests = names.Select(name => collision.RequestSets.Single(r => r.Name == name)).ToArray();
         collision.RequestSets.Clear();
         for (var i = 0; i < requests.Length; i++) {

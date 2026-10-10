@@ -63,8 +63,9 @@ public sealed class DlcWeaponLabTests {
                 Assert.Single(components, c => c.Type.Name == "via.physics.RequestSetCollider");
                 Assert.Contains(weapon.CollisionPath, first.GetPfbFile(path).Resources);
                 var collision = first.GetRcolFile(weapon.CollisionPath.RcolFile()).ToBuilder(first.TypeRepository);
-                Assert.Equal(Enumerable.Range(0, 6), collision.RequestSets.Select(r => r.Id));
-                Assert.Equal(new[] { 300, 300, 300, 300, 500, 3000 }, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
+                Assert.Equal(Enumerable.Range(0, 7), collision.RequestSets.Select(r => r.Id));
+                Assert.Equal(new[] { 300, 300, 300, 300, 500, 3000, 500 }, collision.RequestSets.Select(r => r.UserData!.Get<int>("Damage")));
+                Assert.Equal("AttackStraightV2_Double", collision.RequestSets[6].Name);
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "R_UpperArm");
                 Assert.Contains(collision.Groups.SelectMany(g => g.Shapes), s => s.PrimaryJointName == "L_UpperArm");
                 Assert.True(components.Single(c => c.Type.Name == "via.Transform").Get<bool>("SameJointsContraint"));
