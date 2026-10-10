@@ -976,7 +976,7 @@ spear recovery/damage, stake-bomb placement, messages, generation, and cold
 save/load still need validation. The prototype currently uses the camera rotation;
 the source constructs its orientation from direction/up vectors. No CH9 player
 component was grafted onto Ethan. Spear recovery was subsequently proven in the
-scoped experiment below; damage and complete campaign integration remain open.
+scoped experiments below; complete campaign integration remains open.
 
 ### Spear recovery and stationary pool roots
 
@@ -1029,8 +1029,8 @@ not traversal and reuse of every slot. An explicit reset destroyed/recreated the
 manager and restored all pool types without parenting or adapter errors. Evidence
 is in the ignored `ch9-module-*` captures, with the failing/control traces in
 `ch9-recovery-*`. Pickups used bounded UI-command pulses after a short physical
-F-key tap was not consumed. Cold-save/title transitions, full-pool cycling,
-full-inventory rejection, spear damage, and aimed/held throws remain unproven.
+F-key tap was not consumed. At this stage cold-save/title transitions, full-pool
+cycling, full-inventory rejection, spear damage, and aimed/held throws were unproven.
 All 30 Lua suites passed under Lua 5.4, along with 23 focused DLC weapon/runtime
 .NET tests; this does not promote the three CH9 throwables into generation.
 
@@ -1043,6 +1043,73 @@ should name methods and executable identity, not assume old absolute addresses.
 This pass used PE timestamp `0x69c1fe87`, image size `0x9a37000`; the local IDA MCP
 endpoint was unavailable, so these findings came from matching-file disassembly,
 not a successful IDA decompilation.
+
+### Knife/spear motion adapter foundation
+
+The subsequent spear damage trace recorded a normal campaign `Em4000` hit from
+`HarpoonBulletS`: raw damage 100, calculated damage 50, and the remaining 2.456905
+HP removed. The enemy had already taken knife damage; this is evidence of native
+campaign damage routing, not a full-health damage or balance measurement. A normal
+mouse throw produced one native release and stock 4 -> 3. Player protection was
+enabled for this test; enemy health was not edited. Local evidence is retained as
+`ch9-spear-molded-damage-1020.json` and `ch9-spear-molded-throw-1021.json`.
+
+Three additional pitfalls appeared while validating aimed input:
+
+- **A successful launch does not complete the player action.** Normal throws
+  returned to idle, but an aimed spear remained in `Melee.AimAttackC`, clip 2405,
+  at frame 90. Restore the still-valid held object and request the campaign's
+  `Melee.AimToReady` only when this owned attack reaches its actual clip end.
+  Preserve other task/state/clip replacements instead of forcing a recovery
+  through damage or scripted actions. A bounded five-second native-command
+  probe then launched once, returned to aiming while Aim remained requested,
+  and returned to ReadyIdle when released. This is not physical held-button QA.
+- **Last-stock destruction happens before animation completion.** Native
+  `reduceWeapon()` immediately removes the final equipped object. A later update
+  that only checks the currently equipped weapon loses the attack's completion.
+  Keep a bounded record of the clip/state, without the destroyed weapon, and
+  request `Hands.ReadyStart` at completion if no replacement weapon/task/state
+  has taken over. Aimed last-stock spear and knife checks reached empty hands
+  without a stuck attack. The campaign empty-hands presentation caveat described
+  for grenades still applies; do not claim its zero-length arm clip is repaired.
+- **Blend-root duration is not resource readiness.** `getMotionInfo` successfully
+  resolves roots 2400/2405 with end frame -1 for both weapons. Their children
+  2406/2407 report 78 frames for the knife and 90 for the spear. Require the roots
+  to exist, but validate positive duration on the children and idle. Requiring
+  positive duration on blend roots caused a reproducible false loading timeout.
+
+`BioRand7/dlc_ch9_throwable.lua` now implements this foundation with the separate
+owned CH9 pool. It retains native concrete weapons, uses custom bank types
+9960/9961, samples the child release track over a frame range, calls native
+projectile activation and stock reduction, and restores visibility on completion
+or interruption. Sample release before checking clip completion so a low-FPS
+update crossing both boundaries cannot lose the throw. Pool exhaustion does not
+consume stock. Startup hooks are deduplicated by native address: the concrete
+knife and spear `doStart` methods share a body in the tested executable. Discard
+MotionInfo, sequence-track, collision-result, and reference-cell scratch objects
+on reset and player replacement without invoking expired objects.
+
+The actual module was hot-adopted into the controlled campaign session, with the
+old research motion hooks made inert and the existing owned banks/pool retained.
+A normal mouse knife throw consumed stock 2 -> 1 and returned to ReadyIdle. An
+aimed last-stock knife throw reached empty hands. An aimed spear throw/recovery
+cycle produced stock 3 -> 2 -> 3 and pool availability 10 -> 9 -> 10, with the
+native success callback deactivating the shell. Separately, filling the last
+inventory slot with throwing knives made native spear pickup show its rejection
+indicator; no spear was added, no success callback ran, and the lodged projectiles
+remained active. Evidence is in the ignored `ch9-runtime-*`, `ch9-aim-*`, and
+`ch9-spear-full-inventory-1053.json` captures.
+
+All 31 Lua 5.4 suites and 23 focused DLC weapon/runtime .NET tests passed. The
+new strict mocks cover both weapons and attack modes, blend-root readiness,
+shared hook registration, native collision filters/reference marshalling/offsets,
+low-FPS release, last-stock destruction, infinity, missing tracks, pool exhaustion,
+pause/menu/task/clip interruption, and reset/player scratch invalidation. The
+module is not yet selected by generation or included in the ordinary runtime
+archive allowlist. Warm adoption is not fresh startup validation. Clean-process
+pickup/messages/storage/save/title checks, all-pool-slot reuse, exact source
+orientation parity, and Mia/Clancy coverage remain open. Stake Bomb remains
+separate and unsupported; this work does not substitute its placement logic.
 
 ## Pitfalls to carry forward
 

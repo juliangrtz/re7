@@ -16,6 +16,7 @@ local suites = {
     "test_dlc_grenade_pool",
     "test_dlc_ch9_pool",
     "test_dlc_ch9_recovery",
+    "test_dlc_ch9_throwable",
     "test_dlc_grenade",
     "test_dlc_grenade_prepare",
     "test_dlc_weapons",
